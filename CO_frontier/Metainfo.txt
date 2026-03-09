@@ -1,0 +1,13 @@
+Name of Quantlet: CO_frontier
+
+Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+
+Description: Coverage-efficiency frontier: raw vs corrected LLM models
+
+Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+
+Author: Daniel Traian Pele
+
+Datafile: run_conformal_analysis.py
+
+Output: fig_coverage_efficiency_frontier.pdf
