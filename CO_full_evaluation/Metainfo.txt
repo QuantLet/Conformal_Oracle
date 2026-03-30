@@ -1,0 +1,13 @@
+Name of Quantlet: CO_full_evaluation
+
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
+
+Description: Main evaluation pipeline — conformal VaR recalibration for 5 TSFMs and 4 parametric benchmarks across 24 assets (2000-2026). Produces Tables 1-8 and Figures 1-5.
+
+Keywords: conformal prediction, Value-at-Risk, foundation models, backtesting, Basel traffic light, Kupiec, Christoffersen
+
+Author: Daniel Traian Pele
+
+Datafile: CO_full_evaluation.ipynb
+
+Output: master_table.tex, qv_ranking.tex, fig_qV_ranking.pdf, fig_traffic_light.pdf

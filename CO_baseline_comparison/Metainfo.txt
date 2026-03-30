@@ -1,0 +1,13 @@
+Name of Quantlet: CO_baseline_comparison
+
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
+
+Description: Compares conformal recalibration against four alternative post-hoc correction methods — scale correction, historical quantile, quantile regression, and isotonic regression. Produces Table 11.
+
+Keywords: recalibration, isotonic regression, quantile regression, baseline comparison, Quantile Score
+
+Author: Daniel Traian Pele
+
+Datafile: CO_baseline_comparison.ipynb
+
+Output: tab_baseline_comparison.tex, fig_baseline_qs.pdf
