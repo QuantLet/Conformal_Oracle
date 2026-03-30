@@ -1,0 +1,13 @@
+Name of Quantlet: CO_Z2_test
+
+Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+
+Description: Acerbi Z2 ES adequacy test: raw vs corrected
+
+Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+
+Author: Daniel Traian Pele
+
+Datafile: run_conformal_analysis.py
+
+Output: fig4_z2_comparison.pdf

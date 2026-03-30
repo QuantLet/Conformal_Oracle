@@ -1,0 +1,13 @@
+Name of Quantlet: CO_dashboards
+
+Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+
+Description: Asset dashboards: SP500 and CRIX multi-panel view
+
+Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+
+Author: Daniel Traian Pele
+
+Datafile: run_conformal_analysis.py
+
+Output: dashboard_SP500_w30.pdf dashboard_CRIX_w30.pdf

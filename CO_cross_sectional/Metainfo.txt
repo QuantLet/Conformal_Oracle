@@ -1,0 +1,13 @@
+Name of Quantlet: CO_cross_architecture
+
+Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+
+Description: Cross-architecture benchmark: GPT-3.5, GPT-4, GPT-4o and planned models
+
+Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+
+Author: Daniel Traian Pele
+
+Datafile: run_conformal_analysis.py
+
+Output: tables

@@ -1,0 +1,13 @@
+Name of Quantlet: CO_width_comparison
+
+Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+
+Description: VaR width comparison: price of distribution-free guarantees
+
+Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+
+Author: Daniel Traian Pele
+
+Datafile: run_conformal_analysis.py
+
+Output: fig_garch_var_width_comparison.pdf
