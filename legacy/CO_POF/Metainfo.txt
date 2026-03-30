@@ -1,0 +1,13 @@
+Name of Quantlet: CO_POF
+
+Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+
+Description: Raw Percentage of Failures for 1pct VaR across LLM models
+
+Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+
+Author: Daniel Traian Pele
+
+Datafile: run_conformal_analysis.py
+
+Output: slide32_pof_1pct_var.pdf
