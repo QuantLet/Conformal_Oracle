@@ -25,7 +25,6 @@ Pele, D.T., Lessmann, S., Hardle, W.K. (2026)
 | CO_score_comparison | One-sided vs two-sided score comparison |
 | CO_sharpness_penalty | Calibration-efficiency trade-off |
 | CO_sign_diagnostic | q_V sign diagnostic heatmap |
-| legacy/ | Archived GPT-3.5/4/4o Quantlets from Pele et al. (2025, ESWA) |
 
 ## Data
 
