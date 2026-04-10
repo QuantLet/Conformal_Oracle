@@ -1,0 +1,25 @@
+Name of Quantlet: CFP_Calibration_Efficiency_Frontier
+
+Published in: 'Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence'
+
+Description: Generates the two-panel calibration-efficiency frontier (Figure 3)
+             showing the trade-off between empirical coverage and VaR width for
+             four representative forecasters (Chronos-Small, TimesFM 2.5, Lag-Llama,
+             GJR-GARCH) before and after conformal correction. Panel (a) shows the
+             zoomed view near the 99% target; panel (b) shows the full scale
+             including Chronos-Small at raw coverage ~61%.
+
+Keywords: calibration efficiency, VaR width, coverage, conformal prediction, frontier, time series foundation models
+
+See also:
+- CO_full_evaluation
+
+Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+
+Submitted: 2026-04-09
+
+Input: cfp_ijf_data/paper_outputs/tables/all_results.csv
+
+Output: calibration_efficiency_frontier_v2.pdf, calibration_efficiency_frontier_v2.png
+
+Example: Chronos-Small moves from raw coverage 61.2% (width 0.003) to corrected coverage 98.9% (width 0.041), while TimesFM requires only a modest shift from 98.6% to 99.0%.
