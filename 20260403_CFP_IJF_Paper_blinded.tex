@@ -447,8 +447,8 @@
 	improved conditional coverage.
 	
 	A structural limitation is that $\hat{q}_{V,t}$ is
-	backward-looking: at the onset of a crisis, the trailing
-	window still contains pre-crisis scores, and the correction
+	backward-looking: at the onset of a stress episode, the trailing
+	window still contains pre-stress scores, and the correction
 	lags the true regime shift. For sudden, unprecedented
 	events (e.g., March 2020), the lag is unavoidable.
 
@@ -762,8 +762,8 @@
 	\end{figure}
 	\begin{figure}[htbp]
 		\centering
-		\includegraphics[width=\textwidth]{calibration_efficiency_frontier_v2}
-		\caption{Calibration--efficiency frontier for four representative forecasters. \textbf{(a)}~Zoomed view near the 99\% target. \textbf{(b)}~Full scale including Chronos-Small (raw $\hat{\pi} = 38.8\%$). Each arrow traces one forecaster from its raw (hollow) to its conformally corrected (filled) position.}
+		\includegraphics[width=0.8\textwidth]{fig_frontier_killer}
+		\caption{Calibration--efficiency frontier for four representative forecasters. Each arrow traces one forecaster from its raw (hollow) to its conformally corrected (filled) position. Conformal correction moves forecasts toward the 99\% coverage target at the cost of VaR width expansion. Chronos-Small enters from raw $\hat\pi = 38.8\%$ (inset). GJR-GARCH moves left---the only model where correction \emph{shrinks} the interval.}
 		\label{fig:coverage_frontier}
 	\end{figure}
 	\begin{figure}[htbp]
@@ -807,7 +807,7 @@
 	errors use the \citet{newey1987simple} estimator;
 	cluster-robust $p$-values cluster by asset, allowing arbitrary
 	within-asset dependence while treating the 24 series as
-	independent.\footnote{During crisis periods, cross-asset
+	independent.\footnote{During stress periods, cross-asset
 		correlations spike and the effective cluster count falls below
 		24, so $p_{\text{cluster}}$ may be anti-conservative under
 		systemic stress. The high values in Table~\ref{tab:panel}
@@ -902,7 +902,7 @@
 			Cluster-robust DM tests (clustering by asset, 24 clusters)
 			yield 28 of 36 significant comparisons; under a conservative
 			assumption of 16 effective clusters (accounting for
-			crisis-period cross-asset correlation), 25 of 36 remain
+			stress-period cross-asset correlation), 25 of 36 remain
 			significant. The ranking is qualitatively unchanged but
 			confidence intervals widen by approximately 22\%.
 		\end{minipage}
@@ -1031,8 +1031,8 @@
 	($\lambda = 0.01$) yields similar performance, while varying
 	$f_c \in \{0.50, 0.60, 0.70, 0.80\}$ produces stable Green
 	rates and corrected violation rates within 0.010--0.011.
-	Rolling $\qV$ spikes during an embedded crisis regime but
-	reverts to pre-crisis levels with no permanent shift
+	Rolling $\qV$ spikes during an embedded stress regime but
+	reverts to pre-stress levels with no permanent shift
 	($p > 0.30$; Table~\ref{tab:regime_stability}). In small
 	samples, $\text{Std}(\qV)$ is $3$--$5\times$ larger at
 	$T = 250$ than at $T = 5{,}000$, and no calibration fraction
@@ -1125,7 +1125,7 @@
 		($k = 3.65$, dashed red), Lag-Llama at Green-zone multiplier
 		($k = 3.00$, solid blue), and GJR-GARCH at Green-zone
 		multiplier (solid green). All three use the conformally corrected
-		VaR. The grey band marks the COVID-19 period (Feb--Apr~2020).}
+		VaR. The grey band marks the Feb--Apr~2020 volatility regime.}
 		\label{fig:capital_charge}
 	\end{figure}
 

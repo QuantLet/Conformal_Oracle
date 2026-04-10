@@ -154,27 +154,27 @@ print(f"Over the {N_test}-day test window, the cumulative capital saving from "
       f"{saving_pct:.1f}\\% of the raw cumulative charge.")
 
 # ── Generate figure ───────────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(10, 5))
+fig, ax = plt.subplots(figsize=(10, 5.5))
 
-ax.plot(dates_common, cumul_yellow_ll, color='#A32D2D', ls='--', lw=1.5,
-        label=f'Lag-Llama Yellow ($k={K_YELLOW}$)')
-ax.plot(dates_common, cumul_green_ll, color='#185FA5', ls='-', lw=1.5,
-        label=f'Lag-Llama Green ($k={K_GREEN}$)')
-ax.plot(dates_common, cumul_green_gj, color='#0F6E56', ls='-', lw=1.5,
-        label=f'GJR-GARCH Green ($k={K_GREEN}$)')
+ax.plot(dates_common, cumul_yellow_ll, color='#A32D2D', ls='--', lw=2.5,
+        label=f'Lag-Llama, Yellow zone ($k={K_YELLOW}$)')
+ax.plot(dates_common, cumul_green_ll, color='#185FA5', ls='-', lw=2,
+        label=f'Lag-Llama, Green zone ($k={K_GREEN}$)')
+ax.plot(dates_common, cumul_green_gj, color='#0F6E56', ls='-.', lw=2,
+        label=f'GJR-GARCH, Green zone ($k={K_GREEN}$)')
 
-# COVID shading
-covid_start = pd.Timestamp('2020-02-01')
-covid_end = pd.Timestamp('2020-04-30')
-ax.axvspan(covid_start, covid_end, alpha=0.15, color='grey',
-           label='COVID-19 (Feb--Apr 2020)')
+# Volatility regime shading (Feb-Apr 2020)
+shock_start = pd.Timestamp('2020-02-01')
+shock_end = pd.Timestamp('2020-04-30')
+ax.axvspan(shock_start, shock_end, alpha=0.12, color='grey',
+           label='Feb--Apr 2020 volatility regime')
 
-ax.set_xlabel('Date')
-ax.set_ylabel('Cumulative capital charge')
-ax.set_title('Cumulative Capital Charge: S\\&P 500', fontsize=12)
+ax.set_xlabel('Date', fontsize=13)
+ax.set_ylabel('Cumulative capital charge', fontsize=13)
+ax.tick_params(labelsize=11)
 
-ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12),
-          ncol=2, fontsize=9, frameon=False)
+ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.10),
+          ncol=2, fontsize=11, frameon=False)
 
 ax.xaxis.set_major_locator(mdates.YearLocator(2))
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))

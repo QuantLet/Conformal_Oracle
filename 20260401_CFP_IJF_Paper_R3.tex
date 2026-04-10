@@ -865,8 +865,8 @@
 	\end{figure}
 	\begin{figure}[htbp]
 		\centering
-		\includegraphics[width=\textwidth]{calibration_efficiency_frontier_v2}
-		\caption{Calibration--efficiency frontier for four representative forecasters. \textbf{(a)}~Zoomed view near the 99\% target. \textbf{(b)}~Full scale including Chronos-Small (raw $\hat{\pi} = 38.8\%$). Each arrow traces one forecaster from its raw (hollow) to its conformally corrected (filled) position.}
+		\includegraphics[width=0.8\textwidth]{fig_frontier_killer}
+		\caption{Calibration--efficiency frontier for four representative forecasters. Each arrow traces one forecaster from its raw (hollow) to its conformally corrected (filled) position. Conformal correction moves forecasts toward the 99\% coverage target at the cost of VaR width expansion. Chronos-Small enters from raw $\hat\pi = 38.8\%$ (inset). GJR-GARCH moves left---the only model where correction \emph{shrinks} the interval.}
 		\label{fig:coverage_frontier}
 	\end{figure}
 	\begin{figure}[htbp]
@@ -910,7 +910,7 @@
 	errors use the \citet{newey1987simple} estimator;
 	cluster-robust $p$-values cluster by asset, allowing arbitrary
 	within-asset dependence while treating the 24 series as
-	independent.\footnote{During crisis periods, cross-asset
+	independent.\footnote{During stress periods, cross-asset
 		correlations spike and the effective cluster count falls below
 		24, so $p_{\text{cluster}}$ may be anti-conservative under
 		systemic stress. The high values in Table~\ref{tab:panel}
@@ -1005,7 +1005,7 @@
 			Cluster-robust DM tests (clustering by asset, 24 clusters)
 			yield 28 of 36 significant comparisons; under a conservative
 			assumption of 16 effective clusters (accounting for
-			crisis-period cross-asset correlation), 25 of 36 remain
+			stress-period cross-asset correlation), 25 of 36 remain
 			significant. The ranking is qualitatively unchanged but
 			confidence intervals widen by approximately 22\%.
 		\end{minipage}
@@ -1227,7 +1227,7 @@
 		($k = 3.65$, dashed red), Lag-Llama at Green-zone multiplier
 		($k = 3.00$, solid blue), and GJR-GARCH at Green-zone
 		multiplier (solid green). All three use the conformally corrected
-		VaR. The grey band marks the COVID-19 period (Feb--Apr~2020).}
+		VaR. The grey band marks the Feb--Apr~2020 volatility regime.}
 		\label{fig:capital_charge}
 	\end{figure}
 
@@ -1260,7 +1260,7 @@
 	that the rolling correction absorbs the regime change but
 	with a structural delay inherent to any backward-looking
 	window estimator. The lag implies that the first
-	$\approx w/2$ days of a crisis remain under-protected; a
+	$\approx w/2$ days of a stress episode remain under-protected; a
 	stressed calibration floor or a volatility-triggered
 	override (e.g., $\qV \geq \qV^{\mathrm{stressed}}$ when
 	realised volatility exceeds a threshold) would mitigate
