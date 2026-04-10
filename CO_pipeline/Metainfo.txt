@@ -1,0 +1,13 @@
+Name of Quantlet: CO_pipeline
+
+Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+
+Description: LLMTime pipeline: serialisation, prompting, VaR/ES estimation
+
+Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+
+Author: Daniel Traian Pele
+
+Datafile: run_conformal_analysis.py
+
+Output: llmtime_diagram.pdf
