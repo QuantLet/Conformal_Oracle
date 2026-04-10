@@ -25,6 +25,9 @@ Pele, D.T., Lessmann, S., Hardle, W.K. (2026)
 | CO_score_comparison | One-sided vs two-sided score comparison |
 | CO_sharpness_penalty | Calibration-efficiency trade-off |
 | CO_sign_diagnostic | q_V sign diagnostic heatmap |
+| CFP_ES_Correction_Z2 | Heuristic ES correction and Z2 backtest (Table C.1) |
+| CFP_Capital_Charge | Cumulative capital charge comparison (Section 6) |
+| CFP_Calibration_Efficiency_Frontier | Two-panel calibration-efficiency frontier (Figure 3) |
 
 ## Data
 

@@ -18,7 +18,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # ── Configuration ─────────────────────────────────────────────────────────
-REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA = REPO_ROOT / 'cfp_ijf_data'
 RES  = DATA / 'paper_outputs' / 'tables'
 FIG  = Path(__file__).resolve().parent
