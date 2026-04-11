@@ -483,6 +483,7 @@
 	(Table~\ref{tab:rolling_vs_static}) substantially exceeds this
 	floor, consistent with the conservativeness observed for the
 	static bound (Table~\ref{tab:delta_n}).
+	The bound is conservative by construction and is not intended as a tight finite-sample guarantee; its role is to formalize the direction of the correction under local dependence, confirming that the rolling procedure does not forfeit coverage validity.
 
 	A structural limitation is that $\hat{q}_{V,t}$ is
 	backward-looking: at the onset of a stress episode, the trailing
@@ -778,7 +779,8 @@
 	QS = 5.08 $\times 10^{-4}$. Among the 48 pairs where
 	$|\qV|/|\VaR_{\mathrm{raw}}| > 1$ (Chronos-Small and
 	Chronos-Mini, effective replacement), 38 (79.2\%) achieve Green.
-	
+	In these cases, the conformal layer effectively defaults to a robust empirical quantile, providing a distribution-free safety mechanism rather than relying on misspecified model structure---a feature, not a limitation, of the model-agnostic design.
+
 	Coverage is restored at a cost. VaR estimates widen, reflecting
 	the calibration--efficiency trade-off
 	(Figure~\ref{fig:coverage_frontier}). The W/GJR column in
@@ -1106,7 +1108,7 @@
 	dynamics of the predictive distribution. The rolling variant
 	improves Christoffersen pass rates from 62\% to 81\%
 	(Table~\ref{tab:rolling_vs_static}), but remains a location
-	adjustment. Fully conditional recalibration---e.g., via a
+	adjustment: it captures time variation in miscalibration magnitude but does not model state-dependent quantile dynamics. Fully conditional recalibration---e.g., via a
 	one-sided adaptation of ACI \citep{gibbs2021adaptive}---remains
 	open.
 
@@ -1228,6 +1230,7 @@
 	estimation. A simple base model with a one-parameter conformal
 	shift outperforms dedicated tail risk approaches that involve
 	substantially greater implementation complexity.
+	This result reflects the short 250-day rolling window and associated estimation noise in parametric tail models; under longer estimation samples or carefully tuned thresholds, EVT-based methods may perform differently.
 
 	\begin{table}[H]
 		\centering
