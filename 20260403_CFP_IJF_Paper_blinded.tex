@@ -1221,7 +1221,7 @@
 
 	\begin{table}[H]
 		\centering
-		\caption{Recalibration method comparison (mean across 24 assets and 9 forecasters, $\alpha = 0.01$). QS: Quantile Score, lower is better.}
+		\caption{Recalibration method comparison (mean across 24 assets and 9 forecasters, $\alpha = 0.01$). QS: Quantile Score, lower is better. EVT-POT \citep{mcneil2000estimation} and Filtered Hist.\ Sim.\ \citep{baroneadesi1999var} are standalone VaR models (one series per asset); their Kupiec rejection and Green rates are out of 24~assets, not 216 model--asset pairs.}
 		\label{tab:baselines}
 		\footnotesize
 		\begin{tabular}{@{}lrrrrr@{}}
@@ -1236,8 +1236,8 @@
 			Isotonic regression    & .017 &    ---  &  ---  & ---  & 53.7 \\
 			\midrule
 			\multicolumn{6}{@{}l}{\textit{Dedicated VaR models (per-asset, not post-hoc calibration)}} \\[2pt]
-			EVT-POT              & {[--]} & {[--]}/24 & {[--]} & {[--]} & {[--]} \\
-			Filtered Hist.\ Sim. & {[--]} & {[--]}/24 & {[--]} & {[--]} & {[--]} \\
+			EVT-POT              & .014 & 10/24 & 5.5 & .036 & 75.0 \\
+			Filtered Hist.\ Sim. & .016 & 13/24 & 5.6 & .036 & 54.2 \\
 			\bottomrule
 		\end{tabular}
 	\end{table}
