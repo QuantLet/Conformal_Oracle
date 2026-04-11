@@ -1219,9 +1219,19 @@
 	residuals---which also reduces to a near-scalar correction at
 	extreme quantiles---cluster at the top.
 
+	The comparison extends to purpose-built VaR models. GARCH-N with
+	conformal correction (Table~\ref{tab:master}, Panel~A:
+	QS $= 4.7 \times 10^{-4}$, 21/24 Green) dominates both EVT-POT
+	(QS $= 5.5$, 18/24 Green) and filtered historical simulation
+	(QS $= 5.6$, 13/24 Green), despite requiring no tail
+	distribution fitting, no threshold selection, and no GPD
+	estimation. A simple base model with a one-parameter conformal
+	shift outperforms dedicated tail risk approaches that involve
+	substantially greater implementation complexity.
+
 	\begin{table}[H]
 		\centering
-		\caption{Recalibration method comparison (mean across 24 assets and 9 forecasters, $\alpha = 0.01$). QS: Quantile Score, lower is better. EVT-POT \citep{mcneil2000estimation} and Filtered Hist.\ Sim.\ \citep{baroneadesi1999var} are standalone VaR models (one series per asset); their Kupiec rejection and Green rates are out of 24~assets, not 216 model--asset pairs.}
+		\caption{Recalibration method comparison (mean across 24 assets and 9 forecasters, $\alpha = 0.01$). QS: Quantile Score, lower is better. EVT-POT \citep{mcneil2000estimation} and Filtered Hist.\ Sim.\ \citep{baroneadesi1999var} are standalone VaR models (one series per asset); their Kupiec rejection and Green rates are out of 24~assets, not 216 model--asset pairs. Both EVT-POT and Filtered Hist.\ Sim.\ use GARCH(1,1) pre-filtering with EWMA ($\lambda = 0.94$) fallback on convergence failure; the GARCH fallback rate averaged approximately 70\% across assets and test days due to the short 250-day estimation window, so both baselines are effectively EWMA-filtered in the majority of windows.}
 		\label{tab:baselines}
 		\footnotesize
 		\begin{tabular}{@{}lrrrrr@{}}
@@ -1251,6 +1261,11 @@
 	achieves competitive or superior performance relative to more
 	complex dedicated VaR approaches, while requiring substantially
 	less implementation effort and no distributional assumptions.
+	The EVT-POT implementation exhibited frequent fallbacks to
+	empirical quantiles (GPD convergence failure rate ${>}10\%$ on
+	all 24 assets), underscoring the fragility of parametric tail
+	estimation on short rolling windows---a practical limitation
+	that the distribution-free conformal approach avoids by design.
 
 	For practitioners, GJR-GARCH with static conformal correction
 	dominates for standalone 1\% VaR on individual assets: it
