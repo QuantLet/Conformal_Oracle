@@ -1,0 +1,25 @@
+Name of Quantlet: CFP_Capital_Charge
+
+Published in: 'Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence'
+
+Description: Computes cumulative daily capital charges under Basel zone multipliers
+             for raw versus conformally corrected VaR forecasts on S&P 500.
+             Compares Lag-Llama (Yellow zone, k=3.65) against corrected Lag-Llama
+             and GJR-GARCH (Green zone, k=3.00). Produces the cumulative capital
+             charge figure and the 17.8% capital saving reported in Section 6.
+
+Keywords: capital charge, Basel traffic light, VaR, conformal prediction, zone reclassification, regulatory capital
+
+See also:
+- CO_full_evaluation
+- CFP_ES_Correction_Z2
+
+Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+
+Submitted: 2026-04-09
+
+Input: cfp_ijf_data/returns/SP500.csv, cfp_ijf_data/lagllama/SP500.parquet, cfp_ijf_data/benchmarks/SP500_gjr_garch.parquet
+
+Output: capital_charge_cumulative.pdf, capital_charge_cumulative.png, capital_charge_results.csv
+
+Example: Over 1824 test days (2018-2026), the cumulative capital saving from reclassifying Lag-Llama from Yellow to Green amounts to 17.8% of the Yellow-zone cumulative charge.

@@ -1,0 +1,13 @@
+Name of Quantlet: CO_simulation_study
+
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
+
+Description: 'Monte Carlo simulation study (500 replications, 5 DGPs) validating the conformal correction under controlled misspecification.'
+
+Keywords: conformal prediction, VaR, calibration, time series foundation models
+
+See also: Conformal_VaR_TSFM/CO_simulation_study
+
+Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+
+Submitted: Daniel Traian Pele

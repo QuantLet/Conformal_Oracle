@@ -1,0 +1,13 @@
+Name of Quantlet: CO_coverage
+
+Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+
+Description: Coverage recovery across GPT-3.5, GPT-4, GPT-4o
+
+Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+
+Author: Daniel Traian Pele
+
+Datafile: run_conformal_analysis.py
+
+Output: fig3_coverage_comparison.pdf

@@ -1,0 +1,13 @@
+Name of Quantlet: CO_cross_model
+
+Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+
+Description: Cross-model threshold comparison and sign diagnostic
+
+Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+
+Author: Daniel Traian Pele
+
+Datafile: run_conformal_analysis.py
+
+Output: fig2_cross_model_thresholds.pdf

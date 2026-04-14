@@ -1,0 +1,15 @@
+torch>=2.0
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+matplotlib>=3.7
+tqdm
+yfinance
+arch>=6.0
+statsmodels>=0.14
+pyarrow
+huggingface_hub
+chronos-forecasting>=2.0
+gluonts==0.14.4
+einops
+uni2ts

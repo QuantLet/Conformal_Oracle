@@ -1,0 +1,13 @@
+Name of Quantlet: CO_garch_conformal
+
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
+
+Description: 'Conformal correction applied to GARCH-N and EWMA parametric benchmarks. Produces violation-rate diagnostics and Green-zone counts for the parametric pipeline.'
+
+Keywords: conformal prediction, VaR, calibration, time series foundation models
+
+See also: CO_full_evaluation, CO_rolling_qV
+
+Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+
+Submitted: Daniel Traian Pele

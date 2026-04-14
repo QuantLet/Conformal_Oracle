@@ -1,0 +1,13 @@
+Name of Quantlet: CO_rolling_qV
+
+Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+
+Description: Rolling qV stability across volatility regimes
+
+Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+
+Author: Daniel Traian Pele
+
+Datafile: run_conformal_analysis.py
+
+Output: fig7_rolling_qV_stability.pdf

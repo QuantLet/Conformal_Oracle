@@ -1,0 +1,40 @@
+Name of Quantlet: CO_full_evaluation
+
+Published in: 'Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence'
+
+Description: Main evaluation pipeline for conformal VaR recalibration.
+             Downloads 24 asset return series, generates forecasts from 5 TSFMs
+             (Chronos-Small, Chronos-Mini, TimesFM 2.5, Moirai 1.1-R, Lag-Llama)
+             and 4 parametric benchmarks (GJR-GARCH, GARCH-N, HS, EWMA),
+             runs one-sided conformal calibration (70/30 split),
+             produces Tables 1-8 and Figures 1-5 of the paper.
+
+Keywords: conformal prediction, Value-at-Risk, foundation models, backtesting, Basel
+
+See also:
+- CO_simulation_study
+- CO_rolling_conformal
+- CO_baseline_comparison
+
+Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+
+Submitted: 2026-03-26
+
+Input: Yahoo Finance daily prices (24 assets, 2000-2026)
+
+Output: 8 LaTeX tables, 9 PDF figures, all parquet forecasts and backtest results
+
+Example:
+- CFP_Data_Download.ipynb: download 24 asset returns
+- CFP_Chronos_Forecasts.ipynb: Chronos-Small/Mini VaR forecasts
+- CFP_TimesFM_Forecasts.ipynb: TimesFM 2.5 quantile-to-VaR
+- CFP_Moirai_Forecasts.ipynb: Moirai 1.1-R VaR forecasts
+- CFP_LagLlama_Forecasts.ipynb: Lag-Llama VaR forecasts
+- CFP_Parametric_Benchmarks.ipynb: GJR-GARCH, GARCH-N, HS, EWMA
+- CFP_Conformal_Calibration.ipynb: core calibration and backtesting
+- CFP_qV_Diagnostic.ipynb: conformal threshold analysis
+- CFP_Multi_Quantile.ipynb: multi-alpha evaluation
+- CFP_Panel_Pooled.ipynb: cross-asset pooled backtest
+- CFP_Scoring_Rules.ipynb: Quantile Score and DM tests
+- CFP_Traffic_Light.ipynb: Basel traffic light heatmaps
+- CFP_Paper_Tables_Figures.ipynb: publication-ready outputs

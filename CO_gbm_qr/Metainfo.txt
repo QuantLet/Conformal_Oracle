@@ -1,0 +1,13 @@
+Name of Quantlet: CO_gbm_qr
+
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
+
+Description: 'Gradient-boosted quantile regression baseline (LightGBM) for 1% VaR recalibration. Features: base-model lower quantile, lagged 5-day and 20-day realised volatility. Empirical evidence that nonlinear post-processing overfits under tail sparsity, in line with Proposition 3.5.'
+
+Keywords: quantile regression, gradient boosting, LightGBM, conformal prediction, Value-at-Risk, tail sparsity, post-processing, bias-variance trade-off
+
+See also: CO_baseline_comparison, CO_full_evaluation
+
+Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+
+Submitted: Daniel Traian Pele

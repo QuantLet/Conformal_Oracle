@@ -1,0 +1,13 @@
+Name of Quantlet: CO_quantile_scores
+
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
+
+Description: 'Quantile Score (pinball loss) evaluation across 9 forecasters and 24 assets at alpha in {0.01, 0.025, 0.05, 0.10}; Diebold-Mariano pairwise tests.'
+
+Keywords: conformal prediction, VaR, calibration, time series foundation models
+
+See also: CO_full_evaluation, CO_score_comparison
+
+Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+
+Submitted: Daniel Traian Pele

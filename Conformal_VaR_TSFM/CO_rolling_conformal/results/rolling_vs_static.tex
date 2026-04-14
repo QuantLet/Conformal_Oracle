@@ -1,0 +1,28 @@
+\begin{table}[H]
+	\centering
+	\caption{Static (70/30 split) versus rolling (250-day window) conformal correction ($\alpha = 0.01$, mean across 24 assets)}
+	\label{tab:rolling_vs_static}
+	\footnotesize
+	\begin{tabular}{@{}lcccccc@{}}
+		\toprule
+		& \multicolumn{3}{c}{\textit{Static}} & \multicolumn{3}{c}{\textit{Rolling}} \\
+		\cmidrule(lr){2-4}\cmidrule(l){5-7}
+		Model & $\hat\pi$ & Green & CC pass & $\hat\pi$ & Green & CC pass \\
+		\midrule
+		Chronos-Small      & .011 & 19/24 & 10/24 & .009 & 24/24 & 14/24 \\
+		Chronos-Mini       & .010 & 19/24 & 7/24 & .009 & 24/24 & 14/24 \\
+		TimesFM-2.5        & .010 & 22/24 & 14/24 & .010 & 24/24 & 18/24 \\
+		Moirai-2.0         & .010 & 21/24 & 20/24 & .008 & 24/24 & 24/24 \\
+		Lag-Llama          & .010 & 24/24 & 23/24 & .009 & 24/24 & 24/24 \\
+		\midrule
+		GJR-GARCH          & .011 & 19/24 & 16/24 & .009 & 24/24 & 22/24 \\
+		GARCH-N            & .010 & 21/24 & 17/24 & .009 & 24/24 & 22/24 \\
+		Hist-Sim           & .011 & 22/24 & 12/24 & .013 & 21/24 & 15/24 \\
+		EWMA               & .011 & 20/24 & 14/24 & .009 & 24/24 & 22/24 \\
+		\bottomrule
+	\end{tabular}
+	\begin{minipage}{\linewidth}\scriptsize
+		\smallskip
+		CC pass: number of assets passing Christoffersen conditional coverage test at 5\%. The rolling correction adapts $\hat{q}_{V,t}$ to local volatility, improving conditional coverage relative to the static split. Overall CC pass: static 62\%, rolling 81\%.
+	\end{minipage}
+\end{table}
