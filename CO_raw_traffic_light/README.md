@@ -9,7 +9,7 @@ Name of Quantlet: CO_raw_traffic_light
 
 Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
 
-Description: Raw traffic light results from Pele et al. (2025)
+Description: Raw traffic light results from Pele et al. (2026)
 
 Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
 
