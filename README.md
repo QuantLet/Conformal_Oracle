@@ -8,7 +8,7 @@ Pele, D.T., Bolovăneanu, V., Ginavar, A.T., Lessmann, S., Hardle, W.K. (2026)
 
 | Quantlet | Description |
 |----------|-------------|
-| CO_full_evaluation | Main pipeline: 9 models x 24 assets, Tables 1-8, Figures 1-5 |
+| CO_full_evaluation | Main pipeline: 10 models x 24 assets, Tables 1-8, Figures 1-5 |
 | CO_baseline_comparison | Conformal vs 4 recalibration alternatives (Table 11) |
 | CO_gbm_qr | Gradient-boosted quantile regression baseline (LightGBM), Table 12 |
 | CO_simulation_study | Monte Carlo: 5 DGPs x 500 reps (Section 5.7) |
