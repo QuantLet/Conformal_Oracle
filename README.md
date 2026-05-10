@@ -1,39 +1,84 @@
-# Conformal_VaR_TSFM
+# Conformal_Oracle
 
-**Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence**
+**Recalibrating Tail Event Forecasts under Temporal Dependence**
 
-Pele, D.T., Bolovăneanu, V., Ginavar, A.T., Lessmann, S., Hardle, W.K. (2026)
+Pele, D.T., Bolovăneanu, V., Ginavar, A.T., Lessmann, S., Härdle, W.K. (2026)
+
+This repository contains the reproducible code units (Quantlets) for all tables
+and figures in the paper, plus a standalone Python package (`conformal-oracle`)
+implementing the conformal recalibration audit framework for user-supplied
+probabilistic forecasters.
+
+The [`python/`](python/) directory contains the package with install instructions
+and a quickstart guide. The Quantlets below are self-contained directories with
+a `Metainfo.txt` (QuantNet standard), a Python script (`.py`), a Jupyter
+notebook (`.ipynb`), and one or more outputs (`.tex`, `.csv`, `.pdf`, `.png`).
 
 ## Quantlets
 
-| Quantlet | Description |
-|----------|-------------|
-| CO_full_evaluation | Main pipeline: 10 models x 24 assets, Tables 1-8, Figures 1-5 |
-| CO_baseline_comparison | Conformal vs 4 recalibration alternatives (Table 11) |
-| CO_gbm_qr | Gradient-boosted quantile regression baseline (LightGBM), Table 12 |
-| CO_simulation_study | Monte Carlo: 5 DGPs x 500 reps (Section 5.7) |
-| CO_coverage | Coverage recovery comparison (Figure 3) |
-| CO_cross_sectional | Cross-sectional q_V vs asset characteristics |
-| CO_cross_model | Cross-model threshold comparison (Figure 2) |
-| CO_frontier | Coverage-efficiency frontier (Figure 5) |
-| CO_garch_conformal | Parametric benchmark conformal correction |
-| CO_heatmap | q_V heatmap across models and assets (Figure 6) |
-| CO_multi_quantile_panel | Multi-quantile panel evaluation (Table 5) |
-| CO_pipeline | Forecasting pipeline diagram |
-| CO_quantile_scores | Quantile Score evaluation and DM tests (Table 7) |
-| CO_raw_traffic_light | Basel traffic light matrix (Table 3) |
-| CO_rolling_qV | Rolling q_V stability analysis (Figure 7) |
-| CO_score_comparison | One-sided vs two-sided score comparison |
-| CO_sharpness_penalty | Calibration-efficiency trade-off |
-| CO_sign_diagnostic | q_V sign diagnostic heatmap |
-| CFP_ES_Correction_Z2 | Heuristic ES correction and Z2 backtest (Table C.1) |
-| CFP_Capital_Charge | Cumulative capital charge comparison (Section 6) |
-| CFP_Calibration_Efficiency_Frontier | Two-panel calibration-efficiency frontier (Figure 3) |
+| Quantlet | Output | Description |
+|----------|--------|-------------|
+| CO_data_returns | data | Download 24 asset return series from Yahoo Finance |
+| CO_asset_overview | Table 1 | Asset universe (24 assets, 5 classes) |
+| CO_model_overview | Table 2 | Model overview (6 TSFMs + 4 benchmarks) |
+| CO_cross_sectional | Table 3 | Cross-sectional correlations of q_V |
+| CO_full_evaluation | Table 4 | Master results: violation rates, Kupiec, Basel, QS |
+| CO_qV_ranking | Figure | q_V ranking bar chart |
+| CO_multi_quantile_panel | Tables 5-7 | Multi-quantile evaluation, panel-pooled, panel by class |
+| CO_quantile_scores | Table 8 | Diebold-Mariano p-values (HLN correction) |
+| CO_garch_conformal | Table 9 | Rolling vs static conformal correction |
+| CO_bound_validation | Table 11 | Coverage bound evaluation (Theorem 3.5) |
+| CO_gbm_qr | prerequisite | GBM-QR baseline (LightGBM) |
+| CO_gamlss | prerequisite | GAMLSS-SST baseline |
+| CO_baselines_evt_fhs | prerequisite | EVT-POT + FHS baselines |
+| CO_baseline_comparison | Table 12 | Composite recalibration method comparison |
+| CO_baseline_comparison_tuned | Table E.1 | Tuned GBM-QR comparison |
+| CO_fz_scores | Table 13 | Fissler-Ziegel joint VaR-ES scores |
+| CFP_ES_Correction_Z2 | Table C.14 | ES correction + Acerbi-Szekely Z2 backtest |
+| CO_robustness | Tables D.15-D.18 | WCP, calibration fraction, MC robustness |
+| CO_robustness_inner7 | Table E.2 | Extended tail closure (inner 7 assets) |
+| CO_regime_sensitivity | Table E.5 | Regime-conditional sensitivity analysis |
+| CO_panel_wildcluster | Table E.3 | Wild cluster bootstrap panel inference |
+| CO_diagnostic_regression | Table E.4 | Diagnostic regression analysis |
+| CO_rolling_qV | Figure 1 | Rolling q_V on S&P 500 + realised volatility |
+| CO_heatmap | Figure 2 | Basel Traffic Light heatmap (10 x 24) |
+| CFP_Calibration_Efficiency_Frontier | Figure 3 | Calibration-efficiency frontier |
+| CO_violation_rates | Figure 4 | Raw vs corrected violation rates |
+| CO_simulation_study | Table 10 + Figure 5 | Monte Carlo q_V distribution (5 DGPs, 500 reps) |
+| CO_covid_response_lag | Figure 6 | COVID-19 response lag |
+| CO_drift_diagnostic | Figure 7 | Distributional drift diagnostic (TV distance) |
+| CFP_Capital_Charge | Figure 8 | Cumulative capital charge comparison |
 
 ## Data
 
 All return series sourced from Yahoo Finance (24 assets, 2000-2026).
+TSFM quantile forecasts produced by the upstream pipeline in the
+[main repository](https://github.com/danpele/Conformal_Oracle).
 Pinned TSFM checkpoints listed in Table 2 of the paper.
+
+## Running individual Quantlets
+
+Each Quantlet can be run standalone from the repository root:
+
+```bash
+# Run the Python script directly
+python CO_full_evaluation/run_master_table.py
+
+# Or open the Jupyter notebook for interactive exploration
+jupyter notebook CO_full_evaluation/CO_full_evaluation.ipynb
+```
+
+## Quantlet structure
+
+Each directory follows the QuantNet standard:
+
+```
+CO_full_evaluation/
+├── Metainfo.txt                    # QuantNet metadata (name, keywords, description)
+├── run_master_table.py             # Standalone Python script
+├── CO_full_evaluation.ipynb        # Jupyter notebook (same logic, interactive)
+└── tab_master_results.tex          # Output (table or figure)
+```
 
 ## Requirements
 
@@ -44,11 +89,11 @@ gluonts, arch, statsmodels, scipy, pandas, numpy, lightgbm
 
 ```bibtex
 @article{pele2026conformal,
-  title={Distribution-Free Recalibration of Tail Quantile
-         Forecasts under Temporal Dependence},
-  author={Pele, Daniel Traian and Bolovăneanu, Vlad and Ginavar, Andrei Theodor and Lessmann, Stefan
-          and H{\"a}rdle, Wolfgang Karl},
-  journal={Working Paper},
+  title={Recalibrating Tail Event Forecasts
+         under Temporal Dependence},
+  author={Pele, Daniel Traian and Bolov{\u{a}}neanu, Vlad and Ginavar, Andrei Theodor
+          and Lessmann, Stefan and H{\"a}rdle, Wolfgang Karl},
+  journal={International Journal of Forecasting},
   year={2026}
 }
 ```

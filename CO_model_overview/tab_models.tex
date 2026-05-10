@@ -1,0 +1,52 @@
+\par\smallskip
+\textit{Panel~A: Time Series Foundation Models}
+\smallskip
+
+\begin{tabular}{@{}llrlll@{}}
+\hline\hline
+Model & Architecture & Parameters & Distribution & Forecast output & Context \\
+\hline
+Chronos-Small & Tokenisation & 46M
+& Categorical & 1{,}000 samples
+& 512 obs. \\
+Chronos-Mini & Tokenisation & 20M
+& Categorical & 1{,}000 samples
+& 512 obs. \\
+TimesFM 2.5 & Decoder-only & 200M
+& Quantile & Quantile grid
+& 512 obs. \\
+Moirai 1.1 & Masked encoder & 11.4M
+& Mixture & 1{,}000 samples
+& 512 obs. \\
+Moirai 2.0 & Masked encoder & 11.4M
+& Mixture & Quantile grid
+& 512 obs. \\
+Lag-Llama & LLaMA-inspired & 7.5M
+& Student-$t$ & 1{,}000 samples
+& 512 obs. \\
+\hline\hline
+\end{tabular}
+
+\bigskip
+\textit{Panel~B: Classical Benchmarks}
+\smallskip
+
+\begin{tabular}{@{}lllll@{}}
+\hline\hline
+Model & Type & Innovation dist.\
+& Est.\ parameters & Est.\ window \\
+\hline
+GJR-GARCH(1,1) & Parametric & Skewed-$t$
+& $\omega,\alpha_1,\beta_1,\gamma,\nu,\xi$
+& 250 obs. \\
+GARCH(1,1)-N & Parametric & Normal
+& $\omega,\alpha_1,\beta_1$
+& 250 obs. \\
+EWMA & Parametric & Normal
+& $\lambda = 0.94$
+& Recursive \\
+Hist.\ Sim. & Non-parametric & Empirical
+& 
+& 250 obs. \\
+\hline\hline
+\end{tabular}

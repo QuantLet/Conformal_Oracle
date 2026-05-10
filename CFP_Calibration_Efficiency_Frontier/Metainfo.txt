@@ -1,25 +1,17 @@
 Name of Quantlet: CFP_Calibration_Efficiency_Frontier
 
-Published in: 'Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence'
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
 
-Description: Generates the two-panel calibration-efficiency frontier (Figure 3)
-             showing the trade-off between empirical coverage and VaR width for
-             four representative forecasters (Chronos-Small, TimesFM 2.5, Lag-Llama,
-             GJR-GARCH) before and after conformal correction. Panel (a) shows the
-             zoomed view near the 99% target; panel (b) shows the full scale
-             including Chronos-Small at raw coverage ~61%.
+Description: Calibration-efficiency frontier showing raw-to-corrected trajectory for four representative forecasters on the coverage-width plane at alpha = 0.01 (Figure 3). Hollow markers indicate raw forecasts, filled markers indicate corrected, with arrows showing the conformal correction path.
 
-Keywords: calibration efficiency, VaR width, coverage, conformal prediction, frontier, time series foundation models
+Keywords: calibration efficiency, VaR width, coverage, conformal prediction, frontier, TSFM
 
-See also:
-- CO_full_evaluation
+See also: CO_full_evaluation, CO_violation_rates
 
-Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+Author: Daniel Traian Pele
 
-Submitted: 2026-04-09
+Submitted: 2026-04-25
 
-Input: cfp_ijf_data/paper_outputs/tables/all_results.csv
+Datafile: cfp_ijf_data/paper_outputs/tables/all_results.csv
 
-Output: calibration_efficiency_frontier_v2.pdf, calibration_efficiency_frontier_v2.png
-
-Example: Chronos-Small moves from raw coverage 61.2% (width 0.003) to corrected coverage 98.9% (width 0.041), while TimesFM requires only a modest shift from 98.6% to 99.0%.
+Output: fig_frontier_killer.pdf, fig_frontier_killer.png

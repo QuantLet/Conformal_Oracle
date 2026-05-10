@@ -24,7 +24,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # ── Configuration ─────────────────────────────────────────────────────────
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 DATA = REPO_ROOT / 'cfp_ijf_data'
 FIG  = Path(__file__).resolve().parent
 FIG.mkdir(exist_ok=True)
@@ -156,12 +156,13 @@ print(f"Over the {N_test}-day test window, the cumulative capital saving from "
 # ── Generate figure ───────────────────────────────────────────────────────
 fig, ax = plt.subplots(figsize=(10, 5))
 
-ax.plot(dates_common, cumul_yellow_ll, color='#A32D2D', ls='--', lw=1.5,
+ax.plot(dates_common, cumul_yellow_ll, color='#CD0000', ls='--', lw=2.0,
         label=f'Lag-Llama Yellow ($k={K_YELLOW}$)')
-ax.plot(dates_common, cumul_green_ll, color='#185FA5', ls='-', lw=1.5,
+ax.plot(dates_common, cumul_green_ll, color='#1A3A6E', ls='-', lw=2.0,
         label=f'Lag-Llama Green ($k={K_GREEN}$)')
-ax.plot(dates_common, cumul_green_gj, color='#0F6E56', ls='-', lw=1.5,
+ax.plot(dates_common, cumul_green_gj, color='#E07B00', ls='-.', lw=2.0,
         label=f'GJR-GARCH Green ($k={K_GREEN}$)')
+# Note: Lag-Llama and GJR-GARCH are already standard display names
 
 # COVID shading
 covid_start = pd.Timestamp('2020-02-01')
@@ -171,7 +172,20 @@ ax.axvspan(covid_start, covid_end, alpha=0.15, color='grey',
 
 ax.set_xlabel('Date')
 ax.set_ylabel('Cumulative capital charge')
-ax.set_title('Cumulative Capital Charge: S\\&P 500', fontsize=12)
+
+period_start = dates_common[0].strftime('%Y')
+period_end = dates_common[-1].strftime('%Y')
+ax.set_title(f'Cumulative Capital Charge: S&P 500 ({period_start}\u2013{period_end}, {N_test} trading days)',
+             fontsize=12)
+
+# Annotate the saving
+mid_idx = N_test // 2
+gap = cumul_yellow_ll[mid_idx] - cumul_green_ll[mid_idx]
+mid_y = (cumul_yellow_ll[mid_idx] + cumul_green_ll[mid_idx]) / 2
+ax.annotate(f'{saving_pct:.1f}% saving\n(Yellow → Green)',
+            xy=(dates_common[mid_idx], mid_y),
+            fontsize=9, color='#A32D2D', ha='left',
+            bbox=dict(boxstyle='round,pad=0.3', fc='white', ec='#A32D2D', alpha=0.85))
 
 ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12),
           ncol=2, fontsize=9, frameon=False)
@@ -182,5 +196,9 @@ ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 plt.tight_layout()
 fig.savefig(FIG / 'capital_charge_cumulative.pdf', dpi=300, bbox_inches='tight')
 fig.savefig(FIG / 'capital_charge_cumulative.png', dpi=150, bbox_inches='tight')
+SHARED_FIG = REPO_ROOT / 'figures'
+SHARED_FIG.mkdir(exist_ok=True)
+fig.savefig(SHARED_FIG / 'capital_charge_cumulative.pdf', dpi=300, bbox_inches='tight')
+fig.savefig(SHARED_FIG / 'capital_charge_cumulative.png', dpi=150, bbox_inches='tight')
 print(f"\nSaved: {FIG / 'capital_charge_cumulative.pdf'}")
-print(f"Saved: {FIG / 'capital_charge_cumulative.png'}")
+print(f"Saved: {SHARED_FIG / 'capital_charge_cumulative.pdf'}")

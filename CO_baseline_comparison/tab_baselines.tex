@@ -1,17 +1,62 @@
 \begin{table}[H]
-\centering
-\caption{Recalibration method comparison (mean across 24 assets and 9 forecasters, $\alpha = 0.01$)}
-\label{tab:baselines}
-\begin{tabular}{lcccccc}
-\toprule
-Method & $\hat{\pi}$ & Kupiec Rej. & Green~\% & QS & VaR Width & $N$ \\
-\midrule
-Raw & 0.1028 & 160 & 36.6\% & 0.001289 & 0.0273 & 216 \\
-Conformal & 0.0106 & 60 & 86.6\% & 0.000524 & 0.0388 & 216 \\
-Scale & 0.0552 & 90 & 68.1\% & 0.000869 & 0.0323 & 216 \\
-Hist-Quantile & 0.0103 & 99 & 81.0\% & 0.000589 & 0.0414 & 216 \\
-QR-Residual & 0.0114 & 65 & 82.4\% & 0.000531 & 0.0377 & 216 \\
-Isotonic & 0.0172 & 120 & 53.7\% & 0.000537 & 0.0341 & 216 \\
-\bottomrule
-\end{tabular}
+	\centering
+	\caption{Recalibration method comparison (mean
+		across 24 assets, $\alpha = 0.01$). Conformal
+		methods are evaluated on all 10 forecasters
+		(240 model--asset pairs); alternative post-hoc
+		methods on the original 9-forecaster subset
+		(216 pairs). Dedicated VaR models are
+		evaluated per-asset (24 denominators).
+		Method definitions in
+		Section~\ref{sec:alternatives}. QS: Quantile
+		Score, lower is better.}
+	\label{tab:baselines}
+	\footnotesize
+	\begin{tabular}{@{}lrrrrr@{}}
+		\hline\hline
+		Method & $\hat\pi$ & Kupiec rej.
+		& QS ($\times 10^{4}$)
+		& Width & Green\,\% \\
+		\hline
+		Raw (no correction)
+		& .289 & 199/240 & 74.99 & .028 & 26.2 \\
+		Conformal static (ours)
+		& .011 & 100/240 &  6.07 & .044 & 84.6 \\
+		Conformal rolling $w{=}250$ (ours)
+		& .010 &  13/240 &  5.63 & .044 & 97.5 \\
+		Scale correction
+		& .264 & 215/216 & 28.51 & .023 & 11.6 \\
+		Historical quantile
+		& .010 &  99/216 &  5.89 & .041 & 81.0 \\
+		QR on residuals
+		& .012 &  68/216 &  5.29 & .038 & 81.5 \\
+		ACI \citep{gibbs2021adaptive}
+		& .013 &   6/216 &  5.37 & .040 & 96.3 \\
+		Isotonic regression
+		& .267 &     --- &   --- &  --- & 11.1 \\
+		GBM-QR
+		& .018 & 128/216 &  5.48 & .033 & 48.6 \\
+		GAMLSS-SST
+		& .010 &  91/216 &  5.38 & .043 & 88.0 \\
+		\hline
+		\multicolumn{6}{@{}l}{\textit{Dedicated VaR
+				models (per-asset, not post-hoc
+				calibration)}} \\[2pt]
+		EVT-POT
+		& .014 & 14/24 & 5.5 & .036 & 75.0 \\
+		Filtered Hist.\ Sim.
+		& .016 & 11/24 & 5.6 & .036 & 54.2 \\
+		\hline\hline
+	\end{tabular}
+	\begin{minipage}{\linewidth}\scriptsize
+		\smallskip
+		Isotonic regression: Kupiec, QS, and Width are
+		not reported because step-function estimates at
+		the 1\% tail are unstable or undefined for most
+		model--asset pairs
+		(Section~\ref{sec:alternatives}). The
+		GARCH(1,1) pre-filtering required by EVT-POT
+		and Filtered Hist.\ Sim.\ fell back to EWMA
+		($\lambda = 0.94$) on roughly 70\% of windows.
+	\end{minipage}
 \end{table}

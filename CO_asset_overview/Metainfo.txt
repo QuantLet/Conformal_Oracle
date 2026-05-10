@@ -1,0 +1,17 @@
+Name of Quantlet: CO_asset_overview
+
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
+
+Description: Asset universe table (Table 1). Lists all 24 assets grouped by class (equity indices, bonds, commodities, cryptocurrencies, foreign exchange) with symbol, name, class, sample size, and date range.
+
+Keywords: asset universe, financial data, equity, bonds, commodities, crypto, FX
+
+See also: CO_full_evaluation, CO_model_overview
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-04-25
+
+Datafile: cfp_ijf_data/paper_outputs/tables/assets.csv
+
+Output: tab_assets.tex

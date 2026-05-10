@@ -1,15 +1,17 @@
-Name of QuantLet: CO_multi_quantile_panel
+Name of Quantlet: CO_multi_quantile_panel
 
 Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
 
-Description: Multi-quantile conformal correction at alpha in {0.01, 0.05, 0.10}, panel-level pooled backtest with cluster-robust inference, and Quantile Score (pinball loss) evaluation for LLM and GARCH benchmarks.
+Description: Three pooled-analysis tables. Table 5: multi-quantile evaluation at alpha in {0.01, 0.025, 0.05, 0.10}. Table 6: panel-pooled backtest with Driscoll-Kraay HAC standard errors. Table 7: backtest by asset class (equity, bond, commodity, crypto, FX).
 
-Keywords: conformal prediction, Value-at-Risk, quantile score, pinball loss, panel backtest, multi-quantile, LLM, GARCH
+Keywords: conformal prediction, VaR, multi-quantile, Kupiec test, panel backtest, HAC, Driscoll-Kraay, asset class, Basel traffic light
+
+See also: CO_full_evaluation
 
 Author: Daniel Traian Pele
 
-Submitted: 2026-03-19
+Submitted: 2026-04-25
 
-Datafile: conformal_backtest_results.csv, multi_quantile_panel_results.csv
+Datafile: cfp_ijf_data/paper_outputs/tables/all_results.csv, cfp_ijf_data/paper_outputs/tables/panel_pooled.csv
 
-Output: LaTeX tables for multi-quantile, panel pooled, and pinball loss evaluations
+Output: tab_multiquantile.tex, tab_panel_pooled.tex, tab_panel_by_class.tex

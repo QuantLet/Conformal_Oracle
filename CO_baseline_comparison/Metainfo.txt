@@ -2,12 +2,16 @@ Name of Quantlet: CO_baseline_comparison
 
 Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
 
-Description: Compares conformal recalibration against four alternative post-hoc correction methods — scale correction, historical quantile, quantile regression, and isotonic regression. Produces Table 11.
+Description: Recalibration method comparison (Table 12). Assembles the 12-row composite table from six data sources covering conformal static, conformal rolling, scale correction, historical quantile, QR on residuals, ACI, isotonic regression, GBM-QR, GAMLSS-SST, EVT-POT, and filtered historical simulation.
 
-Keywords: recalibration, isotonic regression, quantile regression, baseline comparison, Quantile Score
+Keywords: recalibration, baseline comparison, quantile score, ACI, GBM-QR, GAMLSS, EVT, filtered historical simulation
+
+See also: CO_gbm_qr, CO_gamlss, CO_baselines_evt_fhs
 
 Author: Daniel Traian Pele
 
-Datafile: CO_baseline_comparison.ipynb
+Submitted: 2026-04-25
 
-Output: tab_baseline_comparison.tex, fig_baseline_qs.pdf
+Datafile: cfp_ijf_data/paper_outputs/tables/baseline_comparison.csv, CO_gbm_qr/gbm_qr_results.csv, CO_gamlss/gamlss_results.csv, CO_baselines_evt_fhs/baselines_evt_fhs_summary.csv
+
+Output: tab_baselines.tex

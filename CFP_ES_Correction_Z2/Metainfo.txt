@@ -1,24 +1,17 @@
 Name of Quantlet: CFP_ES_Correction_Z2
 
-Published in: 'Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence'
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
 
-Description: Computes the heuristic Expected Shortfall correction from Appendix C
-             and evaluates the Acerbi-Szekely Z2 backtest statistic before and after
-             correction across 9 forecasters and 24 financial assets.
-             Implements Definition C.2 (conformal ES correction) and reports Table C.1.
+Description: Heuristic Expected Shortfall correction and Acerbi-Szekely Z2 backtest (Table C.14). Implements Definition C.2 (conformal ES correction) and evaluates the Z2 statistic before and after correction across 9 forecasters and 24 financial assets.
 
-Keywords: conformal prediction, Expected Shortfall, Z2 backtest, Acerbi-Szekely, VaR, ES correction, tail risk
+Keywords: conformal prediction, expected shortfall, Z2 backtest, Acerbi-Szekely, VaR, ES correction, tail risk
 
-See also:
-- CO_full_evaluation
-- CFP_Capital_Charge
+See also: CO_full_evaluation, CFP_Capital_Charge
 
-Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+Author: Daniel Traian Pele
 
-Submitted: 2026-04-09
+Submitted: 2026-04-25
 
-Input: cfp_ijf_data/returns/*.csv, cfp_ijf_data/{chronos_small,chronos_mini,timesfm25,moirai2,lagllama}/*.parquet, cfp_ijf_data/benchmarks/*.parquet
+Datafile: cfp_ijf_data/returns/*.csv, cfp_ijf_data/{model}/*.parquet, cfp_ijf_data/benchmarks/*.parquet
 
-Output: table_c1_es_correction.csv, LaTeX table block (Table C.1)
-
-Example: Z2 drops from +131 (raw) to +11 (corrected) for Chronos-Small, confirming the heuristic ES correction absorbs the bulk of excess tail violations.
+Output: tab_es_correction.tex, table_c1_es_correction.csv

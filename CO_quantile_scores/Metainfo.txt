@@ -2,12 +2,16 @@ Name of Quantlet: CO_quantile_scores
 
 Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
 
-Description: 'Quantile Score (pinball loss) evaluation across 9 forecasters and 24 assets at alpha in {0.01, 0.025, 0.05, 0.10}; Diebold-Mariano pairwise tests.'
+Description: Diebold-Mariano test p-values for pairwise quantile score comparisons (Table 8). Reports 4 parametric vs 5 TSFM p-values under Driscoll-Kraay panel HAC with Harvey-Leybourne-Newbold small-sample correction, pooled across 24 assets at alpha = 0.01.
 
-Keywords: conformal prediction, VaR, calibration, time series foundation models
+Keywords: conformal prediction, VaR, Diebold-Mariano, quantile score, HLN correction, forecast comparison, Driscoll-Kraay, panel HAC
 
-See also: CO_full_evaluation, CO_score_comparison
+See also: CO_full_evaluation, CO_multi_quantile_panel
 
-Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+Author: Daniel Traian Pele
 
-Submitted: Daniel Traian Pele
+Submitted: 2026-04-25
+
+Datafile: cfp_ijf_data/paper_outputs/qs_sequences/*.parquet
+
+Output: tab_dm_pvalues.tex, tab_dm_pvalues.csv

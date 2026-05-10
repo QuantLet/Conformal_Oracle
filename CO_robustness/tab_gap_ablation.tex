@@ -1,0 +1,22 @@
+\begin{table}[htbp]
+\centering
+\caption{Gap-parameter ablation: corrected violation rate
+    $\hat\pi$ under adjacent splits ($g_n = 0$) versus a
+    theoretically compliant gap ($g_n = \lceil c \log n \rceil$,
+    $c = 1/|\!\log\hat\rho|$). Four representative
+    model--asset pairs spanning all classification regimes.}
+\label{tab:gap_ablation}
+\footnotesize
+\begin{tabular}{@{}ll rr cc c@{}}
+\hline\hline
+Model & Asset & $\hat\rho$ & $g_n$
+& $\hat\pi_{g=0}$ & $\hat\pi_{g>0}$
+& $|\Delta\hat\pi|$ \\
+\hline
+Chronos-Small & SP500 & -0.15 & 8 & 0.014 & 0.014 & 0.000 \\
+Lag-Llama & BTC & +0.05 & 5 & 0.004 & 0.004 & 0.000 \\
+GJR-GARCH & WTI & +0.64 & 19 & 0.011 & 0.010 & 0.002 \\
+Moirai 2.0 & NATGAS & +0.25 & 6 & 0.076 & 0.076 & 0.000 \\
+\hline\hline
+\end{tabular}
+\end{table}

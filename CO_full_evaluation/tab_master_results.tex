@@ -1,0 +1,50 @@
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l rr rr r rr rrr r@{}}
+\hline\hline
+& \multicolumn{2}{c}{$\hat\pi$}
+& \multicolumn{2}{c}{Kupiec pass}
+& CC pass
+& \multicolumn{2}{c}{QS} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+\cmidrule(lr){7-8}
+Model & Raw & Corr. & Raw & Corr.
+& Corr.
+& Raw & Corr. & Width & W/GJR & Green & $\bar{R}$ \\
+\hline
+\multicolumn{12}{@{}l}{\textit{Panel~A: Signal-preserving recalibration}
+	($|\qVstat|/|\VaR_{\mathrm{raw}}| < 1$)} \\[2pt]
+Moirai 1.1 & .015 & .011 & 13/24 & 15/24
+& 24/24
+& 5.4 & 5.3 & .039 & 1.00 & 21/24 & 0.11 \\
+Lag-Llama & .029 & .009 & 0/24 & 22/24
+& 24/24
+& 5.9 & 5.2 & .041 & 1.05 & 24/24 & 0.36 \\
+GJR-GARCH & .004 & .011 & 7/24 & 16/24
+& 20/24
+& 5.0 & 4.9 & .039 & 1.00 & 19/24 & 0.16 \\
+GARCH-N & .019 & .010 & 8/24 & 18/24
+& 18/24
+& 4.9 & 4.7 & .036 & 0.93 & 21/24 & 0.17 \\
+Hist.\ Sim. & .016 & .011 & 11/24 & 21/24
+& 14/24
+& 5.7 & 5.6 & .039 & 1.00 & 22/24 & 0.11 \\
+EWMA & .021 & .011 & 5/24 & 16/24
+& 21/24
+& 5.1 & 4.9 & .037 & 0.93 & 20/24 & 0.18 \\
+\hline
+\multicolumn{12}{@{}l}{\textit{Panel~B: Effective replacement}
+	($|\qVstat|/|\VaR_{\mathrm{raw}}| > 1$)} \\[2pt]
+Chronos-Small & .388 & .011 & 0/24 & 14/24
+& 15/24
+& 37.9 & 5.8 & .040 & 1.03 & 19/24 & 17.3 \\
+Chronos-Mini & .419 & .010 & 0/24 & 11/24
+& 16/24
+& 41.1 & 5.7 & .041 & 1.04 & 19/24 & 23.5 \\
+TimesFM 2.5 & .990 & .013 & 0/24 & 3/24
+& 10/24
+& 334.0 & 9.5 & .069 & 1.75 & 19/24 & 3.2 \\
+Moirai 2.0 & .988 & .015 & 0/24 & 4/24
+& 7/24
+& 304.9 & 9.1 & .063 & 1.60 & 19/24 & 3.2 \\
+\hline\hline
+\end{tabular}
