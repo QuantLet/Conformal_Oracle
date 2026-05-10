@@ -4,10 +4,15 @@
 
 Pele, D.T., Bolovăneanu, V., Ginavar, A.T., Lessmann, S., Härdle, W.K. (2026)
 
-Reproducible code units (Quantlets) for all tables and figures.
-Each Quantlet is a self-contained directory with a `Metainfo.txt` (QuantNet standard),
-a Python script (`.py`), a Jupyter notebook (`.ipynb`), and one or more outputs
-(`.tex`, `.csv`, `.pdf`, `.png`).
+This repository contains the reproducible code units (Quantlets) for all tables
+and figures in the paper, plus a standalone Python package (`conformal-oracle`)
+implementing the conformal recalibration audit framework for user-supplied
+probabilistic forecasters.
+
+The [`python/`](python/) directory contains the package with install instructions
+and a quickstart guide. The Quantlets below are self-contained directories with
+a `Metainfo.txt` (QuantNet standard), a Python script (`.py`), a Jupyter
+notebook (`.ipynb`), and one or more outputs (`.tex`, `.csv`, `.pdf`, `.png`).
 
 ## Quantlets
 

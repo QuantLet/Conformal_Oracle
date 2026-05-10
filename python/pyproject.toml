@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "conformal-oracle"
+version = "0.1.0"
+description = "Conformal recalibration audit for tail quantile forecasters"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Daniel Traian Pele", email = "danpele@ase.ro" },
+]
+keywords = ["conformal prediction", "VaR", "risk management", "backtesting"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.10",
+    "statsmodels>=0.14",
+    "arch>=6.0",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1",
+    "mypy>=1.5",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--tb=short -q"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.mypy]
+# v0.1: non-strict. Strict mode has 16 kwargs-forwarding errors — fix in v0.2.
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
