@@ -1,13 +1,17 @@
 Name of Quantlet: CO_rolling_qV
 
-Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
 
-Description: Rolling qV stability across volatility regimes
+Description: Rolling 250-day conformal threshold q_hat_V for four representative forecasters on S&P 500 with realised volatility overlay (Figure 1).
 
-Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+Keywords: conformal prediction, VaR, rolling window, volatility regimes, TSFM, GARCH
+
+See also: CO_garch_conformal, CO_covid_response_lag
 
 Author: Daniel Traian Pele
 
-Datafile: run_conformal_analysis.py
+Submitted: 2026-04-25
 
-Output: fig7_rolling_qV_stability.pdf
+Datafile: cfp_ijf_data/paper_outputs/tables/rolling_qv_SP500.csv
+
+Output: fig_rolling_qv.pdf, fig_rolling_qv.png

@@ -1,0 +1,71 @@
+\begin{table}[htbp]
+\centering
+\scriptsize
+\caption{Block-bootstrap 95\% confidence intervals for the conformal
+threshold $\qVstat$ across six representative assets and seven
+forecasters. Stationary block bootstrap
+\citep{politis1994stationary}, $B = 1{,}000$ replications,
+expected block length $\ell = 50$. Replacement regime:
+$R = |\qVstat|/|\widehat{\VaR}_{\mathrm{raw}}| > 1$.}
+\label{tab:qV_bootstrap_ci}
+\begin{tabular}{@{}ll rrrr l@{}}
+\hline\hline
+Asset & Model & $\qVstat$ & 95\% CI & SE & $R$
+& Repl.\ \\
+\hline
+\multicolumn{7}{@{}l}{\textit{SP500}} \\[2pt]
+& Chronos-Small  & .031 & $[.024,\;.042]$ & .005 & 21.5 & Yes \\
+& TimesFM~2.5    & .110 & $[.068,\;.139]$ & .022 &  4.3 & Yes \\
+& Moirai~2.0     & .095 & $[.063,\;.122]$ & .018 &  3.9 & Yes \\
+& Moirai~1.1     & .004 & $[.001,\;.006]$ & .001 &  0.1 & No  \\
+& Lag-Llama      & .008 & $[.005,\;.013]$ & .002 &  0.3 & No  \\
+& GJR-GARCH     & $-.005$ & $[-.006,\;-.004]$ & .001 & 0.1 & No \\
+& GARCH-N        & .005 & $[.003,\;.006]$ & .001 &  0.2 & No  \\
+\hline
+\multicolumn{7}{@{}l}{\textit{BTC}} \\[2pt]
+& Chronos-Small  & .108 & $[.098,\;.122]$ & .005 & 18.7 & Yes \\
+& TimesFM~2.5    & .256 & $[.220,\;.281]$ & .017 &  3.6 & Yes \\
+& Moirai~2.0     & .222 & $[.195,\;.250]$ & .014 &  3.8 & Yes \\
+& Moirai~1.1     & .023 & $[.011,\;.036]$ & .006 &  0.3 & No  \\
+& Lag-Llama      & .037 & $[.021,\;.046]$ & .006 &  0.6 & No  \\
+& GJR-GARCH     & $-.003$ & $[-.018,\;.002]$ & .005 & 0.0 & No \\
+& GARCH-N        & .026 & $[.015,\;.040]$ & .006 &  0.5 & No  \\
+\hline
+\multicolumn{7}{@{}l}{\textit{GOLD}} \\[2pt]
+& Chronos-Small  & .031 & $[.027,\;.034]$ & .002 & 26.6 & Yes \\
+& TimesFM~2.5    & .074 & $[.062,\;.082]$ & .005 &  3.0 & Yes \\
+& Moirai~2.0     & .071 & $[.060,\;.078]$ & .005 &  3.2 & Yes \\
+& Moirai~1.1     & .004 & $[.002,\;.006]$ & .001 &  0.1 & No  \\
+& Lag-Llama      & .010 & $[.007,\;.013]$ & .002 &  0.4 & No  \\
+& GJR-GARCH     & $-.004$ & $[-.006,\;-.002]$ & .001 & 0.1 & No \\
+& GARCH-N        & .006 & $[.003,\;.008]$ & .001 &  0.2 & No  \\
+\hline
+\multicolumn{7}{@{}l}{\textit{EURUSD}} \\[2pt]
+& Chronos-Small  & .015 & $[.013,\;.019]$ & .002 & 14.1 & Yes \\
+& TimesFM~2.5    & .046 & $[.035,\;.052]$ & .005 &  4.2 & Yes \\
+& Moirai~2.0     & .048 & $[.036,\;.066]$ & .008 &  4.3 & Yes \\
+& Moirai~1.1     & .000 & $[-.001,\;.002]$ & .001 &  0.0 & No  \\
+& Lag-Llama      & .003 & $[.001,\;.005]$ & .001 &  0.3 & No  \\
+& GJR-GARCH     & $-.004$ & $[-.004,\;-.003]$ & .001 & 0.2 & No \\
+& GARCH-N        & .001 & $[.000,\;.002]$ & .001 &  0.1 & No  \\
+\hline
+\multicolumn{7}{@{}l}{\textit{WTI}} \\[2pt]
+& Chronos-Small  & .055 & $[.046,\;.069]$ & .006 & 16.2 & Yes \\
+& TimesFM~2.5    & .185 & $[.128,\;.207]$ & .023 &  3.0 & Yes \\
+& Moirai~2.0     & .182 & $[.122,\;.222]$ & .028 &  3.3 & Yes \\
+& Moirai~1.1     & .001 & $[-.003,\;.008]$ & .002 &  0.0 & No  \\
+& Lag-Llama      & .017 & $[.008,\;.024]$ & .004 &  0.3 & No  \\
+& GJR-GARCH     & $-.011$ & $[-.015,\;-.006]$ & .003 & 0.1 & No \\
+& GARCH-N        & .005 & $[.002,\;.009]$ & .001 &  0.1 & No  \\
+\hline
+\multicolumn{7}{@{}l}{\textit{NATGAS}} \\[2pt]
+& Chronos-Small  & .071 & $[.064,\;.082]$ & .005 &  6.6 & Yes \\
+& TimesFM~2.5    & .186 & $[.173,\;.198]$ & .006 &  1.7 & Yes \\
+& Moirai~2.0     & .176 & $[.166,\;.185]$ & .005 &  1.8 & Yes \\
+& Moirai~1.1     & .001 & $[-.002,\;.007]$ & .002 &  0.0 & No  \\
+& Lag-Llama      & .017 & $[.010,\;.022]$ & .004 &  0.2 & No  \\
+& GJR-GARCH     & $-.022$ & $[-.027,\;-.019]$ & .002 & 0.2 & No \\
+& GARCH-N        & .005 & $[.000,\;.008]$ & .002 &  0.0 & No  \\
+\hline\hline
+\end{tabular}
+\end{table}

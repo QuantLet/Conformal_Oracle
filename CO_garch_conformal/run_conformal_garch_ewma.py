@@ -24,22 +24,22 @@ from scipy import stats
 import warnings
 warnings.filterwarnings('ignore')
 
-BASE_DIR = "/Users/danielpele/Documents/CFP LLM VaR"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ASSETS_DIR = os.path.join(BASE_DIR, "Assets data")
 
 ALPHA_VAR = 0.01
 ALPHA_ES  = 0.025
 F_CAL     = 0.70
 
-ASSET_ORDER = ["CRIX", "SP500", "SPGTCLTR", "stoxx", "cact", "gdaxi", "cbu", "ftse", "djci"]
+ASSET_ORDER = ["CRIX", "SP500", "SPGTCLTR", "stoxx", "fchi", "gdaxi", "cbu", "ftse", "djci"]
 ASSET_LABELS = {
     "CRIX": "CRIX", "SP500": "S&P 500", "SPGTCLTR": "SPGTCLTR",
-    "stoxx": "STOXX", "cact": "CACT", "gdaxi": "GDAXI",
+    "stoxx": "STOXX", "fchi": "FCHI", "gdaxi": "GDAXI",
     "cbu": "CBU0.L", "ftse": "FTSE100", "djci": "DJCI",
 }
 ASSET_TEX = {
     "CRIX": "CRIX", "SP500": r"S\&P~500", "SPGTCLTR": "SPGTCLTR",
-    "stoxx": "STOXX", "cact": "CACT", "gdaxi": "GDAXI",
+    "stoxx": "STOXX", "fchi": "FCHI", "gdaxi": "GDAXI",
     "cbu": "CBU0.L", "ftse": "FTSE100", "djci": "DJCI",
 }
 
@@ -49,7 +49,7 @@ LPA_FOLDERS = {
     "SP500": "SP500_20240923_234055",
     "SPGTCLTR": "SPGTCLTR_20240924_000606",
     "stoxx": "stoxx_20240924_003112",
-    "cact": "cact_20240923_194011",
+    "fchi": "fchi_20240923_194011",
     "gdaxi": "gdaxi_20240923_231441",
     "cbu": "cbu_20240923_200649",
     "ftse": "ftse_20240923_224833",
@@ -58,7 +58,7 @@ LPA_FOLDERS = {
 
 ASSET_FILES = {
     "CRIX": "CRIX.xlsx", "SP500": "SP500.xlsx", "SPGTCLTR": "SPGTCLTR.xlsx",
-    "stoxx": "stoxx.xlsx", "cact": "cact.xlsx", "gdaxi": "gdaxi.xlsx",
+    "stoxx": "stoxx.xlsx", "fchi": "fchi.xlsx", "gdaxi": "gdaxi.xlsx",
     "cbu": "cbu.xlsx", "ftse": "ftse.xlsx", "djci": "djci.xlsx",
 }
 
@@ -545,7 +545,7 @@ def generate_figure(df, summary_rows, llm_results):
     }
     x_labels = [short_names.get(m, m) for m in method_names]
 
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(14, 7))
 
     x = np.arange(len(method_names))
     bars = ax.bar(x, mean_qvs, color=colors, width=0.6, edgecolor='black', linewidth=0.5)
@@ -554,13 +554,14 @@ def generate_figure(df, summary_rows, llm_results):
     for bar, val in zip(bars, mean_qvs):
         y = bar.get_height()
         ax.text(bar.get_x() + bar.get_width()/2., y + 0.0005,
-                f'{val:+.4f}', ha='center', va='bottom', fontsize=8, fontweight='bold')
+                f'{val:+.4f}', ha='center', va='bottom', fontsize=12, fontweight='bold')
 
     ax.axhline(y=0, color='black', linestyle='--', linewidth=0.8, alpha=0.5)
     ax.set_xticks(x)
-    ax.set_xticklabels(x_labels, rotation=30, ha='right', fontsize=10)
-    ax.set_ylabel(r'Mean $\hat{q}_V$ (conformal correction)', fontsize=11)
-    ax.set_title(r'Conformal Correction Magnitude Across Model Classes', fontsize=13, fontweight='bold')
+    ax.set_xticklabels(x_labels, rotation=30, ha='right', fontsize=14)
+    ax.set_ylabel(r'Mean $\hat{q}_V$ (conformal correction)', fontsize=18)
+    ax.set_title(r'Conformal Correction Magnitude Across Model Classes', fontsize=22, fontweight='bold')
+    ax.tick_params(axis='both', labelsize=14)
 
     # Legend
     from matplotlib.patches import Patch
@@ -569,7 +570,7 @@ def generate_figure(df, summary_rows, llm_results):
         Patch(facecolor='#4DAF4A', edgecolor='black', label='Semi-parametric (EWMA)'),
         Patch(facecolor='#E31A1C', edgecolor='black', label='LLM-based'),
     ]
-    ax.legend(handles=legend_elements, loc='upper left', fontsize=9)
+    ax.legend(handles=legend_elements, loc='upper left', fontsize=14)
 
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -580,7 +581,7 @@ def generate_figure(df, summary_rows, llm_results):
     # Save
     png_path = os.path.join(BASE_DIR, "fig_conformal_agnostic.png")
     pdf_path = os.path.join(BASE_DIR, "fig_conformal_agnostic.pdf")
-    fig.savefig(png_path, dpi=300, transparent=True, bbox_inches='tight')
+    fig.savefig(png_path, dpi=600, transparent=True, bbox_inches='tight')
     fig.savefig(pdf_path, transparent=True, bbox_inches='tight')
     plt.close(fig)
     print(f"Saved: {png_path}")

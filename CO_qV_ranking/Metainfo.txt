@@ -1,0 +1,15 @@
+Name of Quantlet: CO_qV_ranking
+
+Published in: 'Recalibrating Tail Event Forecasts under Temporal Dependence'
+
+Description: 'Horizontal bar chart of mean conformal correction magnitude q_V across 10 forecasters (24 assets, alpha = 0.01), color-coded by regime: replacement (red), under-covers (crimson), moderate/mild (blue), near-calibrated (green). Sorted descending by q_V. Produces Figure 5 of the paper.'
+
+Keywords: 'conformal prediction, VaR, Value-at-Risk, calibration diagnostic, q_V, bar chart, regime classification'
+
+Author: 'Daniel Traian Pele, Vlad Bolovaneanu, Andrei Theodor Ginavar, Stefan Lessmann, Wolfgang Karl Haerdle'
+
+Submitted: '20260502'
+
+Datafile: 'cfp_ijf_data/paper_outputs/tables/all_results.csv, cfp_ijf_data/paper_outputs/tables/moirai11_full_results.csv'
+
+Output: 'fig_qV_ranking.pdf, fig_qV_ranking.png'

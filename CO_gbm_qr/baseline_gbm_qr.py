@@ -23,10 +23,10 @@ from scipy.stats import chi2
 
 import lightgbm as lgb
 
-BASE = Path(__file__).resolve().parent.parent
+BASE = Path(__file__).resolve().parent.parent.parent
 DATA = BASE / 'cfp_ijf_data'
-OUT  = BASE / 'results'
-OUT.mkdir(exist_ok=True)
+OUT  = Path(__file__).resolve().parent
+
 
 ALPHA = 0.01
 F_CAL = 0.70
@@ -34,7 +34,7 @@ VAL_FRAC = 0.20        # fraction of calibration sample held out for early stopp
 EARLY_STOP_ROUNDS = 50
 NUM_BOOST = 500
 
-SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'CACT', 'FTSE100', 'ICLN',
+SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
            'NIKKEI', 'HSI', 'BOVESPA', 'NIFTY', 'ASX200', 'CBU0',
            'TLT', 'IBGL', 'DJCI', 'GOLD', 'WTI', 'NATGAS',
            'BTC', 'ETH', 'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD']

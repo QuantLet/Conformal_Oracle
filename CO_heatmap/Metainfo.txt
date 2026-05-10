@@ -1,13 +1,17 @@
 Name of Quantlet: CO_heatmap
 
-Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
 
-Description: Heatmap of conformal threshold qV across models and assets
+Description: Basel Traffic Light heatmap for 9 models across 24 assets after conformal correction at alpha = 0.01 (Figure 2). Cell labels show annual violation counts scaled to 250 trading days. Green, Yellow, and Red zones follow the Basel Committee framework.
 
-Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+Keywords: conformal prediction, VaR, Basel traffic light, heatmap, backtesting
+
+See also: CO_full_evaluation, CO_violation_rates
 
 Author: Daniel Traian Pele
 
-Datafile: run_conformal_analysis.py
+Submitted: 2026-04-25
 
-Output: fig6_heatmap_qV.pdf
+Datafile: cfp_ijf_data/paper_outputs/tables/all_results.csv
+
+Output: fig_traffic_light.pdf, fig_traffic_light.png

@@ -1,0 +1,48 @@
+\begin{table}[htbp]
+\centering
+\scriptsize
+\caption{Tail-completion robustness for TimesFM~2.5 and Moirai~2.0
+across three representative assets. The Student-$t$ closure is the
+default; Gaussian, linear, and inner-7-deciles Student-$t$ closures
+are reported as sensitivity checks. The inner-7 variant drops the
+outermost deciles ($u = 0.1, 0.9$) and refits on $u \in \{0.2,\ldots,0.8\}$.
+The replacement-regime classification ($R > 1$) is
+invariant to closure choice for both models.}
+\label{tab:tail_closure_extended}
+\begin{tabular}{@{}ll rrrr@{}}
+\hline\hline
+Model & Closure & $\qVstat$ & $\hat\pi_{\mathrm{corr}}$
+& $R$ & Basel \\
+\hline
+\multicolumn{6}{@{}l}{\textit{SP500}} \\[2pt]
+TimesFM~2.5 & Student-$t$ & .110 & .003 & 4.28 & Yellow \\
+              & Gaussian & .103 & .003 & 4.88 & Red \\
+              & Linear & .082 & .003 & 5.30 & Yellow \\
+              & Inner-7 Student-$t$ & .110 & .003 & 4.28 & Yellow \\
+Moirai~2.0 & Student-$t$ & .095 & .005 & 3.87 & Yellow \\
+              & Gaussian & .084 & .005 & 3.84 & Yellow \\
+              & Linear & .070 & .006 & 4.43 & Yellow \\
+              & Inner-7 Student-$t$ & .095 & .005 & 3.87 & Yellow \\
+\hline
+\multicolumn{6}{@{}l}{\textit{BTC}} \\[2pt]
+TimesFM~2.5 & Student-$t$ & .256 & .000 & 3.62 & Green \\
+              & Gaussian & .211 & .000 & 4.46 & Green \\
+              & Linear & .182 & .001 & 5.02 & Red \\
+              & Inner-7 Student-$t$ & .256 & .000 & 3.62 & Green \\
+Moirai~2.0 & Student-$t$ & .222 & .000 & 3.76 & Green \\
+              & Gaussian & .205 & .000 & 4.39 & Green \\
+              & Linear & .175 & .001 & 5.07 & Red \\
+              & Inner-7 Student-$t$ & .222 & .000 & 3.76 & Green \\
+\hline
+\multicolumn{6}{@{}l}{\textit{NATGAS}} \\[2pt]
+TimesFM~2.5 & Student-$t$ & .186 & .080 & 1.73 & Green \\
+              & Gaussian & .177 & .065 & 1.88 & Green \\
+              & Linear & .150 & .058 & 2.16 & Green \\
+              & Inner-7 Student-$t$ & .186 & .080 & 1.73 & Green \\
+Moirai~2.0 & Student-$t$ & .176 & .075 & 1.77 & Green \\
+              & Gaussian & .169 & .074 & 1.81 & Green \\
+              & Linear & .145 & .058 & 2.14 & Green \\
+              & Inner-7 Student-$t$ & .176 & .075 & 1.77 & Green \\
+\hline\hline
+\end{tabular}
+\end{table}

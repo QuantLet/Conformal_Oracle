@@ -2,12 +2,16 @@ Name of Quantlet: CO_simulation_study
 
 Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
 
-Description: 'Monte Carlo simulation study (500 replications, 5 DGPs) validating the conformal correction under controlled misspecification.'
+Description: Monte Carlo simulation study validating conformal correction under controlled distributional misspecification (Table 10 and Figure 5). Five DGPs (Normal, Student-t(5), Student-t(3), Hansen skewed-t, mixture Normals), 500 replications, T in {1000, 5000}. GARCH(1,1) with known parameters and Normal quantile forecaster.
 
-Keywords: conformal prediction, VaR, calibration, time series foundation models
+Keywords: conformal prediction, VaR, Monte Carlo simulation, GARCH, misspecification, skewed-t, Basel traffic light
 
-See also: Conformal_VaR_TSFM/CO_simulation_study
+See also: CO_robustness
 
-Author: Daniel Traian Pele, Stefan Lessmann, Wolfgang Karl Haerdle
+Author: Daniel Traian Pele
 
-Submitted: Daniel Traian Pele
+Submitted: 2026-04-25
+
+Datafile: run_simulation_study.py (synthetic data)
+
+Output: tab_simulation_extended.tex, fig_simulation_qV_distribution.pdf, fig_simulation_qV_distribution.png, simulation_study_results.csv

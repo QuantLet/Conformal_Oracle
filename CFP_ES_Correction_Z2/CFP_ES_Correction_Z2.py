@@ -20,7 +20,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # ── Configuration ─────────────────────────────────────────────────────────
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 DATA = REPO_ROOT / 'cfp_ijf_data'
 OUT  = Path(__file__).resolve().parent
 
@@ -28,7 +28,7 @@ ALPHA = 0.01
 F_CAL = 0.70
 Z2_THRESHOLD = -1.96  # 5% significance (one-sided)
 
-SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'CACT', 'FTSE100', 'ICLN',
+SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
            'NIKKEI', 'HSI', 'BOVESPA', 'NIFTY', 'ASX200', 'CBU0',
            'TLT', 'IBGL', 'DJCI', 'GOLD', 'WTI', 'NATGAS',
            'BTC', 'ETH', 'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD']
@@ -274,3 +274,45 @@ for model_name in MODELS:
     display = MODEL_DISPLAY[model_name]
     print(f"\t\t\t{display:20s} & {mean_raw:+.2f} & {mean_corr:+.2f} "
           f"& {int(n_raw_pass)}/{n_assets} & {int(n_corr_pass)}/{n_assets} \\\\")
+
+# ── Summary .tex (tabular-only, for \input in manuscript) ────────────────
+from decimal import Decimal, ROUND_HALF_UP
+
+def rhu(x, places):
+    fmt = '0.' + '0' * places
+    return Decimal(str(x)).quantize(Decimal(fmt), rounding=ROUND_HALF_UP)
+
+MODEL_ORDER = list(MODELS.keys())
+lines = [
+    r'\begin{tabular}{@{}l rr rr@{}}',
+    r'\toprule',
+    r'& \multicolumn{2}{c}{Mean $Z_2$}',
+    r'& \multicolumn{2}{c}{Pass ($x$/24)} \\',
+    r'\cmidrule(lr){2-3}\cmidrule(lr){4-5}',
+    r'Model & Raw & Corrected & Raw & Corrected \\',
+    r'\midrule',
+]
+
+for i, model_name in enumerate(MODEL_ORDER):
+    mdf = df_results[df_results['model'] == model_name]
+    n_assets = len(mdf)
+    mean_raw = mdf['z2_raw'].mean()
+    mean_corr = mdf['z2_corr'].mean()
+    n_raw_pass = int(mdf['raw_pass'].sum())
+    n_corr_pass = int(mdf['corr_pass'].sum())
+
+    display = MODEL_DISPLAY[model_name]
+    line = (f'{display} & $+${rhu(mean_raw, 2)} & $+${rhu(mean_corr, 2)}'
+            f' & {n_raw_pass}/{n_assets} & {n_corr_pass}/{n_assets} \\\\')
+    lines.append(line)
+    if i == 4:
+        lines.append(r'\midrule')
+
+lines.append(r'\bottomrule')
+lines.append(r'\end{tabular}')
+
+tex = '\n'.join(lines) + '\n'
+tex_path = OUT / 'tab_es_correction.tex'
+tex_path.write_text(tex)
+print(f'\nSaved {tex_path.name}')
+print(tex)

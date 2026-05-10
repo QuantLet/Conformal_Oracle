@@ -1,0 +1,17 @@
+Name of Quantlet: CO_gamlss
+
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
+
+Description: GAMLSS baseline with Fernandez-Steel skewed-t innovations for 1% VaR recalibration. Location linear in base-model quantile forecast, log-scale linear in lagged realised volatility, shape and skewness intercept-only. Produces the GAMLSS-SST row of Table 12.
+
+Keywords: GAMLSS, skewed-t, conditional density, conformal prediction, Value-at-Risk, tail sparsity, location-scale model
+
+See also: CO_baseline_comparison, CO_gbm_qr
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-04-25
+
+Datafile: cfp_ijf_data/{model}/*.parquet, cfp_ijf_data/benchmarks/*.parquet, cfp_ijf_data/returns/*.csv
+
+Output: gamlss_results.csv

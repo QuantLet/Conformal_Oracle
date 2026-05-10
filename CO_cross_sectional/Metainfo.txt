@@ -1,13 +1,17 @@
-Name of Quantlet: CO_cross_architecture
+Name of Quantlet: CO_cross_sectional
 
-Published in: Calibrating the Oracle — Distribution-Free Conformal Risk Measures for LLM-Based Financial Forecasting
+Published in: Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal Dependence
 
-Description: Cross-architecture benchmark: GPT-3.5, GPT-4, GPT-4o and planned models
+Description: Cross-sectional Pearson correlation between conformal threshold q_V and three asset characteristics (annualised volatility, excess kurtosis, tail frequency) across 24 assets for 9 models at alpha = 0.01 (Table 3). Tail frequency is the fraction of full-sample returns exceeding three standard deviations.
 
-Keywords: conformal prediction, VaR, ES, LLM, risk management, Basel traffic light
+Keywords: conformal prediction, VaR, cross-sectional, correlation, tail frequency, asset characteristics
+
+See also: CO_full_evaluation, CO_asset_overview
 
 Author: Daniel Traian Pele
 
-Datafile: run_conformal_analysis.py
+Submitted: 2026-04-25
 
-Output: tables
+Datafile: cfp_ijf_data/paper_outputs/tables/all_results.csv, cfp_ijf_data/returns/*.csv
+
+Output: tab_cross_sectional.tex
