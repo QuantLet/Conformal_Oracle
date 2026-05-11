@@ -13,8 +13,9 @@ from conformal_oracle.audit import (
     audit_static,
     audit_with_benchmarks,
 )
+from conformal_oracle.panel import audit_panel
 
-__version__ = "0.1.0"
+__version__ = "0.2.0-beta"
 
 __all__ = [
     "SampleDistribution",
@@ -26,4 +27,5 @@ __all__ = [
     "audit_static",
     "audit_rolling",
     "audit_with_benchmarks",
+    "audit_panel",
 ]
