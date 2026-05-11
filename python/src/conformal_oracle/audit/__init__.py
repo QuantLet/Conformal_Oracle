@@ -26,13 +26,20 @@ def audit(
     forecaster: Forecaster,
     alpha: float = 0.01,
     mode: Literal["static", "rolling"] = "static",
+    recalibration: object | None = None,
     **kwargs: object,
 ) -> Union[StaticAuditResult, RollingAuditResult]:
     """Convenience dispatcher for static or rolling audit."""
     if mode == "static":
-        return audit_static(returns, forecaster, alpha=alpha, **kwargs)
+        return audit_static(
+            returns, forecaster, alpha=alpha,
+            recalibration=recalibration, **kwargs,
+        )
     elif mode == "rolling":
-        return audit_rolling(returns, forecaster, alpha=alpha, **kwargs)
+        return audit_rolling(
+            returns, forecaster, alpha=alpha,
+            recalibration=recalibration, **kwargs,
+        )
     else:
         raise ValueError(f"Unknown mode: {mode!r}. Use 'static' or 'rolling'.")
 

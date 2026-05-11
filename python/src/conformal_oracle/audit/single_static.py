@@ -120,6 +120,7 @@ def audit_static(
     calibration_split: float = 0.70,
     warmup: int = 50,
     seed: int = 2026,
+    recalibration: object | None = None,
 ) -> StaticAuditResult:
     """Run the static conformal audit pipeline.
 
@@ -127,6 +128,9 @@ def audit_static(
         warmup: Minimum observations before the first valid forecast.
                 Forecasts at t < warmup are skipped during calibration
                 score computation.
+        recalibration: Optional RecalibrationMethod to use instead of
+                       the built-in conformal shift. If None (default),
+                       the conformal shift is used.
     """
     n = len(returns)
     n_cal = int(n * calibration_split)
@@ -143,6 +147,7 @@ def audit_static(
         cal_forecasts.append(forecaster.forecast(returns, t))
 
     cal_realised = cal_returns.values[warmup_start:]
+    cal_var_raw = np.array([-f.quantile(alpha) for f in cal_forecasts])
     cal_scores = np.array([
         f.quantile(alpha) - r for f, r in zip(cal_forecasts, cal_realised)
     ])
@@ -152,18 +157,21 @@ def audit_static(
 
     test_forecasts: list[PredictiveDistribution] = []
     var_raw = np.empty(n_test)
-    var_corrected = np.empty(n_test)
     es_raw = np.empty(n_test)
-    es_corrected = np.empty(n_test)
 
     for i, t in enumerate(range(n_cal, n)):
         fc = forecaster.forecast(returns, t)
         test_forecasts.append(fc)
-        q_raw = fc.quantile(alpha)
-        var_raw[i] = -q_raw
-        var_corrected[i] = -(q_raw - q_v_stat)
+        var_raw[i] = -fc.quantile(alpha)
         es_raw[i] = -fc.expected_shortfall(alpha)
-        es_corrected[i] = es_raw[i] + q_v_stat
+
+    if recalibration is not None:
+        recalibration.fit(cal_var_raw, cal_realised, alpha)
+        var_corrected = recalibration.apply(var_raw)
+    else:
+        var_corrected = var_raw + q_v_stat
+
+    es_corrected = es_raw + (var_corrected - var_raw)
 
     test_realised = test_returns.values
     viol_raw = (test_realised < -var_raw).astype(int)

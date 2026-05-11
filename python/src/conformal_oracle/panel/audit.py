@@ -20,6 +20,7 @@ def audit_panel(
     calibration_split: float = 0.70,
     window: int = 250,
     seed: int = 2026,
+    recalibration: object | None = None,
     **mode_kwargs: object,
 ) -> PanelResult:
     """Run a panel-level audit across all (forecaster, asset) pairs.
@@ -48,6 +49,7 @@ def audit_panel(
                     alpha=alpha,
                     calibration_split=calibration_split,
                     seed=pair_seed,
+                    recalibration=recalibration,
                     **mode_kwargs,
                 )
             elif mode == "rolling":
@@ -57,6 +59,7 @@ def audit_panel(
                     alpha=alpha,
                     window=window,
                     seed=pair_seed,
+                    recalibration=recalibration,
                     **mode_kwargs,
                 )
             else:

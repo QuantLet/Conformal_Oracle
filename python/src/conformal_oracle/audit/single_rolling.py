@@ -123,8 +123,16 @@ def audit_rolling(
     warmup: int = 250,
     persistence: int = 20,
     seed: int = 2026,
+    recalibration: object | None = None,
 ) -> RollingAuditResult:
-    """Run the rolling conformal audit pipeline."""
+    """Run the rolling conformal audit pipeline.
+
+    Args:
+        recalibration: Optional RecalibrationMethod to use instead of
+                       the rolling conformal shift. If provided, the
+                       method is fit on a calibration window and applied
+                       to the evaluation period.
+    """
     n = len(returns)
     forecaster.fit(returns.iloc[:warmup])
 
@@ -155,8 +163,15 @@ def audit_rolling(
     es_raw_eval = np.array(es_raw_all[offset:])
     realised_eval = realised_all[offset:]
 
-    var_corrected_eval = var_raw_eval + qv_roll
-    es_corrected_eval = es_raw_eval + qv_roll
+    if recalibration is not None:
+        cal_var = np.array(var_raw_all[:offset])
+        cal_real = realised_all[:offset]
+        recalibration.fit(cal_var, cal_real, alpha)
+        var_corrected_eval = recalibration.apply(var_raw_eval)
+    else:
+        var_corrected_eval = var_raw_eval + qv_roll
+
+    es_corrected_eval = es_raw_eval + (var_corrected_eval - var_raw_eval)
 
     viol_raw = (realised_eval < -var_raw_eval).astype(int)
     viol_corrected = (realised_eval < -var_corrected_eval).astype(int)

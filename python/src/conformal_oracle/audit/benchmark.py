@@ -81,12 +81,19 @@ def audit_with_benchmarks(
     returns: pd.Series,
     forecaster: Forecaster,
     benchmarks: list[str] | None = None,
+    recalibrations: list[object] | None = None,
     alpha: float = 0.01,
     mode: Literal["static", "rolling"] = "rolling",
     seed: int = 2026,
     **mode_kwargs: object,
 ) -> BenchmarkComparison:
-    """Audit user's forecaster alongside reference benchmarks."""
+    """Audit user's forecaster alongside reference benchmarks.
+
+    Args:
+        recalibrations: Optional list of RecalibrationMethod instances.
+            When provided, each (base_forecaster, recalibration) combination
+            is audited. Default (None) uses the conformal shift only.
+    """
     if benchmarks is None:
         benchmarks = ["gjr_garch", "hist_sim"]
 
@@ -98,14 +105,35 @@ def audit_with_benchmarks(
             )
 
     audit_fn = audit_static if mode == "static" else audit_rolling
-    user_result = audit_fn(returns, forecaster, alpha=alpha, seed=seed, **mode_kwargs)
 
-    bench_results: dict[str, Union[StaticAuditResult, RollingAuditResult]] = {}
-    for name in benchmarks:
-        bench_fc = _BENCHMARK_REGISTRY[name]()
-        bench_results[name] = audit_fn(
-            returns, bench_fc, alpha=alpha, seed=seed, **mode_kwargs
+    if recalibrations is None:
+        user_result = audit_fn(
+            returns, forecaster, alpha=alpha, seed=seed, **mode_kwargs,
         )
+        bench_results: dict[str, Union[StaticAuditResult, RollingAuditResult]] = {}
+        for name in benchmarks:
+            bench_fc = _BENCHMARK_REGISTRY[name]()
+            bench_results[name] = audit_fn(
+                returns, bench_fc, alpha=alpha, seed=seed, **mode_kwargs,
+            )
+    else:
+        user_result = audit_fn(
+            returns, forecaster, alpha=alpha, seed=seed, **mode_kwargs,
+        )
+        bench_results = {}
+
+        all_forecasters: dict[str, Forecaster] = {"user": forecaster}
+        for name in benchmarks:
+            all_forecasters[name] = _BENCHMARK_REGISTRY[name]()
+
+        for recal in recalibrations:
+            recal_name = type(recal).__name__
+            for fc_name, fc in all_forecasters.items():
+                label = f"{fc_name}+{recal_name}"
+                bench_results[label] = audit_fn(
+                    returns, fc, alpha=alpha, seed=seed,
+                    recalibration=recal, **mode_kwargs,
+                )
 
     return BenchmarkComparison(
         user=user_result,
