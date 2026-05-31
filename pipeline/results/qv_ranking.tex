@@ -1,0 +1,22 @@
+\begin{table}[htbp]
+\centering
+\caption{$\hat{q}_V$ ranking of 9 forecasters ($\alpha=0.01$).}
+\label{tab:qv_ranking}
+\footnotesize
+\begin{tabular}{lrrrrr}
+\toprule
+ & $\bar{\hat{q}}_V$ & sd & $\bar{\pi}_{cp}$ & Green\% & Interpretation \\
+model &  &  &  &  &  \\
+\midrule
+GJR-GARCH & -0.0066 & 0.0048 & 0.0112 & 0.7917 & Over-conservative \\
+TimesFM-2.5 & 0.0028 & 0.0027 & 0.0103 & 0.9167 & Well-calibrated \\
+Hist-Sim & 0.0036 & 0.0029 & 0.0108 & 0.9167 & Well-calibrated \\
+Moirai-2.0 & 0.0039 & 0.0053 & 0.0101 & 0.8750 & Well-calibrated \\
+GARCH-N & 0.0057 & 0.0075 & 0.0104 & 0.8750 & Mild under-cov. \\
+EWMA & 0.0061 & 0.0082 & 0.0114 & 0.8333 & Mild under-cov. \\
+Lag-Llama & 0.0109 & 0.0089 & 0.0097 & 1.0000 & Moderate under-cov. \\
+Chronos-Small & 0.0379 & 0.0281 & 0.0108 & 0.7917 & Severe under-cov. \\
+Chronos-Mini & 0.0390 & 0.0292 & 0.0103 & 0.7917 & Severe under-cov. \\
+\bottomrule
+\end{tabular}
+\end{table}

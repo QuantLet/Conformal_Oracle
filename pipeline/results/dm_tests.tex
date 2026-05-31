@@ -1,0 +1,49 @@
+\begin{table}[htbp]
+\centering
+\caption{Top-20 Diebold-Mariano tests ($\alpha=0.01$, corrected QS).}
+\label{tab:dm_tests}
+\footnotesize
+\begin{tabular}{lrrr}
+\toprule
+ &  & DM stat & $p$ & Favoured \\
+model_1 & model_2 &  &  &  \\
+\midrule
+Chronos-Small & TimesFM-2.5 & 8.2136 & 0.0000 & TimesFM-2.5 \\
+\cline{1-5}
+GARCH-N & Hist-Sim & -7.4953 & 0.0000 & GARCH-N \\
+\cline{1-5}
+Chronos-Mini & TimesFM-2.5 & 7.4474 & 0.0000 & TimesFM-2.5 \\
+\cline{1-5}
+Hist-Sim & EWMA & 6.5762 & 0.0000 & EWMA \\
+\cline{1-5}
+Chronos-Small & Moirai-2.0 & 5.7026 & 0.0000 & Moirai-2.0 \\
+\cline{1-5}
+GJR-GARCH & Hist-Sim & -5.4862 & 0.0000 & GJR-GARCH \\
+\cline{1-5}
+Chronos-Small & Lag-Llama & 4.5463 & 0.0000 & Lag-Llama \\
+\cline{1-5}
+Chronos-Mini & Moirai-2.0 & 4.5463 & 0.0000 & Moirai-2.0 \\
+\cline{1-5}
+\multirow[t]{2}{*}{Chronos-Small} & GARCH-N & 4.2057 & 0.0000 & GARCH-N \\
+ & GJR-GARCH & 4.1292 & 0.0000 & GJR-GARCH \\
+\cline{1-5}
+\multirow[t]{3}{*}{Chronos-Mini} & Lag-Llama & 4.0553 & 0.0001 & Lag-Llama \\
+ & GARCH-N & 3.9580 & 0.0001 & GARCH-N \\
+ & GJR-GARCH & 3.8723 & 0.0001 & GJR-GARCH \\
+\cline{1-5}
+Chronos-Small & EWMA & 3.6355 & 0.0003 & EWMA \\
+\cline{1-5}
+GARCH-N & EWMA & -3.5214 & 0.0004 & GARCH-N \\
+\cline{1-5}
+Chronos-Mini & EWMA & 3.3765 & 0.0007 & EWMA \\
+\cline{1-5}
+\multirow[t]{2}{*}{TimesFM-2.5} & Moirai-2.0 & -2.7242 & 0.0065 & TimesFM-2.5 \\
+ & Hist-Sim & -2.5592 & 0.0106 & TimesFM-2.5 \\
+\cline{1-5}
+Lag-Llama & GARCH-N & 2.2986 & 0.0216 & GARCH-N \\
+\cline{1-5}
+Moirai-2.0 & GARCH-N & 2.2607 & 0.0239 & GARCH-N \\
+\cline{1-5}
+\bottomrule
+\end{tabular}
+\end{table}

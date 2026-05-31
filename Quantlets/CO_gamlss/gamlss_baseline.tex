@@ -1,0 +1,24 @@
+
+\begin{table}[htbp]
+  \centering
+  \caption{GAMLSS-SST baseline per model (skewed-$t$, $\alpha = 0.01$).}
+  \label{tab:gamlss}
+  \footnotesize
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+    Model & $\hat\pi$ & QS ($\times 10^{-4}$) & Width & Green \\
+    \midrule
+    Chronos-Mini     & .008 & 5.53 & .045 & 20/24 \\
+    Chronos-Small    & .007 & 5.58 & .046 & 22/24 \\
+    EWMA             & .009 & 5.47 & .043 & 21/24 \\
+    GARCH-N          & .010 & 5.37 & .042 & 21/24 \\
+    GJR-GARCH        & .011 & 5.43 & .041 & 23/24 \\
+    Hist-Sim         & .009 & 5.47 & .043 & 22/24 \\
+    Lag-Llama        & .010 & 5.21 & .040 & 21/24 \\
+    Moirai-2.0       & .009 & 5.36 & .043 & 21/24 \\
+    TimesFM-2.5      & .008 & 5.44 & .043 & 21/24 \\
+    \midrule
+    \textbf{Pooled (216)} & .009 & 5.43 & .043 & 192/216 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

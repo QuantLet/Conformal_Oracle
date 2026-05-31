@@ -1,0 +1,24 @@
+
+\begin{table}[htbp]
+  \centering
+  \caption{GBM-QR baseline per model (LightGBM, $\alpha = 0.01$).}
+  \label{tab:gbm_qr}
+  \footnotesize
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+    Model & $\hat\pi$ & QS ($\times 10^{-4}$) & Width & Green \\
+    \midrule
+    Chronos-Mini     & .018 & 5.49 & .032 & 11/24 \\
+    Chronos-Small    & .018 & 5.52 & .033 & 13/24 \\
+    EWMA             & .018 & 5.42 & .033 & 11/24 \\
+    GARCH-N          & .018 & 5.42 & .033 & 12/24 \\
+    GJR-GARCH        & .018 & 5.35 & .033 & 10/24 \\
+    Hist-Sim         & .018 & 5.50 & .033 & 14/24 \\
+    Lag-Llama        & .018 & 5.51 & .033 & 14/24 \\
+    Moirai-2.0       & .017 & 5.48 & .033 & 11/24 \\
+    TimesFM-2.5      & .018 & 5.50 & .033 & 9/24 \\
+    \midrule
+    \textbf{Pooled (216)} & .018 & 5.47 & .033 & 105/216 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

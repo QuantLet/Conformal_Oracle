@@ -1,0 +1,31 @@
+\begin{table}[htbp]
+\centering
+\caption{Detection lag: $\hat{q}_V$ alarm vs Kupiec alarm (days).}
+\label{tab:detection_lag}
+\footnotesize
+\begin{tabular}{lrrr}
+\toprule
+ &  & qV_alarm & kup_alarm & lag_days \\
+asset & model &  &  &  \\
+\midrule
+\multirow[t]{5}{*}{SP500} & Chronos-Small & 2008-10-10 & 2007-11-08 & -337.0000 \\
+ & Chronos-Mini & 2008-10-10 & 2008-10-08 & -2.0000 \\
+ & TimesFM-2.5 & 2011-08-09 & 2024-07-25 & 4734.0000 \\
+ & Moirai-2.0 & 2008-09-30 & 2024-07-25 & 5777.0000 \\
+ & Lag-Llama & 2008-09-30 & 2025-03-11 & 6006.0000 \\
+\cline{1-5}
+\multirow[t]{5}{*}{BTC} & Chronos-Small & Never & Never & NaN \\
+ & Chronos-Mini & Never & Never & NaN \\
+ & TimesFM-2.5 & 2017-01-12 & Never & NaN \\
+ & Moirai-2.0 & 2017-01-12 & Never & NaN \\
+ & Lag-Llama & 2021-05-20 & Never & NaN \\
+\cline{1-5}
+\multirow[t]{5}{*}{GOLD} & Chronos-Small & Never & 2020-08-12 & NaN \\
+ & Chronos-Mini & Never & 2020-03-16 & NaN \\
+ & TimesFM-2.5 & 2006-06-14 & Never & NaN \\
+ & Moirai-2.0 & 2012-03-01 & 2020-04-01 & 2953.0000 \\
+ & Lag-Llama & 2006-06-14 & 2006-06-14 & 0.0000 \\
+\cline{1-5}
+\bottomrule
+\end{tabular}
+\end{table}

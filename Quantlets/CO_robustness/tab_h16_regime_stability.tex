@@ -1,0 +1,26 @@
+\begin{table}[H]
+	\centering
+	\caption{Rolling $\qVroll$ stability across regime changes (200 replications, GARCH(1,1), $T = 5{,}000$, stress regime at $t = 2{,}000$--$2{,}500$ with $3\times$ variance multiplier, rolling window $w = 250$). Reported values are time averages of $\qVroll$ within each period, averaged across replications. The $t$-test compares pre-stress ($t < 2{,}000$) and post-stress ($t \geq 2{,}750$) means.}
+	\label{tab:regime_stability}
+	\footnotesize
+	\begin{tabular}{@{}llccc@{}}
+		\hline\hline
+		DGP & Period & Mean $\qVroll$ & Std & $t$-test (Pre vs Post) \\
+		\hline
+		\multicolumn{5}{@{}l}{\textit{Student-$t(5)$}} \\[2pt]
+		& Pre-stress      & 0.00446 & 0.00289 &  \\
+		& During stress   & 0.01214 & 0.00774 &  \\
+		& Post-stress     & 0.00420 & 0.00225 & $t = 0.99$, $p = 0.324$ \\
+		\addlinespace
+		\multicolumn{5}{@{}l}{\textit{Skewed-$t(3)$}} \\[2pt]
+		& Pre-stress      & 0.00895 & 0.00399 &  \\
+		& During stress   & 0.01823 & 0.01033 &  \\
+		& Post-stress     & 0.00870 & 0.00352 & $t = 0.66$, $p = 0.508$ \\
+		\hline\hline
+	\end{tabular}
+
+	\begin{minipage}{\linewidth}\footnotesize
+		\smallskip
+		The rolling conformal threshold $\qVroll$ increases by a factor of 2--3 during the stress regime and reverts to pre-stress levels once the stressed observations exit the rolling window. The absence of statistically significant differences between pre- and post-stress means ($p > 0.05$) confirms that the correction adapts to transient volatility shocks without inducing persistent drift.
+	\end{minipage}
+\end{table}

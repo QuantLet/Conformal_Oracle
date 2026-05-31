@@ -1,0 +1,22 @@
+\begin{table}[htbp]
+\centering
+\caption{Panel-pooled backtest ($\alpha=0.01$, 24 assets).}
+\label{tab:panel_pooled}
+\footnotesize
+\begin{tabular}{lrrrrr}
+\toprule
+ & $N_{panel}$ & $\hat{\pi}_{pool}$ & HAC SE & $p_{Kup}$ & $p_{cluster}$ \\
+model &  &  &  &  &  \\
+\midrule
+Chronos-Small & 36588 & 0.0105 & 0.0016 & 0.2947 & 0.7614 \\
+Chronos-Mini & 36588 & 0.0101 & 0.0015 & 0.9114 & 0.9735 \\
+TimesFM-2.5 & 36588 & 0.0104 & 0.0015 & 0.4931 & 0.7019 \\
+Moirai-2.0 & 36588 & 0.0103 & 0.0015 & 0.5966 & 0.7713 \\
+Lag-Llama & 36588 & 0.0098 & 0.0015 & 0.7567 & 0.8114 \\
+GJR-GARCH & 38473 & 0.0115 & 0.0016 & 0.0041 & 0.2336 \\
+GARCH-N & 38473 & 0.0109 & 0.0016 & 0.0834 & 0.2620 \\
+Hist-Sim & 38473 & 0.0108 & 0.0016 & 0.1256 & 0.2901 \\
+EWMA & 38473 & 0.0119 & 0.0017 & 0.0003 & 0.0352 \\
+\bottomrule
+\end{tabular}
+\end{table}

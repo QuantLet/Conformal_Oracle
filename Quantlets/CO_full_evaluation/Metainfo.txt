@@ -1,0 +1,17 @@
+Name of Quantlet: CO_full_evaluation
+
+Published in: Recalibrating Tail Risk Forecasts under Temporal Dependence
+
+Description: Master results table (Table 4). Conformal VaR recalibration for 5 TSFMs and 4 parametric benchmarks across 24 assets at alpha = 0.01. Reports raw and corrected violation rates, Kupiec rejection counts, Basel traffic light zone, quantile score, and VaR width.
+
+Keywords: conformal prediction, Value-at-Risk, foundation models, backtesting, Basel traffic light, Kupiec, Christoffersen
+
+See also: CO_asset_overview, CO_model_overview
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-04-25
+
+Datafile: cfp_ijf_data/paper_outputs/tables/all_results.csv
+
+Output: tab_master_results.tex

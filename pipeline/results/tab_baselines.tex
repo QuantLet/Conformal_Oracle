@@ -1,0 +1,17 @@
+\begin{table}[H]
+\centering
+\caption{Recalibration method comparison (mean across 24 assets and 9 forecasters, $\alpha = 0.01$)}
+\label{tab:baselines}
+\begin{tabular}{lcccccc}
+\toprule
+Method & $\hat{\pi}$ & Kupiec Rej. & Green~\% & QS & VaR Width & $N$ \\
+\midrule
+Raw & 0.1028 & 160 & 36.6\% & 0.001289 & 0.0273 & 216 \\
+Conformal & 0.0106 & 60 & 86.6\% & 0.000524 & 0.0388 & 216 \\
+Scale & 0.0552 & 90 & 68.1\% & 0.000869 & 0.0323 & 216 \\
+Hist-Quantile & 0.0103 & 99 & 81.0\% & 0.000589 & 0.0414 & 216 \\
+QR-Residual & 0.0114 & 65 & 82.4\% & 0.000531 & 0.0377 & 216 \\
+Isotonic & 0.0172 & 120 & 53.7\% & 0.000537 & 0.0341 & 216 \\
+\bottomrule
+\end{tabular}
+\end{table}

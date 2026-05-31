@@ -1,0 +1,17 @@
+Name of Quantlet: CFP_Calibration_Efficiency_Frontier
+
+Published in: Recalibrating Tail Risk Forecasts under Temporal Dependence
+
+Description: Calibration-efficiency frontier showing raw-to-corrected trajectory for four representative forecasters on the coverage-width plane at alpha = 0.01 (Figure 3). Hollow markers indicate raw forecasts, filled markers indicate corrected, with arrows showing the conformal correction path.
+
+Keywords: calibration efficiency, VaR width, coverage, conformal prediction, frontier, TSFM
+
+See also: CO_full_evaluation, CO_violation_rates
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-04-25
+
+Datafile: cfp_ijf_data/paper_outputs/tables/all_results.csv
+
+Output: fig_frontier_killer.pdf, fig_frontier_killer.png

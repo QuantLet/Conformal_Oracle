@@ -1,0 +1,87 @@
+# Build artifacts
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.spl
+*.synctex.gz
+*.toc
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+.venv*/
+.ipynb_checkpoints/
+test_env/
+
+# OS
+.DS_Store
+
+# Data: only the small return series are tracked. The ~126 MB of forecast
+# parquets and paper_outputs/ tables are published as a GitHub Release asset and
+# fetched with download_data.py (keeps the code repo lean).
+cfp_ijf_data/*
+!cfp_ijf_data/returns/
+/cfp_ijf_data.zip
+gpt3.5_simulations/
+gpt4_simulations/
+gpt_4o_simulations/
+legacy/
+Assets\ data/
+lag-llama/
+robustness_output/
+
+# Paper source (kept locally, not in public Quantlet repo)
+20260*.tex
+20260*.aux
+20260*.bbl
+20260*.blg
+20260*.log
+20260*.out
+20260*.pdf
+20260*.spl
+20260*.synctex.gz
+calibrating_the_oracle.bib
+# Root-anchored: these names also exist as required Quantlet outputs that the
+# paper \inputs (Quantlets/CO_robustness/, Quantlets/CO_simulation_study/).
+# Anchoring with a leading slash ignores only the root-level local copies.
+/tab_h14_small_sample.tex
+/tab_h15_fc_sensitivity.tex
+/tab_h16_regime_stability.tex
+/tab_simulation_extended.tex
+preamble.tex
+highlights.txt
+*.docx
+fig3_frontier.py
+generate_figures.py
+regenerate_r3_figures.py
+run_all_three_tasks.py
+run_conformal_analysis*.py
+/run_conformal_garch_ewma.py
+run_forecasts.ipynb
+run_conformal_analysis.py.local
+robustness_mc.py
+# Root-anchored: Quantlets/CO_simulation_study/ ships its own copies (script,
+# results CSV) that must be tracked; ignore only the root-level local copies.
+/run_simulation_study.py
+conformal_prediction_analysis.ipynb
+conformal_all_methods_summary.csv
+conformal_backtest_results.csv
+garch_conformal_detail.csv
+/simulation_study_results.csv
+
+# Paper-level outputs (Quantlets host their own)
+/figures/
+/results/
+/scripts/
+
+# Root-level images (Quantlets have their own)
+/ql_logo.png
+/qr_logo.png
+/Sigla_MAAT.png

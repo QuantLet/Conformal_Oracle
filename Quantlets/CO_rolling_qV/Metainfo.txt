@@ -1,0 +1,17 @@
+Name of Quantlet: CO_rolling_qV
+
+Published in: Recalibrating Tail Risk Forecasts under Temporal Dependence
+
+Description: Rolling 250-day conformal threshold q_hat_V for four representative forecasters on S&P 500 with realised volatility overlay (Figure 1).
+
+Keywords: conformal prediction, VaR, rolling window, volatility regimes, TSFM, GARCH
+
+See also: CO_garch_conformal, CO_covid_response_lag
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-04-25
+
+Datafile: cfp_ijf_data/paper_outputs/tables/rolling_qv_SP500.csv
+
+Output: fig_rolling_qv.pdf, fig_rolling_qv.png

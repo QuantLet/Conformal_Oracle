@@ -1,0 +1,17 @@
+Name of Quantlet: CO_forensic_tsfm
+
+Published in: Recalibrating Tail Risk Forecasts under Temporal Dependence
+
+Description: Forensic validation of quantile-grid TSFM tail failures. Four-panel figure showing realised S&P 500 returns versus predicted quantiles for TimesFM 2.5 and Moirai 2.0 over 2022. Top row: native 10th percentile and extrapolated 1st percentile against returns. Bottom row: full predicted quantile structure (1%, 2.5%, 5%, 10% quantiles and mean). Central quantiles track returns; the extrapolated 1% tail does not. Empirical violation rates at the mean (49.7% TimesFM, 50.2% Moirai) confirm correct interpretation; the failure is specific to the 1% tail.
+
+Keywords: conformal prediction, VaR, time series foundation models, forensic validation, quantile grid, tail failure, TSFM
+
+See also: CO_full_evaluation, CO_robustness_inner7
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-05-13
+
+Datafile: cfp_ijf_data/timesfm25/SP500 2.parquet, cfp_ijf_data/moirai2/SP500 2.parquet, cfp_ijf_data/returns/SP500.csv
+
+Output: fig_forensic_tsfm.pdf, fig_forensic_tsfm.png

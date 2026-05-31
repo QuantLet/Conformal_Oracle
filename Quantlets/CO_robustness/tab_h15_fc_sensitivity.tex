@@ -1,0 +1,54 @@
+\begin{table}[H]
+	\centering
+	\caption{Calibration fraction sensitivity in small samples (500 replications, $\alpha = 0.01$). The forecaster assumes Normal innovations under misspecified heavy-tailed DGPs. Green\% denotes the percentage of replications satisfying the Basel Traffic Light Green zone (scaled to sample size).}
+	\label{tab:fc_small_sample}
+	\footnotesize
+	\begin{tabular}{@{}llcccc@{}}
+		\hline\hline
+		DGP & $(T, f_c)$ & Mean $\qVstat$ & Std $\qVstat$ & $\hat\pi$ & Green\% \\
+		\hline
+		\multicolumn{6}{@{}l}{\textit{Student-$t(5)$}} \\[2pt]
+		& (250, 0.40) & 0.0033 & 0.0087 & 0.023 & 40 \\
+		& (250, 0.50) & 0.0037 & 0.0081 & 0.020 & 52 \\
+		& (250, 0.60) & 0.0040 & 0.0075 & 0.019 & 61 \\
+		& (250, 0.70) & 0.0051 & 0.0075 & 0.016 & 47 \\
+		& (250, 0.80) & 0.0054 & 0.0076 & 0.017 & 59 \\
+		\addlinespace
+		& (500, 0.40) & 0.0051 & 0.0079 & 0.017 & 54 \\
+		& (500, 0.50) & 0.0054 & 0.0078 & 0.014 & 66 \\
+		& (500, 0.60) & 0.0057 & 0.0074 & 0.015 & 61 \\
+		& (500, 0.70) & 0.0057 & 0.0069 & 0.013 & 58 \\
+		& (500, 0.80) & 0.0060 & 0.0060 & 0.013 & 73 \\
+		\addlinespace
+		& (1000, 0.40) & 0.0052 & 0.0065 & 0.014 & 63 \\
+		& (1000, 0.50) & 0.0060 & 0.0070 & 0.013 & 67 \\
+		& (1000, 0.60) & 0.0059 & 0.0055 & 0.012 & 75 \\
+		& (1000, 0.70) & 0.0058 & 0.0052 & 0.012 & 68 \\
+		& (1000, 0.80) & 0.0061 & 0.0050 & 0.013 & 69 \\
+		\addlinespace
+		\multicolumn{6}{@{}l}{\textit{Skewed-$t(3)$}} \\[2pt]
+		& (250, 0.40) & 0.0079 & 0.0118 & 0.023 & 39 \\
+		& (250, 0.50) & 0.0074 & 0.0103 & 0.022 & 46 \\
+		& (250, 0.60) & 0.0088 & 0.0101 & 0.021 & 55 \\
+		& (250, 0.70) & 0.0100 & 0.0088 & 0.016 & 47 \\
+		& (250, 0.80) & 0.0111 & 0.0092 & 0.016 & 60 \\
+		\addlinespace
+		& (500, 0.40) & 0.0094 & 0.0112 & 0.017 & 52 \\
+		& (500, 0.50) & 0.0093 & 0.0099 & 0.016 & 66 \\
+		& (500, 0.60) & 0.0104 & 0.0096 & 0.013 & 64 \\
+		& (500, 0.70) & 0.0108 & 0.0080 & 0.013 & 57 \\
+		& (500, 0.80) & 0.0101 & 0.0077 & 0.014 & 70 \\
+		\addlinespace
+		& (1000, 0.40) & 0.0101 & 0.0109 & 0.014 & 62 \\
+		& (1000, 0.50) & 0.0098 & 0.0074 & 0.013 & 72 \\
+		& (1000, 0.60) & 0.0101 & 0.0079 & 0.012 & 74 \\
+		& (1000, 0.70) & 0.0108 & 0.0067 & 0.011 & 71 \\
+		& (1000, 0.80) & 0.0108 & 0.0061 & 0.012 & 71 \\
+		\hline\hline
+	\end{tabular}
+
+	\begin{minipage}{\linewidth}\footnotesize
+		\smallskip
+		Calibration fraction controls a bias--variance trade-off in tail estimation: smaller $f_c$ reduces estimation variance but introduces bias due to insufficient tail coverage, while larger $f_c$ improves quantile estimation at the cost of reduced effective test sample size. For $T \leq 500$, no calibration fraction yields stable Basel Green performance under misspecification, reflecting the $O((\alpha T)^{-1/2})$ variance scaling implied by tail sparsity. For $T \geq 1{,}000$, performance stabilises for $f_c \in [0.60, 0.80]$, supporting the practical recommendation $f_c \geq 0.60$.
+	\end{minipage}
+\end{table}
