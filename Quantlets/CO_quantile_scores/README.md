@@ -1,0 +1,26 @@
+<div style="margin: 0; padding: 0; text-align: center; border: none;">
+<a href="https://quantlet.com" target="_blank" style="text-decoration: none; border: none;">
+<img src="https://github.com/StefanGam/test-repo/blob/main/quantlet_design.png?raw=true" alt="Header Image" width="100%" style="margin: 0; padding: 0; display: block; border: none;" />
+</a>
+</div>
+
+```
+Name of Quantlet: CO_quantile_scores
+
+Published in: Recalibrating Tail Risk Forecasts under Temporal Dependence
+
+Description: Diebold-Mariano test p-values for pairwise quantile score comparisons (Table 8). Reports 4 parametric vs 5 TSFM p-values under Driscoll-Kraay panel HAC with Harvey-Leybourne-Newbold small-sample correction, pooled across 24 assets at alpha = 0.01.
+
+Keywords: conformal prediction, VaR, Diebold-Mariano, quantile score, HLN correction, forecast comparison, Driscoll-Kraay, panel HAC
+
+See also: CO_full_evaluation, CO_multi_quantile_panel
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-04-25
+
+Datafile: cfp_ijf_data/paper_outputs/qs_sequences/*.parquet
+
+Output: tab_dm_pvalues.tex, tab_dm_pvalues.csv
+
+```
