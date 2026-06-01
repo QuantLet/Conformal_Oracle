@@ -1,0 +1,26 @@
+<div style="margin: 0; padding: 0; text-align: center; border: none;">
+<a href="https://quantlet.com" target="_blank" style="text-decoration: none; border: none;">
+<img src="https://github.com/StefanGam/test-repo/blob/main/quantlet_design.png?raw=true" alt="Header Image" width="100%" style="margin: 0; padding: 0; display: block; border: none;" />
+</a>
+</div>
+
+```
+Name of Quantlet: CO_bound_validation
+
+Published in: Recalibrating Tail Risk Forecasts under Temporal Dependence
+
+Description: Empirical evaluation of the coverage bound from Theorem 3.5 on six representative model-asset pairs (Table 11). Computes score persistence rho_hat as autocorrelation of absolute conformity scores, remainder term Delta_n = (5/2) sqrt(log n / n), and compares implied guaranteed coverage with realised out-of-sample coverage.
+
+Keywords: conformal prediction, VaR, coverage bound, mixing, beta-mixing, temporal dependence, score persistence, bound validation
+
+See also: CO_full_evaluation, CO_drift_diagnostic
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-04-25
+
+Datafile: cfp_ijf_data/paper_outputs/tables/all_results.csv, cfp_ijf_data/{model}/*.parquet, cfp_ijf_data/returns/*.csv
+
+Output: tab_bound_validation.tex, tab_bound_validation.csv
+
+```
