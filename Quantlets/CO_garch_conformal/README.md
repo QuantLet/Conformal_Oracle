@@ -1,0 +1,26 @@
+<div style="margin: 0; padding: 0; text-align: center; border: none;">
+<a href="https://quantlet.com" target="_blank" style="text-decoration: none; border: none;">
+<img src="https://github.com/StefanGam/test-repo/blob/main/quantlet_design.png?raw=true" alt="Header Image" width="100%" style="margin: 0; padding: 0; display: block; border: none;" />
+</a>
+</div>
+
+```
+Name of Quantlet: CO_garch_conformal
+
+Published in: Recalibrating Tail Risk Forecasts under Temporal Dependence
+
+Description: Static (70/30 split) versus rolling (250-day window) conformal correction comparison (Table 9). Reports corrected violation rate, Basel Green zone count, and Christoffersen conditional coverage pass count for all 9 models under both calibration schemes.
+
+Keywords: conformal prediction, VaR, rolling window, static calibration, Christoffersen, conditional coverage, Basel traffic light
+
+See also: CO_full_evaluation, CO_rolling_qV
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-04-25
+
+Datafile: cfp_ijf_data/paper_outputs/tables/rolling_vs_static.csv
+
+Output: tab_rolling_vs_static.tex, tab_rolling_vs_static.csv
+
+```
