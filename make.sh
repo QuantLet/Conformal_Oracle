@@ -205,6 +205,31 @@ do_mc() {
 }
 
 # ──────────────────────────────────────────────────────────────
+# Target: rr
+#   Supplementary diagnostics: identification panel, empirical scale
+#   diagnostic, ACI baseline; compiles rr_material.tex.
+# ──────────────────────────────────────────────────────────────
+do_rr() {
+    info "=== SUPPLEMENTARY DIAGNOSTICS ==="
+
+    # RR1: Identification MC panel (synthetic, ~20s) -> tab:identification + fig
+    run_py "Quantlets/CO_identification/run_identification.py" "RR1 Identification panel"
+    copy_fig "Quantlets/CO_identification/fig_identification.pdf"
+    copy_fig "Quantlets/CO_identification/fig_identification.png"
+
+    # RR2: Empirical scale diagnostic (216 pairs) -> tab:scale_diagnostic
+    run_py "Quantlets/CO_diagnostic_scale/run_diagnostic_scale.py" "RR2 Scale diagnostic"
+
+    # RR3: ACI baseline (216 pairs) -> tab:baselines_aci + gamma sensitivity + verdict
+    run_py "Quantlets/CO_aci_baseline/run_aci_baseline.py" "RR3 ACI baseline"
+
+    # Compile the standalone supplement
+    cd "$ROOT"
+    latexmk -pdf -interaction=nonstopmode rr_material.tex || fail "rr_material LaTeX"
+    ok "=== SUPPLEMENTARY DIAGNOSTICS DONE ==="
+}
+
+# ──────────────────────────────────────────────────────────────
 # Target: manuscript
 #   Compile LaTeX: pdflatex → bibtex → pdflatex × 2.
 # ──────────────────────────────────────────────────────────────
@@ -330,16 +355,18 @@ case "${1:-help}" in
     tables)     do_tables ;;
     figures)    do_figures ;;
     mc)         do_mc ;;
+    rr)         do_rr ;;
     manuscript) do_manuscript ;;
     clean)      do_clean ;;
     verify)     do_verify ;;
     help|*)
-        echo "Usage: $0 {all|tables|figures|mc|manuscript|clean|verify}"
+        echo "Usage: $0 {all|tables|figures|mc|rr|manuscript|clean|verify}"
         echo ""
         echo "  all         Tables + figures + manuscript (excludes MC)"
         echo "  tables      Regenerate all table .tex files (~2 min)"
         echo "  figures     Regenerate all figure PDFs (~5 min)"
         echo "  mc          Run Monte Carlo studies, Tables D.16-D.18 (~30 min)"
+        echo "  rr          Supplementary diagnostics: identification, scale diag, ACI; rr_material.tex"
         echo "  manuscript  Compile LaTeX manuscript"
         echo "  clean       Remove generated outputs"
         echo "  verify      Rebuild and diff against committed outputs"

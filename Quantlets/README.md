@@ -177,3 +177,18 @@ CO_full_evaluation/
 ├── CO_full_evaluation.ipynb        # Jupyter notebook (same logic, interactive)
 └── tab_master_results.tex          # Output (table or figure)
 ```
+
+## Supplementary diagnostics
+
+Three Quantlets driving the standalone supplement `rr_material.tex`. Build them
+all (and compile the supplement) with `bash make.sh rr`.
+
+| Quantlet | Topic | Output |
+|----------|-------|--------|
+| `CO_identification` | Shift is information, not scale/bias (Prop. `prop:decomposition`) | `tab_identification.tex`, `fig_identification.pdf/.png` (synthetic; ~20 s, CPU) |
+| `CO_diagnostic_scale` | Empirical two-parameter scale check (216 pairs) | `tab_scale_diagnostic.tex`, `tab_scale_regime_crosstab.tex` (uses `conformal_oracle.recalibration.diagnose_scale`) |
+| `CO_aci_baseline` | ACI vs rolling (216 pairs) | `tab_baselines_aci.tex`, `tab_aci_gamma_sensitivity.tex`, `verdict_aci.tex` (uses `ACICalibrator`) |
+
+`CO_diagnostic_scale` and `CO_aci_baseline` consume the cached forecast parquets
+in `cfp_ijf_data/` (same inputs as `CO_baseline_comparison`); `CO_identification`
+is fully synthetic.
