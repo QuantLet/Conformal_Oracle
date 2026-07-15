@@ -1,0 +1,17 @@
+Name of Quantlet: CO_aci_baseline
+
+Published in: Recalibrating Tail Event Forecasts under Temporal Dependence
+
+Description: Adaptive Conformal Inference baseline. Runs ACI (Gibbs and Candes 2021) with step size gamma selected from {0.001, 0.005, 0.01, 0.05} by first-half validation over all 216 model-asset pairs from cached forecasts, and compares it head-to-head with the static and 250-day rolling conformal estimators on the test split. Reports violation rate, Kupiec and Christoffersen p-values, Basel traffic-light zone shares, mean |VaR| (capital proxy), and a VaR-path volatility measure (sd of day-over-day corrected VaR changes) capturing operational smoothness. Emits a data-driven ACI-vs-rolling verdict and a gamma-sensitivity table. Uses conformal_oracle.recalibration.ACICalibrator.
+
+Keywords: conformal prediction, VaR, adaptive conformal inference, ACI, backtesting, Kupiec, Christoffersen, Basel traffic light, capital
+
+See also: CO_baseline_comparison, CO_rolling_qV
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-07-15
+
+Datafile: cfp_ijf_data/returns/*.csv, cfp_ijf_data/{model}/*.parquet, cfp_ijf_data/benchmarks/*.parquet
+
+Output: tab_baselines_aci.tex, tab_aci_gamma_sensitivity.tex, verdict_aci.tex, aci_baseline_results.csv, aci_gamma_sensitivity_results.csv

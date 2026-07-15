@@ -1,0 +1,16 @@
+\begin{table}[htbp]
+	\centering
+	\caption{ACI versus the conformal estimators on the 216 model--asset pairs ($\alpha = 0.01$, test split). $\hat\pi$: mean violation rate; Kupiec/Chr.\ rej.: number of pairs rejected at 5\%; Green/Yellow/Red: Basel traffic-light shares (\%); mean $|\VaR|$: capital proxy; VaR-path vol.: mean standard deviation of day-over-day corrected VaR changes (operational smoothness, lower is smoother). ACI step size $\gamma$ selected by first-half validation.}
+	\label{tab:baselines_aci}
+	\footnotesize
+	\begin{tabular}{@{}lrrrrrrr@{}}
+		\hline\hline
+		Method & $\hat\pi$ & Kupiec & Chr. & Green & Red & mean $|\VaR|$ & VaR-path \\
+		 & & rej. & rej. & \% & \% & & vol. \\
+		\hline
+		Conformal static & 0.011 & 91/216 & 116/216 & 88.4 & 3.2 & 0.0450 & 0.00541 \\
+		Conformal rolling $w{=}250$ & 0.010 & 10/216 & 65/216 & 94.9 & 0.0 & 0.0443 & 0.00579 \\
+		ACI (first-half $\gamma$) & 0.006 & 156/216 & 148/216 & 90.3 & 2.3 & 0.0750 & 0.00992 \\
+		\hline\hline
+	\end{tabular}
+\end{table}
