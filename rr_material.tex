@@ -426,7 +426,14 @@ distance is large, and the static estimator reaches the Green zone on
 $84.6\%$ of model--asset pairs. The rolling estimator replaces that single
 distance with the window average~\eqref{eq:rr_coverage_gap}, which under local
 stationarity is far smaller because the calibration scores are always recent;
-this is the mechanism behind its Green-zone rate of $97.5\%$. The gap between
+this is the mechanism behind its Green-zone rate of $97.5\%$.%
+\footnote{The head-to-head comparison of Table~\ref{tab:baselines_aci}
+evaluates the rolling estimator on the $70/30$ test split with the Basel zone
+scored on the final $250$-day window, over the $216$-pair subset, and reports
+$94.9\%$ Green at the same $0.010$ mean violation rate; the $97.5\%$ headline is
+the full-sample, full-history Basel scoring over all pairs. The two protocols
+agree on coverage and differ only in the zone-counting window and the pair
+set.} The gap between
 the two is therefore not evidence that one estimator is exact and the other is
 not --- neither is exchangeable --- but a direct reading of the difference
 between a global and a localized $\dTV$ term, and it is largest precisely for

@@ -276,7 +276,7 @@ def generate_verdict(df, dfg=None):
     over_under = "over-covers" if aci["violation"] < ALPHA else "under-covers"
 
     # Grid-wide capital fact: does any fixed gamma bring ACI's mean capital
-    # below the rolling estimator's? Keeps the dominance claim honest.
+    # below the rolling estimator's? Keeps the dominance claim defensible.
     grid_clause = ""
     if dfg is not None and len(dfg):
         gcap = dfg.groupby("gamma")["mean_var"].mean()
