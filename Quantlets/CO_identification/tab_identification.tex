@@ -1,0 +1,37 @@
+\begin{table}[htbp]
+	\centering
+	\caption{Identification of the conformal shift under controlled contamination of the oracle Value-at-Risk (500 replications, $\alpha = 0.01$, $f_c = 0.70$; averages across the five DGPs of Table~\ref{tab:simulation_extended}). $\qVstat$: mean conformal shift; $R=|\qVstat|/|\overline{\VaR^{\mathrm{raw}}}|$: mean audit ratio; $\hat\pi_{\mathrm{raw}}$ / $\hat\pi_{\mathrm{cp}}$: raw and post-correction violation rates. Bias and scale cells stay at or below the replacement threshold ($R\le 1$; the scale cell $b=\tfrac12$ sits at the boundary $R=1$ predicted by Corollary~\ref{cor:rr_R_response}) and are repaired to nominal coverage; only the noise channel enters the replacement regime ($R>1$).}
+	\label{tab:identification}
+	\footnotesize
+	\begin{tabular}{@{}l c rrrr@{}}
+		\hline\hline
+		Contamination & $T$ & $\qVstat$ & $R$ & $\hat\pi_{\mathrm{raw}}$ & $\hat\pi_{\mathrm{cp}}$ \\
+		\hline
+		\multicolumn{6}{@{}l}{\textit{Pure bias ($b=1$)}} \\[1pt]
+		Bias $a=-1\sigma$ & 1,000 & 0.0155 & 0.740 & 0.055 & 0.010 \\
+		 & 5,000 & 0.0144 & 0.695 & 0.056 & 0.010 \\
+		Bias $a=-0.5\sigma$ & 1,000 & 0.0085 & 0.301 & 0.022 & 0.010 \\
+		 & 5,000 & 0.0073 & 0.262 & 0.022 & 0.010 \\
+		Bias $a=+0.5\sigma$ & 1,000 & -0.0057 & 0.172 & 0.006 & 0.010 \\
+		 & 5,000 & -0.0068 & 0.165 & 0.005 & 0.010 \\
+		Bias $a=+1\sigma$ & 1,000 & -0.0128 & 0.270 & 0.004 & 0.010 \\
+		 & 5,000 & -0.0139 & 0.283 & 0.003 & 0.010 \\
+		\multicolumn{6}{@{}l}{\textit{Pure scale ($a=0$)}} \\[1pt]
+		Scale $b=0.5$ & 1,000 & 0.0188 & 1.049 & 0.066 & 0.011 \\
+		 & 5,000 & 0.0174 & 0.989 & 0.066 & 0.010 \\
+		Scale $b=0.8$ & 1,000 & 0.0081 & 0.288 & 0.020 & 0.010 \\
+		 & 5,000 & 0.0069 & 0.245 & 0.020 & 0.010 \\
+		Scale $b=1.25$ & 1,000 & -0.0067 & 0.178 & 0.005 & 0.010 \\
+		 & 5,000 & -0.0078 & 0.180 & 0.005 & 0.010 \\
+		Scale $b=2$ & 1,000 & -0.0298 & 0.426 & 0.001 & 0.010 \\
+		 & 5,000 & -0.0308 & 0.438 & 0.001 & 0.010 \\
+		\multicolumn{6}{@{}l}{\textit{Pure noise}} \\[1pt]
+		Noise (matched var.) & 1,000 & 0.0323 & 4.013 & 0.237 & 0.012 \\
+		 & 5,000 & 0.0298 & 3.353 & 0.218 & 0.010 \\
+		\hline\hline
+	\end{tabular}
+	\begin{minipage}{\linewidth}\scriptsize
+		\smallskip
+		$\sigma$ is the unconditional return standard deviation $\sqrt{\omega/(1-\alpha_g-\beta_g)}$. The pure-bias shift matches $\qVstat=-a$ and the pure-scale ratio matches $R=|1-b|/b$ of Proposition~\ref{prop:decomposition} and Corollary~\ref{cor:rr_R_response} up to finite-sample error.
+	\end{minipage}
+\end{table}

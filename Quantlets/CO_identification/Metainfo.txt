@@ -1,0 +1,17 @@
+Name of Quantlet: CO_identification
+
+Published in: Recalibrating Tail Event Forecasts under Temporal Dependence
+
+Description: Monte Carlo identification panel for the conformal shift. Takes the oracle Value-at-Risk under the five DGPs of CO_simulation_study and contaminates it along one channel at a time -- pure bias (a in +/-0.5 sigma, +/-1 sigma; b=1), pure scale (b in 0.5, 0.8, 1.25, 2; a=0), and pure noise (matched-variance signal-free forecast). For each cell it reports the conformal shift q_hat_V, the audit ratio R, and raw/post-correction violation rates over 500 replications at T in {1000, 5000}. Verifies Proposition prop:decomposition: bias and scale cells stay signal-preserving (R<=1) and are repaired; only noise enters the replacement regime (R>1).
+
+Keywords: conformal prediction, VaR, identification, misspecification, Monte Carlo, audit ratio, replacement regime, Basel traffic light
+
+See also: CO_simulation_study, CO_diagnostic_scale
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-07-15
+
+Datafile: run_identification.py (synthetic data)
+
+Output: tab_identification.tex, fig_identification.pdf, fig_identification.png, identification_results.csv

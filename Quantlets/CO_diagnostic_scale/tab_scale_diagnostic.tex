@@ -1,0 +1,24 @@
+\begin{table}[htbp]
+	\centering
+	\caption{Two-parameter scale diagnostic on the 216 model--asset pairs ($\alpha = 0.01$, calibration split). $\hat b$: mean slope of the location-scale fit $\VaR_{\mathrm{cp}}=\hat a+\hat b\,\VaR^{\mathrm{raw}}$ ($\hat b=1$ means a pure location shift); \%$\hat b{<}0$: share of pairs with a negative (inverted) slope; \%$R{>}1$: share in the replacement regime ($R=|\hat q_V|/\overline{|\VaR^{\mathrm{raw}}|}$); scale share: mean (median) fraction of the correction taken by the multiplicative term, $|(\hat b-1)\overline{\VaR^{\mathrm{raw}}}|/(|(\hat b-1)\overline{\VaR^{\mathrm{raw}}}|+|\hat a|)$. The scale share is interpretable as genuine scale repair only in the signal-preserving regime ($R\le1$): under replacement it is inflated by slope inversion ($\hat b<0$) or degenerate raw magnitudes ($\hat a$ dominates). Diagnostic only.}
+	\label{tab:scale_diagnostic}
+	\footnotesize
+	\begin{tabular}{@{}lrrrrrr@{}}
+		\hline\hline
+		Forecaster & $n$ & $\hat b$ & \%$\hat b{<}0$ & \%$R{>}1$ & Scale share & (median) \\
+		\hline
+		Chronos-Small & 24 & 2.706 & 4 & 100 & 0.154 & 0.167 \\
+		Chronos-Mini & 24 & 2.252 & 8 & 100 & 0.103 & 0.105 \\
+		TimesFM-2.5 & 24 & -0.875 & 100 & 100 & 0.877 & 0.887 \\
+		Moirai-2.0 & 24 & -1.135 & 100 & 100 & 0.918 & 0.930 \\
+		Lag-Llama & 24 & 0.553 & 0 & 0 & 0.361 & 0.389 \\
+		GJR-GARCH & 24 & 0.586 & 0 & 0 & 0.731 & 0.732 \\
+		GARCH-N & 24 & 0.892 & 0 & 0 & 0.380 & 0.402 \\
+		HS & 24 & 0.687 & 4 & 0 & 0.438 & 0.442 \\
+		EWMA & 24 & 0.946 & 0 & 0 & 0.386 & 0.369 \\
+		\hline
+		\textit{All pairs} & 216 & 0.735 & 24 & 44 & 0.483 & 0.424 \\
+		\textit{Signal-preserving} ($R\le1$) & 120 & 0.733 & 1 & 0 & 0.459 & 0.424 \\
+		\hline\hline
+	\end{tabular}
+\end{table}

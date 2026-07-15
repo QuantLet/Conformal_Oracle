@@ -1,0 +1,17 @@
+Name of Quantlet: CO_diagnostic_scale
+
+Published in: Recalibrating Tail Event Forecasts under Temporal Dependence
+
+Description: Empirical two-parameter scale diagnostic. For each of the 216 model-asset pairs (9 forecasters x 24 assets) it fits the location-scale map VaR_cp = a_hat + b_hat * VaR_raw by alpha-level linear quantile regression on the calibration split, using conformal_oracle.recalibration.diagnose_scale, and reports per forecaster the share of the one-parameter conformal shift attributable to the multiplicative (scale) term. Diagnostic only: the k=1 conformal design from the alpha*T constraint is unchanged; the map is not proposed as a competing corrector.
+
+Keywords: conformal prediction, VaR, quantile regression, scale correction, diagnostic, location-scale, tail risk
+
+See also: CO_identification, CO_baseline_comparison
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-07-15
+
+Datafile: cfp_ijf_data/returns/*.csv, cfp_ijf_data/{model}/*.parquet, cfp_ijf_data/benchmarks/*.parquet
+
+Output: tab_scale_diagnostic.tex, scale_diagnostic_results.csv
