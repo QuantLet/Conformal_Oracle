@@ -5,6 +5,7 @@ from __future__ import annotations
 import numpy as np
 
 from conformal_oracle._types import PredictiveDistribution
+from conformal_oracle.conformal.quantile import conformal_quantile
 
 
 def compute_qv_stat(
@@ -18,7 +19,7 @@ def compute_qv_stat(
     qV_stat = empirical (1-alpha)-quantile of {S_t}.
     """
     scores = _compute_scores(forecasts, realised, alpha)
-    return float(np.quantile(scores, 1 - alpha))
+    return conformal_quantile(scores, alpha)
 
 
 def _compute_scores(

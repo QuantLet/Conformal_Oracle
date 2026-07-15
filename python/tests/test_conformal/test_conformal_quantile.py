@@ -56,7 +56,6 @@ def test_rolling_uses_conformal_quantile_per_window():
     scores = rng.standard_normal(600)
     window = 250
     qv = compute_qv_roll_from_scores(scores, 0.01, window)
-    # each entry must be the finite-sample conformal quantile of its window
     for i in (0, 100, len(qv) - 1):
         expected = conformal_quantile(scores[i : i + window], 0.01)
         assert qv[i] == pytest.approx(expected)
@@ -69,7 +68,6 @@ def test_finite_sample_coverage_at_short_window():
     n, window, alpha = 4000, 250, 0.01
     scores = rng.standard_normal(n)
     qv = compute_qv_roll_from_scores(scores, alpha, window)
-    # coverage of the one-step-ahead score by its rolling threshold
     covered = scores[window:] <= qv[: n - window]
     assert covered.mean() >= 1 - alpha - 0.005
 

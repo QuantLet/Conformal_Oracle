@@ -12,6 +12,7 @@ from conformal_oracle._protocols import Forecaster
 from conformal_oracle._types import PredictiveDistribution
 from conformal_oracle.audit.regime import classify_regime_static
 from conformal_oracle.conformal.bootstrap import bootstrap_qv_ci
+from conformal_oracle.conformal.quantile import conformal_quantile
 from conformal_oracle.diagnostics.acerbi_szekely import z2_statistic
 from conformal_oracle.diagnostics.basel import basel_traffic_light
 from conformal_oracle.diagnostics.christoffersen import christoffersen_pvalue
@@ -148,7 +149,7 @@ def _audit_static_from_quantiles(
 
     # Scores: S_t = q_lo_t - r_t  (same sign convention as forecaster path)
     cal_scores = cal_q_lo - cal_returns
-    q_v_stat = float(np.quantile(cal_scores, 1 - alpha))
+    q_v_stat = conformal_quantile(cal_scores, alpha)
 
     ci = bootstrap_qv_ci(cal_scores, alpha, seed=seed)
 
@@ -241,7 +242,7 @@ def audit_static(
     cal_scores = np.array([
         f.quantile(alpha) - r for f, r in zip(cal_forecasts, cal_realised)
     ])
-    q_v_stat = float(np.quantile(cal_scores, 1 - alpha))
+    q_v_stat = conformal_quantile(cal_scores, alpha)
 
     ci = bootstrap_qv_ci(cal_scores, alpha, seed=seed)
 

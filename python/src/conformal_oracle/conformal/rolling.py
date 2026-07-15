@@ -5,6 +5,7 @@ from __future__ import annotations
 import numpy as np
 
 from conformal_oracle._types import PredictiveDistribution
+from conformal_oracle.conformal.quantile import conformal_quantile
 
 
 def compute_qv_roll(
@@ -35,7 +36,7 @@ def compute_qv_roll_from_scores(
     out_len = n - window
     qv = np.empty(out_len)
     for t in range(window, n):
-        qv[t - window] = np.quantile(scores[t - window : t], 1 - alpha)
+        qv[t - window] = conformal_quantile(scores[t - window : t], alpha)
     return qv
 
 
