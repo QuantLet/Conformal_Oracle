@@ -39,7 +39,7 @@ if TYPE_CHECKING:
         diagnose_scale,
     )
 
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 _RECALIBRATION_NAMES = {
     "RecalibrationMethod",

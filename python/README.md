@@ -22,6 +22,22 @@ Implements the methodology from:
 > Pele, D.T., Bolovaneanu, V., Ginavar, A.T., Lessmann, S., Hardle, W.K.
 > "Recalibrating Tail Event Forecasts under Temporal Dependence" (2026).
 
+## What's new in 0.3.1
+
+**Coverage bugfix (rolling mode).** The rolling conformal correction now uses
+the finite-sample split-conformal quantile — the `ceil((w+1)(1-alpha))`-th
+order statistic of the trailing-window scores — rather than the plain empirical
+`(1-alpha)` quantile. Releases up to and including 0.3.0 systematically
+**under-covered** in `mode="rolling"`; if you produced rolling-mode results on
+an earlier version, re-run on 0.3.1 or later. Static mode is affected only
+negligibly (large calibration window).
+
+**New diagnostics.** `recalibration.diagnose_scale` / `ScaleDiagnostic`
+(a location–scale decomposition of the conformal shift) and
+`recalibration.ACICalibrator` (an Adaptive Conformal Inference baseline with
+step size selected by first-half validation). See the
+[changelog](CHANGELOG.md) for details.
+
 ## Install
 
 ```bash
@@ -52,8 +68,8 @@ q_lo = pd.read_csv("my_var_forecast.csv", index_col=0, parse_dates=True).squeeze
 result = audit(returns, forecast=q_lo, alpha=0.01, mode="static")
 print(result.summary())
 
-# Rolling mode: re-estimates the conformal correction in an
-# expanding window (more realistic for live deployment)
+# Rolling mode: re-estimates the conformal correction from a
+# trailing 250-day window (more realistic for live deployment)
 result_roll = audit(returns, forecast=q_lo, alpha=0.01, mode="rolling")
 print(result_roll.summary())
 ```

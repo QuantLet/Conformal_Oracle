@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.2] - 2026-07-16
+
+### Documentation
+- README now describes the 0.3.1 rolling-mode coverage fix and the new
+  `diagnose_scale` / `ScaleDiagnostic` and `ACICalibrator` APIs, and corrects
+  the rolling-mode description (trailing 250-day window, not an expanding one).
+  No code changes; identical to 0.3.1 in behaviour.
+
 ## [0.3.1] - 2026-07-15
 
 ### Fixed
