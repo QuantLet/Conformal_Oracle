@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.3.1] - 2026-07-15
+
+### Fixed
+- **Split-conformal quantile now finite-sample valid (coverage bugfix).** The
+  conformal correction used the plain empirical quantile
+  `np.quantile(scores, 1 - alpha)`, which loses the finite-sample coverage
+  guarantee: the correct threshold is the `ceil((n + 1)(1 - alpha))`-th order
+  statistic (Vovk et al. 2005; Lei et al. 2018), one step more conservative.
+  The gap is `O(1/n)` — negligible on large calibration sets but material at
+  short windows. On the **250-day rolling correction** it systematically
+  **under-covered**: mean realised violation 0.016 against a 0.010 target,
+  versus 0.010 once corrected (Basel Green-zone share 72% → 95% on the 216
+  model–asset panel of the companion study). Users who ran
+  `audit(..., mode='rolling')` or `compute_qv_roll_from_scores` on releases up
+  to and including 0.3.0 have rolling results that under-cover and should
+  re-run on 0.3.1. Static correction (`compute_qv_stat`, `ConformalShift`,
+  static `audit`) is affected only negligibly (large calibration window) but was
+  corrected for consistency. `AdaptiveConformalInference` / `ACICalibrator` are
+  unchanged. New shared helper `conformal.quantile.conformal_quantile`.
+
+### Added
+- `recalibration.diagnose_scale()` / `recalibration.ScaleDiagnostic`: a
+  location-scale diagnostic reporting the multiplicative (scale) share of the
+  one-parameter conformal shift. Diagnostic only.
+- `recalibration.ACICalibrator`: Adaptive Conformal Inference (Gibbs & Candès
+  2021) wrapped as a calibrator with `gamma` selected by first-half validation.
+
 ## [0.3.0] - 2026-05-12
 
 ### Migration

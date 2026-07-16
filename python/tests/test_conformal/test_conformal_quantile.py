@@ -96,3 +96,31 @@ def test_rolling_coverage_panel_near_nominal():
         violations.append(viol.mean())
     panel_mean = float(np.mean(violations))
     assert 0.005 <= panel_mean <= 0.012, f"panel-mean violation {panel_mean:.4f}"
+
+
+def test_rolling_coverage_panel_public_audit_api():
+    """Behavioral regression through the PUBLIC entry point users call:
+    ``audit(returns, forecast=q_lo, mode='rolling')`` — not the internal helper.
+
+    A miscalibrated raw lower quantile (-2.0 for N(0,1); true 1% ~ -2.326) is
+    corrected by the 250-day rolling shift on a fixed 20-series panel. The
+    pre-fix plain-quantile code under-covered here (panel-mean corrected
+    violation ~0.013+); the finite-sample conformal quantile keeps it near
+    nominal. Upper bound 0.012 is the guard the pre-fix code violated.
+    """
+    import pandas as pd
+
+    from conformal_oracle import audit
+
+    alpha, n, n_series = 0.01, 2500, 20
+    violations = []
+    for k in range(n_series):
+        rng = np.random.default_rng(100 + k)
+        r = pd.Series(rng.standard_normal(n))
+        q_lo = pd.Series(np.full(n, -2.0))  # miscalibrated lower alpha-quantile
+        res = audit(r, forecast=q_lo, mode="rolling", alpha=alpha)
+        violations.append(res.violation_rate_corrected)
+    panel_mean = float(np.mean(violations))
+    assert 0.005 <= panel_mean <= 0.012, (
+        f"public-path panel-mean corrected violation {panel_mean:.4f}"
+    )

@@ -1,4 +1,15 @@
-# conformal-oracle 0.3.1 — release notes (DRAFT, not yet published)
+# conformal-oracle 0.3.1 — release notes
+
+> **Are you affected?** You are affected if you called
+> `audit(..., mode='rolling')`, `compute_qv_roll`, or
+> `compute_qv_roll_from_scores` on **0.3.0 or earlier**. Check your version with
+> `python -c "import conformal_oracle; print(conformal_oracle.__version__)"` —
+> upgrade to `0.3.1` and re-run those audits. Static-mode users are unaffected
+> to four decimals.
+>
+> **0.3.0 has been yanked on PyPI** (reason: *rolling-mode under-coverage bug,
+> fixed in 0.3.1*). Yanked releases still install if pinned explicitly but are
+> skipped by normal resolution; pin `conformal-oracle>=0.3.1`.
 
 ## Summary
 
@@ -24,7 +35,7 @@ over. Its practical impact scales inversely with that window:
 
 | Path | Window `n` | Impact at alpha = 0.01 |
 |------|-----------|------------------------|
-| **Rolling** (`audit(mode='rolling')`, `compute_qv_roll`, `compute_qv_roll_from_scores`) | **250** (default) | **Material.** 249th vs plain ~247.5th order statistic. On 216 real model–asset pairs: mean violation **0.016 → 0.010** (target 0.010); Basel Green share **72% → 95%**. |
+| **Rolling** (`audit(mode='rolling')`, `compute_qv_roll`, `compute_qv_roll_from_scores`) | **250** (default) | **Material.** 249th vs plain ~247.5th order statistic. Illustrative on the 216-pair empirical panel of the companion study (test-split protocol, 250-day Basel window): mean violation **0.016 → 0.010** (target 0.010), Basel Green share **72% → 95%**. These are panel-specific magnitudes — the direction (under-coverage) is general; the size depends on window length, tail shape, and dependence. |
 | Static (`audit(mode='static')`, `compute_qv_stat`, `ConformalShift`) | full calibration split (~10³–10⁴) | **Negligible** (< 0.0005 in the quantile level; mean violation moved 0.012 → 0.011, Green unchanged at 88%). Corrected here for consistency. |
 
 Rule of thumb: material for windows up to a few hundred observations; negligible

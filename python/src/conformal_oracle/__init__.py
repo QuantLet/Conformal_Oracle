@@ -24,6 +24,7 @@ from conformal_oracle.compare import ComparisonResult, compare_forecasters
 
 if TYPE_CHECKING:
     from conformal_oracle.recalibration import (
+        ACICalibrator,
         AdaptiveConformalInference,
         ConformalShift,
         ExtremeValueTheoryPOT,
@@ -34,9 +35,11 @@ if TYPE_CHECKING:
         LinearQuantileRegression,
         RecalibrationMethod,
         ScaleCorrectionRecalibration,
+        ScaleDiagnostic,
+        diagnose_scale,
     )
 
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 _RECALIBRATION_NAMES = {
     "RecalibrationMethod",
@@ -46,9 +49,12 @@ _RECALIBRATION_NAMES = {
     "LinearQuantileRegression",
     "IsotonicQuantileRegression",
     "AdaptiveConformalInference",
+    "ACICalibrator",
     "GBMQuantileRegression",
     "ExtremeValueTheoryPOT",
     "FilteredHistoricalSimulation",
+    "ScaleDiagnostic",
+    "diagnose_scale",
 }
 
 def __getattr__(name: str):
@@ -85,7 +91,10 @@ __all__ = [
     "LinearQuantileRegression",
     "IsotonicQuantileRegression",
     "AdaptiveConformalInference",
+    "ACICalibrator",
     "GBMQuantileRegression",
     "ExtremeValueTheoryPOT",
     "FilteredHistoricalSimulation",
+    "ScaleDiagnostic",
+    "diagnose_scale",
 ]
