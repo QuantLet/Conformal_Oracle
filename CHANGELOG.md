@@ -37,9 +37,12 @@ p-values and Basel zones. Table 1's Moirai-1.1 row (Green 21/24, Kupiec 15/24,
 R̄ = 0.11) and the aggregate figures (Panel A 127/144 = 88.2%; all pairs
 203/240 = 84.6%) all reproduce from the corrected file.
 
-**Worth stating plainly: the error flattered the result.** The stale file gives
-205/240 Green (85.4%); the correct computation gives 203/240 (84.6%). The
-correction makes the reported outcome slightly worse, not better.
+**Worth stating plainly: the error flattered the result.** In Table 5, the stale
+file records Moirai 1.1 as rejected on 10 of 24 assets at α = 0.01; the correct
+computation gives 9. The stale file made the model look *better* calibrated than
+it is, and the correction makes the reported outcome slightly worse. The same
+direction holds throughout: both defects push q̂_V downward, understating the
+size of the correction the model needs.
 
 Two published outputs were built from the stale file and change:
 
@@ -71,6 +74,43 @@ Table 1; they are not consumed by any published number.
 version control, so **the Release asset must be re-uploaded** for this correction
 to reach users. If the package has been deposited on Quantinar or attached to the
 SSRN entry, those copies need the same replacement and this note.
+
+### A larger reproducibility gap found while verifying the above
+
+Checking which pipeline path produced the aggregate Green count turned up
+something wider than the Moirai-1.1 defect, and it should be fixed before the
+package is redistributed.
+
+**`Quantlets/CO_full_evaluation/run_master_table.py` does not produce the
+published Table 1.** The script emits a 10-column table over **nine** models,
+with TimesFM 2.5 and Moirai 2.0 in Panel A (signal-preserving). The published
+table is 12 columns over **ten** models, adds a CC-pass column and an R̄ column,
+and places TimesFM 2.5 and Moirai 2.0 in Panel B (replacement) — the assignment
+the paper argues for. The script predates the finding that those two models have
+~99% raw violation rates, and it never reads any Moirai-1.1 input.
+
+Consequently:
+
+- **Table 1 is not regenerable from the shipped scripts.** Its values are correct
+  — they reproduce from `moirai11_results.csv` and `all_results.csv` — but no
+  script in the package assembles them into the published table.
+- **The aggregate "Overall: 203/240 Green (84.6%), 32 Yellow, 5 Red"** in the
+  table note, repeated in Section 4.3, is not emitted by any script. It is
+  consistent with the correct inputs (182/216 from `all_results.csv` plus 21/24
+  for Moirai-1.1), but it is a hand-entered figure.
+
+This violates the project's own rule that every number in the text be traceable
+to a pipeline script. `run_master_table.py` needs to be brought up to the
+published specification — ten models, correct panel assignment, CC and R̄
+columns, and the aggregate emitted rather than typed — before the replication
+package is redistributed.
+
+An earlier draft of this entry claimed the stale file yielded 205/240 Green
+against the correct 203/240. That comparison is withdrawn: 205/240 is what one
+obtains by concatenating `all_results.csv` with the stale file, but **no script
+in the package takes that path**, so the figure was not reproducible and should
+not have been offered as evidence. The Table 5 rejection count above is the
+demonstrable version of the same point.
 
 ### Related disclosure
 

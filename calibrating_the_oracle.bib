@@ -1,0 +1,578 @@
+%─── GAMLSS ─────────────────────────────────────────────────────────────────
+@inproceedings{zinkevich2003online,
+	author    = {Zinkevich, Martin},
+	title     = {{Online Convex Programming and Generalized Infinitesimal
+	Gradient Ascent}},
+	booktitle = {Proceedings of the Twentieth International Conference
+	on Machine Learning (ICML)},
+	pages     = {928--936},
+	year      = {2003},
+	publisher = {AAAI Press}
+}
+
+@article{glosten1993relation,
+	title={On the relation between the expected value and the volatility
+	of the nominal excess return on stocks},
+	author={Glosten, Lawrence R. and Jagannathan, Ravi and Runkle, David E.},
+	journal={Journal of Finance},
+	volume={48},
+	number={5},
+	pages={1779--1801},
+	year={1993}
+}
+
+@article{bollerslev1986generalized,
+	title={Generalized autoregressive conditional heteroskedasticity},
+	author={Bollerslev, Tim},
+	journal={Journal of Econometrics},
+	volume={31},
+	number={3},
+	pages={307--327},
+	year={1986}
+}
+
+@techreport{riskmetrics1996,
+	title={{RiskMetrics --- Technical Document}},
+	author={{J.P. Morgan/Reuters}},
+	institution={J.P. Morgan/Reuters},
+	year={1996},
+	edition={Fourth}
+}
+@article{liu2024moiraimoe,
+	title={{Moirai-MoE: Empowering Time Series Foundation Models with
+	Sparse Mixture of Experts}},
+	author={Liu, Xu and Liu, Juncheng and Woo, Gerald and Aksu, Taha
+	and Liang, Yuxuan and Zimmermann, Roger and Liu, Chenghao
+	and Savarese, Silvio and Xiong, Caiming and Sahoo, Doyen},
+	journal={arXiv preprint arXiv:2410.10469},
+	year={2024}
+}
+
+@article{goel2025volatility,
+	title={{Foundation Time-Series AI Model for Realized Volatility
+	Forecasting}},
+	author={Goel, Anubha and Pasricha, Puneet and Kanniainen, Juho},
+	journal={arXiv preprint arXiv:2505.11163},
+	year={2025}
+}
+
+@article{tamingtailrisk2026,
+	title={{Taming Tail Risk in Financial Markets: Conformal Risk Control
+	for Nonstationary Portfolio VaR}},
+	author={Schmitt, Marc},
+	journal={arXiv preprint arXiv:2602.03903},
+	year={2026}
+}
+
+@article{rigby2005generalized,
+	author  = {Rigby, Robert A. and Stasinopoulos, D. Mikis},
+	title   = {{Generalized Additive Models for Location, Scale and Shape}},
+	journal = {Journal of the Royal Statistical Society: Series C (Applied Statistics)},
+	volume  = {54},
+	number  = {3},
+	pages   = {507--554},
+	year    = {2005},
+	doi     = {10.1111/j.1467-9876.2005.00510.x}
+}
+
+%─── Core methodology ───────────────────────────────────────────────────────
+
+@book{koenker2005quantile,
+	title={{Quantile Regression}},
+	author={Koenker, Roger},
+	year={2005},
+	publisher={Cambridge University Press}
+}
+
+@book{vovk2005algorithmic,
+	author    = {Vovk, Vladimir and Gammerman, Alexander and Shafer, Glenn},
+	title     = {{Algorithmic Learning in a Random World}},
+	publisher = {Springer},
+	address   = {New York},
+	year      = {2005},
+	doi       = {10.1007/b106715}
+}
+
+@inproceedings{romano2019conformalized,
+	author    = {Romano, Yaniv and Patterson, Evan and Cand{\`e}s, Emmanuel},
+	title     = {{Conformalized Quantile Regression}},
+	booktitle = {{Advances in Neural Information Processing Systems}},
+	year      = {2019},
+	volume    = {32},
+	url       = {https://proceedings.neurips.cc/paper/2019/hash/5103c3584b063c431bd1268e9b5e76fb-Abstract.html}
+}
+
+@article{barber2023conformal,
+	author  = {Barber, Rina Foygel and Cand\`{e}s, Emmanuel J. and Ramdas, Aaditya and Tibshirani, Ryan J.},
+	title   = {{Conformal Prediction Beyond Exchangeability}},
+	journal = {Annals of Statistics},
+	year    = {2023},
+	volume  = {51},
+	number  = {2},
+	pages   = {816--845},
+	doi     = {10.1214/23-AOS2276}
+}
+
+@inproceedings{gibbs2021adaptive,
+	author    = {Gibbs, Isaac and Cand{\`e}s, Emmanuel},
+	title     = {{Adaptive Conformal Inference Under Distribution Shift}},
+	booktitle = {{Advances in Neural Information Processing Systems}},
+	year      = {2021},
+	volume    = {34},
+	pages     = {1660--1672},
+	url       = {https://proceedings.neurips.cc/paper/2021/hash/0d441de75945e5acbc865f6d9e0ab1be-Abstract.html}
+}
+
+@inproceedings{zaffran2022conformal,
+	author    = {Zaffran, Margaux and F\'{e}ron, Olivier and Goude, Yannig
+	and Josse, Julie and Dieuleveut, Aymeric},
+	title     = {{Adaptive Conformal Predictions for Time Series}},
+	booktitle = {{Proceedings of the 39th International Conference on Machine Learning (ICML)}},
+	year      = {2022},
+	volume    = {162},
+	pages     = {25834--25866},
+	publisher = {PMLR},
+	url       = {https://proceedings.mlr.press/v162/zaffran22a.html}
+}
+
+@article{xu2024conformal,
+	author  = {Xu, Chen and Xie, Yao},
+	title   = {{Conformal Prediction for Time Series}},
+	journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+	year    = {2023},
+	volume  = {45},
+	number  = {10},
+	pages   = {11575--11587},
+	doi     = {10.1109/TPAMI.2023.3272339}
+}
+
+@inproceedings{chernozhukov2018exact,
+	author    = {Chernozhukov, Victor and W\"{u}thrich, Kaspar and Zhu, Yinchu},
+	title     = {{Exact and Robust Conformal Inference Methods for Predictive
+	Machine Learning with Dependent Data}},
+	booktitle = {{Proceedings of the 31st Conference on Learning Theory (COLT)}},
+	year      = {2018},
+	volume    = {75},
+	pages     = {732--749},
+	url       = {https://arxiv.org/abs/1802.06300}
+}
+
+@inproceedings{angelopoulos2024conformal,
+	author    = {Angelopoulos, Anastasios N. and Bates, Stephen and Fisch, Adam and Lei, Lihua and Schuster, Tal},
+	title     = {Conformal Risk Control},
+	booktitle = {{International Conference on Learning Representations (ICLR)}},
+	year      = {2024},
+	url       = {https://openreview.net/forum?id=33XGfHLtZg}
+}
+
+@article{angelopoulos2024pid,
+	author  = {Angelopoulos, Anastasios N. and Cand{\`e}s, Emmanuel J. and Tibshirani, Ryan J.},
+	title   = {Conformal {PID} Control for Time Series Prediction},
+	journal = {Advances in Neural Information Processing Systems},
+	volume  = {36},
+	year    = {2024}
+}
+
+@inproceedings{zinkevich2003online,
+	author    = {Zinkevich, Martin},
+	title     = {Online Convex Programming and Generalized Infinitesimal Gradient Ascent},
+	booktitle = {Proceedings of the 20th International Conference on Machine Learning},
+	pages     = {928--935},
+	year      = {2003}
+}
+
+@book{hazan2016introduction,
+	author    = {Hazan, Elad},
+	title     = {Introduction to Online Convex Optimization},
+	publisher = {Now Publishers},
+	edition   = {2nd},
+	year      = {2016}
+}
+
+%─── Post-processing and scoring ────────────────────────────────────────────
+
+@article{gneiting2007probabilistic,
+	author  = {Gneiting, Tilmann and Balabdaoui, Fadoua and Raftery, Adrian E.},
+	title   = {{Probabilistic forecasts, calibration and sharpness}},
+	journal = {Journal of the Royal Statistical Society: Series B},
+	volume  = {69},
+	number  = {2},
+	pages   = {243--268},
+	year    = {2007},
+}
+
+@article{gneiting2014probabilistic,
+	author  = {Gneiting, Tilmann and Katzfuss, Matthias},
+	title   = {{Probabilistic forecasting}},
+	journal = {Annual Review of Statistics and Its Application},
+	volume  = {1},
+	pages   = {125--151},
+	year    = {2014},
+}
+
+@article{gneiting2013combining,
+	author  = {Gneiting, Tilmann and Ranjan, Roopesh},
+	title   = {{Combining predictive distributions}},
+	journal = {Electronic Journal of Statistics},
+	volume  = {7},
+	pages   = {1747--1782},
+	year    = {2013},
+	doi     = {10.1214/13-EJS823}
+}
+
+@article{brehmer2021properification,
+	author  = {Brehmer, Jonas R. and Gneiting, Tilmann},
+	title   = {{Properification---postprocessing of quantile and interval forecasts}},
+	journal = {Electronic Journal of Statistics},
+	volume  = {15},
+	number  = {2},
+	pages   = {3692--3720},
+	year    = {2021},
+	doi     = {10.1214/21-EJS1913}
+}
+
+@article{taillardat2016calibrated,
+	author  = {Taillardat, Maxime and Mestre, Olivier and Zamo, Micha{\"e}l and Naveau, Philippe},
+	title   = {{Calibrated ensemble forecasts using quantile regression forests and ensemble model output statistics}},
+	journal = {Monthly Weather Review},
+	volume  = {144},
+	number  = {6},
+	pages   = {2375--2393},
+	year    = {2016},
+	doi     = {10.1175/MWR-D-15-0260.1}
+}
+
+@article{gneiting2011making,
+	author  = {Gneiting, Tilmann},
+	title   = {{Making and Evaluating Point Forecasts}},
+	journal = {Journal of the American Statistical Association},
+	year    = {2011},
+	volume  = {106},
+	number  = {494},
+	pages   = {746--762},
+	doi     = {10.1198/jasa.2011.r10138}
+}
+
+@article{fissler2016higher,
+	author  = {Fissler, Tobias and Ziegel, Johanna F.},
+	title   = {{Higher Order Elicitability and {Osband}'s Principle}},
+	journal = {Annals of Statistics},
+	year    = {2016},
+	volume  = {44},
+	number  = {4},
+	pages   = {1680--1707},
+	doi     = {10.1214/16-AOS1439}
+}
+
+@article{nolde2017elicitability,
+	author  = {Nolde, Natalia and Ziegel, Johanna F.},
+	title   = {{Elicitability and Backtesting: Perspectives for Banking Regulation}},
+	journal = {Annals of Applied Statistics},
+	year    = {2017},
+	volume  = {11},
+	number  = {4},
+	pages   = {1833--1874},
+	doi     = {10.1214/17-AOAS1041}
+}
+
+%─── Forecast comparison ────────────────────────────────────────────────────
+
+@article{diebold1995comparing,
+	author  = {Diebold, Francis X. and Mariano, Roberto S.},
+	title   = {{Comparing predictive accuracy}},
+	journal = {Journal of Business \& Economic Statistics},
+	volume  = {13},
+	number  = {3},
+	pages   = {253--263},
+	year    = {1995},
+	doi     = {10.1080/07350015.1995.10524599}
+}
+
+@article{harvey1997testing,
+	author  = {Harvey, David and Leybourne, Stephen and Newbold, Paul},
+	title   = {{Testing the equality of prediction mean squared errors}},
+	journal = {International Journal of Forecasting},
+	volume  = {13},
+	number  = {2},
+	pages   = {281--291},
+	year    = {1997},
+	doi     = {10.1016/S0169-2070(96)00719-4}
+}
+
+%─── Backtesting and regulation ─────────────────────────────────────────────
+
+@article{christoffersen1998,
+	author  = {Christoffersen, Peter F.},
+	title   = {{Evaluating Interval Forecasts}},
+	journal = {International Economic Review},
+	year    = {1998},
+	volume  = {39},
+	number  = {4},
+	pages   = {841--862},
+	doi     = {10.2307/2527341}
+}
+
+@article{kupiec1995,
+	author  = {Kupiec, Paul},
+	title   = {{Techniques for Verifying the Accuracy of Risk Measurement Models}},
+	journal = {Journal of Derivatives},
+	year    = {1995},
+	volume  = {3},
+	number  = {2},
+	pages   = {73--84},
+	doi     = {10.3905/jod.1995.407942}
+}
+
+@techreport{basel1996,
+	author      = {{Basel Committee on Banking Supervision}},
+	title       = {{Supervisory Framework for the Use of ``Backtesting''
+	in Conjunction with the Internal Models Approach to
+	Market Risk Capital Requirements}},
+	institution = {Bank for International Settlements},
+	year        = {1996},
+	address     = {Basel},
+	url         = {https://www.bis.org/publ/bcbs22.htm}
+}
+
+@techreport{bcbs2019frtb,
+	author      = {{Basel Committee on Banking Supervision}},
+	title       = {{Minimum Capital Requirements for Market Risk}},
+	institution = {Bank for International Settlements},
+	number      = {d457},
+	year        = {2019},
+	address     = {Basel},
+	url         = {https://www.bis.org/bcbs/publ/d457.htm}
+}
+
+@article{acerbi2014back,
+	author  = {Acerbi, Carlo and Sz\'{e}kely, Bal\'{a}zs},
+	title   = {{Back-Testing Expected Shortfall}},
+	journal = {Risk},
+	year    = {2014},
+	volume  = {27},
+	number  = {11},
+	pages   = {76--81}
+}
+
+%─── VaR/ES models ──────────────────────────────────────────────────────────
+
+@article{engle2004caviar,
+	author  = {Engle, Robert F. and Manganelli, Simone},
+	title   = {{{CAViaR}: Conditional Autoregressive Value at Risk by
+	Regression Quantiles}},
+	journal = {Journal of Business \& Economic Statistics},
+	year    = {2004},
+	volume  = {22},
+	number  = {4},
+	pages   = {367--381},
+	doi     = {10.1198/073500104000000370}
+}
+
+@article{mcneil2000estimation,
+	author  = {McNeil, Alexander J. and Frey, R{\"u}diger},
+	title   = {{Estimation of Tail-Related Risk Measures for Heteroscedastic
+	Financial Time Series: An Extreme Value Approach}},
+	journal = {Journal of Empirical Finance},
+	year    = {2000},
+	volume  = {7},
+	number  = {3--4},
+	pages   = {271--300},
+	doi     = {10.1016/S0927-5398(00)00012-8}
+}
+
+@article{baroneadesi1999var,
+	author = {Barone-Adesi, Giovanni and Giannopoulos, Kostas and Vosper, Les},
+	title = {{VaR} without Correlations for Portfolios of Derivative Securities},
+	journal = {Journal of Futures Markets},
+	volume = {19},
+	pages = {583--602},
+	year = {1999},
+	doi = {10.1002/(SICI)1096-9934(199908)19:5<583::AID-FUT5>3.0.CO;2-S}
+}
+
+%─── Econometrics and HAC ───────────────────────────────────────────────────
+
+@article{newey1987simple,
+	author    = {Newey, Whitney K. and West, Kenneth D.},
+	title     = {{A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix}},
+	journal   = {Econometrica},
+	volume    = {55},
+	number    = {3},
+	pages     = {703--708},
+	year      = {1987},
+}
+
+@article{newey1994automatic,
+	author    = {Newey, Whitney K. and West, Kenneth D.},
+	title     = {{Automatic Lag Selection in Covariance Matrix Estimation}},
+	journal   = {Review of Economic Studies},
+	volume    = {61},
+	number    = {4},
+	pages     = {631--653},
+	year      = {1994},
+	doi       = {10.2307/2297912},
+}
+
+@article{driscoll1998consistent,
+	author    = {Driscoll, John C. and Kraay, Aart C.},
+	title     = {{Consistent Covariance Matrix Estimation with Spatially Dependent Panel Data}},
+	journal   = {Review of Economics and Statistics},
+	volume    = {80},
+	number    = {4},
+	pages     = {549--560},
+	year      = {1998},
+	doi       = {10.1162/003465398557825},
+}
+
+%─── GARCH theory ───────────────────────────────────────────────────────────
+
+@article{bollerslev1987,
+	author    = {Bollerslev, Tim},
+	title     = {A Conditionally Heteroskedastic Time Series Model for Speculative Prices and Rates of Return},
+	journal   = {The Review of Economics and Statistics},
+	volume    = {69},
+	number    = {3},
+	pages     = {542--547},
+	year      = {1987},
+	publisher = {The MIT Press},
+	doi       = {10.2307/1925546}
+}
+
+@book{francq2019garch,
+	title={{{GARCH} Models: Structure, Statistical Inference and Financial Applications}},
+	author={Francq, Christian and Zako{\"\i}an, Jean-Michel},
+	edition={2nd},
+	year={2019},
+	publisher={John Wiley \& Sons},
+	doi={10.1002/9781119313472}
+}
+
+@article{lindner2009stationarity,
+	title={{Stationarity, mixing, distributional properties and moments of {GARCH}(p,q) processes}},
+	author={Lindner, Alexander M},
+	journal={Handbook of Financial Time Series},
+	pages={43--69},
+	year={2009},
+	publisher={Springer}
+}
+
+%─── Mixing and empirical processes ─────────────────────────────────────────
+
+@book{rio2017asymptotic,
+	title={{Asymptotic Theory of Weakly Dependent Random Processes}},
+	author={Rio, Emmanuel},
+	year={2017},
+	publisher={Springer},
+	doi={10.1007/978-3-662-54323-8}
+}
+
+@article{yu1994rates,
+	title={{Rates of convergence for empirical processes of stationary mixing sequences}},
+	author={Yu, Bin},
+	journal={The Annals of Probability},
+	volume={22},
+	number={1},
+	pages={94--116},
+	year={1994},
+	doi={10.1214/aop/1176988849}
+}
+
+%─── Time series foundation models ──────────────────────────────────────────
+
+@article{ansari2024chronos,
+	author  = {Ansari, Abdul Fatir and Stella, Lorenzo and Turkmen, Caner and Zhang, Xiyuan and Mercado, Pedro and Shen, Huibin and Shchur, Oleksandr and Rangapuram, Syama Sundar and Arango, Sebastian Pineda and Kapoor, Shubham and others},
+	title   = {{Chronos: Learning the language of time series}},
+	journal = {Transactions on Machine Learning Research},
+	year    = {2024},
+	url     = {https://openreview.net/forum?id=gerNCVqqtR}
+}
+
+@article{ansari2025chronos2,
+	author  = {Ansari, Abdul Fatir and Shchur, Oleksandr and K{\"u}ken, Jaris and Auer, Andreas and Han, Boran and Mercado, Pedro and Rangapuram, Syama Sundar and Shen, Huibin and Stella, Lorenzo and Zhang, Xiyuan and others},
+	title   = {{Chronos-2: From Univariate to Universal Forecasting}},
+	journal = {arXiv preprint arXiv:2510.15821},
+	year    = {2025},
+	url     = {https://arxiv.org/abs/2510.15821}
+}
+
+@inproceedings{das2024timesfm,
+	author    = {Das, Abhimanyu and Kong, Weihao and Sen, Rajat and Zhou, Yichen},
+	title     = {{A decoder-only foundation model for time-series forecasting}},
+	booktitle = {{Proceedings of the 41st International Conference on Machine Learning (ICML)}},
+	year      = {2024}
+}
+
+@inproceedings{woo2024moirai,
+	author    = {Woo, Gerald and Liu, Chenghao and Kumar, Akshat and Xiong, Caiming and Savarese, Silvio and Sahoo, Doyen},
+	title     = {{Unified training of universal time series forecasting transformers}},
+	booktitle = {{Proceedings of the 41st International Conference on Machine Learning (ICML)}},
+	year      = {2024}
+}
+
+@article{liu2024moirai2,
+	author  = {Liu, Xu and Woo, Gerald and Sahoo, Doyen and others},
+	title   = {{Moirai-MoE: Empowering time series foundation models with sparse mixture of experts}},
+	journal = {arXiv preprint arXiv:2410.10469},
+	year    = {2024}
+}
+
+@article{rasul2024lagllama,
+	author  = {Rasul, Kashif and Ashok, Arjun and Williams, Andrew Robert and Ghonia, Hena and Bhagwatkar, Rishika and Khorasani, Arian and Bayazi, Mohammad Javad Darvishi and Adamopoulos, George and Riachi, Roland and Hassen, Nadhir and Bilo{\v{s}}, Marin and Garg, Sahil and Schneider, Anderson and Chapados, Nicolas and Drouin, Alexandre and Zantedeschi, Valentina and Nevmyvaka, Yuriy and Rish, Irina},
+	title   = {{Lag-Llama: Towards foundation models for probabilistic time series forecasting}},
+	journal = {arXiv preprint arXiv:2310.08278},
+	year    = {2024}
+}
+
+@article{goel2024tsfmvar,
+	author  = {Goel, Gaurav and Pasricha, Puneet and Kanniainen, Juho},
+	title   = {{Time-series foundation model for {V}alue-at-{R}isk forecasting}},
+	journal = {arXiv preprint arXiv:2410.11773},
+	year    = {2024}
+}
+
+@article{rahimikia2025revisiting,
+	author  = {Rahimikia, Eghbal and Yeung, Dic and Hanna, Alan and Hurn, Stan and Poon, Ser-Huang},
+	title   = {{Re(Visiting) Time Series Foundation Models in Finance}},
+	journal = {arXiv preprint arXiv:2511.18578},
+	year    = {2025}
+}
+
+%─── Own prior work ─────────────────────────────────────────────────────────
+
+@article{pele2025llmvar,
+	author  = {Pele, Daniel Traian and Bolov{\u a}neanu, Vlad and
+	Lin, Min-Bin and Ren, Rui and Ginavar, Andrei Theodor and
+	Spilak, Bruno and Andrei, Alexandru Victor and
+	Toma, Florin-Mihai and Lessmann, Stefan and
+	H{\"a}rdle, Wolfgang Karl},
+	title   = {{In the Beginning was the Word: {LLM-VaR} and {LLM-ES}}},
+	journal = {Expert Systems with Applications},
+	volume  = {295},
+	pages   = {128676},
+	year    = {2026},
+	issn    = {0957-4174},
+	doi     = {10.1016/j.eswa.2025.128676}
+}
+
+%─── Hansen skewed-t ────────────────────────────────────────────────────────
+
+@article{hansen1994autoregressive,
+	author  = {Hansen, Bruce E.},
+	title   = {Autoregressive Conditional Density Estimation},
+	journal = {International Economic Review},
+	volume  = {35},
+	number  = {3},
+	pages   = {705--730},
+	year    = {1994},
+	doi     = {10.2307/2527081}
+}
+
+@article{politis1994stationary,
+	author  = {Politis, Dimitris N. and Romano, Joseph P.},
+	title   = {The Stationary Bootstrap},
+	journal = {Journal of the American Statistical Association},
+	volume  = {89},
+	number  = {428},
+	pages   = {1303--1313},
+	year    = {1994}
+}

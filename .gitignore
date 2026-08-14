@@ -48,6 +48,10 @@ robustness_output/
 20260*.spl
 20260*.synctex.gz
 calibrating_the_oracle.bib
+# ...but the bibliography SOURCE is versioned: the response letter states that the
+# bibliography was audited, and that claim is only verifiable with a commit trail.
+# The rule above still catches the build artefacts sharing this stem.
+!calibrating_the_oracle.bib
 # Root-anchored: these names also exist as required Quantlet outputs that the
 # paper \inputs (Quantlets/CO_robustness/, Quantlets/CO_simulation_study/).
 # Anchoring with a leading slash ignores only the root-level local copies.
@@ -79,7 +83,12 @@ garch_conformal_detail.csv
 # Paper-level outputs (Quantlets host their own)
 /figures/
 /results/
-/scripts/
+# Local analysis scratch stays out, but the audit tools are part of the
+# replication package and must be versioned. (Git cannot re-include a file whose
+# parent directory is excluded, so the directory is globbed rather than ignored.)
+/scripts/*
+!/scripts/audit_bib.py
+!/scripts/audit_refs.py
 
 # Root-level images (Quantlets have their own)
 /ql_logo.png
