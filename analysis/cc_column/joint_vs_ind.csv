@@ -1,0 +1,10 @@
+model,table2_static,independence_chi2_1,joint_chi2_2
+Chronos-Small,4,4,3
+Chronos-Mini,5,5,2
+TimesFM-2.5,0,0,0
+Moirai-2.0,0,0,0
+Lag-Llama,2,2,2
+GJR-GARCH,7,7,6
+GARCH-N,6,6,7
+Hist-Sim,6,6,4
+EWMA,7,7,2

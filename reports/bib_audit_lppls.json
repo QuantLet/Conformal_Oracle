@@ -1,0 +1,670 @@
+{
+ "bib": "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/Lppls-ai-ecosystem/paper/refs.bib",
+ "tex": [
+  "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/Lppls-ai-ecosystem/paper/main.tex",
+  "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/Lppls-ai-ecosystem/paper/preamble.tex"
+ ],
+ "n_entries": 21,
+ "counts": {
+  "OK": 15,
+  "MISMATCH": 1,
+  "MANUAL": 5
+ },
+ "records": [
+  {
+   "key": "johansen2000",
+   "type": "article",
+   "lineno": 1,
+   "local": {
+    "title": "Crashes as Critical Points",
+    "author": "Johansen",
+    "author_raw": "Johansen, Anders and Ledoit, Olivier and Sornette, Didier",
+    "container": "International Journal of Theoretical and Applied Finance",
+    "year": "2000",
+    "volume": "3",
+    "pages": "219-255",
+    "doi": "10.1142/S0219024900000115"
+   },
+   "remote": {
+    "title": "CRASHES AS CRITICAL POINTS",
+    "author": "JOHANSEN",
+    "container": "International Journal of Theoretical and Applied Finance",
+    "year": "2000",
+    "volume": "03",
+    "pages": "219-255",
+    "doi": "10.1142/s0219024900000115",
+    "type": "journal-article",
+    "publisher": "World Scientific Pub Co Pte Lt"
+   },
+   "source": "crossref:10.1142/S0219024900000115",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "volume 3 vs Crossref 03 (zero-padding only)"
+   ],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "filimonov2013",
+   "type": "article",
+   "lineno": 12,
+   "local": {
+    "title": "A Stable and Robust Calibration Scheme of the Log-Periodic Power Law Model",
+    "author": "Filimonov",
+    "author_raw": "Filimonov, Vladimir and Sornette, Didier",
+    "container": "Physica A: Statistical Mechanics and its Applications",
+    "year": "2013",
+    "volume": "392",
+    "pages": "3698-3707",
+    "doi": "10.1016/j.physa.2013.04.012"
+   },
+   "remote": {
+    "title": "A stable and robust calibration scheme of the log-periodic power law model",
+    "author": "Filimonov",
+    "container": "Physica A: Statistical Mechanics and its Applications",
+    "year": "2013",
+    "volume": "392",
+    "pages": "3698-3707",
+    "doi": "10.1016/j.physa.2013.04.012",
+    "type": "journal-article",
+    "publisher": "Elsevier BV"
+   },
+   "source": "crossref:10.1016/j.physa.2013.04.012",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "sornette2015",
+   "type": "article",
+   "lineno": 24,
+   "local": {
+    "title": "Real-Time Prediction and Post-Mortem Analysis of the Shanghai 2015 Stock Market Bubble and Crash",
+    "author": "Sornette",
+    "author_raw": "Sornette, Didier and Demos, Guilherme and Zhang, Qun and Cauwels, Peter and Filimonov, Vladimir and Zhang, Qunzhi",
+    "container": "Journal of Investment Strategies",
+    "year": "2015",
+    "volume": "4",
+    "pages": "77-95",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Tight fibered knots and band sums",
+    "author": "Baker",
+    "container": "arXiv:1509.00121",
+    "year": "2015",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:1509.00121",
+   "status": "MISMATCH",
+   "problems": [
+    "title mismatch vs arXiv (similarity 0.28)",
+    "first author 'Sornette' vs arXiv 'Baker'"
+   ],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "sarkar2026",
+   "type": "unpublished",
+   "lineno": 35,
+   "local": {
+    "title": "Is There an AI Bubble? Robust Date-Stamping for Periods of Exuberance",
+    "author": "Sarkar",
+    "author_raw": "Sarkar, Abir and Wells, Martin T.",
+    "container": "",
+    "year": "2026",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Is There an AI Bubble? Robust Date-Stamping for Periods of Exuberance",
+    "author": "Sarkar",
+    "container": "arXiv:2604.12062",
+    "year": "2026",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2604.12062",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "meng2026",
+   "type": "unpublished",
+   "lineno": 42,
+   "local": {
+    "title": "Artificial Intelligence and Systemic Risk: A Unified Model of Performative Prediction, Algorithmic Herding, and Cognitive Dependency in Financial Markets",
+    "author": "Meng",
+    "author_raw": "Meng, Shuchen and Chen, Xupeng",
+    "container": "",
+    "year": "2026",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Artificial Intelligence and Systemic Risk: A Unified Model of Performative Prediction, Algorithmic Herding, and Cognitive Dependency in Financial Markets",
+    "author": "Meng",
+    "container": "arXiv:2604.03272",
+    "year": "2026",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2604.03272",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "cao2025",
+   "type": "unpublished",
+   "lineno": 49,
+   "local": {
+    "title": "Identifying and Quantifying Financial Bubbles with the Hyped Log-Periodic Power Law Model",
+    "author": "Cao",
+    "author_raw": "Cao, Zheng and Shao, Xingran and Yan, Yuheng and Geman, Helyette",
+    "container": "",
+    "year": "2025",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Identifying and Quantifying Financial Bubbles with the Hyped Log-Periodic Power Law Model",
+    "author": "Cao",
+    "container": "arXiv:2510.10878",
+    "year": "2025",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2510.10878",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "shu2020",
+   "type": "article",
+   "lineno": 56,
+   "local": {
+    "title": "Detection of Chinese Stock Market Bubbles with LPPLS Confidence Indicator",
+    "author": "Shu",
+    "author_raw": "Shu, Min and Zhu, Wei",
+    "container": "Physica A: Statistical Mechanics and its Applications",
+    "year": "2020",
+    "volume": "557",
+    "pages": "124892",
+    "doi": "10.1016/j.physa.2020.124892"
+   },
+   "remote": {
+    "title": "Detection of Chinese stock market bubbles with LPPLS confidence indicator",
+    "author": "Shu",
+    "container": "Physica A: Statistical Mechanics and its Applications",
+    "year": "2020",
+    "volume": "557",
+    "pages": "124892",
+    "doi": "10.1016/j.physa.2020.124892",
+    "type": "journal-article",
+    "publisher": "Elsevier BV"
+   },
+   "source": "crossref:10.1016/j.physa.2020.124892",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "phillips2015",
+   "type": "article",
+   "lineno": 67,
+   "local": {
+    "title": "Testing for Multiple Bubbles: Historical Episodes of Exuberance and Collapse in the S&P 500",
+    "author": "Phillips",
+    "author_raw": "Phillips, Peter C.B. and Shi, Shuping and Yu, Jun",
+    "container": "International Economic Review",
+    "year": "2015",
+    "volume": "56",
+    "pages": "1043-1078",
+    "doi": "10.1111/iere.12132"
+   },
+   "remote": {
+    "title": "TESTING FOR MULTIPLE BUBBLES: HISTORICAL EPISODES OF EXUBERANCE AND COLLAPSE IN THE S&amp;P 500",
+    "author": "Phillips",
+    "container": "International Economic Review",
+    "year": "2015",
+    "volume": "56",
+    "pages": "1043-1078",
+    "doi": "10.1111/iere.12132",
+    "type": "journal-article",
+    "publisher": "Wiley"
+   },
+   "source": "crossref:10.1111/iere.12132",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 0.978
+  },
+  {
+   "key": "vovk2005",
+   "type": "book",
+   "lineno": 78,
+   "local": {
+    "title": "Algorithmic Learning in a Random World",
+    "author": "Vovk",
+    "author_raw": "Vovk, Vladimir and Gammerman, Alexander and Shafer, Glenn",
+    "container": "Springer",
+    "year": "2005",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1007/b106715"
+   },
+   "remote": {
+    "title": "Algorithmic Learning in a Random World",
+    "author": "",
+    "container": "",
+    "year": "2005",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1007/b106715",
+    "type": "book",
+    "publisher": "Springer-Verlag"
+   },
+   "source": "crossref:10.1007/b106715",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "container 'Springer' vs Crossref 'Springer-Verlag' \u2014 publisher/series naming, not an error"
+   ],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "romano2019",
+   "type": "inproceedings",
+   "lineno": 86,
+   "local": {
+    "title": "Conformalized Quantile Regression",
+    "author": "Romano",
+    "author_raw": "Romano, Yaniv and Patterson, Evan and Candes, Emmanuel J.",
+    "container": "Advances in Neural Information Processing Systems",
+    "year": "2019",
+    "volume": "32",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Conformalized Quantile Regression",
+    "author": "Romano",
+    "container": "arXiv:1905.03222",
+    "year": "2019",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:1905.03222",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "acemoglu2012",
+   "type": "article",
+   "lineno": 95,
+   "local": {
+    "title": "The Network Origins of Aggregate Fluctuations",
+    "author": "Acemoglu",
+    "author_raw": "Acemoglu, Daron and Carvalho, Vasco M. and Ozdaglar, Asuman and Tahbaz-Salehi, Alireza",
+    "container": "Econometrica",
+    "year": "2012",
+    "volume": "80",
+    "pages": "1977-2016",
+    "doi": "10.3982/ECTA9623"
+   },
+   "remote": {
+    "title": "The Network Origins of Aggregate Fluctuations",
+    "author": "",
+    "container": "Econometrica",
+    "year": "2012",
+    "volume": "80",
+    "pages": "1977-2016",
+    "doi": "10.3982/ecta9623",
+    "type": "journal-article",
+    "publisher": "The Econometric Society"
+   },
+   "source": "crossref:10.3982/ECTA9623",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "battiston2012",
+   "type": "article",
+   "lineno": 106,
+   "local": {
+    "title": "DebtRank: Too Central to Fail? Financial Networks, the FED and Systemic Risk",
+    "author": "Battiston",
+    "author_raw": "Battiston, Stefano and Puliga, Michelangelo and Kaushik, Rahul and Tasca, Paolo and Caldarelli, Guido",
+    "container": "Scientific Reports",
+    "year": "2012",
+    "volume": "2",
+    "pages": "541",
+    "doi": "10.1038/srep00541"
+   },
+   "remote": {
+    "title": "DebtRank: Too Central to Fail? Financial Networks, the FED and Systemic Risk",
+    "author": "Battiston",
+    "container": "Scientific Reports",
+    "year": "2012",
+    "volume": "2",
+    "pages": "",
+    "doi": "10.1038/srep00541",
+    "type": "journal-article",
+    "publisher": "Springer Science and Business Media LLC"
+   },
+   "source": "crossref:10.1038/srep00541",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "diebold2014",
+   "type": "article",
+   "lineno": 116,
+   "local": {
+    "title": "On the Network Topology of Variance Decompositions: Measuring the Connectedness of Financial Firms",
+    "author": "Diebold",
+    "author_raw": "Diebold, Francis X. and Y lmaz, Kamil",
+    "container": "Journal of Econometrics",
+    "year": "2014",
+    "volume": "182",
+    "pages": "119-134",
+    "doi": "10.1016/j.jeconom.2014.04.012"
+   },
+   "remote": {
+    "title": "On the network topology of variance decompositions: Measuring the connectedness of financial firms",
+    "author": "Diebold",
+    "container": "Journal of Econometrics",
+    "year": "2014",
+    "volume": "182",
+    "pages": "119-134",
+    "doi": "10.1016/j.jeconom.2014.04.012",
+    "type": "journal-article",
+    "publisher": "Elsevier BV"
+   },
+   "source": "crossref:10.1016/j.jeconom.2014.04.012",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "sornette2003",
+   "type": "book",
+   "lineno": 127,
+   "local": {
+    "title": "Why Stock Markets Crash: Critical Events in Complex Financial Systems",
+    "author": "Sornette",
+    "author_raw": "Sornette, Didier",
+    "container": "Princeton University Press",
+    "year": "2003",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: year 2003 vs 2017"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.23943/princeton/9780691175959.001.0001",
+     "title": "Why Stock Markets Crash: Critical Events in Complex Financial Systems",
+     "author": "Sornette",
+     "container": "",
+     "year": "2017",
+     "volume": "",
+     "pages": ""
+    }
+   ]
+  },
+  {
+   "key": "page1999",
+   "type": "techreport",
+   "lineno": 134,
+   "local": {
+    "title": "The PageRank Citation Ranking: Bringing Order to the Web",
+    "author": "Page",
+    "author_raw": "Page, Lawrence and Brin, Sergey and Motwani, Rajeev and Winograd, Terry",
+    "container": "Stanford InfoLab",
+    "year": "1999",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "goldmansachs2026",
+   "type": "misc",
+   "lineno": 142,
+   "local": {
+    "title": "Why AI Companies May Invest More than \\$500 Billion in 2026",
+    "author": "Sachs",
+    "author_raw": "Goldman Sachs",
+    "container": "",
+    "year": "2026",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "siliconangle2025",
+   "type": "misc",
+   "lineno": 149,
+   "local": {
+    "title": "OpenAI and Oracle Strike \\$300B Cloud Computing Deal to Power AI",
+    "author": "SiliconANGLE",
+    "author_raw": "SiliconANGLE",
+    "container": "",
+    "year": "2025",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "sornette2014",
+   "type": "article",
+   "lineno": 156,
+   "local": {
+    "title": "Financial Bubbles: Mechanisms and Diagnostics",
+    "author": "Sornette",
+    "author_raw": "Sornette, Didier and Cauwels, Peter",
+    "container": "Review of Behavioral Economics",
+    "year": "2015",
+    "volume": "2",
+    "pages": "279-305",
+    "doi": "10.1561/105.00000035"
+   },
+   "remote": {
+    "title": "Financial Bubbles: Mechanisms and Diagnostics",
+    "author": "Sornette",
+    "container": "Review of Behavioral Economics",
+    "year": "2015",
+    "volume": "2",
+    "pages": "279-305",
+    "doi": "10.1561/105.00000035",
+    "type": "journal-article",
+    "publisher": "Emerald"
+   },
+   "source": "crossref:10.1561/105.00000035",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "cont2013",
+   "type": "article",
+   "lineno": 167,
+   "local": {
+    "title": "Running for the Exit: Distressed Selling and Endogenous Correlation in Financial Markets",
+    "author": "Cont",
+    "author_raw": "Cont, Rama and Wagalath, Lakshithe",
+    "container": "Mathematical Finance",
+    "year": "2013",
+    "volume": "23",
+    "pages": "718-741",
+    "doi": "10.1111/j.1467-9965.2011.00510.x"
+   },
+   "remote": {
+    "title": "RUNNING FOR THE EXIT: DISTRESSED SELLING AND ENDOGENOUS CORRELATION IN FINANCIAL MARKETS",
+    "author": "Cont",
+    "container": "Mathematical Finance",
+    "year": "2013",
+    "volume": "23",
+    "pages": "718-741",
+    "doi": "10.1111/j.1467-9965.2011.00510.x",
+    "type": "journal-article",
+    "publisher": "Wiley"
+   },
+   "source": "crossref:10.1111/j.1467-9965.2011.00510.x",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "boulder2024",
+   "type": "misc",
+   "lineno": 178,
+   "local": {
+    "title": "lppls: Python module for fitting the Log-Periodic Power Law Singularity model",
+    "author": "Technologies",
+    "author_raw": "Boulder Investment Technologies",
+    "container": "",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "demirer2018",
+   "type": "article",
+   "lineno": 185,
+   "local": {
+    "title": "Estimating Global Bank Network Connectedness",
+    "author": "Demirer",
+    "author_raw": "Demirer, Mert and Diebold, Francis X. and Liu, Laura and Y lmaz, Kamil",
+    "container": "Journal of Applied Econometrics",
+    "year": "2018",
+    "volume": "33",
+    "pages": "1-15",
+    "doi": "10.1002/jae.2585"
+   },
+   "remote": {
+    "title": "Estimating global bank network connectedness",
+    "author": "Demirer",
+    "container": "Journal of Applied Econometrics",
+    "year": "2018",
+    "volume": "33",
+    "pages": "1-15",
+    "doi": "10.1002/jae.2585",
+    "type": "journal-article",
+    "publisher": "Wiley"
+   },
+   "source": "crossref:10.1002/jae.2585",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  }
+ ],
+ "cited_not_in_bib": [],
+ "in_bib_not_cited": [
+  "acemoglu2012",
+  "battiston2012",
+  "boulder2024",
+  "cao2025",
+  "cont2013",
+  "demirer2018",
+  "diebold2014",
+  "filimonov2013",
+  "goldmansachs2026",
+  "johansen2000",
+  "meng2026",
+  "page1999",
+  "phillips2015",
+  "romano2019",
+  "sarkar2026",
+  "shu2020",
+  "siliconangle2025",
+  "sornette2003",
+  "sornette2014",
+  "sornette2015",
+  "vovk2005"
+ ]
+}

@@ -1,0 +1,10 @@
+model,static_informative_pass,static_incl_degenerate,table2_static,roll_informative_pass,roll_incl_degenerate,table2_rolling,static_ok,roll_ok
+Chronos-Small,4,15,4,5,14,5,True,True
+Chronos-Mini,5,16,5,5,14,5,True,True
+TimesFM-2.5,0,10,0,3,10,3,True,True
+Moirai-2.0,0,7,0,2,8,2,True,True
+Lag-Llama,2,24,2,2,24,2,True,True
+GJR-GARCH,7,20,7,8,23,8,True,True
+GARCH-N,6,18,6,10,22,10,True,True
+Hist-Sim,6,14,6,9,16,9,True,True
+EWMA,7,21,7,5,22,5,True,True

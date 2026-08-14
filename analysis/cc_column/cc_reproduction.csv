@@ -1,0 +1,11 @@
+model,n_degenerate,n_informative_pass,sum,published,reproduces
+Moirai-1.1,18,6,24,24,True
+Lag-Llama,22,2,24,24,True
+GJR-GARCH,13,7,20,20,True
+GARCH-N,12,6,18,18,True
+Hist-Sim,8,6,14,14,True
+EWMA,14,7,21,21,True
+Chronos-Small,11,4,15,15,True
+Chronos-Mini,11,5,16,16,True
+TimesFM-2.5,10,0,10,10,True
+Moirai-2.0,7,0,7,7,True

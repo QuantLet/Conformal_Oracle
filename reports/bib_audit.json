@@ -1,0 +1,1898 @@
+{
+ "bib": "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/2026 CFP LLM VaR/submission_IJF/calibrating_the_oracle.bib",
+ "tex": [
+  "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/2026 CFP LLM VaR/submission_IJF/main_R1.tex",
+  "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/2026 CFP LLM VaR/submission_IJF/main_R1_anon.tex"
+ ],
+ "n_entries": 56,
+ "counts": {
+  "MANUAL": 19,
+  "OK": 30,
+  "UNRESOLVED": 3,
+  "MISMATCH": 4
+ },
+ "records": [
+  {
+   "key": "zinkevich2003online",
+   "type": "inproceedings",
+   "lineno": 1,
+   "local": {
+    "title": "Online Convex Programming and Generalized Infinitesimal Gradient Ascent",
+    "author": "Zinkevich",
+    "author_raw": "Zinkevich, Martin",
+    "container": "Proceedings of the Twentieth International Conference on Machine Learning (ICML)",
+    "year": "2003",
+    "volume": "",
+    "pages": "928-936",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "glosten1993relation",
+   "type": "article",
+   "lineno": 12,
+   "local": {
+    "title": "On the relation between the expected value and the volatility of the nominal excess return on stocks",
+    "author": "Glosten",
+    "author_raw": "Glosten, Lawrence R. and Jagannathan, Ravi and Runkle, David E.",
+    "container": "Journal of Finance",
+    "year": "1993",
+    "volume": "48",
+    "pages": "1779-1801",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1111/j.1540-6261.1993.tb05128.x",
+     "title": "On the Relation between the Expected Value and the Volatility of the Nominal Excess Return on Stocks",
+     "author": "GLOSTEN",
+     "container": "The Journal of Finance",
+     "year": "1993",
+     "volume": "48",
+     "pages": "1779-1801"
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.21034/sr.157",
+     "title": "On the Relation Between the Expected Value and the Volatility of the Nominal Excess Return on Stocks",
+     "author": "Glosten",
+     "container": "",
+     "year": "1993",
+     "volume": "",
+     "pages": ""
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.21034/wp.505",
+     "title": "On the Relation Between the Expected Value and the Volatility of the Nominal Excess Return on Stocks",
+     "author": "Glosten",
+     "container": "",
+     "year": "1992",
+     "volume": "",
+     "pages": ""
+    }
+   ]
+  },
+  {
+   "key": "bollerslev1986generalized",
+   "type": "article",
+   "lineno": 23,
+   "local": {
+    "title": "Generalized autoregressive conditional heteroskedasticity",
+    "author": "Bollerslev",
+    "author_raw": "Bollerslev, Tim",
+    "container": "Journal of Econometrics",
+    "year": "1986",
+    "volume": "31",
+    "pages": "307-327",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1016/0304-4076(86)90063-1",
+     "title": "Generalized autoregressive conditional heteroskedasticity",
+     "author": "Bollerslev",
+     "container": "Journal of Econometrics",
+     "year": "1986",
+     "volume": "31",
+     "pages": "307-327"
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.1093/oso/9780198774310.003.0003",
+     "title": "Generalized Autoregressive Conditional Heteroskedasticity",
+     "author": "Bollerslev",
+     "container": "Arch",
+     "year": "1995",
+     "volume": "",
+     "pages": "42-60"
+    },
+    {
+     "similarity": 0.912,
+     "doi": "10.1016/j.jeconom.2023.02.001",
+     "title": "Reprint of: Generalized Autoregressive Conditional Heteroskedasticity",
+     "author": "Bollerslev",
+     "container": "Journal of Econometrics",
+     "year": "2023",
+     "volume": "234",
+     "pages": "25-37"
+    }
+   ]
+  },
+  {
+   "key": "riskmetrics1996",
+   "type": "techreport",
+   "lineno": 33,
+   "local": {
+    "title": "RiskMetrics -- Technical Document",
+    "author": "J.P. Morgan/Reuters",
+    "author_raw": "J.P. Morgan/Reuters",
+    "container": "J.P. Morgan/Reuters",
+    "year": "1996",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "liu2024moiraimoe",
+   "type": "article",
+   "lineno": 40,
+   "local": {
+    "title": "Moirai-MoE: Empowering Time Series Foundation Models with Sparse Mixture of Experts",
+    "author": "Liu",
+    "author_raw": "Liu, Xu and Liu, Juncheng and Woo, Gerald and Aksu, Taha and Liang, Yuxuan and Zimmermann, Roger and Liu, Chenghao and Savarese, Silvio and Xiong, Caiming and Sahoo, Doyen",
+    "container": "arXiv preprint arXiv:2410.10469",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Moirai-MoE: Empowering Time Series Foundation Models with Sparse Mixture of Experts",
+    "author": "Liu",
+    "container": "arXiv:2410.10469",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2410.10469",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "goel2025volatility",
+   "type": "article",
+   "lineno": 50,
+   "local": {
+    "title": "Foundation Time-Series AI Model for Realized Volatility Forecasting",
+    "author": "Goel",
+    "author_raw": "Goel, Anubha and Pasricha, Puneet and Kanniainen, Juho",
+    "container": "arXiv preprint arXiv:2505.11163",
+    "year": "2025",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Foundation Time-Series AI Model for Realized Volatility Forecasting",
+    "author": "Goel",
+    "container": "arXiv:2505.11163",
+    "year": "2025",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2505.11163",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "tamingtailrisk2026",
+   "type": "article",
+   "lineno": 58,
+   "local": {
+    "title": "Taming Tail Risk in Financial Markets: Conformal Risk Control for Nonstationary Portfolio VaR",
+    "author": "Schmitt",
+    "author_raw": "Schmitt, Marc",
+    "container": "arXiv preprint arXiv:2602.03903",
+    "year": "2026",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Taming Tail Risk in Financial Markets: Conformal Calibration for Nonstationary Portfolio VaR",
+    "author": "Schmitt",
+    "container": "arXiv:2602.03903",
+    "year": "2026",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2602.03903",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "rigby2005generalized",
+   "type": "article",
+   "lineno": 66,
+   "local": {
+    "title": "Generalized Additive Models for Location, Scale and Shape",
+    "author": "Rigby",
+    "author_raw": "Rigby, Robert A. and Stasinopoulos, D. Mikis",
+    "container": "Journal of the Royal Statistical Society: Series C (Applied Statistics)",
+    "year": "2005",
+    "volume": "54",
+    "pages": "507-554",
+    "doi": "10.1111/j.1467-9876.2005.00510.x"
+   },
+   "remote": {
+    "title": "Generalized Additive Models for Location, Scale and Shape",
+    "author": "Rigby",
+    "container": "Journal of the Royal Statistical Society Series C: Applied Statistics",
+    "year": "2005",
+    "volume": "54",
+    "pages": "507-554",
+    "doi": "10.1111/j.1467-9876.2005.00510.x",
+    "type": "journal-article",
+    "publisher": "Oxford University Press (OUP)"
+   },
+   "source": "crossref:10.1111/j.1467-9876.2005.00510.x",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "koenker2005quantile",
+   "type": "book",
+   "lineno": 78,
+   "local": {
+    "title": "Quantile Regression",
+    "author": "Koenker",
+    "author_raw": "Koenker, Roger",
+    "container": "Cambridge University Press",
+    "year": "2005",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1017/cbo9780511754098",
+     "title": "Quantile Regression",
+     "author": "Koenker",
+     "container": "",
+     "year": "2005",
+     "volume": "",
+     "pages": ""
+    }
+   ]
+  },
+  {
+   "key": "vovk2005algorithmic",
+   "type": "book",
+   "lineno": 85,
+   "local": {
+    "title": "Algorithmic Learning in a Random World",
+    "author": "Vovk",
+    "author_raw": "Vovk, Vladimir and Gammerman, Alexander and Shafer, Glenn",
+    "container": "Springer",
+    "year": "2005",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1007/b106715"
+   },
+   "remote": {
+    "title": "Algorithmic Learning in a Random World",
+    "author": "",
+    "container": "",
+    "year": "2005",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1007/b106715",
+    "type": "book",
+    "publisher": "Springer-Verlag"
+   },
+   "source": "crossref:10.1007/b106715",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "container 'Springer' vs Crossref 'Springer-Verlag' \u2014 publisher/series naming, not an error"
+   ],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "romano2019conformalized",
+   "type": "inproceedings",
+   "lineno": 94,
+   "local": {
+    "title": "Conformalized Quantile Regression",
+    "author": "Romano",
+    "author_raw": "Romano, Yaniv and Patterson, Evan and Candes, Emmanuel",
+    "container": "Advances in Neural Information Processing Systems",
+    "year": "2019",
+    "volume": "32",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "arXiv preprint found by title: arXiv:1905.03222v1 (2019, similarity 1.0)"
+   ],
+   "candidates": [],
+   "arxiv_match": {
+    "title": "Conformalized Quantile Regression",
+    "authors": [
+     "Yaniv Romano",
+     "Evan Patterson",
+     "Emmanuel J. Cand\u00e8s"
+    ],
+    "year": "2019",
+    "arxiv_id": "1905.03222v1",
+    "similarity": 1.0
+   }
+  },
+  {
+   "key": "barber2023conformal",
+   "type": "article",
+   "lineno": 103,
+   "local": {
+    "title": "Conformal Prediction Beyond Exchangeability",
+    "author": "Barber",
+    "author_raw": "Barber, Rina Foygel and Candes, Emmanuel J. and Ramdas, Aaditya and Tibshirani, Ryan J.",
+    "container": "Annals of Statistics",
+    "year": "2023",
+    "volume": "51",
+    "pages": "816-845",
+    "doi": "10.1214/23-AOS2276"
+   },
+   "remote": {
+    "title": "Conformal prediction beyond exchangeability",
+    "author": "Barber",
+    "container": "The Annals of Statistics",
+    "year": "2023",
+    "volume": "51",
+    "pages": "",
+    "doi": "10.1214/23-aos2276",
+    "type": "journal-article",
+    "publisher": "Institute of Mathematical Statistics"
+   },
+   "source": "crossref:10.1214/23-AOS2276",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "gibbs2021adaptive",
+   "type": "inproceedings",
+   "lineno": 114,
+   "local": {
+    "title": "Adaptive Conformal Inference Under Distribution Shift",
+    "author": "Gibbs",
+    "author_raw": "Gibbs, Isaac and Candes, Emmanuel",
+    "container": "Advances in Neural Information Processing Systems",
+    "year": "2021",
+    "volume": "34",
+    "pages": "1660-1672",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "arXiv preprint found by title: arXiv:2106.00170v3 (2021, similarity 1.0)"
+   ],
+   "candidates": [],
+   "arxiv_match": {
+    "title": "Adaptive Conformal Inference Under Distribution Shift",
+    "authors": [
+     "Isaac Gibbs",
+     "Emmanuel Cand\u00e8s"
+    ],
+    "year": "2021",
+    "arxiv_id": "2106.00170v3",
+    "similarity": 1.0
+   }
+  },
+  {
+   "key": "zaffran2022conformal",
+   "type": "inproceedings",
+   "lineno": 124,
+   "local": {
+    "title": "Adaptive Conformal Predictions for Time Series",
+    "author": "Zaffran",
+    "author_raw": "Zaffran, Margaux and Feron, Olivier and Goude, Yannig and Josse, Julie and Dieuleveut, Aymeric",
+    "container": "Proceedings of the 39th International Conference on Machine Learning (ICML)",
+    "year": "2022",
+    "volume": "162",
+    "pages": "25834-25866",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "arXiv preprint found by title: arXiv:2202.07282v1 (2022, similarity 1.0)"
+   ],
+   "candidates": [],
+   "arxiv_match": {
+    "title": "Adaptive Conformal Predictions for Time Series",
+    "authors": [
+     "Margaux Zaffran",
+     "Aymeric Dieuleveut",
+     "Olivier F\u00e9ron",
+     "Yannig Goude",
+     "Julie Josse"
+    ],
+    "year": "2022",
+    "arxiv_id": "2202.07282v1",
+    "similarity": 1.0
+   }
+  },
+  {
+   "key": "xu2024conformal",
+   "type": "article",
+   "lineno": 136,
+   "local": {
+    "title": "Conformal Prediction for Time Series",
+    "author": "Xu",
+    "author_raw": "Xu, Chen and Xie, Yao",
+    "container": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+    "year": "2024",
+    "volume": "46",
+    "pages": "9788-9804",
+    "doi": "10.1109/TPAMI.2024.3443853"
+   },
+   "remote": {},
+   "source": "crossref:10.1109/TPAMI.2024.3443853",
+   "status": "UNRESOLVED",
+   "problems": [
+    "**DOI DOES NOT EXIST** \u2014 not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier."
+   ],
+   "notes": [],
+   "candidates": [],
+   "doi_exists": false
+  },
+  {
+   "key": "chernozhukov2018exact",
+   "type": "inproceedings",
+   "lineno": 147,
+   "local": {
+    "title": "Exact and Robust Conformal Inference Methods for Predictive Machine Learning with Dependent Data",
+    "author": "Chernozhukov",
+    "author_raw": "Chernozhukov, Victor and Wuthrich, Kaspar and Zhu, Yinchu",
+    "container": "Proceedings of the 31st Conference on Learning Theory (COLT)",
+    "year": "2018",
+    "volume": "75",
+    "pages": "732-749",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Exact and Robust Conformal Inference Methods for Predictive Machine Learning With Dependent Data",
+    "author": "Chernozhukov",
+    "container": "arXiv:1802.06300",
+    "year": "2018",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:1802.06300",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "angelopoulos2024conformal",
+   "type": "article",
+   "lineno": 158,
+   "local": {
+    "title": "Conformal Risk Control",
+    "author": "Angelopoulos",
+    "author_raw": "Angelopoulos, Anastasios N. and Bates, Stephen and Candes, Emmanuel J. and Jordan, Michael I. and Lei, Lihua",
+    "container": "Journal of the American Statistical Association",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1080/01621459.2024.2316667"
+   },
+   "remote": {},
+   "source": "crossref:10.1080/01621459.2024.2316667",
+   "status": "UNRESOLVED",
+   "problems": [
+    "**DOI DOES NOT EXIST** \u2014 not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier."
+   ],
+   "notes": [],
+   "candidates": [],
+   "doi_exists": false
+  },
+  {
+   "key": "angelopoulos2024pid",
+   "type": "article",
+   "lineno": 166,
+   "local": {
+    "title": "Conformal PID Control for Time Series Prediction",
+    "author": "Angelopoulos",
+    "author_raw": "Angelopoulos, Anastasios N. and Candes, Emmanuel J. and Tibshirani, Ryan J.",
+    "container": "Advances in Neural Information Processing Systems",
+    "year": "2024",
+    "volume": "36",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: year 2024 vs 2023"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.52202/075280-1000",
+     "title": "Conformal PID Control for Time Series Prediction",
+     "author": "Angelopoulos",
+     "container": "Advances in Neural Information Processing Systems 36",
+     "year": "2023",
+     "volume": "",
+     "pages": "23047-23074"
+    }
+   ]
+  },
+  {
+   "key": "hazan2016introduction",
+   "type": "book",
+   "lineno": 174,
+   "local": {
+    "title": "Introduction to Online Convex Optimization",
+    "author": "Hazan",
+    "author_raw": "Hazan, Elad",
+    "container": "Now Publishers",
+    "year": "2016",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1561/9781680831719",
+     "title": "Introduction to Online Convex Optimization",
+     "author": "Hazan",
+     "container": "",
+     "year": "2016",
+     "volume": "",
+     "pages": ""
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.1561/2400000013",
+     "title": "Introduction to Online Convex Optimization",
+     "author": "Hazan",
+     "container": "Foundations and Trends\u00ae in Optimization",
+     "year": "2016",
+     "volume": "2",
+     "pages": "157-325"
+    }
+   ]
+  },
+  {
+   "key": "gneiting2007probabilistic",
+   "type": "article",
+   "lineno": 183,
+   "local": {
+    "title": "Probabilistic forecasts, calibration and sharpness",
+    "author": "Gneiting",
+    "author_raw": "Gneiting, Tilmann and Balabdaoui, Fadoua and Raftery, Adrian E.",
+    "container": "Journal of the Royal Statistical Society: Series B",
+    "year": "2007",
+    "volume": "69",
+    "pages": "243-268",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: year 2007 vs 2005"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.21236/ada454827",
+     "title": "Probabilistic Forecasts, Calibration and Sharpness",
+     "author": "Gneiting",
+     "container": "",
+     "year": "2005",
+     "volume": "",
+     "pages": ""
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.1111/j.1467-9868.2007.00587.x",
+     "title": "Probabilistic Forecasts, Calibration and Sharpness",
+     "author": "Gneiting",
+     "container": "Journal of the Royal Statistical Society Series B: Statistical Methodology",
+     "year": "2007",
+     "volume": "69",
+     "pages": "243-268"
+    }
+   ]
+  },
+  {
+   "key": "gneiting2014probabilistic",
+   "type": "article",
+   "lineno": 193,
+   "local": {
+    "title": "Probabilistic forecasting",
+    "author": "Gneiting",
+    "author_raw": "Gneiting, Tilmann and Katzfuss, Matthias",
+    "container": "Annual Review of Statistics and Its Application",
+    "year": "2014",
+    "volume": "1",
+    "pages": "125-151",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1146/annurev-statistics-062713-085831",
+     "title": "Probabilistic Forecasting",
+     "author": "Gneiting",
+     "container": "Annual Review of Statistics and Its Application",
+     "year": "2014",
+     "volume": "1",
+     "pages": "125-151"
+    }
+   ]
+  },
+  {
+   "key": "gneiting2013combining",
+   "type": "article",
+   "lineno": 202,
+   "local": {
+    "title": "Combining predictive distributions",
+    "author": "Gneiting",
+    "author_raw": "Gneiting, Tilmann and Ranjan, Roopesh",
+    "container": "Electronic Journal of Statistics",
+    "year": "2013",
+    "volume": "7",
+    "pages": "1747-1782",
+    "doi": "10.1214/13-EJS823"
+   },
+   "remote": {
+    "title": "Combining predictive distributions",
+    "author": "Gneiting",
+    "container": "Electronic Journal of Statistics",
+    "year": "2013",
+    "volume": "7",
+    "pages": "",
+    "doi": "10.1214/13-ejs823",
+    "type": "journal-article",
+    "publisher": "Institute of Mathematical Statistics"
+   },
+   "source": "crossref:10.1214/13-EJS823",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "brehmer2021properification",
+   "type": "article",
+   "lineno": 212,
+   "local": {
+    "title": "Properification--postprocessing of quantile and interval forecasts",
+    "author": "Brehmer",
+    "author_raw": "Brehmer, Jonas R. and Gneiting, Tilmann",
+    "container": "Electronic Journal of Statistics",
+    "year": "2021",
+    "volume": "15",
+    "pages": "3692-3720",
+    "doi": "10.1214/21-EJS1913"
+   },
+   "remote": {
+    "title": "Rate of estimation for the stationary distribution of jump-processes over anisotropic Holder classes",
+    "author": "Amorino",
+    "container": "Electronic Journal of Statistics",
+    "year": "2021",
+    "volume": "15",
+    "pages": "",
+    "doi": "10.1214/21-ejs1913",
+    "type": "journal-article",
+    "publisher": "Institute of Mathematical Statistics"
+   },
+   "source": "crossref:10.1214/21-EJS1913",
+   "status": "MISMATCH",
+   "problems": [
+    "TITLE MISMATCH (similarity 0.40): DOI resolves to a different work",
+    "first author 'Brehmer' vs Crossref 'Amorino'"
+   ],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 0.4
+  },
+  {
+   "key": "taillardat2016calibrated",
+   "type": "article",
+   "lineno": 223,
+   "local": {
+    "title": "Calibrated ensemble forecasts using quantile regression forests and ensemble model output statistics",
+    "author": "Taillardat",
+    "author_raw": "Taillardat, Maxime and Mestre, Olivier and Zamo, Michael and Naveau, Philippe",
+    "container": "Monthly Weather Review",
+    "year": "2016",
+    "volume": "144",
+    "pages": "2375-2393",
+    "doi": "10.1175/MWR-D-15-0260.1"
+   },
+   "remote": {
+    "title": "Calibrated Ensemble Forecasts Using Quantile Regression Forests and Ensemble Model Output Statistics",
+    "author": "Taillardat",
+    "container": "Monthly Weather Review",
+    "year": "2016",
+    "volume": "144",
+    "pages": "2375-2393",
+    "doi": "10.1175/mwr-d-15-0260.1",
+    "type": "journal-article",
+    "publisher": "American Meteorological Society"
+   },
+   "source": "crossref:10.1175/MWR-D-15-0260.1",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "gneiting2011making",
+   "type": "article",
+   "lineno": 234,
+   "local": {
+    "title": "Making and Evaluating Point Forecasts",
+    "author": "Gneiting",
+    "author_raw": "Gneiting, Tilmann",
+    "container": "Journal of the American Statistical Association",
+    "year": "2011",
+    "volume": "106",
+    "pages": "746-762",
+    "doi": "10.1198/jasa.2011.r10138"
+   },
+   "remote": {
+    "title": "Making and Evaluating Point Forecasts",
+    "author": "Gneiting",
+    "container": "Journal of the American Statistical Association",
+    "year": "2011",
+    "volume": "106",
+    "pages": "746-762",
+    "doi": "10.1198/jasa.2011.r10138",
+    "type": "journal-article",
+    "publisher": "Informa UK Limited"
+   },
+   "source": "crossref:10.1198/jasa.2011.r10138",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "fissler2016higher",
+   "type": "article",
+   "lineno": 245,
+   "local": {
+    "title": "Higher Order Elicitability and Osband's Principle",
+    "author": "Fissler",
+    "author_raw": "Fissler, Tobias and Ziegel, Johanna F.",
+    "container": "Annals of Statistics",
+    "year": "2016",
+    "volume": "44",
+    "pages": "1680-1707",
+    "doi": "10.1214/16-AOS1439"
+   },
+   "remote": {
+    "title": "Higher order elicitability and Osband\u2019s principle",
+    "author": "Fissler",
+    "container": "The Annals of Statistics",
+    "year": "2016",
+    "volume": "44",
+    "pages": "",
+    "doi": "10.1214/16-aos1439",
+    "type": "journal-article",
+    "publisher": "Institute of Mathematical Statistics"
+   },
+   "source": "crossref:10.1214/16-AOS1439",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "nolde2017elicitability",
+   "type": "article",
+   "lineno": 256,
+   "local": {
+    "title": "Elicitability and Backtesting: Perspectives for Banking Regulation",
+    "author": "Nolde",
+    "author_raw": "Nolde, Natalia and Ziegel, Johanna F.",
+    "container": "Annals of Applied Statistics",
+    "year": "2017",
+    "volume": "11",
+    "pages": "1833-1874",
+    "doi": "10.1214/17-AOAS1041"
+   },
+   "remote": {
+    "title": "Elicitability and backtesting: Perspectives for banking regulation",
+    "author": "Nolde",
+    "container": "The Annals of Applied Statistics",
+    "year": "2017",
+    "volume": "11",
+    "pages": "",
+    "doi": "10.1214/17-aoas1041",
+    "type": "journal-article",
+    "publisher": "Institute of Mathematical Statistics"
+   },
+   "source": "crossref:10.1214/17-AOAS1041",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "diebold1995comparing",
+   "type": "article",
+   "lineno": 268,
+   "local": {
+    "title": "Comparing predictive accuracy",
+    "author": "Diebold",
+    "author_raw": "Diebold, Francis X. and Mariano, Roberto S.",
+    "container": "Journal of Business & Economic Statistics",
+    "year": "1995",
+    "volume": "13",
+    "pages": "253-263",
+    "doi": "10.1080/07350015.1995.10524599"
+   },
+   "remote": {
+    "title": "Comparing Predictive Accuracy",
+    "author": "Diebold",
+    "container": "Journal of Business &amp; Economic Statistics",
+    "year": "1995",
+    "volume": "13",
+    "pages": "253-263",
+    "doi": "10.1080/07350015.1995.10524599",
+    "type": "journal-article",
+    "publisher": "Informa UK Limited"
+   },
+   "source": "crossref:10.1080/07350015.1995.10524599",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "harvey1997testing",
+   "type": "article",
+   "lineno": 279,
+   "local": {
+    "title": "Testing the equality of prediction mean squared errors",
+    "author": "Harvey",
+    "author_raw": "Harvey, David and Leybourne, Stephen and Newbold, Paul",
+    "container": "International Journal of Forecasting",
+    "year": "1997",
+    "volume": "13",
+    "pages": "281-291",
+    "doi": "10.1016/S0169-2070(96)00719-4"
+   },
+   "remote": {
+    "title": "Testing the equality of prediction mean squared errors",
+    "author": "Harvey",
+    "container": "International Journal of Forecasting",
+    "year": "1997",
+    "volume": "13",
+    "pages": "281-291",
+    "doi": "10.1016/s0169-2070(96)00719-4",
+    "type": "journal-article",
+    "publisher": "Elsevier BV"
+   },
+   "source": "crossref:10.1016/S0169-2070(96)00719-4",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "christoffersen1998",
+   "type": "article",
+   "lineno": 291,
+   "local": {
+    "title": "Evaluating Interval Forecasts",
+    "author": "Christoffersen",
+    "author_raw": "Christoffersen, Peter F.",
+    "container": "International Economic Review",
+    "year": "1998",
+    "volume": "39",
+    "pages": "841-862",
+    "doi": "10.2307/2527341"
+   },
+   "remote": {
+    "title": "Evaluating Interval Forecasts",
+    "author": "Christoffersen",
+    "container": "International Economic Review",
+    "year": "1998",
+    "volume": "39",
+    "pages": "841",
+    "doi": "10.2307/2527341",
+    "type": "journal-article",
+    "publisher": "JSTOR"
+   },
+   "source": "crossref:10.2307/2527341",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "Crossref records the first page only (841); our range 841-862 starts there \u2014 check the end page"
+   ],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "kupiec1995",
+   "type": "article",
+   "lineno": 302,
+   "local": {
+    "title": "Techniques for Verifying the Accuracy of Risk Measurement Models",
+    "author": "Kupiec",
+    "author_raw": "Kupiec, Paul",
+    "container": "Journal of Derivatives",
+    "year": "1995",
+    "volume": "3",
+    "pages": "73-84",
+    "doi": "10.3905/jod.1995.407942"
+   },
+   "remote": {
+    "title": "Techniques for Verifying the Accuracy of Risk Measurement Models",
+    "author": "Kupiec",
+    "container": "The Journal of Derivatives",
+    "year": "1995",
+    "volume": "3",
+    "pages": "73-84",
+    "doi": "10.3905/jod.1995.407942",
+    "type": "journal-article",
+    "publisher": "With Intelligence LLC"
+   },
+   "source": "crossref:10.3905/jod.1995.407942",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "basel1996",
+   "type": "techreport",
+   "lineno": 313,
+   "local": {
+    "title": "Supervisory Framework for the Use of ``Backtesting'' in Conjunction with the Internal Models Approach to Market Risk Capital Requirements",
+    "author": "Supervision",
+    "author_raw": "Basel Committee on Banking Supervision",
+    "container": "Bank for International Settlements",
+    "year": "1996",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "bcbs2019frtb",
+   "type": "techreport",
+   "lineno": 324,
+   "local": {
+    "title": "Minimum Capital Requirements for Market Risk",
+    "author": "Supervision",
+    "author_raw": "Basel Committee on Banking Supervision",
+    "container": "Bank for International Settlements",
+    "year": "2019",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "acerbi2014back",
+   "type": "article",
+   "lineno": 334,
+   "local": {
+    "title": "Back-Testing Expected Shortfall",
+    "author": "Acerbi",
+    "author_raw": "Acerbi, Carlo and Szekely, Balazs",
+    "container": "Risk",
+    "year": "2014",
+    "volume": "27",
+    "pages": "76-81",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "engle2004caviar",
+   "type": "article",
+   "lineno": 345,
+   "local": {
+    "title": "CAViaR: Conditional Autoregressive Value at Risk by Regression Quantiles",
+    "author": "Engle",
+    "author_raw": "Engle, Robert F. and Manganelli, Simone",
+    "container": "Journal of Business & Economic Statistics",
+    "year": "2004",
+    "volume": "22",
+    "pages": "367-381",
+    "doi": "10.1198/073500104000000370"
+   },
+   "remote": {
+    "title": "CAViaR: Conditional Autoregressive Value at Risk by Regression Quantiles",
+    "author": "Engle",
+    "container": "Journal of Business &amp; Economic Statistics",
+    "year": "2004",
+    "volume": "22",
+    "pages": "367-381",
+    "doi": "10.1198/073500104000000370",
+    "type": "journal-article",
+    "publisher": "Informa UK Limited"
+   },
+   "source": "crossref:10.1198/073500104000000370",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "mcneil2000estimation",
+   "type": "article",
+   "lineno": 357,
+   "local": {
+    "title": "Estimation of Tail-Related Risk Measures for Heteroscedastic Financial Time Series: An Extreme Value Approach",
+    "author": "McNeil",
+    "author_raw": "McNeil, Alexander J. and Frey, Rudiger",
+    "container": "Journal of Empirical Finance",
+    "year": "2000",
+    "volume": "7",
+    "pages": "271-300",
+    "doi": "10.1016/S0927-5398(00)00012-8"
+   },
+   "remote": {
+    "title": "Estimation of tail-related risk measures for heteroscedastic financial time series: an extreme value approach",
+    "author": "McNeil",
+    "container": "Journal of Empirical Finance",
+    "year": "2000",
+    "volume": "7",
+    "pages": "271-300",
+    "doi": "10.1016/s0927-5398(00)00012-8",
+    "type": "journal-article",
+    "publisher": "Elsevier BV"
+   },
+   "source": "crossref:10.1016/S0927-5398(00)00012-8",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "baroneadesi1999var",
+   "type": "article",
+   "lineno": 369,
+   "local": {
+    "title": "VaR without Correlations for Portfolios of Derivative Securities",
+    "author": "Barone-Adesi",
+    "author_raw": "Barone-Adesi, Giovanni and Giannopoulos, Kostas and Vosper, Les",
+    "container": "Journal of Futures Markets",
+    "year": "1999",
+    "volume": "19",
+    "pages": "583-602",
+    "doi": "10.1002/(SICI)1096-9934(199908)19:5<583::AID-FUT6>3.0.CO;2-S"
+   },
+   "remote": {},
+   "source": "crossref:10.1002/(SICI)1096-9934(199908)19:5<583::AID-FUT6>3.0.CO;2-S",
+   "status": "UNRESOLVED",
+   "problems": [
+    "**DOI DOES NOT EXIST** \u2014 not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier."
+   ],
+   "notes": [],
+   "candidates": [],
+   "doi_exists": false
+  },
+  {
+   "key": "newey1987simple",
+   "type": "article",
+   "lineno": 380,
+   "local": {
+    "title": "A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix",
+    "author": "Newey",
+    "author_raw": "Newey, Whitney K. and West, Kenneth D.",
+    "container": "Econometrica",
+    "year": "1987",
+    "volume": "55",
+    "pages": "703-708",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: pages 703-708 vs 703"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.2307/1913610",
+     "title": "A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix",
+     "author": "Newey",
+     "container": "Econometrica",
+     "year": "1987",
+     "volume": "55",
+     "pages": "703"
+    },
+    {
+     "similarity": 0.995,
+     "doi": "10.3386/t0055",
+     "title": "A Simple, Positive Semi-Definite, Heteroskedasticity and AutocorrelationConsistent Covariance Matrix",
+     "author": "Newey",
+     "container": "",
+     "year": "1986",
+     "volume": "",
+     "pages": ""
+    }
+   ]
+  },
+  {
+   "key": "newey1994automatic",
+   "type": "article",
+   "lineno": 390,
+   "local": {
+    "title": "Automatic Lag Selection in Covariance Matrix Estimation",
+    "author": "Newey",
+    "author_raw": "Newey, Whitney K. and West, Kenneth D.",
+    "container": "Review of Economic Studies",
+    "year": "1994",
+    "volume": "61",
+    "pages": "631-653",
+    "doi": "10.2307/2297912"
+   },
+   "remote": {
+    "title": "Automatic Lag Selection in Covariance Matrix Estimation",
+    "author": "Newey",
+    "container": "The Review of Economic Studies",
+    "year": "1994",
+    "volume": "61",
+    "pages": "631-653",
+    "doi": "10.2307/2297912",
+    "type": "journal-article",
+    "publisher": "Oxford University Press (OUP)"
+   },
+   "source": "crossref:10.2307/2297912",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "driscoll1998consistent",
+   "type": "article",
+   "lineno": 401,
+   "local": {
+    "title": "Consistent Covariance Matrix Estimation with Spatially Dependent Panel Data",
+    "author": "Driscoll",
+    "author_raw": "Driscoll, John C. and Kraay, Aart C.",
+    "container": "Review of Economics and Statistics",
+    "year": "1998",
+    "volume": "80",
+    "pages": "549-560",
+    "doi": "10.1162/003465398557825"
+   },
+   "remote": {
+    "title": "Consistent Covariance Matrix Estimation with Spatially Dependent Panel Data",
+    "author": "Driscoll",
+    "container": "Review of Economics and Statistics",
+    "year": "1998",
+    "volume": "80",
+    "pages": "549-560",
+    "doi": "10.1162/003465398557825",
+    "type": "journal-article",
+    "publisher": "MIT Press"
+   },
+   "source": "crossref:10.1162/003465398557825",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "bollerslev1987",
+   "type": "article",
+   "lineno": 413,
+   "local": {
+    "title": "A Conditionally Heteroskedastic Time Series Model for Speculative Prices and Rates of Return",
+    "author": "Bollerslev",
+    "author_raw": "Bollerslev, Tim",
+    "container": "The Review of Economics and Statistics",
+    "year": "1987",
+    "volume": "69",
+    "pages": "542-547",
+    "doi": "10.2307/1925546"
+   },
+   "remote": {
+    "title": "A Conditionally Heteroskedastic Time Series Model for Speculative Prices and Rates of Return",
+    "author": "Bollerslev",
+    "container": "The Review of Economics and Statistics",
+    "year": "1987",
+    "volume": "69",
+    "pages": "542",
+    "doi": "10.2307/1925546",
+    "type": "journal-article",
+    "publisher": "JSTOR"
+   },
+   "source": "crossref:10.2307/1925546",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "Crossref records the first page only (542); our range 542-547 starts there \u2014 check the end page"
+   ],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "francq2019garch",
+   "type": "book",
+   "lineno": 425,
+   "local": {
+    "title": "GARCH Models: Structure, Statistical Inference and Financial Applications",
+    "author": "Francq",
+    "author_raw": "Francq, Christian and Zako\\\" an, Jean-Michel",
+    "container": "John Wiley & Sons",
+    "year": "2019",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1002/9781119313472"
+   },
+   "remote": {
+    "title": "GARCH Models: Structure, Statistical Inference and Financial Applications",
+    "author": "Francq",
+    "container": "",
+    "year": "2019",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1002/9781119313472",
+    "type": "monograph",
+    "publisher": "Wiley"
+   },
+   "source": "crossref:10.1002/9781119313472",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "container 'John Wiley & Sons' vs Crossref 'Wiley' \u2014 publisher/series naming, not an error"
+   ],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "lindner2009stationarity",
+   "type": "article",
+   "lineno": 434,
+   "local": {
+    "title": "Stationarity, mixing, distributional properties and moments of GARCH(p,q) processes",
+    "author": "Lindner",
+    "author_raw": "Lindner, Alexander M",
+    "container": "Handbook of Financial Time Series",
+    "year": "2009",
+    "volume": "",
+    "pages": "43-69",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1007/978-3-540-71297-8_2",
+     "title": "Stationarity, Mixing, Distributional Properties and Moments of GARCH(p, q)\u2013Processes",
+     "author": "Lindner",
+     "container": "Handbook of Financial Time Series",
+     "year": "2009",
+     "volume": "",
+     "pages": "43-69"
+    }
+   ]
+  },
+  {
+   "key": "rio2017asymptotic",
+   "type": "book",
+   "lineno": 444,
+   "local": {
+    "title": "Asymptotic Theory of Weakly Dependent Random Processes",
+    "author": "Rio",
+    "author_raw": "Rio, Emmanuel",
+    "container": "Springer",
+    "year": "2017",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1007/978-3-662-54323-8"
+   },
+   "remote": {
+    "title": "Asymptotic Theory of Weakly Dependent Random Processes",
+    "author": "Rio",
+    "container": "Probability Theory and Stochastic Modelling",
+    "year": "2017",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1007/978-3-662-54323-8",
+    "type": "book",
+    "publisher": "Springer Berlin Heidelberg"
+   },
+   "source": "crossref:10.1007/978-3-662-54323-8",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "container 'Springer' vs Crossref 'Probability Theory and Stochastic Modelling' \u2014 publisher/series naming, not an error"
+   ],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "yu1994rates",
+   "type": "article",
+   "lineno": 452,
+   "local": {
+    "title": "Rates of convergence for empirical processes of stationary mixing sequences",
+    "author": "Yu",
+    "author_raw": "Yu, Bin",
+    "container": "The Annals of Probability",
+    "year": "1994",
+    "volume": "22",
+    "pages": "94-116",
+    "doi": "10.1214/aop/1176988849"
+   },
+   "remote": {
+    "title": "Rates of Convergence for Empirical Processes of Stationary Mixing Sequences",
+    "author": "Yu",
+    "container": "The Annals of Probability",
+    "year": "1994",
+    "volume": "22",
+    "pages": "",
+    "doi": "10.1214/aop/1176988849",
+    "type": "journal-article",
+    "publisher": "Institute of Mathematical Statistics"
+   },
+   "source": "crossref:10.1214/aop/1176988849",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "ansari2024chronos",
+   "type": "article",
+   "lineno": 464,
+   "local": {
+    "title": "Chronos: Learning the language of time series",
+    "author": "Ansari",
+    "author_raw": "Ansari, Abdul Fatir and Stella, Lorenzo and Turkmen, Caner and Zhang, Xiyuan and Mercado, Pedro and Shen, Huishuai and Shchur, Oleksandr and Rangapuram, Syama Sundar and Arango, Sebastian Pineda and Kapoor, Shubham and others",
+    "container": "Transactions on Machine Learning Research",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MISMATCH",
+   "problems": [
+    "given name for Shen: our 'Huishuai' vs source 'Huibin'"
+   ],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "arXiv preprint found by title: arXiv:2403.07815v3 (2024, similarity 1.0)"
+   ],
+   "candidates": [],
+   "arxiv_match": {
+    "title": "Chronos: Learning the Language of Time Series",
+    "authors": [
+     "Abdul Fatir Ansari",
+     "Lorenzo Stella",
+     "Caner Turkmen",
+     "Xiyuan Zhang",
+     "Pedro Mercado",
+     "Huibin Shen",
+     "Oleksandr Shchur",
+     "Syama Sundar Rangapuram",
+     "Sebastian Pineda Arango",
+     "Shubham Kapoor",
+     "Jasper Zschiegner",
+     "Danielle C. Maddix",
+     "Hao Wang",
+     "Michael W. Mahoney",
+     "Kari Torkkola",
+     "Andrew Gordon Wilson",
+     "Michael Bohlke-Schneider",
+     "Yuyang Wang"
+    ],
+    "year": "2024",
+    "arxiv_id": "2403.07815v3",
+    "similarity": 1.0
+   }
+  },
+  {
+   "key": "ansari2025chronos2",
+   "type": "article",
+   "lineno": 472,
+   "local": {
+    "title": "Chronos-2: From Univariate to Universal Forecasting",
+    "author": "Ansari",
+    "author_raw": "Ansari, Abdul Fatir and Shchur, Oleksandr and Kuken, Jaris and Auer, Andreas and Han, Boran and Mercado, Pedro and Rangapuram, Syama Sundar and Shen, Huibin and Stella, Lorenzo and Zhang, Xiyuan and others",
+    "container": "arXiv preprint arXiv:2510.15821",
+    "year": "2025",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Chronos-2: From Univariate to Universal Forecasting",
+    "author": "Ansari",
+    "container": "arXiv:2510.15821",
+    "year": "2025",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2510.15821",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "das2024timesfm",
+   "type": "inproceedings",
+   "lineno": 480,
+   "local": {
+    "title": "A decoder-only foundation model for time-series forecasting",
+    "author": "Das",
+    "author_raw": "Das, Abhimanyu and Kong, Weihao and Leber, Andrew and Mathews, Rajat and Sen, Rajat",
+    "container": "Proceedings of the 41st International Conference on Machine Learning (ICML)",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MISMATCH",
+   "problems": [
+    "author(s) in our entry not on the source record: Leber, Mathews"
+   ],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "arXiv preprint found by title: arXiv:2310.10688v4 (2023, similarity 1.0)",
+    "author(s) on the source record missing from our entry: Zhou"
+   ],
+   "candidates": [],
+   "arxiv_match": {
+    "title": "A decoder-only foundation model for time-series forecasting",
+    "authors": [
+     "Abhimanyu Das",
+     "Weihao Kong",
+     "Rajat Sen",
+     "Yichen Zhou"
+    ],
+    "year": "2023",
+    "arxiv_id": "2310.10688v4",
+    "similarity": 1.0
+   }
+  },
+  {
+   "key": "woo2024moirai",
+   "type": "inproceedings",
+   "lineno": 487,
+   "local": {
+    "title": "Unified training of universal time series forecasting transformers",
+    "author": "Woo",
+    "author_raw": "Woo, Gerald and Liu, Chenghao and Kumar, Akshat and Xiong, Caiming and Savarese, Silvio and Sahoo, Doyen",
+    "container": "Proceedings of the 41st International Conference on Machine Learning (ICML)",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "arXiv preprint found by title: arXiv:2402.02592v2 (2024, similarity 1.0)"
+   ],
+   "candidates": [],
+   "arxiv_match": {
+    "title": "Unified Training of Universal Time Series Forecasting Transformers",
+    "authors": [
+     "Gerald Woo",
+     "Chenghao Liu",
+     "Akshat Kumar",
+     "Caiming Xiong",
+     "Silvio Savarese",
+     "Doyen Sahoo"
+    ],
+    "year": "2024",
+    "arxiv_id": "2402.02592v2",
+    "similarity": 1.0
+   }
+  },
+  {
+   "key": "liu2024moirai2",
+   "type": "article",
+   "lineno": 494,
+   "local": {
+    "title": "Moirai-MoE: Empowering time series foundation models with sparse mixture of experts",
+    "author": "Liu",
+    "author_raw": "Liu, Xu and Woo, Gerald and Sahoo, Doyen and others",
+    "container": "arXiv preprint arXiv:2410.10469",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Moirai-MoE: Empowering Time Series Foundation Models with Sparse Mixture of Experts",
+    "author": "Liu",
+    "container": "arXiv:2410.10469",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2410.10469",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "rasul2024lagllama",
+   "type": "inproceedings",
+   "lineno": 501,
+   "local": {
+    "title": "Lag-Llama: Towards foundation models for probabilistic time series forecasting",
+    "author": "Rasul",
+    "author_raw": "Rasul, Kashif and Ashok, Arjun and Williams, Andrew Robert and Khorasani, Arian and Adamopoulos, George and Bhatt, Rishika and Bilos, Marin and Ghonia, Hena and Hassen, Nadhir Vincent and Schneider, Anderson and Thiele, Sahil and Gasthaus, Johannes",
+    "container": "Proceedings of the 41st International Conference on Machine Learning (ICML)",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MISMATCH",
+   "problems": [
+    "author(s) in our entry not on the source record: Bhatt, Thiele, Gasthaus"
+   ],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "arXiv preprint found by title: arXiv:2310.08278v3 (2023, similarity 1.0)",
+    "author(s) on the source record missing from our entry: Bhagwatkar, Bayazi, Riachi, Garg, Chapados, Drouin, Zantedeschi, Nevmyvaka, Rish"
+   ],
+   "candidates": [],
+   "arxiv_match": {
+    "title": "Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting",
+    "authors": [
+     "Kashif Rasul",
+     "Arjun Ashok",
+     "Andrew Robert Williams",
+     "Hena Ghonia",
+     "Rishika Bhagwatkar",
+     "Arian Khorasani",
+     "Mohammad Javad Darvishi Bayazi",
+     "George Adamopoulos",
+     "Roland Riachi",
+     "Nadhir Hassen",
+     "Marin Bilo\u0161",
+     "Sahil Garg",
+     "Anderson Schneider",
+     "Nicolas Chapados",
+     "Alexandre Drouin",
+     "Valentina Zantedeschi",
+     "Yuriy Nevmyvaka",
+     "Irina Rish"
+    ],
+    "year": "2023",
+    "arxiv_id": "2310.08278v3",
+    "similarity": 1.0
+   }
+  },
+  {
+   "key": "goel2024tsfmvar",
+   "type": "article",
+   "lineno": 508,
+   "local": {
+    "title": "Time-series foundation model for Value-at-Risk forecasting",
+    "author": "Goel",
+    "author_raw": "Goel, Gaurav and Pasricha, Puneet and Kanniainen, Juho",
+    "container": "arXiv preprint arXiv:2410.11773",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Time-Series Foundation AI Model for Value-at-Risk Forecasting",
+    "author": "Goel",
+    "container": "arXiv:2410.11773",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2410.11773",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "rahimikia2025revisiting",
+   "type": "article",
+   "lineno": 515,
+   "local": {
+    "title": "Re(Visiting) Time Series Foundation Models in Finance",
+    "author": "Rahimikia",
+    "author_raw": "Rahimikia, Eghbal and Yeung, Dic and Hanna, Alan and Hurn, Stan and Poon, Ser-Huang",
+    "container": "arXiv preprint arXiv:2511.18578",
+    "year": "2025",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Re(Visiting) Time Series Foundation Models in Finance",
+    "author": "Rahimikia",
+    "container": "arXiv:2511.18578",
+    "year": "2025",
+    "volume": "",
+    "pages": "",
+    "doi": "10.2139/ssrn.577056"
+   },
+   "source": "arxiv:2511.18578",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "now published; journal DOI 10.2139/ssrn.577056 available \u2014 consider updating"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "pele2025llmvar",
+   "type": "article",
+   "lineno": 523,
+   "local": {
+    "title": "In the Beginning was the Word: LLM-VaR and LLM-ES",
+    "author": "Pele",
+    "author_raw": "Pele, Daniel Traian and Bolov aneanu, Vlad and Lin, Min-Bin and Ren, Rui and Ginavar, Andrei Theodor and Spilak, Bruno and Andrei, Alexandru Victor and Toma, Florin-Mihai and Lessmann, Stefan and Hardle, Wolfgang Karl",
+    "container": "Expert Systems with Applications",
+    "year": "2026",
+    "volume": "295",
+    "pages": "128676",
+    "doi": "10.1016/j.eswa.2025.128676"
+   },
+   "remote": {
+    "title": "In the beginning was the Word: LLM-VaR and LLM-ES",
+    "author": "Pele",
+    "container": "Expert Systems with Applications",
+    "year": "2026",
+    "volume": "295",
+    "pages": "128676",
+    "doi": "10.1016/j.eswa.2025.128676",
+    "type": "journal-article",
+    "publisher": "Elsevier BV"
+   },
+   "source": "crossref:10.1016/j.eswa.2025.128676",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "hansen1994autoregressive",
+   "type": "article",
+   "lineno": 539,
+   "local": {
+    "title": "Autoregressive Conditional Density Estimation",
+    "author": "Hansen",
+    "author_raw": "Hansen, Bruce E.",
+    "container": "International Economic Review",
+    "year": "1994",
+    "volume": "35",
+    "pages": "705-730",
+    "doi": "10.2307/2527081"
+   },
+   "remote": {
+    "title": "Autoregressive Conditional Density Estimation",
+    "author": "Hansen",
+    "container": "International Economic Review",
+    "year": "1994",
+    "volume": "35",
+    "pages": "705",
+    "doi": "10.2307/2527081",
+    "type": "journal-article",
+    "publisher": "JSTOR"
+   },
+   "source": "crossref:10.2307/2527081",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "Crossref records the first page only (705); our range 705-730 starts there \u2014 check the end page"
+   ],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "politis1994stationary",
+   "type": "article",
+   "lineno": 550,
+   "local": {
+    "title": "The Stationary Bootstrap",
+    "author": "Politis",
+    "author_raw": "Politis, Dimitris N. and Romano, Joseph P.",
+    "container": "Journal of the American Statistical Association",
+    "year": "1994",
+    "volume": "89",
+    "pages": "1303-1313",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1080/01621459.1994.10476870",
+     "title": "The Stationary Bootstrap",
+     "author": "Politis",
+     "container": "Journal of the American Statistical Association",
+     "year": "1994",
+     "volume": "89",
+     "pages": "1303-1313"
+    }
+   ]
+  }
+ ],
+ "cited_not_in_bib": [],
+ "in_bib_not_cited": [
+  "angelopoulos2024conformal",
+  "hazan2016introduction",
+  "koenker2005quantile",
+  "liu2024moiraimoe",
+  "newey1987simple",
+  "politis1994stationary"
+ ]
+}

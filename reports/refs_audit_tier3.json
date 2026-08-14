@@ -1,0 +1,968 @@
+[
+ {
+  "label": "AIDA MSCA \u2014 Application Package",
+  "path": "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/2026 AIDA MSCA/20260721 Proposal/20260725 AIDA_Application_Package.md",
+  "counts": {
+   "OK_NO_DOI": 3,
+   "UNVERIFIED": 1,
+   "OK": 3,
+   "CHECK": 2
+  },
+  "records": [
+   {
+    "entry": "1. Part A fields, ready to paste **Title:** AIDA: Artificial Intelligence for Discovery and Analytics in Economics **Subtitle:** The counterfactual laboratory for economics **Acronym:** AIDA **Panel:** Economics (ECO) **Action:** HORIZON-TMA-MSCA-DN (Standard Doctoral Network) \u00b7 **Duration:** 48 months \u00b7 **Doctoral candidates:** 15 (540 person-months) **Coordinator:** Bucharest University of Economic Studies (ASE), Romania, Prof. Daniel Traian Pele #### Abstract (Part A; portal limit 2,000 characters including spaces: this abstract: 1,943 characters) Europe's 2022-24 energy-support packages and the EUR 800 billion NextGenerationEU recovery programme are evaluated on contested evidence. Economics is a science without a laboratory. The trajectory an economy would have followed under a different policy is unobservable, and the discipline's substitutes for experiment are linear, small-sample, or rest on assumptions the profession itself distrusts. AIDA builds an open counterfactual laboratory for economics. Fifteen doctoral candidates across thirteen universities in eleven countries develop three interlocking AI methodologies that do not yet exist in validated, open, economics-ready form. The first produces counterfactual economic trajectories from causal generative models, with calibrated uncertainty under stated non-stationarity regimes. The second turns agent-based and LLM-agent economies into scientific instruments through simulation-based inference and a transfer-validity th",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1016/j.eneco.2025.108909` (overlap 0.64)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Mapping the impact of artificial intelligence on energy poverty: New evidence from spatial panel models",
+     "author": "Zambrano-Monserrate",
+     "year": "2025",
+     "doi": "10.1016/j.eneco.2025.108909"
+    }
+   },
+   {
+    "entry": "2. Ethics self-assessment (portal issues table) | Ethics issue | Answer | Two-sentence justification | |----|----|----| | **Human embryos / stem cells** | No | The research is methodological and economic; it involves no human embryos, embryonic stem cells, or related material. | | **Humans (participants)** | No | No human participants are recruited, observed, or experimented on. The LLM-agent populations of Pillar 2 are simulated software agents, not human subjects, and are governed by DC6's admissibility framework and a publication norm that labels all in-silico evidence as such. | | **Human cells / tissues** | No | No human cells or tissues are used. | | **Personal data** | Yes | Pillar 2 calibration uses administrative and statistical microdata that may contain personal data; processing is lawful-basis-documented, minimised, and where possible executed inside partner enclaves with only aggregates leaving. GDPR compliance is coordinated by the ASE Data Protection Officer with per-partner DPIAs where required (WP4, D4.1). | | **Non-EU / international data transfer** | Yes | Some microdata and market data originate from associated partners and are processed across beneficiary countries; transfers follow GDPR and the partners' access conditions, with enclave execution where redistribution is barred. All transfer arrangements are documented in the DMP and the relevant partner agreements. | | **Animals** | No | No animals are involved. | | **Activities in non-EU / associated / t",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1007/978-1-4020-6989-5_6` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Stem Cells, Embryos and Ethics: Is There a Way Forward?",
+     "author": "Hurlbut",
+     "year": "2008",
+     "doi": "10.1007/978-1-4020-6989-5_6"
+    }
+   },
+   {
+    "entry": "3. Per-participant Part A data sheets (13 beneficiaries) Each sheet gives role, main tasks, key persons, infrastructure, relevant projects, and the five-publication list. Where the corpus supplies verifiable publications they are listed. The remaining entries are to be completed by each PI from the partner-confirmation template before submission (marked *(to be supplied by the PI on the partner template)*). These sheets double as the attachment for the partner round. #### B1: Bucharest University of Economic Studies (ASE) / Institute for Digital Assets (IDA), Romania, COORDINATOR **Role:** Coordinator; lead of WP3 (proving grounds and transfer), WP5 (dissemination and open science), and WP6 (management, coordination and training, which absorbed the former training work package in July 2026). Hosts DC4, DC12, DC15. **Main tasks:** Network coordination and reporting; the validation benchmark (DC4); the digital-asset proving ground on IDA infrastructure and the SYNCRISK line (DC12); the transfer methodology and central-bank demonstration (DC15); the Q\u00b2 open-science ecosystem and the development of the Q-Pilot AI tool (T5.5, a coordinator-led open-science infrastructure deliverable of WP5); the AIDA Conference and monthly seminar series (T6.7, T6.8); governance, recruitment and reporting (T6.1 to T6.5); the training programme, which the July 2026 meeting merged into coordination (T6.6 to T6.9). **Key persons:** Prof. Daniel Traian Pele (Coordinator; Professor of Statistics and Ec",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.54): \"Supplemental Information 1: Ecological data on each species and a reference list for where these data came from\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "4. Remaining-actions list (Tier 3, external dependencies) | # | Action | Owner | Close by | Holds which claim | |----|----|----|----|----| | 1 | Central-bank associated-partner letter(s), coordinating-country central bank + one major euro-area central bank | Coordinator (Pele) + DC15/DC1 host PIs | 2026-08-31 | O4 transfer demonstration; partner research visits (DC1, DC2, DC3, DC5, DC15) | | 2 | Energy regulator / TSO associated-partner letter (ACER-network regulator or national TSO) | Coordinator + Wroc\u0142aw (Weron) | 2026-08-31 | Energy proving ground; visits and live questions (DC4, DC11, DC13) | | 3 | Digital-asset exchange / analytics, plus the two further associated partners onboarded in July 2026 | Coordinator + ASE (Pele, Lupu); Napoli (Iannario); Babe\u0219-Bolyai (Mare) | Signed: Traderion, Inc. (2026-07-13); San Jose State University; Banca Transilvania with the Transilvania IT Cluster | Fast proving ground and applied engagement (DC7, DC12, DC14) | | 4 | National statistical institute / policy-institution associated-partner letter (restricted microdata) | Babe\u0219-Bolyai (Mare) + HU Berlin (Reluga) | 2026-08-31 | Pillar 2 microdata refinement (DC8, DC10) | | 5 | Optional: associated academic partner for additional co-supervision/training | Coordinator + H\u00e4rdle/Osterrieder network | 2026-08-31 | Supplementary co-supervision capacity | | 6 | Part A prior-submission disclosure decision | Coordinator (Pele) | 2026-08-31 | Part A administrative-forms accuracy | | 7 | Per-PI five",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1017/9781788212960.011` (overlap 0.67)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "The ECB holds the euro together",
+     "author": "",
+     "year": "2020",
+     "doi": "10.1017/9781788212960.011"
+    }
+   },
+   {
+    "entry": "Bolov\u0103neanu, Ginavar, Lessmann & H\u00e4rdle (2026), Recalibrating tail risk forecasts under temporal dependence, manuscript submitted to the *International Journal of Forecasting* (under review). (2) Pele et al. (2025), In the beginning was the Word: LLM-VaR and LLM-ES, *Expert Systems with Applications*, 295, 128676 (doi:10.1016/j.eswa.2025.128676). (3) BitMood: Facebook-derived mood and Bitcoin volatility, *Digital Finance*. (4) Financial Risk Meter for stablecoins",
+    "status": "OK",
+    "problems": [],
+    "notes": [],
+    "doi": "10.1016/j.eswa.2025.128676",
+    "arxiv": null,
+    "remote": {
+     "title": "In the beginning was the Word: LLM-VaR and LLM-ES",
+     "author": "Pele",
+     "container": "Expert Systems with Applications",
+     "year": "2026",
+     "doi": "10.1016/j.eswa.2025.128676"
+    },
+    "title_overlap": 1.0,
+    "inline": true
+   },
+   {
+    "entry": "* **Relevant projects:** *(to be supplied by the PI on the partner template.)* **Five publications: (1) (2026) Spelta A., Facchinetti S., Osmetti S. A., Tarantola C., Mare C., Mazzali A., Merli L., Iannario M. A Network-based Distributional Inference Approach to Model Country-Level Cyber Risk, JRSSA (to appear) DOI: 10.1093/jrsssa/qnag049. (2) (2025) Giantsidi S., Tarantola C. Deep learning for financial forecasting: A review of recent trends, International",
+    "status": "OK",
+    "problems": [],
+    "notes": [],
+    "doi": "10.1093/jrsssa/qnag049",
+    "arxiv": null,
+    "remote": {
+     "title": "A network-based distributional inference approach to model country-level cyber risk",
+     "author": "Spelta",
+     "container": "Journal of the Royal Statistical Society Series A: Statistics in Society",
+     "year": "2026",
+     "doi": "10.1093/jrsssa/qnag049"
+    },
+    "title_overlap": 1.0,
+    "inline": true
+   },
+   {
+    "entry": "zali A., Merli L., Iannario M. A Network-based Distributional Inference Approach to Model Country-Level Cyber Risk, JRSSA (to appear) DOI: 10.1093/jrsssa/qnag049. (2) (2025) Giantsidi S., Tarantola C. Deep learning for financial forecasting: A review of recent trends, International Review of Economics and Finance DOI: 10.1016/j.iref.2025.104719. (3) (2019) Ntzoufras I., Tarantola C. and Lupparelli M. Probability Based Independence Sampler for Bayesian Quantitativ",
+    "status": "CHECK",
+    "problems": [],
+    "notes": [
+     "first author on the DOI record is 'Spelta', which does not appear in the reference",
+     "year on the DOI record is 2026; the reference states 2019/2025"
+    ],
+    "doi": "10.1093/jrsssa/qnag049",
+    "arxiv": null,
+    "remote": {
+     "title": "A network-based distributional inference approach to model country-level cyber risk",
+     "author": "Spelta",
+     "container": "Journal of the Royal Statistical Society Series A: Statistics in Society",
+     "year": "2026",
+     "doi": "10.1093/jrsssa/qnag049"
+    },
+    "title_overlap": 1.0,
+    "inline": true
+   },
+   {
+    "entry": ", International Review of Economics and Finance DOI: 10.1016/j.iref.2025.104719. (3) (2019) Ntzoufras I., Tarantola C. and Lupparelli M. Probability Based Independence Sampler for Bayesian Quantitative Learning in Graphical Log-Linear Marginal Models, Bayesian Analysis, 14, pp. 777-803, ISBA, USA. ISSN 1936-0975, doi: 10.1214/18-BA1128. (4) (2025) Lupparelli M., Marchetti M.G. and Tarantola C. Regression Graph Models for Categorical Data, Springer Nature",
+    "status": "CHECK",
+    "problems": [],
+    "notes": [
+     "DOI `10.1016/j.iref.2025.104719` resolves to \"Deep learning for financial forecasting: A review of recent trends\" (Giantsidi, 2025), which does not match the reference text (inline citation: the surrounding text is a context window, so verify manually)"
+    ],
+    "doi": "10.1016/j.iref.2025.104719",
+    "arxiv": null,
+    "remote": {
+     "title": "Deep learning for financial forecasting: A review of recent trends",
+     "author": "Giantsidi",
+     "container": "International Review of Economics &amp; Finance",
+     "year": "2025",
+     "doi": "10.1016/j.iref.2025.104719"
+    },
+    "title_overlap": 0.29,
+    "inline": true
+   },
+   {
+    "entry": "ture, eBook ISBN 978-3-031-99797-6. (5) (2018) Bassetti F., De Giuli M.E., Nicolino E. and Tarantola C. Multivariate dependence analysis via tree copula models: An application to one-year forward energy contracts, European Journal of Operational Research, 269, pp. 1107-1121, Elsevier, Netherlands. ISSN 0377-2217, doi: 10.1016/j.ejor.2018.02.037.** #### B13: Aarhus University, Denmark **Role: Beneficiary; hosts DC5 (T1.5).** **Main tasks:** DC5 spillover-robust c",
+    "status": "OK",
+    "problems": [],
+    "notes": [],
+    "doi": "10.1016/j.ejor.2018.02.037",
+    "arxiv": null,
+    "remote": {
+     "title": "Multivariate dependence analysis via tree copula models: An application to one-year forward energy contracts",
+     "author": "Bassetti",
+     "container": "European Journal of Operational Research",
+     "year": "2018",
+     "doi": "10.1016/j.ejor.2018.02.037"
+    },
+    "title_overlap": 1.0,
+    "inline": true
+   }
+  ]
+ },
+ {
+  "label": "AIDA MSCA \u2014 Concept Note",
+  "path": "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/2026 AIDA MSCA/20260721 Proposal/20260725 AIDA_Concept_Note.docx",
+  "counts": {
+   "OK_NO_DOI": 3,
+   "UNVERIFIED": 7
+  },
+  "records": [
+   {
+    "entry": "1. The idea In economics the counterfactual is rarely observed. We cannot see what an economy would have done under a different interest rate, energy price cap, or fiscal package. The established tools for approximating it, structural models, synthetic control, local projections, each carry well-known limitations, so major policy decisions are often evaluated on contested evidence. AIDA proposes to build an open counterfactual laboratory for economics, using AI as a scientific instrument that changes how economic evidence is produced. The network trains 15 doctoral candidates to develop three interlocking families of methods, and to release them as open code, open models, and open benchmarks for the discipline and the wider RAISE community. The design principle is validation-ordered development. Build and test the instruments where validation is fast, cheap and checkable, in digital-asset and energy markets, then transfer them, under an explicit validity theory, to the questions where the stakes are highest, monetary and fiscal policy with central-bank partners. Three pillars Pillar Focus Work package P1, Counterfactual machines Causal generative models, distribution-free/conformal inference, neural synthetic control, and the validation methodology that makes counterfactual methods testable WP1 P2, Economies in silico Agent-based and LLM-agent economies turned into experimental instruments via simulation-based inference and a validity theory; distributional and granular incid",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1007/978-3-030-85821-6_6` (overlap 0.80)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "\u2018What if I Would Have Done Otherwise\u2026\u2019: A Controlled Adaptive Network Model for Mental Models in Counterfactual Thinking",
+     "author": "Bhalwankar",
+     "year": "2022",
+     "doi": "10.1007/978-3-030-85821-6_6"
+    }
+   },
+   {
+    "entry": "2. Objectives Objective O1 Counterfactual machines, causal generative models producing calibrated counterfactual trajectories, validated on 30+ historical interventions. O2 Economies in silico, simulation-based inference and a transfer-validity theory for agent-based/LLM-agent economies. O3 Resolution in the proving grounds, resolve six open empirical questions in energy and digital-asset markets (2022-24 energy interventions; MiCA; depeg/contagion). O4 Transfer to macro policy, deploy the validated machinery with central-bank partners; publish and demonstrate the transfer protocol. O5 A new researcher profile, train 15 doctoral candidates fluent in both economics and the engineering of causal/generative/agent-based AI.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1002/9781119704492.ch4` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Agent\u2010based Models and Causal Inference",
+     "author": "",
+     "year": "2022",
+     "doi": "10.1002/9781119704492.ch4"
+    }
+   },
+   {
+    "entry": "3. Doctoral candidate projects (indicative) Themes, hosts, and the number of positions are indicative and open for discussion. DC Pillar Indicative theme Indicative host / PI DC1 P1 Causal generative macro-financial models (counterfactual fiscal/energy paths) UCLouvain (Hafner) DC2 P1 Conformal inference for dependent, networked series SCAI-Sorbonne (Cinnella) DC3 P1 Neural synthetic control on networked panels Bristol (Wang) DC4 P1 Validation methodology & public benchmark of interventions ASE (Pele, H\u00e4rdle) DC5 P1 Spillover-robust counterfactuals (cross-border leakage) Aarhus (Chen Huang); co-sup Charles (Barun\u00edk) DC6 P2 Validity theory for LLM-agent populations HU Berlin (Lessmann) DC7 P2 Calibrated agent-based market laboratories (ex-ante regulation) Twente (Osterrieder) DC8 P2 Distributional incidence (income / region / gender) Babe\u0219-Bolyai (Mare) DC9 P2 Greenwashing-robust outcome measurement (CUB + satellite/LLM) Napoli Federico II (Iannario) DC10 P2 Granular small-area inference engine Milan (Tarantola) DC11 P3 Merit-order-aware energy counterfactuals Wroc\u0142aw (Weron) DC12 P3 Event-time causal inference for digital-asset markets (SYNCRISK) ASE (Pele, Lupu, H\u00e4rdle) DC13 P3 Decision layer: stochastic programming over counterfactual scenarios Charles Prague (Kopa) DC14 P3 Cross-venue microstructure for tokenised assets Latvia (Rupeika-Apoga) DC15 P3 Transfer methodology, fast-to-slow domains; one full central-bank evaluation ASE (Pele, H\u00e4rdle)",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.25): \"Development of islamic finance in the digital economy through financial technologies: &lt;br/&gt; &lt;style type=\"text/css\"&gt; &lt;!-- p {margin: 0; padding: 0;} .ft10{font-size:14px;font-family:Gotham-Light;color:#231f20;} .ft11{font-size:18px;font-family:Gotham-Book;color:#ffffff;} .ft12{font-size:17px;font-family:Gotham-BoldItalic;color:#ba0d41;} .ft13{font-size:17px;font-family:Gotham-BookItalic;color:#231f20;} .ft14{font-size:18px;font-family:Gotham-Bold;color:#231f20;} .ft15{font-size:18px;font-family:Gotham-Book;color:#231f20;} .ft16{font-size:15px;font-family:Gotham-Bold;color:#231f20;} .ft17{font-size:15px;font-family:Gotham-BookItalic;color:#231f20;} .ft18{font-size:30px;font-family:HeliosCond-Bold;color:#ba0d41;} .ft19{font-size:17px;line-height:22px;font-family:Gotham-BookItalic;color:#231f20;} .ft110{font-size:18px;line-height:22px;font-family:Gotham-Book;color:#231f20;} .ft111{font-size:15px;line-height:22px;font-family:Gotham-BookItalic;color:#231f20;} .ft112{font-size:30px;line-height:40px;font-family:HeliosCond-Bold;color:#ba0d41;} .ft113{font-size:14px;line-height:24px;font-family:Gotham-Light;color:#231f20;} --&gt; &lt;/style&gt; &lt;div class=\"sub_page\"&gt; &lt;div id=\"page1-div\" style=\"position:relative;width:892px;height:1262px;\"&gt; &lt;img width=\"892\" height=\"1262\" src=\"/files/journals/90/articles/18962/6433d716d6217001.jpg\" alt=\"background image\"/&gt; &lt;p style=\"position:absolute;top:1163px;left:60px;white-space:nowrap\" class=\"ft10\"&gt;STARS International University&lt;/p&gt; &lt;p style=\"position:absolute;top:1194px;left:767px;white-space:nowrap\" class=\"ft11\"&gt; 239&lt;/p&gt; &lt;p style=\"position:absolute;top:448px;left:81px;white-space:nowrap\" class=\"ft12\"&gt;&lt;i&gt;&lt;b&gt;Abstract:&lt;/b&gt;&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:449px;left:157px;white-space:nowrap\" class=\"ft13\"&gt;&lt;i&gt; In the article, you can see the role and importance of developing Islamic &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:471px;left:60px;white-space:nowrap\" class=\"ft19\"&gt;&lt;i&gt;finance in the digital economy through financial technologies. The characteristics of new &lt;br/&gt;financial instruments in the Islamic financial system, their connection with modern financial &lt;br/&gt;technologies, their place in the world financial market, and efficiency indicators were &lt;br/&gt;analyzed. The level and share of the use of financial technologies of the Islamic bank in &lt;br/&gt;the digital economy are studied and analyzed by the countries of the world. The results of &lt;br/&gt;Islamic finance in the digital economy and the results in several directions were achieved, &lt;br/&gt;and which areas of the financial system of our country can be used more effectively were &lt;br/&gt;analyzed.&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:651px;left:81px;white-space:nowrap\" class=\"ft12\"&gt;&lt;i&gt;&lt;b&gt;Keywords:&lt;/b&gt;&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:651px;left:169px;white-space:nowrap\" class=\"ft13\"&gt;&lt;i&gt; digital economy, Islamic finance, financial technology, digital technology, &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:674px;left:60px;white-space:nowrap\" class=\"ft13\"&gt;&lt;i&gt;artificial intelligence, Islamic financial technology, modern technology.&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:717px;left:81px;white-space:nowrap\" class=\"ft14\"&gt;&lt;b&gt;Introduction. &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:717px;left:208px;white-space:nowrap\" class=\"ft15\"&gt;Today, the digital economy is based on software solutions for &lt;/p&gt; &lt;p style=\"position:absolute;top:740px;left:60px;white-space:nowrap\" class=\"ft110\"&gt;issues arising in the market and social relations. First of all, we can count the sectors &lt;br/&gt;with a high dependence on the Internet: transport, trade, logistics, etc. For this &lt;br/&gt;reason, it can also be called \u201celectronic economy\u201d, \u201csoftware economy\u201d and \u201cAPI &lt;br/&gt;economy\u201d. The term \u201cdigital economy\u201d was first used in 1995 by Don Tapscott. It is &lt;br/&gt;used as a separate concept in the publication \u201cDigital Economy: Promise and Peril &lt;br/&gt;in the Age of Networked Intelligence\u201d. This publication highlights fundamental &lt;br/&gt;innovations, key technologies, and connecting infrastructures as key components &lt;br/&gt;of the digital economy. FinTech has garnered an increasing amount of interest in &lt;br/&gt;recent years.&lt;/p&gt; &lt;p style=\"position:absolute;top:942px;left:81px;white-space:nowrap\" class=\"ft15\"&gt;Banks and financial institutions are taking steps to catch up with the digital &lt;/p&gt; &lt;p style=\"position:absolute;top:965px;left:60px;white-space:nowrap\" class=\"ft110\"&gt;and FinTech wave. At the outset, the new trends that are emerging in financial &lt;br/&gt;communities, such as digital banking, have been challenging the hegemony of &lt;br/&gt;the incumbent banks whose business model has remained constant over several &lt;br/&gt;years despite the changing industry landscape. Simultaneously, AI (Artificial &lt;br/&gt;Intelligence) is key to the future of digital banking, and more importantly, ethics &lt;br/&gt;in AI application is a recurring theme in the literature. Likewise, microfinancing, &lt;br/&gt;through the use of FinTech technologies, has opened up the banking sector to &lt;/p&gt; &lt;p style=\"position:absolute;top:227px;left:413px;white-space:nowrap\" class=\"ft16\"&gt;&lt;b&gt;NILUFAR ALIQULOVA&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:250px;left:413px;white-space:nowrap\" class=\"ft111\"&gt;&lt;i&gt;Teacher of the \u201cStars &lt;br/&gt;international university\u201d&lt;br/&gt;aliqulova95@bk.ru&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:205px;left:101px;white-space:nowrap\" class=\"ft112\"&gt;&lt;b&gt;DEVELOPMENT OF &lt;br/&gt;ISLAMIC FINANCE IN &lt;br/&gt;THE DIGITAL ECONOMY &lt;br/&gt;THROUGH FINANCIAL &lt;br/&gt;TECHNOLOGIES&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:322px;left:413px;white-space:nowrap\" class=\"ft113\"&gt;https://doi.org/10.47689/STARS.univer-&lt;br/&gt;s i t y - 5 - p p 2 3 7 - 2 4 0&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;br/&gt; &lt;style type=\"text/css\"&gt; &lt;!-- p {margin: 0; padding: 0;} .ft20{font-size:14px;font-family:Gotham-Light;color:#231f20;} .ft21{font-size:18px;font-family:Gotham-Book;color:#ffffff;} .ft22{font-size:18px;font-family:Gotham-Book;color:#231f20;} .ft23{font-size:10px;font-family:Gotham-Book;color:#231f20;} .ft24{font-size:18px;font-family:Gotham-Bold;color:#231f20;} .ft25{font-size:12px;font-family:Gotham-Book;color:#231f20;} .ft26{font-size:11px;font-family:Gotham-Book;color:#231f20;} .ft27{font-size:18px;line-height:22px;font-family:Gotham-Book;color:#231f20;} --&gt; &lt;/style&gt; &lt;div class=\"sub_page\"&gt; &lt;div id=\"page2-div\" style=\"position:relative;width:892px;height:1262px;\"&gt; &lt;img width=\"892\" height=\"1262\" src=\"/files/journals/90/articles/18962/6433d716d6217002.jpg\" alt=\"background image\"/&gt; &lt;p style=\"position:absolute;top:1163px;left:504px;white-space:nowrap\" class=\"ft20\"&gt;\u00abYangi O\u2018zbekiston: Moliyaviy hisobotning xalqaro &lt;/p&gt; &lt;p style=\"position:absolute;top:1179px;left:564px;white-space:nowrap\" class=\"ft20\"&gt;standartlarini joriy etishda muvaffaqiyatli &lt;/p&gt; &lt;p style=\"position:absolute;top:1196px;left:603px;white-space:nowrap\" class=\"ft20\"&gt;xalqaro tajriba\u00bb 16 dekabr, 2022 yil.&lt;/p&gt; &lt;p style=\"position:absolute;top:1194px;left:82px;white-space:nowrap\" class=\"ft21\"&gt;240&lt;/p&gt; &lt;p style=\"position:absolute;top:82px;left:106px;white-space:nowrap\" class=\"ft27\"&gt;an entirely neglected part of the business sector. Recently due to the COVID-19 &lt;br/&gt;pandemic, digital finance has garnered much support from users in GCC and &lt;br/&gt;beyond and FinTech will further drive the digital transformation of the financial &lt;br/&gt;services industry&lt;/p&gt; &lt;p style=\"position:absolute;top:151px;left:263px;white-space:nowrap\" class=\"ft23\"&gt;1&lt;/p&gt; &lt;p style=\"position:absolute;top:149px;left:267px;white-space:nowrap\" class=\"ft22\"&gt;.&lt;/p&gt; &lt;p style=\"position:absolute;top:171px;left:128px;white-space:nowrap\" class=\"ft24\"&gt;&lt;b&gt;Results. &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:172px;left:209px;white-space:nowrap\" class=\"ft22\"&gt;Technologically, the digital economy can be divided into 4 areas: &lt;/p&gt; &lt;p style=\"position:absolute;top:194px;left:106px;white-space:nowrap\" class=\"ft27\"&gt;mobile technologies, business analytics, \u201ccloud\u201d technologies, and social media. &lt;br/&gt;Also, the creation and improvement of various platforms for ordering services, &lt;br/&gt;joint use of resources, sorting of counterparties, electronic trade, payments, and &lt;br/&gt;other purposes will accelerate&lt;/p&gt; &lt;p style=\"position:absolute;top:263px;left:386px;white-space:nowrap\" class=\"ft23\"&gt;2&lt;/p&gt; &lt;p style=\"position:absolute;top:262px;left:392px;white-space:nowrap\" class=\"ft22\"&gt;.&lt;/p&gt; &lt;p style=\"position:absolute;top:284px;left:128px;white-space:nowrap\" class=\"ft22\"&gt;According to the ledgers, the digital economy has a significant impact on more &lt;/p&gt; &lt;p style=\"position:absolute;top:307px;left:106px;white-space:nowrap\" class=\"ft27\"&gt;than half of the various industries. According to the World Bank, a 10% increase &lt;br/&gt;in the number of high-speed Internet users can increase annual GDP growth by &lt;br/&gt;0.4-1.4%52&lt;/p&gt; &lt;p style=\"position:absolute;top:353px;left:203px;white-space:nowrap\" class=\"ft23\"&gt;3&lt;/p&gt; &lt;p style=\"position:absolute;top:352px;left:209px;white-space:nowrap\" class=\"ft22\"&gt;. In recent years, the growth of Internet speed and usage has been &lt;/p&gt; &lt;p style=\"position:absolute;top:374px;left:106px;white-space:nowrap\" class=\"ft27\"&gt;accelerating. Global Internet traffic alone was 100 Gb/s in 2002, reached 46,000 &lt;br/&gt;Gb by 2017, and is projected to increase to 150,700 Gb by 2022.&lt;/p&gt; &lt;p style=\"position:absolute;top:419px;left:128px;white-space:nowrap\" class=\"ft22\"&gt;The main factors of the transition of socio-economic development to the &lt;/p&gt; &lt;p style=\"position:absolute;top:442px;left:106px;white-space:nowrap\" class=\"ft22\"&gt;trajectory of the digital economy are as follows:&lt;/p&gt; &lt;p style=\"position:absolute;top:464px;left:128px;white-space:nowrap\" class=\"ft27\"&gt;- implementation of the electronic government concept;&lt;br/&gt;- the creation of the concept of a \u201cdigital city\u201d based on comprehensive &lt;/p&gt; &lt;p style=\"position:absolute;top:509px;left:106px;white-space:nowrap\" class=\"ft22\"&gt;informatization of transport, housing, and other areas;&lt;/p&gt; &lt;p style=\"position:absolute;top:532px;left:128px;white-space:nowrap\" class=\"ft22\"&gt;- popularization of new technological products on the market (such as driverless &lt;/p&gt; &lt;p style=\"position:absolute;top:554px;left:106px;white-space:nowrap\" class=\"ft22\"&gt;cars);&lt;/p&gt; &lt;p style=\"position:absolute;top:577px;left:128px;white-space:nowrap\" class=\"ft27\"&gt;- wide use of 3D printers;&lt;br/&gt;- the large-scale production of construction and finishing products for smart &lt;/p&gt; &lt;p style=\"position:absolute;top:622px;left:106px;white-space:nowrap\" class=\"ft22\"&gt;and environmentally friendly houses;&lt;/p&gt; &lt;p style=\"position:absolute;top:644px;left:128px;white-space:nowrap\" class=\"ft22\"&gt;- increase in demand for innovative pharmaceutical products intended for &lt;/p&gt; &lt;p style=\"position:absolute;top:667px;left:106px;white-space:nowrap\" class=\"ft22\"&gt;human rejuvenation;&lt;/p&gt; &lt;p style=\"position:absolute;top:689px;left:128px;white-space:nowrap\" class=\"ft22\"&gt;- increase in outsourcing and one-time alternative and free-form employment &lt;/p&gt; &lt;p style=\"position:absolute;top:712px;left:106px;white-space:nowrap\" class=\"ft22\"&gt;(freelance services);&lt;/p&gt; &lt;p style=\"position:absolute;top:734px;left:128px;white-space:nowrap\" class=\"ft22\"&gt;- the creation of a large number of professional networks to advertise the orders &lt;/p&gt; &lt;p style=\"position:absolute;top:757px;left:106px;white-space:nowrap\" class=\"ft22\"&gt;of employers&lt;/p&gt; &lt;p style=\"position:absolute;top:758px;left:221px;white-space:nowrap\" class=\"ft23\"&gt;4&lt;/p&gt; &lt;p style=\"position:absolute;top:757px;left:228px;white-space:nowrap\" class=\"ft22\"&gt;.&lt;/p&gt; &lt;p style=\"position:absolute;top:779px;left:128px;white-space:nowrap\" class=\"ft22\"&gt;Islamic finance is one segment of the finance industry that o\ufb00ers a lot of &lt;/p&gt; &lt;p style=\"position:absolute;top:802px;left:106px;white-space:nowrap\" class=\"ft27\"&gt;potential for digital transformation due to the tremendous number of opportunities &lt;br/&gt;available for Islamic finance institutions (IFIs) to embark on to achieve multiple &lt;br/&gt;strategic objectives. With the help of digitalization, IFIs can achieve financial &lt;br/&gt;inclusion, o\ufb00er customer-oriented financial services, and operational excellence &lt;br/&gt;and gain a competitive advantage over their peers. Crowdfunding, peer-to-peer &lt;br/&gt;model and payment platforms, smart contracts and blockchain, cryptocurrencies, &lt;br/&gt;cybersecurity, and so on are among a few emerging channels of digital &lt;br/&gt;transformation that could be utilized in the Islamic finance industry. Even though &lt;br/&gt;Islamic banks are at par with their conventional counterpart when it comes to &lt;br/&gt;technological development, the Shariah aspect of the financial transaction can &lt;/p&gt; &lt;p style=\"position:absolute;top:1041px;left:128px;white-space:nowrap\" class=\"ft25\"&gt;1 Nafis Alam, Syed Nazim Ali. Fintech, Digital Currency and the Future of Islamic Finance. Gulf Research Centre Caml-&lt;/p&gt; &lt;p style=\"position:absolute;top:1057px;left:106px;white-space:nowrap\" class=\"ft25\"&gt;bridge 2021. \u2013 p1.&lt;/p&gt; &lt;p style=\"position:absolute;top:1075px;left:128px;white-space:nowrap\" class=\"ft26\"&gt;2 \u041f\u0430\u043d\u044c\u0448\u0438\u043d \u0411. \u0426\u0438\u0444\u0440\u043e\u0432\u0430\u044f \u044d\u043a\u043e\u043d\u043e\u043c\u0438\u043a\u0430: \u043e\u0441\u043e\u0431\u0435\u043d\u043d\u043e\u0441\u0442\u0438 \u0438 \u0442\u0435\u043d\u0434\u0435\u043d\u0446\u0438\u0438 \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044f // \u041d\u0430\u0443\u043a\u0430 \u0438 \u0438\u043d\u043d\u043e\u0432\u0430\u0446\u0438\u0438. 2016. \u0422. 3. \u2116 157. \u0421. 18. &lt;/p&gt; &lt;p style=\"position:absolute;top:1090px;left:128px;white-space:nowrap\" class=\"ft25\"&gt;3 \u0421\u0430\u0432\u0438\u043d\u0430 \u0422.\u041d. \u0426\u0438\u0444\u0440\u043e\u0432\u0430\u044f \u044d\u043a\u043e\u043d\u043e\u043c\u0438\u043a\u0430 \u043a\u0430\u043a \u043d\u043e\u0432\u0430\u044f \u043f\u0430\u0440\u0430\u0434\u0438\u0433\u043c\u0430 \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044f: \u0432\u044b\u0437\u043e\u0432\u044b, \u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u0438 \u0438 \u043f\u0435\u0440\u0441\u043f\u0435\u043a\u0442\u0438\u0432\u044b // \u0424\u0438-&lt;/p&gt; &lt;p style=\"position:absolute;top:1107px;left:106px;white-space:nowrap\" class=\"ft25\"&gt;\u043d\u0430\u043d\u0441\u044b \u0438 \u043a\u0440\u0435\u0434\u0438\u0442. \u2014 2018. \u2014 \u0422. 24, \u2116 3. \u2014 \u0421. 584. &lt;/p&gt; &lt;p style=\"position:absolute;top:1124px;left:128px;white-space:nowrap\" class=\"ft26\"&gt;4 \u041f\u0430\u043d\u044c\u0448\u0438\u043d \u0411. \u0426\u0438\u0444\u0440\u043e\u0432\u0430\u044f \u044d\u043a\u043e\u043d\u043e\u043c\u0438\u043a\u0430: \u043e\u0441\u043e\u0431\u0435\u043d\u043d\u043e\u0441\u0442\u0438 \u0438 \u0442\u0435\u043d\u0434\u0435\u043d\u0446\u0438\u0438 \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044f // \u041d\u0430\u0443\u043a\u0430 \u0438 \u0438\u043d\u043d\u043e\u0432\u0430\u0446\u0438\u0438. 2016. \u0422. 3. \u2116 157. \u0421. 18. &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;br/&gt; &lt;style type=\"text/css\"&gt; &lt;!-- p {margin: 0; padding: 0;} .ft30{font-size:14px;font-family:Gotham-Light;color:#231f20;} .ft31{font-size:18px;font-family:Gotham-Book;color:#ffffff;} .ft32{font-size:18px;font-family:Gotham-Book;color:#231f20;} .ft33{font-size:10px;font-family:Gotham-Book;color:#231f20;} .ft34{font-size:7px;font-family:Gotham-Book;color:#231f20;} .ft35{font-size:12px;font-family:Gotham-Book;color:#231f20;} .ft36{font-size:18px;line-height:22px;font-family:Gotham-Book;color:#231f20;} --&gt; &lt;/style&gt; &lt;div class=\"sub_page\"&gt; &lt;div id=\"page3-div\" style=\"position:relative;width:892px;height:1262px;\"&gt; &lt;img width=\"892\" height=\"1262\" src=\"/files/journals/90/articles/18962/6433d716d6217003.jpg\" alt=\"background image\"/&gt; &lt;p style=\"position:absolute;top:1163px;left:60px;white-space:nowrap\" class=\"ft30\"&gt;STARS International University&lt;/p&gt; &lt;p style=\"position:absolute;top:1194px;left:772px;white-space:nowrap\" class=\"ft31\"&gt; 241&lt;/p&gt; &lt;p style=\"position:absolute;top:82px;left:60px;white-space:nowrap\" class=\"ft36\"&gt;be a hurdle to digitalizing the process. Knowhow about the blockchain or the &lt;br/&gt;permissibility of cryptocurrency can deter the adoption of Fintech within the &lt;br/&gt;Islamic finance industry&lt;/p&gt; &lt;p style=\"position:absolute;top:128px;left:282px;white-space:nowrap\" class=\"ft33\"&gt;1&lt;/p&gt; &lt;p style=\"position:absolute;top:127px;left:286px;white-space:nowrap\" class=\"ft32\"&gt;.&lt;/p&gt; &lt;p style=\"position:absolute;top:149px;left:81px;white-space:nowrap\" class=\"ft32\"&gt;In Islamic fintech, risk-sharing opportunities are being created through innovative &lt;/p&gt; &lt;p style=\"position:absolute;top:172px;left:60px;white-space:nowrap\" class=\"ft36\"&gt;startups for those who want to invest based on Islamic principles. Digital banks &lt;br/&gt;(virtual banks) can be cited as an example. Islamic fintech platforms must fully &lt;br/&gt;comply with the principles of Islamic finance such as asset-based, interest-free, &lt;br/&gt;and risk-sharing. It should also be free of asymmetric information, fraud, and &lt;br/&gt;mistrust between participants and counterparties. The use of smart contracts in &lt;br/&gt;the open database of calculations (blockchain) serves to increase the efficiency &lt;br/&gt;and transparency of fintech companies. Similarly, takaful will ease the processing &lt;br/&gt;of insurance claims through IoT platforms. By applying blockchain technologies &lt;br/&gt;in waqf (scholarly endowment), great achievements can be made. It can also be &lt;br/&gt;noted that Islamic fintech solutions for crowdfunding provide the opportunity to &lt;br/&gt;provide financial resources to large social projects that are usually not financed by &lt;br/&gt;traditional banks.&lt;/p&gt; &lt;p style=\"position:absolute;top:442px;left:81px;white-space:nowrap\" class=\"ft32\"&gt;There are an increasing number of countries that are seeing Islamic Fintech &lt;/p&gt; &lt;p style=\"position:absolute;top:464px;left:60px;white-space:nowrap\" class=\"ft36\"&gt;activity or are well-placed to facilitate such activity. As such, a clear need exists &lt;br/&gt;for a relative comparison of each country, and this report presents the only &lt;br/&gt;Global Islamic Fintech (GIFT) Index. This Index represents which countries are &lt;br/&gt;most conducive to the growth of the Islamic Fintech Market &amp;amp; Ecosystem in their &lt;br/&gt;jurisdictions.&lt;/p&gt; &lt;p style=\"position:absolute;top:577px;left:81px;white-space:nowrap\" class=\"ft32\"&gt;Generally, the introduction of the internet, e-commerce, mobile network, and &lt;/p&gt; &lt;p style=\"position:absolute;top:599px;left:60px;white-space:nowrap\" class=\"ft36\"&gt;smart devices has greatly contributed to changing the shape of monetary and &lt;br/&gt;financial services. However, the inception of Bitcoin, and other crypto-assets, &lt;br/&gt;has been among the greatest influencers and strongest catalysts for disruption. &lt;br/&gt;Although the crypto-asset class, like Bitcoin, is still at its infancy stage; experts have &lt;br/&gt;already regarded its impact and e\ufb00ect as the beginning of a new technological &lt;br/&gt;revolution, particularly relevant to the financial services sector. Money has a &lt;br/&gt;history of transformation through several items; shells, wheels, beads, and even &lt;br/&gt;cows. Broadly, commodity money was made of a substance that had its own value &lt;br/&gt;such as gold and silver coins, unlike representative money which is a certificate or &lt;br/&gt;a debit receipt. While fiat currency does not have intrinsic usage or benefit and &lt;br/&gt;does not represent an underlying asset in a vault somewhere. Money has indeed &lt;br/&gt;already recorded a significant transformation. Today, digital money in the form of &lt;br/&gt;virtual currency as represented by Bitcoin and other currency tokens is another &lt;br/&gt;significant milestone in the transformation of money. While the value of fiat &lt;br/&gt;currency comes from being recognized as legal tender by the government of the &lt;br/&gt;issuing country which then leads to its acceptance by the people, Bitcoin\u2019s value &lt;br/&gt;emanates from the recognition of stakeholders in the participating community. &lt;br/&gt;In other words, it is derived from the general people\u2019s trust in the system and the &lt;br/&gt;economic principle of demand and supply of Bitcoin.&lt;/p&gt; &lt;p style=\"position:absolute;top:1027px;left:81px;white-space:nowrap\" class=\"ft32\"&gt;According to Ifnfintech, a Malaysian publication that covers and analyzes fintech &lt;/p&gt; &lt;p style=\"position:absolute;top:1049px;left:60px;white-space:nowrap\" class=\"ft36\"&gt;in Islamic finance, there is 122 Islamic fintech operating as of April 2020. This data &lt;br/&gt;is regularly updated and in March it recorded 148. A dramatic change occurred &lt;/p&gt; &lt;p style=\"position:absolute;top:1108px;left:81px;white-space:nowrap\" class=\"ft34\"&gt;1&lt;/p&gt; &lt;p style=\"position:absolute;top:1107px;left:83px;white-space:nowrap\" class=\"ft35\"&gt; Nafis Alam, Syed Nazim Ali. Fintech, Digital Currency and the Future of Islamic Finance. Gulf Research Centre Caml-&lt;/p&gt; &lt;p style=\"position:absolute;top:1123px;left:60px;white-space:nowrap\" class=\"ft35\"&gt;bridge 2021. \u2013 p:5-6.&lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;br/&gt; &lt;style type=\"text/css\"&gt; &lt;!-- p {margin: 0; padding: 0;} .ft40{font-size:14px;font-family:Gotham-Light;color:#231f20;} .ft41{font-size:18px;font-family:Gotham-Book;color:#ffffff;} .ft42{font-size:18px;font-family:Gotham-Book;color:#231f20;} .ft43{font-size:18px;font-family:Gotham-Bold;color:#231f20;} .ft44{font-size:18px;line-height:22px;font-family:Gotham-Book;color:#231f20;} --&gt; &lt;/style&gt; &lt;div class=\"sub_page\"&gt; &lt;div id=\"page4-div\" style=\"position:relative;width:892px;height:1262px;\"&gt; &lt;img width=\"892\" height=\"1262\" src=\"/files/journals/90/articles/18962/6433d716d6217004.jpg\" alt=\"background image\"/&gt; &lt;p style=\"position:absolute;top:1163px;left:504px;white-space:nowrap\" class=\"ft40\"&gt;\u00abYangi O\u2018zbekiston: Moliyaviy hisobotning xalqaro &lt;/p&gt; &lt;p style=\"position:absolute;top:1179px;left:564px;white-space:nowrap\" class=\"ft40\"&gt;standartlarini joriy etishda muvaffaqiyatli &lt;/p&gt; &lt;p style=\"position:absolute;top:1196px;left:603px;white-space:nowrap\" class=\"ft40\"&gt;xalqaro tajriba\u00bb 16 dekabr, 2022 yil.&lt;/p&gt; &lt;p style=\"position:absolute;top:1194px;left:82px;white-space:nowrap\" class=\"ft41\"&gt;242&lt;/p&gt; &lt;p style=\"position:absolute;top:82px;left:106px;white-space:nowrap\" class=\"ft44\"&gt;due to the fact that the March IT technology and infrastructure group was not &lt;br/&gt;included in April. The publication categorizes Islamic fintech companies into more &lt;br/&gt;than ten groups as follows:&lt;/p&gt; &lt;p style=\"position:absolute;top:149px;left:128px;white-space:nowrap\" class=\"ft44\"&gt;- alternative financing;&lt;br/&gt;- digital bank;&lt;br/&gt;- blockchain and cryptocurrencies;&lt;br/&gt;- data analysis;&lt;br/&gt;- takaful&lt;br/&gt;- incubator, venture fund, and suppliers;&lt;br/&gt;- personal financial management;&lt;br/&gt;- P2P financing;&lt;br/&gt;- crowdfunding;&lt;br/&gt;- roboconsulting;&lt;br/&gt;- trade and investment;&lt;br/&gt;- payment, transfers, and forex.&lt;/p&gt; &lt;p style=\"position:absolute;top:419px;left:128px;white-space:nowrap\" class=\"ft43\"&gt;&lt;b&gt;Conclusion. &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:419px;left:239px;white-space:nowrap\" class=\"ft42\"&gt;As Islamic finance is a new field, there is a high demand for fintech &lt;/p&gt; &lt;p style=\"position:absolute;top:442px;left:106px;white-space:nowrap\" class=\"ft44\"&gt;in all its areas. Through fintech, Islamic financial services will reach unreached &lt;br/&gt;sections of society and untapped potential will be tapped.&lt;/p&gt; &lt;p style=\"position:absolute;top:487px;left:128px;white-space:nowrap\" class=\"ft42\"&gt;As with any industry, there are several obstacles to the development of Islamic &lt;/p&gt; &lt;p style=\"position:absolute;top:509px;left:106px;white-space:nowrap\" class=\"ft44\"&gt;fintech, and the sooner they are resolved, the more economic results will be &lt;br/&gt;achieved. For the development of Islamic fintech, it is important to overcome the &lt;br/&gt;following obstacles and challenges:&lt;/p&gt; &lt;p style=\"position:absolute;top:577px;left:128px;white-space:nowrap\" class=\"ft42\"&gt;- regulatory and legal documents. The existence of certain legal documents for &lt;/p&gt; &lt;p style=\"position:absolute;top:599px;left:106px;white-space:nowrap\" class=\"ft44\"&gt;the creation and introduction of innovations for businesses to protect them from &lt;br/&gt;legal negative consequences.&lt;/p&gt; &lt;p style=\"position:absolute;top:644px;left:128px;white-space:nowrap\" class=\"ft42\"&gt;- financial support. The vision of fintech platforms is to provide funding from &lt;/p&gt; &lt;p style=\"position:absolute;top:667px;left:106px;white-space:nowrap\" class=\"ft42\"&gt;investors such as venture funds and business angels for high-risk innovative ideas.&lt;/p&gt; &lt;p style=\"position:absolute;top:689px;left:128px;white-space:nowrap\" class=\"ft42\"&gt;- sta\ufb00 training. Unlike traditional fintech, sta\ufb00 needs to have a good understanding &lt;/p&gt; &lt;p style=\"position:absolute;top:712px;left:106px;white-space:nowrap\" class=\"ft42\"&gt;of both Sharia and financial issues.&lt;/p&gt; &lt;p style=\"position:absolute;top:734px;left:128px;white-space:nowrap\" class=\"ft42\"&gt;- flexibility. In recent centuries, in the era of very fast-changing technologies, it is &lt;/p&gt; &lt;p style=\"position:absolute;top:757px;left:106px;white-space:nowrap\" class=\"ft44\"&gt;important to adapt to the market conjuncture immediately. As well as reducing the &lt;br/&gt;role of technology in making Islamic finance unable to compete with conventional &lt;br/&gt;finance.&lt;/p&gt; &lt;p style=\"position:absolute;top:824px;left:128px;white-space:nowrap\" class=\"ft42\"&gt;- entrepreneurial skills and determination. Creating an equally necessary business &lt;/p&gt; &lt;p style=\"position:absolute;top:847px;left:106px;white-space:nowrap\" class=\"ft42\"&gt;environment for all sectors of fast-changing finance is a new trend.&lt;/p&gt; &lt;p style=\"position:absolute;top:884px;left:333px;white-space:nowrap\" class=\"ft43\"&gt;&lt;b&gt;Literature cited/bibliography:&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:911px;left:128px;white-space:nowrap\" class=\"ft42\"&gt;1.Nafis Alam, Syed Nazim Ali. Fintech, Digital Currency and the Future of Islamic &lt;/p&gt; &lt;p style=\"position:absolute;top:933px;left:106px;white-space:nowrap\" class=\"ft42\"&gt;Finance. Gulf Research Centre Cambridge 2021. &lt;/p&gt; &lt;p style=\"position:absolute;top:956px;left:128px;white-space:nowrap\" class=\"ft42\"&gt;2.\u041f\u0430\u043d\u044c\u0448\u0438\u043d \u0411. \u0426\u0438\u0444\u0440\u043e\u0432\u0430\u044f \u044d\u043a\u043e\u043d\u043e\u043c\u0438\u043a\u0430: \u043e\u0441\u043e\u0431\u0435\u043d\u043d\u043e\u0441\u0442\u0438 \u0438 \u0442\u0435\u043d\u0434\u0435\u043d\u0446\u0438\u0438 \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044f // &lt;/p&gt; &lt;p style=\"position:absolute;top:978px;left:106px;white-space:nowrap\" class=\"ft42\"&gt;\u041d\u0430\u0443\u043a\u0430 \u0438 \u0438\u043d\u043d\u043e\u0432\u0430\u0446\u0438\u0438. 2016. \u0422. 3. \u2116 157.&lt;/p&gt; &lt;p style=\"position:absolute;top:1001px;left:128px;white-space:nowrap\" class=\"ft42\"&gt;3.\u0421\u0430\u0432\u0438\u043d\u0430 \u0422.\u041d. \u0426\u0438\u0444\u0440\u043e\u0432\u0430\u044f \u044d\u043a\u043e\u043d\u043e\u043c\u0438\u043a\u0430 \u043a\u0430\u043a \u043d\u043e\u0432\u0430\u044f \u043f\u0430\u0440\u0430\u0434\u0438\u0433\u043c\u0430 \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044f: \u0432\u044b\u0437\u043e\u0432\u044b, &lt;/p&gt; &lt;p style=\"position:absolute;top:1023px;left:106px;white-space:nowrap\" class=\"ft44\"&gt;\u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u0438 \u0438 \u043f\u0435\u0440\u0441\u043f\u0435\u043a\u0442\u0438\u0432\u044b // \u0424\u0438\u043d\u0430\u043d\u0441\u044b \u0438 \u043a\u0440\u0435\u0434\u0438\u0442. \u2014 2018. \u2014 \u0422. 24, \u2116 3. \u2014 \u0421. &lt;br/&gt;584. &lt;/p&gt; &lt;p style=\"position:absolute;top:1068px;left:128px;white-space:nowrap\" class=\"ft42\"&gt;4.\u0410\u0431\u0440\u043e\u0440\u043e\u0432 \u0421\u0438\u0440\u043e\u0436\u0438\u0434\u0434\u0438\u043d \u0417\u0443\u0445\u0440\u0438\u0434\u0434\u0438\u043d \u045e\u0493\u043b\u0438. \u040e\u0437\u0431\u0435\u043a\u0441\u0442\u043e\u043d\u0434\u0430 \u0440\u0430\u049b\u0430\u043c\u043b\u0438 \u0438\u049b\u0442\u0438\u0441\u043e\u0434\u0438-&lt;/p&gt; &lt;p style=\"position:absolute;top:1091px;left:106px;white-space:nowrap\" class=\"ft44\"&gt;\u0451\u0442\u043d\u0438 \u0448\u0430\u043a\u043b\u043b\u0430\u043d\u0442\u0438\u0440\u0438\u0448 \u0448\u0430\u0440\u043e\u0438\u0442\u0438\u0434\u0430 \u0441\u0443\u043a\u0443\u043a\u043b\u0430\u0440\u043d\u0438 \u0436\u043e\u0440\u0438\u0439 \u044d\u0442\u0438\u0448 \u0438\u0441\u0442\u0438\u049b\u0431\u043e\u043b\u043b\u0430\u0440\u0438. \u041c\u043e-&lt;br/&gt;\u043d\u043e\u0433\u0440\u0430\u0444\u0438\u044f. \u0422\u041e\u0428\u041a\u0415\u041d\u0422\u20132020&lt;/p&gt; &lt;/div&gt; &lt;/div&gt;\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "4. Work packages WP Title DCs WP1 Counterfactual machines DC1 to DC5 WP2 Economies in silico & measurement instruments DC6 to DC10 WP3 Proving grounds, decisions & transfer DC11 to DC15 WP4 Ethics & responsible AI (research package) all WP5 Dissemination, exploitation, open science & RAISE all WP6 Management, coordination & training all",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.20): \"Innovative ways of teaching research for students: &lt;br/&gt; &lt;style type=\"text/css\"&gt; &lt;!-- p {margin: 0; padding: 0;} .ft10{font-size:16px;font-family:Calibri;color:#000000;} .ft11{font-size:16px;font-family:Times New Roman;color:#000000;} .ft12{font-size:16px;font-family:Times New Roman;color:#212121;} .ft13{font-size:16px;font-family:Times New Roman,Bold;color:#000000;} .ft14{font-size:16px;font-family:Arial;color:#000000;} .ft15{font-size:16px;font-family:Times New Roman,Italic;color:#000000;} .ft16{font-size:16px;font-family:Times New Roman,BoldItalic;color:#000000;} .ft17{font-size:16px;font-family:Times New Roman,Italic;color:#0000ff;} .ft18{font-size:16px;font-family:Times New Roman;color:#202020;} .ft19{font-size:16px;line-height:18px;font-family:Times New Roman;color:#000000;} .ft110{font-size:16px;line-height:19px;font-family:Times New Roman;color:#000000;} .ft111{font-size:16px;line-height:15px;font-family:Times New Roman;color:#000000;} .ft112{font-size:16px;line-height:22px;font-family:Times New Roman;color:#000000;} .ft113{font-size:16px;line-height:19px;font-family:Times New Roman;color:#212121;} .ft114{font-size:16px;line-height:18px;font-family:Times New Roman;color:#212121;} .ft115{font-size:16px;line-height:18px;font-family:Times New Roman,Bold;color:#000000;} .ft116{font-size:16px;line-height:19px;font-family:Times New Roman;color:#202020;} .ft117{font-size:16px;line-height:18px;font-family:Times New Roman;color:#202020;} --&gt; &lt;/style&gt; &lt;div class=\"sub_page\"&gt; &lt;div id=\"page1-div\" style=\"position:relative;width:892px;height:1262px;\"&gt; &lt;img width=\"892\" height=\"1262\" src=\"/files/journals/46/articles/5578/628f62c8b185c001.jpg\" alt=\"background image\"/&gt; &lt;p style=\"position:absolute;top:1203px;left:445px;white-space:nowrap\" class=\"ft10\"&gt;188 &lt;/p&gt; &lt;p style=\"position:absolute;top:68px;left:160px;white-space:nowrap\" class=\"ft11\"&gt;Moreover, I tried to experiment my students by using both traditional and non-traditional way in &lt;/p&gt; &lt;p style=\"position:absolute;top:86px;left:106px;white-space:nowrap\" class=\"ft110\"&gt;teaching grammar. The Group A was taught using communicative activities to acquire the grammar &lt;br/&gt;points while the Group \u0412 had lessons explaining the rules and doing grammar exercises based on the &lt;br/&gt;topic. Most of the students in Group A had less difficulties in comprehending the grammar rules as the &lt;br/&gt;various games helped them to understand the topic easily while the students in group B were busy with &lt;br/&gt;analyzing the topic. In the beginning of the lesson to group A I made a presentation with animation. As &lt;br/&gt;my topic was Past Continuous Tense I included the structures and authentic materials which had been &lt;br/&gt;simplified to help them make up sentences on their own. Unfortunately, course books do not provide with &lt;br/&gt;detailed grammar knowledge. More practice will be essential in the classroom, using group work and pair &lt;br/&gt;work. My next step was practice which consisted of various kinds of extra exercises and activities. Pupils &lt;br/&gt;are more enthusiastic when they enjoy the class, so it is a vital part of the lesson. The most interesting &lt;br/&gt;process was the game \u2015Alibi\u2016 in which we have the students create the crime they are going to &lt;br/&gt;investigate. It is similar to the murder mystery \u2015Clue\u2016. I divided the students into two groups suspects and &lt;br/&gt;detectives. I needed more suspects and 2-3 detectives. &lt;/p&gt; &lt;p style=\"position:absolute;top:314px;left:474px;white-space:nowrap\" class=\"ft12\"&gt;The suspects each have to create a story of where &lt;/p&gt; &lt;p style=\"position:absolute;top:333px;left:106px;white-space:nowrap\" class=\"ft113\"&gt;they were and what they were doing at the time of the crime. They are then questioned by one of the &lt;br/&gt;detective students. The detectives must ask questions using Past Continuous by only asking the time of &lt;br/&gt;the murder. For instance: What were you doing from 3 a.m till 5 a.m on Sunday? What was the doctor &lt;br/&gt;eating?&lt;/p&gt; &lt;p style=\"position:absolute;top:390px;left:154px;white-space:nowrap\" class=\"ft11\"&gt; Then I set up a jury and have the class vote as to who is guilty and why they don\u2018t believe in &lt;/p&gt; &lt;p style=\"position:absolute;top:409px;left:106px;white-space:nowrap\" class=\"ft11\"&gt;Alibi. &lt;/p&gt; &lt;p style=\"position:absolute;top:428px;left:160px;white-space:nowrap\" class=\"ft11\"&gt;Furthermore, the process of teaching grammar to group B began with the explanation of the Past &lt;/p&gt; &lt;p style=\"position:absolute;top:447px;left:106px;white-space:nowrap\" class=\"ft19\"&gt;Continuous tense by presentation. Then I asked them to make up sentences in Past Continuous without &lt;br/&gt;looking on the course book. So, majority of the pupils could not do the tasks as they only used to doing &lt;br/&gt;the exercises only by learning the rules by heart. But when I compared the tense with the target language, &lt;br/&gt;they easily underlined the similarities of both languages. &lt;/p&gt; &lt;p style=\"position:absolute;top:523px;left:160px;white-space:nowrap\" class=\"ft11\"&gt;In conclusion, there is a variety of activities and techniques in teaching grammar developed by &lt;/p&gt; &lt;p style=\"position:absolute;top:542px;left:106px;white-space:nowrap\" class=\"ft112\"&gt;scholars. From my point of view, traditional methods do not exactly help students learn grammar easily &lt;br/&gt;and they definitely do not make the English class enjoyable and interesting. So, the communicative &lt;br/&gt;activities make students brain use and meant to enlarge the students\u2018 horizon and let them know that &lt;br/&gt;grammar is not only theory but also practice and fun. &lt;/p&gt; &lt;p style=\"position:absolute;top:618px;left:457px;white-space:nowrap\" class=\"ft13\"&gt;&lt;b&gt; &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:637px;left:399px;white-space:nowrap\" class=\"ft13\"&gt;&lt;b&gt;REFERENCES: &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:656px;left:106px;white-space:nowrap\" class=\"ft11\"&gt;1.&lt;/p&gt; &lt;p style=\"position:absolute;top:655px;left:119px;white-space:nowrap\" class=\"ft14\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:656px;left:160px;white-space:nowrap\" class=\"ft11\"&gt;Ur.P. (1991). &lt;/p&gt; &lt;p style=\"position:absolute;top:656px;left:259px;white-space:nowrap\" class=\"ft15\"&gt;&lt;i&gt;A Course in Language Teaching: Teaching Grammar. &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:656px;left:649px;white-space:nowrap\" class=\"ft11\"&gt;Cambridge: Cambridge &lt;/p&gt; &lt;p style=\"position:absolute;top:675px;left:106px;white-space:nowrap\" class=\"ft19\"&gt;University Press. &lt;br/&gt;2.&lt;/p&gt; &lt;p style=\"position:absolute;top:693px;left:119px;white-space:nowrap\" class=\"ft14\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:694px;left:160px;white-space:nowrap\" class=\"ft11\"&gt;Ur.P. (1988). &lt;/p&gt; &lt;p style=\"position:absolute;top:694px;left:255px;white-space:nowrap\" class=\"ft15\"&gt;&lt;i&gt;Grammar Practice Activities: A Practical Guide for Teachers. &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:694px;left:690px;white-space:nowrap\" class=\"ft11\"&gt;United Kingdom: &lt;/p&gt; &lt;p style=\"position:absolute;top:713px;left:106px;white-space:nowrap\" class=\"ft19\"&gt;Cambridge University Press. &lt;br/&gt; &lt;br/&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:770px;left:203px;white-space:nowrap\" class=\"ft13\"&gt;&lt;b&gt;INNOVATIVE WAYS OF TEACHING RESEARCH FOR STUDENTS &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:789px;left:681px;white-space:nowrap\" class=\"ft16\"&gt;&lt;i&gt;&lt;b&gt;Seytniyazova G.M. &lt;/b&gt;&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:807px;left:434px;white-space:nowrap\" class=\"ft15\"&gt;&lt;i&gt;Teacher, English Philology and Languages Department, &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:827px;left:487px;white-space:nowrap\" class=\"ft15\"&gt;&lt;i&gt;KarSU named after Berdakh, Nukus, Uzbekistan &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:845px;left:601px;white-space:nowrap\" class=\"ft15\"&gt;&lt;i&gt;e-mail:&lt;a href=\"mailto:seytniyazova@inbox.ru\"&gt; &lt;/a&gt;&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:845px;left:653px;white-space:nowrap\" class=\"ft17\"&gt;&lt;a href=\"mailto:seytniyazova@inbox.ru\"&gt;&lt;i&gt;seytniyazova@inbox.ru&lt;/i&gt;&lt;/a&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:845px;left:808px;white-space:nowrap\" class=\"ft15\"&gt;&lt;a href=\"mailto:seytniyazova@inbox.ru\"&gt;&lt;i&gt; &lt;/i&gt;&lt;/a&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:865px;left:679px;white-space:nowrap\" class=\"ft16\"&gt;&lt;i&gt;&lt;b&gt;Nizamiddinova Sh. &lt;/b&gt;&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:883px;left:376px;white-space:nowrap\" class=\"ft15\"&gt;&lt;i&gt;4-th year student, English Philology and Languages Department, &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:903px;left:488px;white-space:nowrap\" class=\"ft15\"&gt;&lt;i&gt;KarSU named after Berdakh, Nukus, Uzbekistan &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:922px;left:106px;white-space:nowrap\" class=\"ft115\"&gt;&lt;b&gt; &lt;br/&gt;Annotation: &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:940px;left:199px;white-space:nowrap\" class=\"ft11\"&gt;The purpose of this article is to assist an educator in teaching and creating innovative &lt;/p&gt; &lt;p style=\"position:absolute;top:959px;left:106px;white-space:nowrap\" class=\"ft19\"&gt;methods for facilitating research. A brief background and discussion of the research process is being &lt;br/&gt;presented followed by how and why innovative ways are important for doing a research work. &lt;/p&gt; &lt;p style=\"position:absolute;top:978px;left:733px;white-space:nowrap\" class=\"ft13\"&gt;&lt;b&gt; &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:997px;left:106px;white-space:nowrap\" class=\"ft13\"&gt;&lt;b&gt;Key words:&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:997px;left:189px;white-space:nowrap\" class=\"ft11\"&gt; research, scientific, techniques, innovative strategy, identification, hypothesis, formulation, &lt;/p&gt; &lt;p style=\"position:absolute;top:1016px;left:106px;white-space:nowrap\" class=\"ft11\"&gt;discussion, conclusion. &lt;/p&gt; &lt;p style=\"position:absolute;top:1035px;left:160px;white-space:nowrap\" class=\"ft110\"&gt; &lt;br/&gt;When the term research is brought-up in discussion, teachers tend to scramble for creative and &lt;/p&gt; &lt;p style=\"position:absolute;top:1073px;left:106px;white-space:nowrap\" class=\"ft110\"&gt;effective methods to teach these concepts. The concept of research as an innately human trait is grounded &lt;br/&gt;in the day-to-day processes we employ to make decisions ranging from simple to complex. &lt;/p&gt; &lt;p style=\"position:absolute;top:1111px;left:160px;white-space:nowrap\" class=\"ft18\"&gt;United Nations Educational, Scientific and Cultural Organization (UNESCO) defines research as &lt;/p&gt; &lt;p style=\"position:absolute;top:1130px;left:106px;white-space:nowrap\" class=\"ft117\"&gt;systematic and creative actions taken to increase knowledge about humans, culture, and society and to &lt;br/&gt;apply it in new areas of interest. Scientific research is the research performed by applying systematic and &lt;br/&gt;constructed scientific methods to obtain, analyze, and interpret data. Scientific research is the neutral, &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;br/&gt; &lt;style type=\"text/css\"&gt; &lt;!-- p {margin: 0; padding: 0;} .ft20{font-size:16px;font-family:Calibri;color:#000000;} .ft21{font-size:16px;font-family:Times New Roman;color:#202020;} .ft22{font-size:16px;font-family:Times New Roman;color:#000000;} .ft23{font-size:16px;font-family:Times New Roman,Bold;color:#000000;} .ft24{font-size:16px;line-height:18px;font-family:Times New Roman;color:#202020;} .ft25{font-size:16px;line-height:19px;font-family:Times New Roman;color:#202020;} .ft26{font-size:16px;line-height:19px;font-family:Times New Roman;color:#000000;} .ft27{font-size:16px;line-height:18px;font-family:Times New Roman;color:#000000;} .ft28{font-size:16px;line-height:19px;font-family:Times New Roman,Bold;color:#000000;} .ft29{font-size:16px;line-height:18px;font-family:Times New Roman,Bold;color:#000000;} --&gt; &lt;/style&gt; &lt;div class=\"sub_page\"&gt; &lt;div id=\"page2-div\" style=\"position:relative;width:892px;height:1262px;\"&gt; &lt;img width=\"892\" height=\"1262\" src=\"/files/journals/46/articles/5578/628f62c8b185c002.jpg\" alt=\"background image\"/&gt; &lt;p style=\"position:absolute;top:1203px;left:423px;white-space:nowrap\" class=\"ft20\"&gt;189 &lt;/p&gt; &lt;p style=\"position:absolute;top:68px;left:85px;white-space:nowrap\" class=\"ft25\"&gt;systematic, planned, and multiple-step process that uses previously discovered facts to advance &lt;br/&gt;knowledge that does not exist in the literature. It can be classified as observational or experimental with &lt;br/&gt;respect to data collection techniques, descriptive or analytical with respect to causality, and prospective, &lt;br/&gt;retrospective, or cross-sectional with respect to time [1]. &lt;/p&gt; &lt;p style=\"position:absolute;top:124px;left:462px;white-space:nowrap\" class=\"ft22\"&gt;The reflection of research in the classroom needs &lt;/p&gt; &lt;p style=\"position:absolute;top:143px;left:85px;white-space:nowrap\" class=\"ft27\"&gt;to address the dynamic nature of the research process in real-life. The basis for using science to improve &lt;br/&gt;professional practice and overall quality of life needs to form the foundation in any research course. &lt;br/&gt;Assisting students in appreciating the various steps of this dynamic process should be the ultimate goal of &lt;br/&gt;the educator. The following innovative strategies to assist the educator in this process: &lt;/p&gt; &lt;p style=\"position:absolute;top:219px;left:138px;white-space:nowrap\" class=\"ft22\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:239px;left:85px;white-space:nowrap\" class=\"ft23\"&gt;&lt;b&gt;1. Identification of a research problem&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:239px;left:355px;white-space:nowrap\" class=\"ft22\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:257px;left:85px;white-space:nowrap\" class=\"ft26\"&gt;A good research always starts with a good problem. You can observe people or things, visit places, read &lt;br/&gt;printed materials, or consult experts to find the research problem that is right for you. The research &lt;br/&gt;problem guides you in formulating the hypothesis and interpretation of your findings so that you can &lt;br/&gt;formulate the right conclusion. Factors like area of interest, availability of fund, socio-economic &lt;br/&gt;significance of the study, and the safety measures to be undertaken should be considered in finding a &lt;br/&gt;good research problem [2]. &lt;/p&gt; &lt;p style=\"position:absolute;top:371px;left:85px;white-space:nowrap\" class=\"ft28\"&gt;&lt;b&gt; &lt;br/&gt;2. Formulation of Hypothesis&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:391px;left:290px;white-space:nowrap\" class=\"ft22\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:409px;left:85px;white-space:nowrap\" class=\"ft26\"&gt;After finding your research problem, the next step is to formulate your own hypothesis. A hypothesis is a &lt;br/&gt;theoretical statement in solving a logical relationship between variables. Always remember that when you &lt;br/&gt;formulate a hypothesis, it should be based on the research problem being solved. &lt;/p&gt; &lt;p style=\"position:absolute;top:466px;left:85px;white-space:nowrap\" class=\"ft28\"&gt;&lt;b&gt; &lt;br/&gt;3. Review of Related Literature&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:485px;left:306px;white-space:nowrap\" class=\"ft22\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:504px;left:85px;white-space:nowrap\" class=\"ft27\"&gt;A research problem is vague at first. To give you a vivid picture of the whole research, you should read &lt;br/&gt;various publications or surf the internet to become aware of the previous works already done. In doing so, &lt;br/&gt;it could spur an idea that can be the subject of your investigation. The review of related literature can be &lt;br/&gt;taken from science books, magazines, journals, newspapers, or even in the internet. &lt;/p&gt; &lt;p style=\"position:absolute;top:580px;left:85px;white-space:nowrap\" class=\"ft29\"&gt;&lt;b&gt; &lt;br/&gt;4. Preparation of Research Design&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:599px;left:326px;white-space:nowrap\" class=\"ft22\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:618px;left:85px;white-space:nowrap\" class=\"ft27\"&gt;A research design is the blueprint of the research you are going to undertake. It serves as the work plan of &lt;br/&gt;the whole study not only because it entails the resources needed in conducting the research but also the &lt;br/&gt;ways these resources are utilized. &lt;/p&gt; &lt;p style=\"position:absolute;top:675px;left:85px;white-space:nowrap\" class=\"ft29\"&gt;&lt;b&gt; &lt;br/&gt;5. Actual experimentation&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:694px;left:268px;white-space:nowrap\" class=\"ft22\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:713px;left:85px;white-space:nowrap\" class=\"ft27\"&gt;Actual experimentation is an implementation of the research design. In actual experimentation, you have &lt;br/&gt;to conduct an experiment to prove the validity of the hypothesis you have formulated. Actual &lt;br/&gt;experimentation includes the methodology that you have followed in doing your research. The &lt;br/&gt;methodology should be carefully planned prior to the actual experimentation to ensure the validity and &lt;br/&gt;accuracy of the result. &lt;/p&gt; &lt;p style=\"position:absolute;top:808px;left:85px;white-space:nowrap\" class=\"ft28\"&gt;&lt;b&gt; &lt;br/&gt;6. Results and Discussion&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:827px;left:262px;white-space:nowrap\" class=\"ft22\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:845px;left:85px;white-space:nowrap\" class=\"ft26\"&gt;This is the heart of the research process because this is part where the findings of the research can be &lt;br/&gt;found. &lt;/p&gt; &lt;p style=\"position:absolute;top:884px;left:85px;white-space:nowrap\" class=\"ft28\"&gt;&lt;b&gt; &lt;br/&gt;7. Formulation of Conclusions and Recommendations&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:903px;left:463px;white-space:nowrap\" class=\"ft22\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:921px;left:85px;white-space:nowrap\" class=\"ft27\"&gt;Conclusion is a statement where you will present the solution to the proposed problem based on the &lt;br/&gt;findings of the investigation. They are tied up to the questions investigated. Your conclusion will show &lt;br/&gt;whether or not your experiment worked. It should answer your hypothesis and research problem. In your &lt;br/&gt;concluding statement you can also infer on the possible benefits to society that your results might present. &lt;br/&gt;You can state any plans you might have to continue working on other aspects related to your area of &lt;br/&gt;study. &lt;/p&gt; &lt;p style=\"position:absolute;top:1035px;left:138px;white-space:nowrap\" class=\"ft22\"&gt;Conducting research is a tiresome task because it is a year-round activity. You have to be &lt;/p&gt; &lt;p style=\"position:absolute;top:1054px;left:85px;white-space:nowrap\" class=\"ft26\"&gt;committed to become successful in making a good research which would benefit not only you but of &lt;br/&gt;everyone. The willingness in you in making future researches should always be there because doing &lt;br/&gt;research without your \u2017heart\u2018 and \u2017mind\u2018 on it is a burden on your part. Always enjoy doing it. The more &lt;br/&gt;you enjoy doing the task, the more that you ease the burden in conducting this difficult endeavor. Never &lt;br/&gt;hesitate to ask questions. Asking questions from other people who is aware of your research topic would &lt;br/&gt;help you arrive at the correct conclusions. &lt;/p&gt; &lt;/div&gt; &lt;/div&gt; &lt;br/&gt; &lt;style type=\"text/css\"&gt; &lt;!-- p {margin: 0; padding: 0;} .ft30{font-size:16px;font-family:Calibri;color:#000000;} .ft31{font-size:16px;font-family:Times New Roman;color:#000000;} .ft32{font-size:16px;font-family:Times New Roman,Bold;color:#000000;} .ft33{font-size:16px;font-family:Times New Roman;color:#202020;} .ft34{font-size:16px;font-family:Times New Roman,Italic;color:#202020;} .ft35{font-size:16px;font-family:Times New Roman;color:#0000ff;} .ft36{font-size:16px;font-family:Times New Roman,BoldItalic;color:#000000;} .ft37{font-size:16px;font-family:Times New Roman,Italic;color:#000000;} .ft38{font-size:10px;font-family:Times New Roman,Italic;color:#000000;} .ft39{font-size:16px;line-height:22px;font-family:Times New Roman;color:#000000;} .ft310{font-size:16px;line-height:19px;font-family:Times New Roman;color:#000000;} .ft311{font-size:16px;line-height:18px;font-family:Times New Roman;color:#000000;} .ft312{font-size:16px;line-height:18px;font-family:Times New Roman,Bold;color:#000000;} .ft313{font-size:16px;line-height:15px;font-family:Times New Roman;color:#000000;} --&gt; &lt;/style&gt; &lt;div class=\"sub_page\"&gt; &lt;div id=\"page3-div\" style=\"position:relative;width:892px;height:1262px;\"&gt; &lt;img width=\"892\" height=\"1262\" src=\"/files/journals/46/articles/5578/628f62c8b185c003.jpg\" alt=\"background image\"/&gt; &lt;p style=\"position:absolute;top:1203px;left:445px;white-space:nowrap\" class=\"ft30\"&gt;190 &lt;/p&gt; &lt;p style=\"position:absolute;top:68px;left:160px;white-space:nowrap\" class=\"ft31\"&gt;To conclude, research can be fun, interesting and fascinating. A feeling of accomplishment, &lt;/p&gt; &lt;p style=\"position:absolute;top:83px;left:106px;white-space:nowrap\" class=\"ft311\"&gt;satisfaction, and pride can be the result of contributing to the \u2015greater cause\u2016 of our \u2015way of knowing.\u2016 &lt;br/&gt;Research is a complex, exacting, and complex process that yields the ultimate reward of truth or at least a &lt;br/&gt;path leading to it [Bailey, D. M.: 1997]. Using innovative ways of doing research is one to achieve a great &lt;br/&gt;goal. &lt;/p&gt; &lt;p style=\"position:absolute;top:162px;left:160px;white-space:nowrap\" class=\"ft31\"&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:182px;left:399px;white-space:nowrap\" class=\"ft32\"&gt;&lt;b&gt;REFERENCES: &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:200px;left:106px;white-space:nowrap\" class=\"ft33\"&gt;1. \u00c7aparlar C\u00d6, D\u00f6nmez A. What is Scientific Research and How Can it be Done? &lt;/p&gt; &lt;p style=\"position:absolute;top:200px;left:675px;white-space:nowrap\" class=\"ft34\"&gt;&lt;i&gt;Turk J Anaesthesiol &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:219px;left:106px;white-space:nowrap\" class=\"ft34\"&gt;&lt;i&gt;Reanim. &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:219px;left:165px;white-space:nowrap\" class=\"ft33\"&gt;2016; 44: 212\u20138 &lt;/p&gt; &lt;p style=\"position:absolute;top:238px;left:106px;white-space:nowrap\" class=\"ft33\"&gt;2. Resnik DB. &lt;/p&gt; &lt;p style=\"position:absolute;top:238px;left:207px;white-space:nowrap\" class=\"ft34\"&gt;&lt;i&gt;What is Ethics in Research &amp;amp; Why is it Important?&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:238px;left:566px;white-space:nowrap\" class=\"ft33\"&gt; Natonal Institute of Environmental &lt;/p&gt; &lt;p style=\"position:absolute;top:257px;left:106px;white-space:nowrap\" class=\"ft33\"&gt;HealthSciences;2015. &lt;/p&gt; &lt;p style=\"position:absolute;top:276px;left:106px;white-space:nowrap\" class=\"ft311\"&gt;3. The practice of social research (9th ed.). Belmont, CA: Wadsworth Thomson Learning. Bailey, D. M. &lt;br/&gt;(1997). &lt;br/&gt;4. Educational research: an introduction (4th ed.). New York. Longman. Creswell, J. W. (1998). &lt;br/&gt;Qualitative inquiry and research design: choosing among five traditions. Thousand Oaks, CA: Sage &lt;br/&gt;Publications. &lt;br/&gt;&lt;a href=\"https://www.teacherph.com/-steps-research-process\"&gt;5. &lt;/a&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:371px;left:123px;white-space:nowrap\" class=\"ft35\"&gt;&lt;a href=\"https://www.teacherph.com/-steps-research-process\"&gt;https://www.teacherph.com/-steps-research-process&lt;/a&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:371px;left:464px;white-space:nowrap\" class=\"ft31\"&gt;&lt;a href=\"https://www.teacherph.com/-steps-research-process\"&gt; &lt;/a&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:390px;left:106px;white-space:nowrap\" class=\"ft31\"&gt;&lt;a href=\"https://www.ncbi.nlm.nih.gov/pmc/articles\"&gt;6. &lt;/a&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:390px;left:123px;white-space:nowrap\" class=\"ft35\"&gt;&lt;a href=\"https://www.ncbi.nlm.nih.gov/pmc/articles\"&gt;https://www.ncbi.nlm.nih.gov/pmc/articles&lt;/a&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:390px;left:406px;white-space:nowrap\" class=\"ft31\"&gt;&lt;a href=\"https://www.ncbi.nlm.nih.gov/pmc/articles\"&gt; &lt;/a&gt; &lt;/p&gt; &lt;p style=\"position:absolute;top:409px;left:457px;white-space:nowrap\" class=\"ft312\"&gt;&lt;b&gt; &lt;br/&gt; &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:447px;left:258px;white-space:nowrap\" class=\"ft32\"&gt;&lt;b&gt;SELF-STUDY IN LEARNING FOREIGN LANGUAGE &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:466px;left:703px;white-space:nowrap\" class=\"ft36\"&gt;&lt;i&gt;&lt;b&gt;Dauletova D.B. &lt;/b&gt;&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:485px;left:379px;white-space:nowrap\" class=\"ft37\"&gt;&lt;i&gt;Assistant teacher, English Language and Literature Department, &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:504px;left:502px;white-space:nowrap\" class=\"ft37\"&gt;&lt;i&gt;KSU named after Berdakh, Nukus, Uzbekistan &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:523px;left:703px;white-space:nowrap\" class=\"ft36\"&gt;&lt;i&gt;&lt;b&gt;Dauletbaeva G. &lt;/b&gt;&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:542px;left:388px;white-space:nowrap\" class=\"ft37\"&gt;&lt;i&gt;2&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:539px;left:396px;white-space:nowrap\" class=\"ft38\"&gt;&lt;i&gt;nd&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:542px;left:407px;white-space:nowrap\" class=\"ft37\"&gt;&lt;i&gt; year student, English Language and Literature Department, &lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:561px;left:502px;white-space:nowrap\" class=\"ft37\"&gt;&lt;i&gt;KSU named after Berdakh, Nukus, Uzbekistan&lt;/i&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:561px;left:808px;white-space:nowrap\" class=\"ft32\"&gt;&lt;b&gt; &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:580px;left:106px;white-space:nowrap\" class=\"ft312\"&gt;&lt;b&gt; &lt;br/&gt;Abstract:&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:599px;left:174px;white-space:nowrap\" class=\"ft31\"&gt; The use of technology has received increasing recognition as a means capable of bridging &lt;/p&gt; &lt;p style=\"position:absolute;top:618px;left:106px;white-space:nowrap\" class=\"ft310\"&gt;formal and informal settings in the target language learning and enabling students to actively and &lt;br/&gt;effectively use technology both inside and outside the classroom. &lt;/p&gt; &lt;p style=\"position:absolute;top:656px;left:106px;white-space:nowrap\" class=\"ft32\"&gt;&lt;b&gt;Key words: &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:656px;left:192px;white-space:nowrap\" class=\"ft31\"&gt;self-study, new methods, motivation &lt;/p&gt; &lt;p style=\"position:absolute;top:671px;left:106px;white-space:nowrap\" class=\"ft32\"&gt;&lt;b&gt;\u0410\u043d\u043d\u043e\u0442\u0430\u0446\u0438\u044f: &lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:671px;left:200px;white-space:nowrap\" class=\"ft31\"&gt;\u0418\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u0435 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u0439 \u043f\u043e\u043b\u0443\u0447\u0430\u0435\u0442 \u0432\u0441\u0435 \u0431\u043e\u043b\u044c\u0448\u0435\u0435 \u043f\u0440\u0438\u0437\u043d\u0430\u043d\u0438\u0435 \u043a\u0430\u043a \u0441\u0440\u0435\u0434\u0441\u0442\u0432\u043e, \u0441\u043f\u043e\u0441\u043e\u0431\u043d\u043e\u0435 &lt;/p&gt; &lt;p style=\"position:absolute;top:690px;left:106px;white-space:nowrap\" class=\"ft311\"&gt;\u043e\u0431\u044a\u0435\u0434\u0438\u043d\u0438\u0442\u044c \u0444\u043e\u0440\u043c\u0430\u043b\u044c\u043d\u044b\u0435 \u0438 \u043d\u0435\u0444\u043e\u0440\u043c\u0430\u043b\u044c\u043d\u044b\u0435 \u0443\u0441\u043b\u043e\u0432\u0438\u044f \u043f\u0440\u0438 \u0438\u0437\u0443\u0447\u0435\u043d\u0438\u0438 \u0446\u0435\u043b\u0435\u0432\u043e\u0433\u043e \u044f\u0437\u044b\u043a\u0430 \u0438 \u043f\u043e\u0437\u0432\u043e\u043b\u044f\u044e\u0449\u0435\u0435 &lt;br/&gt;\u0443\u0447\u0430\u0449\u0438\u043c\u0441\u044f \u0430\u043a\u0442\u0438\u0432\u043d\u043e \u0438 \u044d\u0444\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u043e \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u044c \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u0438 \u043a\u0430\u043a \u0432 \u043a\u043b\u0430\u0441\u0441\u0435, \u0442\u0430\u043a \u0438 \u0437\u0430 \u0435\u0433\u043e \u043f\u0440\u0435\u0434\u0435\u043b\u0430\u043c\u0438. &lt;/p&gt; &lt;p style=\"position:absolute;top:728px;left:106px;white-space:nowrap\" class=\"ft32\"&gt;&lt;b&gt;\u041a\u043b\u044e\u0447\u0435\u0432\u044b\u0435 \u0441\u043b\u043e\u0432\u0430:&lt;/b&gt;&lt;/p&gt; &lt;p style=\"position:absolute;top:732px;left:238px;white-space:nowrap\" class=\"ft31\"&gt; \u0441\u0430\u043c\u043e\u043e\u0431\u0443\u0447\u0435\u043d\u0438\u0435, \u043d\u043e\u0432\u044b\u0435 \u043c\u0435\u0442\u043e\u0434\u044b, \u043c\u043e\u0442\u0438\u0432\u0430\u0446\u0438\u044f &lt;/p&gt; &lt;p style=\"position:absolute;top:751px;left:160px;white-space:nowrap\" class=\"ft313\"&gt; &lt;br/&gt;There has been an increasingly large div of research on students\u2018 use of technology for second &lt;/p&gt; &lt;p style=\"position:absolute;top:789px;left:106px;white-space:nowrap\" class=\"ft311\"&gt;or foreign language learning. These research studies have generally concentrated on students\u2018 perceptions &lt;br/&gt;and evaluations of the suitability of technological devices for language learning, adoption of these &lt;br/&gt;technological devices in the classroom settings, and the factors that affect the effectiveness of language &lt;br/&gt;learning in classroom technology-using conditions. For example, P. Winke and S. Goertler found that &lt;br/&gt;songs and movies were the most frequently used technologies and the ease of access was the strongest &lt;br/&gt;predictor of the frequency of technology use [Winke; Goertler: 2008] &lt;/p&gt; &lt;p style=\"position:absolute;top:903px;left:160px;white-space:nowrap\" class=\"ft31\"&gt;Recent research on technology-facilitated language learning, however, has been mostly laboratory &lt;/p&gt; &lt;p style=\"position:absolute;top:921px;left:106px;white-space:nowrap\" class=\"ft310\"&gt;and classroom experiments of technology applications in the formal educational contexts Consequently, &lt;br/&gt;our knowledge and understanding of students\u2018 self-regulated use of technology for target language &lt;br/&gt;learning is still limited. Aspects of technology-assisted language learning such as goal setting, &lt;br/&gt;motivation-regulation, and cognitive strategy use particularly in an English as a Foreign Language \u2013 EFL &lt;br/&gt;context remains in need of further empirical inquiry. After all, in the course of learning a second or &lt;br/&gt;foreign language, learners are at the center of learning and play an instrumental role in shaping outcomes &lt;br/&gt;of their learning experiences. Key to this view of learner-centredness is self-regulation and learners taking &lt;br/&gt;the responsibility for their own learning [Holec: 1981]. &lt;/p&gt; &lt;p style=\"position:absolute;top:1073px;left:160px;white-space:nowrap\" class=\"ft31\"&gt;Nevertheless, what is lacking in recent research on technology-assisted language learning is a &lt;/p&gt; &lt;p style=\"position:absolute;top:1092px;left:106px;white-space:nowrap\" class=\"ft310\"&gt;systematic examination of SRL strategies in technology-using conditions particularly in an EFL &lt;br/&gt;context. This study investigated university students\u2018 technology-assisted self-regulated learning \u2013 SRL &lt;br/&gt;strategies and whether the technology-based SRL strategies mediated the associations between English &lt;br/&gt;language self-efficacy, English enjoyment, and learning outcomes. &lt;/p&gt; &lt;/div&gt; &lt;/div&gt;\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "5. Consortium (indicative, 13 beneficiaries, 11 countries) # Beneficiary Country PI(s) DC(s) 1 ASE Bucharest (coordinator) RO Pele, Lupu, H\u00e4rdle DC4, DC12, DC15 2 University of Bristol UK Wang DC3 3 Humboldt-Universit\u00e4t zu Berlin DE Lessmann, Reluga DC6 4 SCAI-Sorbonne FR Cinnella DC2 5 University of Twente NL Osterrieder DC7 6 Charles University Prague CZ Barun\u00edk, Kopa DC13 7 UCLouvain BE Hafner DC1 8 Babe\u0219-Bolyai University RO Mare DC8 9 Universit\u00e0 di Napoli Federico II IT Iannario DC9 10 Wroc\u0142aw University of Science and Technology PL Weron (co-sup. Burnecki) DC11 11 University of Latvia LV Rupeika-Apoga DC14 12 University of Milan IT Tarantola DC10 13 Aarhus University DK Chen Huang DC5 An associated-partner layer (central banks, an energy regulator/TSO, a digital-asset exchange/analytics firm, a statistical institute) carries the intersectoral dimension, data, co-supervision, research visits, and live policy questions.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.11): \"Oral anticoagulation related intracerebral hemorrhage: more questions than answers\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "6. Training programme Each candidate completes 30 ECTS plus transferable-skills training, with two cross-border supervisors. The network opens with a kick-off meeting and runs four in-person weeks, one foundations week and one per pillar, with an online mid-term review, a final conference and monthly online seminars. The supplementary curriculum is delivered through Quantinar as open courseware. Hosts rotate across the consortium, and the indicative themes are: Event Indicative content Timing Kick-off meeting Consortium launch: governance, roles, recruitment, PCDPs M1 Foundations week (mandatory, in person) Shared language across the four disciplines, including conformal and distributional inference and explainable AI M8 Pillar 1 week: Counterfactual machines Causal generative and structural counterfactual models, neural synthetic control, calibrated uncertainty M14 Pillar 2 week: Economies in silico Agentic and LLM-agent economies, simulation-based inference, distributional measurement M20 Online mid-term review Cross-pillar presentations, benchmark hackathon, career development M24 Pillar 3 week: Proving grounds and transfer Energy counterfactuals, event-time inference, the decision layer, transfer to policy M28 Final conference Results, policy roundtable, synthesis and policy-briefing session M46 Monthly seminars and Quantinar programme Online series; the supplementary curriculum as open courseware M1-M48",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.40): \"Enriched Gabor Feature Based PCA for Face Recognition with One Training Image per Person\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "7. Timeline & milestones Milestone When Marker MS1 M2 Consortium Agreement signed; recruitment launched MS2 M12 All 15 DCs in post; training plans signed MS3 M22 Core engines integrated MS4 M28 Public benchmark; first pre-registered scoring (central go/no-go) MS5 M38 Proving-ground findings public MS6 M46 Transfer protocol demonstrated with a partner Proposal preparation: consortium consultation through summer 2026; submission 24 November 2026. \u2192 shape themes and positions over the summer \u2192 collect PI inputs and commitment letters \u2192",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.07): \"Figure 2. CDPK4 activity facilitates the assembly of the pre-replicative complex during microgametogenesis.: (A) GO term enrichment analysis of proteins co-immunoprecipitated with CDPK4-3xHA in non-activated gametocytes reveals the kinase is interacting with proteins of the pre-replicative complex. Bonferroni corrected p-values are indicated. (B) 178 proteins are immunoprecipitated with both CDPK4-3xHA and MCM5-3xHA including all components of the ORC and the MCM complex. The relative abundance of proteins was determined as the number of spectral counts for each protein divided by the number of total spectral counts in the respective immunoprecipitate. (C) The interaction between CDPK4-3xHA and MCM2-7/Cdt1 proteins is stable during the first 15 s following XA stimulation while interaction with ORC1-5/Cdc6 proteins is increased when the kinase is activated. Data are representative of two independent biological replicates. (D) MCM5-3xHA is enriched in chromatin-enriched NaCl fractions at 15 s post-activation in gametocytes but not when 1294 is added; \u03b1-tubulin was used as a soluble control. Error bars show standard deviations, n = 3, ** Student's T-test, p\u22640.01.\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "8. Scope & budget Scope: an indicative 15 fellowships of 36 months across the partner universities; final number and distribution to be agreed. Budget: standard MSCA-DN unit costs (approx. \u20ac285k per fellowship, country-corrected), funding the recruited candidates, training, and networking. No co-financing is required from partners. Budget work is handled by the coordinator.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.20): \"Figure 3. RC-seq sensitivity for gold-standard true insertions and corrected RC-seq somatic insertion rates.: (A) Average sensitivity of single-cell RC-seq for gold-standard KNR insertions at different read count thresholds. Sensitivity of single-cell L1-IP (Evrony et al., 2012) and single-cell WGS (Evrony et al., 2015) are shown for comparison. Note, the average number of uniquely mapped reads in the targeted enrichment methods of L1-IP and RC-seq are 3.2 and 16.7 million reads, respectively, so L1-IP achieves higher sensitivity than RC-seq with fewer reads even with a more liberal read count threshold for RC-seq. Gold-standard KNR insertions are defined for each single-cell method as in Figures 2A and Figure 2\u2014figure supplement 1B\u2013C. Error bars \u00b1 SD. As illustrated in the schematic on the left, \u03a3m is the number of single cells in the study (i.e. mA+mB+...), and \u03a3n is the number of gold-standard KNR insertions used to calculate sensitivity across the profiled individuals (i.e. nA+nB+...; as seen in the schematic, \u03a3n increases as more individuals are profiled). See also Figure 3\u2014figure supplement 1. (B) Average RC-seq somatic insertion rates per cell. These are pre-PCR validation rates, since Upton et al. did not attempt PCR validation for these somatic candidates. The percentage of cells without any candidates (above the threshold of &gt;2 reads and after excluding chimeras) is shown. See Supplementary file 1 (\"RC-seq | Somatic L1 &gt;2 reads\" sheet) for analysis of all somatic candidate sequences. Error bars \u00b1 SD.\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "9. What we need from you Now (this week), one line is enough: confirm your interest and willingness to join. Next (over the summer, if you are in): Agree your role: which theme(s) and how many positions you would host, the PI, and a cross-border co-supervisor. A short PI input for each supervising PI: a one-paragraph CV and five relevant publications. Confirm your institution holds a Gender Equality Plan (a Horizon Europe eligibility requirement, yes/no). A letter of commitment to participate as a beneficiary, once the consortium firms up. To make this easy, a short Partner Input Form accompanies this note (role, PI CV and five publications, GEP, candidate-project details, and any associated-partner links you may have, optional). Please complete and return it to danpele@ase.ro when you are ready, partial is fine.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1007/978-3-031-52395-3_4` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "What We See. and What We Don\u2019t",
+     "author": "Kinley",
+     "year": "2024",
+     "doi": "10.1007/978-3-031-52395-3_4"
+    }
+   },
+   {
+    "entry": "10. Discussion points for the first call The number of positions per partner and the final DC list. Themes: refinements to the indicative projects to fit each group's strengths. Co-supervision pairings across institutions (and any joint-doctorate interest). Associated-partner links (optional): any ties your group has to central banks, regulators, exchanges, or data providers. Research visits and training contributions within the network. These points are taken forward at the consortium meetings; a calendar invite follows.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.20): \"Tables of simple interest and discount at 3, 4, 5, 6, 7, 8, 9, and 10 l. per cent. per ann. ::also tables of compound interest at the same rates : whereby the amount or present value of any sum of money, or any annuity, or other yearly payment, &amp;c for any number of years, not exceeding one hundred, is readily found\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   }
+  ]
+ },
+ {
+  "label": "Stablecoin governance (draft)",
+  "path": "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/Advanced Stablecoin Analysis.docx",
+  "counts": {
+   "OK_NO_DOI": 5,
+   "UNVERIFIED": 5
+  },
+  "records": [
+   {
+    "entry": "1. Introduction and Motivation Traditional portfolio theory, based on mean-variance optimization, is poorly suited for stablecoin analysis because it focuses on return maximization rather than price stability. Since stablecoins are designed to maintain a fixed peg (typically $1.00), their success should be measured by peg adherence rather than returns. Key Insight: No stablecoin has achieved perfect peg maintenance. Therefore, analysis should focus on understanding, predicting, and optimizing around peg deviations rather than treating them as anomalies.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1201/b16039-18` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "\u25fe Mean Variance Portfolio Optimization",
+     "author": "",
+     "year": "2014",
+     "doi": "10.1201/b16039-18"
+    }
+   },
+   {
+    "entry": "2. Peg Deviation Framework 2.1 Peg Deviation Definition For a stablecoin with price $P_t$ at time $t$ and target peg $\\pi$ (typically $\\pi = 1$), the peg deviation is: $$D_t = |P_t - \\pi|$$ The relative peg deviation is: $$d_t = \\frac{|P_t - \\pi|}{\\pi}$$ 2.2 Peg Break Detection A peg break occurs when the deviation exceeds a threshold $\\delta$ for a minimum duration $\\tau_{min}$: $$\\text{Break}t = \\begin{cases} 1 & \\text{if } d_t > \\delta \\text{ and } \\sum{i=0}^{\\tau_{min}-1} \\mathbf{1}{d{t-i} > \\delta} = \\tau_{min} \\ 0 & \\text{otherwise} \\end{cases}$$ where $\\mathbf{1}$ is the indicator function. 2.3 Break Severity Classification For a break episode lasting from $t_1$ to $t_2$, we define: Duration: $\\tau = t_2 - t_1 + 1$ Maximum Deviation: $D_{max} = \\max_{t \\in [t_1, t_2]} d_t$ Average Severity: $\\bar{S} = \\frac{1}{\\tau} \\sum_{t=t_1}^{t_2} d_t$ Recovery Time: $\\tau_R$ = time to return within normal range after break ends",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.50): \"Break a peg! A study of stablecoin co-instability\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "3. Stability Metrics 3.1 Rolling Stability Measures For a rolling window of length $w$, we compute: Peg Volatility: $$\\sigma_P(t) = \\sqrt{\\frac{1}{w-1} \\sum_{i=0}^{w-1} (d_{t-i} - \\bar{d}_w)^2}$$ Peg Persistence (fraction of time within normal range): $$\\text{Persistence}(t) = \\frac{1}{w} \\sum_{i=0}^{w-1} \\mathbf{1}{d{t-i} \\leq \\delta_{normal}}$$ Directional Bias: $$\\text{Bias}(t) = \\frac{1}{w} \\sum_{i=0}^{w-1} (P_{t-i} - \\pi)$$ 3.2 Stability Score A composite stability score combining multiple metrics: $$\\text{Stability}_t = w_1 \\cdot (1 - \\sigma_P(t)) + w_2 \\cdot \\text{Persistence}(t) + w_3 \\cdot (1 - |\\text{Bias}(t)|)$$ where $w_1 + w_2 + w_3 = 1$ are weights.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.27): \"Inflation Persistence in Inflation and Non-Inflation Targeting Countries: A Rolling Window, Fractional Integration Approach\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "4. Contagion Analysis 4.1 Cross-Coin Break Correlation For stablecoins $i$ and $j$ with break indicator series $B^{(i)}_t$ and $B^{(j)}_t$, the contemporaneous contagion is: $$\\rho_{i,j}(0) = \\text{Corr}(B^{(i)}_t, B^{(j)}_t)$$ 4.2 Lead-Lag Contagion The lag-$k$ contagion measures whether breaks in coin $i$ predict breaks in coin $j$: $$\\rho_{i,j}(k) = \\text{Corr}(B^{(i)}t, B^{(j)}{t+k})$$ 4.3 Contagion Network The contagion network is represented by the adjacency matrix $\\mathbf{C}$ where: $$C_{i,j} = \\max_k |\\rho_{i,j}(k)|$$ This captures the maximum predictive relationship between any two stablecoins across all lags.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1002/9781118267646.ch2` (overlap 0.75)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Correlation Analysis of Financial Contagion",
+     "author": "Corsetti",
+     "year": "2011",
+     "doi": "10.1002/9781118267646.ch2"
+    }
+   },
+   {
+    "entry": "5. Peg-Optimized Portfolio Theory 5.1 Peg Covariance Matrix Instead of return covariance, we use peg deviation covariance. For $N$ stablecoins with peg deviation series $\\mathbf{d}_t = [d_1(t), ..., d_N(t)]'$: $$\\Sigma_P = \\text{Cov}(\\mathbf{d}_t)$$ 5.2 Portfolio Peg Deviation For portfolio weights $\\mathbf{w} = [w_1, ..., w_N]'$ with $\\sum w_i = 1$ and $w_i \\geq 0$, the portfolio price is: $$P_t^{portfolio} = \\mathbf{w}' \\mathbf{P}_t$$ The portfolio peg deviation is: $$d_t^{portfolio} = |\\mathbf{w}' \\mathbf{P}_t - \\pi|$$ 5.3 Minimum Peg Deviation Portfolio Optimization Problem: $$\\min_{\\mathbf{w}} \\mathbf{w}' \\Sigma_P \\mathbf{w}$$ $$\\text{subject to: } \\sum_{i=1}^N w_i = 1, \\quad w_i \\geq 0$$ Solution: Using Lagrangian multipliers, the optimal weights are: $$\\mathbf{w}^{*} = \\frac{\\Sigma_P^{-1} \\mathbf{1}}{\\mathbf{1}' \\Sigma_P^{-1} \\mathbf{1}}$$ where $\\mathbf{1}$ is a vector of ones. 5.4 Risk Parity for Peg Risk Each asset contributes equally to total peg risk. The risk contribution of asset $i$ is: $$RC_i = w_i \\cdot (\\Sigma_P \\mathbf{w})_i$$ Target: $RC_i = \\frac{1}{N} \\mathbf{w}' \\Sigma_P \\mathbf{w}$ for all $i$ Iterative Solution: $$w_i^{(k+1)} = w_i^{(k)} \\sqrt{\\frac{\\text{Target Risk Contribution}}{RC_i^{(k)}}}$$ 5.5 Maximum Diversification for Peg Risk The diversification ratio for peg risk is: $$DR = \\frac{\\mathbf{w}' \\boldsymbol{\\sigma}_P}{\\sqrt{\\mathbf{w}' \\Sigma_P \\mathbf{w}}}$$ where $\\boldsymbol{\\sigma}P = [\\sigma{P,1}, ..., \\sigma_{P,N}]'$ are individual peg v",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.2139/ssrn.4874008` (overlap 0.67)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Covariance Matrix Analysis for Optimal Portfolio Selection",
+     "author": "Lim",
+     "year": "2024",
+     "doi": "10.2139/ssrn.4874008"
+    }
+   },
+   {
+    "entry": "6. Regime Detection 6.1 Variance-Based Regime Detection Using changepoint detection on rolling volatility series ${\\sigma_t}$: $$\\hat{T} = \\arg\\max_T \\left[ \\sum_{t=1}^T \\log f(\\sigma_t | \\theta_1) + \\sum_{t=T+1}^n \\log f(\\sigma_t | \\theta_2) - P(\\text{change}) \\right]$$ where $f(\\cdot|\\theta)$ is the likelihood function and $P(\\text{change})$ is a penalty term. 6.2 Hidden Markov Model Approach State evolution: $S_t | S_{t-1} \\sim \\text{Categorical}(\\mathbf{P}{S{t-1}})$ Observation model: $d_t | S_t \\sim \\mathcal{N}(\\mu_{S_t}, \\sigma^2_{S_t})$ Parameters estimated via EM algorithm.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.20): \"On some new Eisenstein series identities involving the Broweins' cubic theta function $a(q)$ and the convolution sum $\\ds\\sum_{i+3j=m}\\sigma(i)\\sigma(j)$\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "7. Stress Testing Framework 7.1 Scenario Definition A stress scenario $\\mathcal{S}$ is defined by: Shock magnitude: $\\Delta_S$ Duration: $\\tau_S$ Recovery pattern: ${r_k}_{k=1}^{\\tau_R}$ 7.2 Stress Application For baseline price series ${P_t^0}$, the stressed series is: $$P_t^S = \\begin{cases} P_t^0 + \\Delta_S & t \\in [t_0, t_0 + \\tau_S] \\ P_t^0 + r_{t-t_0-\\tau_S} & t \\in [t_0 + \\tau_S + 1, t_0 + \\tau_S + \\tau_R] \\ P_t^0 & \\text{otherwise} \\end{cases}$$ 7.3 Resilience Metrics Maximum Deviation Under Stress: $$D_{max}^S = \\max_{t \\in [t_0, t_0 + \\tau_S + \\tau_R]} |P_t^S - \\pi|$$ Recovery Time: $$\\tau_{recovery} = \\min{k : |P_{t_0 + \\tau_S + k}^S - \\pi| < \\epsilon}$$ Stress Impact Score: $$\\text{SIS} = \\frac{D_{max}^S \\cdot \\tau_{recovery}}{\\tau_S}$$",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1057/9781137374547.0009` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Stress and Scenario Testing",
+     "author": "",
+     "year": "2013",
+     "doi": "10.1057/9781137374547.0009"
+    }
+   },
+   {
+    "entry": "8. Implementation Considerations 8.1 Data Requirements High-frequency price data for all stablecoins Sufficient historical coverage for regime detection Macro-economic indicators for external regime identification 8.2 Parameter Calibration Break threshold $\\delta$: typically 0.5% - 2% Minimum duration $\\tau_{min}$: 2-5 observations Rolling window $w$: 30-90 observations Stress scenario parameters based on historical events 8.3 Computational Complexity Peg deviation calculation: $O(NT)$ Contagion matrix: $O(N^2 T)$ Portfolio optimization: $O(N^3)$ per rebalancing Regime detection: $O(T \\log T)$ using PELT algorithm",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.57): \"Regime Change Detection Using Directional Change Indicators\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "9. Empirical Applications 9.1 Portfolio Performance Evaluation Traditional Sharpe ratio is inadequate. Instead, use: Peg Stability Ratio: $$PSR = \\frac{|\\mathbb{E}[R_p]|}{\\text{Std}[d_t^{portfolio}]}$$ Maximum Peg Deviation: $$MPD = \\max_t |P_t^{portfolio} - \\pi|$$ Peg Persistence Score: $$PPS = \\frac{1}{T} \\sum_{t=1}^T \\mathbf{1}{d_t^{portfolio} \\leq \\delta{normal}}$$ 9.2 Hypothesis Testing Null Hypothesis: Portfolio peg stability equals individual coin average $$H_0: \\mathbb{E}[d_t^{portfolio}] = \\frac{1}{N} \\sum_{i=1}^N \\mathbb{E}[d_t^{(i)}]$$ Use paired t-test or Wilcoxon signed-rank test depending on distribution properties.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.36): \"China's Rare Earth Advantage as a Portfolio Allocation Factor: A Maximum Sharpe Ratio Approach\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "10. Conclusion This framework provides a comprehensive approach to stablecoin analysis that prioritizes the fundamental purpose of these assets: maintaining price stability. By focusing on peg deviations rather than returns, we can better understand systemic risks, construct more appropriate portfolios, and develop early warning systems for stability issues. The methodology addresses several key limitations of traditional financial analysis when applied to stablecoins and provides practical tools for risk management in the stablecoin ecosystem. Note: All parameters should be calibrated based on specific use cases and market conditions. The framework is designed to be flexible and adaptable to different stablecoin mechanisms and market environments.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1177/00076503221126642` (overlap 0.75)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "More Than an Umbrella Construct: We Can (and Should) Do Better With CSR by Theorizing Through Context",
+     "author": "Brown",
+     "year": "2022",
+     "doi": "10.1177/00076503221126642"
+    }
+   }
+  ]
+ },
+ {
+  "label": "MESA (paper1, Nature Comp Sci draft)",
+  "path": "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/MESA/paper/paper1_nature_compsci.tex",
+  "counts": {
+   "OK_NO_DOI": 10,
+   "UNVERIFIED": 2
+  },
+  "records": [
+   {
+    "entry": "Arthur, W.B., Holland, J.H., LeBaron, B., Palmer, R., & Tayler, P. (1997). Asset pricing under endogenous expectations in an artificial stock market. The Economy as an Evolving Complex System II, 15-44.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1201/9780429496639-2` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Asset Pricing Under Endogenous Expectations in an Artificial Stock Market",
+     "author": "Arthur",
+     "year": "2018",
+     "doi": "10.1201/9780429496639-2"
+    }
+   },
+   {
+    "entry": "Bouchaud, J.P., Bonart, J., Donier, J., & Gould, M. (2018). Trades, Quotes and Prices: Financial Markets Under the Microscope. Cambridge University Press.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1017/9781316659335` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Trades, Quotes and Prices: Financial Markets Under the Microscope",
+     "author": "Bouchaud",
+     "year": "2018",
+     "doi": "10.1017/9781316659335"
+    }
+   },
+   {
+    "entry": "Cont, R. (2001). Empirical properties of asset returns: stylized facts and statistical issues. Quantitative Finance, 1(2), 223-236.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1080/713665670` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Empirical properties of asset returns: stylized facts and statistical issues",
+     "author": "Cont",
+     "year": "2001",
+     "doi": "10.1080/713665670"
+    }
+   },
+   {
+    "entry": "Hommes, C.H. (2006). Heterogeneous agent models in economics and finance. Handbook of Computational Economics, 2, 1109-1186.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.2139/ssrn.742384` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Heterogeneous Agent Models in Economics and Finance",
+     "author": "Hommes",
+     "year": "2005",
+     "doi": "10.2139/ssrn.742384"
+    }
+   },
+   {
+    "entry": "Horton, J.J. (2023). Large language models as simulated economic agents: What can we learn from Homo Silicus? NBER Working Paper, 31122.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.3386/w31122` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Large Language Models as Simulated Economic Agents: What Can We Learn from Homo Silicus?",
+     "author": "Horton",
+     "year": "2023",
+     "doi": "10.3386/w31122"
+    }
+   },
+   {
+    "entry": "LeBaron, B. (2006). Agent-based computational finance. Handbook of Computational Economics, 2, 1187-1233.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1016/s1574-0021(05)02024-1` (overlap 0.80)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Chapter 24 Agent-based Computational Finance",
+     "author": "LeBaron",
+     "year": "2006",
+     "doi": "10.1016/s1574-0021(05)02024-1"
+    }
+   },
+   {
+    "entry": "Lux, T. & Marchesi, M. (1999). Scaling and criticality in a stochastic multi-agent model of a financial market. Nature, 397(6719), 498-500.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1038/17290` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Scaling and criticality in a stochastic multi-agent model of a financial market",
+     "author": "Lux",
+     "year": "1999",
+     "doi": "10.1038/17290"
+    }
+   },
+   {
+    "entry": "Pele, D.T., Wesselh\u00f6fft, N., H\u00e4rdle, W.K. (2024). LLM-VaR: Large language model-based Value-at-Risk estimation. Expert Systems with Applications.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.44): \"LLM-Loc: Bootstrap single-image indoor localization with large language model\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "Aher, G.V., Arriaga, R.I., & Kalai, A.T. (2023). Using large language models to simulate multiple humans and replicate human subject studies. ICML 2023.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.55): \"Review for \"The threat of analytic flexibility in using large language models to simulate human data\"\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "Lopez-Lira, A. & Tang, Y. (2023). Can ChatGPT forecast stock price movements? Return predictability and large language models. SSRN Working Paper.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.2139/ssrn.4412788` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Can ChatGPT Forecast Stock Price Movements? Return Predictability and Large Language Models",
+     "author": "Lopez-Lira",
+     "year": "2023",
+     "doi": "10.2139/ssrn.4412788"
+    }
+   },
+   {
+    "entry": "Mandelbrot, B. (1963). The variation of certain speculative prices. The Journal of Business, 36(4), 394-419.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1086/294632` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "The Variation of Certain Speculative Prices",
+     "author": "Mandelbrot",
+     "year": "1963",
+     "doi": "10.1086/294632"
+    }
+   },
+   {
+    "entry": "Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity. Journal of Econometrics, 31(3), 307-327.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1016/0304-4076(86)90063-1` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Generalized autoregressive conditional heteroskedasticity",
+     "author": "Bollerslev",
+     "year": "1986",
+     "doi": "10.1016/0304-4076(86)90063-1"
+    }
+   }
+  ]
+ },
+ {
+  "label": "ING ROBOR (expert report draft)",
+  "path": "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/2026 ING ROBOR/paper/main.tex",
+  "counts": {
+   "OK_NO_DOI": 17,
+   "UNVERIFIED": 3
+  },
+  "records": [
+   {
+    "entry": "Abrantes-Metz, R.~M., Kraten, M., Metz, A.~D., & Seow, G.~S. (2012). Libor manipulation? Journal of Banking & Finance, 36(1), 136-150.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1016/j.jbankfin.2011.06.014` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Libor manipulation?",
+     "author": "Abrantes-Metz",
+     "year": "2012",
+     "doi": "10.1016/j.jbankfin.2011.06.014"
+    }
+   },
+   {
+    "entry": "Snider, C.~A., & Youle, T. (2012). The fix is in: Detecting portfolio driven manipulation of the LIBOR. Working paper.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.2139/ssrn.2189015` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "The Fix Is in: Detecting Portfolio Driven Manipulation of the Libor",
+     "author": "Snider",
+     "year": "2012",
+     "doi": "10.2139/ssrn.2189015"
+    }
+   },
+   {
+    "entry": "Duffie, D., & Stein, J.~C. (2015). Reforming LIBOR and other financial market benchmarks. Journal of Economic Perspectives, 29(2), 191-212.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1257/jep.29.2.191` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Reforming LIBOR and Other Financial Market Benchmarks",
+     "author": "Duffie",
+     "year": "2015",
+     "doi": "10.1257/jep.29.2.191"
+    }
+   },
+   {
+    "entry": "Gandhi, P., Golez, B., Jackwerth, J.~C., & Plazzi, A. (2019). Libor manipulation: Cui bono? Journal of Financial and Quantitative Analysis.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.2139/ssrn.2342075` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Libor Manipulation: Cui Bono?",
+     "author": "Gandhi",
+     "year": "2013",
+     "doi": "10.2139/ssrn.2342075"
+    }
+   },
+   {
+    "entry": "Eisl, A., Jankowitsch, R., & Subrahmanyam, M.~G. (2017). The manipulation potential of Libor and Euribor. European Financial Management, 23(4).",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1111/eufm.12126` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "The Manipulation Potential of Libor and Euribor",
+     "author": "Eisl",
+     "year": "2017",
+     "doi": "10.1111/eufm.12126"
+    }
+   },
+   {
+    "entry": "Bai, J. (1997). Estimation of a change point in multiple regression models. Review of Economics and Statistics, 79(4), 551-563.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1162/003465397557132` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Estimation of a Change Point in Multiple Regression Models",
+     "author": "Bai",
+     "year": "1997",
+     "doi": "10.1162/003465397557132"
+    }
+   },
+   {
+    "entry": "Bai, J., & Perron, P. (1998). Estimating and testing linear models with multiple structural changes. Econometrica, 66(1), 47-78.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.2307/2998540` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Estimating and Testing Linear Models with Multiple Structural Changes",
+     "author": "Bai",
+     "year": "1998",
+     "doi": "10.2307/2998540"
+    }
+   },
+   {
+    "entry": "Bai, J., & Perron, P. (2003). Computation and analysis of multiple structural change models. Journal of Applied Econometrics, 18(1), 1-22.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1002/jae.659` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Computation and analysis of multiple structural change models",
+     "author": "Bai",
+     "year": "2003",
+     "doi": "10.1002/jae.659"
+    }
+   },
+   {
+    "entry": "Holm, S. (1979). A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics, 6(2), 65-70.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.57): \"Correction: An Improved Sequentially Rejective Bonferroni Test Procedure\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "Kiefer, N.~M., & Vogelsang, T.~J. (2005). A new asymptotic theory for heteroskedasticity-autocorrelation robust tests. Econometric Theory, 21(6), 1130-1164.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1017/s0266466605050565` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "A NEW ASYMPTOTIC THEORY FOR HETEROSKEDASTICITY-AUTOCORRELATION ROBUST TESTS",
+     "author": "Kiefer",
+     "year": "2005",
+     "doi": "10.1017/s0266466605050565"
+    }
+   },
+   {
+    "entry": "Lakens, D. (2017). Equivalence tests: A practical primer for $t$~tests, correlations, and meta-analyses. Social Psychological and Personality Science, 8(4), 355-362.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1177/1948550617697177` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Equivalence Tests: A Practical Primer for <i>t</i> Tests, Correlations, and Meta-Analyses",
+     "author": "Lakens",
+     "year": "2017",
+     "doi": "10.1177/1948550617697177"
+    }
+   },
+   {
+    "entry": "Lazarus, E., Lewis, D.~J., Stock, J.~H., & Watson, M.~W. (2018). HAR inference: Recommendations for practice. Journal of Business & Economic Statistics, 36(4), 541-559.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1080/07350015.2018.1506926` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "HAR Inference: Recommendations for Practice",
+     "author": "Lazarus",
+     "year": "2018",
+     "doi": "10.1080/07350015.2018.1506926"
+    }
+   },
+   {
+    "entry": "Liu, J., Wu, S., & Zidek, J.~V. (1997). On segmented multivariate regression. Statistica Sinica, 7(2), 497-525.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.40): \"Envelopes for elliptical multivariate linear regression\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "Negrea, B.~C. (coord.), Georgescu, G.-C., \u021a\u00e2\u021bu, L., Boitan, I.~A., Cepoi, C.~O., & Ciobanu, R. (2026). Studiu privind rela\u021bia dintre indicii ROBOR, conduita politicii monetare \u0219i principalii indicatori macroeconomici. Academia de Studii Economice din Bucure\u0219ti.",
+    "status": "UNVERIFIED",
+    "problems": [],
+    "notes": [
+     "no DOI and no confident Crossref match \u2014 may be a book, report, working paper or conference item, or may not exist; verify by hand",
+     "closest Crossref hit (overlap 0.11): \"Indicatorii economiei circulare \u00een Uniunea European\u0103 \u0219i implica\u021biile lor asupra cre\u0219terii economice\""
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {}
+   },
+   {
+    "entry": "Newey, W.~K., & West, K.~D. (1987). A simple, positive semi-definite, heteroskedasticity and autocorrelation consistent covariance matrix. Econometrica, 55(3), 703-708.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.2307/1913610` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "A Simple, Positive Semi-Definite, Heteroskedasticity and Autocorrelation Consistent Covariance Matrix",
+     "author": "Newey",
+     "year": "1987",
+     "doi": "10.2307/1913610"
+    }
+   },
+   {
+    "entry": "Politis, D.~N., & Romano, J.~P. (1994). The stationary bootstrap. Journal of the American Statistical Association, 89(428), 1303-1313.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1080/01621459.1994.10476870` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "The Stationary Bootstrap",
+     "author": "Politis",
+     "year": "1994",
+     "doi": "10.1080/01621459.1994.10476870"
+    }
+   },
+   {
+    "entry": "Politis, D.~N., & White, H. (2004). Automatic block-length selection for the dependent bootstrap. Econometric Reviews, 23(1), 53-70.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1081/etc-120028836` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Automatic Block-Length Selection for the Dependent Bootstrap",
+     "author": "Politis",
+     "year": "2004",
+     "doi": "10.1081/etc-120028836"
+    }
+   },
+   {
+    "entry": "Roll, R. (1984). A simple implicit measure of the effective bid-ask spread in an efficient market. Journal of Finance, 39(4), 1127-1139.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1111/j.1540-6261.1984.tb03897.x` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "A Simple Implicit Measure of the Effective Bid\u2010Ask Spread in an Efficient Market",
+     "author": "ROLL",
+     "year": "1984",
+     "doi": "10.1111/j.1540-6261.1984.tb03897.x"
+    }
+   },
+   {
+    "entry": "Schuirmann, D.~J. (1987). A comparison of the two one-sided tests procedure and the power approach for assessing the equivalence of average bioavailability. Journal of Pharmacokinetics and Biopharmaceutics, 15(6), 657-680.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1007/bf01068419` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "A comparison of the Two One-Sided Tests Procedure and the Power Approach for assessing the equivalence of average bioavailability",
+     "author": "Schuirmann",
+     "year": "1987",
+     "doi": "10.1007/bf01068419"
+    }
+   },
+   {
+    "entry": "Truong, C., Oudre, L., & Vayatis, N. (2020). Selective review of offline change point detection methods. Signal Processing, 167, 107299.",
+    "status": "OK_NO_DOI",
+    "problems": [],
+    "notes": [
+     "no DOI in the reference; Crossref match `10.1016/j.sigpro.2019.107299` (overlap 1.00)"
+    ],
+    "doi": null,
+    "arxiv": null,
+    "remote": {
+     "title": "Selective review of offline change point detection methods",
+     "author": "Truong",
+     "year": "2020",
+     "doi": "10.1016/j.sigpro.2019.107299"
+    }
+   }
+  ]
+ }
+]

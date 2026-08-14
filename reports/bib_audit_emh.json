@@ -1,0 +1,788 @@
+{
+ "bib": "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/EMH/llm_emh_sim/paper/references.bib",
+ "tex": [
+  "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/EMH/llm_emh_sim/paper/paper.tex"
+ ],
+ "n_entries": 21,
+ "counts": {
+  "MANUAL": 19,
+  "OK": 2
+ },
+ "records": [
+  {
+   "key": "fama1970efficient",
+   "type": "article",
+   "lineno": 1,
+   "local": {
+    "title": "Efficient Capital Markets: A Review of Theory and Empirical Work",
+    "author": "Fama",
+    "author_raw": "Fama, Eugene F",
+    "container": "The Journal of Finance",
+    "year": "1970",
+    "volume": "25",
+    "pages": "383-417",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: pages 383-417 vs 383"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.2307/2325486",
+     "title": "Efficient Capital Markets: A Review of Theory and Empirical Work",
+     "author": "Fama",
+     "container": "The Journal of Finance",
+     "year": "1970",
+     "volume": "25",
+     "pages": "383"
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.1111/j.1540-6261.1970.tb00518.x",
+     "title": "EFFICIENT CAPITAL MARKETS: A REVIEW OF THEORY AND EMPIRICAL WORK*",
+     "author": "Malkiel",
+     "container": "The Journal of Finance",
+     "year": "1970",
+     "volume": "25",
+     "pages": "383-417"
+    }
+   ]
+  },
+  {
+   "key": "lo2004adaptive",
+   "type": "article",
+   "lineno": 11,
+   "local": {
+    "title": "The Adaptive Markets Hypothesis",
+    "author": "Lo",
+    "author_raw": "Lo, Andrew W",
+    "container": "The Journal of Portfolio Management",
+    "year": "2004",
+    "volume": "30",
+    "pages": "15-29",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.3905/jpm.2004.442611",
+     "title": "The Adaptive Markets Hypothesis",
+     "author": "Lo",
+     "container": "The Journal of Portfolio Management",
+     "year": "2004",
+     "volume": "30",
+     "pages": "15-29"
+    }
+   ]
+  },
+  {
+   "key": "lo1988stock",
+   "type": "article",
+   "lineno": 21,
+   "local": {
+    "title": "Stock Market Prices Do Not Follow Random Walks: Evidence from a Simple Specification Test",
+    "author": "Lo",
+    "author_raw": "Lo, Andrew W and MacKinlay, A Craig",
+    "container": "The Review of Financial Studies",
+    "year": "1988",
+    "volume": "1",
+    "pages": "41-66",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: year 1988 vs 1987"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.3386/w2168",
+     "title": "Stock Market Prices Do Not Follow Random Walks: Evidence From a Simple Specification Test",
+     "author": "Lo",
+     "container": "",
+     "year": "1987",
+     "volume": "",
+     "pages": ""
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.1093/rfs/1.1.41",
+     "title": "Stock Market Prices Do Not Follow Random Walks: Evidence from a Simple Specification Test",
+     "author": "Lo",
+     "container": "Review of Financial Studies",
+     "year": "1988",
+     "volume": "1",
+     "pages": "41-66"
+    }
+   ]
+  },
+  {
+   "key": "cont2001empirical",
+   "type": "article",
+   "lineno": 31,
+   "local": {
+    "title": "Empirical Properties of Asset Returns: Stylized Facts and Statistical Issues",
+    "author": "Cont",
+    "author_raw": "Cont, Rama",
+    "container": "Quantitative Finance",
+    "year": "2001",
+    "volume": "1",
+    "pages": "223-236",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1080/713665670",
+     "title": "Empirical properties of asset returns: stylized facts and statistical issues",
+     "author": "Cont",
+     "container": "Quantitative Finance",
+     "year": "2001",
+     "volume": "1",
+     "pages": "223-236"
+    }
+   ]
+  },
+  {
+   "key": "brock1996simple",
+   "type": "article",
+   "lineno": 41,
+   "local": {
+    "title": "A Test for Independence Based on the Correlation Dimension",
+    "author": "Brock",
+    "author_raw": "Brock, William A and Dechert, W Davis and Scheinkman, Jose A and LeBaron, Blake",
+    "container": "Econometric Reviews",
+    "year": "1996",
+    "volume": "15",
+    "pages": "197-235",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: year 1996 vs 2001; pages 197-235 vs 324-362"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.4337/9781782543046.00024",
+     "title": "A Test for Independence Based on the Correlation Dimension",
+     "author": "Brock",
+     "container": "Growth Theory, Nonlinear Dynamics and Economic Modelling",
+     "year": "2001",
+     "volume": "",
+     "pages": "324-362"
+    }
+   ]
+  },
+  {
+   "key": "hendershott2011does",
+   "type": "article",
+   "lineno": 51,
+   "local": {
+    "title": "Does Algorithmic Trading Improve Liquidity?",
+    "author": "Hendershott",
+    "author_raw": "Hendershott, Terrence and Jones, Charles M and Menkveld, Albert J",
+    "container": "The Journal of Finance",
+    "year": "2011",
+    "volume": "66",
+    "pages": "1-33",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1111/j.1540-6261.2010.01624.x",
+     "title": "Does Algorithmic Trading Improve Liquidity?",
+     "author": "HENDERSHOTT",
+     "container": "The Journal of Finance",
+     "year": "2011",
+     "volume": "66",
+     "pages": "1-33"
+    }
+   ]
+  },
+  {
+   "key": "brogaard2014high",
+   "type": "article",
+   "lineno": 61,
+   "local": {
+    "title": "High-Frequency Trading and Price Discovery",
+    "author": "Brogaard",
+    "author_raw": "Brogaard, Jonathan and Hendershott, Terrence and Riordan, Ryan",
+    "container": "The Review of Financial Studies",
+    "year": "2014",
+    "volume": "27",
+    "pages": "2267-2306",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: year 2014 vs 2012"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.2139/ssrn.1938769",
+     "title": "High Frequency Trading and Price Discovery",
+     "author": "Brogaard",
+     "container": "",
+     "year": "2012",
+     "volume": "",
+     "pages": ""
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.2139/ssrn.2341037",
+     "title": "High Frequency Trading and Price Discovery",
+     "author": "Brogaard",
+     "container": "",
+     "year": "2013",
+     "volume": "",
+     "pages": ""
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.1093/rfs/hhu032",
+     "title": "High-Frequency Trading and Price Discovery",
+     "author": "Brogaard",
+     "container": "Review of Financial Studies",
+     "year": "2014",
+     "volume": "27",
+     "pages": "2267-2306"
+    }
+   ]
+  },
+  {
+   "key": "farmer2002market",
+   "type": "article",
+   "lineno": 71,
+   "local": {
+    "title": "The Price Dynamics of Common Trading Strategies",
+    "author": "Farmer",
+    "author_raw": "Farmer, J Doyne and Joshi, Shareen",
+    "container": "Journal of Economic Behavior & Organization",
+    "year": "2002",
+    "volume": "49",
+    "pages": "149-171",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1016/s0167-2681(02)00065-3",
+     "title": "The price dynamics of common trading strategies",
+     "author": "Farmer",
+     "container": "Journal of Economic Behavior &amp; Organization",
+     "year": "2002",
+     "volume": "49",
+     "pages": "149-171"
+    }
+   ]
+  },
+  {
+   "key": "lebaron2006agent",
+   "type": "incollection",
+   "lineno": 81,
+   "local": {
+    "title": "Agent-Based Computational Finance",
+    "author": "LeBaron",
+    "author_raw": "LeBaron, Blake",
+    "container": "Handbook of Computational Economics",
+    "year": "2006",
+    "volume": "2",
+    "pages": "1187-1233",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "hong2007disagreement",
+   "type": "article",
+   "lineno": 91,
+   "local": {
+    "title": "Disagreement and the Stock Market",
+    "author": "Hong",
+    "author_raw": "Hong, Harrison and Stein, Jeremy C",
+    "container": "Journal of Economic Perspectives",
+    "year": "2007",
+    "volume": "21",
+    "pages": "109-128",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1257/jep.21.2.109",
+     "title": "Disagreement and the Stock Market",
+     "author": "Hong",
+     "container": "Journal of Economic Perspectives",
+     "year": "2007",
+     "volume": "21",
+     "pages": "109-128"
+    }
+   ]
+  },
+  {
+   "key": "kirilenko2017flash",
+   "type": "article",
+   "lineno": 101,
+   "local": {
+    "title": "The Flash Crash: High-Frequency Trading in an Electronic Market",
+    "author": "Kirilenko",
+    "author_raw": "Kirilenko, Andrei and Kyle, Albert S and Samadi, Mehrdad and Tuzun, Tugkan",
+    "container": "The Journal of Finance",
+    "year": "2017",
+    "volume": "72",
+    "pages": "967-998",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: year 2017 vs 2011"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.2139/ssrn.1686004",
+     "title": "The Flash Crash: High-Frequency Trading in an Electronic Market",
+     "author": "Kirilenko",
+     "container": "",
+     "year": "2011",
+     "volume": "",
+     "pages": ""
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.1111/jofi.12498",
+     "title": "The Flash Crash: High\u2010Frequency Trading in an Electronic Market",
+     "author": "KIRILENKO",
+     "container": "The Journal of Finance",
+     "year": "2017",
+     "volume": "72",
+     "pages": "967-998"
+    }
+   ]
+  },
+  {
+   "key": "kim2024financial",
+   "type": "article",
+   "lineno": 111,
+   "local": {
+    "title": "Financial Statement Analysis with Large Language Models",
+    "author": "Kim",
+    "author_raw": "Kim, Alex G and Muhn, Maximilian and Nikolaev, Valeri V",
+    "container": "Chicago Booth Research Paper",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.2139/ssrn.4835311",
+     "title": "Financial Statement Analysis with Large Language Models",
+     "author": "Kim",
+     "container": "",
+     "year": "2024",
+     "volume": "",
+     "pages": ""
+    }
+   ]
+  },
+  {
+   "key": "lopez2023can",
+   "type": "article",
+   "lineno": 118,
+   "local": {
+    "title": "Can ChatGPT Forecast Stock Price Movements? Return Predictability and Large Language Models",
+    "author": "Lopez-Lira",
+    "author_raw": "Lopez-Lira, Alejandro and Tang, Yuehua",
+    "container": "arXiv preprint arXiv:2304.07619",
+    "year": "2023",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Can ChatGPT Forecast Stock Price Movements? Return Predictability and Large Language Models",
+    "author": "Lopez-Lira",
+    "container": "arXiv:2304.07619",
+    "year": "2023",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2304.07619",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "li2023large",
+   "type": "article",
+   "lineno": 125,
+   "local": {
+    "title": "Large Language Models in Finance: A Survey",
+    "author": "Li",
+    "author_raw": "Li, Yinheng and Wang, Shaofei and Ding, Han and Chen, Hang",
+    "container": "arXiv preprint arXiv:2311.10723",
+    "year": "2023",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Large Language Models in Finance: A Survey",
+    "author": "Li",
+    "container": "arXiv:2311.10723",
+    "year": "2023",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2311.10723",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "chiarella2009impact",
+   "type": "article",
+   "lineno": 132,
+   "local": {
+    "title": "The Impact of Heterogeneous Trading Rules on the Limit Order Book and Order Flows",
+    "author": "Chiarella",
+    "author_raw": "Chiarella, Carl and Iori, Giulia and Perello, Josep",
+    "container": "Journal of Economic Dynamics and Control",
+    "year": "2009",
+    "volume": "33",
+    "pages": "525-537",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: year 2009 vs 2006"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.2139/ssrn.893087",
+     "title": "The Impact of Heterogeneous Trading Rules on the Limit Order Book and Order Flows",
+     "author": "Chiarella",
+     "container": "",
+     "year": "2006",
+     "volume": "",
+     "pages": ""
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.1016/j.jedc.2008.08.001",
+     "title": "The impact of heterogeneous trading rules on the limit order book and order flows",
+     "author": "Chiarella",
+     "container": "Journal of Economic Dynamics and Control",
+     "year": "2009",
+     "volume": "33",
+     "pages": "525-537"
+    }
+   ]
+  },
+  {
+   "key": "westerhoff2004multiasset",
+   "type": "article",
+   "lineno": 142,
+   "local": {
+    "title": "Multiasset Market Dynamics",
+    "author": "Westerhoff",
+    "author_raw": "Westerhoff, Frank",
+    "container": "Macroeconomic Dynamics",
+    "year": "2004",
+    "volume": "8",
+    "pages": "596-616",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1017/s1365100504040040",
+     "title": "MULTIASSET MARKET DYNAMICS",
+     "author": "WESTERHOFF",
+     "container": "Macroeconomic Dynamics",
+     "year": "2004",
+     "volume": "8",
+     "pages": "596-616"
+    }
+   ]
+  },
+  {
+   "key": "storn1997differential",
+   "type": "article",
+   "lineno": 152,
+   "local": {
+    "title": "Differential Evolution - A Simple and Efficient Heuristic for Global Optimization over Continuous Spaces",
+    "author": "Storn",
+    "author_raw": "Storn, Rainer and Price, Kenneth",
+    "container": "Journal of Global Optimization",
+    "year": "1997",
+    "volume": "11",
+    "pages": "341-359",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1023/a:1008202821328",
+     "title": "Differential Evolution \u2013 A Simple and Efficient Heuristic for global Optimization over Continuous Spaces",
+     "author": "Storn",
+     "container": "Journal of Global Optimization",
+     "year": "1997",
+     "volume": "11",
+     "pages": "341-359"
+    }
+   ]
+  },
+  {
+   "key": "hommes2006heterogeneous",
+   "type": "article",
+   "lineno": 162,
+   "local": {
+    "title": "Heterogeneous Agent Models in Economics and Finance",
+    "author": "Hommes",
+    "author_raw": "Hommes, Cars H",
+    "container": "Handbook of Computational Economics",
+    "year": "2006",
+    "volume": "2",
+    "pages": "1109-1186",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 0.903,
+     "doi": "10.1016/s1574-0021(05)02023-x",
+     "title": "Chapter 23 Heterogeneous Agent Models in Economics and Finance",
+     "author": "Hommes",
+     "container": "Handbook of Computational Economics",
+     "year": "2006",
+     "volume": "",
+     "pages": "1109-1186"
+    },
+    {
+     "similarity": 1.0,
+     "doi": "10.2139/ssrn.742384",
+     "title": "Heterogeneous Agent Models in Economics and Finance",
+     "author": "Hommes",
+     "container": "",
+     "year": "2005",
+     "volume": "",
+     "pages": ""
+    }
+   ]
+  },
+  {
+   "key": "lux2000volatility",
+   "type": "article",
+   "lineno": 171,
+   "local": {
+    "title": "Volatility Clustering in Financial Markets: A Microsimulation of Interacting Agents",
+    "author": "Lux",
+    "author_raw": "Lux, Thomas and Marchesi, Michele",
+    "container": "International Journal of Theoretical and Applied Finance",
+    "year": "2000",
+    "volume": "3",
+    "pages": "675-702",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable",
+    "candidate match disagrees on: volume 3 vs 03"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1142/s0219024900000826",
+     "title": "VOLATILITY CLUSTERING IN FINANCIAL MARKETS: A MICROSIMULATION OF INTERACTING AGENTS",
+     "author": "LUX",
+     "container": "International Journal of Theoretical and Applied Finance",
+     "year": "2000",
+     "volume": "03",
+     "pages": "675-702"
+    },
+    {
+     "similarity": 0.994,
+     "doi": "10.1016/s1474-6670(17)40450-2",
+     "title": "Volatility Clustering in Financial Markets: A Micro-Simulation of Interacting Agents",
+     "author": "Lux",
+     "container": "IFAC Proceedings Volumes",
+     "year": "1998",
+     "volume": "31",
+     "pages": "7-10"
+    }
+   ]
+  },
+  {
+   "key": "grossman1980impossibility",
+   "type": "article",
+   "lineno": 181,
+   "local": {
+    "title": "On the Impossibility of Informationally Efficient Markets",
+    "author": "Grossman",
+    "author_raw": "Grossman, Sanford J and Stiglitz, Joseph E",
+    "container": "The American Economic Review",
+    "year": "1980",
+    "volume": "70",
+    "pages": "393-408",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": []
+  },
+  {
+   "key": "park2023generative",
+   "type": "inproceedings",
+   "lineno": 191,
+   "local": {
+    "title": "Generative Agents: Interactive Simulacra of Human Behavior",
+    "author": "Park",
+    "author_raw": "Park, Joon Sung and O'Brien, Joseph C and Cai, Carrie J and Morris, Meredith Ringel and Liang, Percy and Bernstein, Michael S",
+    "container": "Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology (UIST '23)",
+    "year": "2023",
+    "volume": "",
+    "pages": "1-22",
+    "doi": ""
+   },
+   "remote": {},
+   "source": null,
+   "status": "MANUAL",
+   "problems": [],
+   "notes": [
+    "no DOI and no arXiv id in entry \u2014 not automatically verifiable"
+   ],
+   "candidates": [
+    {
+     "similarity": 1.0,
+     "doi": "10.1145/3586183.3606763",
+     "title": "Generative Agents: Interactive Simulacra of Human Behavior",
+     "author": "Park",
+     "container": "Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology",
+     "year": "2023",
+     "volume": "",
+     "pages": "1-22"
+    }
+   ]
+  }
+ ],
+ "cited_not_in_bib": [],
+ "in_bib_not_cited": [
+  "grossman1980impossibility",
+  "hommes2006heterogeneous",
+  "lux2000volatility"
+ ]
+}
