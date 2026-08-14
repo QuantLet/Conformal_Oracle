@@ -100,10 +100,60 @@ Consequently:
   for Moirai-1.1), but it is a hand-entered figure.
 
 This violates the project's own rule that every number in the text be traceable
-to a pipeline script. `run_master_table.py` needs to be brought up to the
-published specification — ten models, correct panel assignment, CC and R̄
-columns, and the aggregate emitted rather than typed — before the replication
-package is redistributed.
+to a pipeline script.
+
+**Resolved the same day.** `Quantlets/CO_full_evaluation/rebuild_master_table.py`
+regenerates Table 1 to the published specification, in two modes. Run under the
+published CC convention it reproduces **109 of the table's 110 cells exactly**,
+and emits the aggregate note — `Overall: 203/240 Green (84.6%), 32 Yellow,
+5 Red` — which now matches the previously hand-entered line character for
+character. That validation is the point of the exercise: it establishes that the
+printed table was internally correct and that the only defect was the missing
+generator.
+
+The script also recovered three definitions that appear nowhere in the text:
+Kupiec pass is `p >= 0.05`; Width is the mean of `|VaR_width|` and W/GJR the
+ratio of those means; and **R̄ is the mean over assets of |q̂_V|/|VaR_raw|** — the
+per-pair mean of absolute ratios, not the ratio of means. The absolute value is
+load-bearing: GJR-GARCH has a negative mean q̂_V, and the ratio-of-means
+definition returns −0.14 against the published 0.16.
+
+### Erratum: one cell of Table 1
+
+The single cell that does not reproduce is **Moirai 1.1, W/GJR: printed 1.00,
+computed 0.99**. Both Moirai-1.1 sources agree on a mean corrected width of
+0.038661 against GJR-GARCH's 0.039157, a ratio of 0.9873. Every other row's
+W/GJR matches the unrounded ratio (GARCH-N: 0.9312 → 0.93), so this row appears
+to have been formed from the already-rounded widths (.039/.039). It is a
+display error of one hundredth in a derived column and changes no argument, but
+it is an erratum and is recorded as one.
+
+### Revised table under the corrected CC convention
+
+`--convention informative` emits the same table counting only pairs where the
+independence test is defined. The two outputs are both kept: their difference is
+the degeneracy result of Section 4.2, so this is material the revision needs, not
+redundancy.
+
+| Model | CC pass, published rule | informative only | degenerate |
+|---|---|---|---|
+| Moirai 1.1 | 24/24 | 6/24 | 18 |
+| Lag-Llama | 24/24 | 2/24 | 22 |
+| GJR-GARCH | 20/24 | 7/24 | 13 |
+| GARCH-N | 18/24 | 6/24 | 12 |
+| Hist. Sim. | 14/24 | 6/24 | 8 |
+| EWMA | 21/24 | 7/24 | 14 |
+| Chronos-Small | 15/24 | 4/24 | 11 |
+| Chronos-Mini | 16/24 | 5/24 | 11 |
+| TimesFM 2.5 | 10/24 | 0/24 | 10 |
+| Moirai 2.0 | 7/24 | 0/24 | 7 |
+
+The informative-only column reproduces Table 2's static CC column exactly for
+all nine models Table 2 carries, which ties the two tables to one statistic under
+two conventions for the first time.
+
+`run_master_table.py` is left in place unmodified, since it is what produced
+earlier drafts and removing it would erase provenance.
 
 An earlier draft of this entry claimed the stale file yielded 205/240 Green
 against the correct 203/240. That comparison is withdrawn: 205/240 is what one
