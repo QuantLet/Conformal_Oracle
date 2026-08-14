@@ -29,7 +29,10 @@ Definitions recovered from the published table (none were documented):
   * W/GJR        : ratio of those means
   * R-bar        : mean over assets of |qV| / |VaR_raw|  -- the per-pair mean of
                    absolute ratios, NOT the ratio of means. The absolute value
-                   matters: GJR-GARCH has a negative mean qV.
+                   matters: GJR-GARCH has a negative mean qV. The CSV also
+                   carries `rbar_signed` and `n_qV_negative`, because the printed
+                   column cannot distinguish an over-conservative forecaster
+                   (R < 0) from a nearly calibrated one (R > 0, small).
   * Panel        : A if R-bar < 1, B otherwise
 
 Usage:
@@ -108,7 +111,14 @@ def compute(d: pd.DataFrame, convention: str) -> pd.DataFrame:
             "green": int((s["TL_cp"] == "Green").sum()),
             "yellow": int((s["TL_cp"] == "Yellow").sum()),
             "red": int((s["TL_cp"] == "Red").sum()),
+            # Published R-bar discards the sign. Kept for reproduction, but the
+            # signed mean and the share of negative pairs are carried alongside:
+            # GJR-GARCH is over-conservative (qV < 0 on 23 of 24 assets) and the
+            # absolute column makes it look like a neighbour of Moirai 1.1 on the
+            # same side of nominal, which is the opposite of the diagnosis.
             "rbar": (s["qV"].abs() / s["raw_width"].abs()).mean(),
+            "rbar_signed": (s["qV"] / s["raw_width"].abs()).mean(),
+            "n_qV_negative": int((s["qV"] < 0).sum()),
         })
     return pd.DataFrame(rows)
 

@@ -1,4 +1,19 @@
 """
+SUPERSEDED — kept for provenance, do not run to regenerate the paper's table.
+
+This script produced EARLIER DRAFTS of the master table and no longer matches the
+published one. It emits ten columns over nine models and places TimesFM 2.5 and
+Moirai 2.0 in Panel A (signal-preserving); the published Table 1 has twelve
+columns over ten models, adds CC-pass and R-bar, includes Moirai 1.1, and places
+those two models in Panel B (replacement). It predates the finding that they
+carry ~99% raw violation rates.
+
+Use `rebuild_master_table.py` instead. It reproduces 109 of the published
+table's 110 cells and emits the aggregate note. This file is retained
+deliberately: deleting it would erase the provenance of the earlier drafts.
+
+Original header follows.
+--------------------------------------------------------------------------
 CO_full_evaluation — Master results table (Table 4 in the paper).
 Produces tab_master_results.tex.
 
