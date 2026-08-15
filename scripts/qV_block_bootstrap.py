@@ -3,6 +3,8 @@ Stationary block bootstrap (Politis-Romano) for the conformal
 threshold q̂_V on representative model-asset pairs.
 """
 
+import hashlib
+
 import numpy as np
 import pandas as pd
 import os
@@ -28,7 +30,17 @@ ALPHA = 0.01
 F_C = 0.70
 N_BOOTSTRAP = 1000
 BLOCK_LENGTH = 50
-RNG = np.random.default_rng(42)
+# Per-(asset, model) seeding. A single shared stream made every interval depend
+# on how many models happened to precede it in the loop: adding one model moved
+# 30 of 36 published intervals. Keying the seed on the cell identity makes each
+# one independent of what else is in the dictionary, so the table is stable
+# under future additions.
+SEED = 42
+
+
+def rng_for(*keys):
+    h = hashlib.sha256("|".join(str(k) for k in keys).encode()).digest()
+    return np.random.default_rng(SEED + int.from_bytes(h[:8], "big"))
 
 
 def load_var_and_returns(model_name, model_dir, asset):
@@ -105,7 +117,7 @@ def run():
             cal_scores, mean_abs_var = compute_scores(var_raw, returns)
             point = qhat_ceil(cal_scores, ALPHA)
             boot = stationary_bootstrap(cal_scores, BLOCK_LENGTH,
-                                        N_BOOTSTRAP, RNG)
+                                        N_BOOTSTRAP, rng_for(asset, model_name))
             lo, hi = np.quantile(boot, [0.025, 0.975])
             se = np.std(boot)
             R = abs(point) / mean_abs_var if mean_abs_var > 0 else np.inf

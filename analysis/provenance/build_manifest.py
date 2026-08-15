@@ -107,20 +107,23 @@ NUM = re.compile(r"-?(?:\d+\.\d+|\.\d+|\d+)")
 
 
 def numbers(text: str) -> list[str]:
-    """Every numeric token in the table body.
+    """Every numeric token in the table, formatting stripped.
 
-    A table can differ from the submitted copy in rule style (\toprule vs
-    \hline\hline) or macro names while every reported value is identical. That
-    is a formatting drift, not an erratum, and conflating the two would bury the
-    cases that matter. Only a difference in this sequence is an erratum."""
-    body = text
-    for marker in (r"\midrule", r"\hline"):
-        i = body.find(marker)
-        if i != -1:
-            body = body[i:]
-            break
-    body = re.sub(r"\\(?:cmidrule|multicolumn)\s*(?:\([^)]*\))?\{[^}]*\}", " ", body)
-    return NUM.findall(body)
+    Earlier this anchored the body at the first \\hline or \\midrule. That is
+    wrong when the two files use different rule macros: a booktabs version
+    starts at \\toprule and a plain one at \\hline\\hline, so the two get
+    truncated at different offsets and every subsequent token misaligns --
+    reporting a purely cosmetic table as a numeric erratum. Strip the rule and
+    layout macros instead, and compare what is left.
+    """
+    t = text
+    t = re.sub(r"\\(?:top|mid|bottom)rule|\\hline", " ", t)
+    t = re.sub(r"\\cmidrule\s*(?:\([^)]*\))?\{[^}]*\}", " ", t)
+    t = re.sub(r"\\multicolumn\s*\{[^}]*\}\s*\{[^}]*\}", " ", t)
+    t = re.sub(r"\\begin\{tabular\}\s*\{[^}]*\}", " ", t)
+    t = re.sub(r"\\setlength\{[^}]*\}\{[^}]*\}", " ", t)
+    t = re.sub(r"\\(?:label|ref|cite\w*)\{[^}]*\}", " ", t)
+    return NUM.findall(t)
 
 
 def main() -> int:
