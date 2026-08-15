@@ -192,3 +192,75 @@ should state explicitly, recorded here so the package and the text agree.
   `scripts/audit_bib.py` and `scripts/audit_refs.py` verify a bibliography or a
   formatted reference list against Crossref, arXiv and doi.org; see
   `reports/bib_audit.md` and `reports/phase0_memo.md`.
+
+---
+
+## 2026-08-15 — Provenance audit: findings and structural fixes
+
+A systematic pass over every table and figure in the paper, prompted by three
+defects surfacing in three consecutive checks. Method and per-artefact results:
+`analysis/provenance/MANIFEST.md`.
+
+### Every substantive defect traces to one of two causes
+
+**Cause 1 — commit `b9d94d1` ("Quantlet repo cleanup") untracked 18 files.**
+Four old paper drafts, the bibliography, two figures, seven result CSVs and four
+pipeline scripts. Nothing was deleted; everything recovers from `ae79321`. Two of
+the CSVs were blocking Table 3 entirely. Full inventory in
+`analysis/provenance/RECOVERED_INTERMEDIATES.md`. The scripts were on disk but
+absent from a clone — including those producing the ACI, EVT/FHS and FZ-score
+baselines, i.e. the alternative recalibration methods the AE's point 5 turns on.
+
+**Cause 2 — generators left at nine forecasters.** Moirai-1.1 was added to the
+paper as the within-family control, but the scripts that build the tables were
+never updated. This is why the same one-line fix had to be discovered
+independently in the multi-alpha results, the block-bootstrap CIs, the rolling
+intermediate behind Table 3, `tab_models` and `tab_dm_pvalues`.
+
+### Manifest verdicts
+
+`DIFFERS` is an erratum; `NOT_EMITTED` is a reproducibility gap; `COSMETIC` means
+the generator is live and every reported value identical, with only rule style
+differing (the booktabs migration). The three must not be merged.
+
+Of the DIFFERS: three are Cause 2 (`tab_baselines`, `tab_models`,
+`tab_dm_pvalues`) — a column or row missing from the regenerated version, with
+**every shared value identical**. Two are single-cell errata: `tab_master_results`
+(Moirai 1.1 W/GJR printed 1.00, computed 0.99) and `tab_multiquantile`
+(Moirai 1.1 rejections 10/24 printed, 9/24 correct).
+
+**The Diebold–Mariano matrix is not wrong.** Six columns submitted against five
+regenerated, all shared values identical. The claim that classical parametric
+models retain a Quantile Score advantage after correction is unaffected.
+
+**Figure 1 verifies exactly**: 63/77/100 raw and 203/32/5 corrected all recompute
+on the ten-forecaster count.
+
+### One erratum found without any code
+
+Section 4.3 states commodities are "only 64\% Green" under single-split
+calibration. Table D.5 reports 22/36 = **61.1%**, which reproduces exactly.
+No version of the data yields 64%. The paper states two different commodity Green
+rates four sections apart; §4.3 should read 61%.
+
+### Structural fixes
+
+- `Quantlets/cfp_config.py` — one source for the model set, asset set, the
+  floor split, the conformal order statistic, and `rng_for()`. The model
+  dictionary had been duplicated per script, which is why Cause 2 kept
+  reappearing rather than being fixed once.
+- `qV_block_bootstrap.py` reseeded per (asset, model). The single shared stream
+  meant every interval depended on how many models preceded it in the loop:
+  inserting one moved 30 of 36 published intervals.
+- `aci_baseline_results.csv` (648-row gamma grid) renamed to
+  `aci_baseline_gamma_grid.csv`. A file of the same name but different schema —
+  the 216-row summary — is what Table 4 consumes; substituting one for the other
+  failed loudly this time, which was luck.
+- Seven pipeline scripts un-ignored in `.gitignore`.
+
+### What the audit did and did not do
+
+**No published number changed materially.** Six defects, one full day: two
+single-cell errata, one stale percentage in §4.3, and a set of generators behind
+the paper. The audit did not repair results — it made them defensible, which in a
+submission with an open credibility question was the point.
