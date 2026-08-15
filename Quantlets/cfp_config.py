@@ -42,6 +42,12 @@ SYMBOLS = [
     "BTC", "ETH", "EURUSD", "GBPUSD", "USDJPY", "AUDUSD",
 ]
 
+# The CAC 40 series was stored as CACT before the data rebuild and is FCHI now.
+# Six pipeline scripts kept the old ticker and, because a missing returns file is
+# skipped rather than raised, silently produced 23-asset tables that looked
+# complete. Published figures predate the rename and are unaffected.
+LEGACY_SYMBOL_ALIASES = {"CACT": "FCHI"}
+
 ASSET_CLASS = {
     **{s: "Equity" for s in ("SP500", "STOXX", "GDAXI", "FCHI", "FTSE100",
                              "ICLN", "NIKKEI", "HSI", "BOVESPA", "NIFTY",

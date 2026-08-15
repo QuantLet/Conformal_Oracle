@@ -16,9 +16,9 @@ For every table and figure in `main_R1.tex`: does a script emit it, and does the
 
 | Status | Count |
 |---|---|
-| DIFFERS | 7 |
+| DIFFERS | 6 |
 | NOT_EMITTED | 3 |
-| COSMETIC | 9 |
+| COSMETIC | 10 |
 | OK | 6 |
 | FIGURE | 9 |
 
@@ -26,24 +26,24 @@ For every table and figure in `main_R1.tex`: does a script emit it, and does the
 
 | Artefact | Status | Generator | Note |
 |---|---|---|---|
-| `Quantlets/CFP_ES_Correction_Z2/tab_es_correction.tex` | **DIFFERS** | CFP_ES_Correction_Z2.py | CFP_ES_Correction_Z2.py: 40 numeric token(s) differ from the submitted copy (56 vs 58 tokens) |
-| `Quantlets/CO_baseline_comparison/tab_baselines.tex` | **DIFFERS** | compile_tab_baselines.py | compile_tab_baselines.py: 77 numeric token(s) differ from the submitted copy (76 vs 78 tokens) |
+| `Quantlets/CO_baseline_comparison/tab_baselines.tex` | **DIFFERS** | compile_tab_baselines.py | compile_tab_baselines.py: 82 numeric token(s) differ from the submitted copy (82 vs 84 tokens) |
 | `Quantlets/CO_full_evaluation/tab_master_results.tex` | **DIFFERS** | rebuild_master_table.py, run_master_table.py | rebuild_master_table.py reproduces 109/110 cells; Moirai 1.1 W/GJR printed 1.00 vs computed 0.99. The shipped run_master_table.py does not emit this table at all (9 models, wrong panels) and is marked SUPERSEDED. |
-| `Quantlets/CO_fz_scores/tab_fz_scores.tex` | **DIFFERS** | run_fz_scores.py | run_fz_scores.py: 23 numeric token(s) differ from the submitted copy (21 vs 23 tokens) |
 | `Quantlets/CO_model_overview/tab_models.tex` | **DIFFERS** | run_model_overview.py | run_model_overview.py: 15 numeric token(s) differ from the submitted copy (32 vs 35 tokens) |
 | `Quantlets/CO_multi_quantile_panel/tab_multiquantile.tex` | **DIFFERS** | run_multiquantile.py | Moirai 1.1 at alpha=0.01: 10/24 rejections printed, 9/24 correct. Built from the stale moirai11_full_results.csv, now replaced. |
 | `Quantlets/CO_quantile_scores/tab_dm_pvalues.tex` | **DIFFERS** | run_dm_pvalues.py | run_dm_pvalues.py: 22 numeric token(s) differ from the submitted copy (20 vs 26 tokens) |
+| `Quantlets/CO_robustness_inner7/tab_tail_closure_extended.tex` | **DIFFERS** | run_inner7_tail_closure.py | run_inner7_tail_closure.py: 1 numeric token(s) differ from the submitted copy (97 vs 97 tokens) |
 | `Quantlets/CO_baseline_comparison_tuned/tab_gbm_tuned.tex` | **NOT_EMITTED** | — | no script in the artefact's directory writes it |
 | `Quantlets/CO_robustness/tab_gap_ablation.tex` | **NOT_EMITTED** | — | no script in the artefact's directory writes it |
 | `Quantlets/CO_robustness/tab_qV_bootstrap_ci.tex` | **NOT_EMITTED** | — | no script in the artefact's directory writes it |
+| `Quantlets/CFP_ES_Correction_Z2/tab_es_correction.tex` | **COSMETIC** | CFP_ES_Correction_Z2.py | CFP_ES_Correction_Z2.py: every reported value is identical; only formatting differs |
 | `Quantlets/CO_asset_overview/tab_assets.tex` | **COSMETIC** | run_asset_overview.py | run_asset_overview.py: every reported value is identical; only formatting differs |
+| `Quantlets/CO_fz_scores/tab_fz_scores.tex` | **COSMETIC** | run_fz_scores.py | run_fz_scores.py: every reported value is identical; only formatting differs |
 | `Quantlets/CO_garch_conformal/tab_rolling_vs_static.tex` | **COSMETIC** | run_rolling_vs_static.py | run_rolling_vs_static.py: every reported value is identical; only formatting differs |
 | `Quantlets/CO_multi_quantile_panel/tab_panel_by_class.tex` | **COSMETIC** | run_panel_by_class.py | run_panel_by_class.py: every reported value is identical; only formatting differs |
 | `Quantlets/CO_robustness/tab_h14_small_sample.tex` | **COSMETIC** | run_robustness_mc.py | run_robustness_mc.py: every reported value is identical; only formatting differs |
 | `Quantlets/CO_robustness/tab_h15_fc_sensitivity.tex` | **COSMETIC** | run_robustness_mc.py | run_robustness_mc.py: every reported value is identical; only formatting differs |
 | `Quantlets/CO_robustness/tab_h16_regime_stability.tex` | **COSMETIC** | run_robustness_mc.py | run_robustness_mc.py: every reported value is identical; only formatting differs |
 | `Quantlets/CO_robustness/tab_robustness_summary.tex` | **COSMETIC** | run_robustness_summary.py | run_robustness_summary.py: every reported value is identical; only formatting differs |
-| `Quantlets/CO_robustness_inner7/tab_tail_closure_extended.tex` | **COSMETIC** | run_inner7_tail_closure.py | run_inner7_tail_closure.py: every reported value is identical; only formatting differs |
 | `Quantlets/CO_simulation_study/tab_simulation_extended.tex` | **COSMETIC** | run_simulation_study.py | run_simulation_study.py: every reported value is identical; only formatting differs |
 | `Quantlets/CO_cross_sectional/tab_cross_sectional.tex` | **OK** | run_cross_sectional.py | reproduced by run_cross_sectional.py |
 | `Quantlets/CO_diagnostic_regression/tab_diag_regression.tex` | **OK** | run_diag_regression.py | reproduced by run_diag_regression.py |

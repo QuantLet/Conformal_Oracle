@@ -28,7 +28,7 @@ F_CAL = 0.70
 W = 250          # rolling window size (Basel convention)
 GAMMAS = [0.001, 0.005, 0.01]  # candidate learning rates
 
-SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'CACT', 'FTSE100', 'ICLN',
+SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
            'NIKKEI', 'HSI', 'BOVESPA', 'NIFTY', 'ASX200', 'CBU0',
            'TLT', 'IBGL', 'DJCI', 'GOLD', 'WTI', 'NATGAS',
            'BTC', 'ETH', 'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD']

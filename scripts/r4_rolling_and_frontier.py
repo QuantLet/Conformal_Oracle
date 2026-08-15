@@ -32,7 +32,7 @@ FIG.mkdir(exist_ok=True)
 ALPHA = 0.01
 F_CAL = 0.70
 
-SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'CACT', 'FTSE100', 'ICLN',
+SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
            'NIKKEI', 'HSI', 'BOVESPA', 'NIFTY', 'ASX200', 'CBU0',
            'TLT', 'IBGL', 'DJCI', 'GOLD', 'WTI', 'NATGAS',
            'BTC', 'ETH', 'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD']
