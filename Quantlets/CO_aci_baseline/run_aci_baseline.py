@@ -14,7 +14,7 @@ Outputs:
   tab_baselines_aci.tex           tab:baselines_aci (methods x metrics)
   tab_aci_gamma_sensitivity.tex   tab:aci_gamma_sensitivity (gamma grid)
   verdict_aci.tex                 data-driven 3-4 sentence referee verdict
-  aci_baseline_results.csv        per-pair, per-method results
+  aci_baseline_gamma_grid.csv        per-pair, per-method results
 
 Usage:  python run_aci_baseline.py
 """
@@ -374,7 +374,7 @@ def run_gamma_sensitivity():
 
 if __name__ == "__main__":
     df = run()
-    df.to_csv(SCRIPT_DIR / "aci_baseline_results.csv", index=False)
+    df.to_csv(SCRIPT_DIR / "aci_baseline_gamma_grid.csv", index=False)
     dfg = run_gamma_sensitivity()
     if len(df):
         generate_main_table(df)

@@ -33,6 +33,7 @@ import re
 import shutil
 import subprocess
 import sys
+import hashlib
 import tempfile
 from pathlib import Path
 
@@ -163,15 +164,33 @@ def main() -> int:
             continue
 
         backup = tmp / tpath.name
+        before = None
         if live.exists():
             shutil.copy2(live, backup)
+            before = (live.stat().st_mtime_ns,
+                      hashlib.sha256(live.read_bytes()).hexdigest())
         ok, err = run_generator(gens[0])
+        # A generator can exit 0 without touching its target -- wrong output
+        # path, an early return, a silently skipped branch. The pre-existing
+        # file would then be compared against the baseline and could be
+        # reported OK, turning a failure into a pass. Require positive evidence
+        # that THIS run wrote the file.
+        wrote = False
+        if live.exists():
+            after = (live.stat().st_mtime_ns,
+                     hashlib.sha256(live.read_bytes()).hexdigest())
+            wrote = before is None or after[0] != before[0] or after[1] != before[1]
         if not ok:
             rec["status"] = "RUN_FAILED"
             rec["detail"] = f"{gens[0].name}: {err.splitlines()[-1] if err else '?'}"
         elif not live.exists():
             rec["status"] = "NOT_EMITTED"
             rec["detail"] = f"{gens[0].name} ran but did not write {tpath.name}"
+        elif not wrote:
+            rec["status"] = "NOT_WRITTEN"
+            rec["detail"] = (f"{gens[0].name} exited 0 but left {tpath.name} "
+                             "untouched (mtime and hash unchanged) -- the file "
+                             "on disk predates this run, so no verdict is possible")
         else:
             lt, ft = live.read_text(errors="replace"), frozen.read_text(errors="replace")
             same_text = normalise(lt) == normalise(ft)
@@ -197,8 +216,8 @@ def main() -> int:
         rows.append({"artefact": f, "generators": [], "status": "FIGURE",
                      "detail": "figure; checked separately"})
 
-    order = {"DIFFERS": 0, "NOT_EMITTED": 1, "RUN_FAILED": 2, "NO_BASELINE": 3,
-             "COSMETIC": 4, "PENDING": 5, "OK": 6, "FIGURE": 7}
+    order = {"DIFFERS": 0, "NOT_EMITTED": 1, "NOT_WRITTEN": 2, "RUN_FAILED": 3,
+             "NO_BASELINE": 4, "COSMETIC": 5, "PENDING": 6, "OK": 7, "FIGURE": 8}
     rows.sort(key=lambda r: (order.get(r["status"], 9), r["artefact"]))
 
     L = ["# Provenance manifest", "",
@@ -210,6 +229,7 @@ def main() -> int:
          "| `NOT_EMITTED` | no generator — **reproducibility gap**, not an erratum |",
          "| `RUN_FAILED` | generator exists but does not execute |",
          "| `COSMETIC` | regenerates with identical values; only formatting differs |",
+         "| `NOT_WRITTEN` | generator exited 0 but did not touch the file — **no verdict** |",
          "| `PENDING` | generator found, not yet executed |", ""]
     counts: dict[str, int] = {}
     for r in rows:

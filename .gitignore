@@ -89,6 +89,17 @@ garch_conformal_detail.csv
 /scripts/*
 !/scripts/audit_bib.py
 !/scripts/audit_refs.py
+# Pipeline scripts behind published baselines. These produce the ACI, EVT/FHS
+# and FZ-score rows of Table 4 -- the alternative recalibration methods the AE's
+# point 5 turns on -- and the rolling/frontier intermediates. They were on disk
+# but untracked since b9d94d1, so a fresh clone did not contain them.
+!/scripts/baseline_aci.py
+!/scripts/baselines_evt_fhs.py
+!/scripts/fz_scores.py
+!/scripts/r4_rolling_and_frontier.py
+!/scripts/qV_block_bootstrap.py
+!/scripts/gap_ablation.py
+!/scripts/regenerate_rolling_vs_static.py
 
 # Root-level images (Quantlets have their own)
 /ql_logo.png
