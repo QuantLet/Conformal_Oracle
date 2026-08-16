@@ -146,6 +146,24 @@ def fit_gas(y: np.ndarray):
 
 # --------------------------------------------------------------------------- #
 
+def cc_pval(v_bool):
+    v = v_bool.astype(int)
+    n00 = int(np.sum((v[:-1] == 0) & (v[1:] == 0)))
+    n01 = int(np.sum((v[:-1] == 0) & (v[1:] == 1)))
+    n10 = int(np.sum((v[:-1] == 1) & (v[1:] == 0)))
+    n11 = int(np.sum((v[:-1] == 1) & (v[1:] == 1)))
+    if (n00 + n01) == 0 or (n10 + n11) == 0 or (n01 + n11) == 0:
+        return np.nan
+    pi01 = n01 / (n00 + n01); pi11 = n11 / (n10 + n11)
+    pi = (n01 + n11) / (n00 + n01 + n10 + n11)
+    if pi01 in (0, 1) or pi11 in (0, 1) or pi in (0, 1):
+        return np.nan
+    lr = -2.0 * ((n00 + n10) * np.log(1 - pi) + (n01 + n11) * np.log(pi)
+                 - n00 * np.log(1 - pi01) - n01 * np.log(pi01)
+                 - n10 * np.log(1 - pi11) - n11 * np.log(pi11))
+    return float(1.0 - stats.chi2.cdf(abs(lr), 1))
+
+
 def evaluate(r_test, q_test, r_cal, q_cal, alpha) -> dict:
     qV = qhat_ceil(q_cal - r_cal, alpha)
     cp = q_test - qV
@@ -161,6 +179,9 @@ def evaluate(r_test, q_test, r_cal, q_cal, alpha) -> dict:
         "QS_cp": quantile_score(r_test, cp, alpha),
         "TL_raw": traffic_light(v_raw, n), "TL_cp": traffic_light(v_cp, n),
         "R": abs(qV) / abs(np.mean(q_test)) if np.mean(q_test) else np.nan,
+        "VaR_width": float(np.mean(cp)), "raw_width": float(np.mean(q_test)),
+        "p_cc_raw": cc_pval(r_test < q_test), "p_cc_cp": cc_pval(r_test < cp),
+        "viol_raw": v_raw, "viol_cp": v_cp,
     }
 
 
