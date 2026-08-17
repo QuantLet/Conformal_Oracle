@@ -41,6 +41,10 @@
 \renewcommand{\P}{\mathsf{P}}
 \newcommand{\1}{\boldsymbol{1}}
 \newcommand{\qVstat}{\hat{q}_{\scriptscriptstyle\mathrm{V}}^{\,\mathrm{stat}}}
+% Backward-compatible alias: three robustness fragments predate the
+% \qV -> \qVstat rename and still emit \qV. Aliasing here avoids editing
+% generated files, which would be overwritten on the next pipeline run.
+\providecommand{\qV}{\qVstat}
 \newcommand{\qVroll}{\hat{q}_{{\scriptscriptstyle\mathrm{V}},t}^{\,\mathrm{roll}}}
 \newcommand{\qE}{\hat{q}_{\scriptscriptstyle\mathrm{E}}}
 \newcommand{\EScqr}{\widehat{\ES}^{\,\mathrm{cqr}}}
