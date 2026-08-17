@@ -1,0 +1,41 @@
+{
+ "rahimikia2511.18578": {
+  "arxiv": "2511.18578",
+  "fetched": true,
+  "hits": {
+   "sampling": 12,
+   "Monte Carlo sample": 2,
+   "predictive distribution": 5
+  },
+  "source": "https://arxiv.org/html/2511.18578v1",
+  "chars": 448588,
+  "contexts": []
+ },
+ "goel2410.11773": {
+  "arxiv": "2410.11773",
+  "fetched": true,
+  "hits": {
+   "sampling": 1,
+   "quantile head": 1
+  },
+  "source": "https://arxiv.org/html/2410.11773v1",
+  "chars": 69113,
+  "contexts": []
+ },
+ "schmitt2602.03903": {
+  "arxiv": "2602.03903",
+  "fetched": true,
+  "hits": {},
+  "source": "https://arxiv.org/html/2602.03903v1",
+  "chars": 58474,
+  "contexts": []
+ },
+ "zhong2603.22569": {
+  "arxiv": "2603.22569",
+  "fetched": true,
+  "hits": {},
+  "source": "https://arxiv.org/html/2603.22569v1",
+  "chars": 93260,
+  "contexts": []
+ }
+}

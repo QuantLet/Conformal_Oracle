@@ -1,0 +1,47 @@
+{
+ "Rahimikia et al.": {
+  "arxiv": "2511.18578",
+  "url": "https://arxiv.org/html/2511.18578",
+  "chars": 448588,
+  "title": "Re(Visiting) Time Series Foundation Models in Finance // Restore the saved color scheme prefer",
+  "samp": {
+   "top k": 1,
+   "number of samples": 1
+  },
+  "models": {
+   "chronos": 255,
+   "lag-llama": 13,
+   "moirai": 31,
+   "timesfm": 201
+  }
+ },
+ "Goel et al.": {
+  "arxiv": "2410.11773",
+  "url": "https://arxiv.org/html/2410.11773",
+  "chars": 77069,
+  "title": "Time-Series Foundation AI Model for Value-at-Risk Forecasting // Restore the saved color schem",
+  "samp": {},
+  "models": {
+   "lag-llama": 1,
+   "lagllama": 1,
+   "timesfm": 50,
+   "timegpt": 4
+  }
+ },
+ "Schmitt": {
+  "arxiv": "2602.03903",
+  "url": "https://arxiv.org/html/2602.03903",
+  "chars": 47180,
+  "title": "Taming Tail Risk in Financial Markets: Conformal Calibration for Nonstationary Portfolio VaR /",
+  "samp": {},
+  "models": {}
+ },
+ "Zhong": {
+  "arxiv": "2603.22569",
+  "url": "https://arxiv.org/html/2603.22569",
+  "chars": 93260,
+  "title": "Proxy-Reliance Control in Conformal Recalibration of One-Sided Value-at-Risk // Restore the sa",
+  "samp": {},
+  "models": {}
+ }
+}
