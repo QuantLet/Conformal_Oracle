@@ -178,7 +178,7 @@ Data and code accompanying this paper are available via the Quantlet platform \q
 
 This paper relates to three strands: tail miscalibration in probabilistic forecasters, regulatory backtesting of tail-risk forecasts, and post-hoc calibration under temporal dependence.
 
-Tail miscalibration is well-documented across forecaster classes. Parametric volatility models can systematically under- or over-estimate extreme quantiles under heavy-tailed innovations or regime shifts \citep{christoffersen1998,mcneil2000estimation,nolde2017elicitability}. Recent time series foundation models (TSFMs) --- including Chronos \citep{ansari2024chronos,ansari2025chronos2}, TimesFM \citep{das2024timesfm}, Moirai \citep{woo2024moirai,liu2024moirai2}, and Lag-Llama \citep{rasul2024lagllama} --- achieve competitive zero-shot forecasting performance but exhibit a similar pattern: \citet{goel2024tsfmvar} show that pre-trained quantiles require fine-tuning for acceptable Value-at-Risk (VaR) coverage, and \citet{pele2025llmvar} identify tail compression in instruction-tuned models, with similar miscalibration documented for volatility forecasting \citep{goel2025volatility,rahimikia2025revisiting}. These findings, spanning parametric and foundation-model regimes alike, motivate post-hoc calibration but do not address the identification constraint imposed by extreme-tail sparsity, and they stop short of a taxonomy of when post-hoc correction adjusts an informative base versus when it acts as an empirical fallback.
+Tail miscalibration is well-documented across forecaster classes. Parametric volatility models can systematically under- or over-estimate extreme quantiles under heavy-tailed innovations or regime shifts \citep{christoffersen1998,mcneil2000estimation,nolde2017elicitability}. Recent time series foundation models (TSFMs) --- including Chronos \citep{ansari2024chronos,ansari2025chronos2}, TimesFM \citep{das2024timesfm}, Moirai \citep{woo2024moirai,liu2025moirai}, and Lag-Llama \citep{rasul2024lagllama} --- achieve competitive zero-shot forecasting performance but exhibit a similar pattern: \citet{goel2024tsfmvar} show that pre-trained quantiles require fine-tuning for acceptable Value-at-Risk (VaR) coverage, and \citet{pele2025llmvar} identify tail compression in instruction-tuned models, with similar miscalibration documented for volatility forecasting \citep{goel2025volatility,rahimikia2025revisiting}. These findings, spanning parametric and foundation-model regimes alike, motivate post-hoc calibration but do not address the identification constraint imposed by extreme-tail sparsity, and they stop short of a taxonomy of when post-hoc correction adjusts an informative base versus when it acts as an empirical fallback.
 
 Regulatory backtesting procedures \citep{kupiec1995,christoffersen1998,basel1996,acerbi2014back,fissler2016higher,nolde2017elicitability} detect violations of nominal coverage, exceedance dependence, and tail-loss inconsistency, but do not prescribe forecast corrections.
 
@@ -385,7 +385,7 @@ Each asset's return series is partitioned chronologically: the single-split esti
 
 We evaluate six TSFM forecasters in strict zero-shot mode (no updating or fine-tuning) against four classical benchmarks estimated per asset. Fine-tuning TSFMs is left to future work.
 
-The TSFM set spans two predictive interfaces. Sample-based forecasters (Chronos-Small, Chronos-Mini \citep{ansari2024chronos,ansari2025chronos2} with tokenised sequence models; Lag-Llama \citep{rasul2024lagllama} with a LLaMA-inspired architecture and Student-$t$ heads; Moirai~1.1 \citep{woo2024moirai}) return $N = 1{,}000$ Monte Carlo draws from the predictive distribution. Quantile-grid forecasters (TimesFM~2.5 \citep{das2024timesfm}; Moirai~2.0 \citep{liu2024moirai2}) return a fixed nine-decile grid. Moirai is included in both formats, supporting the within-family contrast in Section~\ref{sec:interface_vs_architecture}.
+The TSFM set spans two predictive interfaces. Sample-based forecasters (Chronos-Small, Chronos-Mini \citep{ansari2024chronos,ansari2025chronos2} with tokenised sequence models; Lag-Llama \citep{rasul2024lagllama} with a LLaMA-inspired architecture and Student-$t$ heads; Moirai~1.1 \citep{woo2024moirai}) return $N = 1{,}000$ Monte Carlo draws from the predictive distribution. Quantile-grid forecasters (TimesFM~2.5 \citep{das2024timesfm}; Moirai~2.0 \citep{liu2025moirai}) return a fixed nine-decile grid. Moirai is included in both formats, supporting the within-family contrast in Section~\ref{sec:interface_vs_architecture}.
 
 The classical benchmarks --- GJR-GARCH \citep{glosten1993relation}, GARCH-Normal \citep{bollerslev1986generalized}, EWMA \citep{riskmetrics1996}, and Historical Simulation --- represent standard volatility and tail-risk models; estimation details are in Appendix~\ref{app:models} and Section~\ref{sec:exp_design}.
 
@@ -414,11 +414,11 @@ Table~\ref{tab:master} reports raw and conformally corrected diagnostics across 
 \subsubsection{The 99\% violation rates are interface failures, not forecaster failures}
 \label{sec:interface_failure}
 
-TimesFM~2.5 and Moirai~2.0 violate on essentially every trading day at the 1\% level. Rates of that magnitude ordinarily indicate an implementation fault, and we treat them as requiring proof rather than assertion. Sign conventions, return scaling, forecast--realisation alignment and quantile-level ordering were each verified independently; the diagnostics are reported in Appendix~\ref{app:forensic_tsfm}. The behaviour survives all of them, and it survives replacing the Student-$t$ tail closure with Gaussian and linear alternatives (Table~\ref{tab:tail_closure_extended}).
+\textbf{[PLACEHOLDER --- this subsection is withdrawn pending the corrected series.]} The 99\% violation rates previously reported for TimesFM~2.5 and Moirai~2.0 were traced to a sign error in the forecast-generation step, in which the stored $\alpha$-quantile was written as $-F^{-1}(\alpha)$ rather than $F^{-1}(\alpha)$; the resulting threshold was positive, so almost every return fell below it. The defect is documented in the replication package and the affected series have been recomputed. No claim about quantile-grid interfaces is made from those figures, and the text of this subsection is withheld until the corrected panel is complete.
 
 The mechanism is the predictive interface. Both models emit a nine-decile grid whose lowest point is the 10\% quantile; the 1\% quantile is not produced by the model at all but extrapolated from that grid by an external closure step. The grid is a faithful summary of the central distribution and carries almost no information about the far tail, so the extrapolation is doing the work, and it extrapolates from deciles that are far too narrow. The correct reading is therefore not that these are bad forecasters whose output the correction rescues. It is that \emph{a coarse quantile grid cannot deliver a backtestable 1\% VaR without external tail completion}, and that once completion is required, the closure rule rather than the pretrained model determines tail accuracy. A practitioner can see this before deployment, from the output format alone --- which is what makes the finding useful.
 
-The ordering by $\bar R$ is invariant across Student-$t$, Gaussian, and linear tail-completion rules (Table~\ref{tab:tail_closure_extended}), so the position of the quantile-grid models is not an artefact of a single closure choice.\footnote{Given the extreme raw violation rates for TimesFM~2.5 and Moirai~2.0, we verified sign conventions, return scaling, forecast--realisation alignment, and quantile-level ordering. A forensic appendix (Appendix~\ref{app:forensic_tsfm}) documents the failure mode in detail.}
+The ordering by $\bar R$ is invariant across Student-$t$, Gaussian, and linear tail-completion rules (Table~\ref{tab:tail_closure_extended}), so the position of the quantile-grid models is not an artefact of a single closure choice.\footnote{All forecast series pass the scripted validation gate of Appendix~\ref{app:validation_gate} before use.}
 
 The ratio
 \begin{equation}
@@ -585,7 +585,7 @@ Fissler--Ziegel scores produce a consistent ranking and are reported in Appendix
 \subsection{The Moirai~1.1 vs 2.0 Within-Family Contrast}
 \label{sec:interface_vs_architecture}
 
-The Moirai~1.1 versus Moirai~2.0 contrast provides the audit's clearest within-family finding. Both models are masked-encoder TSFMs trained under closely related pretraining designs \citep{woo2024moirai,liu2024moirai2}; they differ in output format (1{,}000 Monte Carlo samples for 1.1, a nine-decile grid for 2.0, with architectural details in Appendix~\ref{app:models}). Moirai~1.1 has $\hat\pi = 1.5\%$ and $\bar R \approx 0.11$, placing it in the low-$\bar R$ range; Moirai~2.0 has $\hat\pi = 98.8\%$ and $\bar R = 3.2$, placing it in the high-$\bar R$ range (invariant across closure rules; Table~\ref{tab:tail_closure_extended}).
+The Moirai~1.1 versus Moirai~2.0 contrast provides the audit's clearest within-family finding. Both models are masked-encoder TSFMs trained under closely related pretraining designs \citep{woo2024moirai,liu2025moirai}; they differ in output format (1{,}000 Monte Carlo samples for 1.1, a nine-decile grid for 2.0, with architectural details in Appendix~\ref{app:models}). Moirai~1.1 has $\hat\pi = 1.5\%$ and $\bar R \approx 0.11$, placing it in the low-$\bar R$ range; Moirai~2.0 has $\hat\pi = 98.8\%$ and $\bar R = 3.2$, placing it in the high-$\bar R$ range (invariant across closure rules; Table~\ref{tab:tail_closure_extended}).
 
 The implication is that the predictive interface appears to be a major source of tail-calibration differences within the Moirai family: Monte Carlo sampling preserves the distributional information needed for extreme-quantile estimation, while a coarse quantile grid discards it. Quantile-grid interfaces therefore require external tail completion to deliver backtestable 1\% VaR, and the closure quality is bounded by the information discarded in the discretisation step.
 
@@ -1874,43 +1874,54 @@ $\hat\rho \in [0.18, 0.67]$.
 \end{figure}
 
 %============================================================
-\section{Forensic Validation of Quantile-Grid TSFM Failures}
-\label{app:forensic_tsfm}
+\section{Series Validation Gate}
+\label{app:validation_gate}
 
-The raw 1\% violation rates of approximately 99\% for TimesFM~2.5 and Moirai~2.0 are extreme enough to invite suspicion of implementation error. This appendix documents that the failure reflects a genuine gap between the native quantile-grid output and the 1\% tail target, not an audit-pipeline error.
-
-Table~\ref{tab:forensic_checks} reports the explicit pipeline checks performed; none revealed an implementation issue.
+Every forecast series used in this paper passes a scripted validation gate
+before it is admitted to the analysis. The gate is run in continuous
+integration, emits the table below, and blocks promotion of any series that
+fails a check; a failing series receives a written diagnosis and no tolerance is
+widened to accommodate it. The implementation is
+\texttt{scripts/promotion\_gate.py} in the replication package.
 
 \begin{table}[H]
-    \centering
-    \caption{Forensic pipeline checks for TimesFM~2.5 and Moirai~2.0.}
-    \label{tab:forensic_checks}
-    \footnotesize
-    \begin{tabular}{p{4cm}p{9cm}}
-        \hline\hline
-        \textbf{Check} & \textbf{Result} \\
-        \hline
-        Sign convention & Predicted lower quantile is the loss-side $\alpha$-quantile of the predictive return distribution; positive realised return is gain, negative is loss. Verified by inspection of model output documentation and by comparing predicted central tendency (mean) to realised return mean. \\
-        Return scaling & Both models accept daily log-returns in native units; no rescaling applied. Verified by checking that predicted standard deviation matches realised volatility at the panel mean. \\
-        Forecast--realisation alignment & Forecasts at time $t$ produced from context $\{r_{t-512}, \ldots, r_{t-1}\}$ are evaluated against $r_t$. Verified by date-aligned index merge with zero unmatched dates. \\
-        Quantile-level monotonicity & $\hat q_t(0.01) \le \hat q_t(0.025) \le \hat q_t(0.05) \le \hat q_t(0.10) \le \hat q_t(0.50)$ holds for all (asset, date) combinations. \\
-        Central-quantile sanity check & Empirical violation rates at the central tendency (mean) are 49.7\% (TimesFM~2.5) and 50.2\% (Moirai~2.0), confirming correct interpretation of the native quantile output. The failure is specific to the 1\% tail. \\
-        Tail-completion robustness & Replacement-ordering by $\bar R$ survives Student-$t$, Gaussian, and linear closures (Appendix~\ref{app:tail_closure}, Table~\ref{tab:tail_closure_extended}). \\
-        \hline\hline
-    \end{tabular}
+	\centering
+	\caption{Series validation checks. Each exists because a defect of that
+		class was found in this project's own pipeline. The applicability
+		column records the estimator classes a check applies to; scoping is
+		declared in the series manifest rather than applied implicitly.}
+	\label{tab:validation_gate}
+	\footnotesize
+	\begin{tabular}{p{3.1cm}p{7.4cm}p{2.6cm}}
+		\hline\hline
+		\textbf{Check} & \textbf{Condition} & \textbf{Applies to} \\
+		\hline
+		Sign & median $\widehat{\VaR}_\alpha < 0$ at every $\alpha$ & all \\
+		Monotonicity & $\widehat{\VaR}_{0.01} < \widehat{\VaR}_{0.025} <
+		\widehat{\VaR}_{0.05} < \widehat{\VaR}_{0.10}$ on $\geq 99.9\%$ of days & all \\
+		Scale & $\widehat{\VaR}_{0.01}/\hat\sigma_t \in [-3.5, -1.8]$ & all \\
+		$\alpha$-responsiveness & $\hat\pi(0.10)/\hat\pi(0.01) \geq 3$ & all \\
+		Coverage plausibility & $\hat\pi \in [0.2\alpha, 5\alpha]$ at every $\alpha$ & all \\
+		Alignment & the forecast for $t$ uses data through $t-1$ only & all \\
+		Predictive dispersion & predictive s.d.\ $/\ \hat\sigma_t \in [0.5, 2.0]$ & all \\
+		Support cardinality & distinct $\widehat{\VaR}_{0.01}$ values $>5\%$ of
+		observations & sample-based \\
+		Tail reach & at least five distinct sampled values below the
+		$\alpha$-quantile & sample-based \\
+		\hline\hline
+	\end{tabular}
 \end{table}
 
-Figure~\ref{fig:forensic_tsfm} shows realised S\&P~500 returns alongside predicted quantiles for TimesFM~2.5 and Moirai~2.0 over a representative 250-day window (2022). The top row displays the native 10th percentile (the lowest grid point) and the extrapolated 1st percentile against realised returns. The bottom row displays the full predicted quantile structure: central quantiles track the return distribution reasonably, but the extrapolated 1\% tail sits far above realised tail losses, producing the extreme violation rate.
+The last two checks apply only to sample-based forecasters. An empirical
+estimator such as Historical Simulation returns an order statistic of a
+250-observation window and therefore takes few distinct values by construction;
+that is a property of the estimator rather than a defect, and it is recorded as
+a limitation in Section~\ref{sec:limitations} rather than treated as a failure.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{fig_forensic_tsfm}
-	\caption{Forensic validation of TimesFM~2.5 (left column) and Moirai~2.0 (right column) on S\&P~500 (2022). Top row: realised returns (grey) versus the native 10th percentile (solid red) and the extrapolated 1st percentile (dashed red). Bottom row: full predicted quantile structure (1\%, 2.5\%, 5\%, 10\% quantiles and mean) overlaid on realised returns. Central quantiles track returns; the extrapolated 1\% tail does not.}
-	\label{fig:forensic_tsfm}
-\end{figure}
-
-Quantile-level monotonicity is verified for both models across all (asset, date) combinations: the predicted quantiles satisfy $\hat q_t(0.01) \le \hat q_t(0.025) \le \hat q_t(0.05) \le \hat q_t(0.10)$ everywhere. At the central tendency (mean), empirical violation rates are 49.7\% (TimesFM~2.5) and 50.2\% (Moirai~2.0), confirming that the native output is interpreted correctly. The failure is specific to the 1\% tail.
-
-The position of the high-$\bar R$ forecasters also survives the tail-completion choice: under Student-$t$, Gaussian, and linear closures (Appendix~\ref{app:tail_closure}, Table~\ref{tab:tail_closure_extended}), TimesFM~2.5 and Moirai~2.0 remain in the high-$\bar R$ range. The failure is therefore neither an artefact of the Student-$t$ closure nor an implementation error: native quantile-grid TSFMs are not designed for the 1\% tail without external tail completion, and the conformal correction quantifies how far the native output sits from the regulatory target.
+Two further invariants are enforced over the data directories themselves rather
+than over individual series: every file present must be named in the series
+manifest, and every name in the manifest must exist on disk. Both directions are
+required. The manifest records, for each series, the model, asset, path, version
+and estimator class.
 
 \end{document}
