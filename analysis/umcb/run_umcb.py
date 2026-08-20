@@ -58,11 +58,16 @@ ALPHA = 0.01
 
 sys.path.insert(0, str(BASE / "analysis" / "ae_point4"))
 from run_ae_point4 import (  # noqa: E402
-    F_CAL, GRID_FAILURES, MODELS, SYMBOLS, W_ROLL, load_pair, qhat_ceil,
+    F_CAL, DEFECTIVE_SERIES, MODELS, SYMBOLS, W_ROLL, load_pair, qhat_ceil,
     quantile_score,
 )
 
-PANEL_A = {"Moirai-1.1", "Lag-Llama", "GJR-GARCH", "GARCH-N", "Hist-Sim", "EWMA"}
+# Grouping is by TRACED DEFECT, not by the withdrawn Panel A/B taxonomy. That
+# taxonomy put TimesFM-2.5 and Moirai-2.0 in "Panel B" on the strength of ~99%
+# raw violation rates, which were a sign inversion rather than a property of the
+# quantile-grid interface; corrected, both are among the best-calibrated raw
+# forecasters in the panel. The only series that still stand apart are the two
+# Chronos ones sampled at the checkpoint default top_k = 50.
 
 
 def weighted_quantile(v: np.ndarray, w: np.ndarray, alpha: float) -> float:
@@ -132,12 +137,14 @@ def make_figure(df: pd.DataFrame, path: Path) -> None:
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     C_A, C_B, INK = "#2a78d6", "#eb6834", "#0b0b0b"
+    ok = df[~df["defective"]]
     fig, ax = plt.subplots(1, 2, figsize=(11, 4.6))
-    for a, sub, title in ((ax[0], df, "all 240 pairs (log-log)"),
-                          (ax[1], df[df["panel"] == "A"],
-                           "Panel A only \u2014 usable forecasters")):
-        for panel, colour, lab in (("A", C_A, "Panel A"), ("B", C_B, "Panel B")):
-            s = sub[(sub["panel"] == panel) & (sub["uMCB"] > 0)]
+    for a, sub, title in ((ax[0], df, f"all {len(df)} pairs (log-log)"),
+                          (ax[1], ok,
+                           f"well-specified series only ({len(ok)} pairs)")):
+        for flag, colour, lab in ((False, C_A, "well-specified"),
+                                  (True, C_B, "top_k-truncated")):
+            s = sub[(sub["defective"] == flag) & (sub["uMCB"] > 0)]
             if len(s):
                 a.scatter(s["qV"].abs(), s["uMCB"], s=34, facecolor=colour,
                           edgecolor="white", linewidth=0.6, label=lab, zorder=3)
@@ -176,8 +183,7 @@ def main() -> int:
             d = decompose(q_test, r_test, ALPHA)
             d.update({
                 "model": model, "asset": sym,
-                "panel": "A" if model in PANEL_A else "B",
-                "grid": model in GRID_FAILURES,
+                "defective": model in DEFECTIVE_SERIES,
                 "qV": qV, "R": abs(qV) / abs(np.mean(q_test)),
                 "n_test": len(r_test),
             })
@@ -215,9 +221,8 @@ def main() -> int:
     lines += ["## Correlation of |q_V| with uMCB", "",
               "| Subset | n | Pearson | Spearman | p |", "|---|---|---|---|---|"]
     for label, s in (("all pairs", df),
-                     ("excluding quantile-grid failures", df[~df["grid"]]),
-                     ("Panel A only", df[df["panel"] == "A"]),
-                     ("Panel B only", df[df["panel"] == "B"])):
+                     ("well-specified series only", df[~df["defective"]]),
+                     ("top_k-truncated series only", df[df["defective"]])):
         lab, n, p, sp, pv = rel(s, label)
         lines.append(f"| {lab} | {n} | {p:.3f} | **{sp:.3f}** | {pv:.1e} |")
     lines.append("")
@@ -238,7 +243,7 @@ def main() -> int:
     lines.append("")
 
     # Is uMCB ~ (1/2) f qV^2 -- does the local density break monotonicity?
-    sub = d2[(~d2["grid"]) & (d2["uMCB"] > 0) & (d2["qV"].abs() > 1e-6)].copy()
+    sub = d2[(~d2["defective"]) & (d2["uMCB"] > 0) & (d2["qV"].abs() > 1e-6)].copy()
     sub["implied_f"] = 2 * sub["uMCB"] / sub["qV"] ** 2
     lo, hi = sub["implied_f"].quantile([0.05, 0.95])
     neg = int((d2["uMCB"] < 0).sum())
@@ -246,7 +251,7 @@ def main() -> int:
               "A second-order expansion of the quantile loss gives "
               "uMCB \u2248 \u00bd\u00b7f\u00b7q_V\u00b2, with f the residual density at "
               "the alpha-quantile. Solving for the implied f per pair "
-              "(quantile-grid failures excluded, and the "
+              "(the two top_k-truncated Chronos series excluded, and the "
               f"{neg} pairs with numerically negative uMCB dropped):", "",
               f"- 5th-95th percentile of implied f: **{lo:.1f} to {hi:.1f}**, "
               f"a factor of {hi / max(lo, 1e-9):.0f}; median "
@@ -261,8 +266,9 @@ def main() -> int:
 
     lines += ["## Share of miscalibration that is unconditional", "",
               "| Subset | mean uMCB/MCB | median |", "|---|---|---|"]
-    for label, s in (("all", df), ("excluding grid failures", df[~df["grid"]]),
-                     ("Panel A", df[df["panel"] == "A"])):
+    for label, s in (("all", df),
+                     ("well-specified series only", df[~df["defective"]]),
+                     ("top_k-truncated series only", df[df["defective"]])):
         sh = (s["uMCB"] / s["MCB"].replace(0, np.nan)).replace([np.inf, -np.inf], np.nan).dropna()
         lines.append(f"| {label} | {sh.mean():.3f} | {sh.median():.3f} |")
     lines.append("")

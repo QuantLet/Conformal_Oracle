@@ -1,0 +1,24 @@
+  GJR-GARCH w=250: pihat_raw=0.021556 qV=0.00342610
+  GJR-GARCH w=500: pihat_raw=0.019704 qV=0.00295361
+  GJR-GARCH w=1000: pihat_raw=0.020262 qV=0.00339439
+  GARCH-N w=250: pihat_raw=0.021030 qV=0.00479637
+  GARCH-N w=500: pihat_raw=0.021346 qV=0.00388917
+  GARCH-N w=1000: pihat_raw=0.023838 qV=0.00434072
+  EWMA w=250: pihat_raw=0.024711 qV=0.00425830
+  EWMA w=500: pihat_raw=0.024083 qV=0.00443115
+  EWMA w=1000: pihat_raw=0.024434 qV=0.00480057
+  Hist-Sim w=250: pihat_raw=0.017350 qV=0.00328258
+  Hist-Sim w=500: pihat_raw=0.014778 qV=0.00390017
+  Hist-Sim w=1000: pihat_raw=0.014899 qV=0.00500158
+
+--- max abs difference, stored vs reproduced ---
+  qV           1.179e-10
+  pihat_raw    9.368e-17
+  pihat_cp     6.418e-17
+  QS_raw       5.690e-09
+  QS_cp        5.697e-09
+  p_kup_raw    9.021e-17
+  p_kup_cp     5.551e-17
+
+zones identical: TL_raw True TL_cp True
+WORST 5.697e-09 -> DIFFERS
