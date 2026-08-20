@@ -3,7 +3,7 @@ CO_garch_conformal — Static vs rolling conformal correction (Table 9).
 Produces tab_rolling_vs_static.tex and tab_rolling_vs_static.csv.
 
 Reads pre-computed static and rolling conformal results from
-rolling_vs_static.csv (9 models × 24 assets). For each model
+rolling_vs_static.csv (13 models × 24 assets). For each model
 reports: corrected π̂ (equal-weighted mean), Basel Green count,
 and Christoffersen conditional coverage pass count (5% level)
 under both static (70/30 split) and rolling (250-day window)
@@ -20,14 +20,25 @@ DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'cfp_ijf_data'
 RES_DIR  = DATA_DIR / 'paper_outputs' / 'tables'
 OUT_DIR  = Path(__file__).resolve().parent
 
-MODEL_ORDER = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-               'Moirai-2.0', 'Lag-Llama',
-               'GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from cfp_config import MODELS as CFG_MODELS  # noqa: E402
+
+MODEL_ORDER = ['Chronos-Small', 'Chronos-Small-A', 'Chronos-Mini', 'Chronos-Mini-A',
+               'TimesFM-2.5', 'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama',
+               'GJR-GARCH', 'GJR-GARCH-t', 'GARCH-N', 'Hist-Sim', 'EWMA']
+assert set(MODEL_ORDER) == set(CFG_MODELS), 'model set drifted from cfp_config'
 
 MODEL_LABELS = {
-    'TimesFM-2.5': 'TimesFM 2.5',
-    'Moirai-2.0':  'Moirai 2.0',
-    'Hist-Sim':    r'Hist.\ Sim.',
+    'Chronos-Small':   'Chronos-Small (default)',
+    'Chronos-Small-A': 'Chronos-Small (analytic)',
+    'Chronos-Mini':    'Chronos-Mini (default)',
+    'Chronos-Mini-A':  'Chronos-Mini (analytic)',
+    'TimesFM-2.5':     'TimesFM 2.5',
+    'Moirai-1.1':      'Moirai 1.1',
+    'Moirai-2.0':      'Moirai 2.0',
+    'GJR-GARCH-t':     r'GJR-GARCH-$t$',
+    'Hist-Sim':        r'Hist.\ Sim.',
 }
 
 # ── Load data ─────────────────────────────────────────────────────

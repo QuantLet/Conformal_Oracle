@@ -3,28 +3,34 @@
 \smallskip
 
 \begin{tabular}{@{}llrlll@{}}
-\hline\hline
+\toprule
 Model & Architecture & Parameters & Distribution & Forecast output & Context \\
-\hline
-Chronos-Small & Tokenisation & 46M
-& Categorical & 1{,}000 samples
+\midrule
+Chronos-Small & Encoder-decoder over quantised tokens & 46M
+& Categorical over 4093 bins & 1{,}000 samples{,} checkpoint default \texttt{top\_k} = 50
 & 512 obs. \\
-Chronos-Mini & Tokenisation & 20M
-& Categorical & 1{,}000 samples
+Chronos-Small (analytic) & Encoder-decoder over quantised tokens & 46M
+& Categorical over 4093 bins & Quantiles read from the logits
 & 512 obs. \\
-TimesFM 2.5 & Decoder-only & 200M
-& Quantile & Quantile grid
+Chronos-Mini & Encoder-decoder over quantised tokens & 20M
+& Categorical over 4093 bins & 1{,}000 samples{,} checkpoint default \texttt{top\_k} = 50
 & 512 obs. \\
-Moirai 1.1 & Masked encoder & 11.4M
+Chronos-Mini (analytic) & Encoder-decoder over quantised tokens & 20M
+& Categorical over 4093 bins & Quantiles read from the logits
+& 512 obs. \\
+TimesFM 2.5 & Decoder-only & --
+& Quantile heads & Nine-decile grid
+& 512 obs. \\
+Moirai 1.1 & Masked encoder, multi-patch & --
 & Mixture & 1{,}000 samples
 & 512 obs. \\
-Moirai 2.0 & Masked encoder & 11.4M
-& Mixture & Quantile grid
+Moirai 2.0 & Decoder-only, single patch & --
+& Quantile loss & Nine-decile grid
 & 512 obs. \\
-Lag-Llama & LLaMA-inspired & 7.5M
+Lag-Llama & LLaMA-inspired & --
 & Student-$t$ & 1{,}000 samples
 & 512 obs. \\
-\hline\hline
+\bottomrule
 \end{tabular}
 
 \bigskip
@@ -32,12 +38,15 @@ Lag-Llama & LLaMA-inspired & 7.5M
 \smallskip
 
 \begin{tabular}{@{}lllll@{}}
-\hline\hline
+\toprule
 Model & Type & Innovation dist.\
 & Est.\ parameters & Est.\ window \\
-\hline
-GJR-GARCH(1,1) & Parametric & Skewed-$t$
-& $\omega,\alpha_1,\beta_1,\gamma,\nu,\xi$
+\midrule
+GJR-GARCH(1,1) & Parametric & Normal
+& omega.alpha_1.beta_1.gamma
+& 250 obs. \\
+GJR-GARCH(1.1)-t & Parametric & Student-t
+& omega.alpha_1.beta_1.gamma.nu
 & 250 obs. \\
 GARCH(1,1)-N & Parametric & Normal
 & $\omega,\alpha_1,\beta_1$
@@ -48,5 +57,5 @@ EWMA & Parametric & Normal
 Hist.\ Sim. & Non-parametric & Empirical
 & 
 & 250 obs. \\
-\hline\hline
+\bottomrule
 \end{tabular}

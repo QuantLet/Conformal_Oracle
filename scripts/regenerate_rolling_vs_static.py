@@ -16,22 +16,15 @@ ALPHA = 0.01
 F_CAL = 0.70
 W_ROLL = 250
 
-SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
-           'NIKKEI', 'HSI', 'BOVESPA', 'NIFTY', 'ASX200', 'CBU0',
-           'TLT', 'IBGL', 'DJCI', 'GOLD', 'WTI', 'NATGAS',
-           'BTC', 'ETH', 'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD']
+# Model and asset sets come from cfp_config. This file used to carry its own
+# nine-model dictionary, which is why the static-versus-rolling table stayed a
+# nine-model table after Moirai-1.1, GJR-GARCH-t and the two analytic Chronos
+# series entered the panel.
+import sys
+sys.path.insert(0, str(BASE / 'Quantlets'))
+from cfp_config import MODELS, SYMBOLS as _SYMBOLS  # noqa: E402
 
-MODELS = {
-    'Chronos-Small': ('chronos_small', None),
-    'Chronos-Mini':  ('chronos_mini',  None),
-    'TimesFM-2.5':   ('timesfm25',     None),
-    'Moirai-2.0':    ('moirai2',       None),
-    'Lag-Llama':     ('lagllama',      None),
-    'GJR-GARCH':     ('benchmarks',    'gjr_garch'),
-    'GARCH-N':       ('benchmarks',    'garch_n'),
-    'Hist-Sim':      ('benchmarks',    'hs'),
-    'EWMA':          ('benchmarks',    'ewma'),
-}
+SYMBOLS = sorted(_SYMBOLS)
 
 
 def load_pair(model_key, symbol):
@@ -200,7 +193,8 @@ for model in MODELS:
               f'R: pi={r_pi:.4f} TL={r_tl:6s}')
 
 df = pd.DataFrame(rows)
-assert len(df) == 216, f'Expected 216 rows, got {len(df)}'
+expected = len(MODELS) * len(SYMBOLS)
+assert len(df) == expected, f'Expected {expected} rows, got {len(df)}'
 
 out_path = DATA / 'paper_outputs' / 'tables' / 'rolling_vs_static.csv'
 df.to_csv(out_path, index=False)
@@ -227,7 +221,7 @@ for m in MODELS:
 
 total_sg = (df['static_tl'] == 'Green').sum()
 total_rg = (df['rolling_tl'] == 'Green').sum()
-print(f'  TOTAL            Static={total_sg}/216  Rolling={total_rg}/216')
+print(f'  TOTAL            Static={total_sg}/{len(SYMBOLS) * len(MODELS)}  Rolling={total_rg}/{len(SYMBOLS) * len(MODELS)}')
 
 # Save rolling_w250_pooled.csv (for compile_tab_baselines.py)
 rdf = pd.DataFrame(rolling_rows)

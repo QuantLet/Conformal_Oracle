@@ -25,15 +25,16 @@ def rhup(val, ndigits):
 
 
 def main():
-    df9 = pd.read_csv(DATA / 'all_results.csv')
-    df9 = df9[df9['alpha'] == 0.01].copy()
-
-    df11 = pd.read_csv(DATA / 'moirai11_results.csv')
-    if 'alpha' in df11.columns:
-        df11 = df11[df11['alpha'] == 0.01].copy()
+    # Moirai-1.1 has been part of all_results.csv since the 17 August rebuild;
+    # concatenating the legacy file would duplicate its 24 rows and weight that
+    # model double in a pooled regression.
+    df = pd.read_csv(DATA / 'all_results.csv')
+    dup = df.duplicated(subset=['model', 'symbol', 'alpha']).sum()
+    assert dup == 0, f'{dup} duplicated (model, symbol, alpha) rows'
+    df = df[df['alpha'] == 0.01].copy()
 
     cols = ['model', 'symbol', 'qV', 'pihat_raw', 'QS_raw', 'QS_cp']
-    df = pd.concat([df9[cols], df11[cols]], ignore_index=True)
+    df = df[cols].copy()
     df['delta_qs'] = df['QS_raw'] - df['QS_cp']
     df = df.dropna(subset=['delta_qs', 'qV', 'pihat_raw'])
 
@@ -65,13 +66,16 @@ def main():
     print(f"Cluster(asset) SEs: {dict(zip(col_names, ols_asset.bse))}")
     print(f"Cluster(model) SEs: {dict(zip(col_names, ols_model.bse))}")
 
-    body_r2 = 0.822
-    body_partial = 0.616
-    r2_match = abs(rhup(ols.rsquared, 3) - body_r2) < 0.002
-    pr2_match = abs(rhup(partial_r2, 3) - body_partial) < 0.002
-    print(f"\n--- Verification ---")
-    print(f"R² match body ({body_r2}): {rhup(ols.rsquared, 3)} -> {'OK' if r2_match else 'DRIFT'}")
-    print(f"Partial R² match body ({body_partial}): {rhup(partial_r2, 3)} -> {'OK' if pr2_match else 'DRIFT'}")
+    # The manuscript's figures were R2 = 0.822 and partial R2 = 0.616 on the
+    # ten-forecaster panel, then 0.782 and 0.534 as reprinted. Both were computed
+    # with four defective series in the sample, where delta_QS is dominated by
+    # the size of the defect. There is no target to match any more: what the
+    # regression now reports is what the corrected panel says, and the body text
+    # takes its number from here rather than the other way round.
+    print(f"\n--- On the corrected panel ---")
+    print(f"R2 = {rhup(ols.rsquared, 3)}   partial R2 (qV) = {rhup(partial_r2, 3)}")
+    print("Superseded figures, defective panel: R2 = 0.822 / 0.782, "
+          "partial R2 = 0.616 / 0.534.")
 
     results = []
     for i, name in enumerate(col_names):
@@ -88,6 +92,21 @@ def main():
     rdf = pd.DataFrame(results)
     rdf.to_csv(OUT / 'diag_regression_results.csv', index=False)
     print(f"\nSaved results to {OUT / 'diag_regression_results.csv'}")
+
+    # Same regression with the two top_k-truncated series dropped. Their qV is
+    # two orders of magnitude larger than anything else in the panel, so leaving
+    # them in makes the fit a statement about a sampling parameter rather than
+    # about recalibration. Both numbers are reported; neither is hidden.
+    sub = df[~df['model'].isin(['Chronos-Small', 'Chronos-Mini'])]
+    y_s = sub['delta_qs'].values
+    X_s = sm.add_constant(sub[['qV', 'pihat_raw']].values)
+    ols_s = sm.OLS(y_s, X_s).fit()
+    y_on_pi_s = sm.OLS(y_s, sm.add_constant(sub['pihat_raw'].values)).fit()
+    x_on_pi_s = sm.OLS(sub['qV'].values,
+                       sm.add_constant(sub['pihat_raw'].values)).fit()
+    partial_s = sm.OLS(y_on_pi_s.resid, sm.add_constant(x_on_pi_s.resid)).fit().rsquared
+    print(f"Excluding the two truncated series (n = {len(sub)}): "
+          f"R2 = {rhup(ols_s.rsquared, 3)}   partial R2 (qV) = {rhup(partial_s, 3)}")
 
     write_tex(ols, ols_asset, ols_model, col_names,
               ols.rsquared, partial_r2, len(df))

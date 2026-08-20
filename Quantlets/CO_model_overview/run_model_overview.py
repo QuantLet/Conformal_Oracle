@@ -2,6 +2,18 @@
 CO_model_overview — Model overview table (Table 2).
 Produces tab_models.tex from models.csv.
 Two-panel structure: Panel A (TSFMs), Panel B (Classical Benchmarks).
+
+models.csv was rewritten on 2026-08-20. What it had said about Moirai 2.0 --
+"Masked encoder", mixture distribution, 1,000 samples -- is the description of
+Moirai 1.1, and the primary source for 2.0 (arXiv:2511.11698) describes a
+decoder-only model with a single patch and a quantile loss. It also listed the
+GJR-GARCH innovation as skewed-t, which is neither what the manuscript describes
+nor what the corrected series computes.
+
+Every architectural cell now carries the arXiv identifier it comes from, in the
+`source` column, and parameter counts that could not be verified against a
+primary source are left as `--` rather than guessed. That rule is the standing
+requirement from analysis/provenance/VERIFICATION_INVENTORY.md.
 """
 
 import pandas as pd
@@ -32,6 +44,7 @@ for _, row in panel_a.iterrows():
     ctx = row['context']
     if dist == 'Student-t':
         dist = r'Student-$t$'
+    params = '--' if pd.isna(params) or str(params) == '--' else params
     fo_tex = fo.replace(',', '{,}')
     line = (f'{row["model"]} & {row["architecture"]} & {params}\n'
             f'& {dist} & {fo_tex}\n'
