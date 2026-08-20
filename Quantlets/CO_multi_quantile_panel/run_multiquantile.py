@@ -13,14 +13,23 @@ DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'cfp_ijf_data'
 RES_DIR  = DATA_DIR / 'paper_outputs' / 'tables'
 OUT_DIR  = Path(__file__).resolve().parent
 
-TSFM_ORDER = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-              'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama']
+# Both Chronos configurations are shown: the shipped series sampled at the
+# checkpoint default, and the same weights read analytically. The pair is the
+# point of the table at multiple levels -- the default's violation rate is
+# almost flat in alpha, which is what a truncated support does.
+TSFM_ORDER = ['Chronos-Small', 'Chronos-Small-A', 'Chronos-Mini', 'Chronos-Mini-A',
+              'TimesFM-2.5', 'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama']
 ALPHAS = [0.01, 0.025, 0.05, 0.10]
 
 # ── Load ───────────────────────────────────────────────────────────
+# Moirai-1.1 is part of all_results.csv since the 17 August rebuild; the
+# separate file it used to live in is no longer concatenated, which would now
+# duplicate every one of its rows.
 df = pd.read_csv(RES_DIR / 'all_results.csv')
-moirai11 = pd.read_csv(RES_DIR / 'moirai11_full_results.csv')
-df = pd.concat([df, moirai11], ignore_index=True)
+dup = df.duplicated(subset=['model', 'symbol', 'alpha']).sum()
+assert dup == 0, f'{dup} duplicated (model, symbol, alpha) rows in all_results.csv'
+missing = [m for m in TSFM_ORDER if m not in set(df['model'])]
+assert not missing, f'not in all_results.csv: {missing}'
 df = df[df['model'].isin(TSFM_ORDER)].copy()
 print(f'Loaded {len(df)} TSFM rows '
       f'({df["model"].nunique()} models, '

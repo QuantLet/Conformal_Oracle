@@ -41,17 +41,37 @@ four defective series unless it is independent of the panel.
 | `CO_asset_overview/tab_assets` | asset metadata |
 | `CO_model_overview/tab_models` | model metadata, but must be extended from 13 to 16 forecasters |
 
+## Progress, 20 August
+
+Rebuilt on the corrected 13-forecaster panel and verified:
+
+| artefact | note |
+|---|---|
+| `qs_sequences/`, `violation_sequences/` | rebuilt by `scripts/build_qs_sequences.py` for all 13 forecasters, raw and corrected; reproduces `all_results.csv` with counts identical and floats within 1e-12 |
+| `tab_dm_pvalues` | 5 benchmarks x 6 TSFM series; adds the default-versus-analytic comparison |
+| `tab_panel_wildcluster_kupiec`, `tab_panel_wildcluster_dm` | 13 forecasters, 999 Rademacher draws |
+| `tab_panel_pooled` | refactored to read the committed sequences instead of rebuilding the correction itself |
+| `tab_multiquantile` | both Chronos configurations, four levels |
+| `tab_panel_by_class` | reads `all_results.csv` directly; no change needed beyond the input |
+
+`compute_panel_pooled.py` was converted from a second writer of
+`violation_sequences/` into an independent cross-check of them. It agrees with
+the committed sequences on every cell of all 13 forecasters, which is worth more
+than the duplicate producer was: the producer verifies against a summary it also
+derives, while this path shares no code with it.
+
 ## The blocking dependency
 
 `cfp_ijf_data/paper_outputs/qs_sequences/` and `violation_sequences/` date from
 24 April and cover nine forecasters. They are the input to the
-Diebold--Mariano, wild-cluster and panel-pooled tables, and **no script in the
-repository produces them** --- they are consumed by
+Diebold--Mariano, wild-cluster and panel-pooled tables, and no script in the repository produced the QS ones --- they were consumed by
 `CO_quantile_scores/run_dm_pvalues.py`,
 `CO_panel_wildcluster/run_wild_cluster_bootstrap.py` and
 `python/src/conformal_oracle/panel/diebold_mariano.py`, and written by nothing.
-This is the same class of gap the provenance audit found in July: an artefact on
-disk with no producer under version control.
+(The violation sequences did have a producer, `compute_panel_pooled.py`, which
+wrote them for nine models as a side effect of a verification run. That is worse
+than no producer in one respect: re-running it would have silently replaced a
+thirteen-model artefact with a nine-model one.)
 
 Regenerating them is not optional and not hard: a quantile-loss sequence per
 (model, asset) on the test window is exactly what `run_full_evaluation.py`

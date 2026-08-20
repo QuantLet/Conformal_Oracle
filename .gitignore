@@ -145,3 +145,5 @@ reports/.bib_audit_cache.json
 !/scripts/table_c1_es_correction.py
 !/scripts/tail_completion_robustness.py
 !/scripts/fill_quantlets.py
+# Producer of the QS and violation sequences, which had none.
+!/scripts/build_qs_sequences.py

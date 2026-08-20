@@ -29,30 +29,30 @@ RES_DIR  = DATA_DIR / 'paper_outputs' / 'tables'
 RET_DIR  = DATA_DIR / 'returns'
 OUT_DIR  = Path(__file__).resolve().parent
 
-MODEL_ORDER = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-               'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama',
-               'GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
+# The model set and the file keys come from cfp_config, so this table cannot
+# describe a different panel from Table 1. It used to carry its own dictionary of
+# ten, which is how it stayed a ten-forecaster table after the panel became
+# thirteen.
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from cfp_config import MODELS  # noqa: E402
+
+MODEL_ORDER = list(MODELS)
 ALPHA = 0.01
+VIOL_DIR = DATA_DIR / 'paper_outputs' / 'violation_sequences'
 
-MODEL_SUBDIR = {
-    'Chronos-Small': 'chronos_small', 'Chronos-Mini': 'chronos_mini',
-    'TimesFM-2.5': 'timesfm25', 'Moirai-1.1': 'moirai',
-    'Moirai-2.0': 'moirai2', 'Lag-Llama': 'lagllama',
-}
-BENCH_SUFFIX = {
-    'GJR-GARCH': 'gjr_garch', 'GARCH-N': 'garch_n',
-    'Hist-Sim': 'hs', 'EWMA': 'ewma',
-}
 
-def parquet_path(model, symbol):
-    if model in MODEL_SUBDIR:
-        return DATA_DIR / MODEL_SUBDIR[model] / f'{symbol}.parquet'
-    return DATA_DIR / 'benchmarks' / f'{symbol}_{BENCH_SUFFIX[model]}.parquet'
+def viol_key(model):
+    subdir, suffix = MODELS[model]
+    return suffix if suffix else subdir
+
 
 # ── Load all_results ─────────────────────────────────────────────
+# Moirai-1.1 is in all_results.csv since the 17 August rebuild; concatenating
+# the legacy file would duplicate its rows.
 ar = pd.read_csv(RES_DIR / 'all_results.csv')
-moirai11 = pd.read_csv(RES_DIR / 'moirai11_results.csv')
-ar = pd.concat([ar, moirai11], ignore_index=True)
+dup = ar.duplicated(subset=['model', 'symbol', 'alpha']).sum()
+assert dup == 0, f'{dup} duplicated (model, symbol, alpha) rows in all_results.csv'
 d01 = ar[ar['alpha'] == ALPHA].copy()
 
 # ── Reconstruct violations & compute statistics ──────────────────
@@ -64,19 +64,19 @@ for model in MODEL_ORDER:
     assets = sorted(sub['symbol'].unique())
     J = len(assets)
 
+    # Read the committed violation sequences rather than reconstructing them.
+    # This script used to rebuild the conformal correction itself from the
+    # forecast parquets -- a second implementation of the evaluation, which is
+    # exactly how two tables come to disagree. scripts/build_qs_sequences.py
+    # writes these and verifies that they reproduce all_results.csv.
+    seq = pd.read_parquet(VIOL_DIR / f'{viol_key(model)}_violations.parquet')
     viols = {}
     for sym in assets:
-        row = sub[sub['symbol'] == sym].iloc[0]
-        pq = pd.read_parquet(parquet_path(model, sym))
-        ret = pd.read_csv(RET_DIR / f'{sym}.csv')
-        ret['date'] = pd.to_datetime(ret['date'])
-        pq.index = pd.to_datetime(pq.index)
-        merged = pq[['VaR_0.01']].join(
-            ret.set_index('date')['log_return'], how='inner')
-        n_cal = int(row['n_cal'])
-        n_test = int(row['n_test'])
-        test = merged.iloc[n_cal:n_cal + n_test]
-        v = (test['log_return'] < (test['VaR_0.01'] - row['qV'])).astype(int)
+        v = seq[sym].dropna().astype(int)
+        expected = int(sub[sub['symbol'] == sym].iloc[0]['n_test'])
+        assert len(v) == expected, (
+            f'{model}/{sym}: sequence has {len(v)} test days, '
+            f'all_results.csv says {expected}')
         viols[sym] = v
 
     n_panel    = sum(len(v) for v in viols.values())

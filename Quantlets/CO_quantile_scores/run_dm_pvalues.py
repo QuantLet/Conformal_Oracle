@@ -34,33 +34,49 @@ DATA_DIR = Path(__file__).resolve().parent.parent.parent / 'cfp_ijf_data'
 QS_DIR   = DATA_DIR / 'paper_outputs' / 'qs_sequences'
 OUT_DIR  = Path(__file__).resolve().parent
 
-ROWS = ['GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
-COLS = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-        'Moirai-2.0', 'Lag-Llama']
-COL_SHORT = ['Chr-S', 'Chr-M', 'TFM', 'Moirai', 'L-Llama']
+# The two Chronos series sampled at the checkpoint default are NOT forecasters
+# and are excluded from the forecast comparison: their loss is a property of a
+# sampling parameter. The comparison that concerns them -- default against the
+# same checkpoint read analytically -- is reported separately at the foot of this
+# script, because it is the one quantitative statement about the defect that
+# belongs in a forecast-comparison framework.
+ROWS = ['GJR-GARCH-t', 'GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
+COLS = ['Chronos-Small-A', 'Chronos-Mini-A', 'TimesFM-2.5',
+        'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama']
+COL_SHORT = ['Chr-S', 'Chr-M', 'TFM', 'Moirai 1.1', 'Moirai 2.0', 'L-Llama']
 
 ROW_LABELS = {
     'Hist-Sim': r'Hist.\ Sim.',
+    'GJR-GARCH-t': r'GJR-GARCH-$t$',
 }
 
-MODEL_ORDER = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-               'Moirai-2.0', 'Lag-Llama',
-               'GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
+MODEL_ORDER = ['Chronos-Small-A', 'Chronos-Mini-A', 'TimesFM-2.5',
+               'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama',
+               'GJR-GARCH', 'GJR-GARCH-t', 'GARCH-N', 'Hist-Sim', 'EWMA']
 
 MODEL_FILES = {
+    'Chronos-Small-A': 'chronos_small_analytic_qs.parquet',
+    'Chronos-Mini-A':  'chronos_mini_analytic_qs.parquet',
+    'TimesFM-2.5':     'timesfm25_qs.parquet',
+    'Moirai-1.1':      'moirai_qs.parquet',
+    'Moirai-2.0':      'moirai2_qs.parquet',
+    'Lag-Llama':       'lagllama_qs.parquet',
+    'GJR-GARCH':       'gjr_garch_qs.parquet',
+    'GJR-GARCH-t':     'gjr_t_qs.parquet',
+    'GARCH-N':         'garch_n_qs.parquet',
+    'Hist-Sim':        'hs_qs.parquet',
+    'EWMA':            'ewma_qs.parquet',
+}
+
+# Read separately, for the default-versus-analytic comparison only.
+DEFAULT_FILES = {
     'Chronos-Small': 'chronos_small_qs.parquet',
     'Chronos-Mini':  'chronos_mini_qs.parquet',
-    'TimesFM-2.5':   'timesfm25_qs.parquet',
-    'Moirai-2.0':    'moirai2_qs.parquet',
-    'Lag-Llama':      'lagllama_qs.parquet',
-    'GJR-GARCH':      'gjr_garch_qs.parquet',
-    'GARCH-N':        'garch_n_qs.parquet',
-    'Hist-Sim':       'hs_qs.parquet',
-    'EWMA':           'ewma_qs.parquet',
 }
 
 # ── Load QS sequences ────────────────────────────────────────────
 qs = {m: pd.read_parquet(QS_DIR / f) for m, f in MODEL_FILES.items()}
+qs.update({m: pd.read_parquet(QS_DIR / f) for m, f in DEFAULT_FILES.items()})
 assets = list(qs['GJR-GARCH'].columns)
 print(f'Loaded {len(qs)} QS sequences, {len(assets)} assets')
 
@@ -110,7 +126,7 @@ def dm_cluster_robust(m1, m2):
     t_stat = d_bar / se
     return 2 * (1 - stats.t.cdf(abs(t_stat), df=J - 1))
 
-# ── Compute all 36 pairwise comparisons ─────────────────────────
+# ── Compute all pairwise comparisons among the forecasters ──────
 pairs_36 = [(MODEL_ORDER[i], MODEL_ORDER[j])
             for i in range(len(MODEL_ORDER))
             for j in range(i + 1, len(MODEL_ORDER))]
@@ -127,17 +143,19 @@ def get_p(store, m1, m2):
     return store[(m2, m1)]
 
 # ── Significance counts ─────────────────────────────────────────
-n_dk_36 = sum(1 for p in pvals_dk.values() if p < 0.05)
-n_cl_36 = sum(1 for p in pvals_cl.values() if p < 0.05)
-n_dk_20 = sum(1 for r in ROWS for c in COLS
-              if get_p(pvals_dk, r, c) < 0.05)
-n_cl_20 = sum(1 for r in ROWS for c in COLS
-              if get_p(pvals_cl, r, c) < 0.05)
+n_all = len(pairs_36)
+n_sub = len(ROWS) * len(COLS)
+n_dk_all = sum(1 for p in pvals_dk.values() if p < 0.05)
+n_cl_all = sum(1 for p in pvals_cl.values() if p < 0.05)
+n_dk_sub = sum(1 for r in ROWS for c in COLS
+               if get_p(pvals_dk, r, c) < 0.05)
+n_cl_sub = sum(1 for r in ROWS for c in COLS
+               if get_p(pvals_cl, r, c) < 0.05)
 
-print(f'Significant at 5%: {n_dk_20}/20 (DK, param-vs-TSFM), '
-      f'{n_dk_36}/36 (DK, all)')
-print(f'                   {n_cl_20}/20 (cluster, param-vs-TSFM), '
-      f'{n_cl_36}/36 (cluster, all)')
+print(f'Significant at 5%: {n_dk_sub}/{n_sub} (DK, benchmark-vs-TSFM), '
+      f'{n_dk_all}/{n_all} (DK, all)')
+print(f'                   {n_cl_sub}/{n_sub} (cluster, benchmark-vs-TSFM), '
+      f'{n_cl_all}/{n_all} (cluster, all)')
 
 # ── Format helpers (round-half-up) ───────────────────────────────
 def fmt_p(x):
@@ -150,7 +168,7 @@ def fmt_p(x):
 # ── Build LaTeX ──────────────────────────────────────────────────
 col_header = ' & '.join(COL_SHORT)
 lines = [
-    r'\begin{tabular}{@{}lccccc@{}}',
+    r'\begin{tabular}{@{}l' + 'c' * len(COLS) + r'@{}}',
     r'\toprule',
     f'& {col_header} \\\\',
     r'\midrule',
@@ -171,15 +189,34 @@ tex_path.write_text(tex)
 print(f'\nSaved {tex_path.name}')
 print(tex)
 
-# ── Save CSV (full 20-cell sub-table) ────────────────────────────
+# ── Save CSV (full sub-table) ───────────────────────────────────
 sub = pd.DataFrame(
     {c: [get_p(pvals_dk, r, c) for r in ROWS] for c in COLS},
     index=ROWS)
 sub.to_csv(OUT_DIR / 'tab_dm_pvalues.csv')
 
 # ── Print all 20 cells for verification ──────────────────────────
-print('\nAll 20 DK p-values (unrounded):')
+print(f'\nAll {n_sub} DK p-values (unrounded):')
 for r in ROWS:
     for c in COLS:
         p = get_p(pvals_dk, r, c)
         print(f'  {r:16s} vs {c:16s}: {p:.6f}')
+
+# ── The configuration comparison ────────────────────────────────
+# Default sampling against the same checkpoint read analytically. Same weights,
+# same contexts, same dates: the only thing that differs is the code that turns
+# the predictive distribution into a threshold.
+print('\nDefault sampling versus analytic reading, same checkpoint:')
+config_rows = []
+for default, analytic in (('Chronos-Small', 'Chronos-Small-A'),
+                          ('Chronos-Mini', 'Chronos-Mini-A')):
+    p_dk = dm_driscoll_kraay(default, analytic)
+    p_cl = dm_cluster_robust(default, analytic)
+    mean_default = float(np.nanmean(qs[default].values))
+    mean_analytic = float(np.nanmean(qs[analytic].values))
+    config_rows.append({'default': default, 'analytic': analytic,
+                        'QS_default': mean_default, 'QS_analytic': mean_analytic,
+                        'p_dk': p_dk, 'p_cluster': p_cl})
+    print(f'  {default:15s} {mean_default:.6e} vs {mean_analytic:.6e} '
+          f'  p_DK = {p_dk:.4f}  p_cluster = {p_cl:.4f}')
+pd.DataFrame(config_rows).to_csv(OUT_DIR / 'tab_dm_configuration.csv', index=False)

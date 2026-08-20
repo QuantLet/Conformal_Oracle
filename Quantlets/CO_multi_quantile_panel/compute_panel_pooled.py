@@ -1,10 +1,17 @@
 """
-CO_multi_quantile_panel — Reconstruct violation indicators and recompute
-panel-pooled backtest statistics at alpha=0.01 (Table 6).
+CO_multi_quantile_panel — Independent reconstruction of the violation
+indicators, as a CHECK on the committed sequences (alpha = 0.01, Table 6).
 
-Violation indicators are reconstructed from forecast parquets + returns + qV.
+This script used to WRITE violation_sequences/. It no longer does.
+scripts/build_qs_sequences.py is the single producer of those files, and it
+verifies them against all_results.csv cell by cell. What is worth keeping here
+is the second, independent path: violations rebuilt from the forecast parquets,
+the returns and qV, by code that shares nothing with the producer. If the two
+disagree, one of them is wrong, and a single producer that verifies only against
+its own summary table could not tell us that.
+
 N_panel, total violations, pi_pooled, p_Kupiec, and cluster-robust p-values
-are independently verifiable.
+are recomputed here and compared against the committed sequences.
 
 HAC SE uses Driscoll-Kraay: Newey-West (Bartlett kernel, Andrews 1991 AR(1)
 plug-in bandwidth) applied to the cross-sectional sum of violations S_t,
@@ -25,25 +32,25 @@ RES_DIR  = DATA_DIR / 'paper_outputs' / 'tables'
 RET_DIR  = DATA_DIR / 'returns'
 OUT_DIR  = Path(__file__).resolve().parent
 
-MODEL_ORDER = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-               'Moirai-2.0', 'Lag-Llama',
-               'GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from cfp_config import MODELS as CFG_MODELS  # noqa: E402
+
+MODEL_ORDER = list(CFG_MODELS)
 ALPHA = 0.01
 
-MODEL_SUBDIR = {
-    'Chronos-Small': 'chronos_small', 'Chronos-Mini': 'chronos_mini',
-    'TimesFM-2.5': 'timesfm25', 'Moirai-2.0': 'moirai2',
-    'Lag-Llama': 'lagllama',
-}
-BENCH_SUFFIX = {
-    'GJR-GARCH': 'gjr_garch', 'GARCH-N': 'garch_n',
-    'Hist-Sim': 'hs', 'EWMA': 'ewma',
-}
+VIOL_DIR = DATA_DIR / 'paper_outputs' / 'violation_sequences'
+
 
 def parquet_path(model, symbol):
-    if model in MODEL_SUBDIR:
-        return DATA_DIR / MODEL_SUBDIR[model] / f'{symbol}.parquet'
-    return DATA_DIR / 'benchmarks' / f'{symbol}_{BENCH_SUFFIX[model]}.parquet'
+    subdir, suffix = CFG_MODELS[model]
+    fname = f'{symbol}_{suffix}.parquet' if suffix else f'{symbol}.parquet'
+    return DATA_DIR / subdir / fname
+
+
+def viol_key(model):
+    subdir, suffix = CFG_MODELS[model]
+    return suffix if suffix else subdir
 
 # ── Load all_results ─────────────────────────────────────────────
 ar = pd.read_csv(RES_DIR / 'all_results.csv')
@@ -127,43 +134,40 @@ for model in MODEL_ORDER:
 
 result = pd.DataFrame(rows)
 
-# ── Compare with pre-computed values ─────────────────────────────
-original = pd.read_csv(RES_DIR / 'panel_pooled.csv')
-original = original.set_index('model').reindex(MODEL_ORDER)
+# ── Compare against the committed sequences ──────────────────────
+# The producer verifies its output against all_results.csv, which it also
+# derives; this check is against a reconstruction that shares no code with it.
+print(f'\n{"Model":18s}  {"N ok":>5s}  {"V(here)":>8s}  {"V(committed)":>12s}  '
+      f'{"max cell diff":>13s}')
+print('-' * 66)
 
-print(f'\n{"Model":16s}  {"N":>5s}  {"Viol":>5s}  '
-      f'{"HAC_SE(orig)":>12s}  {"HAC_SE(DK)":>10s}  {"Diff%":>6s}  '
-      f'{"p_cl(orig)":>10s}  {"p_cl(DK)":>10s}  {"Match4dp":>8s}')
-print('-' * 95)
-
+ok = True
 for model in MODEL_ORDER:
     r = result[result['model'] == model].iloc[0]
-    o = original.loc[model]
-    n_ok = r['N_panel'] == int(o['N_panel'])
-    v_ok = r['total_viol'] == int(o['total_viol'])
-    hac_diff = (r['HAC_SE'] - o['HAC_SE']) / o['HAC_SE'] * 100
-    pcl_match = abs(r['p_cluster'] - o['p_cluster']) < 5e-4
-    print(f'{model:16s}  '
-          f'{"OK" if n_ok else "!":>5s}  {"OK" if v_ok else "!":>5s}  '
-          f'{o["HAC_SE"]:12.6f}  {r["HAC_SE"]:10.6f}  {hac_diff:+5.1f}%  '
-          f'{o["p_cluster"]:10.4f}  {r["p_cluster"]:10.4f}  '
-          f'{"YES" if pcl_match else "NO":>8s}')
+    seq = pd.read_parquet(VIOL_DIR / f'{viol_key(model)}_violations.parquet')
+    v_committed = int(np.nansum(seq.values))
+    here = all_violations[model]
+    worst = 0
+    for sym, v in here.items():
+        a = v.astype(float)
+        b = seq[sym].dropna().astype(float)
+        if len(a) != len(b):
+            worst = max(worst, 1)
+            continue
+        worst = max(worst, float(np.max(np.abs(a.values - b.values))))
+    n_ok = int(r['total_viol']) == v_committed and worst == 0
+    ok = ok and n_ok
+    print(f'{model:18s}  {"OK" if n_ok else "!":>5s}  {int(r["total_viol"]):>8d}  '
+          f'{v_committed:>12d}  {worst:>13.0f}')
+
+print('\n' + ('The independent reconstruction agrees with the committed '
+              'sequences on every cell.' if ok else
+              'DISAGREEMENT: one of the two paths is wrong. Do not use either '
+              'until it is resolved.'))
 
 # ── Save ─────────────────────────────────────────────────────────
 out_path = OUT_DIR / 'panel_pooled_reproduced.csv'
 result.to_csv(out_path, index=False)
-print(f'\nSaved {out_path.name}')
+print(f'Saved {out_path.name}')
 
-# ── Save violation sequences ─────────────────────────────────────
-viol_dir = DATA_DIR / 'paper_outputs' / 'violation_sequences'
-viol_dir.mkdir(parents=True, exist_ok=True)
-
-for model in MODEL_ORDER:
-    viols = all_violations[model]
-    df_v = pd.DataFrame(viols)
-    df_v.index.name = 'date'
-    suffix = MODEL_SUBDIR.get(model, BENCH_SUFFIX.get(model, model.lower()))
-    df_v.to_parquet(viol_dir / f'{suffix}_violations.parquet')
-
-print(f'Saved {len(MODEL_ORDER)} violation parquets to '
-      f'{viol_dir.relative_to(DATA_DIR.parent)}/')
+raise SystemExit(0 if ok else 1)

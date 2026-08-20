@@ -35,26 +35,34 @@ ALPHA = 0.01
 B = 999
 SEED = 42
 
-MODELS = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-          'Moirai-2.0', 'Lag-Llama',
-          'GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
+# The panel as promoted on 2026-08-17: thirteen series, of which the two
+# Chronos ones sampled at the checkpoint default are carried through the Kupiec
+# panel (where their behaviour is the finding) but kept out of the DM pairs,
+# which compare forecasters.
+MODELS = ['Chronos-Small', 'Chronos-Small-A', 'Chronos-Mini', 'Chronos-Mini-A',
+          'TimesFM-2.5', 'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama',
+          'GJR-GARCH', 'GJR-GARCH-t', 'GARCH-N', 'Hist-Sim', 'EWMA']
 
 MODEL_FILES = {
-    'Chronos-Small': 'chronos_small',
-    'Chronos-Mini':  'chronos_mini',
-    'TimesFM-2.5':   'timesfm25',
-    'Moirai-2.0':    'moirai2',
-    'Lag-Llama':     'lagllama',
-    'GJR-GARCH':     'gjr_garch',
-    'GARCH-N':       'garch_n',
-    'Hist-Sim':      'hs',
-    'EWMA':          'ewma',
+    'Chronos-Small':   'chronos_small',
+    'Chronos-Small-A': 'chronos_small_analytic',
+    'Chronos-Mini':    'chronos_mini',
+    'Chronos-Mini-A':  'chronos_mini_analytic',
+    'TimesFM-2.5':     'timesfm25',
+    'Moirai-1.1':      'moirai',
+    'Moirai-2.0':      'moirai2',
+    'Lag-Llama':       'lagllama',
+    'GJR-GARCH':       'gjr_garch',
+    'GJR-GARCH-t':     'gjr_t',
+    'GARCH-N':         'garch_n',
+    'Hist-Sim':        'hs',
+    'EWMA':            'ewma',
 }
 
 DM_PAIRS = [(ref, tsfm)
-            for ref in ['GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
-            for tsfm in ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-                         'Moirai-2.0', 'Lag-Llama']]
+            for ref in ['GJR-GARCH', 'GJR-GARCH-t', 'GARCH-N', 'Hist-Sim', 'EWMA']
+            for tsfm in ['Chronos-Small-A', 'Chronos-Mini-A', 'TimesFM-2.5',
+                         'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama']]
 
 
 def load_violations(model):
@@ -244,10 +252,15 @@ def write_kupiec_tex(kdf):
 
 
 def write_dm_tex(ddf):
-    refs = ['GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
-    tsfms = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-             'Moirai-2.0', 'Lag-Llama']
-    tsfm_short = ['Chr-S', 'Chr-M', 'TFM', 'Moirai', 'L-Llama']
+    # Read the layout off DM_PAIRS so the table cannot drift from what was
+    # bootstrapped. Hardcoding it here is how this file came to describe a
+    # nine-forecaster panel three months after the panel changed.
+    refs = list(dict.fromkeys(r for r, _ in DM_PAIRS))
+    tsfms = list(dict.fromkeys(t for _, t in DM_PAIRS))
+    SHORT = {'Chronos-Small-A': 'Chr-S', 'Chronos-Mini-A': 'Chr-M',
+             'TimesFM-2.5': 'TFM', 'Moirai-1.1': 'Moirai 1.1',
+             'Moirai-2.0': 'Moirai 2.0', 'Lag-Llama': 'L-Llama'}
+    tsfm_short = [SHORT.get(t, t) for t in tsfms]
 
     lines = []
     hdr = ' & '.join(tsfm_short)
@@ -260,6 +273,8 @@ def write_dm_tex(ddf):
         ref_disp = ref.replace('-', '~')
         if ref == 'Hist-Sim':
             ref_disp = r'Hist.\ Sim.'
+        elif ref == 'GJR-GARCH-t':
+            ref_disp = r'GJR-GARCH-$t$'
         cells = []
         for tsfm in tsfms:
             row = ddf[(ddf['model_ref'] == ref) &
