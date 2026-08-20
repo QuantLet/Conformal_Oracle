@@ -127,8 +127,9 @@ analysis/gjr_quantile/superseded/
 analysis/gjr_quantile/_stage/
 analysis/recompute/corrected/
 analysis/recompute/superseded/
-analysis/chronos_sampling/dose_response.csv
-analysis/chronos_sampling/coverage_SP500.csv
+
+# (dose_response.csv and coverage_SP500.csv are NOT excluded: they are the
+# evidence behind published tables and must travel with the paper.)
 
 # Crossref/arXiv response cache for the bibliography audit (9 MB, regenerable
 # with `python scripts/audit_bib.py --refresh`).

@@ -291,8 +291,12 @@ the instruments rather than of this defect.
 conditions on the transition counts of the exceedance indicator. At α = 0.01 a
 test window typically contains too few exceedances to populate the 2×2 table,
 and the statistic does not exist. Across 312 model–asset pairs it is undefined
-on 53.5% at α = 0.01, 26.6% at 0.025, 4.5% at 0.05 and 0.0% at 0.10. Where it is
-defined it rejects on 48.3% of pairs at α = 0.01.
+on 34.6% of the raw forecasts at α = 0.01, and on 53.5% of the same pairs after
+recalibration — a correction that spaces violations out disables the test
+further, and recalibration is where these tests are usually applied. The rate
+falls to 26.6%, 4.5% and 0.0% at α = 0.025, 0.05 and 0.10 (recalibrated;
+11.5%, 1.0% and 0.0% raw). Where it is defined it rejects on 48.3% of
+recalibrated pairs at α = 0.01, and on 27.5% of raw ones.
 
 A degenerate table is an absence of evidence, and the operational distinction
 matters: the natural implementation returns "no rejection", which reads as a

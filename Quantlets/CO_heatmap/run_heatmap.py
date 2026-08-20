@@ -1,7 +1,7 @@
 """
 CO_heatmap — run_heatmap.py
 ============================
-Basel Traffic Light heatmap (10 models x 24 assets) at alpha = 0.01.
+Basel Traffic Light heatmap (13 models x 24 assets) at alpha = 0.01.
 Two stacked panels: raw vs conformal-corrected. Cell color encodes
 annualized violation counts with Basel zone thresholds.
 
@@ -29,12 +29,17 @@ plt.rcParams.update({
     'font.size': 11,
 })
 
-MODEL_ORDER = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-               'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama',
-               'GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
-MODEL_DISPLAY = ['Chronos-Small', 'Chronos-Mini', 'TimesFM 2.5',
-                 'Moirai 1.1', 'Moirai 2.0', 'Lag-Llama',
-                 'GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
+# Thirteen forecasters, ordered so the two configurations of Chronos sit
+# adjacent: the shipped series sampled at the checkpoint default top_k = 50, and
+# the same checkpoint read analytically. The comparison between them is the
+# configuration finding, so the figure has to show both.
+MODEL_ORDER = ['Chronos-Small', 'Chronos-Small-A', 'Chronos-Mini', 'Chronos-Mini-A',
+               'TimesFM-2.5', 'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama',
+               'GJR-GARCH', 'GJR-GARCH-t', 'GARCH-N', 'Hist-Sim', 'EWMA']
+MODEL_DISPLAY = ['Chronos-Small (default)', 'Chronos-Small (analytic)',
+                 'Chronos-Mini (default)', 'Chronos-Mini (analytic)',
+                 'TimesFM 2.5', 'Moirai 1.1', 'Moirai 2.0', 'Lag-Llama',
+                 'GJR-GARCH', 'GJR-GARCH-t', 'GARCH-N', 'Hist-Sim', 'EWMA']
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 BASE = SCRIPT_DIR.parent.parent
@@ -43,9 +48,13 @@ FIG_DIR = BASE / 'figures'
 SLIDE_DIR = BASE / 'ICFS 2026'
 OUT = SCRIPT_DIR
 
+# Moirai-1.1 used to live in a separate file and was concatenated here. It is
+# now part of all_results.csv, and concatenating both duplicated every Moirai-1.1
+# pair -- which the `len(row) == 1` guard below would have turned into a blank
+# row rather than an error.
 df = pd.read_csv(DATA / 'all_results.csv')
-m11 = pd.read_csv(DATA / 'moirai11_results.csv')
-df = pd.concat([df, m11], ignore_index=True)
+dup = df.duplicated(subset=['model', 'symbol', 'alpha']).sum()
+assert dup == 0, f'{dup} duplicated (model, symbol, alpha) rows in all_results.csv'
 d01 = df[df['alpha'] == 0.01].copy()
 d01['ann_raw'] = d01['viol_raw'] / d01['n_test'] * 250
 d01['ann_cp'] = d01['viol_cp'] / d01['n_test'] * 250
