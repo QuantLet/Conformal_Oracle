@@ -3,7 +3,16 @@ CO_robustness — Robustness summary table (Table D.15).
 
 Eight rows: weighted conformal prediction (3 lambdas), calibration
 fraction sensitivity (4 f_c values), and rolling 250-day conformal
-correction.  All rows use Chronos-Small across 24 assets at alpha = 0.01.
+correction.  All rows use Chronos-Small READ ANALYTICALLY across 24 assets at
+alpha = 0.01.
+
+The base forecaster was the shipped Chronos-Small series until 2026-08-20. That
+series is sampled at the checkpoint default top_k = 50, so every row of this
+table was a statement about how conformal machinery behaves on a truncated
+predictive distribution -- which is a question this paper answers elsewhere and
+deliberately, not one an appendix on calibration-fraction sensitivity should be
+answering by accident. The analytic series is the same checkpoint and the same
+weights, with the sampler removed.
 
 Weighted CP implements exponentially decaying observation weights
 following Barber et al. (2023, §3, Theorem 1):
@@ -26,8 +35,8 @@ BASE = SCRIPT_DIR.parent.parent
 DATA_DIR = BASE / 'cfp_ijf_data'
 
 ALPHA = 0.01
-MODEL = 'Chronos-Small'
-SUBDIR = 'chronos_small'
+MODEL = 'Chronos-Small-A'
+SUBDIR = 'chronos_small_analytic'
 
 ASSETS = [
     'ASX200', 'AUDUSD', 'BOVESPA', 'BTC', 'FCHI', 'CBU0', 'DJCI', 'ETH',

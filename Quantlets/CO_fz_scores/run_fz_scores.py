@@ -29,17 +29,9 @@ SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
            'TLT', 'IBGL', 'DJCI', 'GOLD', 'WTI', 'NATGAS',
            'BTC', 'ETH', 'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD']
 
-MODELS = {
-    'Chronos-Small': ('chronos_small', None),
-    'Chronos-Mini':  ('chronos_mini',  None),
-    'TimesFM-2.5':   ('timesfm25',     None),
-    'Moirai-2.0':    ('moirai2',       None),
-    'Lag-Llama':     ('lagllama',      None),
-    'GJR-GARCH':     ('benchmarks',    'gjr_garch'),
-    'GARCH-N':       ('benchmarks',    'garch_n'),
-    'Hist-Sim':      ('benchmarks',    'hs'),
-    'EWMA':          ('benchmarks',    'ewma'),
-}
+import sys
+sys.path.insert(0, str(BASE / 'Quantlets'))
+from cfp_config import MODELS  # noqa: E402
 
 MODEL_ORDER = list(MODELS.keys())
 

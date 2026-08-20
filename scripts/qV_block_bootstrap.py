@@ -14,8 +14,13 @@ OUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'Quantlets', 'CO_robustn
 os.makedirs(OUT_DIR, exist_ok=True)
 
 ASSETS = ['SP500', 'BTC', 'GOLD', 'EURUSD', 'WTI', 'NATGAS']
+# Chronos enters as the analytic series. The shipped one is sampled at the
+# checkpoint default top_k = 50, and a block bootstrap of its q_V would report a
+# confidence interval for a sampling parameter. GJR-GARCH-t is added because the
+# corrected Gaussian-innovation GJR under-covers, which makes the fat-tailed
+# variant the obvious parametric comparison.
 MODELS_TSFM = {
-    'Chronos-Small': 'chronos_small',
+    'Chronos-Small-A': 'chronos_small_analytic',
     'TimesFM-2.5': 'timesfm25',
     'Moirai-2.0': 'moirai2',
     'Moirai-1.1': 'moirai',
@@ -23,6 +28,7 @@ MODELS_TSFM = {
 }
 MODELS_BENCH = {
     'GJR-GARCH': 'benchmarks/gjr_garch',
+    'GJR-GARCH-t': 'benchmarks/gjr_t',
     'GARCH-N': 'benchmarks/garch_n',
 }
 

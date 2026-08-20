@@ -47,19 +47,27 @@ ASSETS = [
     "NATGAS", "NIFTY", "NIKKEI", "SP500", "STOXX", "TLT", "USDJPY", "WTI",
 ]
 
+# Thirteen forecasters, matching cfp_config. Chronos enters in both
+# configurations: the shipped series sampled at the checkpoint default and the
+# same weights read analytically. A baseline comparison that silently used only
+# the truncated one would be comparing recalibration methods on a defect.
 TSFM_MODELS = {
-    "Chronos-Small": "chronos_small",
-    "Chronos-Mini":  "chronos_mini",
-    "TimesFM-2.5":   "timesfm25",
-    "Moirai-2.0":    "moirai2",
-    "Lag-Llama":     "lagllama",
+    "Chronos-Small":   "chronos_small",
+    "Chronos-Small-A": "chronos_small_analytic",
+    "Chronos-Mini":    "chronos_mini",
+    "Chronos-Mini-A":  "chronos_mini_analytic",
+    "TimesFM-2.5":     "timesfm25",
+    "Moirai-1.1":      "moirai",
+    "Moirai-2.0":      "moirai2",
+    "Lag-Llama":       "lagllama",
 }
 
 BENCHMARK_MODELS = {
-    "GJR-GARCH": "gjr_garch",
-    "GARCH-N":   "garch_n",
-    "HS":        "hs",
-    "EWMA":      "ewma",
+    "GJR-GARCH":   "gjr_garch",
+    "GJR-GARCH-t": "gjr_t",
+    "GARCH-N":     "garch_n",
+    "HS":          "hs",
+    "EWMA":        "ewma",
 }
 
 ALL_MODELS = {**TSFM_MODELS, **BENCHMARK_MODELS}
@@ -279,7 +287,10 @@ def summarise_inline(df):
     qs (raw units), width, green_pct.
     """
     result = {}
-    n_pairs = 216  # 9 models x 24 assets
+    # Derived, not asserted: this was hardcoded at 216 for nine forecasters, so
+    # after the panel grew to thirteen every 'k of 216' in the table was a
+    # fraction of the wrong denominator, and the Green percentages exceeded 100.
+    n_pairs = len(df[df["method"] == "Raw"])
 
     for method in ["Raw", "Conformal", "Scale",
                     "Hist-Quantile", "QR-Residual", "Isotonic"]:
@@ -314,9 +325,9 @@ def load_rolling():
     rvs = pd.read_csv(
         DATA_DIR / "paper_outputs" / "tables" / "rolling_vs_static.csv"
     )
-    rp = pd.read_csv(BASE / "legacy" / "results" / "rolling_w250_pooled.csv")
+    rp = pd.read_csv(BASE / "results" / "rolling_w250_pooled.csv")
 
-    n_pairs = len(rvs)  # 216
+    n_pairs = len(rvs)
     pi_hat = rvs["rolling_pihat"].mean()
     green_n = int((rvs["rolling_tl"] == "Green").sum())
     green_pct = 100 * green_n / n_pairs
@@ -343,7 +354,7 @@ def load_aci():
 
     Note: ACI CSV stores QS already multiplied by 1e4.
     """
-    df = pd.read_csv(BASE / "legacy" / "results" / "aci_baseline_results.csv")
+    df = pd.read_csv(BASE / "results" / "aci_baseline_results.csv")
     n_pairs = len(df)  # 216
 
     pi_hat = df["pi_hat"].mean()
@@ -368,7 +379,7 @@ def load_aci():
 
 def load_gbm_qr():
     """Load GBM-QR baseline results."""
-    df = pd.read_csv(BASE / "Quantlets" / "CO_gbm_qr" / "gbm_qr_results.csv")
+    df = pd.read_csv(BASE / "results" / "gbm_qr_results.csv")
     n_pairs = len(df)  # 216
 
     pi_hat = df["pi_hat"].mean()
@@ -487,7 +498,7 @@ def get_qs_x1e4(d):
 def build_table(inline_summary, rolling, aci, gbm_qr, gamlss, evt_fhs):
     """Build the 12-row LaTeX table string."""
 
-    # 10 post-hoc rows (denominator 216)
+    # 10 post-hoc rows
     rows_spec = [
         ("Raw (no correction)",              inline_summary["Raw"],          False),
         ("Conformal static (ours)",          inline_summary["Conformal"],    False),
@@ -505,8 +516,10 @@ def build_table(inline_summary, rolling, aci, gbm_qr, gamlss, evt_fhs):
     lines.append(r"\begin{table}[htbp]")
     lines.append(r"	\centering")
     lines.append(r"	\caption{Recalibration method comparison (mean")
-    lines.append(r"		across 24 assets and 9 forecasters,")
-    lines.append(r"		$\alpha = 0.01$, giving 216 model--asset pairs")
+    n_models = len(ALL_MODELS)
+    n_pairs = n_models * len(ASSETS)
+    lines.append(rf"		across {len(ASSETS)} assets and {n_models} forecasters,")
+    lines.append(rf"		$\alpha = 0.01$, giving {n_pairs} model--asset pairs")
     lines.append(r"		for post-hoc methods; dedicated VaR models")
     lines.append(r"		evaluated per-asset, 24 denominators).")
     lines.append(r"		Method definitions in")

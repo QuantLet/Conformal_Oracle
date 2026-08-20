@@ -15,8 +15,11 @@ BASE = Path(__file__).resolve().parent.parent / 'cfp_ijf_data'
 RET_DIR = BASE / 'returns'
 OUT_DIR = Path(__file__).resolve().parent.parent / 'Quantlets' / 'CO_robustness'
 
+# Chronos enters as the analytic series: the shipped one is sampled at the
+# checkpoint default top_k = 50, and an ablation of the gap parameter on a
+# truncated predictive distribution measures the truncation, not the gap.
 PAIRS = [
-    ('Chronos-Small', 'chronos_small', 'SP500'),
+    ('Chronos-Small-A', 'chronos_small_analytic', 'SP500'),
     ('Lag-Llama', 'lagllama', 'BTC'),
     ('GJR-GARCH', 'benchmarks', 'WTI'),
     ('Moirai-2.0', 'moirai2', 'NATGAS'),

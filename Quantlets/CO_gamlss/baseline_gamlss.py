@@ -29,22 +29,14 @@ OUT  = Path(__file__).resolve().parent
 ALPHA = 0.01
 F_CAL = 0.70
 
-SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
-           'NIKKEI', 'HSI', 'BOVESPA', 'NIFTY', 'ASX200', 'CBU0',
-           'TLT', 'IBGL', 'DJCI', 'GOLD', 'WTI', 'NATGAS',
-           'BTC', 'ETH', 'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD']
+# Model and asset sets from cfp_config: this file carried its own nine-model
+# dictionary, which is why the GAMLSS row of the baseline table described a
+# different panel from the rest of it.
+import sys
+sys.path.insert(0, str(BASE / 'Quantlets'))
+from cfp_config import MODELS, SYMBOLS as _SYMBOLS  # noqa: E402
 
-MODELS = {
-    'Chronos-Small': ('chronos_small', None),
-    'Chronos-Mini':  ('chronos_mini',  None),
-    'TimesFM-2.5':   ('timesfm25',     None),
-    'Moirai-2.0':    ('moirai2',       None),
-    'Lag-Llama':     ('lagllama',      None),
-    'GJR-GARCH':     ('benchmarks',    'gjr_garch'),
-    'GARCH-N':       ('benchmarks',    'garch_n'),
-    'Hist-Sim':      ('benchmarks',    'hs'),
-    'EWMA':          ('benchmarks',    'ewma'),
-}
+SYMBOLS = sorted(_SYMBOLS)
 
 
 def load_pair(model_key, symbol):

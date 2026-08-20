@@ -1,44 +1,42 @@
-\begin{table}[H]
+\begin{table}[htbp]
 	\centering
 	\caption{Recalibration method comparison (mean
-		across 24 assets, $\alpha = 0.01$). Conformal
-		methods are evaluated on all 10 forecasters
-		(240 model--asset pairs); alternative post-hoc
-		methods on the original 9-forecaster subset
-		(216 pairs). Dedicated VaR models are
-		evaluated per-asset (24 denominators).
+		across 24 assets and 13 forecasters,
+		$\alpha = 0.01$, giving 312 model--asset pairs
+		for post-hoc methods; dedicated VaR models
+		evaluated per-asset, 24 denominators).
 		Method definitions in
 		Section~\ref{sec:alternatives}. QS: Quantile
 		Score, lower is better.}
 	\label{tab:baselines}
 	\footnotesize
 	\begin{tabular}{@{}lrrrrr@{}}
-		\hline\hline
+		\toprule
 		Method & $\hat\pi$ & Kupiec rej.
 		& QS ($\times 10^{4}$)
 		& Width & Green\,\% \\
-		\hline
+		\midrule
 		Raw (no correction)
-		& .289 & 199/240 & 74.99 & .028 & 26.2 \\
+		& .078 & 218/312 & 10.47 & .027 & 34.0 \\
 		Conformal static (ours)
-		& .011 & 100/240 &  6.07 & .044 & 84.6 \\
+		& .011 &  82/312 &  5.14 & .038 & 89.1 \\
 		Conformal rolling $w{=}250$ (ours)
-		& .010 &  13/240 &  5.63 & .044 & 97.5 \\
+		& .009 &   8/312 &  5.37 & .043 & 99.0 \\
 		Scale correction
-		& .264 & 215/216 & 28.51 & .023 & 11.6 \\
+		& .143 & 300/312 & 15.28 & .017 & 4.2 \\
 		Historical quantile
-		& .010 &  99/216 &  5.89 & .041 & 81.0 \\
+		& .010 & 143/312 &  5.88 & .041 & 80.8 \\
 		QR on residuals
-		& .012 &  68/216 &  5.29 & .038 & 81.5 \\
+		& .012 &  99/312 &  5.22 & .037 & 81.4 \\
 		ACI \citep{gibbs2021adaptive}
-		& .013 &   6/216 &  5.37 & .040 & 96.3 \\
+		& .013 &   5/312 &  5.29 & .039 & 97.4 \\
 		Isotonic regression
-		& .267 &     --- &   --- &  --- & 11.1 \\
+		& .147 &     --- &   --- &  --- & 5.4 \\
 		GBM-QR
-		& .018 & 128/216 &  5.48 & .033 & 48.6 \\
+		& .018 & 183/312 &  5.49 & .033 & 50.6 \\
 		GAMLSS-SST
-		& .010 &  91/216 &  5.38 & .043 & 88.0 \\
-		\hline
+		& .010 & 136/312 &  5.42 & .043 & 87.5 \\
+		\midrule
 		\multicolumn{6}{@{}l}{\textit{Dedicated VaR
 				models (per-asset, not post-hoc
 				calibration)}} \\[2pt]
@@ -46,7 +44,7 @@
 		& .014 & 14/24 & 5.5 & .036 & 75.0 \\
 		Filtered Hist.\ Sim.
 		& .016 & 11/24 & 5.6 & .036 & 54.2 \\
-		\hline\hline
+		\bottomrule
 	\end{tabular}
 	\begin{minipage}{\linewidth}\scriptsize
 		\smallskip

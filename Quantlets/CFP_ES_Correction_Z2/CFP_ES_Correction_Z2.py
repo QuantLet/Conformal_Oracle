@@ -33,17 +33,19 @@ SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
            'TLT', 'IBGL', 'DJCI', 'GOLD', 'WTI', 'NATGAS',
            'BTC', 'ETH', 'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD']
 
-MODELS = {
-    'Chronos-Small': ('chronos_small', None),
-    'Chronos-Mini':  ('chronos_mini',  None),
-    'TimesFM-2.5':   ('timesfm25',     None),
-    'Moirai-2.0':    ('moirai2',       None),
-    'Lag-Llama':     ('lagllama',      None),
-    'GJR-GARCH':     ('benchmarks',    'gjr_garch'),
-    'GARCH-N':       ('benchmarks',    'garch_n'),
-    'Hist-Sim':      ('benchmarks',    'hs'),
-    'EWMA':          ('benchmarks',    'ewma'),
-}
+# Model set from cfp_config. This file carried its own nine-model dictionary,
+# which is how it kept describing a nine-forecaster panel after the panel became
+# thirteen -- the same drift that had to be fixed independently in five other
+# scripts.
+import sys
+_here = Path(__file__).resolve()
+sys.path.insert(0, str(_here.parent.parent if _here.parent.name != 'scripts'
+                       else _here.parent.parent / 'Quantlets'))
+try:
+    from cfp_config import MODELS  # noqa: E402
+except ModuleNotFoundError:
+    sys.path.insert(0, str(_here.parent.parent.parent / 'Quantlets'))
+    from cfp_config import MODELS  # noqa: E402
 
 # Gaussian ES multiplier: phi(z_alpha) / alpha
 z_alpha = norm.ppf(ALPHA)
@@ -252,16 +254,21 @@ print(f"\nSaved: {OUT / 'table_c1_es_correction.csv'}")
 print("\n% ── LaTeX for Table C.1 ──────────────────────────────────────")
 
 MODEL_DISPLAY = {
-    'Chronos-Small': 'Chronos-Small',
-    'Chronos-Mini': 'Chronos-Mini',
+    'Chronos-Small': 'Chronos-Small (default)',
+    'Chronos-Small-A': 'Chronos-Small (analytic)',
+    'Chronos-Mini': 'Chronos-Mini (default)',
+    'Chronos-Mini-A': 'Chronos-Mini (analytic)',
     'TimesFM-2.5': 'TimesFM 2.5',
+    'Moirai-1.1': 'Moirai 1.1',
     'Moirai-2.0': 'Moirai 2.0',
     'Lag-Llama': 'Lag-Llama',
     'GJR-GARCH': 'GJR-GARCH',
+    'GJR-GARCH-t': r'GJR-GARCH-$t$',
     'GARCH-N': 'GARCH-N',
     'Hist-Sim': r'Hist.\ Sim.',
     'EWMA': 'EWMA',
 }
+assert set(MODEL_DISPLAY) == set(MODELS), 'display map out of step with cfp_config'
 
 for model_name in MODELS:
     mdf = df_results[df_results['model'] == model_name]

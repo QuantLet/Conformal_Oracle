@@ -225,7 +225,10 @@ print(f'  TOTAL            Static={total_sg}/{len(SYMBOLS) * len(MODELS)}  Rolli
 
 # Save rolling_w250_pooled.csv (for compile_tab_baselines.py)
 rdf = pd.DataFrame(rolling_rows)
-legacy_dir = BASE / 'legacy' / 'results'
+# Written to results/, not legacy/results/. A live intermediate that the
+# baseline table consumes has no business living in a directory named
+# 'legacy', which is also excluded from version control.
+legacy_dir = BASE / 'results'
 legacy_dir.mkdir(parents=True, exist_ok=True)
 rdf.to_csv(legacy_dir / 'rolling_w250_pooled.csv', index=False)
 print(f'Saved rolling_w250_pooled.csv ({len(rdf)} rows)')
