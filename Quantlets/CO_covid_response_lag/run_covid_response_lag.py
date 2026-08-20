@@ -36,14 +36,23 @@ SHOCK_END = pd.Timestamp('2020-04-30')
 PLOT_START = '2019-07-01'
 PLOT_END = '2021-07-31'
 
-TSFM_MODELS = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',
-               'Moirai-1.1', 'Moirai-2.0', 'Lag-Llama']
-PARAM_MODELS = ['GJR-GARCH', 'GARCH-N', 'Hist-Sim', 'EWMA']
+# Thirteen forecasters, matching cfp_config. Chronos appears in both
+# configurations: how fast a rolling correction responds to a volatility shock
+# is exactly the kind of question a truncated predictive distribution answers
+# differently, so the pair is informative here rather than redundant.
+TSFM_MODELS = ['Chronos-Small', 'Chronos-Small-A', 'Chronos-Mini',
+               'Chronos-Mini-A', 'TimesFM-2.5', 'Moirai-1.1', 'Moirai-2.0',
+               'Lag-Llama']
+PARAM_MODELS = ['GJR-GARCH', 'GJR-GARCH-t', 'GARCH-N', 'Hist-Sim', 'EWMA']
 ALL_MODELS = TSFM_MODELS + PARAM_MODELS
-DISPLAY = {'Chronos-Small': 'Chronos-S', 'Chronos-Mini': 'Chronos-M',
+DISPLAY = {'Chronos-Small': 'Chronos-S (default)',
+           'Chronos-Small-A': 'Chronos-S (analytic)',
+           'Chronos-Mini': 'Chronos-M (default)',
+           'Chronos-Mini-A': 'Chronos-M (analytic)',
            'TimesFM-2.5': 'TimesFM 2.5', 'Moirai-1.1': 'Moirai 1.1',
            'Moirai-2.0': 'Moirai 2.0',
            'Lag-Llama': 'Lag-Llama', 'GJR-GARCH': 'GJR-GARCH',
+           'GJR-GARCH-t': 'GJR-GARCH-t',
            'GARCH-N': 'GARCH-N', 'Hist-Sim': 'Hist-Sim', 'EWMA': 'EWMA'}
 
 
