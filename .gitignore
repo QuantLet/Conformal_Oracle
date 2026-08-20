@@ -105,3 +105,42 @@ garch_conformal_detail.csv
 /ql_logo.png
 /qr_logo.png
 /Sigla_MAAT.png
+
+# ── Added 2026-08-20, before committing the August audit work ────────────────
+# Credentials must never enter the history.
+PyPI-Recovery-Codes-*.txt
+
+# Large local trees that are not part of the replication package: a conference
+# folder, the assembled IJF submission (148 MB of built PDFs), and the iCloud
+# duplicate returns quarantined on 17 August.
+/ICFS 2026/
+/submission_IJF/
+/quarantine/
+
+# Generated data, published as release assets rather than versioned (same rule
+# as cfp_ijf_data/): raw Chronos sample paths, GJR candidate series from the
+# rebuild, and the corrected/superseded TSFM series. The scripts that produce
+# them are versioned; the outputs are reproducible from those scripts.
+analysis/chronos_sampling/samples/
+analysis/gjr_quantile/candidate_*/
+analysis/gjr_quantile/superseded/
+analysis/gjr_quantile/_stage/
+analysis/recompute/corrected/
+analysis/recompute/superseded/
+analysis/chronos_sampling/dose_response.csv
+analysis/chronos_sampling/coverage_SP500.csv
+
+# Crossref/arXiv response cache for the bibliography audit (9 MB, regenerable
+# with `python scripts/audit_bib.py --refresh`).
+reports/.bib_audit_cache.json
+
+# The remaining audit tools produce published tables, figures or verdicts and
+# belong in the replication package alongside those already whitelisted above.
+!/scripts/promotion_gate.py
+!/scripts/verify_producers.py
+!/scripts/audit_prose_numbers.py
+!/scripts/baseline_gbm_qr.py
+!/scripts/capital_charge_comparison.py
+!/scripts/table_c1_es_correction.py
+!/scripts/tail_completion_robustness.py
+!/scripts/fill_quantlets.py
