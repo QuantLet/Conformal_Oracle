@@ -1,0 +1,14 @@
+panel,model,architecture,parameters,distribution,forecast_output,context,type,innovation_dist,est_parameters,est_window,source
+A,Chronos-Small,Encoder-decoder over quantised tokens,46M,Categorical over 4093 bins,"1,000 samples, checkpoint default \texttt{top\_k} = 50",512 obs.,,,,,arXiv:2403.07815
+A,Chronos-Small (analytic),Encoder-decoder over quantised tokens,46M,Categorical over 4093 bins,Quantiles read from the logits,512 obs.,,,,,arXiv:2403.07815
+A,Chronos-Mini,Encoder-decoder over quantised tokens,20M,Categorical over 4093 bins,"1,000 samples, checkpoint default \texttt{top\_k} = 50",512 obs.,,,,,arXiv:2403.07815
+A,Chronos-Mini (analytic),Encoder-decoder over quantised tokens,20M,Categorical over 4093 bins,Quantiles read from the logits,512 obs.,,,,,arXiv:2403.07815
+A,TimesFM 2.5,Decoder-only,--,Quantile heads,Nine-decile grid,512 obs.,,,,,arXiv:2310.10688
+A,Moirai 1.1,"Masked encoder, multi-patch",--,Mixture,"1,000 samples",512 obs.,,,,,arXiv:2402.02592
+A,Moirai 2.0,"Decoder-only, single patch",--,Quantile loss,Nine-decile grid,512 obs.,,,,,arXiv:2511.11698
+A,Lag-Llama,LLaMA-inspired,--,Student-t,"1,000 samples",512 obs.,,,,,arXiv:2310.08278
+B,GJR-GARCH(1.1),,,,,,Parametric,Normal,"omega.alpha_1.beta_1.gamma",250 obs.,
+B,GJR-GARCH(1.1)-t,,,,,,Parametric,Student-t,"omega.alpha_1.beta_1.gamma.nu",250 obs.,
+B,GARCH(1.1)-N,,,,,,Parametric,Normal,"omega.alpha_1.beta_1",250 obs.,
+B,EWMA,,,,,,Parametric,Normal,lambda = 0.94,Recursive,
+B,Hist. Sim.,,,,,,Non-parametric,Empirical,,250 obs.,

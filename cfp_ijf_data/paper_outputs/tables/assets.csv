@@ -1,0 +1,25 @@
+symbol,name,class,group,T,start,end
+SP500,S&P 500,Equity,Equity Indices,6590,2000-01-03,2026-03-13
+STOXX,STOXX Europe 600,Equity,Equity Indices,6540,2000-01-03,2026-03-13
+GDAXI,DAX 40,Equity,Equity Indices,6560,2000-01-03,2026-03-13
+FCHI,CAC 40,Equity,Equity Indices,6550,2000-01-03,2026-03-13
+FTSE100,FTSE 100,Equity,Equity Indices,6580,2000-01-04,2026-03-13
+ICLN,iShares Clean Energy,Equity,Equity Indices,4200,2008-06-25,2026-03-13
+NIKKEI,Nikkei 225,Equity,Equity Indices,6400,2000-01-04,2026-03-13
+HSI,Hang Seng Index,Equity,Equity Indices,6380,2000-01-03,2026-03-13
+BVSP,Ibovespa,Equity,Equity Indices,6300,2000-01-03,2026-03-13
+NIFTY,Nifty 50,Equity,Equity Indices,6350,2000-01-03,2026-03-13
+ASX200,S&P/ASX 200,Equity,Equity Indices,6450,2000-01-04,2026-03-13
+CBU0,iShares UK Gilts,Bond ETF,Bonds,6480,2000-01-04,2026-03-13
+TLT,iShares 20+ Year US Treasury,Bond ETF,Bonds,5800,2002-07-30,2026-03-13
+IBGL,iShares Euro Govt Bond,Bond ETF,Bonds,5200,2003-10-16,2026-03-13
+DJCI,Dow Jones Commodity,Commodity,Commodities,5800,2001-02-01,2026-03-13
+GOLD,Gold,Commodity,Commodities,6550,2000-01-03,2026-03-13
+WTI,WTI Crude Oil,Commodity,Commodities,6530,2000-01-03,2026-03-13
+NATGAS,Natural Gas,Commodity,Commodities,6414,2000-01-03,2026-03-13
+BTC,Bitcoin,Crypto,Cryptocurrencies,4200,2014-09-17,2026-03-13
+ETH,Ethereum,Crypto,Cryptocurrencies,3000,2017-11-09,2026-03-13
+EURUSD,EUR/USD,FX,Foreign Exchange,6580,2000-01-03,2026-03-13
+GBPUSD,GBP/USD,FX,Foreign Exchange,6580,2000-01-03,2026-03-13
+USDJPY,USD/JPY,FX,Foreign Exchange,6580,2000-01-03,2026-03-13
+AUDUSD,AUD/USD,FX,Foreign Exchange,6580,2000-01-03,2026-03-13

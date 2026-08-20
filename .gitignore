@@ -28,6 +28,16 @@ test_env/
 # fetched with download_data.py (keeps the code repo lean).
 cfp_ijf_data/*
 !cfp_ijf_data/returns/
+# Hand-authored metadata, not generated output: the model and asset descriptions
+# the paper's Tables 2 and A.1 are built from. models.csv carries architectural
+# claims with their primary sources, so it needs a commit trail like any other
+# claim in the paper.
+!cfp_ijf_data/paper_outputs/
+cfp_ijf_data/paper_outputs/*
+!cfp_ijf_data/paper_outputs/tables/
+cfp_ijf_data/paper_outputs/tables/*
+!cfp_ijf_data/paper_outputs/tables/models.csv
+!cfp_ijf_data/paper_outputs/tables/assets.csv
 /cfp_ijf_data.zip
 gpt3.5_simulations/
 gpt4_simulations/
