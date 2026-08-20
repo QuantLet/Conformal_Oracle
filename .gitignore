@@ -158,3 +158,4 @@ reports/.bib_audit_cache.json
 # Producer of the QS and violation sequences, which had none.
 !/scripts/build_qs_sequences.py
 !/scripts/build_rolling_qv_series.py
+!/scripts/paper_numbers.py

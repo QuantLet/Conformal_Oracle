@@ -2,9 +2,10 @@
 \textit{Panel~A: Time Series Foundation Models}
 \smallskip
 
-\begin{tabular}{@{}llrlll@{}}
+\footnotesize
+\begin{tabular}{@{}p{2.45cm}p{2.9cm}r p{2.5cm}p{3.2cm}l@{}}
 \toprule
-Model & Architecture & Parameters & Distribution & Forecast output & Context \\
+Model & Architecture & Param. & Distribution & Forecast output & Context \\
 \midrule
 Chronos-Small & Encoder-decoder over quantised tokens & 46M
 & Categorical over 4093 bins & 1{,}000 samples{,} checkpoint default \texttt{top\_k} = 50
@@ -32,21 +33,23 @@ Lag-Llama & LLaMA-inspired & --
 & 512 obs. \\
 \bottomrule
 \end{tabular}
+\normalsize
 
 \bigskip
 \textit{Panel~B: Classical Benchmarks}
 \smallskip
 
-\begin{tabular}{@{}lllll@{}}
+\footnotesize
+\begin{tabular}{@{}p{3.0cm}p{2.2cm}p{2.2cm}p{4.0cm}l@{}}
 \toprule
 Model & Type & Innovation dist.\
 & Est.\ parameters & Est.\ window \\
 \midrule
 GJR-GARCH(1,1) & Parametric & Normal
-& omega.alpha_1.beta_1.gamma
+& $\omega,\alpha_1,\beta_1,\gamma$
 & 250 obs. \\
 GJR-GARCH(1.1)-t & Parametric & Student-t
-& omega.alpha_1.beta_1.gamma.nu
+& $\omega,\alpha_1,\beta_1,\gamma,\nu$
 & 250 obs. \\
 GARCH(1,1)-N & Parametric & Normal
 & $\omega,\alpha_1,\beta_1$
@@ -59,3 +62,4 @@ Hist.\ Sim. & Non-parametric & Empirical
 & 250 obs. \\
 \bottomrule
 \end{tabular}
+\normalsize

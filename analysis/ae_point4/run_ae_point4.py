@@ -156,6 +156,13 @@ def score_pair(model: str, symbol: str, alpha: float) -> dict | None:
     viol_raw = int(np.sum(r_test < q_test))
     pihat_raw = viol_raw / n_test
 
+    # The same backtest on the CALIBRATION window. A deployment rule that gates
+    # on the test-window backtest is using the outcome it is later scored on;
+    # this is the version of the signal that is actually available on the day
+    # the decision has to be taken.
+    viol_cal = int(np.sum(r_cal < q_cal))
+    pihat_cal = viol_cal / n_cal
+
     # --- single split ------------------------------------------------------ #
     qV = qhat_ceil(q_cal - r_cal, alpha)
     var_static = q_test - qV
@@ -181,6 +188,9 @@ def score_pair(model: str, symbol: str, alpha: float) -> dict | None:
         "QS_static": qs_static, "QS_roll": qs_roll,
         "pihat_static": viol_static / n_test,
         "pihat_roll": viol_roll / n_test,
+        "pihat_cal": pihat_cal,
+        "p_kup_cal": kupiec_p(viol_cal, n_cal, alpha),
+        "TL_cal": traffic_light(viol_cal, n_cal),
         "TL_raw": traffic_light(viol_raw, n_test),
         "TL_static": traffic_light(viol_static, n_test),
         "TL_roll": traffic_light(viol_roll, n_test),
@@ -583,34 +593,52 @@ def main() -> int:
               "when the raw forecast actually fails a backtest "
               "(Basel zone worse than Green, or Kupiec rejected). This "
               "evaluates that rule against applying it unconditionally.", "",
-              "| α | estimator | applied | degraded when applied | skipped | "
-              "degradations avoided | zone upgrades kept / total |",
-              "|---|---|---|---|---|---|---|"]
+              "The rule is reported under two gating signals. Keyed on the TEST "
+              "window it is an oracle: it uses the outcome it is then scored "
+              "on, and bounds what gating could buy. Keyed on the CALIBRATION "
+              "window it is deployable, because that is the information "
+              "available on the day the decision is taken. The paper quotes the "
+              "calibration version.", "",
+              "| α | estimator | gating signal | applied | degraded when "
+              "applied | skipped | degradations avoided | "
+              "zone upgrades kept / total |",
+              "|---|---|---|---|---|---|---|---|"]
     gate_rows = []
     for est in ("static", "roll"):
         for alpha in ALPHAS:
-            a = df[df["alpha"] == alpha].copy()
-            a["raw_fails"] = (a["TL_raw"] != "Green") | (a["p_kup_raw"] <= 0.05)
-            ap, sk = a[a["raw_fails"]], a[~a["raw_fails"]]
-            up = a[a[f"TL_{est}"].map(ZONE_RANK) < a["TL_raw"].map(ZONE_RANK)]
-            row = {
-                "alpha": alpha, "estimator": est,
-                "n_applied": len(ap), "n_skipped": len(sk),
-                "degraded_when_applied": int((ap[f"dQS_{est}"] < 0).sum()),
-                "degradations_avoided": int((sk[f"dQS_{est}"] < 0).sum()),
-                "gains_forgone": int((sk[f"dQS_{est}"] > 0).sum()),
-                "median_gain_applied": 100 * ap[f"rel_{est}"].median(),
-                "median_forgone": 100 * sk[f"rel_{est}"].median(),
-                "zone_upgrades_total": len(up),
-                "zone_upgrades_kept": int(up["raw_fails"].sum()),
-            }
-            gate_rows.append(row)
-            lines.append(
-                f"| {alpha:g} | "
-                f"{'single split' if est == 'static' else 'rolling'} | "
-                f"{row['n_applied']} | {row['degraded_when_applied']} | "
-                f"{row['n_skipped']} | **{row['degradations_avoided']}** | "
-                f"{row['zone_upgrades_kept']} / {row['zone_upgrades_total']} |")
+            for signal in ("test", "cal"):
+                a = df[df["alpha"] == alpha].copy()
+                # `test` gates on the evaluation window -- the rule as an
+                # ORACLE, an upper bound on what gating can buy. `cal` gates on
+                # the calibration window, which is the only version deployable
+                # without look-ahead. Both are reported; the paper quotes `cal`.
+                if signal == "test":
+                    a["raw_fails"] = ((a["TL_raw"] != "Green")
+                                      | (a["p_kup_raw"] <= 0.05))
+                else:
+                    a["raw_fails"] = ((a["TL_cal"] != "Green")
+                                      | (a["p_kup_cal"] <= 0.05))
+                ap, sk = a[a["raw_fails"]], a[~a["raw_fails"]]
+                up = a[a[f"TL_{est}"].map(ZONE_RANK) < a["TL_raw"].map(ZONE_RANK)]
+                row = {
+                    "alpha": alpha, "estimator": est, "signal": signal,
+                    "n_applied": len(ap), "n_skipped": len(sk),
+                    "degraded_when_applied": int((ap[f"dQS_{est}"] < 0).sum()),
+                    "degradations_avoided": int((sk[f"dQS_{est}"] < 0).sum()),
+                    "gains_forgone": int((sk[f"dQS_{est}"] > 0).sum()),
+                    "median_gain_applied": 100 * ap[f"rel_{est}"].median(),
+                    "median_forgone": 100 * sk[f"rel_{est}"].median(),
+                    "zone_upgrades_total": len(up),
+                    "zone_upgrades_kept": int(up["raw_fails"].sum()),
+                }
+                gate_rows.append(row)
+                lines.append(
+                    f"| {alpha:g} | "
+                    f"{'single split' if est == 'static' else 'rolling'} | "
+                    f"{'test window (oracle)' if signal == 'test' else 'calibration window'} | "
+                    f"{row['n_applied']} | {row['degraded_when_applied']} | "
+                    f"{row['n_skipped']} | **{row['degradations_avoided']}** | "
+                    f"{row['zone_upgrades_kept']} / {row['zone_upgrades_total']} |")
     pd.DataFrame(gate_rows).to_csv(OUT / "gate_rule.csv", index=False)
     lines.append("")
 

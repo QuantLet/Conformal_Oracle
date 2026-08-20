@@ -857,7 +857,7 @@ Model: `rel_ΔQS = a + b · |π̂_raw − α|`. The AE's hypothesis implies b > 
 | 0.05 | rolling | included | <0.05 only | 242 | 1.104 | 0.095 | -0.0197 | 0.363 | 2.90e-25 |
 | 0.05 | rolling | excluded | all | 264 | 1.749 | 0.050 | -0.0251 | 0.824 | 1.14e-100 |
 | 0.05 | rolling | excluded | <0.05 only | 242 | 1.104 | 0.095 | -0.0197 | 0.363 | 2.90e-25 |
-| 0.1 | rolling | included | all | 312 | 1.307 | 0.007 | -0.0216 | 0.991 | 6.73e-317 |
+| 0.1 | rolling | included | all | 312 | 1.307 | 0.007 | -0.0216 | 0.991 | 0.00e+00 |
 | 0.1 | rolling | included | <0.05 only | 239 | 0.499 | 0.052 | -0.0122 | 0.279 | 1.38e-18 |
 | 0.1 | rolling | excluded | all | 264 | 0.936 | 0.023 | -0.0162 | 0.864 | 1.80e-115 |
 | 0.1 | rolling | excluded | <0.05 only | 239 | 0.499 | 0.052 | -0.0122 | 0.279 | 1.38e-18 |
@@ -907,16 +907,26 @@ Yellow      72       1
 
 If the correction is an intervention with an indication rather than a universal improvement, the natural rule is: apply it only when the raw forecast actually fails a backtest (Basel zone worse than Green, or Kupiec rejected). This evaluates that rule against applying it unconditionally.
 
-| α | estimator | applied | degraded when applied | skipped | degradations avoided | zone upgrades kept / total |
-|---|---|---|---|---|---|---|
-| 0.01 | single split | 218 | 8 | 94 | **58** | 182 / 182 |
-| 0.025 | single split | 312 | 64 | 0 | **0** | 151 / 151 |
-| 0.05 | single split | 312 | 90 | 0 | **0** | 29 / 29 |
-| 0.1 | single split | 312 | 117 | 0 | **0** | 0 / 0 |
-| 0.01 | rolling | 218 | 85 | 94 | **89** | 205 / 205 |
-| 0.025 | rolling | 312 | 160 | 0 | **0** | 162 / 162 |
-| 0.05 | rolling | 312 | 194 | 0 | **0** | 0 / 0 |
-| 0.1 | rolling | 312 | 202 | 0 | **0** | 0 / 0 |
+The rule is reported under two gating signals. Keyed on the TEST window it is an oracle: it uses the outcome it is then scored on, and bounds what gating could buy. Keyed on the CALIBRATION window it is deployable, because that is the information available on the day the decision is taken. The paper quotes the calibration version.
+
+| α | estimator | gating signal | applied | degraded when applied | skipped | degradations avoided | zone upgrades kept / total |
+|---|---|---|---|---|---|---|---|
+| 0.01 | single split | test window (oracle) | 218 | 8 | 94 | **58** | 182 / 182 |
+| 0.01 | single split | calibration window | 259 | 49 | 53 | **17** | 172 / 182 |
+| 0.025 | single split | test window (oracle) | 312 | 64 | 0 | **0** | 151 / 151 |
+| 0.025 | single split | calibration window | 312 | 64 | 0 | **0** | 151 / 151 |
+| 0.05 | single split | test window (oracle) | 312 | 90 | 0 | **0** | 29 / 29 |
+| 0.05 | single split | calibration window | 312 | 90 | 0 | **0** | 29 / 29 |
+| 0.1 | single split | test window (oracle) | 312 | 117 | 0 | **0** | 0 / 0 |
+| 0.1 | single split | calibration window | 312 | 117 | 0 | **0** | 0 / 0 |
+| 0.01 | rolling | test window (oracle) | 218 | 85 | 94 | **89** | 205 / 205 |
+| 0.01 | rolling | calibration window | 259 | 130 | 53 | **44** | 185 / 205 |
+| 0.025 | rolling | test window (oracle) | 312 | 160 | 0 | **0** | 162 / 162 |
+| 0.025 | rolling | calibration window | 312 | 160 | 0 | **0** | 162 / 162 |
+| 0.05 | rolling | test window (oracle) | 312 | 194 | 0 | **0** | 0 / 0 |
+| 0.05 | rolling | calibration window | 312 | 194 | 0 | **0** | 0 / 0 |
+| 0.1 | rolling | test window (oracle) | 312 | 202 | 0 | **0** | 0 / 0 |
+| 0.1 | rolling | calibration window | 312 | 202 | 0 | **0** | 0 / 0 |
 
 ## Figures
 

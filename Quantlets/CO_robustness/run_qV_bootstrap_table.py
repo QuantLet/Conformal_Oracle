@@ -54,7 +54,7 @@ def main() -> int:
              r"$R = |\qVstat|/|\widehat{\VaR}_{\mathrm{raw}}|$: the size of the",
              r"correction relative to the threshold it adjusts.",
              r"\textsuperscript{a}Read analytically from the checkpoint's",
-             r"predictive distribution, not sampled (Section~\ref{sec:mechanism}).}",
+             r"predictive distribution rather than sampled from it.}",
              r"\label{tab:qV_bootstrap_ci}",
              r"\begin{tabular}{@{}ll rrrr@{}}", r"\hline\hline",
              r"Asset & Model & $\qVstat$ & 95\% CI & SE & $R$ \\", r"\hline"]

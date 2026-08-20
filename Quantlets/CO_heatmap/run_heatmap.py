@@ -26,7 +26,7 @@ plt.rcParams.update({
     'savefig.transparent': True,
     'axes.spines.top': False,
     'axes.spines.right': False,
-    'font.size': 11,
+    'font.size': 13,
 })
 
 # Thirteen forecasters, ordered so the two configurations of Chronos sit
@@ -86,7 +86,7 @@ colors_list = [
 cmap = ListedColormap(colors_list)
 norm = BoundaryNorm(boundaries, cmap.N, clip=True)
 
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 7),
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 9),
                                 gridspec_kw={'hspace': 0.30})
 
 for ax, mat, title, tcol in [

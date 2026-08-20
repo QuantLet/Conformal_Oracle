@@ -29,11 +29,14 @@ panel_b = df[df['panel'] == 'B']
 print(f'Loaded models.csv: {len(panel_a)} TSFMs, {len(panel_b)} benchmarks')
 
 # ── Panel A ─────────────────────────────────────────────────────
+# Fixed-width paragraph columns: the architecture and forecast-output cells now
+# carry full descriptions and an @{}llrlll@{} run ran 278pt past the margin.
 lines_a = [
-    r'\begin{tabular}{@{}llrlll@{}}',
+    r'\footnotesize',
+    r'\begin{tabular}{@{}p{2.45cm}p{2.9cm}r p{2.5cm}p{3.2cm}l@{}}',
     r'\toprule',
-    r'Model & Architecture & Parameters'
-    r' & Distribution & Forecast output & Context \\',
+    r'Model & Architecture & Param. '
+    r'& Distribution & Forecast output & Context \\',
     r'\midrule',
 ]
 
@@ -53,10 +56,12 @@ for _, row in panel_a.iterrows():
 
 lines_a.append(r'\bottomrule')
 lines_a.append(r'\end{tabular}')
+lines_a.append(r'\normalsize')
 
 # ── Panel B ─────────────────────────────────────────────────────
 lines_b = [
-    r'\begin{tabular}{@{}lllll@{}}',
+    r'\footnotesize',
+    r'\begin{tabular}{@{}p{3.0cm}p{2.2cm}p{2.2cm}p{4.0cm}l@{}}',
     r'\toprule',
     'Model & Type & Innovation dist.\\\n'
     r'& Est.\ parameters & Est.\ window \\',
@@ -69,14 +74,29 @@ MODEL_B_ESC = {
     'Hist. Sim.':     r'Hist.\ Sim.',
 }
 
-PARAM_ESC = {
-    'omega.alpha_1.beta_1.gamma.nu.xi':
-        r'$\omega,\alpha_1,\beta_1,\gamma,\nu,\xi$',
-    'omega.alpha_1.beta_1':
-        r'$\omega,\alpha_1,\beta_1$',
-    'lambda = 0.94':
-        r'$\lambda = 0.94$',
-}
+# Parameter lists are written in models.csv as dot-separated plain names
+# ('omega.alpha_1.beta_1.gamma') and rendered as maths here. This used to be a
+# lookup table of the exact strings then in the file, so adding a row -- as the
+# GJR-GARCH-t row did -- emitted raw underscores and broke the build. Escaping
+# the general form removes that failure mode.
+GREEK = ('omega', 'alpha', 'beta', 'gamma', 'nu', 'xi', 'lambda', 'sigma')
+
+
+def esc_params(raw: str) -> str:
+    raw = str(raw).strip()
+    if raw in ('', 'nan'):
+        return ''
+    if '=' in raw:                       # e.g. 'lambda = 0.94'
+        name, _, val = raw.partition('=')
+        name = name.strip()
+        head = rf'\{name}' if name in GREEK else name
+        return rf'${head} = {val.strip()}$'
+    parts = []
+    for tok in raw.split('.'):
+        base, _, sub = tok.partition('_')
+        head = rf'\{base}' if base in GREEK else base
+        parts.append(rf'{head}_{sub}' if sub else head)
+    return '$' + ','.join(parts) + '$'
 
 DIST_ESC = {
     'Skewed-t': r'Skewed-$t$',
@@ -86,10 +106,7 @@ for _, row in panel_b.iterrows():
     model = MODEL_B_ESC.get(row['model'], row['model'])
     typ = row['type']
     innov = DIST_ESC.get(row['innovation_dist'], row['innovation_dist'])
-    est_p = PARAM_ESC.get(str(row['est_parameters']),
-                          str(row['est_parameters']))
-    if est_p == 'nan':
-        est_p = ''
+    est_p = esc_params(row['est_parameters'])
     est_w = str(row['est_window'])
     if est_w == 'nan':
         est_w = ''
@@ -100,6 +117,7 @@ for _, row in panel_b.iterrows():
 
 lines_b.append(r'\bottomrule')
 lines_b.append(r'\end{tabular}')
+lines_b.append(r'\normalsize')
 
 # ── Combined output ─────────────────────────────────────────────
 combined = []
