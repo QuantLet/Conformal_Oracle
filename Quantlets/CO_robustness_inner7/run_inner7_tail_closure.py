@@ -156,7 +156,15 @@ def run():
                         q_alpha = closure_fn(inner_deciles, INNER7_LEVELS)
                     else:
                         q_alpha = closure_fn(all_deciles, fit_levels)
-                    var_series.iloc[t] = -q_alpha
+                    # The alpha-quantile IS the Value-at-Risk threshold and is
+                    # already negative for a lower tail. This line read
+                    # `-q_alpha` until 2026-08-20, which is the same sign
+                    # inversion that corrupted the stored TimesFM and Moirai
+                    # series -- reproduced here, in the robustness script the
+                    # manuscript cites for closure-rule invariance. Verified
+                    # against the promoted series: q_alpha reproduces the stored
+                    # VaR_0.01 to floating point; -q_alpha is its negation.
+                    var_series.iloc[t] = q_alpha
 
                 result = conformal_pipeline(var_series, returns)
                 result['asset'] = asset

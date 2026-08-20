@@ -60,6 +60,34 @@ the committed sequences on every cell of all 13 forecasters, which is worth more
 than the duplicate producer was: the producer verifies against a summary it also
 derives, while this path shares no code with it.
 
+## Final state, 20 August
+
+Every panel-dependent artefact the manuscript inputs has been rebuilt on the
+corrected 13-forecaster panel:
+
+| artefact | note |
+|---|---|
+| `tab_dm_pvalues` | 5 benchmarks x 6 TSFM series, plus the default-versus-analytic comparison |
+| `tab_panel_wildcluster_kupiec`, `..._dm` | 13 forecasters, 999 Rademacher draws |
+| `tab_panel_pooled`, `tab_panel_by_class`, `tab_multiquantile` | |
+| `tab_cross_sectional` | GJR-GARCH's correlation with volatility: -0.786 to +0.816 |
+| `tab_diag_regression` | R2 0.828; partial R2 of q_V falls to 0.007 without the truncated pair |
+| `tab_models` | rewritten from primary sources; Moirai 2.0 was described as Moirai 1.1 |
+| `tab_rolling_vs_static` | static Green counts match all_results.csv on all 312 pairs |
+| `tab_baselines` | ACI, GBM-QR, GAMLSS, EVT-POT, FHS all recomputed; denominators derived |
+| `tab_gbm_tuned` | given a producer; it had none and still printed denominators of 9 |
+| `tab_fz_scores`, `tab_es_correction` | 13 forecasters |
+| `tab_qV_bootstrap_ci` | given a producer; Chronos enters analytically |
+| `tab_robustness_summary`, `tab_gap_ablation` | re-based off the truncated series |
+| `tab_tail_closure`, `tab_tail_closure_extended` | sign defect fixed first; see SIGN_DEFECT_SIXTH.md |
+
+**Panel-independent, verified rather than assumed.** `tab_h14_small_sample`,
+`tab_h15_fc_sensitivity` and `tab_h16_regime_stability` come from
+`run_robustness_mc.py`, and `tab_simulation_extended` from the simulation study.
+Neither script reads anything from `cfp_ijf_data/` -- both generate their own
+GARCH paths -- so their contents cannot depend on the defective series. They
+stand as built.
+
 ## The blocking dependency
 
 `cfp_ijf_data/paper_outputs/qs_sequences/` and `violation_sequences/` date from

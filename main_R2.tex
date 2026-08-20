@@ -359,7 +359,7 @@ and set
 	=
 	\hat\mu_t + \hat\sigma_t\, t_{\hat\nu_t}^{-1}(0.01).
 \end{equation}
-The Student-$t$ closure is a parsimonious heavy-tailed default in financial VaR modelling \citep{bollerslev1987,hansen1994autoregressive,mcneil2000estimation}; the position of the high-$\bar R$ forecasters is invariant across Student-$t$, Gaussian, and linear closures (Section~\ref{app:tail_closure}).
+The Student-$t$ closure is a parsimonious heavy-tailed default in financial VaR modelling \citep{bollerslev1987,hansen1994autoregressive,mcneil2000estimation}. It is not, however, an innocuous choice: Appendix~\ref{app:tail_closure} shows that the closure rule governs the tail behaviour of a grid model far more than the model does, so this decision is reported as part of the forecaster rather than as an implementation detail.
 
 For classical benchmarks (GJR-GARCH, GARCH-Normal, EWMA, Historical Simulation), VaR is computed from the model-implied conditional distribution or, for Historical Simulation, the empirical 250-day rolling distribution.
 
@@ -754,11 +754,20 @@ What remains true, and is worth stating without the failed generalisation, is
 narrower: a nine-decile grid whose lowest point is the 10\% quantile does not
 contain a 1\% quantile, so some external tail-completion step must supply it and
 that step becomes part of the forecaster. Our own closure applies a Student-$t$
-fit at every level, including those the grid reports directly; the ordering by
-$\bar R$ is invariant across Student-$t$, Gaussian and linear closure rules
-(Table~\ref{tab:tail_closure_extended}).\footnote{All forecast series pass the
-scripted validation gate of Section~\ref{sec:gate} and
-Appendix~\ref{app:validation_gate} before entering this table.}
+fit at every level, including those the grid reports directly, and the choice is
+consequential: across three assets the same grids yield $\bar R$ between 0.005
+and 1.70 depending on whether the closure is Student-$t$, Gaussian or linear ---
+a factor of 3 to 76 within a single model--asset pair, and enough to move BTC
+from the Basel yellow zone to the red one
+(Appendix~\ref{app:tail_closure}).\footnote{All forecast series pass the scripted
+validation gate of Section~\ref{sec:gate} and Appendix~\ref{app:validation_gate}
+before entering this table.} An earlier version of this paper reported the
+opposite --- that the ordering was invariant to the closure rule --- from a
+script that carried the same sign inversion as the stored series
+(Section~\ref{sec:interface_failure}); corrected, the invariance does not hold.
+This is the configuration finding again rather than an exception to it: what
+determines the 1\% tail of a quantile-grid forecaster is the code that completes
+the grid.
 
 
 \subsection{Static Recalibration}
@@ -977,7 +986,7 @@ Table~\ref{tab:simulation_extended} reports a Monte Carlo study under five data-
 \subsubsection{Robustness}
 \label{sec:robust}
 
-Five robustness checks, reported in full in Appendix~\ref{app:robustness}, confirm that the audit findings are stable: (i)~calibration-fraction sensitivity is limited over $f_c \in [0.50, 0.80]$; (ii)~rolling-window length variation ($w \in \{125, 250, 500\}$) preserves the ordering by $\bar R$; (iii)~the position of TimesFM~2.5 and Moirai~2.0 at the top of the $\bar R$ ordering is invariant to the tail-completion rule (Table~\ref{tab:tail_closure_extended}); (iv)~the theoretical gap $g_n$ between calibration and evaluation has negligible empirical impact (Table~\ref{tab:gap_ablation}); and (v)~stationary block-bootstrap confidence intervals for $\qVstat$ separate the two regimes cleanly, ruling out sampling variability as the source of the regime gap.
+Five robustness checks, reported in full in Appendix~\ref{app:robustness}, confirm that the audit findings are stable: (i)~calibration-fraction sensitivity is limited over $f_c \in [0.50, 0.80]$; (ii)~rolling-window length variation ($w \in \{125, 250, 500\}$) preserves the ordering by $\bar R$; (iii)~the tail-completion rule, by contrast, is \emph{not} innocuous: it moves $\bar R$ by a factor of 3 to 76 within a single model--asset pair and can change the Basel zone (Table~\ref{tab:tail_closure_extended}), which is why the rule is reported as part of the forecaster; (iv)~the theoretical gap $g_n$ between calibration and evaluation has negligible empirical impact (Table~\ref{tab:gap_ablation}); and (v)~stationary block-bootstrap confidence intervals for $\qVstat$ separate the two regimes cleanly, ruling out sampling variability as the source of the regime gap.
 %══════════════════════════════════════════════════════════════════════════════
 %─── PART 7b: What the diagnostics could not see ────────────────────────────
 %══════════════════════════════════════════════════════════════════════════════
@@ -2353,32 +2362,52 @@ $\qVroll$ across regime changes.
 \subsection{Tail-Completion Rule Sensitivity}
 \label{app:tail_closure}
 
-TimesFM~2.5 and Moirai~2.0 require tail completion to obtain the
-1\% quantile from their nine-decile grids
-(Section~\ref{sec:setup}); the position of the high-$\bar R$ forecasters
-therefore depends on the extrapolation rule, and a single rule
-should not be load-bearing.
+TimesFM~2.5 and Moirai~2.0 do not report a 1\% quantile. Their output is a
+nine-decile grid whose lowest point is the 10\% quantile
+(Section~\ref{sec:setup}), so the threshold that is backtested comes from an
+external completion step. This appendix asks how much that step matters, and the
+answer is: more than the model does.
 
-Table~\ref{tab:tail_closure_extended} compares the default
-Student-$t$ closure with Gaussian closure and linear extrapolation
-across three representative assets. All closures yield $R>1$ for
-both models, confirming that the position of the high-$\bar R$ forecasters
-is not an artefact of the Student-$t$ tail-completion layer. The
-inner-seven-deciles refit ($u\in\{0.2,\ldots,0.8\}$) is the more
-demanding check: dropping the outermost quantiles that anchor the
-tail, we still recover $\qVstat$ and ordering by $\bar R$
-identical to the full nine-decile fit for all six model--asset
-combinations. The extrapolation is determined by the body of the
-predictive distribution, not by its extreme quantiles.
+Table~\ref{tab:tail_closure_extended} compares the Student-$t$ closure used
+throughout the paper against a Gaussian closure and a linear extrapolation from
+the two lowest deciles, on three assets. The same grids, on the same days, give
+$\bar R$ ranging from $0.005$ to $1.70$. Within a single model--asset pair the
+closure rule moves $\bar R$ by a factor of 3.3 (Moirai~2.0 on BTC) to 76
+(Moirai~2.0 on NATGAS), and the raw violation rate with it: TimesFM~2.5 on SP500
+runs at $\hat\pi = 0.019$ under the Student-$t$ closure and $0.075$ under linear
+extrapolation. On BTC the choice moves both models out of the Basel yellow zone
+into the red one after correction.
 
-Moirai~1.1 provides a clean control. As a sample-based forecaster,
-it bypasses tail completion entirely and remains in the
-low-$\bar R$ range ($R\approx0.11$). The contrast within the
-Moirai family --- same architecture, same training, no tail
-completion for 1.1 versus three closure rules and an inner-seven-deciles
-refit tested for 2.0, all yielding the same ordering by $\bar R$ ---
-isolates the forecast interface as the driver, separately from the
-closure choice.
+The practical consequence is the one the body of the paper draws in a different
+setting. A quantile-grid forecaster is not a forecaster until a completion rule
+is specified, and the rule is part of the forecaster in the same sense that
+$\texttt{top\_k}$ is part of a sampled one. Reporting ``TimesFM~2.5 at the 1\%
+level'' without naming the closure describes an object that does not exist.
+
+\paragraph{The inner-seven-deciles check is vacuous, and we now say so.} Earlier
+versions presented a refit on $u \in \{0.2, \ldots, 0.8\}$ --- dropping the
+outermost deciles that anchor the tail --- as the more demanding test, and
+reported that it recovered $\qVstat$ and the ordering exactly. It does: to six
+decimal places, on all six model--asset combinations
+(Table~\ref{tab:tail_closure_extended}). That agreement is an artefact of the
+construction. The deciles are not native model output; they are reconstructed
+from the stored Student-$t$ parameters $(\nu, \mu, \sigma)$, so fitting a
+Student-$t$ to any subset of them recovers those parameters exactly and the
+check cannot fail. It is uninformative about the model, and it is reported here
+only because it was previously reported as evidence.
+
+The Gaussian and linear closures are informative precisely because they impose a
+different functional form, and they are the ones that move the answer.
+
+\paragraph{A correction to the previous version.} The closure-rule table in
+earlier drafts reported that all rules yield $\bar R > 1$ for both models, and
+was used to argue that the position of these forecasters was not an artefact of
+the completion layer. Both scripts producing it stored $-q_\alpha$ where
+$q_\alpha$ is already the Value-at-Risk threshold --- the same sign inversion
+that corrupted the stored series (Section~\ref{sec:interface_failure}),
+reproduced independently in the robustness check meant to guard against exactly
+this kind of dependence. With the sign corrected, no closure yields $\bar R > 1$
+on SP500 or NATGAS, and the invariance claim is withdrawn.
 
 \input{Quantlets/CO_robustness_inner7/tab_tail_closure_extended}
 
