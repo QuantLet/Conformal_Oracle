@@ -184,8 +184,11 @@ gap = cumul_yellow_ll[mid_idx] - cumul_green_ll[mid_idx]
 mid_y = (cumul_yellow_ll[mid_idx] + cumul_green_ll[mid_idx]) / 2
 ax.annotate(f'{saving_pct:.1f}% saving\n(Yellow → Green)',
             xy=(dates_common[mid_idx], mid_y),
-            fontsize=9, color='#A32D2D', ha='left',
-            bbox=dict(boxstyle='round,pad=0.3', fc='white', ec='#A32D2D', alpha=0.85))
+            xytext=(dates_common[int(N_test * 0.05)], cumul_yellow_ll[-1] * 0.74),
+            fontsize=9, color='#A32D2D', ha='left', va='center',
+            bbox=dict(boxstyle='round,pad=0.3', fc='white', ec='#A32D2D', alpha=0.9),
+            arrowprops=dict(arrowstyle='->', color='#A32D2D', lw=1.0,
+                            connectionstyle='arc3,rad=-0.15'))
 
 ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12),
           ncol=2, fontsize=9, frameon=False)

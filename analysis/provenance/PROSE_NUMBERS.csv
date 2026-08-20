@@ -1,0 +1,124 @@
+literal,sourced,context
+0.001,True,"relative to the reported VaR. Across the panel $R$ spans four orders of magnitude, from $0.001$ for CAViaR --- already calibrated, and unchanged by correction --- to $23.5$ for Chronos"
+500,True,"number of tail events is only $\mathcal{O}(\alpha T)$. For $\alpha=0.01$ and roughly 1{,}500 out-of-sample observations, the extreme tail is informed by few exceedances. Flexible rec"
+100048,True,al_Oracle/}; slides are on the Quantinar platform \quantinar{https://quantinar.com/course/100048/recalibrating-tail-risk-forecasts-under-temporal-dependence}. \section{Related Liter
+240,True,on magnitude as an audit instrument; the order-of-magnitude separation we document across 240 model--asset pairs is invisible to their formulations. \section{Methodology}
+250,True,"m the model-implied conditional distribution or, for Historical Simulation, the empirical 250-day rolling distribution. Expected Shortfall is reported separately at $\alpha = 0.025$"
+0.70,True,ast outputs are split chronologically into calibration and test sets with fraction $f_c = 0.70$ (robustness in Section~ ). The nonconformity score $S_t$ from equation~ is positive wh
+0.18,True,"six representative model--asset pairs spanning estimated score persistence $\hat\rho \in [0.18, 0.67]$, the estimated remainder $\hat\Delta_n$ lies between 0.109 and 0.138 --- a covera"
+0.67,True,"presentative model--asset pairs spanning estimated score persistence $\hat\rho \in [0.18, 0.67]$, the estimated remainder $\hat\Delta_n$ lies between 0.109 and 0.138 --- a coverage flo"
+0.109,True,"sistence $\hat\rho \in [0.18, 0.67]$, the estimated remainder $\hat\Delta_n$ lies between 0.109 and 0.138 --- a coverage floor of approximately 88\% against empirical coverage averaging"
+0.138,True,"\hat\rho \in [0.18, 0.67]$, the estimated remainder $\hat\Delta_n$ lies between 0.109 and 0.138 --- a coverage floor of approximately 88\% against empirical coverage averaging 98.9\%. A"
+240,True,"erage floor of approximately 88\% against empirical coverage averaging 98.9\%. Across all 240 model--asset pairs, empirical coverage exceeds the corresponding lower bound $1 - \alpha"
+250,True,he conformal threshold is recomputed at each time $t$ from a trailing window of size $w = 250$: \begin{equation} \qVroll = Q_{1-\alpha}\!\left(\{S_\tau\}_{\tau=t-w}^{t-1}\right)
+0.70,True,"first 70\% as calibration and the remaining 30\% as the out-of-sample test window ($f_c = 0.70$, Section~ ); the rolling estimator recomputes the threshold at each $t$ from a trailing"
+250,True,"olling estimator recomputes the threshold at each $t$ from a trailing window of size $w = 250$ (Section~ ) and is evaluated on the same 30\% test window. The full asset list, per-asse"
+512,True,"every forecaster. All forecasts are one-step-ahead. TSFMs use a fixed context length of 512 observations, the default for all six pretrained checkpoints (Appendix~ ). Classical benc"
+250,True,"rained checkpoints (Appendix~ ). Classical benchmarks are estimated on rolling windows of 250 observations, following the Basel convention p{basel1996}, with parameters re-estimated"
+512,True,"l convention p{basel1996}, with parameters re-estimated at each step. A warm-up period (512 observations for TSFMs, 250 for classical benchmarks) precedes the calibration--test spli"
+250,True,"with parameters re-estimated at each step. A warm-up period (512 observations for TSFMs, 250 for classical benchmarks) precedes the calibration--test split. For full-history series ("
+500,True,"n--test split. For full-history series (2000--2026), the test sample is approximately 1{,}500 observations per asset, yielding roughly 36{,}600 panel observations per model and 366 ex"
+600,True,"), the test sample is approximately 1{,}500 observations per asset, yielding roughly 36{,}600 panel observations per model and 366 expected violations at $\alpha = 0.01$. \section"
+366,True,"{,}500 observations per asset, yielding roughly 36{,}600 panel observations per model and 366 expected violations at $\alpha = 0.01$. \section{Empirical Results} The primary ev"
+0.011,True,"AViaR, Moirai~1.1, Lag-Llama and the classical benchmarks at the lower, with $|\qVstat| < 0.011$. Whether the replacement label reflects missing tail information or severely misspecifie"
+216,True,test alone does not flag---and the two diagnostics agree on the regime for $79\%$ of the $216$ pairs overall. The diagnostic further resolves the correction into three mechanisms: in
+0.459,True,"elow unity and roughly $46\%$ of the shift is genuinely multiplicative (mean scale share $0.459$), whereas in the high-$\bar R$ range the shift is substitution rather than scale repair,"
+240,True,"rror, consistent with the failure of scale-correction baselines noted above.} Across all 240 model--asset pairs, $\qVstat$ ranges from $-0.007$ (GJR-GARCH, over-conservative) to $0.1"
+0.007,True,"ction baselines noted above.} Across all 240 model--asset pairs, $\qVstat$ ranges from $-0.007$ (GJR-GARCH, over-conservative) to $0.102$ (TimesFM~2.5, under-conservative). The diagnos"
+0.102,True,"240 model--asset pairs, $\qVstat$ ranges from $-0.007$ (GJR-GARCH, over-conservative) to $0.102$ (TimesFM~2.5, under-conservative). The diagnostic regression of Quantile Score improveme"
+0.782,True,"ile Score improvement on the conformal threshold and the raw violation rate yields $R^2 = 0.782$, with a partial $R^2$ of $53.4\%$ for $\qVstat$ (Appendix~ , Table~ ). Among high-$\bar"
+0.96,True,"high-$\bar R$ TSFMs, $\qVstat$ tracks annualised volatility ($\bar\rho_{\mathrm{repl}} = 0.96$) and tail frequency ($\bar\rho_{\mathrm{repl}} = 0.51$); among low-$\bar R$ forecasters"
+0.51,True,ility ($\bar\rho_{\mathrm{repl}} = 0.96$) and tail frequency ($\bar\rho_{\mathrm{repl}} = 0.51$); among low-$\bar R$ forecasters the cross-sectional association weakens for Moirai~1.1
+0.67,True,"orecasters the cross-sectional association weakens for Moirai~1.1 ($\rho_{\mathrm{vol}} = 0.67$) and inverts for GJR-GARCH, whose conditional variance dynamics absorb volatility into r"
+260,True,he corrected columns of Table~ show that marginal coverage is restored across the panel: 260 of 312 model--asset pairs reach the Basel Green Zone (83.3\%). What the ordering by $\bar
+312,True,ected columns of Table~ show that marginal coverage is restored across the panel: 260 of 312 model--asset pairs reach the Basel Green Zone (83.3\%). What the ordering by $\bar R$ add
+0.001,True,"mount} of correction required to get there spans four orders of magnitude, from $\bar R = 0.001$ for CAViaR to $\bar R = 23.5$ for Chronos-Mini. At the low end the corrected forecast is"
+126,True,"ndefined whenever no two violations fall on consecutive days, which at $\alpha = 0.01$ is 126 of 240 pairs --- the low-$\bar R$ forecasters pass on 61.5\% of pairs against 13.6\% for"
+240,True,"d whenever no two violations fall on consecutive days, which at $\alpha = 0.01$ is 126 of 240 pairs --- the low-$\bar R$ forecasters pass on 61.5\% of pairs against 13.6\% for the hig"
+126,True,"cing between violations rather than immediate transitions, flag clustering on 47 of those 126 pairs. Recalibration restores both unconditional coverage and violation independence. In"
+0.010,True,cs are in Section~ . Low-$\bar R$ corrected violation rates cluster around $\hat\pi = 0.010$ with Quantile Scores of $4.7$--$5.6 \times 10^{-4}$. High-$\bar R$ forecasters move from
+240,True,r model--asset pairs rather than its mean. At $\alpha = 0.01$ the correction makes 27 of 240 pairs worse under the single-split estimator and 84 of 240 worse under the rolling estima
+240,True,01$ the correction makes 27 of 240 pairs worse under the single-split estimator and 84 of 240 worse under the rolling estimator. The deteriorations are not scattered: they concentrate
+0.38,True,"rection is statistically indistinguishable from doing nothing (mean $\Delta\mathrm{QS} = -0.38\%$ of $\mathrm{QS}_{\mathrm{raw}}$, $p = 0.43$), while the rolling variant degrades 41 of"
+0.43,True,"m doing nothing (mean $\Delta\mathrm{QS} = -0.38\%$ of $\mathrm{QS}_{\mathrm{raw}}$, $p = 0.43$), while the rolling variant degrades 41 of 44 such pairs, with mean $-6.8\%$ and $p \app"
+196,True,"han Green, or Kupiec rejected), and not otherwise. At $\alpha = 0.01$ the rule applies to 196 of 240 pairs and skips 44. It avoids 41 of the 84 rolling deteriorations while retaining"
+240,True,"en, or Kupiec rejected), and not otherwise. At $\alpha = 0.01$ the rule applies to 196 of 240 pairs and skips 44. It avoids 41 of the 84 rolling deteriorations while retaining \emph{a"
+176,True,"rs and skips 44. It avoids 41 of the 84 rolling deteriorations while retaining \emph{all} 176 Basel zone upgrades, so the cost on the regulatory axis is zero; the three skipped pairs"
+0.16,True,ulatory axis is zero; the three skipped pairs that would have gained are worth a median $+0.16\%$ against the $-6.0\%$ median of the losses avoided. The rule does not bind at $\alpha \
+0.001,True,"stence rule, so no reclassification step is required. In our panel $\bar R$ ranges from $0.001$ to $23.5$ (Table~ ). The spread is continuous rather than bimodal: the two largest gaps"
+250,True,carries the information a binary label would have discarded. Figure~ shows the rolling 250-day $\qVroll$ for representative models on the S\&P~500. \begin{figure}[t!] \centering
+203,True,proves extreme-quantile calibration substantially: Basel Green Zone rates rise from 85\% (203/240) to 98\% (234/240) (Table~ ). The gains concentrate in the high-$\bar R$ range: Chron
+240,True,es extreme-quantile calibration substantially: Basel Green Zone rates rise from 85\% (203/240) to 98\% (234/240) (Table~ ). The gains concentrate in the high-$\bar R$ range: Chronos-S
+234,True,ntile calibration substantially: Basel Green Zone rates rise from 85\% (203/240) to 98\% (234/240) (Table~ ). The gains concentrate in the high-$\bar R$ range: Chronos-Small and Chron
+240,True,e calibration substantially: Basel Green Zone rates rise from 85\% (203/240) to 98\% (234/240) (Table~ ). The gains concentrate in the high-$\bar R$ range: Chronos-Small and Chronos-M
+0.013,True,". Historical Simulation is the only model that deteriorates under rolling ($\hat\pi = 0.013$, 21/24 Green versus 22/24 under single-split), because HS is itself a rolling empirical"
+0.035,True,ests. EWMA is the only model rejected by the cluster-robust test ($p_{\mathrm{cluster}} = 0.035$). GJR-GARCH is rejected by the unconditional Kupiec test at the panel level ($p_{\mathrm
+0.004,True,"ARCH is rejected by the unconditional Kupiec test at the panel level ($p_{\mathrm{Kup}} = 0.004$), but the deviation from nominal coverage is economically small ($\hat\pi = 0.0115$) and"
+0.0115,True,"up}} = 0.004$), but the deviation from nominal coverage is economically small ($\hat\pi = 0.0115$) and the cluster-robust test does not reject ($p_{\mathrm{cluster}} = 0.234$). Asset-cl"
+0.234,True,($\hat\pi = 0.0115$) and the cluster-robust test does not reject ($p_{\mathrm{cluster}} = 0.234$). Asset-class disaggregation shows FX and cryptocurrencies achieve full Green classific
+250,True,"her than a model-quality verdict: classical benchmarks are estimated per asset on rolling 250-day windows, whereas TSFMs are deployed strictly zero-shot. Whether a fine-tuned TSFM tra"
+0.11,True,"rchitectural details in Appendix~ ). Moirai~1.1 has $\hat\pi = 1.5\%$ and $\bar R \approx 0.11$, placing it in the low-$\bar R$ range; Moirai~2.0 has $\hat\pi = 98.8\%$ and $\bar R = 3"
+6.07,True,"t-hoc procedures, the one-parameter conformal shift achieves competitive Quantile Score ($6.07 \times 10^{-4}$) while maintaining the highest Green-Zone rate (84.6\%). Linear quantile"
+5.29,True,"est Green-Zone rate (84.6\%). Linear quantile regression on residuals achieves lower QS ($5.29 \times 10^{-4}$) but at somewhat lower coverage (81.5\% Green), consistent with the varia"
+0.010,True,n head-to-head in the supplement reports a $94.9\%$ rolling Green-zone share at the same $0.010$ mean violation rate; the difference from the $97.5\%$ here is entirely a matter of proto
+250,True,"protocol, not of the estimator, since the supplement scores the Basel zone on the final $250$-day window over the $216$-pair subset while the figure here uses full-history Basel scor"
+216,True,"mator, since the supplement scores the Basel zone on the final $250$-day window over the $216$-pair subset while the figure here uses full-history Basel scoring over all pairs.}} with"
+0.0750,True,"able zone coverage but at a materially higher capital charge, posting a mean $|\VaR|$ of $0.0750$ against $0.0443$ for the rolling estimator (a factor of $1.7$) together with a rougher d"
+0.0443,True,"e but at a materially higher capital charge, posting a mean $|\VaR|$ of $0.0750$ against $0.0443$ for the rolling estimator (a factor of $1.7$) together with a rougher day-over-day capit"
+128,True,"sed quantile regression achieves only 48.6\% Green, with a Kupiec rejection rate of 59\% (128/216), despite using lagged volatility features; its narrower intervals reflect under-cove"
+216,True,"quantile regression achieves only 48.6\% Green, with a Kupiec rejection rate of 59\% (128/216), despite using lagged volatility features; its narrower intervals reflect under-coverage"
+500,True,e bounded above by the variance cost of fitting at $\alpha = 0.01$. A grid search on S\&P~500 confirms the prediction (Appendix~ ): the QS-optimal tuning achieves QS $4.40 \times 10^{
+4.40,True,arch on S\&P~500 confirms the prediction (Appendix~ ): the QS-optimal tuning achieves QS $4.40 \times 10^{-4}$ but rejects Kupiec on 5/9 base forecasters; a conservative tuning achieve
+4.63,True,ase forecasters; a conservative tuning achieves 0/9 rejections at the cost of higher QS ($4.63 \times 10^{-4}$). GAMLSS-SST performs better than the static conformal shift (88.0\% vs.
+5.38,True,GAMLSS-SST performs better than the static conformal shift (88.0\% vs.\ 84.6\% Green; QS $5.38$ vs.\ $6.07 \times 10^{-4}$) but remains below the rolling conformal variant. The margina
+6.07,True,erforms better than the static conformal shift (88.0\% vs.\ 84.6\% Green; QS $5.38$ vs.\ $6.07 \times 10^{-4}$) but remains below the rolling conformal variant. The marginal gain from
+250,True,"poral adaptation. Purpose-built VaR models also face short-window constraints. Under the 250-day rolling protocol, GARCH-N with conformal correction outperforms EVT-POT and filtered"
+500,True,"s a Monte Carlo study under five data-generating processes ($T \in \{1{,}000, 5{,}000\}$, 500 replications, $f_c = 0.70$, $\alpha = 0.01$; design in Appendix~ ). Corrected coverage co"
+0.70,True,"er five data-generating processes ($T \in \{1{,}000, 5{,}000\}$, 500 replications, $f_c = 0.70$, $\alpha = 0.01$; design in Appendix~ ). Corrected coverage converges toward the nominal"
+0.50,True,"audit findings are stable: (i)~calibration-fraction sensitivity is limited over $f_c \in [0.50, 0.80]$; (ii)~rolling-window length variation ($w \in \{125, 250, 500\}$) preserves the o"
+0.80,True,"findings are stable: (i)~calibration-fraction sensitivity is limited over $f_c \in [0.50, 0.80]$; (ii)~rolling-window length variation ($w \in \{125, 250, 500\}$) preserves the orderin"
+125,True,"ty is limited over $f_c \in [0.50, 0.80]$; (ii)~rolling-window length variation ($w \in \{125, 250, 500\}$) preserves the ordering by $\bar R$; (iii)~the position of TimesFM~2.5 and M"
+250,True,"limited over $f_c \in [0.50, 0.80]$; (ii)~rolling-window length variation ($w \in \{125, 250, 500\}$) preserves the ordering by $\bar R$; (iii)~the position of TimesFM~2.5 and Moirai"
+500,True,"ted over $f_c \in [0.50, 0.80]$; (ii)~rolling-window length variation ($w \in \{125, 250, 500\}$) preserves the ordering by $\bar R$; (iii)~the position of TimesFM~2.5 and Moirai~2.0"
+200,True,Operational failure modes can be mitigated. Small calibration sets ($n_{\mathrm{cal}} < 200$) produce unstable corrections; a minimum calibration size or cross-asset aggregation is
+0.95,True,"on size or cross-asset aggregation is advisable. Very high score persistence ($\hat\rho > 0.95$) weakens the $\beta$-mixing bound, and GARCH pre-filtering can reduce dependence. Over-c"
+161,True,"maximum within the acute window, while the remaining four exhibit delayed plateaux of 77--161 calendar days. The drift diagnostic $\hat{\delta}_w(t)$ flags this regime in real time (A"
+3.00,True,"uation} A capital saving occurs when this ratio is below one. Using $k_{\mathrm{Green}} = 3.00$ and $k_{\mathrm{Yellow}} \approx 3.65$, the break-even width is $k_{\mathrm{Yellow}}/k_{"
+3.65,True,"is ratio is below one. Using $k_{\mathrm{Green}} = 3.00$ and $k_{\mathrm{Yellow}} \approx 3.65$, the break-even width is $k_{\mathrm{Yellow}}/k_{\mathrm{Green}} \approx 1.22$: a Yellow"
+1.22,True,"}} \approx 3.65$, the break-even width is $k_{\mathrm{Yellow}}/k_{\mathrm{Green}} \approx 1.22$: a Yellow-to-Green transition remains capital-saving as long as the corrected VaR thresh"
+500,True,"as long as the corrected VaR threshold widens by less than about 22\%. Lag-Llama on S\&P~500 has $W = 1.05$, so corrected Green-zone capital is $3.00 \times 1.05 = 3.15$ against an u"
+1.05,True,"e corrected VaR threshold widens by less than about 22\%. Lag-Llama on S\&P~500 has $W = 1.05$, so corrected Green-zone capital is $3.00 \times 1.05 = 3.15$ against an uncorrected Yel"
+3.00,True,"an about 22\%. Lag-Llama on S\&P~500 has $W = 1.05$, so corrected Green-zone capital is $3.00 \times 1.05 = 3.15$ against an uncorrected Yellow-zone capital of $3.65$ --- a 13.7\% per"
+1.05,True,"%. Lag-Llama on S\&P~500 has $W = 1.05$, so corrected Green-zone capital is $3.00 \times 1.05 = 3.15$ against an uncorrected Yellow-zone capital of $3.65$ --- a 13.7\% per-day reducti"
+3.15,True,"-Llama on S\&P~500 has $W = 1.05$, so corrected Green-zone capital is $3.00 \times 1.05 = 3.15$ against an uncorrected Yellow-zone capital of $3.65$ --- a 13.7\% per-day reduction. Cum"
+3.65,True,"-zone capital is $3.00 \times 1.05 = 3.15$ against an uncorrected Yellow-zone capital of $3.65$ --- a 13.7\% per-day reduction. Cumulated over the 1{,}824-day test window (2018--2026),"
+824,True,"cted Yellow-zone capital of $3.65$ --- a 13.7\% per-day reduction. Cumulated over the 1{,}824-day test window (2018--2026), the saving rises to 17.8\% (Figure~ ). Replacement-regime"
+1.60,True,"able trade-off. TimesFM~2.5 and Moirai~2.0 require wider corrected thresholds ($W \approx 1.60$--$1.75$ relative to GJR-GARCH), exceeding the break-even value. At $W = 1.60$, the capit"
+1.75,True,"de-off. TimesFM~2.5 and Moirai~2.0 require wider corrected thresholds ($W \approx 1.60$--$1.75$ relative to GJR-GARCH), exceeding the break-even value. At $W = 1.60$, the capital ratio"
+1.60,True,"($W \approx 1.60$--$1.75$ relative to GJR-GARCH), exceeding the break-even value. At $W = 1.60$, the capital ratio is $(3.00/3.65) \times 1.60 = 1.315$: the wider VaR threshold more th"
+3.00,True,"tive to GJR-GARCH), exceeding the break-even value. At $W = 1.60$, the capital ratio is $(3.00/3.65) \times 1.60 = 1.315$: the wider VaR threshold more than offsets the Green-zone mult"
+3.65,True,"to GJR-GARCH), exceeding the break-even value. At $W = 1.60$, the capital ratio is $(3.00/3.65) \times 1.60 = 1.315$: the wider VaR threshold more than offsets the Green-zone multiplie"
+1.60,True,", exceeding the break-even value. At $W = 1.60$, the capital ratio is $(3.00/3.65) \times 1.60 = 1.315$: the wider VaR threshold more than offsets the Green-zone multiplier benefit. \"
+1.315,True,"ding the break-even value. At $W = 1.60$, the capital ratio is $(3.00/3.65) \times 1.60 = 1.315$: the wider VaR threshold more than offsets the Green-zone multiplier benefit. \begin{fi"
+0.001,True,"the zone alone cannot distinguish that case from CAViaR, which is compliant at $\bar R = 0.001$. The sign of $R$ carries the diagnosis and should not be discarded. A small negative va"
+240,True,"aw forecast fails a backtest, and not otherwise. At $\alpha = 0.01$ that rule skips 44 of 240 pairs, avoids 41 of the 84 degradations the rolling estimator would otherwise cause, and"
+176,True,"ds 41 of the 84 degradations the rolling estimator would otherwise cause, and retains all 176 Basel zone upgrades --- zero cost on the regulatory axis. It does not bind at $\alpha \ge"
+240,True,"ulation, and figure generation --- together with machine-readable result matrices for all 240 model--asset pairs ($\qVstat$, $\hat\pi$, Basel Traffic Light, Kupiec $p$, Christoffersen"
+330941,True,"rt of the project ``MA'AT -- Autonomous Model for Textual Assistance'', SMIS Code 2021+: 330941, funding contract no.\ 390090/11.11.2025, project co-financed by the European Regional De"
+390090,False,"utonomous Model for Textual Assistance'', SMIS Code 2021+: 330941, funding contract no.\ 390090/11.11.2025, project co-financed by the European Regional Development Fund through the Sma"
+999,True,"stortion under cross-asset dependence, we apply a Rademacher wild-cluster bootstrap ($B = 999$, $J = 24$ asset clusters) to the panel-pooled Kupiec LR and Diebold--Mariano statistics."
+500,True,"formal Threshold} \begin{figure}[H] \centering {Distribution of $\qVstat$ across 500 Monte Carlo replications per DGP at $T\in\{1{,}000,5{,}000\}$. The dashed line at zero"
+250,True,"utoregressive}, Gaussian ES for GARCH-Normal and EWMA, and the empirical tail mean of the 250-day rolling window for Historical Simulation. The conformal correction shifts the predic"
+100,True,"(70\%) of each of the nine base forecasters. The QS-optimal configuration ($n_\text{est}=100$, $d=3$, $\eta=0.05$) improves the pinball loss by 5\% relative to the conservative setti"
+100,True,"age: $\hat\pi=.015$ (vs.\ .011), 5/9 Kupiec rejections (vs.\ 0/9), and 88.9\% Green (vs.\ 100\%). Higher-capacity configurations ($d=5$ or $n_\text{est}=500$) do not improve QS furthe"
+500,True,"9), and 88.9\% Green (vs.\ 100\%). Higher-capacity configurations ($d=5$ or $n_\text{est}=500$) do not improve QS further and degrade Green-zone rates, consistent with the bias-varian"
+0.035,True,"near-zero daily ES values; the mean absolute difference from the canonical formulation is 0.035 $Z_2$ units, and the modified and canonical versions agree on the 5\% pass/fail classific"
+240,True,"a_2\,\hat\pi^{\mathrm{raw}}_{m,a} + \varepsilon_{m,a}, \end{equation} estimated across $n=240$ model--asset pairs $(m,a)$. Standard errors are computed under one-way clustering by ass"
+600,True,"iec statistic pools the violation series across the 24 assets, giving approximately $36{,}600$ test observations per model. Under the null $H_0\colon\hat\pi_{m,a}=\alpha$ for all $a$,"
+2.10,True,"_1)]<0$, the GARCH(1,1) process admits a unique strictly stationary solution p[Theorem~2.10]{francq2019garch}. Under standard regularity conditions, it is geometrically $\beta$-mix"
+0.95,True,")$; (iv) skewed-$t(3, -0.5)$ p{hansen1994autoregressive}; and (v) a mixture of Normals, $0.95\,\mathcal N(0,1)+0.05\,\mathcal N(0,25)$. In all cases the forecaster assumes Normal inno"
+0.18,True,"-binding for the four pairs tested, which span the score-persistence range $\hat\rho \in [0.18, 0.67]$. \begin{figure}[H] \centering {Distributional drift diagnostic $\hat{"
+0.67,True,"ng for the four pairs tested, which span the score-persistence range $\hat\rho \in [0.18, 0.67]$. \begin{figure}[H] \centering {Distributional drift diagnostic $\hat{\delta"
+500,True,ntering {Distributional drift diagnostic $\hat{\delta}_w(t)$ for Lag-Llama on S\&P~500 ($w = 250$). Top panel: empirical total variation distance between the first and seco
+250,True,{Distributional drift diagnostic $\hat{\delta}_w(t)$ for Lag-Llama on S\&P~500 ($w = 250$). Top panel: empirical total variation distance between the first and second halves of
+250,True,ers. An empirical estimator such as Historical Simulation returns an order statistic of a 250-observation window and therefore takes few distinct values by construction; that is a pro

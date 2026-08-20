@@ -1,12 +1,12 @@
 \begin{table}[H]
 	\centering
-	\caption{Small-sample behaviour of $\qVstat$ (500 replications, $\alpha=0.01$, $f_c=0.70$). The forecaster assumes Normal innovations regardless of the true DGP. Green\% denotes the percentage of replications satisfying the Basel Traffic Light Green zone (at most 4 violations over 250 observations, scaled to sample size).}
+	\caption{Small-sample behaviour of $\qV$ (500 replications, $\alpha=0.01$, $f_c=0.70$). The forecaster assumes Normal innovations regardless of the true DGP. Green\% denotes the percentage of replications satisfying the Basel Traffic Light Green zone (at most 4 violations over 250 observations, scaled to sample size).}
 	\label{tab:small_sample_qV}
 	\footnotesize
 	\begin{tabular}{@{}llcccc@{}}
-		\hline\hline
-		DGP & $T$ & Mean $\qVstat$ & Std $\qVstat$ & $\hat\pi$ & Green\% \\
-		\hline
+		\toprule
+		DGP & $T$ & Mean $\qV$ & Std $\qV$ & $\hat\pi$ & Green\% \\
+		\midrule
 		Normal (correct)
 		& 250   & 0.0009 & 0.0039 & 0.018 & 45 \\
 		& 500   & 0.0017 & 0.0034 & 0.014 & 57 \\
@@ -41,7 +41,7 @@
 		& 1,000   & 0.0083 & 0.0073 & 0.011 & 71 \\
 		& 2,000   & 0.0079 & 0.0050 & 0.011 & 84 \\
 		& 5,000   & 0.0082 & 0.0033 & 0.010 & 96 \\
-		\hline\hline
+		\bottomrule
 	\end{tabular}
 	\begin{minipage}{\linewidth}\footnotesize
 		\smallskip
@@ -55,8 +55,8 @@
 		forecaster (window $= \min(250, T/5)$), which adds estimation
 		error in~$\hat\sigma_t$ to the misspecification of innovations.
 		The two sources combine to produce the higher dispersion
-		of~$\qVstat$ observed at small~$T$.
-		The standard deviation of $\qVstat$ decreases monotonically with $T$
+		of~$\qV$ observed at small~$T$.
+		The standard deviation of $\qV$ decreases monotonically with $T$
 		across all DGPs (a 3--5$\times$ reduction from $T=250$ to $T=5{,}000$),
 		confirming that estimation error in the conformal threshold is
 		dominated by tail sparsity at small sample sizes and vanishes at

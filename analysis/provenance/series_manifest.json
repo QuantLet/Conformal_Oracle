@@ -1,0 +1,2592 @@
+[
+ {
+  "model": "Chronos-Small",
+  "asset": "ASX200 2",
+  "path": "cfp_ijf_data/chronos_small/ASX200 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "ASX200",
+  "path": "cfp_ijf_data/chronos_small/ASX200.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "AUDUSD 2",
+  "path": "cfp_ijf_data/chronos_small/AUDUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "AUDUSD",
+  "path": "cfp_ijf_data/chronos_small/AUDUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "BOVESPA 2",
+  "path": "cfp_ijf_data/chronos_small/BOVESPA 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "BOVESPA",
+  "path": "cfp_ijf_data/chronos_small/BOVESPA.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "BTC 2",
+  "path": "cfp_ijf_data/chronos_small/BTC 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "BTC",
+  "path": "cfp_ijf_data/chronos_small/BTC.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "CACT",
+  "path": "cfp_ijf_data/chronos_small/CACT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "CBU0 2",
+  "path": "cfp_ijf_data/chronos_small/CBU0 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "CBU0",
+  "path": "cfp_ijf_data/chronos_small/CBU0.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "DJCI 2",
+  "path": "cfp_ijf_data/chronos_small/DJCI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "DJCI",
+  "path": "cfp_ijf_data/chronos_small/DJCI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "ETH 2",
+  "path": "cfp_ijf_data/chronos_small/ETH 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "ETH",
+  "path": "cfp_ijf_data/chronos_small/ETH.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "EURUSD 2",
+  "path": "cfp_ijf_data/chronos_small/EURUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "EURUSD",
+  "path": "cfp_ijf_data/chronos_small/EURUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "FCHI 2",
+  "path": "cfp_ijf_data/chronos_small/FCHI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "FCHI",
+  "path": "cfp_ijf_data/chronos_small/FCHI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "FTSE100 2",
+  "path": "cfp_ijf_data/chronos_small/FTSE100 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "FTSE100",
+  "path": "cfp_ijf_data/chronos_small/FTSE100.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "GBPUSD 2",
+  "path": "cfp_ijf_data/chronos_small/GBPUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "GBPUSD",
+  "path": "cfp_ijf_data/chronos_small/GBPUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "GDAXI 2",
+  "path": "cfp_ijf_data/chronos_small/GDAXI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "GDAXI",
+  "path": "cfp_ijf_data/chronos_small/GDAXI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "GOLD 2",
+  "path": "cfp_ijf_data/chronos_small/GOLD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "GOLD",
+  "path": "cfp_ijf_data/chronos_small/GOLD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "HSI 2",
+  "path": "cfp_ijf_data/chronos_small/HSI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "HSI",
+  "path": "cfp_ijf_data/chronos_small/HSI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "IBGL 2",
+  "path": "cfp_ijf_data/chronos_small/IBGL 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "IBGL",
+  "path": "cfp_ijf_data/chronos_small/IBGL.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "ICLN 2",
+  "path": "cfp_ijf_data/chronos_small/ICLN 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "ICLN",
+  "path": "cfp_ijf_data/chronos_small/ICLN.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "NATGAS 2",
+  "path": "cfp_ijf_data/chronos_small/NATGAS 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "NATGAS",
+  "path": "cfp_ijf_data/chronos_small/NATGAS.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "NIFTY 2",
+  "path": "cfp_ijf_data/chronos_small/NIFTY 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "NIFTY",
+  "path": "cfp_ijf_data/chronos_small/NIFTY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "NIKKEI 2",
+  "path": "cfp_ijf_data/chronos_small/NIKKEI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "NIKKEI",
+  "path": "cfp_ijf_data/chronos_small/NIKKEI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "SP500 2",
+  "path": "cfp_ijf_data/chronos_small/SP500 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "SP500",
+  "path": "cfp_ijf_data/chronos_small/SP500.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "STOXX 2",
+  "path": "cfp_ijf_data/chronos_small/STOXX 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "STOXX",
+  "path": "cfp_ijf_data/chronos_small/STOXX.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "TLT 2",
+  "path": "cfp_ijf_data/chronos_small/TLT 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "TLT",
+  "path": "cfp_ijf_data/chronos_small/TLT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "USDJPY 2",
+  "path": "cfp_ijf_data/chronos_small/USDJPY 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "USDJPY",
+  "path": "cfp_ijf_data/chronos_small/USDJPY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "WTI 2",
+  "path": "cfp_ijf_data/chronos_small/WTI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Small",
+  "asset": "WTI",
+  "path": "cfp_ijf_data/chronos_small/WTI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "ASX200 2",
+  "path": "cfp_ijf_data/chronos_mini/ASX200 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "ASX200",
+  "path": "cfp_ijf_data/chronos_mini/ASX200.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "AUDUSD 2",
+  "path": "cfp_ijf_data/chronos_mini/AUDUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "AUDUSD",
+  "path": "cfp_ijf_data/chronos_mini/AUDUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "BOVESPA 2",
+  "path": "cfp_ijf_data/chronos_mini/BOVESPA 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "BOVESPA",
+  "path": "cfp_ijf_data/chronos_mini/BOVESPA.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "BTC 2",
+  "path": "cfp_ijf_data/chronos_mini/BTC 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "BTC",
+  "path": "cfp_ijf_data/chronos_mini/BTC.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "CACT",
+  "path": "cfp_ijf_data/chronos_mini/CACT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "CBU0 2",
+  "path": "cfp_ijf_data/chronos_mini/CBU0 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "CBU0",
+  "path": "cfp_ijf_data/chronos_mini/CBU0.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "DJCI 2",
+  "path": "cfp_ijf_data/chronos_mini/DJCI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "DJCI",
+  "path": "cfp_ijf_data/chronos_mini/DJCI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "ETH 2",
+  "path": "cfp_ijf_data/chronos_mini/ETH 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "ETH",
+  "path": "cfp_ijf_data/chronos_mini/ETH.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "EURUSD 2",
+  "path": "cfp_ijf_data/chronos_mini/EURUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "EURUSD",
+  "path": "cfp_ijf_data/chronos_mini/EURUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "FCHI 2",
+  "path": "cfp_ijf_data/chronos_mini/FCHI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "FCHI",
+  "path": "cfp_ijf_data/chronos_mini/FCHI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "FTSE100 2",
+  "path": "cfp_ijf_data/chronos_mini/FTSE100 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "FTSE100",
+  "path": "cfp_ijf_data/chronos_mini/FTSE100.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "GBPUSD 2",
+  "path": "cfp_ijf_data/chronos_mini/GBPUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "GBPUSD",
+  "path": "cfp_ijf_data/chronos_mini/GBPUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "GDAXI 2",
+  "path": "cfp_ijf_data/chronos_mini/GDAXI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "GDAXI",
+  "path": "cfp_ijf_data/chronos_mini/GDAXI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "GOLD 2",
+  "path": "cfp_ijf_data/chronos_mini/GOLD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "GOLD",
+  "path": "cfp_ijf_data/chronos_mini/GOLD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "HSI 2",
+  "path": "cfp_ijf_data/chronos_mini/HSI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "HSI",
+  "path": "cfp_ijf_data/chronos_mini/HSI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "IBGL 2",
+  "path": "cfp_ijf_data/chronos_mini/IBGL 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "IBGL",
+  "path": "cfp_ijf_data/chronos_mini/IBGL.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "ICLN 2",
+  "path": "cfp_ijf_data/chronos_mini/ICLN 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "ICLN",
+  "path": "cfp_ijf_data/chronos_mini/ICLN.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "NATGAS 2",
+  "path": "cfp_ijf_data/chronos_mini/NATGAS 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "NATGAS",
+  "path": "cfp_ijf_data/chronos_mini/NATGAS.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "NIFTY 2",
+  "path": "cfp_ijf_data/chronos_mini/NIFTY 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "NIFTY",
+  "path": "cfp_ijf_data/chronos_mini/NIFTY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "NIKKEI 2",
+  "path": "cfp_ijf_data/chronos_mini/NIKKEI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "NIKKEI",
+  "path": "cfp_ijf_data/chronos_mini/NIKKEI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "SP500 2",
+  "path": "cfp_ijf_data/chronos_mini/SP500 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "SP500",
+  "path": "cfp_ijf_data/chronos_mini/SP500.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "STOXX 2",
+  "path": "cfp_ijf_data/chronos_mini/STOXX 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "STOXX",
+  "path": "cfp_ijf_data/chronos_mini/STOXX.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "TLT 2",
+  "path": "cfp_ijf_data/chronos_mini/TLT 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "TLT",
+  "path": "cfp_ijf_data/chronos_mini/TLT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "USDJPY 2",
+  "path": "cfp_ijf_data/chronos_mini/USDJPY 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "USDJPY",
+  "path": "cfp_ijf_data/chronos_mini/USDJPY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "WTI 2",
+  "path": "cfp_ijf_data/chronos_mini/WTI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "Chronos-Mini",
+  "asset": "WTI",
+  "path": "cfp_ijf_data/chronos_mini/WTI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_tokenised"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "ASX200 2",
+  "path": "cfp_ijf_data/timesfm25/ASX200 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "ASX200",
+  "path": "cfp_ijf_data/timesfm25/ASX200.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "AUDUSD 2",
+  "path": "cfp_ijf_data/timesfm25/AUDUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "AUDUSD",
+  "path": "cfp_ijf_data/timesfm25/AUDUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "BOVESPA 2",
+  "path": "cfp_ijf_data/timesfm25/BOVESPA 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "BOVESPA",
+  "path": "cfp_ijf_data/timesfm25/BOVESPA.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "BTC 2",
+  "path": "cfp_ijf_data/timesfm25/BTC 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "BTC",
+  "path": "cfp_ijf_data/timesfm25/BTC.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "CACT",
+  "path": "cfp_ijf_data/timesfm25/CACT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "CBU0 2",
+  "path": "cfp_ijf_data/timesfm25/CBU0 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "CBU0",
+  "path": "cfp_ijf_data/timesfm25/CBU0.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "DJCI 2",
+  "path": "cfp_ijf_data/timesfm25/DJCI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "DJCI",
+  "path": "cfp_ijf_data/timesfm25/DJCI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "ETH 2",
+  "path": "cfp_ijf_data/timesfm25/ETH 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "ETH",
+  "path": "cfp_ijf_data/timesfm25/ETH.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "EURUSD 2",
+  "path": "cfp_ijf_data/timesfm25/EURUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "EURUSD",
+  "path": "cfp_ijf_data/timesfm25/EURUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "FCHI 2",
+  "path": "cfp_ijf_data/timesfm25/FCHI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "FCHI",
+  "path": "cfp_ijf_data/timesfm25/FCHI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "FTSE100 2",
+  "path": "cfp_ijf_data/timesfm25/FTSE100 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "FTSE100",
+  "path": "cfp_ijf_data/timesfm25/FTSE100.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "GBPUSD 2",
+  "path": "cfp_ijf_data/timesfm25/GBPUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "GBPUSD",
+  "path": "cfp_ijf_data/timesfm25/GBPUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "GDAXI 2",
+  "path": "cfp_ijf_data/timesfm25/GDAXI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "GDAXI",
+  "path": "cfp_ijf_data/timesfm25/GDAXI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "GOLD 2",
+  "path": "cfp_ijf_data/timesfm25/GOLD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "GOLD",
+  "path": "cfp_ijf_data/timesfm25/GOLD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "HSI 2",
+  "path": "cfp_ijf_data/timesfm25/HSI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "HSI",
+  "path": "cfp_ijf_data/timesfm25/HSI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "IBGL 2",
+  "path": "cfp_ijf_data/timesfm25/IBGL 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "IBGL",
+  "path": "cfp_ijf_data/timesfm25/IBGL.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "ICLN 2",
+  "path": "cfp_ijf_data/timesfm25/ICLN 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "ICLN",
+  "path": "cfp_ijf_data/timesfm25/ICLN.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "NATGAS 2",
+  "path": "cfp_ijf_data/timesfm25/NATGAS 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "NATGAS",
+  "path": "cfp_ijf_data/timesfm25/NATGAS.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "NIFTY 2",
+  "path": "cfp_ijf_data/timesfm25/NIFTY 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "NIFTY",
+  "path": "cfp_ijf_data/timesfm25/NIFTY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "NIKKEI 2",
+  "path": "cfp_ijf_data/timesfm25/NIKKEI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "NIKKEI",
+  "path": "cfp_ijf_data/timesfm25/NIKKEI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "SP500 2",
+  "path": "cfp_ijf_data/timesfm25/SP500 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "SP500",
+  "path": "cfp_ijf_data/timesfm25/SP500.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "STOXX 2",
+  "path": "cfp_ijf_data/timesfm25/STOXX 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "STOXX",
+  "path": "cfp_ijf_data/timesfm25/STOXX.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "TLT 2",
+  "path": "cfp_ijf_data/timesfm25/TLT 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "TLT",
+  "path": "cfp_ijf_data/timesfm25/TLT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "USDJPY 2",
+  "path": "cfp_ijf_data/timesfm25/USDJPY 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "USDJPY",
+  "path": "cfp_ijf_data/timesfm25/USDJPY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "WTI 2",
+  "path": "cfp_ijf_data/timesfm25/WTI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "TimesFM-2.5",
+  "asset": "WTI",
+  "path": "cfp_ijf_data/timesfm25/WTI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "ASX200 2",
+  "path": "cfp_ijf_data/moirai2/ASX200 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "ASX200",
+  "path": "cfp_ijf_data/moirai2/ASX200.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "AUDUSD 2",
+  "path": "cfp_ijf_data/moirai2/AUDUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "AUDUSD",
+  "path": "cfp_ijf_data/moirai2/AUDUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "BOVESPA 2",
+  "path": "cfp_ijf_data/moirai2/BOVESPA 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "BOVESPA",
+  "path": "cfp_ijf_data/moirai2/BOVESPA.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "BTC 2",
+  "path": "cfp_ijf_data/moirai2/BTC 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "BTC",
+  "path": "cfp_ijf_data/moirai2/BTC.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "CACT 2",
+  "path": "cfp_ijf_data/moirai2/CACT 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "CACT",
+  "path": "cfp_ijf_data/moirai2/CACT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "CBU0 2",
+  "path": "cfp_ijf_data/moirai2/CBU0 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "CBU0",
+  "path": "cfp_ijf_data/moirai2/CBU0.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "DJCI 2",
+  "path": "cfp_ijf_data/moirai2/DJCI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "DJCI",
+  "path": "cfp_ijf_data/moirai2/DJCI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "ETH 2",
+  "path": "cfp_ijf_data/moirai2/ETH 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "ETH",
+  "path": "cfp_ijf_data/moirai2/ETH.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "EURUSD 2",
+  "path": "cfp_ijf_data/moirai2/EURUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "EURUSD",
+  "path": "cfp_ijf_data/moirai2/EURUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "FCHI 2",
+  "path": "cfp_ijf_data/moirai2/FCHI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "FCHI",
+  "path": "cfp_ijf_data/moirai2/FCHI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "FTSE100 2",
+  "path": "cfp_ijf_data/moirai2/FTSE100 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "FTSE100",
+  "path": "cfp_ijf_data/moirai2/FTSE100.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "GBPUSD 2",
+  "path": "cfp_ijf_data/moirai2/GBPUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "GBPUSD",
+  "path": "cfp_ijf_data/moirai2/GBPUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "GDAXI 2",
+  "path": "cfp_ijf_data/moirai2/GDAXI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "GDAXI",
+  "path": "cfp_ijf_data/moirai2/GDAXI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "GOLD 2",
+  "path": "cfp_ijf_data/moirai2/GOLD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "GOLD",
+  "path": "cfp_ijf_data/moirai2/GOLD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "HSI 2",
+  "path": "cfp_ijf_data/moirai2/HSI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "HSI",
+  "path": "cfp_ijf_data/moirai2/HSI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "IBGL 2",
+  "path": "cfp_ijf_data/moirai2/IBGL 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "IBGL",
+  "path": "cfp_ijf_data/moirai2/IBGL.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "ICLN 2",
+  "path": "cfp_ijf_data/moirai2/ICLN 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "ICLN",
+  "path": "cfp_ijf_data/moirai2/ICLN.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "NATGAS 2",
+  "path": "cfp_ijf_data/moirai2/NATGAS 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "NATGAS",
+  "path": "cfp_ijf_data/moirai2/NATGAS.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "NIFTY 2",
+  "path": "cfp_ijf_data/moirai2/NIFTY 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "NIFTY",
+  "path": "cfp_ijf_data/moirai2/NIFTY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "NIKKEI 2",
+  "path": "cfp_ijf_data/moirai2/NIKKEI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "NIKKEI",
+  "path": "cfp_ijf_data/moirai2/NIKKEI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "SP500 2",
+  "path": "cfp_ijf_data/moirai2/SP500 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "SP500",
+  "path": "cfp_ijf_data/moirai2/SP500.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "STOXX 2",
+  "path": "cfp_ijf_data/moirai2/STOXX 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "STOXX",
+  "path": "cfp_ijf_data/moirai2/STOXX.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "TLT 2",
+  "path": "cfp_ijf_data/moirai2/TLT 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "TLT",
+  "path": "cfp_ijf_data/moirai2/TLT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "USDJPY 2",
+  "path": "cfp_ijf_data/moirai2/USDJPY 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "USDJPY",
+  "path": "cfp_ijf_data/moirai2/USDJPY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "WTI 2",
+  "path": "cfp_ijf_data/moirai2/WTI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-2.0",
+  "asset": "WTI",
+  "path": "cfp_ijf_data/moirai2/WTI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "grid_closure"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "ASX200",
+  "path": "cfp_ijf_data/moirai/ASX200.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "AUDUSD",
+  "path": "cfp_ijf_data/moirai/AUDUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "BOVESPA",
+  "path": "cfp_ijf_data/moirai/BOVESPA.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "BTC",
+  "path": "cfp_ijf_data/moirai/BTC.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "CBU0",
+  "path": "cfp_ijf_data/moirai/CBU0.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "DJCI",
+  "path": "cfp_ijf_data/moirai/DJCI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "ETH",
+  "path": "cfp_ijf_data/moirai/ETH.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "EURUSD",
+  "path": "cfp_ijf_data/moirai/EURUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "FCHI",
+  "path": "cfp_ijf_data/moirai/FCHI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "FTSE100",
+  "path": "cfp_ijf_data/moirai/FTSE100.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "GBPUSD",
+  "path": "cfp_ijf_data/moirai/GBPUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "GDAXI",
+  "path": "cfp_ijf_data/moirai/GDAXI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "GOLD",
+  "path": "cfp_ijf_data/moirai/GOLD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "HSI",
+  "path": "cfp_ijf_data/moirai/HSI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "IBGL",
+  "path": "cfp_ijf_data/moirai/IBGL.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "ICLN",
+  "path": "cfp_ijf_data/moirai/ICLN.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "NATGAS",
+  "path": "cfp_ijf_data/moirai/NATGAS.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "NIFTY",
+  "path": "cfp_ijf_data/moirai/NIFTY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "NIKKEI",
+  "path": "cfp_ijf_data/moirai/NIKKEI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "SP500",
+  "path": "cfp_ijf_data/moirai/SP500.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "STOXX",
+  "path": "cfp_ijf_data/moirai/STOXX.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "TLT",
+  "path": "cfp_ijf_data/moirai/TLT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "USDJPY",
+  "path": "cfp_ijf_data/moirai/USDJPY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Moirai-1.1",
+  "asset": "WTI",
+  "path": "cfp_ijf_data/moirai/WTI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "ASX200 2",
+  "path": "cfp_ijf_data/lagllama/ASX200 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "ASX200",
+  "path": "cfp_ijf_data/lagllama/ASX200.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "AUDUSD 2",
+  "path": "cfp_ijf_data/lagllama/AUDUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "AUDUSD",
+  "path": "cfp_ijf_data/lagllama/AUDUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "BOVESPA 2",
+  "path": "cfp_ijf_data/lagllama/BOVESPA 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "BOVESPA",
+  "path": "cfp_ijf_data/lagllama/BOVESPA.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "BTC 2",
+  "path": "cfp_ijf_data/lagllama/BTC 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "BTC",
+  "path": "cfp_ijf_data/lagllama/BTC.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "CACT",
+  "path": "cfp_ijf_data/lagllama/CACT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "CBU0 2",
+  "path": "cfp_ijf_data/lagllama/CBU0 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "CBU0",
+  "path": "cfp_ijf_data/lagllama/CBU0.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "DJCI 2",
+  "path": "cfp_ijf_data/lagllama/DJCI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "DJCI",
+  "path": "cfp_ijf_data/lagllama/DJCI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "ETH 2",
+  "path": "cfp_ijf_data/lagllama/ETH 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "ETH",
+  "path": "cfp_ijf_data/lagllama/ETH.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "EURUSD 2",
+  "path": "cfp_ijf_data/lagllama/EURUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "EURUSD",
+  "path": "cfp_ijf_data/lagllama/EURUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "FCHI 2",
+  "path": "cfp_ijf_data/lagllama/FCHI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "FCHI",
+  "path": "cfp_ijf_data/lagllama/FCHI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "FTSE100 2",
+  "path": "cfp_ijf_data/lagllama/FTSE100 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "FTSE100",
+  "path": "cfp_ijf_data/lagllama/FTSE100.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "GBPUSD 2",
+  "path": "cfp_ijf_data/lagllama/GBPUSD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "GBPUSD",
+  "path": "cfp_ijf_data/lagllama/GBPUSD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "GDAXI 2",
+  "path": "cfp_ijf_data/lagllama/GDAXI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "GDAXI",
+  "path": "cfp_ijf_data/lagllama/GDAXI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "GOLD 2",
+  "path": "cfp_ijf_data/lagllama/GOLD 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "GOLD",
+  "path": "cfp_ijf_data/lagllama/GOLD.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "HSI 2",
+  "path": "cfp_ijf_data/lagllama/HSI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "HSI",
+  "path": "cfp_ijf_data/lagllama/HSI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "IBGL 2",
+  "path": "cfp_ijf_data/lagllama/IBGL 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "IBGL",
+  "path": "cfp_ijf_data/lagllama/IBGL.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "ICLN 2",
+  "path": "cfp_ijf_data/lagllama/ICLN 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "ICLN",
+  "path": "cfp_ijf_data/lagllama/ICLN.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "NATGAS 2",
+  "path": "cfp_ijf_data/lagllama/NATGAS 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "NATGAS",
+  "path": "cfp_ijf_data/lagllama/NATGAS.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "NIFTY 2",
+  "path": "cfp_ijf_data/lagllama/NIFTY 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "NIFTY",
+  "path": "cfp_ijf_data/lagllama/NIFTY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "NIKKEI 2",
+  "path": "cfp_ijf_data/lagllama/NIKKEI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "NIKKEI",
+  "path": "cfp_ijf_data/lagllama/NIKKEI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "SP500 2",
+  "path": "cfp_ijf_data/lagllama/SP500 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "SP500",
+  "path": "cfp_ijf_data/lagllama/SP500.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "STOXX 2",
+  "path": "cfp_ijf_data/lagllama/STOXX 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "STOXX",
+  "path": "cfp_ijf_data/lagllama/STOXX.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "TLT 2",
+  "path": "cfp_ijf_data/lagllama/TLT 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "TLT",
+  "path": "cfp_ijf_data/lagllama/TLT.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "USDJPY 2",
+  "path": "cfp_ijf_data/lagllama/USDJPY 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "USDJPY",
+  "path": "cfp_ijf_data/lagllama/USDJPY.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "WTI 2",
+  "path": "cfp_ijf_data/lagllama/WTI 2.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "Lag-Llama",
+  "asset": "WTI",
+  "path": "cfp_ijf_data/lagllama/WTI.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "sample_continuous"
+ },
+ {
+  "model": "EWMA",
+  "asset": "ASX200",
+  "path": "cfp_ijf_data/benchmarks/ASX200_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "ASX200",
+  "path": "cfp_ijf_data/benchmarks/ASX200_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "ASX200",
+  "path": "cfp_ijf_data/benchmarks/ASX200_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "ASX200",
+  "path": "cfp_ijf_data/benchmarks/ASX200_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "AUDUSD",
+  "path": "cfp_ijf_data/benchmarks/AUDUSD_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "AUDUSD",
+  "path": "cfp_ijf_data/benchmarks/AUDUSD_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "AUDUSD",
+  "path": "cfp_ijf_data/benchmarks/AUDUSD_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "AUDUSD",
+  "path": "cfp_ijf_data/benchmarks/AUDUSD_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "BOVESPA",
+  "path": "cfp_ijf_data/benchmarks/BOVESPA_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "BOVESPA",
+  "path": "cfp_ijf_data/benchmarks/BOVESPA_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "BOVESPA",
+  "path": "cfp_ijf_data/benchmarks/BOVESPA_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "BOVESPA",
+  "path": "cfp_ijf_data/benchmarks/BOVESPA_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "BTC",
+  "path": "cfp_ijf_data/benchmarks/BTC_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "BTC",
+  "path": "cfp_ijf_data/benchmarks/BTC_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "BTC",
+  "path": "cfp_ijf_data/benchmarks/BTC_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "BTC",
+  "path": "cfp_ijf_data/benchmarks/BTC_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "CACT",
+  "path": "cfp_ijf_data/benchmarks/CACT_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "CACT",
+  "path": "cfp_ijf_data/benchmarks/CACT_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "CACT",
+  "path": "cfp_ijf_data/benchmarks/CACT_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "CACT",
+  "path": "cfp_ijf_data/benchmarks/CACT_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "CBU0",
+  "path": "cfp_ijf_data/benchmarks/CBU0_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "CBU0",
+  "path": "cfp_ijf_data/benchmarks/CBU0_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "CBU0",
+  "path": "cfp_ijf_data/benchmarks/CBU0_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "CBU0",
+  "path": "cfp_ijf_data/benchmarks/CBU0_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "DJCI",
+  "path": "cfp_ijf_data/benchmarks/DJCI_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "DJCI",
+  "path": "cfp_ijf_data/benchmarks/DJCI_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "DJCI",
+  "path": "cfp_ijf_data/benchmarks/DJCI_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "DJCI",
+  "path": "cfp_ijf_data/benchmarks/DJCI_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "ETH",
+  "path": "cfp_ijf_data/benchmarks/ETH_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "ETH",
+  "path": "cfp_ijf_data/benchmarks/ETH_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "ETH",
+  "path": "cfp_ijf_data/benchmarks/ETH_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "ETH",
+  "path": "cfp_ijf_data/benchmarks/ETH_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "EURUSD",
+  "path": "cfp_ijf_data/benchmarks/EURUSD_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "EURUSD",
+  "path": "cfp_ijf_data/benchmarks/EURUSD_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "EURUSD",
+  "path": "cfp_ijf_data/benchmarks/EURUSD_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "EURUSD",
+  "path": "cfp_ijf_data/benchmarks/EURUSD_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "FCHI",
+  "path": "cfp_ijf_data/benchmarks/FCHI_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "FCHI",
+  "path": "cfp_ijf_data/benchmarks/FCHI_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "FCHI",
+  "path": "cfp_ijf_data/benchmarks/FCHI_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "FCHI",
+  "path": "cfp_ijf_data/benchmarks/FCHI_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "FTSE100",
+  "path": "cfp_ijf_data/benchmarks/FTSE100_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "FTSE100",
+  "path": "cfp_ijf_data/benchmarks/FTSE100_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "FTSE100",
+  "path": "cfp_ijf_data/benchmarks/FTSE100_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "FTSE100",
+  "path": "cfp_ijf_data/benchmarks/FTSE100_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "GBPUSD",
+  "path": "cfp_ijf_data/benchmarks/GBPUSD_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "GBPUSD",
+  "path": "cfp_ijf_data/benchmarks/GBPUSD_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "GBPUSD",
+  "path": "cfp_ijf_data/benchmarks/GBPUSD_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "GBPUSD",
+  "path": "cfp_ijf_data/benchmarks/GBPUSD_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "GDAXI",
+  "path": "cfp_ijf_data/benchmarks/GDAXI_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "GDAXI",
+  "path": "cfp_ijf_data/benchmarks/GDAXI_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "GDAXI",
+  "path": "cfp_ijf_data/benchmarks/GDAXI_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "GDAXI",
+  "path": "cfp_ijf_data/benchmarks/GDAXI_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "GOLD",
+  "path": "cfp_ijf_data/benchmarks/GOLD_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "GOLD",
+  "path": "cfp_ijf_data/benchmarks/GOLD_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "GOLD",
+  "path": "cfp_ijf_data/benchmarks/GOLD_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "GOLD",
+  "path": "cfp_ijf_data/benchmarks/GOLD_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "HSI",
+  "path": "cfp_ijf_data/benchmarks/HSI_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "HSI",
+  "path": "cfp_ijf_data/benchmarks/HSI_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "HSI",
+  "path": "cfp_ijf_data/benchmarks/HSI_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "HSI",
+  "path": "cfp_ijf_data/benchmarks/HSI_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "IBGL",
+  "path": "cfp_ijf_data/benchmarks/IBGL_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "IBGL",
+  "path": "cfp_ijf_data/benchmarks/IBGL_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "IBGL",
+  "path": "cfp_ijf_data/benchmarks/IBGL_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "IBGL",
+  "path": "cfp_ijf_data/benchmarks/IBGL_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "ICLN",
+  "path": "cfp_ijf_data/benchmarks/ICLN_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "ICLN",
+  "path": "cfp_ijf_data/benchmarks/ICLN_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "ICLN",
+  "path": "cfp_ijf_data/benchmarks/ICLN_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "ICLN",
+  "path": "cfp_ijf_data/benchmarks/ICLN_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "NATGAS",
+  "path": "cfp_ijf_data/benchmarks/NATGAS_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "NATGAS",
+  "path": "cfp_ijf_data/benchmarks/NATGAS_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "NATGAS",
+  "path": "cfp_ijf_data/benchmarks/NATGAS_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "NATGAS",
+  "path": "cfp_ijf_data/benchmarks/NATGAS_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "NIFTY",
+  "path": "cfp_ijf_data/benchmarks/NIFTY_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "NIFTY",
+  "path": "cfp_ijf_data/benchmarks/NIFTY_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "NIFTY",
+  "path": "cfp_ijf_data/benchmarks/NIFTY_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "NIFTY",
+  "path": "cfp_ijf_data/benchmarks/NIFTY_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "NIKKEI",
+  "path": "cfp_ijf_data/benchmarks/NIKKEI_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "NIKKEI",
+  "path": "cfp_ijf_data/benchmarks/NIKKEI_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "NIKKEI",
+  "path": "cfp_ijf_data/benchmarks/NIKKEI_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "NIKKEI",
+  "path": "cfp_ijf_data/benchmarks/NIKKEI_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "SP500",
+  "path": "cfp_ijf_data/benchmarks/SP500_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "SP500",
+  "path": "cfp_ijf_data/benchmarks/SP500_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "SP500",
+  "path": "cfp_ijf_data/benchmarks/SP500_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "SP500",
+  "path": "cfp_ijf_data/benchmarks/SP500_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "STOXX",
+  "path": "cfp_ijf_data/benchmarks/STOXX_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "STOXX",
+  "path": "cfp_ijf_data/benchmarks/STOXX_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "STOXX",
+  "path": "cfp_ijf_data/benchmarks/STOXX_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "STOXX",
+  "path": "cfp_ijf_data/benchmarks/STOXX_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "TLT",
+  "path": "cfp_ijf_data/benchmarks/TLT_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "TLT",
+  "path": "cfp_ijf_data/benchmarks/TLT_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "TLT",
+  "path": "cfp_ijf_data/benchmarks/TLT_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "TLT",
+  "path": "cfp_ijf_data/benchmarks/TLT_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "USDJPY",
+  "path": "cfp_ijf_data/benchmarks/USDJPY_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "USDJPY",
+  "path": "cfp_ijf_data/benchmarks/USDJPY_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "USDJPY",
+  "path": "cfp_ijf_data/benchmarks/USDJPY_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "USDJPY",
+  "path": "cfp_ijf_data/benchmarks/USDJPY_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ },
+ {
+  "model": "EWMA",
+  "asset": "WTI",
+  "path": "cfp_ijf_data/benchmarks/WTI_ewma.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GARCH-N",
+  "asset": "WTI",
+  "path": "cfp_ijf_data/benchmarks/WTI_garch_n.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "GJR-GARCH",
+  "asset": "WTI",
+  "path": "cfp_ijf_data/benchmarks/WTI_gjr_garch.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "parametric"
+ },
+ {
+  "model": "Hist-Sim",
+  "asset": "WTI",
+  "path": "cfp_ijf_data/benchmarks/WTI_hs.parquet",
+  "version": "shipped-2026-05",
+  "estimator_class": "empirical"
+ }
+]

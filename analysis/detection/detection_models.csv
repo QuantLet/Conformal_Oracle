@@ -1,0 +1,14 @@
+model,defect_label,defect_family,assets,R_bar,flag_R,n_qV_neg,flag_qV_sign,kup_fail,flag_kupiec,cc_fail,cc_undefined,flag_cc,pihat
+GJR-GARCH,gjr_quantile_map,classical,24,0.15544746564699727,False,23,True,17,True,2,22,False,0.0041563506911203
+Chronos-Mini-A,none,foundation,24,0.16080204559030897,False,0,False,16,True,6,7,False,0.017809416980433288
+Chronos-Small-A,none,foundation,24,0.14500492699321488,False,0,False,16,True,5,7,False,0.01750089132996764
+EWMA,none,classical,24,0.18432358452755693,False,0,False,19,True,5,11,False,0.020750876026377974
+GARCH-N,none,classical,24,0.1713161260030729,False,0,False,16,True,6,8,False,0.019253652973664544
+GJR-GARCH-t,none,classical,24,0.10108464179451548,False,1,False,11,False,1,12,False,0.014494366003129713
+Hist-Sim,none,classical,24,0.10876420995148935,False,0,False,13,True,11,7,False,0.01581879708832697
+Lag-Llama,none,foundation,24,0.3573258799914782,False,0,False,24,True,0,14,False,0.029379863484821855
+Moirai-1.1,none,foundation,24,0.10561082185870742,False,1,False,11,False,0,16,False,0.015413259461199086
+Moirai-2.0,sign_flip,foundation,24,3.1770466281533127,True,0,False,24,True,2,13,False,0.9878476437625091
+TimesFM-2.5,sign_flip,foundation,24,3.183088174040973,True,0,False,24,True,1,13,False,0.9901656624030178
+Chronos-Mini,top_k_truncation,foundation,24,23.538816112272457,True,0,False,24,True,5,0,False,0.4188408561087113
+Chronos-Small,top_k_truncation,foundation,24,17.26043472430379,True,0,False,24,True,3,0,False,0.3883747401613453

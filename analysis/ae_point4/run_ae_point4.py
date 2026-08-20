@@ -50,25 +50,26 @@ SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
            'TLT', 'IBGL', 'DJCI', 'GOLD', 'WTI', 'NATGAS',
            'BTC', 'ETH', 'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD']
 
-# Moirai-1.1 is the within-family control for the interface finding, so it is
-# carried here alongside the nine models of the main table: 10 x 24 = 240 pairs.
-MODELS = {
-    'Chronos-Small': ('chronos_small', None),
-    'Chronos-Mini':  ('chronos_mini',  None),
-    'TimesFM-2.5':   ('timesfm25',     None),
-    'Moirai-2.0':    ('moirai2',       None),
-    'Moirai-1.1':    ('moirai',        None),
-    'Lag-Llama':     ('lagllama',      None),
-    'GJR-GARCH':     ('benchmarks',    'gjr_garch'),
-    'GARCH-N':       ('benchmarks',    'garch_n'),
-    'Hist-Sim':      ('benchmarks',    'hs'),
-    'EWMA':          ('benchmarks',    'ewma'),
-}
+# Models come from cfp_config so this analysis cannot silently drift from the
+# table it answers to. As of 2026-08-17 that is 13 forecasters x 24 assets x 4
+# alpha levels; it was 10 x 24 when the AE's question was first answered, and
+# the answer below is NOT the same answer, because four of those series were
+# corrected in between.
+sys.path.insert(0, str(BASE / "Quantlets"))
+from cfp_config import MODELS  # noqa: E402
 
-# The two quantile-grid models whose raw 1% violation rate is ~99%. They are
-# interface failures, not forecasters, and they dominate any pooled regression,
-# so results are reported with and without them.
-GRID_FAILURES = {'TimesFM-2.5', 'Moirai-2.0'}
+# Series carrying a traced defect, which dominate any pooled regression and are
+# therefore reported separately rather than averaged in.
+#
+# This set USED to be {TimesFM-2.5, Moirai-2.0}, on the grounds that their raw
+# 1% violation rate was ~99% and they were "interface failures, not
+# forecasters". That was the sign defect, not the interface: corrected, they run
+# at 0.0143 and 0.0178 and are among the best-calibrated raw forecasters in the
+# panel. The two series that now dominate are the Chronos pair sampled under the
+# checkpoint default top_k = 50, whose R-bar is 17.3 and 23.5 against 0.09-0.36
+# for everything else. Their analytic counterparts are NOT in this set -- they
+# are ordinary members of the panel.
+DEFECTIVE_SERIES = {'Chronos-Small', 'Chronos-Mini'}
 
 
 # --------------------------------------------------------------------------- #
@@ -260,7 +261,7 @@ def regression(df: pd.DataFrame, est: str, alpha: float, drop_grid: bool,
     and, at the well-calibrated end, losses (a negative intercept)."""
     d = df[(df["alpha"] == alpha)].copy()
     if drop_grid:
-        d = d[~d["model"].isin(GRID_FAILURES)]
+        d = d[~d["model"].isin(DEFECTIVE_SERIES)]
     if restrict:
         d = d[d["miscal_raw"] < MISCAL_INTERPRETABLE]
     d = d.dropna(subset=[f"rel_{est}", "miscal_raw"])

@@ -52,6 +52,18 @@ DATA = HERE.parent.parent / "cfp_ijf_data"
 TABLES = DATA / "paper_outputs" / "tables"
 
 ALPHA = 0.01
+# NOTE (2026-08-17): the Panel A / Panel B split below, and its labels
+# "Signal-preserving recalibration" and "Effective replacement", are the binary
+# taxonomy WITHDRAWN in Phase 4. They are retained here ONLY because this
+# script's job is to reproduce the table as submitted to IJF, and a reproduction
+# that silently modernises its labels reproduces nothing. Do not import this
+# grouping into new analysis. The R2 table is built by build_table1_r2.py, which
+# orders by continuous R and has no panels.
+#
+# The assignment is also now factually wrong on its own terms: Panel B was
+# defined by ~99% raw violation rates on TimesFM-2.5 and Moirai-2.0, which was
+# the sign defect, not the quantile-grid interface. Corrected, both sit at the
+# top of the panel.
 PANEL_A = ["Moirai-1.1", "Lag-Llama", "GJR-GARCH", "GARCH-N", "Hist-Sim", "EWMA"]
 PANEL_B = ["Chronos-Small", "Chronos-Mini", "TimesFM-2.5", "Moirai-2.0"]
 LABELS = {"TimesFM-2.5": "TimesFM 2.5", "Moirai-2.0": "Moirai 2.0",

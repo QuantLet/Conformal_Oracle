@@ -1,0 +1,277 @@
+{
+ "bib": "drafts/narrow_paper.bib",
+ "tex": [
+  "drafts/narrow_paper.md"
+ ],
+ "n_entries": 8,
+ "counts": {
+  "OK": 8
+ },
+ "records": [
+  {
+   "key": "ansari2024chronos",
+   "type": "article",
+   "lineno": 2,
+   "local": {
+    "title": "Chronos: Learning the Language of Time Series",
+    "author": "Ansari",
+    "author_raw": "Ansari, Abdul Fatir and Stella, Lorenzo and Turkmen, Caner and Zhang, Xiyuan and Mercado, Pedro and Shen, Huibin and Shchur, Oleksandr and Rangapuram, Syama Sundar and Arango, Sebastian Pineda and Kapoor, Shubham and Zschiegner, Jasper and Maddix, Danielle C. and Wang, Hao and Mahoney, Michael W. and Torkkola, Kari and Wilson, Andrew Gordon and Bohlke-Schneider, Michael and Wang, Yuyang",
+    "container": "Transactions on Machine Learning Research",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Chronos: Learning the Language of Time Series",
+    "author": "Ansari",
+    "container": "arXiv:2403.07815",
+    "year": "2024",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2403.07815",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "vovk2005algorithmic",
+   "type": "book",
+   "lineno": 19,
+   "local": {
+    "title": "Algorithmic Learning in a Random World",
+    "author": "Vovk",
+    "author_raw": "Vovk, Vladimir and Gammerman, Alexander and Shafer, Glenn",
+    "container": "Springer",
+    "year": "2005",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1007/b106715"
+   },
+   "remote": {
+    "title": "Algorithmic Learning in a Random World",
+    "author": "",
+    "container": "",
+    "year": "2005",
+    "volume": "",
+    "pages": "",
+    "doi": "10.1007/b106715",
+    "type": "book",
+    "publisher": "Springer-Verlag"
+   },
+   "source": "crossref:10.1007/b106715",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "container 'Springer' vs Crossref 'Springer-Verlag' \u2014 publisher/series naming, not an error"
+   ],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "lei2018distribution",
+   "type": "article",
+   "lineno": 28,
+   "local": {
+    "title": "Distribution-Free Predictive Inference for Regression",
+    "author": "Lei",
+    "author_raw": "Lei, Jing and G'Sell, Max and Rinaldo, Alessandro and Tibshirani, Ryan J. and Wasserman, Larry",
+    "container": "Journal of the American Statistical Association",
+    "year": "2018",
+    "volume": "113",
+    "pages": "1094-1111",
+    "doi": "10.1080/01621459.2017.1307116"
+   },
+   "remote": {
+    "title": "Distribution-Free Predictive Inference for Regression",
+    "author": "Lei",
+    "container": "Journal of the American Statistical Association",
+    "year": "2018",
+    "volume": "113",
+    "pages": "1094-1111",
+    "doi": "10.1080/01621459.2017.1307116",
+    "type": "journal-article",
+    "publisher": "Informa UK Limited"
+   },
+   "source": "crossref:10.1080/01621459.2017.1307116",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "christoffersen1998evaluating",
+   "type": "article",
+   "lineno": 40,
+   "local": {
+    "title": "Evaluating Interval Forecasts",
+    "author": "Christoffersen",
+    "author_raw": "Christoffersen, Peter F.",
+    "container": "International Economic Review",
+    "year": "1998",
+    "volume": "39",
+    "pages": "841-862",
+    "doi": "10.2307/2527341"
+   },
+   "remote": {
+    "title": "Evaluating Interval Forecasts",
+    "author": "Christoffersen",
+    "container": "International Economic Review",
+    "year": "1998",
+    "volume": "39",
+    "pages": "841",
+    "doi": "10.2307/2527341",
+    "type": "journal-article",
+    "publisher": "JSTOR"
+   },
+   "source": "crossref:10.2307/2527341",
+   "status": "OK",
+   "problems": [],
+   "notes": [
+    "Crossref records the first page only (841); our range 841-862 starts there \u2014 check the end page"
+   ],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "kupiec1995techniques",
+   "type": "article",
+   "lineno": 51,
+   "local": {
+    "title": "Techniques for Verifying the Accuracy of Risk Measurement Models",
+    "author": "Kupiec",
+    "author_raw": "Kupiec, Paul H.",
+    "container": "The Journal of Derivatives",
+    "year": "1995",
+    "volume": "3",
+    "pages": "73-84",
+    "doi": "10.3905/jod.1995.407942"
+   },
+   "remote": {
+    "title": "Techniques for Verifying the Accuracy of Risk Measurement Models",
+    "author": "Kupiec",
+    "container": "The Journal of Derivatives",
+    "year": "1995",
+    "volume": "3",
+    "pages": "73-84",
+    "doi": "10.3905/jod.1995.407942",
+    "type": "journal-article",
+    "publisher": "With Intelligence LLC"
+   },
+   "source": "crossref:10.3905/jod.1995.407942",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "gibbs2021adaptive",
+   "type": "inproceedings",
+   "lineno": 62,
+   "local": {
+    "title": "Adaptive Conformal Inference Under Distribution Shift",
+    "author": "Gibbs",
+    "author_raw": "Gibbs, Isaac and Candes, Emmanuel",
+    "container": "Advances in Neural Information Processing Systems",
+    "year": "2021",
+    "volume": "34",
+    "pages": "1660-1672",
+    "doi": ""
+   },
+   "remote": {
+    "title": "Adaptive Conformal Inference Under Distribution Shift",
+    "author": "Gibbs",
+    "container": "arXiv:2106.00170",
+    "year": "2021",
+    "volume": "",
+    "pages": "",
+    "doi": ""
+   },
+   "source": "arxiv:2106.00170",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": []
+  },
+  {
+   "key": "engle2004caviar",
+   "type": "article",
+   "lineno": 74,
+   "local": {
+    "title": "CAViaR: Conditional Autoregressive Value at Risk by Regression Quantiles",
+    "author": "Engle",
+    "author_raw": "Engle, Robert F. and Manganelli, Simone",
+    "container": "Journal of Business & Economic Statistics",
+    "year": "2004",
+    "volume": "22",
+    "pages": "367-381",
+    "doi": "10.1198/073500104000000370"
+   },
+   "remote": {
+    "title": "CAViaR: Conditional Autoregressive Value at Risk by Regression Quantiles",
+    "author": "Engle",
+    "container": "Journal of Business &amp; Economic Statistics",
+    "year": "2004",
+    "volume": "22",
+    "pages": "367-381",
+    "doi": "10.1198/073500104000000370",
+    "type": "journal-article",
+    "publisher": "Informa UK Limited"
+   },
+   "source": "crossref:10.1198/073500104000000370",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  },
+  {
+   "key": "glosten1993relation",
+   "type": "article",
+   "lineno": 86,
+   "local": {
+    "title": "On the Relation between the Expected Value and the Volatility of the Nominal Excess Return on Stocks",
+    "author": "Glosten",
+    "author_raw": "Glosten, Lawrence R. and Jagannathan, Ravi and Runkle, David E.",
+    "container": "The Journal of Finance",
+    "year": "1993",
+    "volume": "48",
+    "pages": "1779-1801",
+    "doi": "10.1111/j.1540-6261.1993.tb05128.x"
+   },
+   "remote": {
+    "title": "On the Relation between the Expected Value and the Volatility of the Nominal Excess Return on Stocks",
+    "author": "GLOSTEN",
+    "container": "The Journal of Finance",
+    "year": "1993",
+    "volume": "48",
+    "pages": "1779-1801",
+    "doi": "10.1111/j.1540-6261.1993.tb05128.x",
+    "type": "journal-article",
+    "publisher": "Wiley"
+   },
+   "source": "crossref:10.1111/j.1540-6261.1993.tb05128.x",
+   "status": "OK",
+   "problems": [],
+   "notes": [],
+   "candidates": [],
+   "title_similarity": 1.0
+  }
+ ],
+ "cited_not_in_bib": [],
+ "in_bib_not_cited": [
+  "ansari2024chronos",
+  "christoffersen1998evaluating",
+  "engle2004caviar",
+  "gibbs2021adaptive",
+  "glosten1993relation",
+  "kupiec1995techniques",
+  "lei2018distribution",
+  "vovk2005algorithmic"
+ ]
+}

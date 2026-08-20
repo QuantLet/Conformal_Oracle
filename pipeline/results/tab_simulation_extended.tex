@@ -1,0 +1,37 @@
+\begin{table}[htbp]
+\centering
+\caption{Monte Carlo simulation: conformal correction under controlled misspecification (500 replications, $\alpha = 0.01$, $f_c = 0.70$). The forecaster always assumes Normal innovations.}
+\label{tab:simulation_extended}
+\footnotesize
+\begin{tabular}{@{}clc rr rr rr@{}}
+\toprule
+& & & \multicolumn{2}{c}{$\hat{q}_V$} & \multicolumn{2}{c}{$\hat\pi$} & \multicolumn{2}{c}{Green \%} \\
+\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(l){8-9}
+DGP & Innovations & $T$ & Mean & Std & Raw & Corr. & Raw & Corr. \\
+\midrule
+1 & Normal (correct) & 1,000 & 0.0015 & 0.0022 & 0.011 & 0.009 & 73 & 82 \\
+\addlinespace
+2 & Student-$t$(5) & 1,000 & 0.0063 & 0.0044 & 0.017 & 0.009 & 48 & 80 \\
+\addlinespace
+3 & Student-$t$(3) & 1,000 & 0.0078 & 0.0052 & 0.018 & 0.010 & 41 & 78 \\
+\addlinespace
+4 & Skewed-$t$(3) & 1,000 & 0.0201 & 0.0084 & 0.032 & 0.009 & 8 & 84 \\
+\addlinespace
+5 & Mix. Normals & 1,000 & 0.0117 & 0.0096 & 0.014 & 0.010 & 58 & 80 \\
+\addlinespace
+1 & Normal (correct) & 5,000 & 0.0006 & 0.0008 & 0.011 & 0.010 & 97 & 97 \\
+\addlinespace
+2 & Student-$t$(5) & 5,000 & 0.0048 & 0.0014 & 0.017 & 0.010 & 38 & 98 \\
+\addlinespace
+3 & Student-$t$(3) & 5,000 & 0.0064 & 0.0017 & 0.019 & 0.010 & 18 & 97 \\
+\addlinespace
+4 & Skewed-$t$(3) & 5,000 & 0.0160 & 0.0028 & 0.033 & 0.010 & 0 & 96 \\
+\addlinespace
+5 & Mix. Normals & 5,000 & 0.0084 & 0.0038 & 0.014 & 0.010 & 71 & 98 \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{\linewidth}\footnotesize
+\smallskip
+DGP~1: Normal (correctly specified). DGP~2: Student-$t$(5). DGP~3: Student-$t$(3). DGP~4: Skewed-$t$(3, $-0.5$). DGP~5: Mixture $0.95 \mathcal{N}(0,1) + 0.05\mathcal{N}(0,25)$. GARCH(1,1) parameters: $\omega = 10^{-5}$, $\alpha = 0.10$, $\beta = 0.85$.
+\end{minipage}
+\end{table}

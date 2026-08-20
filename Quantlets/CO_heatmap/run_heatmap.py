@@ -80,13 +80,13 @@ norm = BoundaryNorm(boundaries, cmap.N, clip=True)
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 7),
                                 gridspec_kw={'hspace': 0.30})
 
-for ax, mat, title in [
-    (ax1, mat_raw, 'Before Correction'),
-    (ax2, mat_cp,  'After Conformal Correction'),
+for ax, mat, title, tcol in [
+    (ax1, mat_raw, 'Before Correction', '#C0392B'),
+    (ax2, mat_cp,  'After Conformal Correction', '#1B7837'),
 ]:
     im = ax.imshow(mat, cmap=cmap, norm=norm, aspect='auto',
                    interpolation='nearest')
-    ax.set_title(title, fontsize=14, fontweight='bold', pad=8)
+    ax.set_title(title, fontsize=14, fontweight='bold', pad=8, color=tcol)
     ax.set_xticks(range(len(ASSETS)))
     ax.set_yticks(range(len(MODEL_ORDER)))
     ax.set_yticklabels(MODEL_DISPLAY, fontsize=11)

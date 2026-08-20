@@ -14,6 +14,7 @@ For each model × asset:
 import numpy as np
 import pandas as pd
 from pathlib import Path
+import pathlib
 from scipy.stats import norm, chi2
 from math import ceil
 import warnings
@@ -28,22 +29,14 @@ F_CAL = 0.70
 W = 250          # rolling window size (Basel convention)
 GAMMAS = [0.001, 0.005, 0.01]  # candidate learning rates
 
-SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
-           'NIKKEI', 'HSI', 'BOVESPA', 'NIFTY', 'ASX200', 'CBU0',
-           'TLT', 'IBGL', 'DJCI', 'GOLD', 'WTI', 'NATGAS',
-           'BTC', 'ETH', 'EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD']
-
-MODELS = {
-    'Chronos-Small': ('chronos_small', None),
-    'Chronos-Mini':  ('chronos_mini',  None),
-    'TimesFM-2.5':   ('timesfm25',     None),
-    'Moirai-2.0':    ('moirai2',       None),
-    'Lag-Llama':     ('lagllama',      None),
-    'GJR-GARCH':     ('benchmarks',    'gjr_garch'),
-    'GARCH-N':       ('benchmarks',    'garch_n'),
-    'Hist-Sim':      ('benchmarks',    'hs'),
-    'EWMA':          ('benchmarks',    'ewma'),
-}
+# B2 (2026-08-19): models and assets come from cfp_config so this baseline runs
+# on the CORRECTED series. The hardcoded 9-model dict this replaces predated the
+# sign fix, the GJR quantile-map fix and the analytic Chronos series, so the
+# ordering the AE objected to ("other methods outperform the shift") was computed
+# on a panel containing two defective forecasters.
+import sys as _sys
+_sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "Quantlets"))
+from cfp_config import MODELS, SYMBOLS  # noqa: E402
 
 
 def load_data(model_key, symbol):

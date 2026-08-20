@@ -1,0 +1,14 @@
+model,n_assets,sign,sign_pass,monotonicity,monotonicity_pass,scale,scale_pass,alpha_response,alpha_response_pass,coverage,coverage_pass,alignment,alignment_pass,dispersion,dispersion_pass,cardinality,cardinality_pass,tail_reach,tail_reach_pass,extremes,extremes_pass,PASS
+Chronos-Small,24,24/24,True,0/24,False,0/24,False,0/24,False,0/24,False,24/24,True,0/24,False,24/24,True,n/a,False,19/24,False,False
+Chronos-Mini,24,24/24,True,0/24,False,0/24,False,0/24,False,0/24,False,24/24,True,0/24,False,24/24,True,n/a,False,15/24,False,False
+TimesFM-2.5,24,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,n/a,False,24/24,True,True
+Moirai-2.0,24,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,n/a,False,24/24,True,True
+Moirai-1.1,24,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,n/a,False,24/24,True,True
+Lag-Llama,24,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,n/a,False,24/24,True,True
+GJR-GARCH,24,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,n/a,False,24/24,True,True
+GJR-GARCH-t,24,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,n/a,False,24/24,True,True
+GARCH-N,24,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,n/a,False,24/24,True,True
+Hist-Sim,24,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,n/a,False,n/a,False,24/24,True,True
+EWMA,24,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,24/24,True,n/a,False,24/24,True,True
+Chronos-Small-A,24,24/24,True,24/24,True,24/24,True,24/24,True,23/24,False,24/24,True,24/24,True,24/24,True,n/a,False,24/24,True,False
+Chronos-Mini-A,24,24/24,True,24/24,True,24/24,True,23/24,False,23/24,False,24/24,True,24/24,True,24/24,True,n/a,False,24/24,True,False

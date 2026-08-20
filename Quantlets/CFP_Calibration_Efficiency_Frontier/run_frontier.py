@@ -111,7 +111,8 @@ for ax in [ax_raw, ax_corr]:
     ax.set_xlabel(r'Mean VaR width', fontsize=13)
     ax.tick_params(axis='both', labelsize=12)
 
-ax_raw.set_title('Raw Forecasts', fontsize=14, fontweight='bold', pad=10)
+ax_raw.set_title('Raw Forecasts', fontsize=14, fontweight='bold', pad=10,
+                 color='#C0392B')
 ax_raw.set_ylabel(r'Empirical coverage $1 - \hat{\pi}$', fontsize=13)
 ax_raw.set_ylim(0.0, 1.08)
 ax_raw.set_xlim(-0.002, 0.052)
@@ -119,7 +120,7 @@ ax_raw.text(0.048, 0.93, '99% target', fontsize=10, color='grey',
             style='italic', ha='right', va='top')
 
 ax_corr.set_title('After Conformal Correction', fontsize=14,
-                   fontweight='bold', pad=10)
+                   fontweight='bold', pad=10, color='#1B7837')
 ax_corr.set_xlim(0.033, 0.074)
 ax_corr.text(0.072, 0.93, '99% target', fontsize=10, color='grey',
              style='italic', ha='right', va='top')

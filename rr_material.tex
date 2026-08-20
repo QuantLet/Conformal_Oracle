@@ -325,13 +325,17 @@ $1\%$-tail imprecision the $k=1$ design avoids.
 
 Read at face value the aggregate share is $0.483$, but it is not uniform across
 forecasters and must be conditioned on the regime of Section~4 before it can be
-interpreted. The magnitude ratio $R=|\qVstat|/\overline{|\VaR^{\mathrm{raw}}|}$
-and the sign of the slope $\hat b$ are two \emph{independent} windows on the
-same object, and they agree: they place the pair in the same regime on $78.7\%$
-of the $216$ pairs, and a negative slope implies $R>1$ in $98\%$ of cases
-(Table~\ref{tab:scale_regime_crosstab}). The scale diagnostic therefore does
-more than register a caveat --- it independently reproduces the paper's
-replacement/signal-preserving split from an entirely different estimator.
+interpreted. The sign of the slope $\hat b$ gives an independent detector for the regime
+split. A negative fitted slope is a near-certain replacement signature:
+$\hat b<0$ implies $R>1$ in $51$ of the $52$ pairs where it occurs, so an
+inverted slope is a \emph{sufficient} condition for replacement rather than an
+equivalent classifier. The disagreement runs one way only --- replacement
+pairs ($R>1$) carrying a positive slope, which the sign test alone does not
+flag --- and the two diagnostics agree on the regime for $78.7\%$ of the $216$
+pairs overall (Table~\ref{tab:scale_regime_crosstab}). The scale diagnostic
+therefore does more than register a caveat: it independently reproduces the
+paper's replacement/signal-preserving split from an entirely different
+estimator.
 
 \input{Quantlets/CO_diagnostic_scale/tab_scale_regime_crosstab.tex}
 
