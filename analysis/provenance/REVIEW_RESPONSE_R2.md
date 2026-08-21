@@ -98,6 +98,51 @@ model table no longer runs 278pt past the margin. The traffic-light figure is
 larger. The tail-closure caption no longer asserts an invariance the table
 refutes.
 
+## Round three
+
+**Proposition E.3 proved, not asserted.** Replaced the regret argument with an
+exact telescoping identity. The update in the statement is
+q_{t+1} = q_t + eta*(1{s_t > q_t} - alpha), so summing gives
+sum_t (1{s_t > q_t} - alpha) = (q_{T+1} - q_1)/eta directly. Step 1 shows the
+iterates cannot leave [-R - eta*a, R + eta*(1-a)] without projection -- once the
+iterate passes R the indicator is 0 and the update pulls it back -- so the range
+has width 2R + eta and
+
+    |T^-1 sum_t 1{s_t > q_t} - alpha| <= (2R + eta) / (eta T),
+
+which is <= 3/sqrt(T) at eta = R/sqrt(T). No density assumption, no Zinkevich,
+explicit constant, and the statement is pathwise. Checked numerically on six
+score paths at three sample sizes: the telescoping identity is exact to 1e-10,
+the iterates stay in the claimed interval, and the bound holds
+(`analysis/provenance/verify_prop_ogd.py`).
+
+**Corrigenda consolidated.** One table at the head of Section 5, in the shape
+suggested: defect, diagnostic, as reported, corrected. Fourteen rows in four
+blocks -- pipeline defects, analysis-code defects, claims withdrawn, theory
+repairs. The subsections that used to carry their own corrections now state the
+current position and point at the table. Section 6.4 keeps its retrospective,
+where the superseded tables are the evidence rather than an apology.
+
+**The Z_2 result must not go into Section 6, and the caution was right.** Written
+as a second implementation from the published definition, the canonical statistic
+does NOT pass on the truncated series -- it rejects on all 24 assets, with median
+Z_2 of -144 and -389. The 24/24 pass was an artefact of our own routine, which
+divided by the stored ES column without negating it; the column is a lower-tail
+quantity and negative, so every term's sign was reversed and the statistic came
+out large and positive, where a one-sided lower-tail test can never reject.
+
+This is the seventh defect of the same family in this project and the third in
+analysis rather than generation code. The producer is fixed, the table
+regenerated -- Chronos default now 0/24 raw passes against 24/24 before -- and
+the episode is written up in Supplement S.1 rather than promoted into the body.
+It also bounds the paper's own thesis: a structural gate would not have caught
+this one, because the series were fine and the test was wrong.
+
+**Public artefacts.** `drafts/ssrn_correction_notice.md` drafts the SSRN version
+note, a shorter Quantinar note, and the argument for a version note over a silent
+PDF replacement, with the sequence: co-author message, then SSRN, then Quantinar,
+then submission.
+
 ## Open
 
 - **Propositions E.3.** The telescoping proof the review suggests is shorter and

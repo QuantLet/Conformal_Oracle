@@ -227,11 +227,38 @@ indicator. The statistic is
 	\frac{V_t r_t}{\widehat{\ES}_t}
 	+1 .
 \end{equation}
-Under correct joint tail specification, $Z_2$ should be close to zero.
-The numerically stabilised variant and pass/fail conventions are detailed
-in Appendix~\ref{app:backtesting}. Since the ES correction is heuristic,
-$Z_2$ is interpreted only as a diagnostic of whether reported ES forecasts
-are broadly consistent with realised tail losses.
+with $\widehat{\ES}_t$ entered as a \emph{positive magnitude}. Under correct
+joint tail specification $Z_2$ is close to zero, and the test is one-sided:
+it rejects for $Z_2$ sufficiently negative, meaning realised losses on violation
+days exceed the forecast ES.
+
+\paragraph{A correction, and why it matters here}
+Our implementation of \eqref{eq:app_z2} divided by the stored ES column
+directly. That column holds a lower-tail quantity and is negative, so every term
+of the sum had its sign reversed and the statistic came out large and positive
+--- around $+146$ and $+391$ on the two Chronos series sampled at
+$\texttt{top\_k} = 50$. A one-sided lower-tail test cannot reject such a value,
+so the routine reported \emph{24 of 24 assets passing} on series whose violation
+rate at the same level is 0.39 and 0.42.
+
+That would have been the most striking instance of this paper's argument, and it
+was not real. Entered as a magnitude, the statistic on those series is $-144$ and
+$-389$ and the test rejects on all 24 assets, as it should. The table below is
+regenerated after the fix, and the finding is the ordinary one: $Z_2$ does
+discriminate here, rejecting the truncated series on every asset while passing
+the well-specified ones on most.
+
+We record this because it is the seventh defect of the same family found in this
+project, the third in analysis rather than generation code, and it was caught by
+writing a second implementation from the published definition rather than by
+reading the first one again (\texttt{analysis/provenance/verify\_z2.py}). It is
+also a caution against the paper's own thesis being applied carelessly: a
+structural check would not have caught this, because the series were fine --- the
+\emph{test} was wrong.
+
+Since the ES correction is heuristic, $Z_2$ is interpreted only as a diagnostic
+of whether reported ES forecasts are broadly consistent with realised tail
+losses.
 
 Table~\ref{tab:es_correction} reports the effect of the heuristic ES
 correction on $Z_2$ across all thirteen forecasters.

@@ -1,0 +1,4 @@
+model,n,pihat_at_ES_level,Z2_canonical_median,pass_canonical,pass_time_averaged
+Chronos-Small,24,0.38828771791626177,-144.3630567222495,0,0
+Chronos-Mini,24,0.415423688545371,-389.00679341927616,0,0
+Moirai-1.1,24,0.03635105427808565,-0.4152498618630104,23,24

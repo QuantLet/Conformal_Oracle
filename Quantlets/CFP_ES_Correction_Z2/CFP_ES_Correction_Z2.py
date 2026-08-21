@@ -88,29 +88,39 @@ def load_data(model_key, symbol):
 
 def compute_z2(r_t, var_t, es_t):
     """
-    Acerbi-Székely Z2 statistic:
-        Z2 = (1/(N*alpha)) * sum(I_t * r_t / ES_t) + 1
-    where I_t = 1(r_t < -VaR_t) [VaR_t is negative, so -VaR_t is positive]
+    Acerbi-Szekely test 2:
 
-    Note: VaR_t and ES_t are stored as negative numbers.
-    Violation: r_t < VaR_t (both negative; r_t more negative than VaR_t).
+        Z2 = (1/(N*alpha)) * sum_t [ I_t * X_t / ES_t ] + 1,
+        I_t = 1{X_t < -VaR_t},
+
+    with X_t the P&L and **ES_t a POSITIVE magnitude**, as in the source. Under
+    the null E[Z2] = 0 and the test is one-sided: reject for Z2 sufficiently
+    negative, meaning realised losses on violation days exceed the forecast ES.
+
+    CORRECTED 2026-08-21. This routine previously divided by the stored ES
+    column directly. That column is a lower-tail quantity and is NEGATIVE, so
+    every term of the sum had its sign flipped and Z2 came out large and
+    POSITIVE -- on the Chronos series sampled at top_k = 50, around +146 and
+    +391. A one-sided lower-tail test can never reject such a value, so the
+    routine reported 24/24 passes on a series whose violation rate at the same
+    level is 0.39. That was an artefact of this function, not a property of the
+    test: with ES entered as a magnitude the statistic is -144 and -389 and the
+    test rejects on all 24 assets, as it should.
+
+    Verified against an independent implementation in
+    analysis/provenance/verify_z2.py, which also uses the canonical per-date
+    denominator rather than the time-averaged one below.
     """
     N = len(r_t)
-    # Violations: r_t < VaR_t (VaR is negative, violation when return is worse)
     I_t = (r_t < var_t).astype(float)
 
-    # ES_bar = mean of ES_t (negative)
-    es_bar = np.mean(es_t)
+    # ES as a positive magnitude. The stored column is negative.
+    es_bar = np.mean(-np.asarray(es_t, dtype=float))
 
     if es_bar == 0 or np.isnan(es_bar):
         return np.nan
 
-    # Z2 = sum(I_t * r_t) / (N * alpha * ES_bar) + 1
-    # ES_bar is negative, sum(I_t * r_t) is negative on violation days
-    # So numerator/denominator should be positive, and Z2 should be near 0 if well-calibrated
-    z2 = np.sum(I_t * r_t) / (N * ALPHA * es_bar) + 1
-
-    return z2
+    return np.sum(I_t * r_t) / (N * ALPHA * es_bar) + 1
 
 
 def conformal_es_correction(r_cal, var_cal, es_cal, es_test):
@@ -309,7 +319,15 @@ for i, model_name in enumerate(MODEL_ORDER):
     n_corr_pass = int(mdf['corr_pass'].sum())
 
     display = MODEL_DISPLAY[model_name]
-    line = (f'{display} & $+${rhu(mean_raw, 2)} & $+${rhu(mean_corr, 2)}'
+
+    def signed(x):
+        # A hardcoded '$+$' was correct only while the statistic was positive
+        # by construction -- which it was, because of the sign defect this
+        # function used to carry.
+        v = rhu(x, 2)
+        return f'$-${abs(float(v)):.2f}' if float(v) < 0 else f'$+${float(v):.2f}'
+
+    line = (f'{display} & {signed(mean_raw)} & {signed(mean_corr)}'
             f' & {n_raw_pass}/{n_assets} & {n_corr_pass}/{n_assets} \\\\')
     lines.append(line)
     if i == 4:
