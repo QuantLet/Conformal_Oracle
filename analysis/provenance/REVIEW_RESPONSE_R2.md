@@ -185,3 +185,32 @@ rule stated as deployable. It runs clean.
 Final state: manuscript **72 pages**, supplement **24**. Both compile with no
 undefined reference or citation, and `paper_numbers.py --check` reports the
 registry current.
+
+---
+
+# Round five: length
+
+Target 45--50 pages including the bibliography. **72 -> 50.**
+
+| moved to the supplement | pages |
+|---|---|
+| All proofs (both lemmas, the theorem, the corollary, the two auxiliary propositions) | ~8 |
+| Tail-completion analysis | 3 |
+| Full statement of the validation gate | 2 |
+| Asset and model universes | 1 |
+| Static-vs-rolling, Diebold--Mariano, baselines and Monte Carlo tables; the rolling-threshold, COVID and capital figures | ~4 |
+| Prose compressed: rolling and static-vs-rolling merged, simulation and robustness to one paragraph each, multi-quantile and baselines rewritten around absent tables, discussion halved | ~4 |
+
+What stays in the body is what the review asked for: Table 3 (the audit trail),
+Table 4 (the master panel), the compact gate table, the two mechanism tables that
+carry the dose--response and the alpha-response, and Figure 1. The theory is
+reduced to Assumption 3.2, Theorem 3.3, Corollary 3.5 and the remark stating that
+the contiguous split does not satisfy the separation the theorem needs.
+
+Section budget now: introduction 5, literature 2, methodology 10, mechanism 4,
+results 12, blind spot 3, gate 2, discussion 2, conclusion and back matter 8
+(of which the bibliography is about 6).
+
+Supplement grows to 44 pages and carries S.1--S.12. Cross-document references
+are plain text in both directions --- neither document needs the other to
+compile. The contradiction sweep runs clean on all nine patterns.

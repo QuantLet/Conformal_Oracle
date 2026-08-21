@@ -523,7 +523,7 @@ def build_table(inline_summary, rolling, aci, gbm_qr, gamlss, evt_fhs):
     lines.append(r"		for post-hoc methods; dedicated VaR models")
     lines.append(r"		evaluated per-asset, 24 denominators).")
     lines.append(r"		Method definitions in")
-    lines.append(r"		Section~\ref{sec:alternatives}. QS: Quantile")
+    lines.append(r"		Section~3.2.4 of the manuscript. QS: Quantile")
     lines.append(r"		Score, lower is better.}")
     lines.append(r"	\label{tab:baselines}")
     lines.append(r"	\footnotesize")
@@ -579,7 +579,7 @@ def build_table(inline_summary, rolling, aci, gbm_qr, gamlss, evt_fhs):
     lines.append(r"		not reported because step-function estimates at")
     lines.append(r"		the 1\% tail are unstable or undefined for most")
     lines.append(r"		model--asset pairs")
-    lines.append(r"		(Section~\ref{sec:alternatives}). The")
+    lines.append(r"		(Section~3.2.4 of the manuscript). The")
     lines.append(r"		GARCH(1,1) pre-filtering required by EVT-POT")
     lines.append(r"		and Filtered Hist.\ Sim.\ fell back to EWMA")
     lines.append(r"		($\lambda = 0.94$) on roughly 70\% of windows.")
@@ -658,7 +658,7 @@ TARGET_TABLE = r"""\begin{table}[htbp]
 		for post-hoc methods; dedicated VaR models
 		evaluated per-asset, 24 denominators).
 		Method definitions in
-		Section~\ref{sec:alternatives}. QS: Quantile
+		Section~3.2.4 of the manuscript. QS: Quantile
 		Score, lower is better.}
 	\label{tab:baselines}
 	\footnotesize
@@ -704,7 +704,7 @@ TARGET_TABLE = r"""\begin{table}[htbp]
 		not reported because step-function estimates at
 		the 1\% tail are unstable or undefined for most
 		model--asset pairs
-		(Section~\ref{sec:alternatives}). The
+		(Section~3.2.4 of the manuscript). The
 		GARCH(1,1) pre-filtering required by EVT-POT
 		and Filtered Hist.\ Sim.\ fell back to EWMA
 		($\lambda = 0.94$) on roughly 70\% of windows.
