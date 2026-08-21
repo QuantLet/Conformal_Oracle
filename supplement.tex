@@ -12,6 +12,8 @@
 \usepackage{algorithm,algpseudocode}
 \usepackage{natbib}
 \usepackage{hyperref}
+\hypersetup{colorlinks=true, allcolors=black, citecolor=black,
+            linkcolor=black, urlcolor=black, pdfborder={0 0 0}}
 \usepackage{placeins}
 \usepackage{setspace,microtype,enumitem}
 \onehalfspacing
@@ -21,7 +23,7 @@
 
 %─── Revision markup (R1) ────────────────────────────────────────────────────
 % Added or rewritten text is wrapped in \revised{...} and shown in blue.
-\newcommand{\revised}[1]{{\color{blue}#1}}
+\newcommand{\revised}[1]{#1}
 % Camera-ready toggle: uncomment the next line to render all revisions in black.
 %\renewcommand{\revised}[1]{#1}
 

@@ -201,9 +201,12 @@ Post-hoc recalibration does not rescue the situation; it conceals it. A
 split-conformal shift restores marginal coverage regardless of the forecaster it
 is applied to --- exactly and in finite samples under exchangeability
 \citep{vovk2005algorithmic,lei2018distribution}, and asymptotically under the
-$\beta$-mixing conditions that actually hold here (Theorem~\ref{thm:dependent_conformal_var}).
-The distinction matters for the theory and not at all for the argument of this
-paragraph: on our data it delivers. Applied to a sign-inverted
+$\beta$-mixing conditions of Theorem~\ref{thm:dependent_conformal_var} --- which
+require a separation between calibration and evaluation that our contiguous split
+does not provide, as Remark~\ref{rem:gap_vs_protocol} sets out. Neither guarantee
+therefore covers the estimator exactly as we run it. The distinction matters for
+the theory and not at all for the argument of this paragraph: on our data the
+correction delivers coverage regardless. Applied to a sign-inverted
 series it placed 19 of 24 assets in the Basel green zone. Every backtest reported
 in the earlier version of this paper was computed downstream of recalibration, so
 every one of them passed. The errors survived because the method worked.
@@ -265,8 +268,11 @@ we observe five defects in one pipeline, and the frequency of such defects in th
 literature is unknown, though we note that neither of the two recent tail-risk
 papers we surveyed that use sample-based foundation models reports a single
 generation parameter. And it does not claim that the ten structural checks are
-sufficient. They are necessary conditions, cheap ones, and the argument for them
-is that the alternative --- coverage --- provably cannot do this job.
+sufficient, and only three of the ten are necessary conditions in the strict
+sense: the other seven are plausibility bands. What can be said for all of them
+is that they are cheap, that each states a property a practitioner would endorse
+before seeing any data, and that the alternative --- coverage --- cannot do this
+job at all.
 
 The remainder of the paper is organised as follows.
 Section~\ref{sec:lit} situates the contribution in the literature on tail
@@ -394,7 +400,7 @@ We apply the standard regulatory backtests --- Kupiec~\citep{kupiec1995} for unc
 	V_t = \mathbf{1}\bigl(r_t < -\widehat{\VaR}_t^{\alpha;M}\bigr).
 \end{equation}
 
-Tail-loss consistency is assessed through the $Z_2$ statistic \citep{acerbi2014back} computed with the time-averaged ES denominator $Z_2^{\mathrm{mod}}$, which avoids division by near-zero daily ES on quiet days (Supplement~S.3). Beyond coverage, the Fissler--Ziegel scoring rule \citep{fissler2016higher} ranks $(\VaR, \ES)$ jointly; full construction is in Supplement~S.1. The conformal magnitude introduced in Section~\ref{sec:layer2} complements these tests by quantifying miscalibration on a continuous, signed scale.
+Tail-loss consistency is assessed through the $Z_2$ statistic \citep{acerbi2014back}, computed with the time-averaged ES denominator $Z_2^{\mathrm{mod}}$, which avoids division by near-zero daily ES on quiet days (Supplement~S.3). Our implementation of it carried a sign defect of its own, found late and reported in Supplement~S.1 rather than quietly repaired. Beyond coverage, the Fissler--Ziegel scoring rule \citep{fissler2016higher} ranks $(\VaR, \ES)$ jointly; full construction is in Supplement~S.1. The conformal shift $\qVstat$ introduced in Section~\ref{sec:layer2} complements these tests by quantifying miscalibration on a continuous, signed scale; the ratio $\bar R$ built from it in Section~\ref{sec:R_meaning} is non-negative by construction and carries magnitude only.
 
 Beyond the per-asset backtests, four panel-level inferential procedures support the empirical audit: a diagnostic regression of the Quantile Score improvement on the conformal threshold, a cross-sectional association between the threshold and asset characteristics, a Diebold--Mariano pairwise forecast comparison with Driscoll--Kraay panel-HAC variance, and a panel-pooled Kupiec test with cluster-robust inference. Specifications are in Supplement~S.3; results enter the empirical sections at first use.
 
@@ -906,13 +912,13 @@ silently dropped.}
 
 The corrected columns of Table~\ref{tab:master} show that marginal coverage is restored across the panel: \nMainGreen{} of \nMainPairs{} model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%). What the ordering by $\bar R$ adds is the \emph{amount} of correction required to get there. For thirteen of the sixteen forecasters it is between $0.001$ and $0.18$ --- the corrected forecast is the raw forecast to two or three decimal places --- while the two series sampled at the checkpoint default sit at $17.3$ and $23.5$, where the corrected forecast is an empirical fallback retaining nothing of the base model's tail estimate. Green-zone compliance after correction is therefore uninformative on its own about whether the corrected forecast carries any of the base model's information: the truncated series reach it as comfortably as the rest.
 
-We deliberately do not partition the panel. The distribution of $\bar R$ contains several gaps --- the largest, a factor of 97, separates CAViaR from Moirai~1.1 near the \emph{bottom} of the range, and the next, a factor of 8.9, separates Lag-Llama from Moirai~2.0 --- and no single cutoff is distinguished by the data. Any threshold would inherit that arbitrariness, and the continuous statistic conveys the same information without it.
+We deliberately do not partition the panel. The ordering by $\bar R$ has structure at both ends and none in the middle: the largest consecutive ratio, a factor of 84, separates the dynamic-quantile forecasters from the rest near the \emph{bottom} of the range, where their raw coverage is already nominal, and the next, a factor of 48, separates Lag-Llama from the two truncated Chronos series at the top. Neither is a boundary between kinds of forecaster, and no single cutoff is distinguished by the data. Any threshold would inherit that arbitrariness, and the continuous statistic conveys the same information without it.
 
 Conditional coverage is a different matter, and the reason is partly that the test is often unavailable. The Christoffersen independence statistic is undefined whenever no two violations fall on consecutive days, which after correction at $\alpha = 0.01$ is the case for \nMainCCUndefined{} of the \nMainPairs{} pairs of the main panel. On the \nMainCCDefined{} pairs where it is defined, \nMainCCPass{} pass --- \nMainCCPassPct\%. We report the informative subset because counting an undefined test as a pass, as is common, would turn the same evidence into a \nMainCCAsPassPct\% pass rate constructed largely from tables that do not exist. The degeneracy rate is itself a result, and Section~\ref{sec:blindspot} treats it as one: at the 1\% level, on samples of the length regulators use, the standard independence test has no evidence to work with on more than half the panel. Green Zone recovery should therefore be read as restored unconditional coverage and nothing more. The structural reasons why a scalar shift cannot reshape conditional dynamics are in Section~\ref{sec:failure}.
 
 \begin{table}[htbp]
 	\centering
-	\caption{Forecast audit across 16 forecasters and 24 assets ($\alpha = 0.01$), ordered by $\bar R$. QS: Quantile Score ($\times 10^{4}$, lower is better). $\bar R = |\qVstat|/|\VaR_{\mathrm{raw}}|$, averaged over assets: the size of the conformal correction relative to the threshold it adjusts. Kind records the estimator class. The two Chronos rows without the analytic suffix are the checkpoint-default configuration of Section~\ref{sec:mechanism} and are retained in the table as the measured consequence of that default, not as forecasters. No threshold is applied and no classification is implied; $\bar R$ is reported as a continuous, signed statistic and the sign is given separately in the replication matrices.}
+	\caption{Forecast audit across 16 forecasters and 24 assets ($\alpha = 0.01$), ordered by $\bar R$. QS: Quantile Score ($\times 10^{4}$, lower is better). $\bar R = |\qVstat|/|\VaR_{\mathrm{raw}}|$, averaged over assets: the size of the conformal correction relative to the threshold it adjusts. Kind records the estimator class. The two Chronos rows without the analytic suffix are the checkpoint-default configuration of Section~\ref{sec:mechanism} and are retained in the table as the measured consequence of that default, not as forecasters. No threshold is applied and no classification is implied. $\bar R$ is a ratio of absolute values and is therefore non-negative by construction; the sign that carries the diagnosis belongs to $\qVstat$, and the count of assets on which it is negative is given in the last column.}
 	\label{tab:master}
 	\tiny
 	\setlength{\tabcolsep}{3pt}
@@ -1002,12 +1008,14 @@ zone upgrades, and the gap between that and the oracle is a measure of how
 poorly the calibration window predicts the test window at $\alpha = 0.01$ ---
 which is the tail-sparsity constraint of Remark~\ref{rem:tail_sparsity} showing
 up in a decision problem rather than in an estimator. The rule does not bind at
-$\alpha \geq 0.025$, where a majority of raw forecasts fail their backtest and
-the correction is indicated for most pairs. The rejection rate falls with the
-level --- \nSeqKupiecRejRawTwoFive\%, \nSeqKupiecRejRawFive\% and
-\nSeqKupiecRejRawTen\% at $\alpha = 0.025$, $0.05$ and $0.10$ --- so the rule
-does bind at the higher levels, on a shrinking minority of pairs; what is
-specific to $\alpha = 0.01$ is the size of the damage it avoids. The decision problem is therefore
+$\alpha \geq 0.025$ in the way an earlier draft claimed. The raw rejection rate
+falls steadily with the level --- \nSeqKupiecRejRawOne\%,
+\nSeqKupiecRejRawTwoFive\%, \nSeqKupiecRejRawFive\% and
+\nSeqKupiecRejRawTen\% at the four levels --- so at $\alpha = 0.10$ a clear
+majority of raw forecasts \emph{pass} and the rule skips most of the panel. It
+binds at every level, on a growing share of pairs as $\alpha$ rises; what is
+specific to $\alpha = 0.01$ is not how often it fires but the size of the damage
+it avoids when it does. The decision problem is therefore
 specific to the extreme tail --- which is where the identification constraint of
 Remark~\ref{rem:tail_sparsity} operates.
 
@@ -1212,15 +1220,20 @@ Split-conformal recalibration targets marginal coverage regardless of the
 forecaster it is applied to --- exactly in finite samples when the scores are
 exchangeable \citep{vovk2005algorithmic,lei2018distribution}, and asymptotically
 under the dependence assumptions of Theorem~\ref{thm:dependent_conformal_var},
-which are the ones this panel satisfies. Either way the guarantee is indifferent
-to the forecaster, and in this panel it delivers:
+which our contiguous split does not satisfy exactly
+(Remark~\ref{rem:gap_vs_protocol}). What matters for this section is what both
+versions share: the guarantee is indifferent to the forecaster. In this panel it
+delivers:
 335 of 384 pairs reach the Basel green zone after correction. Applied to the
 Chronos series truncated at $\texttt{top\_k} = 50$ --- a series whose predictive
 dispersion is 0.12 of realised volatility and whose exceedance rate is nearly
 invariant to the nominal level --- it produces $\hat\pi = 0.0108$ and places 19 of
 24 assets in the green zone. Applied to the sign-inverted series it did the same.
 
-Every coverage-based backtest downstream of that step therefore passes, and this
+Coverage-based backtests downstream of that step therefore lose most of their
+power to separate: after correction \nMainGreen{} of \nMainPairs{} pairs are in
+the green zone and the violation rates of every forecaster cluster within a
+fraction of a percentage point of nominal, defective series included. This
 is not a failure of the method: a correction that guarantees coverage cannot
 diagnose the forecaster it corrects, precisely because the guarantee holds
 whatever the forecaster is. The practical implication is that a pipeline which
@@ -1551,13 +1564,22 @@ Section~\ref{sec:validity}.
 	$\sigma(S_s : s\ge t+k)\subseteq\sigma(r_u : u\ge t+k-1)$, and with an
 	infinite context $S_s$ depends on returns arbitrarily far before $t+k-1$,
 	so the inclusion fails and no separation of the two $\sigma$-fields is
-	obtained. Restricting $g$ to a window of length $m$ repairs it and costs
-	nothing here: every forecaster in this paper uses a finite context by
-	construction --- $m = 512$ for the foundation models, $m = 250$ for the
-	GARCH-family, EWMA and historical-simulation benchmarks
-	(Section~\ref{sec:exp_design}). Recursive filters such as EWMA are the one
-	case needing care; the implementation used here truncates the recursion at
-	the same 250-observation window, which is what makes $m$ finite for it too.
+	obtained. Restricting $g$ to a window of length $m$ repairs it, and for all
+	but one forecaster here the restriction holds by construction: $m = 512$ for
+	the foundation models and $m = 250$ for the GARCH-family and
+	historical-simulation benchmarks (Section~\ref{sec:exp_design}).
+
+	EWMA is the exception, and we state it rather than round it off. An earlier
+	draft documented it as a truncated 250-day weighted sum, but the series was
+	produced by the RiskMetrics recursion, whose memory is infinite; the audit
+	that found the discrepancy is in the replication package. The lemma therefore
+	does not apply to EWMA as literally implemented. What can be said is
+	quantitative: at $\lambda = 0.94$ the weight beyond lag $k$ is $\lambda^k$,
+	which is $1.9\times10^{-7}$ at $k = 250$ and falls below double-precision
+	machine epsilon at $k = 583$. The lemma applies to the filter truncated at
+	$m = 600$, which is indistinguishable from the recursion in the arithmetic
+	that produced the series. That is an approximation argument rather than an
+	exemption, and it is the only one in the paper.
 \end{remark}
 
 \begin{proof}

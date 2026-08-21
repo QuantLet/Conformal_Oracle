@@ -159,3 +159,29 @@ then submission.
   recur at any forecasting journal.
 - **SSRN 6757685 and the Quantinar course still carry 98.8% / 99.0%**, and the
   co-author message has not been sent. Both precede submission, not follow it.
+
+---
+
+# Round four: the consistency sweep
+
+Eight items, all confirmed, all fixed.
+
+| # | Item | Resolution |
+|---|---|---|
+| 1 | pp. 4 and 41 said Theorem 3.3's conditions hold here; p. 14 said correctly that it does not apply at g_n = 0 | Both now point at Remark 3.6: the contiguous split does not satisfy the separation the theorem needs, and neither guarantee covers the estimator exactly as run |
+| 2 | p. 6 called all ten checks "necessary conditions" | Now "only three of the ten are necessary conditions in the strict sense; the other seven are plausibility bands" |
+| 3 | p. 48 said almost every raw forecast fails at alpha >= 0.025 | Reversed: the rejection rate falls from 69.9% to 39.4% across the four levels, so at alpha = 0.10 a clear majority **pass** and the rule skips most of the panel |
+| 4 | p. 28 called R-bar "signed" | R-bar is a ratio of absolute values and is non-negative by construction; the sign belongs to q_V, and the table's last column counts the assets where it is negative |
+| 5 | Gap factors 97 and 8.9 stale | Replaced by the ordering the current table gives: 84x between the dynamic-quantile forecasters and the rest, 48x between Lag-Llama and the truncated Chronos pair |
+| 6 | EWMA "Recursive" in Table B.1 vs the lemma saying truncated at 250 | **Table B.1 is right and the lemma remark was wrong.** The documentation described a truncated 250-day sum; the series came from the RiskMetrics recursion, whose memory is infinite. The finite-context assumption therefore does not hold for EWMA as implemented. Stated, with the number: at lambda = 0.94 the weight beyond lag k is lambda^k, 1.9e-7 at k = 250 and below double-precision epsilon at k = 583, so the lemma applies to the filter truncated at m = 600, indistinguishable from the recursion in the arithmetic that produced the series. An approximation argument, labelled as the only one in the paper |
+| 7 | "Every coverage-based backtest passes" too absolute | Replaced by what the data support: after correction 335 of 384 pairs are green and every forecaster's violation rate clusters within a fraction of a point of nominal, defective series included |
+| 8 | Supplement had boxed links; both documents inconsistent | Same hypersetup in both: black, unboxed. Revision colouring off in both |
+
+A scripted sweep now checks for the whole class -- theorem conditions asserted
+to hold, checks called necessary, R described as signed, stale gap factors,
+absolute backtest claims, old pair counts, the old green figure, and the oracle
+rule stated as deployable. It runs clean.
+
+Final state: manuscript **72 pages**, supplement **24**. Both compile with no
+undefined reference or citation, and `paper_numbers.py --check` reports the
+registry current.
