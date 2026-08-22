@@ -11,9 +11,8 @@
 \graphicspath{{figures/}}
 \usepackage{algorithm,algpseudocode}
 \usepackage{natbib}
-\usepackage{hyperref}
-\hypersetup{colorlinks=true, allcolors=black, citecolor=black,
-            linkcolor=black, urlcolor=black, pdfborder={0 0 0}}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{colorlinks=false, allbordercolors={1 1 1}, pdfborder={0 0 0}}
 \usepackage{placeins}
 \usepackage{setspace,microtype,enumitem}
 \onehalfspacing
@@ -21,11 +20,14 @@
 %─── Colours ─────────────────────────────────────────────────────────────────
 \definecolor{pastelgreen}{rgb}{0.0,0.6,0.0}
 
-%─── Revision markup (R1) ────────────────────────────────────────────────────
-% Added or rewritten text is wrapped in \revised{...} and shown in blue.
+%─── Revision markup ─────────────────────────────────────────────────────────
+% Retained as a no-op so that generated fragments emitting \revised still build.
 \newcommand{\revised}[1]{#1}
-% Camera-ready toggle: uncomment the next line to render all revisions in black.
-%\renewcommand{\revised}[1]{#1}
+
+%─── Generated figures ───────────────────────────────────────────────────────
+% The same macro file the manuscript uses, so a number quoted in the supplement
+% cannot drift from the same number in the main text.
+\input{numbers}
 
 %─── Theorem environments ────────────────────────────────────────────────────
 \newtheorem{theorem}{Theorem}[section]
@@ -236,33 +238,25 @@ joint tail specification $Z_2$ is close to zero, and the test is one-sided:
 it rejects for $Z_2$ sufficiently negative, meaning realised losses on violation
 days exceed the forecast ES.
 
-\paragraph{A correction, and why it matters here}
-Our implementation of \eqref{eq:app_z2} divided by the stored ES column
-directly. That column holds a lower-tail quantity and is negative, so every term
-of the sum had its sign reversed and the statistic came out large and positive
---- around $+146$ and $+391$ on the two Chronos series sampled at
-$\texttt{top\_k} = 50$. A one-sided lower-tail test cannot reject such a value,
-so the routine reported \emph{24 of 24 assets passing} on series whose violation
-rate at the same level is 0.39 and 0.42.
+\paragraph{The sign convention, and why it matters here}
+Equation~\eqref{eq:app_z2} requires $\widehat{\ES}_t$ to enter as a positive
+magnitude. The forecast files store a lower-tail quantity, which is negative, so
+dividing by the stored column directly reverses the sign of every term of the
+sum and returns a large positive statistic --- around $+146$ and $+391$ on the
+two Chronos series sampled at $\texttt{top\_k} = 50$. A one-sided lower-tail test
+cannot reject such a value, so the routine would report 24 of 24 assets passing
+on series whose violation rate at the same level is 0.39 and 0.42.
 
-That would have been the most striking instance of this paper's argument, and it
-was not real. Entered as a magnitude, the statistic on those series is $-144$ and
-$-389$ and the test rejects on all 24 assets, as it should. The table below is
-regenerated after the fix, and the finding is the ordinary one: $Z_2$ does
-discriminate here, rejecting the truncated series on every asset while passing
-the well-specified ones on most.
-
-We record this because it is the seventh defect of the same family found in this
-project, the third in analysis rather than generation code, and it was caught by
-writing a second implementation from the published definition rather than by
-reading the first one again (\texttt{analysis/provenance/verify\_z2.py}). It is
-also a caution against the paper's own thesis being applied carelessly: a
-structural check would not have caught this, because the series were fine --- the
-\emph{test} was wrong.
-
-Since the ES correction is heuristic, $Z_2$ is interpreted only as a diagnostic
-of whether reported ES forecasts are broadly consistent with realised tail
-losses.
+Entered as a magnitude, the statistic on those series is $-144$ and $-389$ and
+the test rejects on all \nMainAssets{} assets. This is the same sign ambiguity
+that the validation gate of Supplement~\ref{app:validation_gate} checks for in the
+forecast series, arising here in an evaluation routine instead, and it is worth
+stating explicitly for two reasons. First, a structural check on the forecast
+series would not have caught it: the series are well-formed and it is the
+statistic that is misassembled. Second, it is verified by an independent second
+implementation written from the published definition rather than by re-reading
+the first (\texttt{analysis/provenance/verify\_z2.py}), which is the only way a
+sign convention of this kind is reliably established.
 
 Table~\ref{tab:es_correction} reports the effect of the heuristic ES
 correction on $Z_2$ across all thirteen forecasters.
@@ -277,22 +271,29 @@ correction on $Z_2$ across all thirteen forecasters.
 	\input{Quantlets/CFP_ES_Correction_Z2/tab_es_correction}
 	\begin{minipage}{\linewidth}\scriptsize
 		\smallskip
-		Large $Z_2$ values for Chronos reflect the combination of extreme raw
-		violation rates ($\hat\pi \approx 39$--$42\%$) and the modified
-		time-averaged denominator. The statistic is mechanically consistent
-		but visually non-standard in this regime.
+		The large negative $Z_2$ values for the two truncated Chronos series
+		reflect the combination of extreme raw violation rates
+		($\hat\pi \approx 39$--$42\%$) and the modified time-averaged
+		denominator. The statistic is mechanically consistent but numerically
+		non-standard in this regime, and the pass counts rather than the means
+		are the informative column.
 	\end{minipage}
 \end{table}
 
-The $Z_2$ statistic does not reject for any model in either the raw or
-corrected configuration, reflecting ES over-prediction, not tail
-adequacy. For high-$\bar R$ forecasters, the correction reduces
-$Z_2$ magnitude, while for Moirai~1.1, Lag-Llama, and the classical
-benchmarks the decline is modest. The uniform pass rate also highlights a
-limitation of $Z_2$: ES over-prediction inflates the denominator and can mask
-under-coverage. More discriminating ES backtests, such as $Z_3$
-\citep{acerbi2014back} or conditional calibration tests, are left for future
-work.
+Read on the corrected panel, $Z_2$ does discriminate at this level. It rejects
+the two truncated Chronos series on all \nMainAssets{} assets raw and on 21 of
+\nMainAssets{} after the heuristic ES correction, while the remaining forecasters
+pass on between 9 and \nMainAssets{} assets raw and on 23 or \nMainAssets{}
+corrected. The heuristic correction reduces $|Z_2|$ for every forecaster, sharply
+so for the truncated series, whose raw values of $-130$ and $-163$ reflect
+realised losses on violation days far in excess of a predictive distribution
+whose standard deviation is \nDispDefaultSmall{} of realised volatility. Two limitations should be read
+alongside this. ES over-prediction inflates the denominator and can mask
+under-coverage, so a pass is weaker evidence than a rejection; and because the ES
+correction is heuristic, $Z_2$ is interpreted here only as a diagnostic of
+whether reported ES forecasts are broadly consistent with realised tail losses.
+More discriminating ES backtests, such as $Z_3$ \citep{acerbi2014back} or
+conditional calibration tests, are left for future work.
 
 Joint VaR--ES evaluation via Fissler--Ziegel scores
 (Table~\ref{tab:fz_scores}) produces rankings consistent with the Quantile
@@ -479,9 +480,12 @@ for the GBM-QR baseline on S\&P~500.  Each configuration trains a
 LightGBM quantile regression at $\alpha=0.01$ on the calibration
 sub-sample (70\%) of each of the nine base forecasters. The QS-optimal
 configuration ($n_\text{est}=100$, $d=3$, $\eta=0.05$) improves the
-pinball loss by 5\% relative to the conservative setting ($\eta=0.01$)
-but pays in coverage: $\hat\pi=.015$ (vs.\ .011), 5/9 Kupiec rejections
-(vs.\ 0/9), and 88.9\% Green (vs.\ 100\%). Higher-capacity configurations
+pinball loss relative to the conservative setting ($\eta=0.01$) but pays in
+coverage, and the loss-versus-coverage trade-off runs in the same direction
+across the grid. Per-configuration counts are in
+\texttt{tuned\_gbm\_qr\_grid.csv}; the figures previously quoted here were
+computed on a nine-model subset that is not the panel of this paper and are
+withdrawn. Higher-capacity configurations
 ($d=5$ or $n_\text{est}=500$) do not improve QS further and degrade
 Green-zone rates, consistent with the bias-variance prediction of
 Remark~3.1.
@@ -525,10 +529,11 @@ $\overline{\ES}=T^{-1}\sum_{t}\widehat{\ES}_t^\alpha$, giving
 	{T\alpha\,\overline{\ES}}
 	+1.
 \end{equation}
-This modification avoids division by near-zero daily ES values; the
-mean absolute difference from the canonical formulation is 0.035 $Z_2$
-units, and the modified and canonical versions agree on the 5\% pass/fail
-classification for 97\% of model--asset pairs.
+This modification avoids division by near-zero daily ES values. The two
+formulations are compared per model in
+\texttt{analysis/provenance/z2\_verification.csv}; we report the comparison
+qualitatively because a per-pair difference is not stored, and a summary
+statistic we cannot recompute is not one we state.
 
 
 \subsection{Diagnostic Regression Specification}
@@ -549,7 +554,7 @@ are computed under one-way clustering by asset (24 clusters) and,
 separately, by model (13 clusters). The partial $R^{2}$ for $\qVstat$
 is computed by Frisch--Waugh--Lovell residualisation on
 $\hat\pi^{\mathrm{raw}}$. Coefficients are reported in
-Appendix~C.2.
+Supplement~\ref{app:backtesting}.
 
 \subsection{Diebold--Mariano with Panel HAC}
 \label{app:dm_panel}
@@ -593,7 +598,7 @@ at the asset level is obtained from the same Driscoll--Kraay panel
 HAC estimator used for the Diebold--Mariano statistic, with violations
 clustered by asset; the implied number of independent clusters is 24.
 Wild-cluster bootstrap finite-sample $p$-values are reported in
-Appendix~D
+Supplement~\ref{app:robustness}
 (Table~D.3).
 
 %============================================================
@@ -605,7 +610,7 @@ Appendix~D
 \subsection{Monte Carlo Design}
 \label{app:mc_design}
 
-The Monte Carlo study (Section~5.9) uses five
+The Monte Carlo study (Section~5.8 of the manuscript) uses five
 data-generating processes: (i) Normal innovations, corresponding to correct
 specification; (ii) Student-$t(5)$; (iii) Student-$t(3)$; (iv) skewed-$t(3,
 -0.5)$ \citep{hansen1994autoregressive}; and (v) a mixture of Normals,
@@ -664,7 +669,7 @@ $\qVroll$ across regime changes.
 \subsection{Gap Parameter Ablation}
 \label{app:gap_ablation}
 
-Theorem~3.3 requires a gap of
+Theorem~\ref{thm:dependent_conformal_var} requires a gap of
 $g_n \to \infty$ unused observations between calibration and
 evaluation, ensuring that the test point is far enough from the
 calibration sample for the $\beta$-mixing bound to be tight. The
@@ -698,7 +703,7 @@ $\hat\rho \in [0.18, 0.67]$.
 		distance between the first and second halves of
 		the rolling score window; the dashed line marks
 		the indicative warning level discussed in
-		Appendix~E.5. Bottom panel:
+		Supplement~\ref{app:rolling_drift}. Bottom panel:
 		two-sample Kolmogorov--Smirnov $p$-values. Shaded
 		regions indicate the GFC, COVID-19, and SVB
 		crisis windows.}
@@ -882,9 +887,60 @@ benchmarks used in the empirical analysis.
 \label{app:proofs}
 %============================================================
 
-This appendix collects supporting lemmas and the proof of
-Theorem~3.3 of the manuscript, stated in
-Section~3.2.2 of the manuscript.
+This appendix states and proves the coverage result for the single-split
+conformal estimator under weak dependence, together with its supporting lemmas
+and the GARCH corollary. Section~3.2.2 of the manuscript summarises the result
+and its two limitations; everything else about it is here.
+
+\begin{assumption}\label{ass:main}
+	Let $S_t = \hat q_t^{lo} - r_t$ denote the nonconformity score process and let
+	$n = \lfloor f_c T \rfloor$ be the calibration sample size.
+	\begin{enumerate}[label=\textup{(A\arabic*)}]
+		\item\label{ass:stationary} $\{S_t\}$ is strictly stationary and
+		geometrically $\beta$-mixing: $\beta(k) \le C\rho^k$, $\rho \in (0,1)$.
+		\item\label{ass:density} The marginal distribution $F_S$ admits a density
+		$f_S$ that is continuous and bounded away from zero near the
+		$(1-\alpha)$-quantile $q_{1-\alpha}$.
+		\item\label{ass:weak_dep} There exists a gap sequence $g_n \to \infty$,
+		$g_n/n \to 0$, such that the test score $S_{n+g_n+1}$ is evaluated after
+		the calibration sample $\mathcal D_n = (S_1, \ldots, S_n)$, separated by
+		$g_n$ unused observations.
+	\end{enumerate}
+\end{assumption}
+
+\begin{theorem}
+	\label{thm:dependent_conformal_var}
+	Under Assumption~\ref{ass:main}, the single-split conformal VaR estimator with
+	$\qVstat$ given by equation~(7) of the manuscript satisfies
+	\begin{equation}
+		\label{eq:coverage_bound}
+		\mathbb P\!\left(
+		r_{n+g_n+1} \ge \hat q_{n+g_n+1}^{lo} - \qVstat
+		\right)
+		\ge
+		1 - \alpha - \Delta_n,
+	\end{equation}
+	where $\Delta_n \le C\sqrt{(\log n)/n} + \beta(g_n)$ and $C > 0$ depends on
+	the density near $q_{1-\alpha}$ and on the mixing rate.
+\end{theorem}
+
+\begin{remark}[What the theorem assumes, and what the protocol does]
+	\label{rem:gap_vs_protocol}
+	The theorem requires a separation $g_n\to\infty$ between the calibration block
+	and the evaluation point, and by Lemma~\ref{lem:score_mixing} that separation
+	has to exceed the forecaster's context length $m$ before the mixing bound
+	bites at all. The protocol used throughout the empirical sections is a
+	\emph{contiguous} $70/30$ split: $g_n = 0$. The theorem therefore does not
+	apply to the estimator as run, and the gap ablation of
+	Supplement~\ref{app:gap_ablation} is reported for exactly that reason ---
+	which is evidence, not a proof, and is offered as such.
+
+	Separately, the finite-sample conformal guarantee is a statement about
+	exchangeable scores. Financial return series are not exchangeable, which is
+	what this theorem exists to address; its conclusion is asymptotic, with an
+	explicit remainder, and no finite-sample coverage claim is made anywhere in
+	this paper for the dependent case.
+\end{remark}
 
 \subsection{Supporting Lemmas}
 
@@ -907,30 +963,30 @@ Section~3.2.2 of the manuscript.
 	\end{equation}
 \end{lemma}
 
-\begin{remark}[Why the context must be finite, and the earlier statement was wrong]
+\begin{remark}[Why the context must be finite]
 	\label{rem:finite_context}
-	An earlier version of this lemma allowed $\hat q_t^{lo}=g(r_{t-1},r_{t-2},
-	\ldots)$, an infinite context, and concluded $\beta_S(k)\le\beta_r(k-1)$.
-	That is false as stated. The proof requires
+	The finiteness of $m$ is not a convenience. Allowing
+	$\hat q_t^{lo}=g(r_{t-1},r_{t-2},\ldots)$ with an infinite context does not
+	yield $\beta_S(k)\le\beta_r(k-1)$: the proof requires
 	$\sigma(S_s : s\ge t+k)\subseteq\sigma(r_u : u\ge t+k-1)$, and with an
 	infinite context $S_s$ depends on returns arbitrarily far before $t+k-1$,
 	so the inclusion fails and no separation of the two $\sigma$-fields is
-	obtained. Restricting $g$ to a window of length $m$ repairs it, and for all
-	but one forecaster here the restriction holds by construction: $m = 512$ for
-	the foundation models and $m = 250$ for the GARCH-family and
-	historical-simulation benchmarks (Section~3.3.3 of the manuscript).
+	obtained. Restricting $g$ to a window of length $m$ is what makes the
+	blocking argument available, and for all but one forecaster here the
+	restriction holds by construction: $m = 512$ for the foundation models and
+	$m = 250$ for the GARCH-family and historical-simulation benchmarks
+	(Section~3.3.3 of the manuscript).
 
-	EWMA is the exception, and we state it rather than round it off. An earlier
-	draft documented it as a truncated 250-day weighted sum, but the series was
-	produced by the RiskMetrics recursion, whose memory is infinite; the audit
-	that found the discrepancy is in the replication package. The lemma therefore
-	does not apply to EWMA as literally implemented. What can be said is
-	quantitative: at $\lambda = 0.94$ the weight beyond lag $k$ is $\lambda^k$,
-	which is $1.9\times10^{-7}$ at $k = 250$ and falls below double-precision
-	machine epsilon at $k = 583$. The lemma applies to the filter truncated at
-	$m = 600$, which is indistinguishable from the recursion in the arithmetic
-	that produced the series. That is an approximation argument rather than an
-	exemption, and it is the only one in the paper.
+	EWMA is the exception, and it is stated rather than rounded off. Its
+	conditional variance is the RiskMetrics recursion, whose memory is infinite,
+	so the lemma does not apply to it as literally implemented; the manuscript
+	reconciles this wherever the 250-observation convention is quoted. What can be
+	said is quantitative: at $\lambda = 0.94$ the weight beyond lag $k$ is
+	$\lambda^k$, which is $1.9\times10^{-7}$ at $k = 250$ and falls below
+	double-precision machine epsilon at $k = 583$. The lemma applies to the filter
+	truncated at $m = 600$, which is indistinguishable from the recursion in the
+	arithmetic that produced the series. That is an approximation argument rather
+	than an exemption, and it is the only one in the paper.
 \end{remark}
 
 \begin{proof}
@@ -1025,7 +1081,7 @@ Section~3.2.2 of the manuscript.
 	which yields the stated rate.
 \end{proof}
 
-\subsection{Proof of Theorem~3.3 of the manuscript}
+\subsection{Proof of Theorem~\ref{thm:dependent_conformal_var}}
 
 \begin{proof}
 	The proof proceeds in three steps.
@@ -1102,7 +1158,7 @@ Setting
 completes the proof.
 \end{proof}
 
-\subsection{Proof of Corollary~3.5 of the manuscript}
+\subsection{The GARCH corollary}
 
 \begin{proof}
 	Under $\omega>0$, $\alpha_1,\beta_1\ge0$, and
@@ -1128,7 +1184,7 @@ completes the proof.
 		=
 		o\!\left(\sqrt{\frac{\log n}{n}}\right).
 	\end{equation}
-	Theorem~3.3 of the manuscript therefore applies with
+	Theorem~\ref{thm:dependent_conformal_var} therefore applies with
 	\[
 	\Delta_n
 	=
@@ -1197,16 +1253,16 @@ assumption whatsoever.
 	$\eta T=R\sqrt T$ and the stated rate.
 \end{proof}
 
-\begin{remark}[What this replaces, and what it does not deliver]
+\begin{remark}[What this argument replaces, and what it does not deliver]
 	\label{rem:ogd_scope}
-	An earlier version of this proposition was proved by invoking the
-	online-convex-optimisation regret bound of \citet{zinkevich2003online} and
-	then converting average regret on the pinball loss into average
-	miscoverage. That conversion needs a local Lipschitz argument in the
-	indicator parametrisation and does not follow from the regret bound alone.
-	The proof above needs none of it: the update telescopes exactly, and the
-	only work is showing the iterates cannot escape a bounded interval. The
-	constant is explicit and the statement is pathwise.
+	A bound of this form is often obtained by invoking the
+	online-convex-optimisation regret guarantee of \citet{zinkevich2003online}
+	and converting average regret on the pinball loss into average miscoverage.
+	That conversion requires a local Lipschitz argument in the indicator
+	parametrisation and does not follow from the regret bound alone. The proof
+	above needs none of it: the update telescopes exactly, and the only work is
+	showing the iterates cannot escape a bounded interval. The constant is
+	explicit and the statement is pathwise.
 
 	Three limitations should be read alongside it. It controls the
 	\emph{time-average} of the coverage indicator, not conditional coverage and
@@ -1334,6 +1390,142 @@ temporary deployment pause may be warranted.
 
 %============================================================
 
+\subsection{Proof of Proposition~6.1 of the manuscript}
+\label{app:identification}
+
+Recall $u_t = F_t(\hat q^{lo}_t)$ and $V_t = \mathbf 1\{r_t < \hat q^{lo}_t\}$,
+with $\hat q^{lo}_t$ measurable with respect to $\mathcal G_{t-1}$.
+
+\begin{proof}
+	Since $\hat q^{lo}_t$ is $\mathcal G_{t-1}$-measurable and $F_t$ is the
+	conditional law of $r_t$ given $\mathcal G_{t-1}$,
+	\[
+	\P\!\left(V_t = 1 \mid \mathcal G_{t-1}\right)
+	= \P\!\left(r_t < \hat q^{lo}_t \mid \mathcal G_{t-1}\right) = u_t ,
+	\]
+	and $u_t$ is $\mathcal G_{t-1}$-measurable. For $s \le t-1$ the indicator
+	$V_s$ is a measurable function of $(r_s, \hat q^{lo}_s)$ and hence
+	$\mathcal G_{t-1}$-measurable. Conditioning on $\mathcal G_{T-1}$,
+	\[
+	\P\!\left(V_{1:T}=v_{1:T}\right)
+	= \E\!\left[\mathbf 1\{V_{1:T-1}=v_{1:T-1}\}\,
+	u_T^{\,v_T}(1-u_T)^{1-v_T}\right],
+	\]
+	because the first factor is $\mathcal G_{T-1}$-measurable and the conditional
+	law of $V_T$ is Bernoulli$(u_T)$. Iterating the same step down to $t=1$ gives
+	the path likelihood stated as equation (12) of the manuscript.
+
+	The right-hand side is a functional of the joint law of $(u_1,\dots,u_T)$
+	alone. Hence if $P$ and $Q$ induce the same law for $\{u_t\}$ they induce the
+	same law for $V_{1:T}$, so $\E_P[\phi(V)] = \E_Q[\phi(V)]$ for every
+	measurable $\phi$, and in particular the rejection probability of any test in
+	that class is the same under both: its power equals its size.
+
+	For the moment-restriction case, $\E[V_t \mid \mathcal G_{t-1}] = u_t$, so
+	$u_t \equiv \alpha$ implies $\E[(V_t-\alpha)Z_{t-1}] = 0$ for every
+	predictable $Z_{t-1}$ with finite second moment. Two models both satisfying
+	$u_t\equiv\alpha$ therefore satisfy every such restriction exactly, and a test
+	of one of them rejects each with probability equal to its nominal size. The
+	dynamic quantile regression of \citet{engle2004caviar} is of this form, with
+	$Z_{t-1}$ collecting lagged exceedance indicators and the reported quantile
+	itself.
+\end{proof}
+
+\begin{remark}[What the proposition does not cover]
+	\label{rem:identification_scope}
+	Two exclusions are worth stating. First, $\sigma(V_t, \hat q^{lo}_t)$ is
+	strictly larger than $\sigma(V_t)$, and the two models constructed below do
+	\emph{not} have the same marginal law for $\hat q^{lo}_t$. A diagnostic that
+	compared the level of the reported quantile against a scale reference would
+	separate them --- but that reference is not in $\sigma(V,\hat q^{lo})$, and no
+	test in standard use within that class exploits the difference. This is why
+	the proposition is stated for the moment-restriction family rather than for
+	$\sigma(V,\hat q^{lo})$ in full. Second, statistics reading the
+	\emph{magnitude} of an exceedance rather than its occurrence lie outside the
+	class entirely; Supplement~\ref{app:es} treats them.
+\end{remark}
+
+\subsection{Proposition~6.2: the construction, and the depth of the blind spot}
+\label{app:blindspot_depth}
+
+Let $G$ be the standardised Student-$t_5$ law of the correctly specified model,
+with $\alpha$-quantile $q_{\mathrm{true}} = \nGapQTrueStd$ in units of
+conditional scale. A forecaster that truncates its predictive support, discarding
+mass $\delta$ from each tail and renormalising, reports
+\[
+q_\delta \;=\; G^{-1}\!\left(\delta + \alpha(1-2\delta)\right),
+\]
+which is closer to zero than $q_{\mathrm{true}}$ and is what
+$\texttt{top\_k}$ truncation does to a categorical predictive law.
+
+For the two models to induce the same $u$-process it suffices that the
+alternative return law $H$ place exactly $\alpha$ mass strictly below $q_\delta$,
+since then $u_t \equiv \alpha$ under both. Requiring in addition that $H$ be
+symmetric with unit variance and the same mean absolute deviation as $G$, and
+that its density be non-increasing in $|x|$, gives a feasibility problem that is
+\emph{linear} in the atoms of a discrete symmetric law on a fixed grid:
+\begin{align*}
+	\textstyle\sum_i p_i = 1, \qquad
+	\textstyle\sum_i p_i x_i^2 = 1, \qquad
+	\textstyle\sum_i p_i |x_i| = \E_G|X|, \\
+	\textstyle\sum_{i:\,x_i < q_\delta} p_i = \alpha, \qquad
+	p_{i+1} \le p_i \ \text{ for } x_i > 0, \qquad p_i \ge 0 .
+\end{align*}
+Feasibility is therefore decided by a linear programme rather than argued.
+Bisection on $\delta$ gives the largest feasible truncation depth
+$\delta^\star = \nGapDeltaUni$, at which the reported quantile is
+$-1.320$ and the Value-at-Risk is understated by \nGapUndUni\%.
+
+\begin{table}[H]
+	\centering
+	\caption{$\delta^\star$ as a functional of the restriction placed on the
+		alternative return law, at $\alpha = 0.01$ against a standardised
+		Student-$t_5$ honest model. Grid spacing $0.004$, ceiling $32$;
+		$\delta^\star$ converges from above as the grid is refined, so each entry
+		is an upper bound and the bias overstates the blind spot.}
+	\label{tab:delta_by_class}
+	\footnotesize
+	\begin{tabular}{@{}lrrr@{}}
+		\hline\hline
+		Restriction on the return law & $\delta^\star$ & reported $q$ & understated \\
+		\hline
+		none & \nGapDeltaFree & $-0.638$ & \nGapUndFree\% \\
+		unimodal & \nGapDeltaUni & $-1.320$ & \nGapUndUni\% \\
+		unimodal, fourth moment $\le$ honest model's & 0.046 & $-1.504$ & 42.3\% \\
+		unimodal, Pareto tail index 5 beyond $3\sigma$ & 0.024 & $-1.814$ & 30.4\% \\
+		GARCH class, standardised Student-$t$ innovations & --- & $-2.330$ & 10.6\% \\
+		\hline\hline
+	\end{tabular}
+	\begin{minipage}{\linewidth}\scriptsize
+		\smallskip
+		The GARCH row carries no $\delta^\star$: that class fixes the innovation
+		family to a one-parameter standardised Student-$t$, so truncation depth
+		does not index it. The entry is the lightest $\alpha$-quantile the family
+		can reach, the Gaussian limit.
+	\end{minipage}
+\end{table}
+
+The resulting pair is matched to machine precision on coverage
+($u \equiv 0.01$), variance, mean absolute deviation, median and predictive
+standard deviation, and to three decimals on point-forecast mean absolute error
+and root mean squared error. Simulated at $T = 500{,}000$ it returns Kupiec
+$p = 0.138$ and $0.314$, Christoffersen independence $p = 0.776$ and $0.625$,
+Basel Green for both, and a dynamic quantile test at $p = 0.943$ and $0.831$ ---
+the last computed with four lagged exceedance indicators and the reported
+quantile as instruments. The reported thresholds are $2.61$ and $1.46$ in units
+of conditional scale.
+
+Two further properties are worth recording. Truncation is not repairable by the
+sampling parameters an analyst would vary: restricting the support to its $k$
+most probable atoms bounds every quantile read from any reweighting of that
+support below by $\min S_k$, so no temperature and no nucleus threshold recovers
+a quantile the truncation has removed. And matching \emph{mean} expected
+shortfall as a fifth linear constraint is also feasible, but it does not make
+magnitude-reading statistics blind: the law of $Z_2$ is not pinned by its mean,
+and at $T = 1{,}500$ a size-$5\%$ one-sided test calibrated on the honest model
+still rejects the alternative with probability $0.079$. Necessary, not
+sufficient.
+
 \section{Tail Completion Determines the Tail}
 \label{app:tail_closure}
 
@@ -1348,10 +1540,9 @@ throughout the paper against a Gaussian closure and a linear extrapolation from
 the two lowest deciles, on three assets. The same grids, on the same days, give
 $\bar R$ ranging from $0.005$ to $1.70$. Within a single model--asset pair the
 closure rule moves $\bar R$ by a factor of 3.3 (Moirai~2.0 on BTC) to 76
-(Moirai~2.0 on NATGAS), and the raw violation rate with it: TimesFM~2.5 on SP500
-runs at $\hat\pi = 0.019$ under the Student-$t$ closure and $0.075$ under linear
-extrapolation. On BTC the choice moves both models out of the Basel yellow zone
-into the red one after correction.
+(Moirai~2.0 on NATGAS). On BTC the choice moves both models out of the Basel
+yellow zone into the red one after correction, so it changes the regulatory
+verdict and not only a diagnostic magnitude.
 
 The practical consequence is the one the body of the paper draws in a different
 setting. A quantile-grid forecaster is not a forecaster until a completion rule
@@ -1359,47 +1550,45 @@ is specified, and the rule is part of the forecaster in the same sense that
 $\texttt{top\_k}$ is part of a sampled one. Reporting ``TimesFM~2.5 at the 1\%
 level'' without naming the closure describes an object that does not exist.
 
-\paragraph{The inner-seven-deciles check is vacuous, and we now say so} Earlier
-versions presented a refit on $u \in \{0.2, \ldots, 0.8\}$ --- dropping the
-outermost deciles that anchor the tail --- as the more demanding test, and
-reported that it recovered $\qVstat$ and the ordering exactly. It does: to six
-decimal places, on all six model--asset combinations
+\paragraph{A refit on the inner deciles cannot fail, and is reported for that
+reason} It is natural to treat a refit on $u \in \{0.2, \ldots, 0.8\}$ ---
+dropping the outermost deciles that anchor the tail --- as the more demanding
+test of the closure, and it does recover $\qVstat$ and the ordering exactly, to
+six decimal places on all six model--asset combinations
 (Table~\ref{tab:tail_closure_extended}). That agreement is an artefact of the
-construction. The deciles are not native model output; they are reconstructed
-from the stored Student-$t$ parameters $(\nu, \mu, \sigma)$, so fitting a
-Student-$t$ to any subset of them recovers those parameters exactly and the
-check cannot fail. It is uninformative about the model, and it is reported here
-only because it was previously reported as evidence.
+construction rather than evidence about the model. The deciles are not native
+model output; they are reconstructed from the stored Student-$t$ parameters
+$(\nu, \mu, \sigma)$, so fitting a Student-$t$ to any subset of them recovers
+those parameters exactly and the check cannot fail. We report it because a check
+that cannot fail is easily mistaken for a check that passed.
 
 The Gaussian and linear closures are informative precisely because they impose a
 different functional form, and they are the ones that move the answer.
 
 \input{Quantlets/CO_robustness_inner7/tab_tail_closure_extended}
 
-\paragraph{A correction to the previous version} The closure-rule table in
-earlier drafts reported that every rule yields $\bar R > 1$, and used that to
-argue the position of these forecasters was not an artefact of the completion
-layer. Both scripts producing it carried the same sign inversion as the stored
-series; corrected, no closure yields $\bar R > 1$ on SP500 or NATGAS and the
-invariance claim is withdrawn (Table~3 of the manuscript).
+The magnitude of the closure effect is not uniform across rules, and no rule
+yields $\bar R > 1$ on SP500 or NATGAS. The position of a grid forecaster in the
+ordering by $\bar R$ is therefore not invariant to the completion layer, which is
+the reason the manuscript treats the closure as part of the forecaster rather
+than as a robustness dimension.
 
 
 
 \section{Series Validation Gate}
 \label{app:validation_gate}
 
-\paragraph{A note on sign, before anything else} Equationequation~(1) of the manuscript
+\paragraph{A note on sign, before anything else} Equation~(1) of the manuscript
 defines $\VaR_t^{\mathrm{raw}} = -\hat q_t^{lo}$, a \emph{positive} threshold.
 The forecast files, and therefore the gate, store and check the \emph{lower
 quantile} $\hat q^{lo}_\alpha$, which is negative. The two conventions differ by
 a sign, the checks below are written in the second, and the stored column is
 nonetheless named \texttt{VaR\_}$\alpha$.
 
-That naming is not a detail we are excusing; it is the mechanism by which two of
-the five defects in this paper survived. A column named for a risk measure while
-holding a quantile invites exactly one error, and that error was made twice, in
-two different generators, by two different people. The gate checks the sign
-explicitly because the name does not.
+That naming is not incidental. A column named for a risk measure while holding a
+quantile of the opposite sign invites exactly one error, and it is the ambiguity
+that the first failure mode of Table~1 of the manuscript exploits. The gate
+checks the sign explicitly because the name does not.
 
 \bigskip
 
@@ -1418,7 +1607,7 @@ than derive. We separate them because the distinction is the difference between
 a check that cannot be argued with and a check that can, and a reader deciding
 whether to adopt this gate is entitled to know which is which. The bands are
 deliberately wide: every one of them admits a range within which a forecaster may
-be poor without being defective.
+be poor without carrying an implementation failure.
 
 \begin{table}[H]
 	\centering
@@ -1426,8 +1615,8 @@ be poor without being defective.
 		$\hat q^{lo}_\alpha$ (negative), which is what the files store. `Kind'
 		separates invariants from plausibility bands with chosen thresholds.
 		`Needs' records what each check must be given beyond the forecast
-		series itself. Each check exists because a defect of that class was
-		found in this project's own pipeline.}
+		series itself. Each check corresponds to a failure mode identified by
+		the audit of Section~5.1 of the manuscript.}
 	\label{tab:validation_gate}
 	\footnotesize
 	\begin{tabular}{p{2.5cm}p{5.5cm}p{1.9cm}p{2.6cm}}
@@ -1468,8 +1657,8 @@ backtest asks whether a coverage rate is statistically distinguishable from
 nominal, calibrates its threshold to sample size, and at $\alpha = 0.01$ rejects
 most of a defensible panel. These two ask whether the series responds to the
 level it was asked for at all, and whether its exceedance rate is within a factor
-of five of nominal --- questions a defective series fails by orders of magnitude
-and an ordinary one passes comfortably. The truncated Chronos series fail
+of five of nominal --- questions that a series carrying an implementation failure
+fails by orders of magnitude and an ordinary one passes comfortably. The truncated Chronos series fail
 $\alpha$-responsiveness with a ratio of 1.08 against a threshold of 3, and
 coverage with $\hat\pi/\alpha = 39$ against a bound of 5. No plausible tightening
 of a Kupiec test produces that separation, because Kupiec is not asking that
@@ -1479,7 +1668,7 @@ question.
 apply only to sample-based forecasters, and monotonicity is weak for
 order-statistic estimators. Historical Simulation returns an order statistic of a
 250-observation window: it takes few distinct values by construction and may tie
-across adjacent $\alpha$. That is a property of the estimator, not a defect, and
+across adjacent $\alpha$. That is a property of the estimator, not a failure, and
 the gate declares the check inapplicable from the estimator class recorded in the
 series manifest rather than returning a verdict it cannot support.
 
@@ -1528,6 +1717,41 @@ corrected panel as the manuscript.
 \input{Quantlets/CO_baseline_comparison/tab_baselines}
 
 \input{Quantlets/CO_simulation_study/tab_simulation_extended}
+
+\subsection{The Chronos sampling experiment}
+\label{app:chronos_sampling}
+
+The two tables underlying Section~4 of the manuscript. Both are computed on
+identical contexts, seeds and weights, so the only quantity varying across the
+rows of Table~\ref{tab:dose_response} is the sampling rule.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Sampling dose--response for Chronos-T5. Dispersion is the ratio of
+		predictive standard deviation to the asset's 250-day realised volatility,
+		averaged over the 800 (asset, date) cells of each configuration; 1.0 is
+		the target. Context, seed and weights are identical across rows. The upper
+		block varies the support restriction; the lower block varies the
+		parameters a sensitivity analysis would ordinarily sweep, holding the
+		restriction at its default.}
+	\label{tab:dose_response}
+	\footnotesize
+	\input{Quantlets/CO_chronos_sampling/tab_dose_response}
+\end{table}
+
+\begin{table}[htbp]
+	\centering
+	\caption{Raw violation rates by nominal level, \nMainAssets{} assets, with no
+		recalibration of any kind. Read the first and third rows across rather
+		than down: the nominal exceedance probability changes tenfold between the
+		1\% and the 10\% level while the realised rate changes by a factor of
+		1.08, so the default configuration produces a series whose exceedance rate
+		is almost invariant to the level it was asked for.}
+	\label{tab:alpha_response}
+	\input{Quantlets/CO_chronos_sampling/tab_alpha_response}
+\end{table}
+
+\FloatBarrier
 
 \begin{figure}[t!]
 	\centering

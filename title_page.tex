@@ -1,0 +1,73 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{hyperref}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+
+\vspace*{0.1cm}
+
+{\LARGE\bfseries Recalibrating Tail Risk Forecasts\\[4pt]
+under Temporal Dependence}
+
+\vspace{0.4cm}
+
+{\large
+Daniel Traian Pele$^{a,b,c,*}$\,,\quad
+Vlad Bolov\u{a}neanu$^{a}$\,,\quad
+Andrei Theodor Ginavar$^{a,c}$\,,\\[4pt]
+Stefan Lessmann$^{a,d}$\,,\quad
+Wolfgang Karl H{\"a}rdle$^{a,c,d,e,f}$
+}
+
+\vspace{0.25cm}
+
+\begin{flushleft}
+\small
+$^{a}$\,Bucharest University of Economic Studies (ASE), Bucharest, Romania\\[1pt]
+$^{b}$\,Institute for Economic Forecasting, Romanian Academy, Bucharest, Romania\\[1pt]
+$^{c}$\,IDA Institute of Digital Assets, Bucharest, Romania\\[1pt]
+$^{d}$\,School of Business and Economics, Humboldt University of Berlin, Berlin, Germany\\[1pt]
+$^{e}$\,School of Informatics, University of Edinburgh, Edinburgh, UK\\[1pt]
+$^{f}$\,Dept.\ of Information Management and Finance, National Yang Ming Chiao Tung University, Hsinchu, Taiwan\\[4pt]
+$^{*}$\,Corresponding author: \href{mailto:danpele@ase.ro}{danpele@ase.ro}
+\end{flushleft}
+
+\end{center}
+
+\vspace{0.15cm}
+
+\noindent\textbf{Abstract}
+
+\smallskip
+
+\noindent
+Extreme-quantile forecasting is constrained by tail sparsity: at the 1\% level, only a small number of exceedances are available for calibration, making flexible post-processing statistically fragile. We propose a low-dimensional alternative: a one-parameter conformal shift applied to the predicted lower quantile. Beyond recalibration, the shift is used as a signed audit statistic, measuring whether the base forecast retains usable tail information or whether the correction effectively replaces it.
+
+Applied to classical volatility models and zero-shot time-series foundation models, the audit reveals a sharp regime separation. In the \emph{signal-preserving} regime, the conformal shift makes a small adjustment to an informative forecast; in the \emph{replacement} regime, the correction dominates the raw tail estimate. This distinction exposes when apparent calibration gains reflect genuine forecast information and when they reflect empirical fallback.
+
+Rolling recalibration substantially improves extreme-tail coverage and outperforms richer recalibration alternatives, while fitted per-asset GARCH models retain a Quantile Score advantage. The results show that local, low-dimensional recalibration can be effective for marginal tail calibration, but they also identify its boundary: scalar shifts do not restore conditional violation independence. Expected Shortfall is therefore treated as a supplementary diagnostic rather than as a target with formal conformal guarantees.
+
+\medskip
+
+\noindent\textbf{Keywords:} Conformal prediction; Value-at-Risk; Time series foundation models; Tail risk forecasting; Temporal dependence; Forecast audit; Quantile Score
+
+\smallskip
+
+\noindent\textbf{JEL Classification:} C14\,|\,C53\,|\,C58\,|\,G17\,|\,G32
+
+\vspace{0.4cm}
+
+\noindent\textbf{Acknowledgements}
+
+\smallskip
+
+\noindent\footnotesize
+This paper is supported through the project ``IDA Institute of Digital Assets'', CF166/15.11.2022, CN760046/23.05.2023; the project ``AI for Energy Finance (AI4EFin)'', CF162/15.11.2022, CN760048/23.05.2023, financed under Romania's National Recovery and Resilience Plan, Call no.\ PNRR-III-C9-2022-I8; and the Marie Sk\l{}odowska-Curie Actions under the European Union's Horizon Europe research and innovation program for the Industrial Doctoral Network on Digital Finance, acronym DIGITAL, Project No.\ 101119635.
+We acknowledge the support of the project ``MA'AT -- Autonomous Model for Textual Assistance'', SMIS Code 2021+: 330941, funding contract no.\ 390090/11.11.2025, project co-financed by the European Regional Development Fund through the Smart Growth, Digitalisation and Financial Instruments Programme 2021--2027 (POCIDIF).
+
+\end{document}

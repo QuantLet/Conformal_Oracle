@@ -1,0 +1,37 @@
+[
+  {
+    "cls": "no shape restriction",
+    "delta": 0.21809000396728517,
+    "q": -0.6382556616109127,
+    "understatement": 75.51258075854531,
+    "saturated": false
+  },
+  {
+    "cls": "unimodal",
+    "delta": 0.0658590383529663,
+    "q": -1.3200022052264493,
+    "understatement": 49.35658335181445,
+    "saturated": false
+  },
+  {
+    "cls": "unimodal, fourth moment <= that of P",
+    "delta": 0.04583550834655763,
+    "q": -1.504000351389567,
+    "understatement": 42.29728091903259,
+    "saturated": false
+  },
+  {
+    "cls": "unimodal, Pareto tail index 5 beyond 3 sigma",
+    "delta": 0.023584706306457523,
+    "q": -1.814004424226076,
+    "understatement": 30.403614862163785,
+    "saturated": false
+  },
+  {
+    "cls": "GARCH class, standardised Student-t innovations",
+    "delta": NaN,
+    "q": -2.3298598298413395,
+    "understatement": 10.61222350436617,
+    "saturated": false
+  }
+]

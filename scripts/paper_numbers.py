@@ -174,6 +174,57 @@ def collect() -> dict:
     from scipy import stats as _st
     ws = t[~t["model"].isin(["Chronos-Small", "Chronos-Mini"])]
     sp = _st.spearmanr(ws["R"], ws["raw_pi"])
+
+    # ---- literals converted from prose (unit tagged in each name) ---------
+    # SEQ = series-asset cells with stored sequences; MAIN = the 16x24 table.
+    def _disp(cell, model):
+        r = dose[(dose["cell"] == cell) & (dose["model"] == model)]
+        return float(r["disp_mean"].iloc[0])
+    n["LitTempGap"] = abs(_disp("temp=2.0 @ k=50", "Chronos-Small")
+                          - _disp("temp=0.5 @ k=50", "Chronos-Small"))
+    n["LitNucleusGap"] = abs(_disp("top_k=50 (default)", "Chronos-Small")
+                             - _disp("top_p=0.9 @ k=50", "Chronos-Small"))
+    n["LitSupportPct"] = 100 * (4093 - 50) / 4093
+    def _pi(model, a_):
+        r = alpha_resp[(alpha_resp["model"] == model)
+                       & (alpha_resp["alpha"].round(4) == a_)]
+        return float(r["pihat"].iloc[0])
+    for tag, mdl in (("Small", "Chronos-Small-A"), ("Mini", "Chronos-Mini-A")):
+        for a_, lab in ((0.025, "TwoFive"), (0.05, "Five")):
+            n[f"LitRatio{tag}{lab}"] = _pi(mdl, a_) / a_
+    n["LitAlphaResp"] = _pi("Chronos-Small", 0.10) / _pi("Chronos-Small", 0.01)
+    n["LitMainRMinAll"] = float(t["R"].min())
+    n["LitMainRMaxOK"] = float(ok["R"].max())
+    n["LitQSMin"] = float(t["cor_qs"].min())
+    n["LitQSMax"] = float(t["cor_qs"].max())
+    n["LitWMin"] = float(t["w_gjr"].min())
+    n["LitWMax"] = float(t["w_gjr"].max())
+    n["LitCorPiTypical"] = float(t["cor_pi"].median())
+    n["LitMoiraiGapPP"] = 100 * abs(t.set_index("model").loc["Moirai-2.0", "raw_pi"]
+                                    - t.set_index("model").loc["Moirai-1.1", "raw_pi"])
+    n["LitLambdaTail"] = 0.94 ** 250
+    dmc = pd.read_csv(Q / "CO_quantile_scores" / "tab_dm_configuration.csv")
+    for _, r in dmc.iterrows():
+        tag = "Small" if "Small" in r["default"] else "Mini"
+        n[f"LitQSDefault{tag}"] = float(r["QS_default"]) * 1e4
+        n[f"LitQSAnalytic{tag}"] = float(r["QS_analytic"]) * 1e4
+
+    # ---- dynamic quantile test, SEQ panel (cells), alpha = 0.01 ----------
+    dq = pd.read_csv(BASE / "analysis" / "phase3" / "dq_panel.csv")
+    n["SeqDQCells"] = int(len(dq))
+    n["SeqDQRejRaw"] = 100 * (dq["p_dq_raw"] < 0.05).mean()
+    n["SeqDQRejCor"] = 100 * (dq["p_dq_cp"] < 0.05).mean()
+
+    # ---- Phase 2: the identification result and the calibrated gate band ----
+    # Emitted by analysis/phase2/{construct_pair,delta_by_class,band_sweep}.py
+    # and frozen into phase2_numbers.json so the manuscript cannot carry a typed
+    # literal for any of them. Grid: spacing 0.004, ceiling 32; delta* converges
+    # from above, so each is an upper bound.
+    p2 = json.loads((BASE / "analysis" / "phase2" / "phase2_numbers.json")
+                    .read_text())
+    for k, v in p2.items():
+        n[f"Gap{k}"] = v
+
     n["SpearmanRPi"] = sp.statistic
     n["SpearmanRPiN"] = len(ws)
     return n
@@ -184,6 +235,35 @@ def fmt(key: str, v) -> str:
         return v
     if isinstance(v, (int, np.integer)):
         return str(int(v))
+    if key.startswith("GapUnd"):
+        return f"{v:.1f}"
+    if key.startswith("GapDelta"):
+        return f"{v:.3f}"
+    if key.startswith("LitSupportPct"):
+        return f"{v:.1f}"
+    if key.startswith("LitMoiraiGapPP"):
+        return f"{v:.2f}"
+    if key.startswith("LitLambdaTail"):
+        m, e = f"{v:.1e}".split("e")
+        return rf"{m}\times 10^{{{int(e)}}}"
+    if key.startswith("LitRatio") or key.startswith("LitQS") \
+            or key.startswith("LitW") or key.startswith("LitAlphaResp"):
+        return f"{v:.2f}"
+    if key.startswith("Lit"):
+        return f"{v:.3f}"
+    if key in ("GapFisherSevere", "GapGapAblFull", "GapGapAblCovid"):
+        return f"{v:g}"
+    if key in ("GapDMt", "GapDMp", "GapQSGapPct", "GapVaRHonest", "GapVaRAlt",
+               "GapRhoLo", "GapRhoHi", "GapDeltaHatLo", "GapDeltaHatHi",
+               "GapEmpCoverage", "GapFisherKupiec"):
+        return f"{v:g}"
+    if key.startswith("GapCells"):
+        return str(int(v))
+    if key.startswith("GapBand") or key.startswith("GapCell") or key.startswith("GapQTrue") \
+            or key.startswith("GapGap") or key.startswith("GapMargin"):
+        return f"{v:.3f}"
+    if key.startswith("SeqDQRej"):
+        return f"{v:.1f}"
     if key.endswith("Pct") or key.startswith("SeqCC") or key.startswith("SeqKupiec"):
         return f"{v:.1f}"
     if key.startswith("RawPi") or key.startswith("Pi") or key.startswith("MainRawPi") \
@@ -210,6 +290,9 @@ def main() -> int:
            "% Macro names carry their panel: Main = 16 x 24 = 384 pairs (Table 1);",
            "% Seq = 13 x 24 = 312 pairs, the forecasters with stored series.", ""]
     for k, v in n.items():
+        if not k.isalpha():
+            raise SystemExit(f"macro name {k!r} is not letters-only; LaTeX "
+                             "control sequences cannot contain digits")
         tex.append(rf"\newcommand{{\n{k}}}{{{fmt(k, v)}}}")
     text = "\n".join(tex) + "\n"
 

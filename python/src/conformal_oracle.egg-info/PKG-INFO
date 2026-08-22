@@ -1,0 +1,222 @@
+Metadata-Version: 2.4
+Name: conformal-oracle
+Version: 0.3.2
+Summary: Conformal recalibration audit for tail quantile forecasters
+Author-email: Daniel Traian Pele <danpele@ase.ro>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/QuantLet/Conformal_Oracle
+Project-URL: Repository, https://github.com/danpele/Conformal_Oracle
+Project-URL: Issues, https://github.com/danpele/Conformal_Oracle/issues
+Project-URL: Documentation, https://github.com/danpele/Conformal_Oracle/blob/main/python/docs/api.md
+Project-URL: Changelog, https://github.com/danpele/Conformal_Oracle/blob/main/python/CHANGELOG.md
+Keywords: conformal prediction,VaR,risk management,backtesting
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.24
+Requires-Dist: pandas>=2.0
+Requires-Dist: scipy>=1.10
+Requires-Dist: statsmodels>=0.14
+Requires-Dist: matplotlib>=3.7
+Provides-Extra: benchmarks
+Requires-Dist: arch>=6.0; extra == "benchmarks"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: ruff>=0.1; extra == "dev"
+Requires-Dist: mypy>=1.5; extra == "dev"
+Requires-Dist: scikit-learn>=1.0; extra == "dev"
+Provides-Extra: chronos
+Requires-Dist: chronos-forecasting>=1.5; extra == "chronos"
+Requires-Dist: torch>=2.0; extra == "chronos"
+Requires-Dist: transformers>=4.30; extra == "chronos"
+Provides-Extra: timesfm
+Requires-Dist: timesfm>=1.2; extra == "timesfm"
+Requires-Dist: torch>=2.0; extra == "timesfm"
+Provides-Extra: moirai
+Requires-Dist: uni2ts>=0.1; extra == "moirai"
+Requires-Dist: torch>=2.0; extra == "moirai"
+Requires-Dist: einops>=0.6; extra == "moirai"
+Requires-Dist: gluonts>=0.14; extra == "moirai"
+Requires-Dist: huggingface-hub>=0.20; extra == "moirai"
+Provides-Extra: lag-llama
+Requires-Dist: torch>=2.0; extra == "lag-llama"
+Requires-Dist: gluonts>=0.14; extra == "lag-llama"
+Requires-Dist: huggingface-hub>=0.20; extra == "lag-llama"
+Requires-Dist: einops>=0.6; extra == "lag-llama"
+Provides-Extra: tsfm-all
+Requires-Dist: chronos-forecasting>=1.5; extra == "tsfm-all"
+Requires-Dist: timesfm>=1.2; extra == "tsfm-all"
+Requires-Dist: uni2ts>=0.1; extra == "tsfm-all"
+Requires-Dist: torch>=2.0; extra == "tsfm-all"
+Requires-Dist: transformers>=4.30; extra == "tsfm-all"
+Requires-Dist: gluonts>=0.14; extra == "tsfm-all"
+Requires-Dist: huggingface-hub>=0.20; extra == "tsfm-all"
+Requires-Dist: einops>=0.6; extra == "tsfm-all"
+Provides-Extra: all
+Requires-Dist: conformal-oracle[benchmarks,tsfm_all]; extra == "all"
+Dynamic: license-file
+
+# conformal-oracle
+
+[![PyPI version](https://img.shields.io/pypi/v/conformal-oracle)](https://pypi.org/project/conformal-oracle/)
+[![Python](https://img.shields.io/pypi/pyversions/conformal-oracle)](https://pypi.org/project/conformal-oracle/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Downloads](https://img.shields.io/pypi/dm/conformal-oracle)](https://pypi.org/project/conformal-oracle/)
+
+Conformal recalibration audit for tail quantile forecasters.
+
+Given any return series and either a forecaster object or a
+pre-computed quantile path, `conformal-oracle` computes a
+one-parameter conformal correction (static or rolling), classifies
+the forecast as signal-preserving or replacement, and reports a
+full backtest panel.
+
+The core install is **dependency-agnostic**: it needs only NumPy,
+pandas, SciPy, statsmodels, and matplotlib. No forecaster library
+is required unless you use the built-in benchmark wrappers.
+
+Implements the methodology from:
+
+> Pele, D.T., Bolovaneanu, V., Ginavar, A.T., Lessmann, S., Hardle, W.K.
+> "Recalibrating Tail Event Forecasts under Temporal Dependence" (2026).
+
+## What's new in 0.3.1
+
+**Coverage bugfix (rolling mode).** The rolling conformal correction now uses
+the finite-sample split-conformal quantile — the `ceil((w+1)(1-alpha))`-th
+order statistic of the trailing-window scores — rather than the plain empirical
+`(1-alpha)` quantile. Releases up to and including 0.3.0 systematically
+**under-covered** in `mode="rolling"`; if you produced rolling-mode results on
+an earlier version, re-run on 0.3.1 or later. Static mode is affected only
+negligibly (large calibration window).
+
+**New diagnostics.** `recalibration.diagnose_scale` / `ScaleDiagnostic`
+(a location–scale decomposition of the conformal shift) and
+`recalibration.ACICalibrator` (an Adaptive Conformal Inference baseline with
+step size selected by first-half validation). See the
+[changelog](CHANGELOG.md) for details.
+
+## Install
+
+```bash
+pip install conformal-oracle                 # core (no arch dep)
+pip install conformal-oracle[benchmarks]     # + GJR-GARCH, GARCH-Normal
+pip install conformal-oracle[chronos]        # + Chronos TSFM
+pip install conformal-oracle[all]            # everything
+```
+
+For development:
+
+```bash
+git clone https://github.com/QuantLet/Conformal_Oracle.git
+cd Conformal_Oracle/python
+pip install -e ".[dev,benchmarks]"
+```
+
+## Quickstart -- agnostic audit (no forecaster dependency)
+
+```python
+import pandas as pd
+from conformal_oracle import audit
+
+returns = pd.read_csv("returns.csv", index_col=0, parse_dates=True).squeeze()
+# q_lo: your model's predicted 1% quantile, same index as returns
+q_lo = pd.read_csv("my_var_forecast.csv", index_col=0, parse_dates=True).squeeze()
+
+result = audit(returns, forecast=q_lo, alpha=0.01, mode="static")
+print(result.summary())
+
+# Rolling mode: re-estimates the conformal correction from a
+# trailing 250-day window (more realistic for live deployment)
+result_roll = audit(returns, forecast=q_lo, alpha=0.01, mode="rolling")
+print(result_roll.summary())
+```
+
+No `arch`, no `torch`, no heavyweight dependency -- just your
+quantile series.
+
+## Quickstart -- with a forecaster object
+
+```python
+from conformal_oracle import audit
+from conformal_oracle.contrib.benchmarks import GJRGARCHForecaster
+
+result = audit(returns, GJRGARCHForecaster(), alpha=0.01, mode="rolling")
+print(result.summary())
+```
+
+## Regime classification
+
+```python
+from conformal_oracle import classify_regime
+
+verdict = classify_regime(returns, forecast=q_lo, mode="rolling")
+print(verdict.regime)       # "signal-preserving" or "replacement"
+print(verdict.R)            # replacement ratio
+print(verdict.basel_zone)   # "green", "yellow", or "red"
+```
+
+## Compare multiple forecasters
+
+```python
+from conformal_oracle import compare_forecasters
+
+comp = compare_forecasters(
+    returns,
+    {"model_A": q_lo_A, "model_B": q_lo_B},
+    mode="rolling",
+)
+print(comp.comparison_table())
+print(comp.dm_matrix())
+```
+
+## Custom forecaster
+
+Any object implementing `fit(returns)` and `forecast(returns, t)` works:
+
+```python
+from conformal_oracle._types import SampleDistribution
+
+class MyForecaster:
+    def fit(self, returns): pass
+    def forecast(self, returns, t):
+        hist = returns.iloc[max(0, t-250):t]
+        return SampleDistribution(samples=hist.values)
+
+result = audit(returns, MyForecaster(), alpha=0.01)
+```
+
+## Worked examples
+
+- [Quickstart (S&P 500)](examples/notebooks/quickstart_sp500.ipynb) --
+  Static and rolling conformal audits with GJR-GARCH and Lag-Llama.
+  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danpele/Conformal_Oracle/blob/main/python/examples/notebooks/quickstart_sp500.ipynb)
+- [Reproduce Table 4 (Full replication)](examples/notebooks/reproduce_table4_full.ipynb) --
+  9 forecasters x 24 assets, full master evaluation table with checkpointing.
+  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danpele/Conformal_Oracle/blob/main/python/examples/notebooks/reproduce_table4_full.ipynb)
+
+## Documentation
+
+- [API Reference](docs/api.md)
+- [Methodology](docs/methodology.md)
+- [Conventions](docs/conventions.md) (return units, VaR sign, alpha)
+- [Migration Guide (v0.3)](docs/migration_v0.3.md)
+
+## Requirements
+
+Python 3.10+, numpy, pandas, scipy, statsmodels, matplotlib.
+
+GARCH benchmarks require `arch>=6.0` (install with `[benchmarks]`).
+TSFM wrappers require PyTorch and model-specific packages (see extras).
+
+## License
+
+MIT

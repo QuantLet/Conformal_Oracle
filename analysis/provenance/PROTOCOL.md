@@ -37,10 +37,27 @@ All three were **correct arithmetic on the wrong object**. In each case I checke
   by series and -1.947 by cell. Recommended an edge that blocks 11 well-specified
   cells while reporting zero false positives.
 
+### R6 is the case the row count does not catch
+
+R3 and R9 are caught by declaring the expected number of rows: an ordered-pair
+matrix has 30 cells and an unordered one 15; a cell panel has 312 rows and a
+series panel 13. R6 is not. The linear programme had the same number of
+decision variables under a grid capped at 4 and a grid capped at 32; only the
+*range* of the object differed, and an infeasibility verdict came back from a
+correct model on a malformed support.
+
+**A second field is therefore mandatory beside the row count: what varies between
+rows, and over what range.** Declaring "the candidate support, spanning |x| <= 4"
+makes the defect visible before the solver is called, because the question "is 4
+wide enough to hold the mass this constraint needs?" is then on the page.
+
 ### What the rule requires
 
 1. Write the unit in the pre-registration, in the words of the table above,
    before running anything.
+1a. Write, beside it, **what varies from row to row and over what range** ---
+   the parameter swept, the grid, the support, the window. A row count alone does
+   not distinguish a correct object from a truncated one.
 2. State the expected row count for that unit, and check it against the data
    before reading any result.
 3. When a result is aggregated, say at which step: cells -> series -> panel is

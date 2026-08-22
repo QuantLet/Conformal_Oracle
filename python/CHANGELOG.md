@@ -1,5 +1,43 @@
 # Changelog
 
+## [0.3.3] - 2026-08-22
+
+### Fixed (documentation of a released estimator)
+
+- **`conformal_shift` and `compute_qv_roll` documented an estimator they do not
+  implement.** Both docstrings described the correction as the plain empirical
+  `(1 - alpha)` quantile of the nonconformity scores. Both call
+  `conformal_quantile()`, which returns the finite-sample split-conformal
+  threshold, the `ceil((n + 1)(1 - alpha))`-th order statistic. The
+  implementation has been correct since 0.3.1; the description has been wrong
+  since the function was introduced, in every released version.
+
+  **No behaviour changes in this release.** `conformal/quantile.py` is untouched
+  and is byte-identical to the file shipped in 0.3.1 and 0.3.2. Numerical output
+  of 0.3.3 is identical to 0.3.2 on all inputs.
+
+  **Why a release rather than a note.** A user reading the docstring and
+  reimplementing from it obtains `np.quantile(scores, 1 - alpha)`, which differs
+  by one order statistic. The gap is `O(1/n)`: negligible on a long calibration
+  set, material on a 250-day window, and large enough to change the *sign* of the
+  correction when the calibration scores straddle zero near the `(1 - alpha)`
+  level. On the panel used in the accompanying paper the two conventions differ
+  in sign on at least one asset (-0.000176 against +0.000708). A user who
+  compared their reimplementation against this package and found a discrepancy
+  would have had the docstring on their side and the code against them.
+
+  This is the second defect this convention has produced, in the opposite
+  direction to the first: 0.3.1 fixed an implementation that had drifted from the
+  documented estimator, and 0.3.3 fixes documentation that had drifted from the
+  implemented one.
+
+### Known issue
+
+- `conformal-oracle/` in the accompanying research repository is a stale
+  duplicate of this package at version 0.3.1 and carries the same docstring
+  defect. It is not the distribution source and should be reconciled against
+  `python/` or removed before any JOSS submission.
+
 ## [0.3.2] - 2026-07-16
 
 ### Documentation

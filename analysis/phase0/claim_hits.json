@@ -1,0 +1,599 @@
+[
+ {
+  "claim": "gap ablation 0.0005 / 0.0058",
+  "tokens": {
+   "0.0005": [
+    "Quantlets/CO_panel_wildcluster/wild_cluster_dm.csv",
+    "Quantlets/CO_full_evaluation/master_table.tex",
+    "Quantlets/CO_robustness/tab_robustness_summary.csv"
+   ],
+   "0.0058": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_robustness/tab_h15_fc_sensitivity.tex",
+    "Quantlets/CO_robustness/qV_bootstrap_ci.csv"
+   ]
+  },
+  "n_files": {
+   "0.0005": 56,
+   "0.0058": 38
+  }
+ },
+ {
+  "claim": "score persistence [0.18,0.67]",
+  "tokens": {
+   "0.18": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_full_evaluation/tab_master_results_rebuilt_informative_cc.tex",
+    "Quantlets/CO_full_evaluation/tab_master_results.tex"
+   ],
+   "0.67": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_identification/identification_results.csv",
+    "Quantlets/CO_cross_sectional/tab_cross_sectional.tex"
+   ]
+  },
+  "n_files": {
+   "0.18": 57,
+   "0.67": 29
+  }
+ },
+ {
+  "claim": "remainder Delta in [0.109,0.138]",
+  "tokens": {
+   "0.109": [
+    "Quantlets/CO_full_evaluation/tab_master_results_r2.tex",
+    "Quantlets/CO_chronos_sampling/tab_dose_response.csv",
+    "Quantlets/CO_chronos_sampling/tab_dose_response.tex"
+   ],
+   "0.138": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_bound_validation/tab_bound_validation.tex",
+    "Quantlets/CO_aci_baseline/aci_gamma_sensitivity_results.csv"
+   ]
+  },
+  "n_files": {
+   "0.109": 47,
+   "0.138": 30
+  }
+ },
+ {
+  "claim": "coverage floor 88%, coverage 98.9%",
+  "tokens": {
+   "98.9": [
+    "analysis/provenance/PROSE_NUMBERS.csv",
+    "analysis/phase0/prose_literals.json",
+    "reports/.bib_audit_cache.json"
+   ]
+  },
+  "n_files": {
+   "98.9": 3
+  }
+ },
+ {
+  "claim": "worst corrected coverage 0.968 / floor 0.891",
+  "tokens": {
+   "0.968": [
+    "Quantlets/CO_full_evaluation/results/all_results.csv",
+    "analysis/provenance/PROSE_NUMBERS.csv",
+    "analysis/phase0/PREREGISTRATION.md"
+   ],
+   "0.891": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_full_evaluation/results/all_results.csv",
+    "analysis/interface/native_vs_extrapolated.csv"
+   ]
+  },
+  "n_files": {
+   "0.968": 4,
+   "0.891": 12
+  }
+ },
+ {
+  "claim": "36,600 panel obs / 366 violations",
+  "tokens": {
+   "36600": [
+    "Quantlets/CO_full_evaluation/tab_master_results_r2.csv",
+    "Quantlets/CO_simulation_study/simulation_study_results.csv",
+    "Quantlets/CO_full_evaluation/results/all_results.csv"
+   ],
+   "36,600": [],
+   "366": [
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_dm.csv"
+   ]
+  },
+  "n_files": {
+   "36600": 9,
+   "36,600": 0,
+   "366": 82
+  }
+ },
+ {
+  "claim": "98.8% of support removed",
+  "tokens": {
+   "98.8": [
+    "analysis/interface/MEMO.md",
+    "analysis/recompute/PREREGISTRATION.md",
+    "analysis/provenance/REVIEW_RESPONSE_R2.md"
+   ]
+  },
+  "n_files": {
+   "98.8": 4
+  }
+ },
+ {
+  "claim": "analytic vs full-vocab 1.041 / 1.038 / 0.3%",
+  "tokens": {
+   "1.041": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "analysis/provenance/PROSE_NUMBERS.csv",
+    "analysis/ae_point4/tab_deterioration.tex"
+   ],
+   "1.038": [
+    "analysis/provenance/PROSE_NUMBERS.csv",
+    "analysis/ae_point4/pairs_long.csv",
+    "analysis/ae_point4/deteriorating_pairs.csv"
+   ]
+  },
+  "n_files": {
+   "1.041": 7,
+   "1.038": 7
+  }
+ },
+ {
+  "claim": "sampled default same dates 0.128 / 0.3942",
+  "tokens": {
+   "0.128": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_aci_baseline/aci_gamma_sensitivity_results.csv",
+    "Quantlets/CO_aci_baseline/aci_baseline_gamma_grid.csv"
+   ],
+   "0.3942": [
+    "Quantlets/CO_full_evaluation/results/all_results.csv",
+    "analysis/provenance/PROSE_NUMBERS.csv",
+    "analysis/ae_point4/pairs_long.csv"
+   ]
+  },
+  "n_files": {
+   "0.128": 20,
+   "0.3942": 5
+  }
+ },
+ {
+  "claim": "121,923 dates per checkpoint",
+  "tokens": {
+   "121923": [
+    "analysis/chronos_sampling/coverage_SP500.csv"
+   ],
+   "121,923": [
+    "analysis/phase0/PREREGISTRATION.md"
+   ]
+  },
+  "n_files": {
+   "121923": 1,
+   "121,923": 1
+  }
+ },
+ {
+  "claim": "range factor 38",
+  "tokens": {
+   "38": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv"
+   ]
+  },
+  "n_files": {
+   "38": 163
+  }
+ },
+ {
+  "claim": "closure R in [0.005,1.70]",
+  "tokens": {
+   "0.005": [
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_dm.csv"
+   ],
+   "1.70": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_robustness/tail_closure_robustness.csv",
+    "Quantlets/CO_robustness_inner7/tab_tail_closure_extended.tex"
+   ]
+  },
+  "n_files": {
+   "0.005": 85,
+   "1.70": 24
+  }
+ },
+ {
+  "claim": "closure factor 3 to 76",
+  "tokens": {
+   "76": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv"
+   ]
+  },
+  "n_files": {
+   "76": 128
+  }
+ },
+ {
+  "claim": "Moirai gap 0.24 pp",
+  "tokens": {
+   "0.24": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_kupiec.csv",
+    "Quantlets/CO_robustness/tab_qV_bootstrap_ci.tex"
+   ]
+  },
+  "n_files": {
+   "0.24": 49
+  }
+ },
+ {
+  "claim": "largest consecutive ratio 84 / next 48",
+  "tokens": {
+   "84": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv"
+   ],
+   "48": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv"
+   ]
+  },
+  "n_files": {
+   "84": 142,
+   "48": 154
+  }
+ },
+ {
+  "claim": "QS 4.67e-4 .. 5.83e-4",
+  "tokens": {
+   "4.67": [
+    "Quantlets/CO_panel_wildcluster/wild_cluster_dm.csv",
+    "Quantlets/CO_full_evaluation/tab_master_results_r2.csv",
+    "Quantlets/CO_aci_baseline/aci_gamma_sensitivity_results.csv"
+   ],
+   "5.83": [
+    "Quantlets/CO_full_evaluation/tab_master_results_r2.csv",
+    "Quantlets/CO_full_evaluation/tab_master_results_rebuilt_informative_cc.csv",
+    "Quantlets/CO_full_evaluation/tab_master_results.csv"
+   ]
+  },
+  "n_files": {
+   "4.67": 14,
+   "5.83": 13
+  }
+ },
+ {
+  "claim": "traffic light 106/312, 154, 52, 278, 34",
+  "tokens": {
+   "106": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv"
+   ],
+   "154": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_dm.csv",
+    "Quantlets/CO_baseline_comparison_tuned/tuned_gbm_qr_summary.csv"
+   ],
+   "52": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv"
+   ],
+   "278": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_dm.csv",
+    "Quantlets/CO_baseline_comparison_tuned/tuned_gbm_qr_grid.csv"
+   ]
+  },
+  "n_files": {
+   "106": 95,
+   "154": 98,
+   "52": 144,
+   "278": 73
+  }
+ },
+ {
+  "claim": "Wilcoxon p 9.3e-5",
+  "tokens": {
+   "9.3": [
+    "Quantlets/CO_simulation_study/simulation_study_results.csv",
+    "Quantlets/CO_aci_baseline/aci_gamma_sensitivity_results.csv",
+    "Quantlets/CO_full_evaluation/results/all_results.csv"
+   ]
+  },
+  "n_files": {
+   "9.3": 26
+  }
+ },
+ {
+  "claim": "rolling 309 green / commodities 67.3 / bonds 89.7",
+  "tokens": {
+   "309": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_dm.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_kupiec.csv"
+   ],
+   "67.3": [
+    "analysis/provenance/PROSE_NUMBERS.csv",
+    "analysis/phase0/prose_literals.json",
+    "reports/.bib_audit_cache.json"
+   ],
+   "89.7": [
+    "analysis/provenance/PROSE_NUMBERS.csv",
+    "analysis/ae_point4/summary.md",
+    "analysis/ae_point4/tab_crosstab_roll.tex"
+   ]
+  },
+  "n_files": {
+   "309": 70,
+   "67.3": 3,
+   "89.7": 6
+  }
+ },
+ {
+  "claim": "GARCH-N rolling CC 10/24",
+  "tokens": {
+   "10/24": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.tex",
+    "Quantlets/CO_full_evaluation/tab_master_results.tex",
+    "Quantlets/CO_full_evaluation/tab_master_results_rebuilt.tex"
+   ]
+  },
+  "n_files": {
+   "10/24": 8
+  }
+ },
+ {
+  "claim": "multi-level Kupiec 5,9,5,4 and 10,14,16,15",
+  "tokens": {
+   "5, 9, 5, 4": [],
+   "10, 14, 16, 15": []
+  },
+  "n_files": {
+   "5, 9, 5, 4": 0,
+   "10, 14, 16, 15": 0
+  }
+ },
+ {
+  "claim": "EWMA cluster p 0.035 / pooled 0.0114 0.0113 0.0111",
+  "tokens": {
+   "0.035": [
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_full_evaluation/tab_master_results_r2.csv"
+   ],
+   "0.0114": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_kupiec.csv"
+   ],
+   "0.0113": [
+    "Quantlets/CO_baseline_comparison_tuned/tuned_gbm_qr_grid.csv",
+    "Quantlets/CO_full_evaluation/tab_master_results_r2.csv",
+    "Quantlets/CO_robustness/tail_closure_robustness.csv"
+   ],
+   "0.0111": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_kupiec.csv",
+    "Quantlets/CO_full_evaluation/tab_master_results_r2.csv"
+   ]
+  },
+  "n_files": {
+   "0.035": 61,
+   "0.0114": 57,
+   "0.0113": 39,
+   "0.0111": 51
+  }
+ },
+ {
+  "claim": "DM 18 of 30 / QS 5.03 5.81 5.00 5.69",
+  "tokens": {
+   "5.03": [
+    "Quantlets/CO_full_evaluation/tab_master_results_r2.csv",
+    "analysis/provenance/PROSE_NUMBERS.csv",
+    "analysis/gjr_quantile/gjr_rebuild.csv"
+   ],
+   "5.81": [
+    "Quantlets/CO_aci_baseline/aci_gamma_sensitivity_results.csv",
+    "analysis/moirai11_reconciliation/diff_vs_legacy.csv",
+    "analysis/provenance/PROSE_NUMBERS.csv"
+   ],
+   "5.00": [
+    "Quantlets/CO_robustness/study1_small_sample.csv",
+    "analysis/provenance/gjr_diagnostic.csv",
+    "analysis/provenance/PROSE_NUMBERS.csv"
+   ],
+   "5.69": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_aci_baseline/aci_gamma_sensitivity_results.csv",
+    "Quantlets/CO_aci_baseline/aci_baseline_gamma_grid.csv"
+   ]
+  },
+  "n_files": {
+   "5.03": 14,
+   "5.81": 11,
+   "5.00": 18,
+   "5.69": 16
+  }
+ },
+ {
+  "claim": "baselines 5.14e-4 / 89.1% / 97.4% / 0.0750 / 0.0443",
+  "tokens": {
+   "5.14": [
+    "Quantlets/CO_baseline_comparison/tab_baselines.tex",
+    "Quantlets/CO_simulation_study/simulation_study_results.csv",
+    "analysis/phase3_windows/window_sensitivity.csv"
+   ],
+   "89.1": [
+    "Quantlets/CO_baseline_comparison/tab_baselines.tex",
+    "analysis/provenance/PROSE_NUMBERS.csv",
+    "analysis/phase0/PREREGISTRATION.md"
+   ],
+   "97.4": [
+    "Quantlets/CO_baseline_comparison/tab_baselines.tex",
+    "analysis/provenance/PROSE_NUMBERS.csv",
+    "analysis/phase0/PREREGISTRATION.md"
+   ],
+   "0.0750": [
+    "Quantlets/CO_aci_baseline/verdict_aci.tex",
+    "Quantlets/CO_aci_baseline/tab_baselines_aci.tex",
+    "Quantlets/CO_aci_baseline/aci_gamma_sensitivity_results.csv"
+   ],
+   "0.0443": [
+    "Quantlets/CO_aci_baseline/verdict_aci.tex",
+    "Quantlets/CO_aci_baseline/tab_baselines_aci.tex",
+    "Quantlets/CO_aci_baseline/tab_aci_gamma_sensitivity.tex"
+   ]
+  },
+  "n_files": {
+   "5.14": 18,
+   "89.1": 5,
+   "97.4": 5,
+   "0.0750": 18,
+   "0.0443": 15
+  }
+ },
+ {
+  "claim": "GBM-QR 50.6% green / 59% Kupiec rej",
+  "tokens": {
+   "50.6": [
+    "Quantlets/CO_baseline_comparison/tab_baselines.tex",
+    "analysis/phase0/PREREGISTRATION.md",
+    "analysis/phase0/prose_literals.json"
+   ],
+   "59": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_dm.csv"
+   ]
+  },
+  "n_files": {
+   "50.6": 4,
+   "59": 132
+  }
+ },
+ {
+  "claim": "raw row mean violation 0.078",
+  "tokens": {
+   "0.078": [
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CO_baselines_evt_fhs/baselines_evt_fhs.csv",
+    "Quantlets/CO_aci_baseline/aci_gamma_sensitivity_results.csv"
+   ]
+  },
+  "n_files": {
+   "0.078": 33
+  }
+ },
+ {
+  "claim": "Monte Carlo 76-81% / 96-98%",
+  "tokens": {
+   "76": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv"
+   ],
+   "81": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv"
+   ],
+   "96": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_dm.csv"
+   ],
+   "98": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv"
+   ]
+  },
+  "n_files": {
+   "76": 128,
+   "81": 142,
+   "96": 138,
+   "98": 150
+  }
+ },
+ {
+  "claim": "Fisher exact 0.49 / 0.00078",
+  "tokens": {
+   "0.49": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_kupiec.csv",
+    "Quantlets/CO_multi_quantile_panel/tab_panel_pooled.csv"
+   ],
+   "0.00078": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_simulation_study/simulation_study_results.csv",
+    "Quantlets/CO_aci_baseline/aci_gamma_sensitivity_results.csv"
+   ]
+  },
+  "n_files": {
+   "0.49": 42,
+   "0.00078": 20
+  }
+ },
+ {
+  "claim": "capital break-even 1.22 / W 0.98-1.14",
+  "tokens": {
+   "1.22": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_simulation_study/simulation_study_results.csv",
+    "Quantlets/CO_gbm_qr/gbm_qr_results.csv"
+   ],
+   "1.14": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CFP_ES_Correction_Z2/tab_es_correction.tex",
+    "Quantlets/CO_full_evaluation/tab_master_results_r2.csv"
+   ]
+  },
+  "n_files": {
+   "1.22": 22,
+   "1.14": 24
+  }
+ },
+ {
+  "claim": "COVID lags 77 / 161 days",
+  "tokens": {
+   "77": [
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.csv",
+    "Quantlets/CO_garch_conformal/garch_conformal_detail.tex",
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv"
+   ],
+   "161": [
+    "Quantlets/CFP_ES_Correction_Z2/table_c1_es_correction.csv",
+    "Quantlets/CO_panel_wildcluster/wild_cluster_dm.csv",
+    "Quantlets/CO_baseline_comparison_tuned/tuned_gbm_qr_grid.csv"
+   ]
+  },
+  "n_files": {
+   "77": 138,
+   "161": 82
+  }
+ },
+ {
+  "claim": "negative qV: 3 TimesFM, 2 Moirai2.0",
+  "tokens": {
+   "-0.786": [
+    "analysis/provenance/REBUILD_LOG.md",
+    "analysis/provenance/STALE_TABLES.md",
+    "pipeline/results/cross_sectional.tex"
+   ]
+  },
+  "n_files": {
+   "-0.786": 3
+  }
+ }
+]

@@ -76,15 +76,50 @@ def test_partial_r_squared_qv(panel_result):
     )
 
 
-def test_clustered_se_differs_from_ols(panel_result):
-    """Clustered SEs should differ from OLS SEs by >50%."""
-    dr = panel_result.diagnostic_regression()
-    for name in ["qV", "pi_raw"]:
-        ols = dr.se_ols[name]
-        cluster_a = dr.se_cluster_asset[name]
-        if ols > 0:
-            pct_diff = abs(cluster_a - ols) / ols
-            assert pct_diff > 0.10, (
-                f"Clustered SE for {name} differs from OLS "
-                f"by only {pct_diff:.1%}"
-            )
+def test_cluster_se_matches_independent_reference():
+    """The clustered-SE estimator must reproduce a known-good implementation.
+
+    The previous version of this test asserted that clustered SEs differ from
+    OLS SEs by more than 10% on the fixture. That is a property of the fixture,
+    not of the estimator: when a panel carries little within-cluster correlation,
+    clustered and OLS standard errors *should* agree, and the test failed on
+    correct code. It is replaced by a check against a reference implementation
+    on data built to have genuine within-cluster correlation.
+    """
+    import numpy as np
+    from conformal_oracle.panel.diagnostic_regression import _cluster_se
+
+    rng = np.random.default_rng(7)
+    n, n_groups = 600, 20
+    groups = np.repeat(np.arange(n_groups), n // n_groups)
+    u = rng.normal(0, 1, n_groups)[groups] + rng.normal(0, 1, n)
+    X = np.column_stack([np.ones(n), rng.normal(0, 1, n)])
+    y = X @ np.array([0.3, 0.8]) + u
+    beta = np.linalg.lstsq(X, y, rcond=None)[0]
+    mine = _cluster_se(y - X @ beta, X, groups)
+
+    sm = pytest.importorskip("statsmodels.api")
+    ref = sm.OLS(y, X).fit(cov_type="cluster",
+                           cov_kwds={"groups": groups}).bse
+    assert np.allclose(mine, ref, rtol=1e-10), f"{mine} vs {ref}"
+
+
+def test_cluster_se_collapses_to_ols_without_clustering():
+    """Negative control: with no within-cluster correlation the two agree.
+
+    This is the case that broke the old test. It is the correct behaviour and is
+    asserted here so that a future change which forces a gap is caught.
+    """
+    import numpy as np
+    from conformal_oracle.panel.diagnostic_regression import _cluster_se
+
+    rng = np.random.default_rng(11)
+    n, n_groups = 600, 20
+    groups = np.repeat(np.arange(n_groups), n // n_groups)
+    X = np.column_stack([np.ones(n), rng.normal(0, 1, n)])
+    y = X @ np.array([0.3, 0.8]) + rng.normal(0, 1, n)
+    beta = np.linalg.lstsq(X, y, rcond=None)[0]
+    resid = y - X @ beta
+    clustered = _cluster_se(resid, X, groups)
+    ols = np.sqrt(np.diag(np.linalg.inv(X.T @ X) * (resid @ resid) / (n - 2)))
+    assert np.allclose(clustered, ols, rtol=0.15)

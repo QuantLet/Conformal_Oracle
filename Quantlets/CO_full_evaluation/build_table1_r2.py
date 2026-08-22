@@ -47,10 +47,10 @@ LABELS = {"TimesFM-2.5": "TimesFM 2.5", "Moirai-2.0": "Moirai 2.0",
           "Moirai-1.1": "Moirai 1.1", "Hist-Sim": r"Hist.\ Sim.",
           "CAViaR-SAV": "CAViaR-SAV", "CAViaR-AS": "CAViaR-AS", "GAS-t": "GAS-$t$",
           "GJR-GARCH-t": "GJR-GARCH-$t$",
-          "Chronos-Small-A": "Chronos-Small (analytic)",
-          "Chronos-Mini-A": "Chronos-Mini (analytic)",
-          "Chronos-Small": r"Chronos-Small (top-$k$\,=\,50)",
-          "Chronos-Mini": r"Chronos-Mini (top-$k$\,=\,50)"}
+          "Chronos-Small-A": "Chronos-Small (anal.)",
+          "Chronos-Mini-A": "Chronos-Mini (anal.)",
+          "Chronos-Small": r"Chronos-Small (default)",
+          "Chronos-Mini": r"Chronos-Mini (default)"}
 # Interface / family annotation, which is what the repositioned paper is about.
 KIND = {
     "Chronos-Small": "TSFM, sample", "Chronos-Mini": "TSFM, sample",
@@ -58,12 +58,12 @@ KIND = {
     "TimesFM-2.5": "TSFM, grid", "Moirai-2.0": "TSFM, grid",
     "GJR-GARCH": "parametric", "GARCH-N": "parametric", "EWMA": "parametric",
     "GJR-GARCH-t": "parametric",
-    "Hist-Sim": "nonparametric", "CAViaR-SAV": "dynamic quantile",
-    "CAViaR-AS": "dynamic quantile", "GAS-t": "score-driven",
+    "Hist-Sim": "nonparam.", "CAViaR-SAV": "dyn. quantile",
+    "CAViaR-AS": "dyn. quantile", "GAS-t": "score-dr.",
     # Chronos read from its own categorical predictive distribution rather than
     # sampled under the checkpoint default. The interface is the same; the
     # extraction is not, which is the point of carrying both.
-    "Chronos-Small-A": "TSFM, analytic", "Chronos-Mini-A": "TSFM, analytic",
+    "Chronos-Small-A": "TSFM, anal.", "Chronos-Mini-A": "TSFM, anal.",
 }
 
 
@@ -119,7 +119,7 @@ def build(d: pd.DataFrame) -> pd.DataFrame:
 
 
 def to_tex(r: pd.DataFrame) -> str:
-    L = [r"\setlength{\tabcolsep}{4pt}",
+    L = [r"\setlength{\tabcolsep}{1pt}",
          r"\begin{tabular}{@{}ll rr rr r rr rr r@{}}", r"\toprule",
          r"& & \multicolumn{2}{c}{$\hat\pi$} & \multicolumn{2}{c}{Kupiec pass}",
          r"& CC pass & \multicolumn{2}{c}{QS} & & & \\",
@@ -134,7 +134,7 @@ def to_tex(r: pd.DataFrame) -> str:
             f"& {x['cc_pass']}/{x['cc_defined']} "
             f"& {rhu(x['raw_qs'], 1)} & {rhu(x['cor_qs'], 1)} "
             f"& {strip0(rhu(x['width'], 3))} & {x['green']}/{x['n']} "
-            f"& {rhu(x['R'], 3) if x['R'] < 1 else rhu(x['R'], 1)} \\\\")
+            f"& {x['R']:.4g} \\\\")
     L += [r"\bottomrule", r"\end{tabular}"]
     return "\n".join(L) + "\n"
 
@@ -176,8 +176,8 @@ def main() -> int:
         second = (f" A second discontinuity of {rs[k + 1] / rs[k]:.0f}$\\times$ "
                   f"separates {lab(r.iloc[k]['model'])} ({rs[k]:.3f}) from "
                   f"{lab(r.iloc[k + 1]['model'])} ({rs[k + 1]:.1f}); that one "
-                  "coincides exactly with the two series carrying a traced "
-                  "sampler defect.")
+                  "marks the boundary of the two series sampled at the "
+                  "checkpoint default.")
     note = (f"Overall: {g}/{n} Green ({100 * g / n:.1f}\\%). "
             f"$\\bar R$ spans {r['R'].min():.3f} ({lab(r.iloc[0]['model'])}) to "
             f"{r['R'].max():.1f} ({lab(r.iloc[-1]['model'])}), a factor of "

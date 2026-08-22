@@ -1,0 +1,17 @@
+% 150-word variant, in case IRFA caps the abstract below the 208-word version
+% currently in main_R2.tex. Same macros, so it cannot drift from the artefacts.
+A Value-at-Risk backtest reports \emph{that} a forecast series miscovers, not
+\emph{why}. We show that the exceedance sequence identifies exactly one
+functional of the joint law of forecast and return, so every test measurable with
+respect to it --- Kupiec, Christoffersen, the Basel traffic light, the dynamic
+quantile test --- has power equal to its size against alternatives agreeing on
+it. One number quantifies the gap. Under a unimodal return law a Value-at-Risk
+understated by \nGapUndUni\% is exactly unidentifiable, holding coverage,
+exceedance clustering, point-forecast accuracy and predictive dispersion fixed;
+structural checks on the series reduce this to \nGapUndGateNow\% and do not close
+it. The same quantity explains the panel: across \nMainAssets{} assets and
+\nMainForecasters{} forecasters, a sampling default in a public Chronos-T5
+checkpoint drives the 1\% violation rate to \nPiSmallDefaultOne{} against
+\nPiSmallAnalyticOne{} read in closed form --- outside the blind region, which is
+why coverage rejects it everywhere while rejecting \nSeqKupiecRejRawOne\% of the
+panel besides. Detection is not diagnosis.

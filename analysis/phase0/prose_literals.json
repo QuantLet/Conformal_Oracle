@@ -1,0 +1,1130 @@
+[
+ [
+  "11",
+  "\\documentclass[preprint,11pt,authoryear]{elsarticle} \\usepackage[T1]{fontenc} \\usepackage{lmod"
+ ],
+ [
+  "0.0,0.6,0.0",
+  "numitem} \\onehalfspacing INPUT \\definecolor{pastelgreen}{rgb}{0.0,0.6,0.0} \\newcommand{\\revised}[1]{#1} \\newtheorem{theorem}{Theorem}[sect"
+ ],
+ [
+  "1,2,3",
+  "Structural Validation of Tail-Risk Forecasting Pipelines} \\author[1,2,3]{Daniel Traian Pele\\corref{cor1}} \\ead{danpele@ase.ro} \\cortext[c"
+ ],
+ [
+  "1,3",
+  "1]{Vlad Bolov\\u{a}neanu} \\ead{vlad.bolovaneanu@ase.ro} \\author[1,3]{Andrei Theodor Ginavar} \\ead{ginavarandrei19@stud.ase.ro}"
+ ],
+ [
+  "1,4",
+  "Theodor Ginavar} \\ead{ginavarandrei19@stud.ase.ro} \\author[1,4]{Stefan Lessmann} \\ead{stefan.lessmann@hu-berlin.de} \\author[1"
+ ],
+ [
+  "1,3,4,5,6",
+  "4]{Stefan Lessmann} \\ead{stefan.lessmann@hu-berlin.de} \\author[1,3,4,5,6]{Wolfgang Karl H{\\\"a}rdle} \\ead{haerdle@hu-berlin.de} \\affiliatio"
+ ],
+ [
+  "4093",
+  "ism: the packaged sampler restricts a categorical predictive law over 4093 quantised bins to its fifty most probable bins before any quantile is"
+ ],
+ [
+  "45",
+  "s in both directions: one of them inflates every threshold by roughly 45\\%, producing a 0.4\\% violation rate against a nominal 1\\% and a Basel"
+ ],
+ [
+  "0.4",
+  "ns: one of them inflates every threshold by roughly 45\\%, producing a 0.4\\% violation rate against a nominal 1\\% and a Basel green zone on all"
+ ],
+ [
+  "4093",
+  "esents its one-step predictive distribution as a categorical law over 4093 quantised value bins. Its packaged sampling routine defaults to $\\tex"
+ ],
+ [
+  "50",
+  "ue bins. Its packaged sampling routine defaults to $\\texttt{top\\_k} = 50$, a value inherited from text generation, which restricts that suppor"
+ ],
+ [
+  "50",
+  "e inherited from text generation, which restricts that support to its 50 most probable atoms before any quantile is computed --- and does so f"
+ ],
+ [
+  "0.001",
+  "ng temperature across a fourfold range moves predictive dispersion by 0.001 and nucleus sampling by 0.006, so an analyst who sweeps the parameter"
+ ],
+ [
+  "0.006",
+  "ld range moves predictive dispersion by 0.001 and nucleus sampling by 0.006, so an analyst who sweeps the parameters that are documented and disc"
+ ],
+ [
+  "0.01",
+  "ain. That third claim is measured rather than asserted. At $\\alpha = 0.01$ the independence test of \\citet{christoffersen1998} is \\emph{degener"
+ ],
+ [
+  "0.10",
+  "oes not hold; the share falls monotonically to MACRO \\% at $\\alpha = 0.10$ under both readings. A degenerate table is an absence of evidence, b"
+ ],
+ [
+  "0.01",
+  "ec1995} is always defined and rejects MACRO \\% of pairs at $\\alpha = 0.01$ against MACRO \\% at $\\alpha = 0.10$; when a test rejects the majori"
+ ],
+ [
+  "0.10",
+  "MACRO \\% of pairs at $\\alpha = 0.01$ against MACRO \\% at $\\alpha = 0.10$; when a test rejects the majority of defensible models, its rejectio"
+ ],
+ [
+  "50",
+  "is relaxed, and one thousand draws under the default contain exactly 50 distinct values on every asset and both checkpoints. We then show tha"
+ ],
+ [
+  "0.01",
+  "on date, it avoids MACRO of the MACRO deteriorations at $\\alpha = 0.01$ --- MACRO \\% --- and costs MACRO of MACRO Basel zone upgrades."
+ ],
+ [
+  "100048",
+  "are on the Quantinar platform \\quantinar{https://quantinar.com/course/100048/recalibrating-tail-risk-forecasts-under-temporal-dependence}. \\s"
+ ],
+ [
+  "0.01",
+  "edicted lower $\\alpha$-quantile from base model~$M$; we fix $\\alpha = 0.01$. VaR is reported as a positive loss threshold: \\begin{equation} \\la"
+ ],
+ [
+  "1.1",
+  "$. For sample-based forecasters (Chronos-Small, Chronos-Mini, Moirai~1.1, and Lag-Llama), the forecast at time~$t$ consists of $N = 1{,}000$ M"
+ ],
+ [
+  "000",
+  "ai~1.1, and Lag-Llama), the forecast at time~$t$ consists of $N = 1{,}000$ Monte Carlo draws $\\{\\hat r_t^{i;M}\\}_{i=1}^N$, yielding the empiric"
+ ],
+ [
+  "2.5",
+  "^{-1}(\\alpha). \\end{equation} For quantile-grid forecasters (TimesFM~2.5 and Moirai~2.0), the predictive object is a finite grid of conditiona"
+ ],
+ [
+  "2.0",
+  "\\end{equation} For quantile-grid forecasters (TimesFM~2.5 and Moirai~2.0), the predictive object is a finite grid of conditional quantiles $\\{"
+ ],
+ [
+  "0.01",
+  "e the audit operates at the 1\\% lower-tail level, we obtain $\\hat q_t(0.01)$ by fitting a three-parameter Student-$t$ distribution to the native"
+ ],
+ [
+  "0.01",
+  "end{equation} and set \\begin{equation} \\label{eq:var_grid} \\hat q_t(0.01) = \\hat\\mu_t + \\hat\\sigma_t\\, t_{\\hat\\nu_t}^{-1}(0.01). \\end{equati"
+ ],
+ [
+  "0.01",
+  "id} \\hat q_t(0.01) = \\hat\\mu_t + \\hat\\sigma_t\\, t_{\\hat\\nu_t}^{-1}(0.01). \\end{equation} The Student-$t$ closure is a parsimonious heavy-tail"
+ ],
+ [
+  "250",
+  "conditional distribution or, for Historical Simulation, the empirical 250-day rolling distribution. EWMA is the exception to the rolling-window"
+ ],
+ [
+  "0.94",
+  ": its conditional variance is the RiskMetrics recursion at $\\lambda = 0.94$ \\citep{riskmetrics1996}, which is not truncated at 250 observations"
+ ],
+ [
+  "250",
+  "t $\\lambda = 0.94$ \\citep{riskmetrics1996}, which is not truncated at 250 observations (Supplement~S.8, Table~S.19). Expected Shortfall is rep"
+ ],
+ [
+  "0.025",
+  "Table~S.19). Expected Shortfall is reported separately at $\\alpha = 0.025$ following the Basel III/FRTB convention \\citep{bcbs2019frtb} and is"
+ ],
+ [
+  "0.70",
+  "t chronologically into calibration and test sets with fraction $f_c = 0.70$ (robustness in Supplement~S.4). The nonconformity score $S_t$ from"
+ ],
+ [
+  "0,1",
+  "and geometrically $\\beta$-mixing: $\\beta(k) \\le C\\rho^k$, $\\rho \\in (0,1)$. \\item\\label{ass:density} The marginal distribution $F_S$ admit"
+ ],
+ [
+  "70",
+  "tocol used throughout the empirical sections is a \\emph{contiguous} $70/30$ split: $g_n = 0$. The theorem therefore does not apply to the es"
+ ],
+ [
+  "30",
+  "ol used throughout the empirical sections is a \\emph{contiguous} $70/30$ split: $g_n = 0$. The theorem therefore does not apply to the estim"
+ ],
+ [
+  "0.0005",
+  "reason (Supplement~S.4): inserting a gap moves $\\hat\\pi$ by at most $0.0005$ over the full sample and $0.0058$ within the COVID window, so the c"
+ ],
+ [
+  "0.0058",
+  "a gap moves $\\hat\\pi$ by at most $0.0005$ over the full sample and $0.0058$ within the COVID window, so the cost of the discrepancy is measurab"
+ ],
+ [
+  "0.18",
+  "odel--asset pairs spanning estimated score persistence $\\hat\\rho \\in [0.18, 0.67]$, the estimated remainder $\\hat\\Delta_n$ lies between 0.109 an"
+ ],
+ [
+  "0.67",
+  "asset pairs spanning estimated score persistence $\\hat\\rho \\in [0.18, 0.67]$, the estimated remainder $\\hat\\Delta_n$ lies between 0.109 and 0.13"
+ ],
+ [
+  "0.109",
+  "in [0.18, 0.67]$, the estimated remainder $\\hat\\Delta_n$ lies between 0.109 and 0.138 --- a coverage floor of approximately 88\\% against empirica"
+ ],
+ [
+  "0.138",
+  "0.67]$, the estimated remainder $\\hat\\Delta_n$ lies between 0.109 and 0.138 --- a coverage floor of approximately 88\\% against empirical coverage"
+ ],
+ [
+  "88",
+  "n$ lies between 0.109 and 0.138 --- a coverage floor of approximately 88\\% against empirical coverage averaging 98.9\\%. Across all MACRO mod"
+ ],
+ [
+  "98.9",
+  "rage floor of approximately 88\\% against empirical coverage averaging 98.9\\%. Across all MACRO model--asset pairs of the sequence panel, empir"
+ ],
+ [
+  "0.968",
+  "\\alpha - \\hat\\Delta_n$: the worst corrected coverage in the panel is $0.968$, against a floor of at most $0.891$. The bound provides a dependence"
+ ],
+ [
+  "0.891",
+  "rrected coverage in the panel is $0.968$, against a floor of at most $0.891$. The bound provides a dependence-robust justification for the single"
+ ],
+ [
+  "1,1",
+  "llary} \\label{cor:garch_conformal_var} Let $\\{r_t\\}$ follow a GARCH(1,1) process satisfying $\\E[\\log(\\alpha_1\\varepsilon_t^2 + \\beta_1)] < 0$"
+ ],
+ [
+  "250",
+  "ld is recomputed at each time $t$ from a trailing window of size $w = 250$: \\begin{equation} \\label{eq:qV_roll} \\qVroll = Q_{1-\\alpha}\\!\\le"
+ ],
+ [
+  "0.01",
+  "ce. The comparison tests Remark~\\ref{rem:tail_sparsity}: at $\\alpha = 0.01$, additional parameters increase variance faster than they reduce bia"
+ ],
+ [
+  "24",
+  "\\subsubsection{Data} \\label{sec:data} The empirical analysis covers 24 financial assets across five classes: 11 equity indices, 3 government"
+ ],
+ [
+  "11",
+  "he empirical analysis covers 24 financial assets across five classes: 11 equity indices, 3 government bond exchange-traded funds (ETFs), 4 com"
+ ],
+ [
+  "13",
+  "Finance over January 2000--March 2026. Price series were retrieved on 13 March 2026. Cryptocurrency histories begin in 2014 for Bitcoin and 20"
+ ],
+ [
+  "70",
+  "artitioned chronologically: the single-split estimator uses the first 70\\% as calibration and the remaining 30\\% as the out-of-sample test win"
+ ],
+ [
+  "30",
+  "-split estimator uses the first 70\\% as calibration and the remaining 30\\% as the out-of-sample test window ($f_c = 0.70$, Section~\\ref{sec:cq"
+ ],
+ [
+  "0.70",
+  "ation and the remaining 30\\% as the out-of-sample test window ($f_c = 0.70$, Section~\\ref{sec:cqr_var}); the rolling estimator recomputes the th"
+ ],
+ [
+  "250",
+  "omputes the threshold at each $t$ from a trailing window of size $w = 250$ (Section~\\ref{sec:rolling_method}) and is evaluated on the same 30\\%"
+ ],
+ [
+  "30",
+  "250$ (Section~\\ref{sec:rolling_method}) and is evaluated on the same 30\\% test window. The full asset list, per-asset sample sizes, and per-a"
+ ],
+ [
+  "1.1",
+  "ama} with a LLaMA-inspired architecture and Student-$t$ heads; Moirai~1.1 \\citep{woo2024moirai}) return $N = 1{,}000$ Monte Carlo draws from th"
+ ],
+ [
+  "000",
+  "Student-$t$ heads; Moirai~1.1 \\citep{woo2024moirai}) return $N = 1{,}000$ Monte Carlo draws from the predictive distribution. Quantile-grid fo"
+ ],
+ [
+  "2.5",
+  "from the predictive distribution. Quantile-grid forecasters (TimesFM~2.5 \\citep{das2024timesfm}; Moirai~2.0 \\citep{liu2025moirai}) return a fi"
+ ],
+ [
+  "2.0",
+  "Quantile-grid forecasters (TimesFM~2.5 \\citep{das2024timesfm}; Moirai~2.0 \\citep{liu2025moirai}) return a fixed nine-decile grid, from which a"
+ ],
+ [
+  "0.01",
+  "O forecasters $\\times$ MACRO assets $=$ MACRO pairs at $\\alpha = 0.01$. This is Table~\\ref{tab:master}. It includes CAViaR-AS, CAViaR-SAV a"
+ ],
+ [
+  "512",
+  "All forecasts are one-step-ahead. TSFMs use a fixed context length of 512 observations, the default for all six pretrained checkpoints (Supplem"
+ ],
+ [
+  "250",
+  "chmarks and Historical Simulation are estimated on rolling windows of 250 observations, following the Basel convention \\citep{basel1996}, with"
+ ],
+ [
+  "0.94",
+  "variance is the RiskMetrics recursion at the conventional $\\lambda = 0.94$, so its memory is geometrically decaying rather than truncated. That"
+ ],
+ [
+  "1.9\\times10^{-7}",
+  "l numerically --- the weight beyond lag $k$ is $\\lambda^k$, which is $1.9\\times10^{-7}$ at $k = 250$ --- but it is material for the finite-context condition"
+ ],
+ [
+  "250",
+  "ht beyond lag $k$ is $\\lambda^k$, which is $1.9\\times10^{-7}$ at $k = 250$ --- but it is material for the finite-context condition of Lemma~S.9"
+ ],
+ [
+  "250",
+  "Supplement~S.9 treats it explicitly rather than folding EWMA into the 250-observation convention. A warm-up period (512 observations for TSFMs"
+ ],
+ [
+  "512",
+  "folding EWMA into the 250-observation convention. A warm-up period (512 observations for TSFMs, 250 for the windowed classical benchmarks) pr"
+ ],
+ [
+  "250",
+  "bservation convention. A warm-up period (512 observations for TSFMs, 250 for the windowed classical benchmarks) precedes the calibration--test"
+ ],
+ [
+  "500",
+  "ull-history series (2000--2026), the test sample is approximately 1{,}500 observations per asset, yielding roughly 36{,}600 panel observations"
+ ],
+ [
+  "36",
+  "ple is approximately 1{,}500 observations per asset, yielding roughly 36{,}600 panel observations per model and 366 expected violations at $\\a"
+ ],
+ [
+  "600",
+  "s approximately 1{,}500 observations per asset, yielding roughly 36{,}600 panel observations per model and 366 expected violations at $\\alpha ="
+ ],
+ [
+  "366",
+  "per asset, yielding roughly 36{,}600 panel observations per model and 366 expected violations at $\\alpha = 0.01$. \\section{A Controlled Case"
+ ],
+ [
+  "0.01",
+  "panel observations per model and 366 expected violations at $\\alpha = 0.01$. \\section{A Controlled Case: Support Truncation in a Sampled Pred"
+ ],
+ [
+  "4093",
+  "mit a parametric predictive law. It quantises the scaled context into 4093 value bins and treats forecasting as next-token prediction over that"
+ ],
+ [
+  "4093",
+  "cabulary, so its one-step predictive distribution is categorical with 4093 atoms. Predictions are drawn from it by the same sampling machinery u"
+ ],
+ [
+  "50",
+  "t, and that machinery has a $\\texttt{top\\_k}$ parameter, defaulted to 50: before a single path is drawn, the support is restricted to the 50 m"
+ ],
+ [
+  "50",
+  "o 50: before a single path is drawn, the support is restricted to the 50 most probable bins and the remaining 4043 are assigned probability ze"
+ ],
+ [
+  "4043",
+  "support is restricted to the 50 most probable bins and the remaining 4043 are assigned probability zero. Two properties of this restriction ma"
+ ],
+ [
+  "98.8",
+  "ity zero. Two properties of this restriction matter here. It removes 98.8\\% of the support, and it removes it \\emph{from the tails inward}, bec"
+ ],
+ [
+  "200",
+  "mini}, four assets of unlike character (SP500, GOLD, BTC, EURUSD) and 200 evenly spaced dates with a full 512-observation context, we draw 1000"
+ ],
+ [
+  "512",
+  "er (SP500, GOLD, BTC, EURUSD) and 200 evenly spaced dates with a full 512-observation context, we draw 1000 samples at horizon one under eight"
+ ],
+ [
+  "1000",
+  "200 evenly spaced dates with a full 512-observation context, we draw 1000 samples at horizon one under eight sampling configurations: $\\texttt{"
+ ],
+ [
+  "50",
+  "rizon one under eight sampling configurations: $\\texttt{top\\_k} \\in \\{50, 200, 1000, 4094\\}$,\\footnote{The vocabulary holds 4096 tokens, of wh"
+ ],
+ [
+  "200",
+  "n one under eight sampling configurations: $\\texttt{top\\_k} \\in \\{50, 200, 1000, 4094\\}$,\\footnote{The vocabulary holds 4096 tokens, of which t"
+ ],
+ [
+  "1000",
+  "under eight sampling configurations: $\\texttt{top\\_k} \\in \\{50, 200, 1000, 4094\\}$,\\footnote{The vocabulary holds 4096 tokens, of which two are"
+ ],
+ [
+  "4094",
+  "eight sampling configurations: $\\texttt{top\\_k} \\in \\{50, 200, 1000, 4094\\}$,\\footnote{The vocabulary holds 4096 tokens, of which two are speci"
+ ],
+ [
+  "4096",
+  "t{top\\_k} \\in \\{50, 200, 1000, 4094\\}$,\\footnote{The vocabulary holds 4096 tokens, of which two are special, leaving 4093 value bins plus the pa"
+ ],
+ [
+  "4093",
+  "e{The vocabulary holds 4096 tokens, of which two are special, leaving 4093 value bins plus the pad token. Setting $\\texttt{top\\_k} = 4094$ there"
+ ],
+ [
+  "4094",
+  "eaving 4093 value bins plus the pad token. Setting $\\texttt{top\\_k} = 4094$ therefore disables the truncation with one place to spare; it is not"
+ ],
+ [
+  "4093",
+  "uncation with one place to spare; it is not an off-by-one against the 4093 bins quoted elsewhere in this paper.} then $\\texttt{top\\_p} \\in \\{0.9"
+ ],
+ [
+  "0.9",
+  "093 bins quoted elsewhere in this paper.} then $\\texttt{top\\_p} \\in \\{0.9, 0.99\\}$ and temperature $\\in \\{0.5, 2.0\\}$ with $\\texttt{top\\_k}$ he"
+ ],
+ [
+  "0.99",
+  "ins quoted elsewhere in this paper.} then $\\texttt{top\\_p} \\in \\{0.9, 0.99\\}$ and temperature $\\in \\{0.5, 2.0\\}$ with $\\texttt{top\\_k}$ held at"
+ ],
+ [
+  "0.5",
+  "per.} then $\\texttt{top\\_p} \\in \\{0.9, 0.99\\}$ and temperature $\\in \\{0.5, 2.0\\}$ with $\\texttt{top\\_k}$ held at its default. Context, seed and"
+ ],
+ [
+  "2.0",
+  "then $\\texttt{top\\_p} \\in \\{0.9, 0.99\\}$ and temperature $\\in \\{0.5, 2.0\\}$ with $\\texttt{top\\_k}$ held at its default. Context, seed and weig"
+ ],
+ [
+  "1000",
+  "nd by nucleus sampling, and (iii) the number of distinct values among 1000 draws under the default equals $\\texttt{top\\_k}$ exactly, on every as"
+ ],
+ [
+  "250",
+  "persion --- the ratio of predictive standard deviation to the asset's 250-day realised volatility, for which 1.0 is the target --- recovers mon"
+ ],
+ [
+  "1.0",
+  "ndard deviation to the asset's 250-day realised volatility, for which 1.0 is the target --- recovers monotonically in $\\texttt{top\\_k}$: MACRO"
+ ],
+ [
+  "50",
+  ", MACRO and MACRO for Chronos-Small across $\\texttt{top\\_k} \\in \\{50, 200, 1000, 4094\\}$, and MACRO to MACRO for Chronos-Mini. It reac"
+ ],
+ [
+  "200",
+  "ACRO and MACRO for Chronos-Small across $\\texttt{top\\_k} \\in \\{50, 200, 1000, 4094\\}$, and MACRO to MACRO for Chronos-Mini. It reaches i"
+ ],
+ [
+  "1000",
+  "and MACRO for Chronos-Small across $\\texttt{top\\_k} \\in \\{50, 200, 1000, 4094\\}$, and MACRO to MACRO for Chronos-Mini. It reaches its tar"
+ ],
+ [
+  "4094",
+  "MACRO for Chronos-Small across $\\texttt{top\\_k} \\in \\{50, 200, 1000, 4094\\}$, and MACRO to MACRO for Chronos-Mini. It reaches its target on"
+ ],
+ [
+  "50",
+  "runcated at all. One thousand draws under the default contain exactly 50 distinct values in all MACRO model--asset--date cells, without exce"
+ ],
+ [
+  "0.001",
+  "tion is durable. A fourfold change in temperature moves dispersion by 0.001 ( MACRO against MACRO ) and nucleus sampling moves it by 0.006. The"
+ ],
+ [
+  "0.006",
+  "n by 0.001 ( MACRO against MACRO ) and nucleus sampling moves it by 0.006. These are the parameters that are documented, discussed in the liter"
+ ],
+ [
+  "40",
+  "and is checked against it before anything is concluded from it. Over 40 dates on SP500 we compare the analytic quantiles against sampling at"
+ ],
+ [
+  "4000",
+  "mpare the analytic quantiles against sampling at full vocabulary with 4000 draws: predictive standard deviations agree to within 0.3\\% (1.041 ag"
+ ],
+ [
+  "0.3",
+  "ulary with 4000 draws: predictive standard deviations agree to within 0.3\\% (1.041 against 1.038 in units of realised volatility), and the viol"
+ ],
+ [
+  "1.041",
+  "ith 4000 draws: predictive standard deviations agree to within 0.3\\% (1.041 against 1.038 in units of realised volatility), and the violation rat"
+ ],
+ [
+  "1.038",
+  ": predictive standard deviations agree to within 0.3\\% (1.041 against 1.038 in units of realised volatility), and the violation rates at all four"
+ ],
+ [
+  "0.128",
+  "they should. The sampled default, on the same dates, gives dispersion 0.128 and a 1\\% violation rate of 0.3942. Cost is not a consideration eith"
+ ],
+ [
+  "0.3942",
+  "on the same dates, gives dispersion 0.128 and a 1\\% violation rate of 0.3942. Cost is not a consideration either. Across 24 assets and both check"
+ ],
+ [
+  "24",
+  "violation rate of 0.3942. Cost is not a consideration either. Across 24 assets and both checkpoints the analytic route required one forward p"
+ ],
+ [
+  "121",
+  "checkpoints the analytic route required one forward pass per date --- 121{,}923 dates per checkpoint --- and completed in roughly ten minutes p"
+ ],
+ [
+  "923",
+  "oints the analytic route required one forward pass per date --- 121{,}923 dates per checkpoint --- and completed in roughly ten minutes per che"
+ ],
+ [
+  "1000",
+  "pleted in roughly ten minutes per checkpoint on a laptop GPU, against 1000 sampled paths per date for the sampling route. At horizon one, readin"
+ ],
+ [
+  "1.08",
+  "er the default configuration the realised rate changes by a factor of 1.08, from MACRO to MACRO . A distribution truncated to its fifty most"
+ ],
+ [
+  "0.0100",
+  "ve law, Chronos-Small delivers $\\hat\\pi = MACRO $ against a nominal $0.0100$ --- MACRO times nominal --- and unconditional coverage rejects on"
+ ],
+ [
+  "16",
+  "$ --- MACRO times nominal --- and unconditional coverage rejects on 16 of MACRO assets. The residual is not a level shift, however. The ra"
+ ],
+ [
+  "1.35",
+  "however. The ratio $\\hat\\pi/\\alpha$ falls monotonically --- MACRO , 1.35, 1.15, MACRO for Chronos-Small and MACRO , 1.33, 1.12, MACRO for"
+ ],
+ [
+  "1.15",
+  "er. The ratio $\\hat\\pi/\\alpha$ falls monotonically --- MACRO , 1.35, 1.15, MACRO for Chronos-Small and MACRO , 1.33, 1.12, MACRO for Chron"
+ ],
+ [
+  "1.33",
+  "cally --- MACRO , 1.35, 1.15, MACRO for Chronos-Small and MACRO , 1.33, 1.12, MACRO for Chronos-Mini --- so that at $\\alpha = 0.10$ the an"
+ ],
+ [
+  "1.12",
+  "--- MACRO , 1.35, 1.15, MACRO for Chronos-Small and MACRO , 1.33, 1.12, MACRO for Chronos-Mini --- so that at $\\alpha = 0.10$ the analytic"
+ ],
+ [
+  "0.10",
+  "MACRO , 1.33, 1.12, MACRO for Chronos-Mini --- so that at $\\alpha = 0.10$ the analytic forecasts are essentially calibrated, passing Kupiec on"
+ ],
+ [
+  "0.01",
+  "t identifies each. $\\hat\\pi$ is the raw violation rate at $\\alpha = 0.01$, averaged over MACRO assets and computed on identical models, as"
+ ],
+ [
+  "38",
+  "l series. Including the two truncated series the range is a factor of 38, and that factor is a property of a sampling parameter rather than of"
+ ],
+ [
+  "13",
+  "gle2004caviar}; the six foundation-model series pass on between 0 and 13. Across the whole table MACRO of MACRO pairs pass raw, and MACRO"
+ ],
+ [
+  "2.5",
+  "ation-model series at the 1\\% level is a quantile-grid model, TimesFM~2.5 at $ MACRO $; the sample-based Moirai~1.1 is at $ MACRO $, the analyt"
+ ],
+ [
+  "1.1",
+  "uantile-grid model, TimesFM~2.5 at $ MACRO $; the sample-based Moirai~1.1 is at $ MACRO $, the analytic Chronos series at $ MACRO $ and $ MACRO"
+ ],
+ [
+  "2.0",
+  "c Chronos series at $ MACRO $ and $ MACRO $, the quantile-grid Moirai~2.0 at $ MACRO $, and the sample-based Lag-Llama at $ MACRO $. The two in"
+ ],
+ [
+  "0.005",
+  "nsequential: across three assets the same grids give $\\bar R$ between 0.005 and 1.70 depending on whether the closure is Student-$t$, Gaussian or"
+ ],
+ [
+  "1.70",
+  "l: across three assets the same grids give $\\bar R$ between 0.005 and 1.70 depending on whether the closure is Student-$t$, Gaussian or linear,"
+ ],
+ [
+  "2.5",
+  "sel yellow zone to the red one (Supplement~S.10). Reporting ``TimesFM~2.5 at the 1\\% level'' without naming the closure describes an object tha"
+ ],
+ [
+  "0.24",
+  "natural candidate, and they run at $ MACRO $ and $ MACRO $, a gap of 0.24 percentage points. But Moirai~1.1 is a masked-encoder model with mult"
+ ],
+ [
+  "1.1",
+  "$ MACRO $ and $ MACRO $, a gap of 0.24 percentage points. But Moirai~1.1 is a masked-encoder model with multi-patch inputs and a mixture outpu"
+ ],
+ [
+  "2.0",
+  "oder model with multi-patch inputs and a mixture output, while Moirai~2.0 replaces all three with a decoder-only architecture, a single patch a"
+ ],
+ [
+  "0.001",
+  "to get there. For thirteen of the sixteen forecasters it is between $0.001$ and $0.18$ --- the corrected forecast is the raw forecast to two or"
+ ],
+ [
+  "0.18",
+  "e. For thirteen of the sixteen forecasters it is between $0.001$ and $0.18$ --- the corrected forecast is the raw forecast to two or three decim"
+ ],
+ [
+  "17.3",
+  "es --- while the two series sampled at the checkpoint default sit at $17.3$ and $23.5$, where the corrected forecast is an empirical fallback re"
+ ],
+ [
+  "23.5",
+  "e the two series sampled at the checkpoint default sit at $17.3$ and $23.5$, where the corrected forecast is an empirical fallback retaining not"
+ ],
+ [
+  "84",
+  "ds and none in the middle: the largest consecutive ratio, a factor of 84, separates the dynamic-quantile forecasters from the rest near the \\e"
+ ],
+ [
+  "48",
+  "here their raw coverage is already nominal, and the next, a factor of 48, separates Lag-Llama from the two truncated Chronos series at the top"
+ ],
+ [
+  "0.01",
+  "he likelihood ratio is not valid there. After correction at $\\alpha = 0.01$ this is the case for MACRO of the MACRO pairs of the main panel."
+ ],
+ [
+  "16",
+  "re}. \\begin{table}[htbp] \\centering \\caption{Forecast audit across 16 forecasters and 24 assets ($\\alpha = 0.01$), ordered by $\\bar R$. QS:"
+ ],
+ [
+  "24",
+  "[htbp] \\centering \\caption{Forecast audit across 16 forecasters and 24 assets ($\\alpha = 0.01$), ordered by $\\bar R$. QS: Quantile Score ($\\"
+ ],
+ [
+  "0.01",
+  "caption{Forecast audit across 16 forecasters and 24 assets ($\\alpha = 0.01$), ordered by $\\bar R$. QS: Quantile Score ($\\times 10^{4}$, lower is"
+ ],
+ [
+  "250",
+  "een: assets reaching the Basel Green Zone after correction (scaled to 250~days). CC pass is reported as passes/informative: the Christoffersen"
+ ],
+ [
+  "0.010",
+  "d{table} Corrected violation rates cluster tightly around $\\hat\\pi = 0.010$ for every forecaster in the table, which is what the guarantee promi"
+ ],
+ [
+  "4.67 \\times 10^{-4}",
+  "rected column cannot rank them. The Quantile Score can: it runs from $4.67 \\times 10^{-4}$ for GJR-GARCH-$t$ to $5.83 \\times 10^{-4}$ for the truncated Chronos"
+ ],
+ [
+  "5.83 \\times 10^{-4}",
+  "e Score can: it runs from $4.67 \\times 10^{-4}$ for GJR-GARCH-$t$ to $5.83 \\times 10^{-4}$ for the truncated Chronos-Small, and the ordering it produces is clo"
+ ],
+ [
+  "13",
+  "\\textwidth]{fig_traffic_light} \\caption{Basel Traffic Light heatmap (13 models $\\times$ 24 assets, $\\alpha = 0.01$). Top: raw forecasts; Bott"
+ ],
+ [
+  "24",
+  "ffic_light} \\caption{Basel Traffic Light heatmap (13 models $\\times$ 24 assets, $\\alpha = 0.01$). Top: raw forecasts; Bottom: after conformal"
+ ],
+ [
+  "0.01",
+  "{Basel Traffic Light heatmap (13 models $\\times$ 24 assets, $\\alpha = 0.01$). Top: raw forecasts; Bottom: after conformal correction. Green: $\\l"
+ ],
+ [
+  "250",
+  "s; Bottom: after conformal correction. Green: $\\leq 4$ violations per 250 days; Yellow: 5--9; Red: $\\geq 10$. Raw: 106/312 Green (34\\%), 154 Ye"
+ ],
+ [
+  "106",
+  "$\\leq 4$ violations per 250 days; Yellow: 5--9; Red: $\\geq 10$. Raw: 106/312 Green (34\\%), 154 Yellow, 52 Red. Corrected: 278/312 Green (89\\%)"
+ ],
+ [
+  "312",
+  "eq 4$ violations per 250 days; Yellow: 5--9; Red: $\\geq 10$. Raw: 106/312 Green (34\\%), 154 Yellow, 52 Red. Corrected: 278/312 Green (89\\%), 34"
+ ],
+ [
+  "34",
+  "tions per 250 days; Yellow: 5--9; Red: $\\geq 10$. Raw: 106/312 Green (34\\%), 154 Yellow, 52 Red. Corrected: 278/312 Green (89\\%), 34 Yellow, n"
+ ],
+ [
+  "154",
+  "er 250 days; Yellow: 5--9; Red: $\\geq 10$. Raw: 106/312 Green (34\\%), 154 Yellow, 52 Red. Corrected: 278/312 Green (89\\%), 34 Yellow, no Red.}"
+ ],
+ [
+  "52",
+  "Yellow: 5--9; Red: $\\geq 10$. Raw: 106/312 Green (34\\%), 154 Yellow, 52 Red. Corrected: 278/312 Green (89\\%), 34 Yellow, no Red.} \\label{fig"
+ ],
+ [
+  "278",
+  "$\\geq 10$. Raw: 106/312 Green (34\\%), 154 Yellow, 52 Red. Corrected: 278/312 Green (89\\%), 34 Yellow, no Red.} \\label{fig:traffic_light} \\end"
+ ],
+ [
+  "312",
+  "eq 10$. Raw: 106/312 Green (34\\%), 154 Yellow, 52 Red. Corrected: 278/312 Green (89\\%), 34 Yellow, no Red.} \\label{fig:traffic_light} \\end{fig"
+ ],
+ [
+  "89",
+  ": 106/312 Green (34\\%), 154 Yellow, 52 Red. Corrected: 278/312 Green (89\\%), 34 Yellow, no Red.} \\label{fig:traffic_light} \\end{figure} \\su"
+ ],
+ [
+  "34",
+  "12 Green (34\\%), 154 Yellow, 52 Red. Corrected: 278/312 Green (89\\%), 34 Yellow, no Red.} \\label{fig:traffic_light} \\end{figure} \\subsectio"
+ ],
+ [
+  "0.01",
+  "rected}}$ over model--asset pairs rather than its mean. At $\\alpha = 0.01$ the correction makes MACRO of MACRO pairs worse under the single"
+ ],
+ [
+  "9.3 \\times 10^{-5}",
+  "athrm{QS} = MACRO \\%$ of $\\mathrm{QS}_{\\mathrm{raw}}$, Wilcoxon $p = 9.3 \\times 10^{-5}$) and the rolling variant degrades MACRO , with mean $ MACRO \\%$ and"
+ ],
+ [
+  "16",
+  "g variant degrades MACRO , with mean $ MACRO \\%$ and $p \\approx 10^{-16}$. The rolling estimator re-estimates the shift on a 250-day window a"
+ ],
+ [
+  "250",
+  "\\approx 10^{-16}$. The rolling estimator re-estimates the shift on a 250-day window and is correspondingly noisier, which is why its deteriora"
+ ],
+ [
+  "0.025",
+  "is roughly double at every level. The pattern holds at $\\alpha \\in \\{0.025, 0.05, 0.10\\}$, where it applies to a larger share of the panel becau"
+ ],
+ [
+  "0.05",
+  "ghly double at every level. The pattern holds at $\\alpha \\in \\{0.025, 0.05, 0.10\\}$, where it applies to a larger share of the panel because mor"
+ ],
+ [
+  "0.10",
+  "ouble at every level. The pattern holds at $\\alpha \\in \\{0.025, 0.05, 0.10\\}$, where it applies to a larger share of the panel because more raw"
+ ],
+ [
+  "99",
+  "risk manager can accept --- while MACRO obtain no zone improvement, 99 of them because they were already Green and 2 because they move from"
+ ],
+ [
+  "0.01",
+  "ated on the evaluation window, the rule looks excellent: at $\\alpha = 0.01$ it applies to MACRO of MACRO pairs, skips MACRO , avoids MACRO"
+ ],
+ [
+  "0.01",
+  "the day the decision is taken. It is materially weaker. At $\\alpha = 0.01$ it applies to MACRO pairs and skips only MACRO ; it avoids MACRO"
+ ],
+ [
+  "0.01",
+  "w poorly the calibration window predicts the test window at $\\alpha = 0.01$ --- which is the tail-sparsity constraint of Remark~\\ref{rem:tail_sp"
+ ],
+ [
+  "0.10",
+  "RO \\%, MACRO \\% and MACRO \\% at the four levels --- so at $\\alpha = 0.10$ a clear majority of raw forecasts \\emph{pass} and the rule skips mos"
+ ],
+ [
+  "0.01",
+  "owing share of pairs as $\\alpha$ falls; what is specific to $\\alpha = 0.01$ is not how often it fires but the size of the damage it avoids when"
+ ],
+ [
+  "250",
+  "vs_rolling} The rolling variant re-estimates the shift on a trailing 250-day window, so $R_t = |\\qVroll|/|\\widehat{\\VaR}^{\\mathrm{raw}}_t|$ be"
+ ],
+ [
+  "89",
+  "tantially and conditional adequacy not at all. Basel green rises from 89\\% (278 of MACRO pairs) to 99\\% (309), with twelve of the MACRO fo"
+ ],
+ [
+  "278",
+  "lly and conditional adequacy not at all. Basel green rises from 89\\% (278 of MACRO pairs) to 99\\% (309), with twelve of the MACRO forecaste"
+ ],
+ [
+  "99",
+  "acy not at all. Basel green rises from 89\\% (278 of MACRO pairs) to 99\\% (309), with twelve of the MACRO forecasters reaching all MACRO"
+ ],
+ [
+  "309",
+  "t at all. Basel green rises from 89\\% (278 of MACRO pairs) to 99\\% (309), with twelve of the MACRO forecasters reaching all MACRO assets"
+ ],
+ [
+  "67.3",
+  "2). The gains concentrate where volatility moves: commodities go from 67.3\\% green to 100\\% and bonds from 89.7\\% to 100\\%, while crypto and FX"
+ ],
+ [
+  "100",
+  "ncentrate where volatility moves: commodities go from 67.3\\% green to 100\\% and bonds from 89.7\\% to 100\\%, while crypto and FX are at 100\\% ei"
+ ],
+ [
+  "89.7",
+  "ility moves: commodities go from 67.3\\% green to 100\\% and bonds from 89.7\\% to 100\\%, while crypto and FX are at 100\\% either way. The single e"
+ ],
+ [
+  "100",
+  "s: commodities go from 67.3\\% green to 100\\% and bonds from 89.7\\% to 100\\%, while crypto and FX are at 100\\% either way. The single exception"
+ ],
+ [
+  "100",
+  "n to 100\\% and bonds from 89.7\\% to 100\\%, while crypto and FX are at 100\\% either way. The single exception is Historical Simulation, which fa"
+ ],
+ [
+  "22",
+  "way. The single exception is Historical Simulation, which falls from 22 to 21 assets green; its raw threshold is an order statistic of the sa"
+ ],
+ [
+  "21",
+  "The single exception is Historical Simulation, which falls from 22 to 21 assets green; its raw threshold is an order statistic of the same tra"
+ ],
+ [
+  "500",
+  "n rather than a tuning question (Section~\\ref{sec:failure}). The S\\&P~500 threshold path is in Figure~S.4. \\subsection{Multiple levels, and fo"
+ ],
+ [
+  "0.01",
+  "l is rejected on 5, 9, 5 and 4 of MACRO assets across $\\alpha \\in \\{0.01, 0.025, 0.05, 0.10\\}$; sampled at the checkpoint default, the same we"
+ ],
+ [
+  "0.025",
+  "ejected on 5, 9, 5 and 4 of MACRO assets across $\\alpha \\in \\{0.01, 0.025, 0.05, 0.10\\}$; sampled at the checkpoint default, the same weights g"
+ ],
+ [
+  "0.05",
+  "on 5, 9, 5 and 4 of MACRO assets across $\\alpha \\in \\{0.01, 0.025, 0.05, 0.10\\}$; sampled at the checkpoint default, the same weights give 10"
+ ],
+ [
+  "0.10",
+  "9, 5 and 4 of MACRO assets across $\\alpha \\in \\{0.01, 0.025, 0.05, 0.10\\}$; sampled at the checkpoint default, the same weights give 10, 14,"
+ ],
+ [
+  "14",
+  "0.10\\}$; sampled at the checkpoint default, the same weights give 10, 14, 16 and 15. The default configuration is worse at the off-calibration"
+ ],
+ [
+  "16",
+  "\\}$; sampled at the checkpoint default, the same weights give 10, 14, 16 and 15. The default configuration is worse at the off-calibration lev"
+ ],
+ [
+  "15",
+  "mpled at the checkpoint default, the same weights give 10, 14, 16 and 15. The default configuration is worse at the off-calibration levels, wh"
+ ],
+ [
+  "0.035",
+  "EWMA is the only forecaster rejected by the cluster-robust test ($p = 0.035$). Three others are rejected by the pooled unconditional test and not"
+ ],
+ [
+  "2.0",
+  "ooled unconditional test and not by the cluster-robust one --- Moirai~2.0, Chronos-Small read analytically, and GJR-GARCH, at pooled rates of $"
+ ],
+ [
+  "0.0114",
+  ", Chronos-Small read analytically, and GJR-GARCH, at pooled rates of $0.0114$, $0.0113$ and $0.0111$ against a nominal $0.01$. The pooled test tre"
+ ],
+ [
+  "0.0113",
+  "Small read analytically, and GJR-GARCH, at pooled rates of $0.0114$, $0.0113$ and $0.0111$ against a nominal $0.01$. The pooled test treats 36{,}0"
+ ],
+ [
+  "0.0111",
+  "alytically, and GJR-GARCH, at pooled rates of $0.0114$, $0.0113$ and $0.0111$ against a nominal $0.01$. The pooled test treats 36{,}000 observatio"
+ ],
+ [
+  "0.01",
+  "at pooled rates of $0.0114$, $0.0113$ and $0.0111$ against a nominal $0.01$. The pooled test treats 36{,}000 observations as independent and rej"
+ ],
+ [
+  "36",
+  "0.0113$ and $0.0111$ against a nominal $0.01$. The pooled test treats 36{,}000 observations as independent and rejects deviations that are eco"
+ ],
+ [
+  "000",
+  "3$ and $0.0111$ against a nominal $0.01$. The pooled test treats 36{,}000 observations as independent and rejects deviations that are economica"
+ ],
+ [
+  "18",
+  ": every significant benchmark--TSFM difference favours the benchmark, 18 of 30 at the 5\\% level, with GJR-GARCH-$t$ the strongest single forec"
+ ],
+ [
+  "30",
+  "y significant benchmark--TSFM difference favours the benchmark, 18 of 30 at the 5\\% level, with GJR-GARCH-$t$ the strongest single forecaster"
+ ],
+ [
+  "0.001",
+  "exception in the other direction, losing to every TSFM series at $p < 0.001$ --- order-statistic variance on a 250-day window, not a property of"
+ ],
+ [
+  "250",
+  "to every TSFM series at $p < 0.001$ --- order-statistic variance on a 250-day window, not a property of the foundation models. The comparison t"
+ ],
+ [
+  "5.03",
+  "sampling it at the checkpoint default, mean corrected quantile score $5.03$ against $5.81 \\times 10^{-4}$ for Chronos-Small and $5.00$ against $"
+ ],
+ [
+  "5.81 \\times 10^{-4}",
+  "the checkpoint default, mean corrected quantile score $5.03$ against $5.81 \\times 10^{-4}$ for Chronos-Small and $5.00$ against $5.69$ for Chronos-Mini, both a"
+ ],
+ [
+  "5.00",
+  "ile score $5.03$ against $5.81 \\times 10^{-4}$ for Chronos-Small and $5.00$ against $5.69$ for Chronos-Mini, both at $p < 0.001$. These are the"
+ ],
+ [
+  "5.69",
+  "$ against $5.81 \\times 10^{-4}$ for Chronos-Small and $5.00$ against $5.69$ for Chronos-Mini, both at $p < 0.001$. These are the \\emph{corrected"
+ ],
+ [
+  "0.001",
+  "hronos-Small and $5.00$ against $5.69$ for Chronos-Mini, both at $p < 0.001$. These are the \\emph{corrected} series, so the difference survives a"
+ ],
+ [
+  "5.14 \\times 10^{-4}",
+  "gle-shot procedures the conformal shift has the best quantile score ($5.14 \\times 10^{-4}$) and the highest green rate ($89.1\\%$); quantile regression on resid"
+ ],
+ [
+  "89.1",
+  "t quantile score ($5.14 \\times 10^{-4}$) and the highest green rate ($89.1\\%$); quantile regression on residuals is close on score at lower cove"
+ ],
+ [
+  "97.4",
+  "ls is close on score at lower coverage; ACI reaches higher coverage ($97.4\\%$) with wider intervals and, at the Basel operating point, a mean $|"
+ ],
+ [
+  "0.0750",
+  "ider intervals and, at the Basel operating point, a mean $|\\VaR|$ of $0.0750$ against $0.0443$ for the rolling estimator. More flexible methods do"
+ ],
+ [
+  "0.0443",
+  "d, at the Basel operating point, a mean $|\\VaR|$ of $0.0750$ against $0.0443$ for the rolling estimator. More flexible methods do not consistently"
+ ],
+ [
+  "50.6",
+  "xible methods do not consistently improve on it: GBM-QR reaches only $50.6\\%$ green with a $59\\%$ Kupiec rejection rate, and a tuning grid confi"
+ ],
+ [
+  "59",
+  "onsistently improve on it: GBM-QR reaches only $50.6\\%$ green with a $59\\%$ Kupiec rejection rate, and a tuning grid confirms the prediction t"
+ ],
+ [
+  "250",
+  "ose-built VaR models face the same short-window constraint: under the 250-day protocol, GARCH-N with conformal correction outperforms EVT-POT a"
+ ],
+ [
+  "0.078",
+  "that table is worth isolating. The raw row's mean violation rate is $0.078$, which is not a statement about the forecasters but about the two se"
+ ],
+ [
+  "000",
+  "te Carlo study over five data-generating processes, with $T \\in \\{1{,}000, 5{,}000\\}$ and 500 replications, confirms the direction of Theorem~\\"
+ ],
+ [
+  "000",
+  "study over five data-generating processes, with $T \\in \\{1{,}000, 5{,}000\\}$ and 500 replications, confirms the direction of Theorem~\\ref{thm:d"
+ ],
+ [
+  "500",
+  "five data-generating processes, with $T \\in \\{1{,}000, 5{,}000\\}$ and 500 replications, confirms the direction of Theorem~\\ref{thm:dependent_co"
+ ],
+ [
+  "76",
+  "es toward nominal as $T$ grows, and Basel green frequencies rise from 76--81\\% at the shorter sample length to 96--98\\% at the longer one (Tab"
+ ],
+ [
+  "81",
+  "oward nominal as $T$ grows, and Basel green frequencies rise from 76--81\\% at the shorter sample length to 96--98\\% at the longer one (Table~S"
+ ],
+ [
+  "96",
+  "green frequencies rise from 76--81\\% at the shorter sample length to 96--98\\% at the longer one (Table~S.25; the design is in Supplement~S.4."
+ ],
+ [
+  "98",
+  "en frequencies rise from 76--81\\% at the shorter sample length to 96--98\\% at the longer one (Table~S.25; the design is in Supplement~S.4.1)."
+ ],
+ [
+  "0.50",
+  "ement~S.4. Calibration-fraction sensitivity is limited over $f_c \\in [0.50, 0.80]$; rolling-window length ($w \\in \\{125, 250, 500\\}$) preserves"
+ ],
+ [
+  "0.80",
+  "S.4. Calibration-fraction sensitivity is limited over $f_c \\in [0.50, 0.80]$; rolling-window length ($w \\in \\{125, 250, 500\\}$) preserves the or"
+ ],
+ [
+  "125",
+  "limited over $f_c \\in [0.50, 0.80]$; rolling-window length ($w \\in \\{125, 250, 500\\}$) preserves the ordering by $\\bar R$; the theoretical gap"
+ ],
+ [
+  "250",
+  "ted over $f_c \\in [0.50, 0.80]$; rolling-window length ($w \\in \\{125, 250, 500\\}$) preserves the ordering by $\\bar R$; the theoretical gap $g_n"
+ ],
+ [
+  "500",
+  "ver $f_c \\in [0.50, 0.80]$; rolling-window length ($w \\in \\{125, 250, 500\\}$) preserves the ordering by $\\bar R$; the theoretical gap $g_n$ has"
+ ],
+ [
+  "0.0058",
+  "; the theoretical gap $g_n$ has negligible empirical effect, at most $0.0058$ in $\\hat\\pi$ within the COVID window and $0.0005$ over the full samp"
+ ],
+ [
+  "0.0005",
+  "al effect, at most $0.0058$ in $\\hat\\pi$ within the COVID window and $0.0005$ over the full sample; and block-bootstrap intervals for $\\qVstat$ ar"
+ ],
+ [
+  "76",
+  "sensitivity in the usual sense: it moves $\\bar R$ by a factor of 3 to 76 within a single model--asset pair and can change the Basel zone, whic"
+ ],
+ [
+  "0.01",
+  "s}, all of which present as the same rejection. Add that at $\\alpha = 0.01$ these tests have their least power exactly where the regulatory fram"
+ ],
+ [
+  "11",
+  "iolations fall on consecutive days the table is degenerate: $\\hat\\pi_{11}$ is estimated at the boundary of the parameter space, the likelihood"
+ ],
+ [
+  "0.01",
+  "oice: a degenerate table carries no evidence either way. At $\\alpha = 0.01$ this is not a corner case. Across the MACRO model--asset pairs of"
+ ],
+ [
+  "0.025",
+  "nominal level --- MACRO \\%, MACRO \\% and MACRO \\% raw at $\\alpha = 0.025$, $0.05$ and $0.10$ --- so this is a property of the tail probability"
+ ],
+ [
+  "0.05",
+  "evel --- MACRO \\%, MACRO \\% and MACRO \\% raw at $\\alpha = 0.025$, $0.05$ and $0.10$ --- so this is a property of the tail probability rather"
+ ],
+ [
+  "0.10",
+  "ACRO \\%, MACRO \\% and MACRO \\% raw at $\\alpha = 0.025$, $0.05$ and $0.10$ --- so this is a property of the tail probability rather than of thi"
+ ],
+ [
+  "0.01",
+  "} The test of \\citet{kupiec1995} is always defined, and at $\\alpha = 0.01$ it rejects MACRO \\% of the MACRO pairs, against MACRO \\% at $\\al"
+ ],
+ [
+  "0.10",
+  "ejects MACRO \\% of the MACRO pairs, against MACRO \\% at $\\alpha = 0.10$. No forecaster in the panel passes on more than MACRO of MACRO a"
+ ],
+ [
+  "0.49",
+  "le attains sensitivity 5/5 at specificity 2/8, a Fisher exact $p$ of $0.49$: it flags 11 of 13 forecasters, which is not discrimination. The ind"
+ ],
+ [
+  "11",
+  "tivity 5/5 at specificity 2/8, a Fisher exact $p$ of $0.49$: it flags 11 of 13 forecasters, which is not discrimination. The independence test"
+ ],
+ [
+  "13",
+  "5/5 at specificity 2/8, a Fisher exact $p$ of $0.49$: it flags 11 of 13 forecasters, which is not discrimination. The independence test attai"
+ ],
+ [
+  "0.10",
+  "ains 0/5. A severe cut on the violation rate --- rejecting $\\hat\\pi > 0.10$ or $\\hat\\pi < 0.005$ --- attains 5/5 at 8/8, $p = 0.00078$. The find"
+ ],
+ [
+  "0.005",
+  "ut on the violation rate --- rejecting $\\hat\\pi > 0.10$ or $\\hat\\pi < 0.005$ --- attains 5/5 at 8/8, $p = 0.00078$. The finding concerns a \\emph{"
+ ],
+ [
+  "0.00078",
+  "ng $\\hat\\pi > 0.10$ or $\\hat\\pi < 0.005$ --- attains 5/5 at 8/8, $p = 0.00078$. The finding concerns a \\emph{threshold} rather than a statistic: wh"
+ ],
+ [
+  "50",
+  "ection. Applied to the Chronos series truncated at $\\texttt{top\\_k} = 50$ --- a series whose predictive dispersion is MACRO of realised vola"
+ ],
+ [
+  "200",
+  "e modes can be mitigated. Small calibration sets ($n_{\\mathrm{cal}} < 200$) produce unstable corrections; a minimum calibration size or cross-a"
+ ],
+ [
+  "0.95",
+  "et aggregation is advisable. Very high score persistence ($\\hat\\rho > 0.95$) weakens the $\\beta$-mixing bound, and GARCH pre-filtering can reduc"
+ ],
+ [
+  "19",
+  "e. Figure~S.5 illustrates the structural-break case during the COVID-19 shock. The trailing-window design produces a measurable lag: seven of"
+ ],
+ [
+  "77",
+  "their post-shock $\\qVroll$ maximum within the acute window, four peak 77 calendar days later, and the two GJR-GARCH variants take 161 days. Th"
+ ],
+ [
+  "161",
+  "four peak 77 calendar days later, and the two GJR-GARCH variants take 161 days. The lag is a property of the window rather than of the forecast"
+ ],
+ [
+  "3,4",
+  "ls framework the traffic-light zone sets a capital multiplier $k \\in [3,4]$. With $W$ the widening of the corrected threshold relative to an un"
+ ],
+ [
+  "1.22",
+  "ion pays whenever $W < k_{\\mathrm{Yellow}}/k_{\\mathrm{Green}} \\approx 1.22$. Under FRTB the binding measure is ES at 97.5\\% and this arithmetic"
+ ],
+ [
+  "97.5",
+  "mathrm{Green}} \\approx 1.22$. Under FRTB the binding measure is ES at 97.5\\% and this arithmetic describes the backtesting channel rather than t"
+ ],
+ [
+  "0.98",
+  "idening. Relative to GJR-GARCH the corrected thresholds run from $W = 0.98$ for the analytic Chronos series to $W = 1.14$ for Lag-Llama, with Ti"
+ ],
+ [
+  "1.14",
+  "hresholds run from $W = 0.98$ for the analytic Chronos series to $W = 1.14$ for Lag-Llama, with TimesFM~2.5 at $ MACRO $ and Moirai~2.0 at $ MAC"
+ ],
+ [
+  "2.5",
+  "the analytic Chronos series to $W = 1.14$ for Lag-Llama, with TimesFM~2.5 at $ MACRO $ and Moirai~2.0 at $ MACRO $. Correction is therefore cap"
+ ],
+ [
+  "2.0",
+  "to $W = 1.14$ for Lag-Llama, with TimesFM~2.5 at $ MACRO $ and Moirai~2.0 at $ MACRO $. Correction is therefore capital-cheap across the board,"
+ ],
+ [
+  "0.01",
+  "est \\emph{on the calibration window}, and not otherwise. At $\\alpha = 0.01$ that rule skips MACRO of MACRO pairs, avoids MACRO of the MAC"
+ ],
+ [
+  "2.5",
+  "rare and belong to no single forecaster --- three assets for TimesFM~2.5, two for Moirai~2.0, one each for Moirai~1.1 and GJR-GARCH-$t$ --- wh"
+ ],
+ [
+  "2.0",
+  "no single forecaster --- three assets for TimesFM~2.5, two for Moirai~2.0, one each for Moirai~1.1 and GJR-GARCH-$t$ --- while GJR-GARCH is pos"
+ ],
+ [
+  "1.1",
+  "three assets for TimesFM~2.5, two for Moirai~2.0, one each for Moirai~1.1 and GJR-GARCH-$t$ --- while GJR-GARCH is positive on all MACRO asse"
+ ],
+ [
+  "0.01",
+  "gnment, a stale vintage --- call for different remedies. At $\\alpha = 0.01$ the instruments are additionally at their weakest: the independence"
+ ],
+ [
+  "0.10",
+  "est of them is concentrated in the tail and largely gone by $\\alpha = 0.10$. Whether fine-tuning closes that tail gap remains open. What this pa"
+ ],
+ [
+  "384",
+  "generation --- together with machine-readable result matrices for all 384 model--asset pairs ($\\qVstat$, $\\hat\\pi$, Basel Traffic Light, Kupiec"
+ ],
+ [
+  "0.3.1",
+  "pha)\\rceil$-th order statistic of the trailing-window scores; version~0.3.1 of the package follows the same convention. Each series admitted to"
+ ],
+ [
+  "15.11.2022",
+  "ported through the project ``IDA Institute of Digital Assets'', CF166/15.11.2022, CN760046/23.05.2023; the project ``AI for Energy Finance (AI4EFin)''"
+ ],
+ [
+  "23.05.2023",
+  "oject ``IDA Institute of Digital Assets'', CF166/15.11.2022, CN760046/23.05.2023; the project ``AI for Energy Finance (AI4EFin)'', CF162/15.11.2022, C"
+ ],
+ [
+  "15.11.2022",
+  "46/23.05.2023; the project ``AI for Energy Finance (AI4EFin)'', CF162/15.11.2022, CN760048/23.05.2023, financed under the Romania's National Recovery"
+ ],
+ [
+  "23.05.2023",
+  "oject ``AI for Energy Finance (AI4EFin)'', CF162/15.11.2022, CN760048/23.05.2023, financed under the Romania's National Recovery and Resilience Plan,"
+ ],
+ [
+  "101119635",
+  "ial Doctoral Network on Digital Finance, acronym DIGITAL, Project No. 101119635. We acknowledge the support of the project ``MA'AT -- Autonomous"
+ ],
+ [
+  "330941",
+  "MA'AT -- Autonomous Model for Textual Assistance'', SMIS Code 2021+: 330941, funding contract no.\\ 390090/11.11.2025, project co-financed by the"
+ ],
+ [
+  "390090",
+  "Textual Assistance'', SMIS Code 2021+: 330941, funding contract no.\\ 390090/11.11.2025, project co-financed by the European Regional Development"
+ ],
+ [
+  "11.11.2025",
+  "l Assistance'', SMIS Code 2021+: 330941, funding contract no.\\ 390090/11.11.2025, project co-financed by the European Regional Development Fund throug"
+ ]
+]

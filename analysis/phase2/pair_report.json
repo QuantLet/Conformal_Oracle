@@ -1,0 +1,21 @@
+{
+  "feasible": true,
+  "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+  "q_true_P": -2.6064635693842795,
+  "q_reported_Q": -1.4607067006519374,
+  "pct_of_way_to_zero": 43.95829207783641,
+  "u_P": 0.01,
+  "u_Q": 0.009999999999999988,
+  "var_P": 1.0,
+  "var_Q": 0.9999999999999984,
+  "mad_P": 0.7351051938957227,
+  "mad_Q": 0.7351051938957223,
+  "median_P": 0.0,
+  "median_Q": 0.0,
+  "kurt_P": 9.0,
+  "kurt_Q": 24.486026416043543,
+  "tail_ratio_P": 2.6064635693842795,
+  "tail_ratio_Q": 2.6064635693842795,
+  "dispersion_ratio_Q_over_P": 0.9999999999999992,
+  "support_mass_discarded": 0.1
+}

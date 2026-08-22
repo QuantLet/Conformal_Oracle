@@ -16,9 +16,11 @@ def compute_qv_roll(
 ) -> np.ndarray:
     """Compute rolling conformal correction qV_roll(t).
 
-    For each t in [window, len(forecasts)), qV_roll(t) is the
-    (1-alpha)-empirical quantile of the most recent `window`
-    nonconformity scores S_{t-window}, ..., S_{t-1}.
+    For each t in [window, len(forecasts)), qV_roll(t) is the finite-sample
+    split-conformal quantile of the most recent `window` nonconformity scores
+    S_{t-window}, ..., S_{t-1}: the ``ceil((window + 1) * (1 - alpha))``-th
+    order statistic, not the plain empirical (1-alpha) quantile. See
+    :func:`conformal_oracle.conformal.quantile.conformal_quantile`.
 
     Returns array of length len(forecasts) - window.
     """

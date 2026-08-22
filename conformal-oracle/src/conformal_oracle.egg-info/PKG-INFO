@@ -1,0 +1,54 @@
+Metadata-Version: 2.4
+Name: conformal-oracle
+Version: 0.3.1
+Summary: Conformal recalibration audit for tail quantile forecasters
+Author-email: Daniel Traian Pele <danpele@ase.ro>
+License-Expression: MIT
+Keywords: conformal prediction,VaR,risk management,backtesting
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Requires-Python: >=3.10
+License-File: LICENSE
+Requires-Dist: numpy>=1.24
+Requires-Dist: pandas>=2.0
+Requires-Dist: scipy>=1.10
+Requires-Dist: statsmodels>=0.14
+Requires-Dist: arch>=6.0
+Requires-Dist: matplotlib>=3.7
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: ruff>=0.1; extra == "dev"
+Requires-Dist: mypy>=1.5; extra == "dev"
+Provides-Extra: chronos
+Requires-Dist: chronos-forecasting>=1.5; extra == "chronos"
+Requires-Dist: torch>=2.0; extra == "chronos"
+Requires-Dist: transformers>=4.30; extra == "chronos"
+Provides-Extra: timesfm
+Requires-Dist: timesfm>=1.2; extra == "timesfm"
+Provides-Extra: moirai
+Requires-Dist: uni2ts>=0.1; extra == "moirai"
+Requires-Dist: torch>=2.0; extra == "moirai"
+Requires-Dist: einops>=0.6; extra == "moirai"
+Requires-Dist: gluonts>=0.14; extra == "moirai"
+Requires-Dist: huggingface-hub>=0.20; extra == "moirai"
+Provides-Extra: lag-llama
+Requires-Dist: torch>=2.0; extra == "lag-llama"
+Requires-Dist: gluonts>=0.14; extra == "lag-llama"
+Requires-Dist: huggingface-hub>=0.20; extra == "lag-llama"
+Requires-Dist: einops>=0.6; extra == "lag-llama"
+Provides-Extra: tsfm-all
+Requires-Dist: chronos-forecasting>=1.5; extra == "tsfm-all"
+Requires-Dist: timesfm>=1.2; extra == "tsfm-all"
+Requires-Dist: uni2ts>=0.1; extra == "tsfm-all"
+Requires-Dist: torch>=2.0; extra == "tsfm-all"
+Requires-Dist: transformers>=4.30; extra == "tsfm-all"
+Requires-Dist: gluonts>=0.14; extra == "tsfm-all"
+Requires-Dist: huggingface-hub>=0.20; extra == "tsfm-all"
+Requires-Dist: einops>=0.6; extra == "tsfm-all"
+Dynamic: license-file

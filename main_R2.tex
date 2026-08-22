@@ -11,9 +11,8 @@
 \graphicspath{{figures/}}
 \usepackage{algorithm,algpseudocode}
 \usepackage{natbib}
-\usepackage{hyperref}
-\hypersetup{colorlinks=true, allcolors=black, citecolor=black,
-            linkcolor=black, urlcolor=black, pdfborder={0 0 0}}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{colorlinks=false, allbordercolors={1 1 1}, pdfborder={0 0 0}}
 \usepackage{placeins}
 \usepackage{setspace,microtype,enumitem}
 \onehalfspacing
@@ -26,14 +25,9 @@
 %─── Colours ─────────────────────────────────────────────────────────────────
 \definecolor{pastelgreen}{rgb}{0.0,0.6,0.0}
 
-%─── Revision markup (R1) ────────────────────────────────────────────────────
-% Added or rewritten text is wrapped in \revised{...} and shown in blue.
-% Revision colouring, off for the clean version. Set to the coloured
-% variant only when a referee has asked to see what changed.
+%─── Revision markup ─────────────────────────────────────────────────────────
+% Retained as a no-op so that generated fragments emitting \revised still build.
 \newcommand{\revised}[1]{#1}
-% \renewcommand{\revised}[1]{{\color{blue}#1}}
-% Camera-ready toggle: uncomment the next line to render all revisions in black.
-%\renewcommand{\revised}[1]{#1}
 
 %─── Theorem environments ────────────────────────────────────────────────────
 \newtheorem{theorem}{Theorem}[section]
@@ -110,13 +104,7 @@
 		%─── PART 2: Abstract ───────────────────────────────────────────────────────
 \begin{abstract}
 
-	A tail-risk backtest reports \emph{that} a Value-at-Risk series miscovers. It cannot report \emph{why}. We show that this gap is where forecasting pipelines fail, and that the failures are neither rare nor exotic.
-
-	We audit a \nMainAssets-asset, \nMainForecasters-forecaster panel and trace five defects in our own pipeline to specific lines of code: two sign inversions, an unstandardised Student-$t$ quantile in a GARCH benchmark, and two data-handling faults. The cleanest case is in published third-party code and reproduces from a public checkpoint without our data. Chronos-T5 represents its one-step predictive law as a categorical distribution over 4093 quantised bins; its packaged sampler defaults to $\texttt{top\_k} = 50$, discarding 98.8\% of that support, from the tails inward, before any quantile is read. The median is barely moved, so point-forecast evaluation is normal, while the 1\% violation rate reaches \nPiSmallDefaultOne{} and \nPiMiniDefaultOne. A controlled dose--response on identical contexts and seeds establishes the mechanism, and the parameters a practitioner would vary --- temperature, nucleus sampling --- move predictive dispersion by 0.001 and 0.006. Reading the law in closed form instead of sampling it has no sampling parameters, costs one forward pass, and moves the rate to \nPiSmallAnalyticOne{} and \nPiMiniAnalyticOne.
-
-	Such failures survive the instruments applied to them. Kupiec's test rejects \nSeqKupiecRejRawOne\% of pairs at $\alpha = 0.01$, defective and merely imperfect series alike; the Christoffersen statistic is degenerate on \nSeqCCUndefRawOne\% of raw pairs and \nSeqCCUndefCorOne\% after recalibration, where its asymptotics do not hold; and a conformal shift targets marginal coverage whatever forecaster it corrects, so on a sign-inverted series it delivered 19 of \nMainAssets{} Basel green zones and every backtest downstream of it passed.
-
-	We therefore validate structurally, before a series is calibrated or evaluated: two invariants that follow from what a quantile forecast is, one invariant tested through a proxy, and seven plausibility bands whose thresholds we state rather than derive. The gate blocks \nGateBlocked{} of \nGateSeries{} series here. Correctly configured, the zero-shot foundation models in this panel are neither catastrophically miscalibrated nor competitive --- they sit alongside GARCH-family benchmarks at the 1\% level, and a per-asset CAViaR fitted the ordinary way outperforms all of them.
+	A Value-at-Risk backtest reports \emph{that} a forecast series miscovers. It cannot report \emph{why}. We show that the exceedance sequence identifies exactly one functional of the joint law of forecast and return --- the tail probability the reported threshold actually cuts off --- so every test measurable with respect to it, Kupiec, Christoffersen, the Basel traffic light and the dynamic quantile test among them, has power equal to its size against alternatives agreeing on that functional. The gap is quantified by a single number, the truncation depth $\delta^\star$ that an indistinguishable alternative can reach. Under a unimodal return law $\delta^\star = \nGapDeltaUni$: a Value-at-Risk understated by \nGapUndUni\% is exactly unidentifiable, holding coverage, exceedance clustering, point-forecast accuracy and predictive dispersion fixed. Structural checks on the forecast series reduce this to \nGapUndGateNow\% and do not close it. The same quantity explains the panel: on \nMainAssets{} assets and \nMainForecasters{} forecasters, a documented sampling default in a public Chronos-T5 checkpoint drives the 1\% violation rate to \nPiSmallDefaultOne{} against \nPiSmallAnalyticOne{} when the same predictive law is read in closed form, an implied $\delta$ near \nGapDeltaChronos{} that lies outside the blind region --- which is why unconditional coverage rejects it everywhere while rejecting \nSeqKupiecRejRawOne\% of the panel besides. Detection is not diagnosis. Correctly configured, the zero-shot foundation models here are neither catastrophically miscalibrated nor superior to the strongest fitted benchmarks.
 
 	\bigskip\noindent
 	\textbf{Keywords:} Value-at-Risk; Structural validation; Time series
@@ -137,92 +125,104 @@ A Value-at-Risk forecast is not a model output. It is the result of reducing a
 model output --- a set of sampled paths, a grid of predictive quantiles, a fitted
 parametric law, an order statistic over a window --- to a single number, and that
 reduction is performed by code that the forecasting literature does not treat as
-an object of study. This paper reports what happens when it is studied: in a
-24-asset, 16-forecaster Value-at-Risk panel, the dominant driver of measured
-extreme-tail failure is the configuration of that reduction step, not the
-architecture of the model, its pretraining corpus, or the format in which it
-exposes its predictive distribution.
+an object of study. This paper treats it as one. In a \nMainAssets-asset,
+\nMainForecasters-forecaster Value-at-Risk panel, the configuration of that
+reduction step --- rather than the architecture of the model, its pretraining
+corpus, or the format in which it exposes its predictive distribution --- is what
+separates a series that is roughly usable at the 1\% level from one that violates
+on four days in ten.
 
-The evidence is unusually direct, because the defects are our own. An audit of
-the pipeline behind an earlier version of this paper traced five errors to
-specific lines of code: two foundation-model series stored the $\alpha$-quantile
-with its sign inverted; one classical GJR-GARCH benchmark applied an
-unstandardised Student-$t$ quantile with its degrees of freedom hard-coded; and
-two data-handling faults propagated a ticker alias and a stale forecast vintage.
-Each is arithmetic rather than judgement, and each is documented with the
-diagnostic that establishes it in the replication package. Their joint effect was
-not noise. They moved reported 1\% violation rates by factors between 4 and 70,
-and they moved them in both directions --- the GJR-GARCH defect inflated every
-threshold by roughly 45\%, producing a 0.42\% violation rate against a nominal
-1\% and placing the benchmark in the Basel green zone on all 24 assets. A defect
-that flatters its owner attracts no scrutiny; that one was found last.
+The difficulty this creates is one of identification, not of measurement. A
+coverage backtest examines a single scalar property of a realised series: the
+frequency of exceedances, and in its conditional form their clustering. When it
+rejects, the rejection is equally consistent with a genuinely poor tail model and
+with an implementation failure anywhere in the reduction step or in the data
+assembly that feeds it. These are different objects calling for different
+remedies, and the test returns the same verdict for all of them. No procedure
+applied downstream of the reduction step recovers the distinction, because the
+information that would identify it has been discarded by then.
 
-We develop the argument on the case that is not ours, because it is in published
-third-party code and reproduces from a public checkpoint without our data.
-Chronos-T5 \citep{ansari2024chronos} represents its predictive distribution as a
-categorical law over 4093 quantised value bins. Its packaged sampling routine
-defaults to $\texttt{top\_k} = 50$, a value inherited from text generation, which
-discards 98.8\% of that support before any quantile is computed --- and discards
-it from the tails inward. The median is barely affected, so a point-forecast
-evaluation of this configuration is entirely normal. The 1\% tail is destroyed:
-the empirical violation rate reaches 0.3884 and 0.4188 for the two checkpoint
-sizes we audit, a thirty-nine-fold exceedance that would place every asset in the
-Basel red zone. This is not a bug in Chronos. It is a documented default, correct
-for the task it was designed for, silently wrong for this one.
+A systematic audit of the forecast-production pipeline behind this panel isolates
+five such failure modes, each located in a specific step and each established by
+a diagnostic that is arithmetic rather than inferential. They are set out once,
+in Table~\ref{tab:failure_modes}, and not re-enumerated thereafter. Their
+measured effect on reported 1\% violation rates spans factors between five and seventy, and it runs in both directions: one of them inflates every threshold by
+roughly 45\%, producing a 0.4\% violation rate against a nominal 1\% and a Basel
+green zone on all \nMainAssets{} assets. A reduction rule that reports fewer
+exceedances than nominal attracts no scrutiny from a system built to count them.
+
+\paragraph{A controlled case} One of these failure modes can be demonstrated
+without reference to this study's data at all, and it is the one on which we
+develop the argument. Chronos-T5 \citep{ansari2024chronos} represents its
+one-step predictive distribution as a categorical law over 4093 quantised value
+bins. Its packaged sampling routine defaults to $\texttt{top\_k} = 50$, a value
+inherited from text generation, which restricts that support to its 50 most
+probable atoms before any quantile is computed --- and does so from the tails
+inward, since the discarded bins are by construction the least probable. The
+median is barely affected, so a point-forecast evaluation of this configuration
+is entirely unremarkable. The 1\% tail is not: the empirical violation rate
+reaches \nPiSmallDefaultOne{} and \nPiMiniDefaultOne{} for the two checkpoint
+sizes examined here, an exceedance that would place every asset in the Basel red
+zone. This is not a fault in Chronos. It is a documented default, correct for the
+task it was designed for and silently wrong for this one, and it reproduces from
+a public checkpoint and published code by any reader who runs it.
 
 Three properties make such failures durable rather than merely possible. First,
 they are invisible to point-forecast evaluation, which is where forecasting
 models are normally validated. Second, they are invisible to a responsible
-sensitivity analysis: varying temperature across a fourfold range moves
-predictive dispersion by 0.001 and nucleus sampling by 0.006, so an analyst who
-sweeps the parameters that are documented and discussed will correctly report the
-model as robust. Third --- and this is the part that concerns the tail-risk
-literature specifically --- they are invisible to the backtests that regulate
-this domain.
+sensitivity analysis: varying temperature across a fourfold range moves predictive dispersion by \nLitTempGap{} and nucleus sampling by \nLitNucleusGap, so an analyst who
+sweeps the parameters that are documented and discussed obtains a flat response
+and correctly reports the model as robust. Third --- and this is the part that
+concerns the tail-risk literature specifically --- they are invisible to the
+backtests that regulate this domain.
 
 That third claim is measured rather than asserted. At $\alpha = 0.01$ the
-independence test of \citet{christoffersen1998} is \emph{undefined} on 34.6\% of
-our 312 model--asset pairs, because a 1\% tail generates too few exceedances to
-populate a transition table, and on 53.5\% of them once the forecasts have been
-recalibrated --- which is where every backtest in the earlier version of this
-paper was computed, since a correction that spaces violations out disables the
-test further. The share falls monotonically to 0.0\% at $\alpha = 0.10$ under
-both readings. A degenerate table is an absence of evidence, but the natural
+independence test of \citet{christoffersen1998} is \emph{degenerate} on
+\nSeqCCUndefRawOne\% of the \nSeqPairs{} model--asset pairs with stored series,
+because a 1\% tail generates too few exceedances to populate a transition table,
+and on \nSeqCCUndefCorOne\% of them once the forecasts have been recalibrated,
+since a correction that spaces violations out empties the table further. In that
+state the transition probability is estimated at the boundary of the parameter
+space and the $\chi^2_1$ calibration of the likelihood ratio does not hold; the
+share falls monotonically to \nSeqCCUndefRawTen\% at $\alpha = 0.10$ under both
+readings. A degenerate table is an absence of evidence, but the natural
 implementation returns ``no rejection'', which reads as a pass. Unconditional
-coverage \citep{kupiec1995} is better defined and rejects
-\nSeqKupiecRejRawOne\% of pairs at $\alpha = 0.01$ against
-\nSeqKupiecRejRawTen\% at $\alpha = 0.10$; when a test rejects the majority
-of defensible models, its rejection of any one of them carries little
-information, and a genuinely defective series is not distinguishable from a
-merely imperfect one. Both instruments are weakest exactly at the level at which
-the Basel traffic-light system operates \citep{basel1996}.
+coverage \citep{kupiec1995} is always defined and rejects \nSeqKupiecRejRawOne\%
+of pairs at $\alpha = 0.01$ against \nSeqKupiecRejRawTen\% at $\alpha = 0.10$;
+when a test rejects the majority of defensible models, its rejection of any one
+of them carries little information, and it does not separate a series carrying an
+implementation failure from one that is merely imperfect. Both instruments are
+weakest exactly at the level at which the Basel traffic-light system operates
+\citep{basel1996}.
 
-Post-hoc recalibration does not rescue the situation; it conceals it. A
+Post-hoc recalibration does not resolve the situation; it conceals it. A
 split-conformal shift restores marginal coverage regardless of the forecaster it
 is applied to --- exactly and in finite samples under exchangeability
 \citep{vovk2005algorithmic,lei2018distribution}, and asymptotically under the
-$\beta$-mixing conditions of Theorem~\ref{thm:dependent_conformal_var} --- which
-require a separation between calibration and evaluation that our contiguous split
-does not provide, as Remark~\ref{rem:gap_vs_protocol} sets out. Neither guarantee
-therefore covers the estimator exactly as we run it. The distinction matters for
-the theory and not at all for the argument of this paragraph: on our data the
-correction delivers coverage regardless. Applied to a sign-inverted
-series it placed 19 of 24 assets in the Basel green zone. Every backtest reported
-in the earlier version of this paper was computed downstream of recalibration, so
-every one of them passed. The errors survived because the method worked.
+$\beta$-mixing conditions of Theorem~S.9.2, which
+require a separation between calibration and evaluation that the contiguous split
+used here does not provide, as Remark~S.9.3 sets out. Neither
+guarantee therefore covers the estimator exactly as it is run; the distinction
+matters for the theory and not for the point of this paragraph, since on these
+data the correction delivers coverage either way. Applied to a series whose predictive
+standard deviation is \nDispDefaultSmall{} of realised volatility, it returns
+$\hat\pi = \nTruncCorPi$ and places \nTruncCorGreen{} of \nMainAssets{} assets in
+the Basel green zone. A pipeline that validates after recalibration has,
+by construction, no test of the forecaster left to run.
 
 \paragraph{Contributions} First, we establish the mechanism of the sampling
-defect by controlled experiment rather than inference, and remove it. Holding
+failure by controlled experiment rather than inference, and remove it. Holding
 contexts, seeds and weights fixed and varying only the sampling configuration,
-predictive dispersion recovers monotonically as the truncation is relaxed and one
-thousand draws under the default contain exactly 50 distinct values on every
+predictive dispersion recovers monotonically as the truncation is relaxed, and
+one thousand draws under the default contain exactly 50 distinct values on every
 asset and both checkpoints. We then show that sampling is unnecessary at a
 one-step horizon, where the predictive law is categorical and its quantiles are
 available in closed form, and give an estimator that reads them directly from the
 model's logits: it agrees with full-vocabulary sampling to within Monte Carlo
 error, has no $\texttt{num\_samples}$, no $\texttt{top\_k}$ and no seed, and
-costs one forward pass. Under it the violation rate falls from 0.3884 and 0.4188
-to 0.0175 and 0.0178.
+costs one forward pass. Under it the violation rate falls from
+\nPiSmallDefaultOne{} and \nPiMiniDefaultOne{} to \nPiSmallAnalyticOne{} and
+\nPiMiniAnalyticOne.
 
 Second, we quantify the blindness of the standard tail diagnostics, as above,
 and separate two claims that are usually merged: that these tests are being
@@ -230,66 +230,70 @@ misapplied, and that they are being applied where they have the least power. It
 is the second. This is the argument for validating a forecast series
 structurally, before it is calibrated or evaluated.
 
-Third, we propose such a validation gate --- ten checks on a forecast series,
-of which two are invariants, one an invariant tested through a proxy, and seven
-plausibility bands with thresholds we state rather than derive. Eight need
-nothing but the series and the returns; two need an evaluation window, and we say
-so rather than claim the gate is entirely free of one. We report its scoping
-honestly in the other direction too: two of the checks are inapplicable to order-statistic estimators and
-say so rather than returning a verdict, and all ten were written after the
-defects were known, so their performance on those defects is in-sample by
-construction. The gate blocks \nGateBlocked{} of \nGateSeries{} series in this panel.
+Third, we propose such a validation gate --- ten checks on a forecast series, of
+which two are invariants that follow from what a quantile forecast is, one is an
+invariant tested through a proxy, and seven are plausibility bands with
+thresholds we state rather than derive. Seven need nothing but the series and the
+returns; one needs the model's sampled paths and two need an evaluation window,
+and we say so rather than claim the gate is entirely free of one. Its scoping is declared in the other direction too: two
+checks are inapplicable to order-statistic estimators and record that rather than
+returning a verdict, and all ten were specified after the failure modes had been
+identified, so their performance on those failure modes is in-sample by
+construction. The gate blocks \nGateBlocked{} of \nGateSeries{} series in this
+panel.
 
-Fourth, for the recalibration layer we retain an asymptotic coverage guarantee
-for the single-split estimator under $\beta$-mixing dependence with explicit
+Fourth, for the recalibration layer we give an asymptotic coverage guarantee for
+the single-split estimator under $\beta$-mixing dependence with explicit
 gap-separation conditions, together with finite-window bounds for the rolling
 variant under distributional drift, and we report the intervention's
 \emph{indication} rather than its average effect. Recalibration is close to free
 where it is not needed and harmful where the base forecast is already calibrated:
 under the rolling estimator, \nWellCalRollWorse{} of the \nWellCalRollN{} pairs
 that pass Kupiec on the test window are degraded by correcting them --- a
-description of who is harmed, not yet a rule for deciding. Gating the correction on a failed raw backtest
-helps, but far less than an in-sample evaluation of that rule suggests: keyed on
-the calibration window, which is the only information available at the decision
-date, it avoids \nGateRollAvoidedPct\% of the damage at $\alpha = 0.01$ and costs
-\nGateRollUpgradesLost{} of \nGateRollUpgrades{} Basel zone upgrades. Keyed on
-the evaluation window it would avoid \nGateRollOracleAvoidedPct\% and cost none,
-and we report that only as the oracle it is.
+description of who is harmed, not yet a rule for deciding. Gating the correction
+on a failed raw backtest helps, but far less than an in-sample evaluation of that
+rule suggests: keyed on the calibration window, which is the only information
+available at the decision date, it avoids \nGateRollAvoided{} of the
+\nDegradedRoll{} deteriorations at $\alpha = 0.01$ ---
+\nGateRollAvoidedPct\% --- and costs \nGateRollUpgradesLost{} of
+\nGateRollUpgrades{} Basel zone upgrades. Keyed on the evaluation window it would
+avoid \nGateRollOracleAvoidedPct\% and cost none, and we report that only as the
+oracle it is.
 
 \paragraph{What this paper does not claim} It does not claim that foundation
 models are unsuitable for tail-risk forecasting, nor that they are ready for it.
-Correctly configured, the six zero-shot foundation-model series in our panel are
-neither catastrophically miscalibrated nor competitive: their raw 1\% violation
-rates run from 0.0143 to 0.0294, which places them alongside the GARCH-family
-benchmarks on the same assets and windows, and a per-asset CAViaR
-\citep{engle2004caviar} fitted the ordinary way outperforms all of them. It does
-not claim that configuration failure explains tail miscalibration in general ---
-we observe five defects in one pipeline, and the frequency of such defects in the
-literature is unknown, though we note that neither of the two recent tail-risk
-papers we surveyed that use sample-based foundation models reports a single
-generation parameter. And it does not claim that the ten structural checks are
-sufficient, and only three of the ten are necessary conditions in the strict
-sense: the other seven are plausibility bands. What can be said for all of them
-is that they are cheap, that each states a property a practitioner would endorse
-before seeing any data, and that the alternative --- coverage --- cannot do this
-job at all.
+Correctly configured, the six zero-shot foundation-model series in this panel are
+neither catastrophically miscalibrated nor superior: their raw 1\% violation
+rates run from \nRawPiTimesFM{} to \nRawPiLagLlama, which places them alongside
+the GARCH-family benchmarks on the same assets and windows, and a per-asset
+CAViaR \citep{engle2004caviar} fitted the ordinary way outperforms all of them.
+It does not claim that implementation failure explains tail miscalibration in
+general: five failure modes are identified in one pipeline, and their prevalence
+in the literature is not identified by this study. And it does not claim that the
+ten structural checks are sufficient, or that more than three of them are
+necessary conditions in the strict sense; the other seven are plausibility bands.
+What can be said for all of them is that they are cheap, that each states a
+property a practitioner would endorse before seeing any data, and that the
+alternative --- coverage --- provably cannot do this job.
 
 The remainder of the paper is organised as follows.
 Section~\ref{sec:lit} situates the contribution in the literature on tail
 miscalibration, regulatory backtesting, and post-hoc calibration.
-Section~\ref{sec:framework} develops the two-layer audit, with asymptotic
-coverage results under $\beta$-mixing dependence, and describes the asset
-universe, the forecasters, and the experimental design.
+Section~\ref{sec:framework} develops the two-layer framework and describes the
+asset universe, the forecasters, and the experimental design.
 Section~\ref{sec:mechanism} establishes the sampling mechanism by controlled
 experiment and gives the analytic estimator that removes it.
-Section~\ref{sec:results} presents the empirical audit on the corrected panel,
-the ordering by $\bar R$, and the static-versus-rolling comparison.
-Section~\ref{sec:blindspot} measures what the standard diagnostics can and cannot
-detect, and Section~\ref{sec:gate} states the structural validation gate.
-Section~\ref{sec:discuss} discusses calibration--sharpness trade-offs,
-deployment considerations, and the FRTB capital arithmetic.
-Section~\ref{sec:conclude} concludes. Proofs and supplementary tables
-are in the appendices.
+Section~\ref{sec:results} presents the audit and the raw panel.
+Section~\ref{sec:blindspot} states the identification result, bounds the blind
+spot it implies, and measures what the standard diagnostics can and cannot
+report. Section~\ref{sec:gate} states the structural validation gate and
+quantifies how much of that blind spot it removes.
+Section~\ref{sec:recal} reports what recalibration restores, when it should be
+applied, and the capital arithmetic that follows.
+Section~\ref{sec:discuss} discusses limitations and practitioner guidance, and
+Section~\ref{sec:conclude} concludes. Proofs, the Monte Carlo study, the
+recalibration baselines, the calibration--sharpness frontier and the
+supplementary tables are in the supplement.
 
 Data and code accompanying this paper are available via the Quantlet platform \quantlet{https://github.com/QuantLet/Conformal_Oracle/}; slides are on the Quantinar platform \quantinar{https://quantinar.com/course/100048/recalibrating-tail-risk-forecasts-under-temporal-dependence}.
 	
@@ -309,9 +313,9 @@ Post-hoc calibration adjusts the output of a fixed forecaster without retraining
 
 The TSFM literature receives closer attention above because this class is recent and has not yet been the subject of a systematic 1\% tail audit; the parametric volatility literature is mature and enters this paper through standard benchmarks rather than fresh review.
 
-Building on these strands, this paper differs from all of them in where it looks. \citet{goel2024tsfmvar} and \citet{goel2025volatility} reduce TSFM tail miscalibration by fine-tuning; \citet{gibbs2021adaptive} deliver adaptive coverage under nonstationarity by online updates of the miscoverage rate; \citet{tamingtailrisk2026} extend conformal risk control to nonstationary portfolio VaR through regime-similarity weighting. Each treats the forecast series as given and improves what is done to it. We ask instead whether the series is what it is claimed to be, and find that in our own pipeline it repeatedly was not --- for reasons that lie in the code that converts a predictive distribution into a threshold, and that no procedure downstream of that conversion can detect.
+Building on these strands, this paper differs from all of them in where it looks. \citet{goel2024tsfmvar} and \citet{goel2025volatility} reduce TSFM tail miscalibration by fine-tuning; \citet{gibbs2021adaptive} deliver adaptive coverage under nonstationarity by online updates of the miscoverage rate; \citet{tamingtailrisk2026} extend conformal risk control to nonstationary portfolio VaR through regime-similarity weighting. Each treats the forecast series as given and improves what is done to it. We ask instead whether the series is what it is claimed to be --- a question that turns on the code converting a predictive distribution into a threshold, and that no procedure downstream of that conversion can answer.
 
-There is a further gap this paper can only point at. Neither of the two recent tail-risk studies we surveyed that use sample-based foundation models reports a single generation parameter --- no \texttt{num\_samples}, \texttt{top\_k}, \texttt{top\_p}, temperature or seed appears in either. \citet{rahimikia2025revisiting} is the clean case: it is centrally about foundation models in finance, Chronos is its most-used model, and none of these parameters occurs anywhere in the text. Two papers do not establish a practice, and we do not claim they do; what they establish is that the reporting convention which would make this class of defect visible to a reader does not currently exist.
+A reporting gap follows directly. For a sample-based forecaster the generation configuration is part of the estimator, in the same sense that a bandwidth is part of a kernel estimator: it determines the object whose quantile is reported. It is not, at present, part of what such studies report. In the recent tail-risk and volatility applications of sample-based foundation models we surveyed, none of \texttt{num\_samples}, \texttt{top\_k}, \texttt{top\_p}, temperature or seed appears in the text \citep[e.g.][]{rahimikia2025revisiting}. We draw no inference about the prevalence of misconfiguration from this, which our design does not identify; the observation is narrower and sufficient for the argument here, namely that the convention which would make a configuration of this kind visible to a reader does not currently exist.
 
 	%══════════════════════════════════════════════════════════════════════════════
 	%─── PART 6: Framework ──────────────────────────────────────────────────────
@@ -356,12 +360,9 @@ For sample-based forecasters (Chronos-Small, Chronos-Mini, Moirai~1.1, and Lag-L
 	= \frac{1}{N}\sum_{i=1}^{N}
 	\mathbf{1}\{\hat r_t^{i;M}\leq x\}.
 \end{equation}
-The raw VaR forecast is the empirical lower $\alpha$-quantile,
-\begin{equation}
-	\label{eq:var_sample}
-	\widehat{\VaR}_t^{\alpha;M}
-	= -(\widehat F_t^M)^{-1}(\alpha).
-\end{equation}
+The raw VaR forecast is the empirical lower $\alpha$-quantile, which is
+equation~\eqref{eq:var_raw} evaluated at $\widehat F_t^M$; we write
+$\VaR_t^{\mathrm{raw}}$ throughout and do not introduce a second symbol for it.
 
 For quantile-grid forecasters (TimesFM~2.5 and Moirai~2.0), the predictive object is a finite grid of conditional quantiles $\{\hat q_t(u_j)\}_{j=1}^{J}$, with $J = 9$ deciles. Since the audit operates at the 1\% lower-tail level, we obtain $\hat q_t(0.01)$ by fitting a three-parameter Student-$t$ distribution to the native predicted quantiles:
 \begin{equation}
@@ -388,19 +389,19 @@ and set
 \end{equation}
 The Student-$t$ closure is a parsimonious heavy-tailed default in financial VaR modelling \citep{bollerslev1987,hansen1994autoregressive,mcneil2000estimation}. It is not, however, an innocuous choice: Supplement~S.10 shows that the closure rule governs the tail behaviour of a grid model far more than the model does, so this decision is reported as part of the forecaster rather than as an implementation detail.
 
-For classical benchmarks (GJR-GARCH, GARCH-Normal, EWMA, Historical Simulation), VaR is computed from the model-implied conditional distribution or, for Historical Simulation, the empirical 250-day rolling distribution.
+For classical benchmarks (GJR-GARCH, GARCH-Normal, EWMA, Historical Simulation), VaR is computed from the model-implied conditional distribution or, for Historical Simulation, the empirical 250-day rolling distribution. EWMA is the exception to the rolling-window convention and is stated as such wherever it appears: its conditional variance is the RiskMetrics recursion at $\lambda = 0.94$ \citep{riskmetrics1996}, which is not truncated at 250 observations (Supplement~S.8, Table~S.19).
 
 Expected Shortfall is reported separately at $\alpha = 0.025$ following the Basel III/FRTB convention \citep{bcbs2019frtb} and is computed from the same predictive object as VaR. Because ES is not elicitable as a standalone functional \citep{gneiting2011making}, the conformal construction is developed for VaR only; ES computation details and the heuristic ES shift are in Supplement~S.1.
 
 \subsubsection{Diagnosing Miscalibration}
 \label{sec:diag}
 
-We apply the standard regulatory backtests --- Kupiec~\citep{kupiec1995} for unconditional coverage, Christoffersen~\citep{christoffersen1998} for joint coverage and serial independence, and the Basel Traffic Light \citep{basel1996} for zone classification --- and define the violation indicator
+We apply the standard regulatory backtests --- Kupiec~\citep{kupiec1995} for unconditional coverage, Christoffersen~\citep{christoffersen1998} for joint coverage and serial independence, the dynamic quantile regression of \citet{engle2004caviar}, which tests whether the centred exceedance indicator is orthogonal to its own lags and to the reported quantile, and the Basel Traffic Light \citep{basel1996} for zone classification --- and define the violation indicator
 \begin{equation}
 	V_t = \mathbf{1}\bigl(r_t < -\widehat{\VaR}_t^{\alpha;M}\bigr).
 \end{equation}
 
-Tail-loss consistency is assessed through the $Z_2$ statistic \citep{acerbi2014back}, computed with the time-averaged ES denominator $Z_2^{\mathrm{mod}}$, which avoids division by near-zero daily ES on quiet days (Supplement~S.3). Our implementation of it carried a sign defect of its own, found late and reported in Supplement~S.1 rather than quietly repaired. Beyond coverage, the Fissler--Ziegel scoring rule \citep{fissler2016higher} ranks $(\VaR, \ES)$ jointly; full construction is in Supplement~S.1. The conformal shift $\qVstat$ introduced in Section~\ref{sec:layer2} complements these tests by quantifying miscalibration on a continuous, signed scale; the ratio $\bar R$ built from it in Section~\ref{sec:R_meaning} is non-negative by construction and carries magnitude only.
+Tail-loss consistency is assessed through the $Z_2$ statistic \citep{acerbi2014back}, computed with the time-averaged ES denominator $Z_2^{\mathrm{mod}}$, which avoids division by near-zero daily ES on quiet days (Supplement~S.3). The statistic requires ES to enter as a positive magnitude, a sign convention that the stored lower-tail column does not satisfy and that Supplement~S.1 states explicitly. Beyond coverage, the Fissler--Ziegel scoring rule \citep{fissler2016higher} ranks $(\VaR, \ES)$ jointly; full construction is in Supplement~S.1. The conformal shift $\qVstat$ introduced in Section~\ref{sec:layer2} complements these tests by quantifying miscalibration on a continuous, signed scale; the ratio $\bar R$ built from it in Section~\ref{sec:R_meaning} is non-negative by construction and carries magnitude only.
 
 Beyond the per-asset backtests, four panel-level inferential procedures support the empirical audit: a diagnostic regression of the Quantile Score improvement on the conformal threshold, a cross-sectional association between the threshold and asset characteristics, a Diebold--Mariano pairwise forecast comparison with Driscoll--Kraay panel-HAC variance, and a panel-pooled Kupiec test with cluster-robust inference. Specifications are in Supplement~S.3; results enter the empirical sections at first use.
 
@@ -412,13 +413,15 @@ Beyond the per-asset backtests, four panel-level inferential procedures support 
 
 Conformal prediction provides a model-free framework for post-hoc calibration of predictive distributions \citep{vovk2005algorithmic,romano2019conformalized}. We adapt it to one-sided tail risk: forecast outputs are split chronologically into calibration and test sets with fraction $f_c = 0.70$ (robustness in Supplement~S.4).
 
-The nonconformity score $S_t$ from equation~\eqref{eq:score} is positive when the realised loss exceeds the predicted quantile. The conformal shift is the empirical $(1-\alpha)$-quantile of the calibration scores,
+The nonconformity score $S_t$ from equation~\eqref{eq:score} is positive when the realised loss exceeds the predicted quantile. The conformal shift is the finite-sample split-conformal quantile of the calibration scores: writing $S_{(1)} \leq \cdots \leq S_{(n)}$ for the order statistics of $\{S_t\}_{t\in\mathcal D_n}$ over the calibration sample $\mathcal D_n$ of size $n$,
 \begin{equation}
 	\label{eq:qV}
 	\qVstat
-	= Q_{1-\alpha}\!\left(\{S_t\}_{t\in\mathcal D_n}\right),
+	= S_{(k)},
+	\qquad
+	k = \left\lceil (n+1)(1-\alpha) \right\rceil,
 \end{equation}
-where $\mathcal D_n$ is the calibration sample. The recalibrated lower quantile and VaR are then given by equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$. A positive $\qVstat$ shifts the predicted quantile downward, increasing reported VaR and correcting underestimation of tail risk; a negative value indicates over-conservatism.
+with $\qVstat = S_{(n)}$ when $k > n$, which occurs only for $\alpha < 1/(n+1)$. This is the conformal convention rather than the plain empirical quantile $Q_{1-\alpha}(\{S_t\})$, and the distinction is not cosmetic: the two differ by one order statistic, an $O(1/n)$ gap that can nonetheless change the sign of $\qVstat$ on assets whose calibration scores straddle zero near the $(1-\alpha)$ level. Every static and rolling result in this paper uses equation~\eqref{eq:qV}; the rolling variant substitutes the trailing window of size $w$ for $\mathcal D_n$ and $k = \lceil (w+1)(1-\alpha)\rceil$. The recalibrated lower quantile and VaR are then given by equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$. A positive $\qVstat$ shifts the predicted quantile downward, increasing reported VaR and correcting underestimation of tail risk; a negative value indicates over-conservatism.
 
 The construction makes no parametric assumption on returns; the coverage guarantee under temporal dependence is developed in Section~\ref{sec:validity}.
 
@@ -426,72 +429,34 @@ The one-sided design is dictated by the regulatory loss function, not by a symme
 
 \begin{remark}[Variance scaling under tail sparsity]
 	\label{rem:tail_sparsity}
-	Tail calibration relies on events $\{r_t \leq \hat q_t^{lo}\}$, whose expected number is $\E[N_\alpha] = \alpha T$. Estimators fitted to this tail subset inherit variance of order $k/N_\alpha$ for $k$ parameters. By contrast, $\qVstat$ is a single order statistic of the full calibration sample. A one-parameter correction therefore enjoys a favourable bias--variance trade-off under tail sparsity, and the correction magnitude is interpretable as a diagnostic precisely because the construction adds no further parameters. Values of $\qVstat$ that dominate the scale of $\hat q_t^{lo}$ signal the high-$\bar R$ range.
+	Tail calibration relies on events $\{r_t \leq \hat q_t^{lo}\}$, whose expected number is $\E[N_\alpha] = \alpha T$. Estimators fitted to this tail subset inherit variance of order $k/N_\alpha$ for $k$ parameters. By contrast, $\qVstat$ is a single order statistic of the full calibration sample --- the $\lceil (n+1)(1-\alpha)\rceil$-th, by equation~\eqref{eq:qV}, and not a quantity estimated from the $N_\alpha$ tail observations alone. A one-parameter correction therefore enjoys a favourable bias--variance trade-off under tail sparsity, and the correction magnitude is interpretable as a diagnostic precisely because the construction adds no further parameters. Values of $\qVstat$ that dominate the scale of $\hat q_t^{lo}$ signal the high-$\bar R$ range.
 \end{remark}
 
 \subsubsection{Validity under Temporal Dependence}
 \label{sec:validity}
 
-Standard conformal coverage guarantees require exchangeability, which volatility clustering and serial dependence in financial returns violate. We therefore state an asymptotic coverage result under weak dependence.\footnote{We work with $\beta$-mixing rather than $\alpha$-mixing because the conformal threshold is an empirical quantile of the score process and the proof uses blocking/coupling arguments controlling total-variation distance between calibration and evaluation blocks.}
+Standard conformal coverage guarantees require exchangeability, which volatility
+clustering and serial dependence in financial returns violate. Supplement~S.9
+states an asymptotic coverage result for the single-split estimator under
+geometric $\beta$-mixing, with an explicit remainder
+$\Delta_n \le C\sqrt{(\log n)/n} + \beta(g_n)$, together with the GARCH
+corollary that makes the mixing rate concrete. Two features of it matter here and
+are stated rather than left to the appendix.
 
-\begin{assumption}\label{ass:main}
-	Let $S_t = \hat q_t^{lo} - r_t$ denote the nonconformity score process and let $n = \lfloor f_c T \rfloor$ be the calibration sample size.
-	\begin{enumerate}[label=\textup{(A\arabic*)}]
-		\item\label{ass:stationary}
-		$\{S_t\}$ is strictly stationary and geometrically $\beta$-mixing: $\beta(k) \le C\rho^k$, $\rho \in (0,1)$.
-		\item\label{ass:density}
-		The marginal distribution $F_S$ admits a density $f_S$ that is continuous and bounded away from zero near the $(1-\alpha)$-quantile $q_{1-\alpha}$.
-		\item\label{ass:weak_dep}
-		There exists a gap sequence $g_n \to \infty$, $g_n/n \to 0$, such that the test score $S_{n+g_n+1}$ is evaluated after the calibration sample $\mathcal D_n = (S_1, \ldots, S_n)$, separated by $g_n$ unused observations.
-	\end{enumerate}
-\end{assumption}
+First, the result requires a gap $g_n\to\infty$ separating the calibration block
+from the evaluation point, exceeding the forecaster's context length. The
+protocol used throughout is a contiguous $70/30$ split: $g_n = 0$. \emph{The
+theorem therefore does not apply to the estimator as run.} We report the gap
+ablation for exactly that reason (Supplement~S.4): inserting a gap moves
+$\hat\pi$ by at most $0.0005$ over the full sample and $\nGapGapAblCovid$ within the COVID window, which is evidence and not a proof, and is offered as such.
 
-\begin{theorem}
-	\label{thm:dependent_conformal_var}
-	Under Assumption~\ref{ass:main}, the single-split conformal VaR estimator satisfies
-	\begin{equation}
-		\label{eq:coverage_bound}
-		\mathbb P\!\left(
-		r_{n+g_n+1} \ge \hat q_{n+g_n+1}^{lo} - \qVstat
-		\right)
-		\ge
-		1 - \alpha - \Delta_n,
-	\end{equation}
-	where $\Delta_n \le C\sqrt{(\log n)/n} + \beta(g_n)$ and $C > 0$ depends on the density near $q_{1-\alpha}$ and on the mixing rate.
-\end{theorem}
-
-\begin{remark}[What the theorem assumes, and what the protocol does]
-	\label{rem:gap_vs_protocol}
-	Two gaps between this result and the empirical design are worth stating
-	rather than leaving for a reader to find.
-
-	First, the theorem requires a separation $g_n\to\infty$ between the
-	calibration block and the evaluation point, and by
-	Lemma~S.9.1 that separation has to exceed the forecaster's
-	context length $m$ before the mixing bound bites at all. The protocol used
-	throughout the empirical sections is a \emph{contiguous} $70/30$ split:
-	$g_n = 0$. The theorem therefore does not apply to the estimator as run. We
-	report the gap ablation for exactly this reason (Supplement~S.4): inserting
-	a gap moves $\hat\pi$ by at most $0.0005$ over the full sample and $0.0058$
-	within the COVID window, so the cost of the discrepancy is measurable and
-	small on this panel --- which is evidence, not a proof, and is offered as
-	such.
-
-	Second, the finite-sample conformal guarantee is a statement about
-	exchangeable scores. Financial return series are not exchangeable, which is
-	what this theorem exists to address; its conclusion is asymptotic, with an
-	explicit remainder, and no finite-sample coverage claim is made anywhere in
-	this paper for the dependent case.
-\end{remark}
-
-The bound is conservative at typical financial sample sizes. On six representative model--asset pairs spanning estimated score persistence $\hat\rho \in [0.18, 0.67]$, the estimated remainder $\hat\Delta_n$ lies between 0.109 and 0.138 --- a coverage floor of approximately 88\% against empirical coverage averaging 98.9\%. Across all 312 model--asset pairs, empirical coverage exceeds the corresponding lower bound $1 - \alpha - \hat\Delta_n$: the worst corrected coverage in the panel is $0.968$, against a floor of at most $0.891$. The bound provides a dependence-robust justification for the single-split correction; finite-sample performance is assessed in Section~\ref{sec:results}.
-
-The remainder simplifies under standard GARCH dynamics.
-
-\begin{corollary}
-	\label{cor:garch_conformal_var}
-	Let $\{r_t\}$ follow a GARCH(1,1) process satisfying $\E[\log(\alpha_1\varepsilon_t^2 + \beta_1)] < 0$. Then the score process $\{S_t\}$ is strictly stationary and geometrically $\beta$-mixing with $\beta(k) \le a\rho^k$. Choosing $g_n = c\log n$ with $c > 1/|\log\rho|$, Theorem~\ref{thm:dependent_conformal_var} applies with $\Delta_n = \mathcal O(\sqrt{(\log n)/n})$.
-\end{corollary}
+Second, no finite-sample coverage claim is made anywhere in this paper for the
+dependent case. The conclusion is asymptotic, with an explicit remainder, and on
+six representative pairs spanning score persistence $\hat\rho \in [\nGapRhoLo, \nGapRhoHi]$
+the estimated remainder lies between $\nGapDeltaHatLo$ and $\nGapDeltaHatHi$ --- a coverage floor
+near 88\% against empirical coverage averaging \nGapEmpCoverage\%. The bound is conservative
+at financial sample sizes and does the work of justifying the correction under
+dependence, not of certifying it.
 
 
 \subsubsection{Rolling Conformal Calibration}
@@ -502,18 +467,20 @@ Financial time series exhibit time-varying volatility and structural change, mot
 	\label{eq:qV_roll}
 	\qVroll
 	=
-	Q_{1-\alpha}\!\left(\{S_\tau\}_{\tau=t-w}^{t-1}\right),
+	S_{(k_w)},
+	\qquad
+	k_w = \left\lceil (w+1)(1-\alpha) \right\rceil,
 \end{equation}
-with the recalibrated lower quantile and VaR given by equation~\eqref{eq:var_cp_roll} substituting $q_V^{\mathrm{roll}}(t) = \qVroll$.
+where $S_{(1)}\le\cdots\le S_{(w)}$ are the order statistics of the trailing-window scores, so the rolling shift uses the same finite-sample conformal convention as equation~\eqref{eq:qV} and not the plain empirical quantile. The recalibrated lower quantile and VaR follow from equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{roll}}(t) = \qVroll$.
 
-The rolling variant is an operational heuristic, not a construction with finite-sample conformal validity: Theorem~\ref{thm:dependent_conformal_var} covers the single-split estimator only, and recomputing the threshold from a trailing window violates the single-split assumption.\footnote{Complementary results from the online learning literature \citep{zinkevich2003online} and the weighted conformal framework \citep{barber2023conformal,angelopoulos2024pid} bound time-average miscoverage and finite-window deviation under drift, but cover related objects --- exact OGD updates and exponentially weighted quantiles, respectively --- not the uniform-weight rolling quantile used here. PropositionsProposition~S.9.4 andProposition~S.9.6 in Supplement~S.9 adapt these bounds; the proofs are included for completeness.} Empirical support comes from the simulation study in Section~\ref{sec:simulation} and from the drift diagnostic $\hat\delta_w(t)$ (Supplement~S.9.5), which flags windows where local recalibration departs from the global one.
+The rolling variant is an operational heuristic, not a construction with finite-sample conformal validity: Theorem~S.9.2 covers the single-split estimator only, and recomputing the threshold from a trailing window violates the single-split assumption.\footnote{Complementary results from the online learning literature \citep{zinkevich2003online} and the weighted conformal framework \citep{barber2023conformal,angelopoulos2024pid} bound time-average miscoverage and finite-window deviation under drift, but cover related objects --- exact OGD updates and exponentially weighted quantiles, respectively --- not the uniform-weight rolling quantile used here. Propositions~S.9.4 and~S.9.6 in Supplement~S.9 adapt these bounds; the proofs are included for completeness.} Empirical support comes from the simulation study in Section~\ref{sec:baselines} and from the drift diagnostic $\hat\delta_w(t)$ (Supplement~S.9.5), which flags windows where local recalibration departs from the global one.
 
-The formal conformal guarantee in Theorem~\ref{thm:dependent_conformal_var} applies to the single-split estimator. The rolling estimator should be read as a locally adaptive engineering variant whose validity is assessed empirically and supported by the time-average and drift bounds in Supplement~S.9, not as an exact conformal procedure.
+The formal conformal guarantee in Theorem~S.9.2 applies to the single-split estimator. The rolling estimator should be read as a locally adaptive engineering variant whose validity is assessed empirically and supported by the time-average and drift bounds in Supplement~S.9, not as an exact conformal procedure.
 
 \subsubsection{Alternative Recalibration Baselines}
 \label{sec:alternatives}
 
-We compare the one-parameter conformal shift against alternatives that vary on three axes: parameter count, correction structure (location only, location--scale, monotone, fully nonparametric), and target object (correction, conditional distribution, or tail). We compare against nine baselines: five single-shot post-hoc corrections, two distributional or nonlinear methods (GAMLSS-SST and gradient-boosted quantile regression), and two dedicated VaR models (EVT-POT and filtered historical simulation). Full specifications are in Supplement~S.2; Table~S.2 of the supplement provides a compact reference. The comparison tests Remark~\ref{rem:tail_sparsity}: at $\alpha = 0.01$, additional parameters increase variance faster than they reduce bias. Empirical results are in Section~\ref{sec:baselines}.
+We compare the one-parameter conformal shift against alternatives that vary on three axes: parameter count, correction structure (location only, location--scale, monotone, fully nonparametric), and target object (correction, conditional distribution, or tail). We compare against ten baselines: five single-shot post-hoc corrections, adaptive conformal inference, two distributional or nonlinear methods (GAMLSS-SST and gradient-boosted quantile regression), and two dedicated VaR models (EVT-POT and filtered historical simulation). Full specifications are in Supplement~S.2; Table~S.3 of the supplement provides a compact reference. The comparison tests Remark~\ref{rem:tail_sparsity}: at $\alpha = 0.01$, additional parameters increase variance faster than they reduce bias. Empirical results are in Section~\ref{sec:baselines}.
 	%══════════════════════════════════════════════════════════════════════════════
 	%─── PART 7: Data and Experimental Setup ────────────────────────────────────
 	%══════════════════════════════════════════════════════════════════════════════
@@ -536,7 +503,7 @@ We evaluate six TSFM forecasters in strict zero-shot mode (no updating or fine-t
 
 The TSFM set spans two predictive interfaces. Sample-based forecasters (Chronos-Small, Chronos-Mini \citep{ansari2024chronos,ansari2025chronos2} with tokenised sequence models; Lag-Llama \citep{rasul2024lagllama} with a LLaMA-inspired architecture and Student-$t$ heads; Moirai~1.1 \citep{woo2024moirai}) return $N = 1{,}000$ Monte Carlo draws from the predictive distribution. Quantile-grid forecasters (TimesFM~2.5 \citep{das2024timesfm}; Moirai~2.0 \citep{liu2025moirai}) return a fixed nine-decile grid, from which a 1\% quantile must be supplied by a tail-completion step. Each Chronos checkpoint enters the panel \emph{twice}: once as the shipped series, sampled under the checkpoint's own default configuration, and once read analytically from the same weights by the estimator of Section~\ref{sec:mechanism:analytic}. The pair is the paper's controlled comparison, and it holds the model fixed while varying only the code that turns its output into a threshold.
 
-The classical benchmarks --- GJR-GARCH \citep{glosten1993relation}, GARCH-Normal \citep{bollerslev1986generalized}, EWMA \citep{riskmetrics1996}, and Historical Simulation --- represent standard volatility and tail-risk models; estimation details are in Supplement~S.8 and Section~\ref{sec:exp_design}.
+The classical benchmarks --- GJR-GARCH \citep{glosten1993relation}, GARCH-Normal \citep{bollerslev1986generalized}, EWMA \citep{riskmetrics1996} and Historical Simulation --- represent standard volatility and tail-risk models; estimation details are in Supplement~S.8 and in Section~\ref{sec:exp_design}.
 
 \subsubsection{Experimental Design}
 \label{sec:exp_design}
@@ -565,23 +532,23 @@ manuscript drifts from the value in the data.
 
 \textbf{The comparison is deliberately asymmetric, and we state that here rather than as a qualification later.} The classical and dynamic benchmarks are estimated per asset and re-estimated at every step; the foundation models are deployed strictly zero-shot, with no fine-tuning and no per-asset adaptation. These are not equivalent adaptation regimes, and any Quantile Score comparison between the two groups reflects that difference as well as any difference in model quality. We retain the asymmetry because it is the operationally relevant contrast --- a zero-shot model is what a practitioner can deploy without an estimation pipeline per instrument --- but no conclusion in this paper rests on a TSFM-versus-GARCH score ranking. The audit's findings are within-group: the interface contrast is between two releases of the same family under identical deployment, and the recalibration results are computed separately for every forecaster.
 
-All forecasts are one-step-ahead. TSFMs use a fixed context length of 512 observations, the default for all six pretrained checkpoints (Supplement~S.8). Classical benchmarks are estimated on rolling windows of 250 observations, following the Basel convention \citep{basel1996}, with parameters re-estimated at each step.
+All forecasts are one-step-ahead. TSFMs use a fixed context length of 512 observations, the default for all six pretrained checkpoints (Supplement~S.8). The GARCH-family benchmarks and Historical Simulation are estimated on rolling windows of 250 observations, following the Basel convention \citep{basel1996}, with parameters re-estimated at each step. EWMA carries no estimation window: its variance is the RiskMetrics recursion at the conventional $\lambda = 0.94$, so its memory is geometrically decaying rather than truncated. That distinction is immaterial numerically --- the weight beyond lag $k$ is $\lambda^k$, which is $\nLitLambdaTail$ at $k = 250$ --- but it is material for the finite-context condition of Lemma~S.9.4, and Supplement~S.9 treats it explicitly rather than folding EWMA into the 250-observation convention.
 
-A warm-up period (512 observations for TSFMs, 250 for classical benchmarks) precedes the calibration--test split. For full-history series (2000--2026), the test sample is approximately 1{,}500 observations per asset, yielding roughly 36{,}600 panel observations per model and 366 expected violations at $\alpha = 0.01$.
+A warm-up period (512 observations for TSFMs, 250 for the windowed classical benchmarks) precedes the calibration--test split. For full-history series (2000--2026), the test sample is approximately 1{,}500 observations per asset, yielding roughly 36{,}600 panel observations per model and 366 expected violations at $\alpha = 0.01$.
 %══════════════════════════════════════════════════════════════════════════════
 %─── PART 6b: The sampling mechanism ────────────────────────────────────────
 %══════════════════════════════════════════════════════════════════════════════
-\section{The Sampling Mechanism}
+\section{A Controlled Case: Support Truncation in a Sampled Predictive Law}
 \label{sec:mechanism}
 
 This section establishes, by controlled experiment, that a single documented
 default in a checkpoint's packaged inference routine accounts for a
 thirty-nine-fold exceedance of a nominal 1\% Value-at-Risk, and then removes the
 sampler from the estimation path entirely. The case is developed on Chronos-T5
-\citep{ansari2024chronos} because it is the one defect in this paper that lives
-in published third-party code and reproduces from a public checkpoint without our
-data. Everything in this section is therefore verifiable by a reader who has
-neither our forecasts nor our returns.
+\citep{ansari2024chronos} because it is independently reproducible: the
+checkpoint is public, the sampling routine ships with it, and the experiment
+below requires neither the forecasts nor the returns used elsewhere in this
+paper. A reader can run it and obtain the same mechanism.
 
 \subsection{What the default does}
 \label{sec:mechanism:default}
@@ -594,7 +561,7 @@ text, and that machinery has a $\texttt{top\_k}$ parameter, defaulted to 50:
 before a single path is drawn, the support is restricted to the 50 most probable
 bins and the remaining 4043 are assigned probability zero.
 
-Two properties of this restriction matter here. It removes 98.8\% of the support,
+Two properties of this restriction matter here. It removes \nLitSupportPct\% of the support,
 and it removes it \emph{from the tails inward}, because the discarded bins are by
 construction the least probable ones. A quantile read from the surviving support
 is therefore a quantile of a different, radically narrower distribution --- while
@@ -603,11 +570,11 @@ the centre of that distribution, and hence any point forecast, is barely moved.
 \subsection{Design}
 \label{sec:mechanism:design}
 
-The experiment varies one thing. For each of two checkpoints
-(\texttt{chronos-t5-small}, \texttt{chronos-t5-mini}), four assets of unlike
+The experiment varies one thing. For each of the two checkpoints
+\texttt{chronos-t5-small} and \texttt{chronos-t5-mini}, four assets of unlike
 character (SP500, GOLD, BTC, EURUSD) and 200 evenly spaced dates with a full
-512-observation context, we draw 1000 samples at horizon one under eight sampling
-configurations: $\texttt{top\_k} \in \{50, 200, 1000, 4094\}$,\footnote{The
+512-observation context, we draw 1000 samples at horizon one under eight
+sampling configurations: $\texttt{top\_k} \in \{50, 200, 1000, 4094\}$,\footnote{The
 vocabulary holds 4096 tokens, of which two are special, leaving 4093 value bins
 plus the pad token. Setting $\texttt{top\_k} = 4094$ therefore disables the
 truncation with one place to spare; it is not an off-by-one against the 4093 bins
@@ -627,30 +594,25 @@ exactly, on every asset and both checkpoints.
 \subsection{Result}
 \label{sec:mechanism:result}
 
-\begin{table}[htbp]
-	\centering
-	\caption{Sampling dose--response for Chronos-T5. Dispersion is the ratio of
-		predictive standard deviation to the asset's 250-day realised volatility,
-		averaged over the 800 (asset, date) cells of each configuration; 1.0 is
-		the target. Context, seed and weights are identical across rows.}
-	\label{tab:dose_response}
-	\input{Quantlets/CO_chronos_sampling/tab_dose_response}
-\end{table}
+All three readings hold (Table~S.26). Dispersion --- the ratio of predictive
+standard deviation to the asset's 250-day realised volatility, for which 1.0 is
+the target --- recovers monotonically in $\texttt{top\_k}$: \nDispDefaultSmall,
+\nDispTwoHundredSmall, \nDispThousandSmall{} and \nDispFullSmall{} for
+Chronos-Small across $\texttt{top\_k} \in \{50, 200, 1000, 4094\}$, and
+\nDispDefaultMini{} to \nDispFullMini{} for Chronos-Mini. It reaches its target
+only when the vocabulary is not truncated at all. One thousand draws under the
+default contain exactly 50 distinct values in all \nDoseCells{}
+model--asset--date cells, without exception; this is a signature of the mechanism
+rather than evidence about the model, and it is the reading that makes the
+diagnosis arithmetic rather than inferential.
 
-All three readings hold (Table~\ref{tab:dose_response}). Dispersion recovers
-monotonically --- 0.121, 0.331, 0.958, 1.087 for Chronos-Small --- and reaches
-its target only when the vocabulary is not truncated at all. One thousand draws
-under the default contain exactly 50 distinct values in all 1600 model--asset--date
-cells, without exception; this is a signature of the mechanism rather than
-evidence about the model, and it is the reading that makes the diagnosis
-arithmetic rather than inferential.
-
-The third row of the lower block is the reason the defect is durable. A fourfold
-change in temperature moves dispersion by 0.001, and nucleus sampling moves it by
-0.006. These are the parameters that are documented, discussed in the literature
-and exposed in every tutorial; an analyst who conducts a careful sensitivity
-analysis over them obtains a flat response and correctly reports the model as
-robust. The one parameter that matters is the one nobody varies.
+The remaining rows are the reason such a configuration is durable. A fourfold
+change in temperature moves dispersion by \nLitTempGap{} (\nDispTempLowSmall{} against
+\nDispTempHighSmall) and nucleus sampling moves it by \nLitNucleusGap. These are the
+parameters that are documented, discussed in the literature and exposed in every
+tutorial; an analyst who conducts a careful sensitivity analysis over them
+obtains a flat response and correctly reports the model as robust. The one
+parameter that governs the tail is the one such a sweep does not vary.
 
 \subsection{Reading the distribution instead of sampling it}
 \label{sec:mechanism:analytic}
@@ -692,133 +654,138 @@ reading the distribution is both more accurate than sampling it and cheaper.
 \subsection{What this does to the forecasts}
 \label{sec:mechanism:consequence}
 
-\begin{table}[htbp]
-	\centering
-	\caption{Raw violation rates by nominal level, 24 assets, no recalibration of
-		any kind. The default configuration produces a series whose exceedance
-		rate is almost invariant to the level it was asked for.}
-	\label{tab:alpha_response}
-	\input{Quantlets/CO_chronos_sampling/tab_alpha_response}
-\end{table}
+Table~S.27 reports the raw forecasts on the full panel, at four nominal levels
+and with no recalibration of any kind. Two things in it deserve separate
+statements.
 
-Table~\ref{tab:alpha_response} reports the raw forecasts on the full panel. Two
-things in it deserve separate statements.
+\paragraph{The default produces a series that is not a quantile forecast}
+Between the 1\% and the 10\% level the nominal exceedance probability changes
+tenfold; under the default configuration the realised rate changes by a factor of \nLitAlphaResp, from \nPiSmallDefaultOne{} at $\alpha = 0.01$ to \nPiSmallDefaultTen{} at $\alpha = 0.10$, both for Chronos-Small. A distribution truncated
+to its fifty most probable bins has so little spread that its $\alpha$-quantiles
+are nearly coincident, and the series built from them responds to the level it
+was asked for almost not at all. That property is diagnostic on its own: it needs
+no benchmark, no model of comparison and no significance calculation, and it is
+the $\alpha$-response check of Section~\ref{sec:gate}.
 
-\paragraph{The default produces a series that is not a quantile forecast} Read
-the first and third rows across, not down. Between the 1\% and the 10\% level the
-nominal exceedance probability changes tenfold; the realised rate changes by a
-factor of 1.08. A distribution truncated to its fifty most probable bins has so
-little spread that its $\alpha$-quantiles are nearly coincident, and the series
-built from them responds to the level it was asked for almost not at all. That
-property is diagnostic on its own: it needs no benchmark, no test window and no
-backtest, and it is the $\alpha$-response check of
-Section~\ref{sec:gate}.
-
-\paragraph{The residual is a tail phenomenon, and it shrinks} Read through its
-own predictive distribution, Chronos is not well calibrated at the 1\% level:
-0.0175 against a nominal 0.0100 is 1.75 times nominal, and unconditional coverage
-rejects on 16 of 24 assets. We state this rather than leave it to be found. But
-the residual is not a level shift. The ratio $\hat\pi/\alpha$ falls monotonically
---- 1.75, 1.35, 1.15, 1.04 for Chronos-Small and 1.78, 1.33, 1.12, 0.99 for
-Chronos-Mini --- so that at $\alpha = 0.10$ the analytic forecasts are
-essentially calibrated, passing Kupiec on 20 and 22 of 24 assets. What survives
-the correction is a specifically \emph{tail} deficiency, which is a claim about
-the model and its quantisation grid rather than about the interface through which
-it is read.
+\paragraph{The residual is a tail phenomenon, and it shrinks} Removing the
+sampler does not make the model well calibrated at the 1\% level. Read through
+its own predictive law, Chronos-Small delivers $\hat\pi = \nPiSmallAnalyticOne$
+against a nominal $0.0100$ --- \nRatioSmallAnalyticOne{} times nominal --- and
+unconditional coverage rejects on 16 of \nMainAssets{} assets. The residual is
+not a level shift, however. The ratio $\hat\pi/\alpha$ falls monotonically ---
+\nRatioSmallAnalyticOne, \nLitRatioSmallTwoFive, \nLitRatioSmallFive, \nRatioSmallAnalyticTen{} for Chronos-Small
+and \nRatioMiniAnalyticOne, \nLitRatioMiniTwoFive, \nLitRatioMiniFive, \nRatioMiniAnalyticTen{} for Chronos-Mini
+--- so that at $\alpha = 0.10$ the analytic forecasts are essentially calibrated,
+passing Kupiec on \nKupSmallAnalyticTen{} and \nKupMiniAnalyticTen{} of
+\nMainAssets{} assets. What survives the removal of the sampler is a specifically
+\emph{tail} deficiency, and that is a statement about the model and its
+quantisation grid rather than about the interface through which it is read.
 
 
 
 %══════════════════════════════════════════════════════════════════════════════
 %─── PART 8: Empirical Results ──────────────────────────────────────────────
 %══════════════════════════════════════════════════════════════════════════════
-\section{Empirical Results}
+\section{The Audit}
 \label{sec:results}
 
-\subsection{Audit trail}
+\subsection{Five implementation failure modes}
 \label{sec:audit_trail}
 
-This paper corrects a working paper of our own, and the corrections are
-substantial enough that a reader is entitled to see them in one place rather
-than assembled from remarks scattered through the text.
-Table~\ref{tab:audit_trail} is that place. The rest of the paper states the
-current position positively and refers back here; the one exception is
-Section~\ref{sec:blindspot_retro}, where what the superseded tables showed is
-itself the evidence and has to be read in context.
+The forecast-production pipeline was audited step by step, from the raw price
+series to the stored threshold, before any forecast entered the evaluation.
+Table~\ref{tab:failure_modes} states what that audit isolates: five ways in which
+the reduction from a predictive object to a Value-at-Risk number can fail while
+leaving a plausible-looking series behind. They are grouped by the step at which
+they act --- three in the reduction itself, two in data assembly --- and each is
+paired with the diagnostic that identifies it, because a claim about a series is
+worth no more than the test that establishes it. Every diagnostic in the table is
+arithmetic: it compares a stored series against an independent reconstruction of
+what the same code path should produce, or against a controlled re-run under a
+single altered parameter. None of them is a hypothesis test, and none needs a
+benchmark forecaster.
 
-Each row names the diagnostic that established the defect, because a claim that
-a number was wrong is worth no more than the test that shows it.
+The two sign inversions and the truncated sampler are the failure modes with a
+measurable effect on the panel, and the last two columns report it: the realised 1\%
+violation rate of the same model on the same assets and dates, computed with the
+failure mode present and with it absent. The spread between the two columns is
+the quantity that matters for this paper's argument, because it is invisible to
+every instrument in Section~\ref{sec:blindspot}.
 
 \begin{table}[htbp]
 	\centering
-	\caption{Every correction to the working paper, with the diagnostic that
-		established it. Rates are raw violation rates at $\alpha = 0.01$,
-		averaged over \nMainAssets{} assets.}
-	\label{tab:audit_trail}
+	\caption{Implementation failure modes in the reduction from a predictive
+		object to a Value-at-Risk threshold, with the diagnostic that identifies
+		each. $\hat\pi$ is the raw violation rate at $\alpha = 0.01$, averaged
+		over \nMainAssets{} assets and computed on identical models, assets and
+		dates with the failure mode present and absent. Per-series diagnostics
+		and the scripts that produce them are in the replication package.}
+	\label{tab:failure_modes}
 	\footnotesize
-	\setlength{\tabcolsep}{4pt}
-	\begin{tabular}{@{}p{3.1cm}p{4.6cm}p{2.4cm}p{2.9cm}@{}}
+	\setlength{\tabcolsep}{3pt}
+	\renewcommand{\arraystretch}{1.15}
+	\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.5cm}
+			>{\raggedright\arraybackslash}p{5.6cm}
+			>{\raggedleft\arraybackslash}p{1.3cm}
+			>{\raggedleft\arraybackslash}p{1.3cm}@{}}
 		\toprule
-		\textbf{Defect or claim} & \textbf{Diagnostic} &
-		\textbf{As reported} & \textbf{Corrected} \\
+		& & \multicolumn{2}{c@{}}{$\hat\pi$ at $\alpha = 0.01$} \\
+		\cmidrule(l){3-4}
+		\textbf{Failure mode} & \textbf{Diagnostic} &
+		\textbf{with} & \textbf{without} \\
 		\midrule
-		\multicolumn{4}{@{}l}{\emph{Defects in the forecast pipeline}}\\[2pt]
-		Sign inversion, TimesFM~2.5 & stored series reproduced by
-		$-F^{-1}(\alpha)$ to ten decimals from parameters in the same file
-		& $\hat\pi = 0.990$ & $\hat\pi = \nRawPiTimesFM$ \\
-		Sign inversion, Moirai~2.0 & as above; 8 of 10 forecast directories
-		store the correct sign & $\hat\pi = 0.988$ & $\hat\pi = \nRawPiMoiraiTwo$ \\
-		Sampler default \texttt{top\_k} $=50$, both Chronos checkpoints
-		& dose--response at fixed context and seed; 1000 draws contain exactly
-		50 distinct values & $\hat\pi = \nPiSmallDefaultOne$, $\nPiMiniDefaultOne$
-		& $\hat\pi = \nPiSmallAnalyticOne$, $\nPiMiniAnalyticOne$ \\
-		Raw $t_5$ quantile with $\nu$ hard-coded, GJR-GARCH & quantile map read
-		from the generator; thresholds inflated by 45\%
-		& $\hat\pi = 0.004$ & $\hat\pi = \nRawPiGJR$ \\
-		\texttt{CACT}/\texttt{FCHI} alias and an undated forecast vintage
-		& manifest and ticker audit & entered six scripts
-		& quarantined \\[4pt]
-		\multicolumn{4}{@{}l}{\emph{Defects in the analysis code}}\\[2pt]
-		Sign inversion in both tail-closure scripts & reconstruction compared
-		against the promoted series & ``$R>1$ under every closure''
-		& $R \in [0.005, 1.70]$ \\
-		Sign inversion in the $Z_2$ routine & second implementation written from
-		the published definition & 24/24 assets pass at $\hat\pi = 0.39$
-		& 0/24; $Z_2 = -144$, $-389$ \\
-		Inner-seven-deciles check & fits a Student-$t$ to points generated by a
-		Student-$t$ & ``most demanding check'' & cannot fail \\[4pt]
-		\multicolumn{4}{@{}l}{\emph{Claims withdrawn or restated}}\\[2pt]
-		Predictive interface drives tail failure & corrected panel ordering; the
-		two Moirai releases differ on three axes & 1.5\% vs 98.8\% within family
-		& \nRawPiMoiraiOne{} vs \nRawPiMoiraiTwo \\
-		$R$ as an audit statistic & $\mathrm{Spearman}(\bar R,
-		\hat\pi_{\mathrm{raw}}) = \nSpearmanRPi$ & ``dominates both backtests''
-		& a re-encoding of $\hat\pi$ \\
-		Gating rule cost & re-evaluated on the calibration window
-		& half the damage, no upgrades lost
-		& \nGateRollAvoidedPct\%, \nGateRollUpgradesLost{} upgrades lost \\
-		Share of miscalibration removable by a shift & Gneiting--Resin
-		decomposition on the corrected panel & 35\% & \nuMCBSharePct\% \\[4pt]
-		\multicolumn{4}{@{}l}{\emph{Repairs to the theory}}\\[2pt]
-		Lemma~S.9.1 & the forward $\sigma$-field inclusion fails
-		for an infinite context & $\beta_S(k)\le\beta_r(k-1)$
-		& $\beta_S(k)\le\beta_r(k-m)$ \\
-		Proposition~S.9.4 & the regret bound does not imply the
-		coverage statement & regret argument & exact telescoping \\
-		Proposition~S.9.6 & drift measure not estimable from
-		one path & stated as a bound & labelled heuristic \\
+		\multicolumn{4}{@{}l}{\emph{In the forecast-reduction step}}\\
+		Lower quantile stored with inverted sign \emph{(TimesFM~2.5)}
+		& the stored series is reproduced to ten decimal places by
+		$-F^{-1}(\alpha)$ from the distributional parameters recorded in the
+		same file & $0.990$ & \nRawPiTimesFM \\
+		\hspace{1em}\emph{(Moirai~2.0)}
+		& as above; 8 of 10 forecast directories store the opposite sign, so the
+		convention is not uniform across the pipeline
+		& $0.988$ & \nRawPiMoiraiTwo \\
+		Predictive support truncated before the quantile is read
+		\emph{(both Chronos checkpoints)}
+		& dose--response at fixed context, seed and weights; 1000 draws contain
+		exactly $\texttt{top\_k}$ distinct values in every cell
+		(Section~\ref{sec:mechanism})
+		& \nPiSmallDefaultOne\newline \nPiMiniDefaultOne
+		& \nPiSmallAnalyticOne\newline \nPiMiniAnalyticOne \\
+		Unstandardised Student-$t$ quantile with hard-coded $\nu$
+		\emph{(GJR-GARCH)}
+		& the quantile map read directly from the generator: $t_\nu^{-1}(\alpha)$
+		applied without the variance standardisation, inflating every threshold
+		by 45\% & $0.004$ & \nRawPiGJR \\
+		\addlinespace[2pt]
+		\multicolumn{4}{@{}l}{\emph{In data assembly}}\\
+		Identifier alias resolving to a different instrument
+		& ticker audit against source metadata; the manifest requires each series
+		to declare model, asset, path and vintage
+		& \multicolumn{2}{r@{}}{quarantined} \\
+		Undated forecast vintage
+		& the same manifest audit; a series without a version stamp cannot be
+		matched to the code that produced it
+		& \multicolumn{2}{r@{}}{quarantined} \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
+Two properties of this list are worth stating before the results. The first is
+that its members are not exotic. A sign convention, a sampling parameter, a
+standardisation constant, an identifier and a version stamp are the ordinary
+furniture of a forecasting pipeline, and each failure leaves the series
+well-formed: correct length, correct dates, plausible magnitudes, no missing
+values. The second is that this paper does not identify how often such failures
+occur elsewhere. Five are isolated here, in one pipeline, by an audit designed to
+find them; that establishes their consequences and their invisibility to standard
+diagnostics, and it establishes nothing about their prevalence.
 
-
-The primary evaluation unit is the model--asset pair, because regulatory risk systems are backtested at the desk, asset, or portfolio level. Panel-pooled tests provide complementary evidence of average calibration across the asset universe, not substitutes for per-asset backtesting.
+The primary evaluation unit throughout is the model--asset pair, because regulatory risk systems are backtested at the desk, asset, or portfolio level. Panel-pooled tests provide complementary evidence of average calibration across the asset universe, not substitutes for per-asset backtesting.
 
 \subsection{\texorpdfstring{Raw Diagnostics and the Ordering by $\bar R$}{Raw Diagnostics and the Ordering by R}}
 \label{sec:results_raw}
 
 Table~\ref{tab:master} reports raw and conformally corrected diagnostics across
-16 forecasters and 24 assets, ordered by $\bar R$. Read it first for what it does
+\nMainForecasters{} forecasters and \nMainAssets{} assets, ordered by $\bar R$. Read it first for what it does
 \emph{not} show. Once the two series sampled at the checkpoint default are set
 aside, raw 1\% violation rates run from \nMainRawPiMin{} for CAViaR-AS to \nMainRawPiMax{} for GAS-$t$
 --- a factor of three across dynamic-quantile models, score-driven models,
@@ -827,62 +794,55 @@ series. Including the two truncated series the range is a factor of 38, and that
 factor is a property of a sampling parameter rather than of any forecaster.
 
 The panel is uniformly under-covered at the 1\% level and nothing in it is well
-calibrated there. No forecaster passes unconditional coverage on more than 15 of
-24 assets, the best being a per-asset CAViaR fitted the ordinary way
-\citep{engle2004caviar}; the six foundation-model series pass on between 0 and 13.
-Across the whole table \nMainKupiecRawPasses{} of \nMainPairs{} pairs pass raw, and \nMainKupiecCorPasses{} pass after correction.
-A reader looking for a foundation model that is competitive at the extreme tail
-will not find one here, and a reader looking for the catastrophe reported in
-earlier work on this panel will not find that either.
+calibrated there. No forecaster passes unconditional coverage on more than
+\nMainBestKupiec{} of \nMainAssets{} assets, the best being a per-asset CAViaR
+fitted the ordinary way \citep{engle2004caviar}; the six foundation-model series
+pass on between 0 and 13. Across the whole table \nMainKupiecRawPasses{} of
+\nMainPairs{} pairs pass raw, and \nMainKupiecCorPasses{} pass after correction,
+so recalibration does not deliver a uniformly passing panel either. A reader
+looking for a foundation model that is competitive at the extreme tail will not
+find one here; a reader looking for one that fails categorically will not find
+that either, once its reduction step is configured correctly.
 
-\subsubsection{What the ratio $R$ measures, and what it does not}
+\subsubsection{\texorpdfstring{What the ratio $R$ measures}{What the ratio R measures}}
 \label{sec:R_meaning}
 
 The ratio
 \begin{equation}
 	\label{eq:replacement_ratio}
-	R
-	=
-	\frac{|\qVstat|}{|\VaR_{\mathrm{raw}}|}
+	R = \frac{|\qVstat|}{|\VaR_{\mathrm{raw}}|}
 \end{equation}
 measures how large the conformal correction is relative to the threshold it
-adjusts. Values near zero mean the corrected forecast is the raw forecast; values
-above one mean the correction exceeds the raw VaR in magnitude, so the reported
-threshold is set by the calibration sample rather than by the model. In this
-panel only the two truncated Chronos series exceed one, at $\bar R = 17.3$ and
-$23.5$; everything else lies between $0.001$ and $0.36$.
+adjusts. It is a ratio of absolute values, hence non-negative by construction: it
+carries magnitude only, and the sign that carries the diagnosis belongs to
+$\qVstat$ and is reported separately (Section~\ref{sec:practitioner} and the last
+column of Table~\ref{tab:master}). In this panel only the two truncated Chronos
+series exceed one, at $\bar R = \nMainRTruncOne$ and $\nMainRTruncTwo$;
+everything else lies between $\nMainRMin$ and $\nMainRMax$.
 
-An earlier version of this paper presented $R$ as an audit statistic carrying
-information that the standard backtests do not. That claim does not survive its
-own test and is withdrawn. Among the well-specified forecasters of this panel,
-$R$ is a rank-preserving transform of the raw violation rate: the Spearman
-correlation between $\bar R$ and $\hat\pi_{\mathrm{raw}}$ is $\nSpearmanRPi$ across
-the \nSpearmanRPiN{} well-specified forecasters of Table~\ref{tab:master}, and a detection rule built on the violation rate
-alone reproduces every sensitivity and specificity figure we had attributed to
-$R$. This is the sharper form of a referee's objection, and it is correct: $R$ is
-a scale-interpretable restatement of a quantity already printed in the adjacent
-column, useful for saying \emph{how much} of a forecast survives correction, and
-not an independent instrument.
+$R$ should not be read as an instrument carrying information the standard
+backtests do not. Among the well-specified forecasters it is a rank-preserving
+transform of the raw violation rate --- Spearman $\nSpearmanRPi$ across the
+\nSpearmanRPiN{} well-specified forecasters --- and a detection rule built on the
+violation rate alone reproduces every sensitivity and specificity figure it
+delivers. It is a scale-interpretable restatement of a quantity already printed
+in the adjacent column, useful for saying \emph{how much} of a forecast survives
+correction, and not an independent test. In the language of
+\citet{gneiting2023regression}, $\qVstat$ estimates the unconditional
+miscalibration component: an identity between estimators rather than a finding.
+What is empirical is its size --- on well-specified series a constant shift
+addresses a median of \nuMCBSharePct\% of total miscalibration, so most of what
+is wrong with these forecasts is conditional and a scalar correction cannot reach
+it. The full ordering by $\bar R$ and the structure at both ends of its range are
+in Supplement~S.12.
 
-The relation to the decomposition of \citet{gneiting2023regression} is the same
-statement in their language. $\qVstat$ estimates the unconditional
-miscalibration component uMCB, the part of the miscalibration that a constant
-shift can remove, and that is an identity between estimators rather than an
-empirical finding. What is empirical is its size: on well-specified series a
-constant shift addresses a median of \nuMCBSharePct\% of total miscalibration, so the
-majority of what is wrong with these forecasts is conditional and a scalar
-correction cannot reach it.
-
-\subsubsection{The quantile-grid interface, and what is left of the claim}
+\subsubsection{The quantile-grid interface}
 \label{sec:interface_failure}
 
-The working paper reported raw 1\% violation rates of 98.8\% for Moirai~2.0 and
-99.0\% for TimesFM~2.5 and read them as evidence that a coarse quantile grid
-cannot deliver a backtestable 1\% VaR. Both figures were a sign inversion in our
-own generation code, and the corrected series run at $\hat\pi =
-\nRawPiMoiraiTwo$ and $\nRawPiTimesFM$ (Table~\ref{tab:audit_trail}).
-
-No interface claim is supportable on the corrected panel, in either direction.
+It is tempting to read the panel as a comparison of predictive interfaces --- a
+coarse quantile grid against a sampled predictive law --- and to ask which of the
+two can deliver a backtestable 1\% VaR. The panel does not support such a claim
+in either direction.
 The best raw foundation-model series at the 1\% level is a quantile-grid model,
 TimesFM~2.5 at $\nRawPiTimesFM$; the sample-based Moirai~1.1 is at
 $\nRawPiMoiraiOne$, the analytic Chronos series at $\nRawPiChronosSmallA$ and
@@ -890,7 +850,7 @@ $\nRawPiChronosMiniA$, the quantile-grid Moirai~2.0 at $\nRawPiMoiraiTwo$, and
 the sample-based Lag-Llama at $\nRawPiLagLlama$. The two interfaces do not
 separate.
 
-What survives is narrower and is a statement about specification rather than
+What can be said is narrower, and is a statement about specification rather than
 about models. A nine-decile grid whose lowest point is the 10\% quantile does
 not contain a 1\% quantile, so a tail-completion step must supply it and becomes
 part of the forecaster. That step is consequential: across three assets the same
@@ -898,38 +858,549 @@ grids give $\bar R$ between 0.005 and 1.70 depending on whether the closure is
 Student-$t$, Gaussian or linear, and on BTC the choice moves both models from
 the Basel yellow zone to the red one (Supplement~S.10). Reporting
 ``TimesFM~2.5 at the 1\% level'' without naming the closure describes an object
-that does not exist.\footnote{Every series in this table has been through the
+that does not exist.
+
+The panel offers no controlled comparison of interfaces, and it is worth saying
+why rather than substituting a within-family label for one. The two Moirai
+releases are the natural candidate, and they run at $\nRawPiMoiraiOne$ and
+$\nRawPiMoiraiTwo$, a gap of \nLitMoiraiGapPP{} percentage points. But Moirai~1.1 is a
+masked-encoder model with multi-patch inputs and a mixture output, while
+Moirai~2.0 replaces all three with a decoder-only architecture, a single patch
+and a quantile loss, trained on a different corpus
+\citep{woo2024moirai,liu2025moirai}. Output format, architecture and pretraining
+data change together, so a gap of any size between them would be
+unattributable. A shared family name is not evidence of a controlled comparison;
+what differs between two releases is a primary-source question to settle before
+the comparison is drawn rather than after. The one genuinely controlled contrast
+available here holds the weights, contexts and dates fixed and varies only the
+code that reads the predictive law --- the two Chronos configurations of
+Section~\ref{sec:mechanism}.\footnote{Every series in this table has been through the
 scripted validation gate of Section~\ref{sec:gate} and
-Supplement~S.11. Four do not pass it: the two Chronos series
+Supplement~S.11. \nGateBlocked{} do not pass it: the two Chronos series
 sampled at the checkpoint default, which fail five checks each, and their
 analytic counterparts, which fail the coverage band on one asset apiece. The
-first two are retained deliberately, as the measured consequence of the default
-rather than as forecasters; a blocked series is reported with its diagnosis, not
-silently dropped.}
+first two are retained in the table deliberately, as the measured consequence of
+that configuration rather than as candidate forecasters; a blocked series is
+reported with its diagnosis, not silently dropped.}
+
+\section{What the Standard Diagnostics Cannot Diagnose}
+\label{sec:blindspot}
+
+Section~\ref{sec:audit_trail} lists five ways in which a Value-at-Risk series can
+be produced incorrectly. This section asks what the standard tail diagnostics
+report when they are applied to such a series, and the answer is not that they
+are blind to miscalibration --- Kupiec's test rejects most of this panel. It is
+narrower: a coverage test reports \emph{that} a series miscovers, never
+\emph{why}. It cannot separate a model that is genuinely poor in the tail from a
+series carrying any of the failure modes of Table~\ref{tab:failure_modes}, all of
+which present as the same rejection. At $\alpha = 0.01$ these tests also have
+their least power exactly where the regulatory framework places them, and a
+correction applied downstream of them removes the evidence they would need. An
+implementation failure can therefore pass through a pipeline untouched.
+
+The first two subsections state that claim as a result rather than as an
+observation, and the rest of the section measures it on the panel.
+
+\subsection{What the exceedance sequence identifies}
+\label{sec:blindspot_identification}
+
+Write $\mathcal G_{t-1}$ for the information available when the forecast for date
+$t$ is made, let $\hat q^{lo}_t$ be the reported lower $\alpha$-quantile, which is
+$\mathcal G_{t-1}$-measurable, and let $F_t$ denote the conditional law of $r_t$
+given $\mathcal G_{t-1}$. Define the \emph{realised} tail probability the reported
+threshold cuts off,
+\begin{equation}
+	\label{eq:u_process}
+	u_t \;:=\; F_t\!\left(\hat q^{lo}_t\right)
+	\;=\; \P\!\left(r_t < \hat q^{lo}_t \mid \mathcal G_{t-1}\right),
+\end{equation}
+which is itself $\mathcal G_{t-1}$-measurable, and let
+$V_t = \mathbf 1\{r_t < \hat q^{lo}_t\}$ be the exceedance indicator of
+Section~\ref{sec:diag}.
+
+\begin{proposition}[What a backtest can see]
+	\label{prop:identification}
+	For any $T$ and any $v_{1:T}\in\{0,1\}^T$,
+	\begin{equation}
+		\label{eq:path_likelihood}
+		\P\left(V_{1:T}=v_{1:T}\right)
+		=
+		\E\left[\prod_{t=1}^{T} u_t^{\,v_t}\,(1-u_t)^{1-v_t}\right].
+	\end{equation}
+	The law of the exceedance sequence therefore depends on the joint law of
+	$(\{\hat q^{lo}_t\},\{r_t\})$ only through the law of the process
+	$\{u_t\}$. Consequently, if two models induce the same law for $\{u_t\}$,
+	then every test $\phi$ measurable with respect to $\sigma(V_1,\dots,V_T)$
+	satisfies $\E_P[\phi]=\E_Q[\phi]$: its power against the alternative equals
+	its size. The same holds for any test of a conditional-moment restriction
+	$\E[(V_t-\alpha)Z_{t-1}]=0$ with $Z_{t-1}$ predictable, since both models
+	satisfy the restriction exactly.
+\end{proposition}
+
+The proof is one application of iterated conditioning and is in Supplement~S.9.6.
+Statistics that read the \emph{magnitude} of an exceedance rather than its
+occurrence lie outside the class, and on this panel they do separate: the
+Acerbi--Sz\'ekely $Z_2$ statistic of Section~\ref{sec:diag} passes 0 of
+\nMainAssets{} assets for each truncated Chronos series against 17 of
+\nMainAssets{} for each analytic counterpart, the sharpest separation any
+diagnostic in this paper achieves (Supplement~S.1). That is the boundary of
+Proposition~\ref{prop:identification} and we mark it here rather than leaving the
+obvious question unanswered. It is not a general escape: the construction of
+Section~\ref{sec:blindspot_pair} can be matched on mean expected shortfall as
+well, after which a size-$5\%$ $Z_2$ test retains almost no power
+(Supplement~S.9.7).
+The class named in the proposition contains every instrument this paper uses:
+Kupiec's unconditional coverage test is a function of $\sum_t V_t$; both
+Christoffersen components are functions of the transition counts of $V$; the
+Basel traffic light is a function of $\sum_t V_t$; and the dynamic quantile test
+of \citet{engle2004caviar} regresses $V_t-\alpha$ on predictable instruments,
+which is the moment-restriction case. None of them can distinguish two models
+agreeing on $\{u_t\}$, at any sample size.
+
+That is a statement about what a rejection means, not a claim that these tests
+are badly designed. A rejection says $u_t\neq\alpha$; it does not say whether the
+cause lies in the model, in the reduction step, or in the returns.
+
+\subsection{\texorpdfstring{How large the resulting blind spot is}{How large the resulting blind spot is}}
+\label{sec:blindspot_pair}
+
+Proposition~\ref{prop:identification} is only useful if the set of
+indistinguishable alternatives contains objects a risk manager would care to
+separate. It does. Let $\delta$ denote the \emph{truncation depth}: the
+probability mass discarded from each tail of a predictive law before its
+$\alpha$-quantile is read. It is distinct from the drift diagnostic
+$\hat\delta_w(t)$ of Supplement~S.9.5, which shares no more than the letter.
+
+\begin{proposition}[The depth of the blind spot]
+	\label{prop:blindspot_depth}
+	Fix $\alpha = 0.01$ and a correctly specified forecaster whose returns are
+	standardised Student-$t_5$, so that its reported quantile is
+	$\nGapQTrueStd$ in units of conditional scale. If the alternative model's
+	return law is required only to be symmetric and unimodal with the same
+	variance and the same mean absolute deviation, then for every
+	$\delta \le \delta^\star = \nGapDeltaUni$ there exists a truncated
+	forecaster and a return law under which the exceedance sequence has exactly
+	the same law as under the correctly specified pair, while the reported
+	Value-at-Risk is understated by up to \nGapUndUni\%. For
+	$\delta > \delta^\star$ no such unimodal law exists.
+\end{proposition}
+
+The construction is explicit and is given in Supplement~S.9.7 as a linear
+programme: the constraints --- coverage, variance, mean absolute deviation, and
+the reported quantile --- are all linear in the probabilities of a discrete
+symmetric law, so feasibility is decided rather than argued. The resulting pair
+is matched on the predictive standard deviation, on point-forecast accuracy in
+both mean absolute error and root mean squared error, and on the median; it
+differs only in the reported threshold and in the shape of the predictive law
+away from it.
+
+$\delta^\star$ belongs to the restriction placed on the return law and is not a
+constant. Dropping unimodality raises it to $\nGapDeltaFree$, an understatement
+of \nGapUndFree\%; requiring in addition a fourth moment no larger than the
+honest model's lowers it to $0.046$; confining the alternative to a GARCH class
+with standardised Student-$t$ innovations leaves only $10.6$\%. The discretisation
+converges from above, so each figure is an upper bound and the bias runs toward
+overstating the blind spot. Supplement~S.9.7 gives the full table.
+
+Two consequences run through the rest of the paper. Section~\ref{sec:gate}
+measures how much of this depth structural checks remove. And the Chronos
+configuration of Section~\ref{sec:mechanism} sits \emph{outside} the blind
+region: its implied $\delta$ is near $\nGapDeltaChronos$, well beyond
+$\nGapDeltaFree$, which is why unconditional coverage rejects it on every asset
+--- while rejecting \nSeqKupiecRejRawOne\% of the panel besides. Detection is not
+diagnosis, and the two separate exactly where Proposition~\ref{prop:blindspot_depth}
+says they should.
+
+\subsection{The independence test is frequently degenerate}
+\label{sec:blindspot_cc}
+
+The independence component of \citet{christoffersen1998} conditions on the
+transition counts of the exceedance indicator. When no two violations fall on
+consecutive days the table is degenerate: $\hat\pi_{11}$ is estimated at the
+boundary of the parameter space, the likelihood ratio can be defined by
+continuity but its $\chi^2_1$ calibration is not valid there, and the test has
+essentially no power against the alternative it is meant to detect. Standard
+implementations differ in what they do about this --- ours returns a missing
+value, others return a $p$-value computed from a statistic whose asymptotics do
+not hold. Implementations differ in what they return in that state --- a missing
+value here, a $p$-value computed from a statistic whose asymptotics fail
+elsewhere --- and the substantive point does not depend on the choice: a
+degenerate table carries no evidence either way. At $\alpha = 0.01$ this is not a
+corner case. Across the \nSeqPairs{} model--asset pairs of the sequence panel the
+table is degenerate on \nSeqCCUndefRawOne\% of the raw series and on
+\nSeqCCUndefCorOne\% of the same pairs after recalibration. The share falls
+monotonically with the nominal level --- \nSeqCCUndefRawTwoFive\%,
+\nSeqCCUndefRawFive\% and \nSeqCCUndefRawTen\% raw at $\alpha = 0.025$, $0.05$
+and $0.10$ --- so this is a property of the tail probability rather than of this
+panel.
+
+Two things follow. First, recalibration makes the problem worse rather than
+better, because a correction that restores coverage also spaces violations out,
+and the tests are usually run on the corrected series. Second, and more
+seriously, a degenerate table is an absence of evidence, but the natural
+implementation returns ``no rejection'', which reads as a pass. A test with
+essentially no power on half of its applications, reported as passing on all of
+them, is not evidence of independence. Where the table \emph{is} informative the
+test rejects on \nSeqCCRejRawOne\% of raw pairs and \nSeqCCRejCorOne\% of
+recalibrated ones, so the non-degenerate cases are not reassuring either.
+
+\subsection{Unconditional coverage rejects almost everything}
+\label{sec:blindspot_kupiec}
+
+The test of \citet{kupiec1995} is always defined, and at $\alpha = 0.01$ it
+rejects \nSeqKupiecRejRawOne\% of the \nSeqPairs{} pairs, against
+\nSeqKupiecRejRawTen\% at $\alpha = 0.10$. No forecaster in the panel passes on
+more than \nMainBestKupiec{} of \nMainAssets{} assets at the 1\% level. A test
+that rejects the majority of defensible models carries little information about
+any one of them --- and, decisively for the question of this paper, it does not
+separate a series carrying an implementation failure from one that is merely
+imperfect. Miscoverage is detected; its source is not identified.
+
+That separation is measured rather than asserted. The exercise is run on the
+series as produced with each failure mode present, since that is the state in
+which a diagnostic would have to identify one. Treating the five series affected
+by an identified failure mode as positives and the eight unaffected series as
+negatives, Kupiec's majority-fail rule attains sensitivity 5/5 at
+specificity 2/8, a Fisher exact $p$ of $\nGapFisherKupiec$: it flags 11 of 13 forecasters,
+which is not discrimination. The independence test attains 0/5. A severe cut on
+the violation rate --- rejecting $\hat\pi > 0.10$ or $\hat\pi < 0.005$ ---
+attains 5/5 at 8/8, $p = \nGapFisherSevere$. The finding concerns a \emph{threshold} rather
+than a statistic: what separates an implementation failure from ordinary
+miscalibration is severity, while Kupiec's threshold is calibrated to sample
+size. The six Kupiec flags falling on unaffected forecasters were each followed
+to a verdict, as specified in advance; none corresponds to an implementation
+failure, so the 2/8 figure stands as measured rather than as an artefact of
+unexamined positives. Two qualifications belong with it: thirteen forecasters is
+a small sample for a discrimination exercise, and the positives are the failure
+modes this audit found, so the exercise measures separation on identified cases
+and not sensitivity to failures of a kind not represented here.
+
+\subsection{The most elaborate of the three discriminates least}
+\label{sec:blindspot_dq}
+
+The dynamic quantile regression of \citet{engle2004caviar} nests both of the
+preceding tests: it regresses the centred exceedance indicator on its own lags
+and on the reported quantile, so a failure of unconditional coverage, a failure
+of independence, and any dependence of exceedances on the threshold level all
+appear as departures from the null. If sophistication helped, it would help here.
+
+It does not. On the \nSeqDQCells{} cells of the sequence panel the test rejects
+\nSeqDQRejRaw\% of raw series at the 5\% level and \nSeqDQRejCor\% after
+correction --- a higher raw rejection rate than Kupiec's
+\nSeqKupiecRejRawOne\%, and one that falls on the well-specified series as
+heavily as on the others. The two truncated Chronos series are rejected on all
+\nMainAssets{} assets, as they should be; so are GARCH-N, EWMA and GJR-GARCH on
+19 of \nMainAssets{}, and GJR-GARCH-$t$ on 14. A test that rejects four series in
+five, including every benchmark a practitioner would consider defensible,
+separates nothing.
+
+This is Proposition~\ref{prop:identification} showing through. Adding the
+reported quantile to the instrument set does not enlarge what the exceedance
+sequence identifies, because the quantile is predictable and the moment
+restriction it tests is one both a correct and a truncated forecaster can satisfy
+exactly. What the extra structure buys is power against \emph{some} alternatives,
+at the cost of rejecting the ones that are merely imperfect --- which at
+$\alpha = 0.01$ is most of them.
+
+\subsection{Recalibration conceals what it corrects}
+\label{sec:blindspot_conformal}
+
+Split-conformal recalibration targets marginal coverage regardless of the
+forecaster it is applied to --- exactly in finite samples when the scores are
+exchangeable \citep{vovk2005algorithmic,lei2018distribution}, and asymptotically
+under the dependence assumptions of Theorem~S.9.2,
+which the contiguous split used here does not satisfy exactly
+(Remark~S.9.3). What matters for this section is what both
+versions share: the guarantee is indifferent to the forecaster it is applied to.
+In this panel \nMainGreen{} of \nMainPairs{} pairs reach the Basel green zone
+after correction. Applied to the Chronos series truncated at
+$\texttt{top\_k} = 50$ --- a series whose predictive dispersion is
+\nDispDefaultSmall{} of realised volatility and whose exceedance rate is nearly
+invariant to the nominal level --- the correction returns $\hat\pi =
+\nTruncCorPi$ and places \nTruncCorGreen{} of \nMainAssets{} assets in the green
+zone. It does the same for a series whose quantile has been stored under the
+opposite sign convention.
+
+Coverage-based backtests downstream of that step therefore lose most of their
+power to separate: after correction the violation rates of every forecaster
+cluster within a fraction of a percentage point of nominal, the truncated series
+among them, and the green-zone counts of Table~\ref{tab:master} range over a
+narrow band that no longer orders the forecasters. This is not a failure of the
+method: a correction that guarantees coverage cannot
+diagnose the forecaster it corrects, precisely because the guarantee holds
+whatever the forecaster is. The practical implication is that a pipeline which
+validates \emph{after} recalibration has, by construction, no test of the
+forecaster at all.
+
+%══════════════════════════════════════════════════════════════════════════════
+%─── PART 7c: Structural validation ─────────────────────────────────────────
+%══════════════════════════════════════════════════════════════════════════════
+\section{Structural Validation}
+\label{sec:gate}
+
+If a coverage test identifies only the realised tail probability
+$u_t = F_t(\hat q^{lo}_t)$, then validation cannot be based on coverage. The
+question this section answers is not whether structural checks are a good idea
+but how much of the blind spot they remove, and the answer is: some of it, and
+not all.
+
+We check a forecast series against properties it must have \emph{to be a
+Value-at-Risk series at all}, before it is calibrated, evaluated or compared with
+anything. The checks are stated on the lower quantile $\hat q^{lo}_\alpha$, which
+is negative and is what the forecast files store, and not on the positive
+threshold $\VaR_t^{\mathrm{raw}} = -\hat q_t^{lo}$ of
+equation~\eqref{eq:var_raw}; the two conventions differ by a sign, and a column
+named for a risk measure while holding a quantile is precisely the ambiguity
+that the first failure mode of Table~\ref{tab:failure_modes} exploits.
+
+Ten such checks are stated in Supplement~S.11 and implemented in
+\texttt{scripts/promotion\_gate.py}: a lower quantile whose median is not
+negative, quantiles that are not ordered across $\alpha$, an exceedance rate that
+does not respond to the nominal level, a predictive dispersion far from realised
+volatility, a support of a handful of distinct values.
+
+They are not all the same kind of thing, and we distinguish them rather than
+present ten items of equal standing. Two are invariants that follow from what a
+quantile forecast is and carry no tunable constant; one is an invariant tested
+through a proxy with a threshold; the remaining seven are plausibility bands
+whose cutoffs we chose and state. Seven of the ten need nothing but the forecast
+series and the returns. Tail reach needs the model's sampled paths and is
+inapplicable to grid and parametric forecasters; $\alpha$-responsiveness and
+coverage plausibility need an evaluation window, so the gate is not entirely
+upstream of the data a backtest consumes. What separates them from a backtest is the
+question they ask: not whether a coverage rate is statistically distinguishable
+from nominal, but whether the series responds to the level it was asked for at
+all. No $p$-value is computed, no benchmark is required, and none of the ten
+needs access to the hardware that produced the forecasts.
+
+\subsection{How much of the blind spot the gate removes}
+\label{sec:gate_residual}
+
+The construction of Section~\ref{sec:blindspot} makes this measurable. For
+a given restriction on the return law, let $\delta^\star$ be the largest
+truncation depth admitting an alternative model that the available diagnostics
+cannot distinguish from a correctly specified one, and read off the
+Value-at-Risk understatement it permits.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Residual unidentifiable understatement, by what the diagnostic is
+		allowed to read. $\delta^\star$ is the largest truncation depth admitting
+		an indistinguishable alternative under a unimodal return law; the last
+		column is the Value-at-Risk understatement it permits, against a true 1\%
+		quantile of $\nGapQTrueStd$ in units of conditional scale. Each figure is
+		attained by an explicit pair, not merely bounded. The discretisation
+		converges from above, so every entry is an upper bound and the bias runs
+		toward overstating the blind spot.}
+	\label{tab:gate_residual}
+	\footnotesize
+	\setlength{\tabcolsep}{5pt}
+	\begin{tabular}{@{}>{\raggedright\arraybackslash}p{7.2cm}rr@{}}
+		\toprule
+		\textbf{Diagnostic reads} & $\bm{\delta^\star}$ & \textbf{understated by} \\
+		\midrule
+		the exceedance path alone, no restriction on returns & \nGapDeltaFree & \nGapUndFree\% \\
+		the exceedance path alone, unimodal returns & \nGapDeltaUni & \nGapUndUni\% \\
+		\addlinespace[2pt]
+		\quad + the series and the returns, scale band at $\nGapBandNow$ & \nGapDeltaGateNow & \nGapUndGateNow\% \\
+		\quad + the series and the returns, band tightened to $\nGapBandTight$ & 0.017 & \nGapUndTight\% \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+Table~\ref{tab:gate_residual} is the section's result. The structural checks cut
+the unidentifiable understatement from \textbf{\nGapUndUni\%} to
+\textbf{\nGapUndGateNow\%}, and tightening the binding band to the edge of what
+this panel permits takes it to \nGapUndTight\%. They do not cut it to zero. A pair exists that passes all ten checks, exceeds on the same
+days at the same rate as a correctly specified forecaster, and still reports a
+threshold a fifth too small. We state this as the gate's limit rather than
+leaving it for a reader to construct.
+
+Two things follow, and they point in opposite directions. The gate is not a
+complete complement of the test class, so no claim that structural validation
+closes the identification gap is available. But it is the only instrument in this
+paper whose contribution to that gap is measured rather than asserted: the
+backtests remove none of it by construction, and the checks remove somewhat more
+than half.
+
+\subsection{\texorpdfstring{Where the band edge can sit, and how much margin it has}{Where the band edge can sit, and how much margin it has}}
+\label{sec:gate_band}
+
+The scale band --- $\operatorname{median}(\hat q^{lo}_{0.01}/\hat\sigma_t)$
+within $[\nGapBandLower, \nGapBandNow]$ --- is the check that binds, and its
+edges were chosen by hand. What the panel shows is not that a better value
+exists, but that on these data the choice does not matter, and we report the
+separation rather than defending a constant.
+
+Evaluated on all \nGapCellsTotal{} series--asset cells, the two populations are
+disjoint by a wide interval. The worst well-specified cell sits at
+$\nGapCellGoodWorst$ and the best truncated cell at $\nGapCellTruncBest$, a gap
+of $\nGapGapWidth$ in units of estimated scale. \emph{Any} edge strictly inside
+that interval blocks all \nGapCellsTrunc{} truncated cells and no well-specified
+one, so the gate's verdict on this panel is invariant to where the edge is placed
+within the gap. That is a stronger position than a calibrated value, because it
+does not rest on a choice.
+
+The gap is not the safety margin, and the two should not be confused. The margin
+is the distance from the edge to the nearest well-specified cell, and at
+$\nGapBandNow$ it is $\nGapMarginUpper$ --- an order of magnitude smaller than
+the gap. Tightening the edge to $\nGapBandTight$ reduces the residual
+understatement from \nGapUndGateNow\% to \nGapUndTight\%, and leaves a margin of
+$\nGapMarginTight$: essentially none. A reader who computes robustness from the
+gap will conclude the check is sturdier than it is, so we print the margin
+instead.
+
+The margin also states the check's limit of generalisation, and it is a real one.
+The separation here is clean because this panel contains no series that is
+\emph{moderately} misspecified: it holds eleven series whose reported quantile
+sits between two and three estimated standard deviations below zero, and two
+whose truncation has driven it to a fifth of that. A forecaster reporting
+$-1.9\hat\sigma_t$ --- under-conservative, but by a quarter rather than by a
+factor of ten --- would be blocked as surely as a truncated one, and the block
+would be a false positive. What Section~\ref{sec:gate_residual} establishes is
+therefore that the check discriminates against gross reduction failures, on a
+panel that contains only gross ones and correctly specified ones. It says nothing
+about the intermediate range, because nothing in this panel occupies it.
+
+\paragraph{One of our own checks cannot fail, and that is the paper's argument
+turned on itself} The lower edge $\nGapBandLower$ blocks
+\nGapCellsLowerBlocks{} of \nGapCellsTotal{} cells. Nothing in the panel comes
+near it: the most negative cell anywhere is $\nGapCellGoodBest$, a margin of
+$\nGapMarginLower$, five times the margin at the upper edge. \emph{A check that
+blocks nothing on any series it has been shown cannot fail informatively, so a
+series passing it has not been tested --- which is precisely what
+Section~\ref{sec:blindspot_cc} says about a Christoffersen statistic computed on
+a degenerate transition table, and it is here in one of our own ten checks.} The
+two cases have the same structure: an absence of evidence returned in the form
+that reads as a pass, and a pass rate reported as though it were an outcome.
+
+We report this rather than adjusting the edge to make it bind, because adjusting
+it would manufacture the outcome. What follows is a scoping statement, not a
+repair: on this panel the scale check is a one-sided check, the band is strongly
+asymmetric in risk, and whether a lower edge is needed at all cannot be
+determined from these data, because nothing in them is over-conservative enough
+to test one. The gate's block count should therefore be read as nine checks
+exercised and one that was not.
+
+\paragraph{What the gate cannot see} The checks operate on a stored forecast
+series and the returns. They can establish that a series has the properties a
+Value-at-Risk series must have, and they cannot establish that the estimator
+which produced it is the estimator the paper says produced it. A mismatch between
+a declared estimator and an implemented one leaves no trace in the series: both
+the plain empirical quantile and the conformal order statistic of
+equation~\eqref{eq:qV} yield a well-formed series that passes all ten checks, and
+only reading the code distinguishes them. Structural validation and code
+provenance are complements, and neither is inferable from the other.
+
+\paragraph{Nor can it validate prose} The same limit applies one level up, and we
+report it against this paper rather than in the abstract. Converting the
+manuscript's numeric claims to generated macros --- forced conversion, not
+inspection --- surfaced five assertions that no artefact produces: a cluster-robust
+$p$-value that inverts the conclusion of the paragraph containing it once the
+artefact is read, two figures comparing a modified and a canonical test
+statistic, a green-zone rate on an undeclared nine-model subset, and a pair of raw
+violation rates whose producer emits only corrected ones. One of the five
+survived a round of peer review. They were found because 79 literals sat outside
+the reach of the script that checks the manuscript's arithmetic, and a literal
+that is never emitted cannot be checked by a tool that checks emitted values ---
+which is the same structure as a test that cannot fail informatively
+(Section~\ref{sec:blindspot_cc}). A gate that validates series does not validate
+the sentences written about them, and the argument of this paper applies to the
+paper.
+
+\paragraph{Scoping is declared, not assumed} Support cardinality and tail reach
+are inapplicable to order-statistic estimators, which may legitimately take few
+distinct values and tie across adjacent $\alpha$ as a window slides; a discrete
+predictive support may tie for the same reason. The gate records the estimator class of each
+series in a manifest and declares the check inapplicable rather than returning a
+verdict on it. A check that cannot fail informatively should say so.
+
+\begin{table}[htbp]
+	\centering
+	\caption{The ten checks, stated on the lower quantile $\hat q^{lo}_\alpha$
+		(negative), which is what the forecast files store. Full conditions,
+		scoping rules and the per-series results are in Supplement~S.11.}
+	\label{tab:gate_compact}
+	\footnotesize
+	\setlength{\tabcolsep}{4pt}
+	\begin{tabular}{@{}llp{4.9cm}@{}}
+		\toprule
+		\textbf{Check} & \textbf{Kind} & \textbf{Needs} \\
+		\midrule
+		Sign & invariant & forecast only \\
+		Monotonicity across $\alpha$ & invariant & forecast only \\
+		Alignment (no look-ahead) & invariant, proxy test & returns \\
+		\midrule
+		Support cardinality$^{\dagger}$ & band & forecast only \\
+		Extremes & band & forecast only \\
+		Scale against realised $\sigma$ & band & realised $\sigma$ \\
+		Predictive dispersion & band & realised $\sigma$ \\
+		$\alpha$-responsiveness & band & evaluation window \\
+		Coverage plausibility & band & evaluation window \\
+		Tail reach$^{\dagger}$ & band & sample paths \\
+		\bottomrule
+	\end{tabular}
+	\begin{minipage}{\linewidth}\scriptsize
+		\smallskip
+		$^{\dagger}$ Declared inapplicable to order-statistic estimators, which
+		take few distinct values by construction and may tie across adjacent
+		$\alpha$. The gate records the estimator class in the series manifest and
+		returns \emph{inapplicable} rather than a verdict.
+	\end{minipage}
+\end{table}
+
+\paragraph{Result on this panel} The gate blocks \nGateBlocked{} of the
+\nGateSeries{} series submitted to it. Two are the Chronos series sampled at the
+checkpoint default, which fail monotonicity, scale, $\alpha$-response, coverage
+and dispersion on all \nMainAssets{} assets. Two are their analytic
+counterparts, which fail only the coverage-plausibility band, and only on one
+asset each --- the residual tail deficiency of
+Section~\ref{sec:mechanism:consequence}, recorded as a block requiring a written
+diagnosis rather than silently admitted. The gate is therefore not a device that
+passes everything a reader would want passed, and we report the two marginal
+blocks rather than widening a band to absorb them.
+
+\paragraph{What this evidence is worth} The ten checks were specified after the
+failure modes of Section~\ref{sec:audit_trail} had been identified, and several
+exist because a failure of that class had already passed whatever checks were in
+place at the time. Their performance on those failure modes is in-sample by
+construction and is not evidence of sensitivity to failures of a kind not
+represented here. The argument for them does not rest on that performance. It
+rests on Table~\ref{tab:gate_residual}: the checks reduce a gap that the
+coverage-based tests of Section~\ref{sec:blindspot} cannot reduce at all, by an
+amount that is computed rather than claimed, and they leave a remainder that is
+computed too.
+
+
+\section{Recalibration: What It Restores, and When to Apply It}
+\label{sec:recal}
 
 \subsection{Static Recalibration}
 \label{sec:recalib}
 
-The corrected columns of Table~\ref{tab:master} show that marginal coverage is restored across the panel: \nMainGreen{} of \nMainPairs{} model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%). What the ordering by $\bar R$ adds is the \emph{amount} of correction required to get there. For thirteen of the sixteen forecasters it is between $0.001$ and $0.18$ --- the corrected forecast is the raw forecast to two or three decimal places --- while the two series sampled at the checkpoint default sit at $17.3$ and $23.5$, where the corrected forecast is an empirical fallback retaining nothing of the base model's tail estimate. Green-zone compliance after correction is therefore uninformative on its own about whether the corrected forecast carries any of the base model's information: the truncated series reach it as comfortably as the rest.
+The corrected columns of Table~\ref{tab:master} show that marginal coverage is restored across the panel: \nMainGreen{} of \nMainPairs{} model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%). What the ordering by $\bar R$ adds is the \emph{amount} of correction required to get there. For thirteen of the sixteen forecasters it is between $\nLitMainRMinAll$ and $0.18$ --- the corrected forecast is the raw forecast to two or three decimal places --- while the two series sampled at the checkpoint default sit at $\nMainRTruncOne$ and $\nMainRTruncTwo$, where the corrected forecast is an empirical fallback retaining nothing of the base model's tail estimate. Green-zone compliance after correction is therefore uninformative on its own about whether the corrected forecast carries any of the base model's information: the truncated series reach it as comfortably as the rest.
 
 We deliberately do not partition the panel. The ordering by $\bar R$ has structure at both ends and none in the middle: the largest consecutive ratio, a factor of 84, separates the dynamic-quantile forecasters from the rest near the \emph{bottom} of the range, where their raw coverage is already nominal, and the next, a factor of 48, separates Lag-Llama from the two truncated Chronos series at the top. Neither is a boundary between kinds of forecaster, and no single cutoff is distinguished by the data. Any threshold would inherit that arbitrariness, and the continuous statistic conveys the same information without it.
 
-Conditional coverage is a different matter, and the reason is partly that the test is often unavailable. The Christoffersen independence statistic is undefined whenever no two violations fall on consecutive days, which after correction at $\alpha = 0.01$ is the case for \nMainCCUndefined{} of the \nMainPairs{} pairs of the main panel. On the \nMainCCDefined{} pairs where it is defined, \nMainCCPass{} pass --- \nMainCCPassPct\%. We report the informative subset because counting an undefined test as a pass, as is common, would turn the same evidence into a \nMainCCAsPassPct\% pass rate constructed largely from tables that do not exist. The degeneracy rate is itself a result, and Section~\ref{sec:blindspot} treats it as one: at the 1\% level, on samples of the length regulators use, the standard independence test has no evidence to work with on more than half the panel. Green Zone recovery should therefore be read as restored unconditional coverage and nothing more. The structural reasons why a scalar shift cannot reshape conditional dynamics are in Section~\ref{sec:failure}.
+Conditional coverage is a different matter, and the reason is partly that the test is often unavailable. The Christoffersen independence statistic is degenerate whenever no two violations fall on consecutive days: the transition probability is estimated at the boundary of the parameter space and the $\chi^2_1$ calibration of the likelihood ratio is not valid there. After correction at $\alpha = 0.01$ this is the case for \nMainCCUndefined{} of the \nMainPairs{} pairs of the main panel. On the \nMainCCDefined{} pairs where the test is informative, \nMainCCPass{} pass --- \nMainCCPassPct\%. We report that subset because counting a degenerate table as a pass, as is common, would turn the same evidence into a \nMainCCAsPassPct\% pass rate constructed largely from transition tables that carry no information. The degeneracy rate is itself a result, and Section~\ref{sec:blindspot} treats it as one: at the 1\% level, on samples of the length regulators use, the standard independence test has no evidence to work with on more than half the panel. Green Zone recovery should therefore be read as restored unconditional coverage and nothing more. The structural reasons why a scalar shift cannot reshape conditional dynamics are in Section~\ref{sec:failure}.
 
 \begin{table}[htbp]
 	\centering
-	\caption{Forecast audit across 16 forecasters and 24 assets ($\alpha = 0.01$), ordered by $\bar R$. QS: Quantile Score ($\times 10^{4}$, lower is better). $\bar R = |\qVstat|/|\VaR_{\mathrm{raw}}|$, averaged over assets: the size of the conformal correction relative to the threshold it adjusts. Kind records the estimator class. The two Chronos rows without the analytic suffix are the checkpoint-default configuration of Section~\ref{sec:mechanism} and are retained in the table as the measured consequence of that default, not as forecasters. No threshold is applied and no classification is implied. $\bar R$ is a ratio of absolute values and is therefore non-negative by construction; the sign that carries the diagnosis belongs to $\qVstat$, and the count of assets on which it is negative is given in the last column.}
+	\caption{Forecast audit across 16 forecasters and 24 assets ($\alpha = 0.01$), ordered by $\bar R$. QS: Quantile Score ($\times 10^{4}$, lower is better). $\bar R = |\qVstat|/|\VaR_{\mathrm{raw}}|$, averaged over assets: the size of the conformal correction relative to the threshold it adjusts. Kind records the estimator class. The two Chronos rows without the analytic suffix are the checkpoint-default configuration of Section~\ref{sec:mechanism} and are retained in the table as the measured consequence of that default, not as forecasters. No threshold is applied and no classification is implied. $\bar R$ is a ratio of absolute values and is therefore non-negative by construction; the sign that carries the diagnosis belongs to $\qVstat$, and the last column counts the assets on which it is negative.}
 	\label{tab:master}
 	\tiny
 	\setlength{\tabcolsep}{3pt}
 	\input{Quantlets/CO_full_evaluation/tab_master_results_r2}
 	\begin{minipage}{\linewidth}\scriptsize
 		\smallskip
-		Corr.: after conformal correction. Width: mean corrected VaR threshold. Green: assets reaching the Basel Green Zone after correction (scaled to 250~days). CC pass is reported as passes/defined: the Christoffersen independence test is undefined when no two violations fall on consecutive days, and an undefined test is not counted as a pass. Summary statistics for the table are in the generated note beneath it, so that they cannot drift from the table itself.
+		Corr.: after conformal correction. Width: mean corrected VaR threshold. Green: assets reaching the Basel Green Zone after correction (scaled to 250~days). CC pass is reported as passes/informative: the Christoffersen independence test is degenerate when no two violations fall on consecutive days, and a degenerate table is not counted as a pass.
+
+		\smallskip
+		\input{Quantlets/CO_full_evaluation/tab_master_results_r2_note}
 	\end{minipage}
 \end{table}
 
-Corrected violation rates cluster tightly around $\hat\pi = 0.010$ for every forecaster in the table, which is what the guarantee promises and is exactly why the corrected column cannot rank them. The Quantile Score can: it runs from $4.67 \times 10^{-4}$ for GJR-GARCH-$t$ to $5.83 \times 10^{-4}$ for the truncated Chronos-Small, and the ordering it produces is close to the ordering by $\bar R$, because both are dominated by how far the raw forecast had to move.
+Corrected violation rates cluster tightly around $\hat\pi = 0.010$ for every forecaster in the table, which is what the guarantee promises and is exactly why the corrected column cannot rank them. The Quantile Score can: it runs from $\nLitQSMin \times 10^{-4}$ for the two GJR-GARCH variants, which are indistinguishable from one another (Section~\ref{sec:practitioner}), to $\nLitQSMax \times 10^{-4}$ for the truncated Chronos-Small, and the ordering it produces is close to the ordering by $\bar R$, because both are dominated by how far the raw forecast had to move.
 
 Conformal corrections widen VaR for under-conservative forecasters and contract it for over-conservative ones; for the panel, the dominant effect is widening, raising implied capital requirements (Table~\ref{tab:master}, Width/GJR column). Calibration--efficiency trade-offs and the resulting capital arithmetic are discussed in Sections~\ref{sec:failure} and~\ref{sec:economic}.
 
@@ -950,32 +1421,29 @@ Aggregate improvements can conceal deteriorations. We therefore report the full
 distribution of $\Delta\mathrm{QS} = \mathrm{QS}_{\mathrm{raw}} -
 \mathrm{QS}_{\mathrm{corrected}}$ over model--asset pairs rather than its mean.
 
-At $\alpha = 0.01$ the correction makes 66 of 312 pairs worse under the
-single-split estimator and 174 of 312 worse under the rolling estimator. The
-deteriorations are not scattered: they concentrate on pairs whose raw forecast
-was already well calibrated, where the correction has nothing to remove and adds
-the estimation noise of $\qVstat$. Of the 94 pairs whose raw forecast passes
-Kupiec on the test set, the single-split correction degrades 58 (mean
-$\Delta\mathrm{QS} = -1.32\%$ of $\mathrm{QS}_{\mathrm{raw}}$, Wilcoxon
-$p = 9.3 \times 10^{-5}$) and the rolling variant degrades 89, with mean
-$-7.35\%$ and $p \approx 10^{-16}$. The rolling estimator re-estimates $\qVstat$
-on a 250-day window and is correspondingly noisier, which is why its
-deterioration rate is roughly double at every level. The pattern holds at
+At $\alpha = 0.01$ the correction makes \nDegradedStatic{} of \nSeqPairs{} pairs
+worse under the single-split estimator and \nDegradedRoll{} of \nSeqPairs{} worse
+under the rolling estimator. The deteriorations are not scattered: they
+concentrate on pairs whose raw forecast was already well calibrated, where the
+correction has nothing to remove and adds the estimation noise of $\qVstat$. Of
+the \nWellCalStaticN{} pairs whose raw forecast passes Kupiec on the test set,
+the single-split correction degrades \nWellCalStaticWorse{} (mean
+$\Delta\mathrm{QS} = \nWellCalStaticMeanPct\%$ of $\mathrm{QS}_{\mathrm{raw}}$,
+Wilcoxon $p = 9.3 \times 10^{-5}$) and the rolling variant degrades
+\nWellCalRollWorse, with mean $\nWellCalRollMeanPct\%$ and
+$p \approx 10^{-16}$. The rolling estimator re-estimates the shift on a 250-day
+window and is correspondingly noisier, which is why its deterioration rate is
+roughly double at every level. The pattern holds at
 $\alpha \in \{0.025, 0.05, 0.10\}$, where it applies to a larger share of the
 panel because more raw forecasts are already acceptable at those levels.
 
-This is a sharper answer than the earlier version of this paper could give. With
-two series running at $\hat\pi \approx 0.99$ in the panel, ``deterioration''
-was not a meaningful notion for them and their magnitudes dominated every pooled
-statistic; removing them makes the effect on the remaining pairs visible rather
-than changing it.
-
-Whether a deterioration matters depends on whether it buys anything. Of the 174
-pairs the rolling estimator degrades, 72 move from Yellow to Green --- a trade a
-risk manager can accept --- but 100 gain no zone change at all, 99 of them
-because they were already Green, and 2 move from Green to Yellow, worsening on
-both axes. On 59\% of the degradations the correction is therefore not a
-trade-off but the wrong intervention.
+Whether a deterioration matters depends on whether it buys anything. Of the
+\nDegradedRoll{} pairs the rolling estimator degrades, \nDegradedRollZoneUp{}
+move from Yellow to Green --- a trade a risk manager can accept --- while
+\nDegradedRollNoChange{} obtain no zone improvement: 99 were already Green, one
+was not and stays where it was, and 2 move from Green to Yellow and worsen on
+both axes. On \nDegradedRollNoChangePct\% of the degradations the correction is
+therefore not a trade-off but the wrong intervention.
 
 This suggests a deployment rule that requires no classification: apply the
 correction when the raw forecast fails a backtest (Basel zone worse than Green,
@@ -1001,386 +1469,90 @@ constraint. Under the single split the deployable rule avoids
 \nGateStaticAvoided{} of the \nDegradedStatic{} deteriorations and costs
 \nGateStaticUpgradesLost{} of \nGateStaticUpgrades{} upgrades.
 
-The honest summary is therefore weaker than the one an in-sample evaluation
-would support, and still useful: a calibration-window backtest carries enough
+The deployable summary is therefore weaker than an in-sample evaluation of the
+same rule would support, and still useful: a calibration-window backtest carries enough
 signal to avoid about a quarter of the damage at a cost of about a tenth of the
 zone upgrades, and the gap between that and the oracle is a measure of how
 poorly the calibration window predicts the test window at $\alpha = 0.01$ ---
 which is the tail-sparsity constraint of Remark~\ref{rem:tail_sparsity} showing
-up in a decision problem rather than in an estimator. The rule does not bind at
-$\alpha \geq 0.025$ in the way an earlier draft claimed. The raw rejection rate
+up in a decision problem rather than in an estimator. The raw rejection rate
 falls steadily with the level --- \nSeqKupiecRejRawOne\%,
 \nSeqKupiecRejRawTwoFive\%, \nSeqKupiecRejRawFive\% and
 \nSeqKupiecRejRawTen\% at the four levels --- so at $\alpha = 0.10$ a clear
 majority of raw forecasts \emph{pass} and the rule skips most of the panel. It
-binds at every level, on a growing share of pairs as $\alpha$ rises; what is
+binds at every level, on a growing share of pairs as $\alpha$ falls; what is
 specific to $\alpha = 0.01$ is not how often it fires but the size of the damage
-it avoids when it does. The decision problem is therefore
-specific to the extreme tail --- which is where the identification constraint of
+it avoids when it does. The decision problem is therefore sharpest in the extreme
+tail, which is where the identification constraint of
 Remark~\ref{rem:tail_sparsity} operates.
 
-\subsection{Rolling recalibration}
-\label{sec:rolling_results}
-
-The rolling variant re-estimates $\qVstat$ on a trailing 250-day window, so
-$R_t = |\qVroll|/|\widehat{\VaR}^{\mathrm{raw}}_t|$ becomes a monitored series
-rather than a single number: sustained elevation says the correction is setting
-the reported threshold, transient spikes are stress episodes. No threshold and no
-persistence rule are imposed.
-
-It improves coverage substantially and conditional adequacy not at all. Basel
-green rises from 89\% (278 of \nSeqPairs) to 99\% (309), with twelve of the
-\nSeqForecasters{} forecasters reaching all \nMainAssets{} assets; the exception
-is Historical Simulation, whose raw threshold is an order statistic of the same
-trailing window the correction uses, so the two estimate from overlapping
-information. The gains concentrate where volatility moves: commodities go from
-67.3\% green to 100\%, bonds from 89.7\% to 100\%, while crypto and FX are at
-100\% either way. Christoffersen pass rates are unchanged within noise. Full
-comparison in Table~S.22, the S\&P~500 threshold path in Figure~S.4.
-
-\subsection{Static versus Rolling}
+\subsection{Static versus rolling recalibration}
 \label{sec:static_vs_rolling}
 
-The rolling variant improves extreme-quantile calibration substantially: Basel Green Zone rates rise from 89\% (278/312) to 99\% (309/312) (Table~S.22). Twelve of the thirteen forecasters reach 24/24 assets Green under the rolling estimator. The exception is Historical Simulation, which falls from 22 to 21 --- the one series whose raw threshold is an order statistic of the same trailing window the rolling correction uses, so the two are estimating from overlapping information.
+The rolling variant re-estimates the shift on a trailing 250-day window, so
+$R_t = |\qVroll|/|\widehat{\VaR}^{\mathrm{raw}}_t|$ becomes a monitored series
+rather than a single number: sustained elevation indicates that the correction is
+setting the reported threshold, transient spikes are stress episodes. No
+threshold and no persistence rule are imposed on it.
 
-Conditional coverage does not improve in parallel: GARCH-N achieves the highest rolling Christoffersen pass rate (10/24), while high-$\bar R$ TSFMs remain low (0--5/24), reflecting persistent violation clustering after conformal correction. This is a structural limitation of scalar recalibration, not a tuning issue (Section~\ref{sec:failure}).
+It improves unconditional coverage substantially and conditional adequacy not at
+all. Basel green rises from 89\% (278 of \nSeqPairs{} pairs) to 99\% (309), with
+twelve of the \nSeqForecasters{} forecasters reaching all \nMainAssets{} assets
+(Table~S.22). The gains concentrate where volatility moves: commodities go from
+67.3\% green to 100\% and bonds from 89.7\% to 100\%, while crypto and FX are at
+100\% either way. The single exception is Historical Simulation, which falls from
+22 to 21 assets green; its raw threshold is an order statistic of the same
+trailing window the rolling correction uses, so the two estimate from overlapping
+information and the second window reduces responsiveness rather than adding to it.
 
+Conditional coverage does not improve in parallel. GARCH-N attains the highest
+rolling Christoffersen pass rate, 10 of \nMainAssets{} assets, while the
+high-$\bar R$ foundation-model series remain at 0--5, reflecting violation
+clustering that survives the correction. This is a structural limitation of
+scalar recalibration rather than a tuning question
+(Section~\ref{sec:failure}). The S\&P~500 threshold path is in Figure~S.4.
 
-
-Historical Simulation is the only model that deteriorates under rolling ($\hat\pi = 0.013$, 21/24 Green versus 22/24 under single-split), because HS is itself a rolling empirical quantile and an additional rolling conformal layer applies a second window to the same data, reducing responsiveness.
-
-\subsection{Multiple levels, and forecast comparison}
+\subsection{Multiple levels, and the configuration contrast}
 \label{sec:multiquantile}
 
-Evaluated at four levels, the panel separates the two Chronos configurations more
+Evaluated at four levels the panel separates the two Chronos configurations more
 sharply than the 1\% table does, and it does so in the rejection counts rather
-than in the violation rates. Corrected rates sit near nominal at every level for
-every series --- that is what the guarantee delivers, and it is why the corrected
-column cannot rank anything. The per-asset Kupiec counts can. Read analytically,
-Chronos-Small is rejected on 5, 9, 5 and 4 of \nMainAssets{} assets across
-$\alpha \in \{0.01, 0.025, 0.05, 0.10\}$; sampled at the checkpoint default, the
-same weights give 10, 14, 16 and 15. The default configuration is worse at the
-off-calibration levels, where a shift calibrated at 1\% does not help it, and the
-gap widens as $\alpha$ rises. Recalibration at one level cannot repair a
-predictive distribution that is too narrow at all of them (Table~S.12).
+than the violation rates: corrected rates sit near nominal at every level for
+every series, which is what the guarantee delivers and why the corrected column
+cannot rank anything. Read analytically, Chronos-Small is rejected on 5, 9, 5 and
+4 of \nMainAssets{} assets across $\alpha \in \{0.01, 0.025, 0.05, 0.10\}$ --- all
+four counts on the \emph{corrected} series --- while the same weights sampled at
+the checkpoint default give 10, 14, 16 and 15. Recalibration at one level cannot
+repair a predictive distribution that is too narrow at all of them
+(Table~S.13).
 
-At the panel level, EWMA is the only forecaster rejected by the cluster-robust
-test ($p = 0.035$). Three others are rejected by the pooled unconditional test
-and not by the cluster-robust one --- Moirai~2.0, Chronos-Small read
-analytically, and GJR-GARCH, at pooled rates of $0.0114$, $0.0113$ and $0.0111$
-against a nominal $0.01$. The pooled test treats 36{,}000 observations as
-independent and rejects deviations that are economically negligible; allowing
-dependence within an asset removes the rejections (Table~S.13).
+The comparison that belongs in the body rather than a robustness appendix is the
+configuration one, because it is the only contrast in this paper that holds the
+model fixed and varies only the reduction step. On identical weights, contexts
+and dates, reading the Chronos predictive distribution analytically beats
+sampling it at the checkpoint default: mean corrected quantile score $\nLitQSAnalyticSmall$ against $\nLitQSDefaultSmall \times 10^{-4}$ for Chronos-Small and $\nLitQSAnalyticMini$ against $\nLitQSDefaultMini$ for Chronos-Mini for
+Chronos-Mini, both at $p < 0.001$. These are the \emph{corrected} series, so the
+difference survives a recalibration that has already restored coverage for both.
+Cross-family score rankings are reported in Supplement~S.12 and no conclusion
+here rests on them.
 
-Diebold--Mariano comparisons on the corrected forecasts run in one direction:
-every significant benchmark--TSFM difference favours the benchmark, 18 of 30 at
-the 5\% level, with GJR-GARCH-$t$ the strongest single forecaster on score
-(Table~S.23). Historical Simulation is the exception in the other direction,
-losing to every TSFM series at $p < 0.001$ --- order-statistic variance on a
-250-day window, not a property of the foundation models. The comparison that
-belongs here rather than in a robustness appendix is the configuration one: on
-identical weights, contexts and dates, reading the Chronos predictive
-distribution analytically beats sampling it at the checkpoint default, mean
-corrected quantile score $5.03$ against $5.81 \times 10^{-4}$ for Chronos-Small
-and $5.00$ against $5.69$ for Chronos-Mini, both at $p < 0.001$. These are the
-\emph{corrected} series, so the difference survives a recalibration that has
-already restored coverage for both.
-
-\subsection{The Moirai within-family comparison, withdrawn}
-\label{sec:interface_vs_architecture}
-
-The working paper presented Moirai~1.1 against Moirai~2.0 as a within-family
-control isolating the predictive interface. It is withdrawn for two independent
-reasons. The measurement was wrong (Table~\ref{tab:audit_trail}): recomputed, the
-two releases run at $\nRawPiMoiraiOne$ and $\nRawPiMoiraiTwo$, a gap of 0.24
-percentage points. And the design was not a control: Moirai~1.1 is a
-masked-encoder model with multi-patch inputs and a mixture output, while
-Moirai~2.0 replaces all three with a decoder-only architecture, a single patch
-and a quantile loss, trained on a different corpus
-\citep{woo2024moirai,liu2025moirai}. Output format, architecture and pretraining
-data change together, so even a large gap could not have been attributed to the
-interface.
-
-The second reason is the more useful one to carry forward. A within-family label
-is not evidence of a controlled comparison, and what differs between two releases
-is a primary-source question to settle before the comparison is drawn rather
-than after.
-
-\FloatBarrier
-\subsection{Alternative recalibration methods}
+\subsection{Alternatives, simulation and robustness}
 \label{sec:baselines}
 
-Ten alternatives to the one-parameter shift were recomputed on the corrected
-panel: five single-shot post-hoc corrections, adaptive conformal inference,
-gradient-boosted quantile regression, GAMLSS-SST, EVT-POT and filtered historical
-simulation (Table~S.24, specifications in Supplement~S.2). Performance is
-governed less by flexibility than by whether the recalibration layer respects the
-tail-sparsity constraint of Remark~\ref{rem:tail_sparsity}.
-
-Among single-shot procedures the conformal shift has the best quantile score
-($5.14 \times 10^{-4}$) and the highest green rate ($89.1\%$); quantile
-regression on residuals is close on score at lower coverage; ACI reaches higher
-coverage ($97.4\%$) with wider intervals and, at the Basel operating point, a
-mean $|\VaR|$ of $0.0750$ against $0.0443$ for the rolling estimator. More
-flexible methods do not consistently improve on it: GBM-QR reaches only $50.6\%$
-green with a $59\%$ Kupiec rejection rate, and a tuning grid confirms the
-prediction that the score-optimal setting buys score at the cost of coverage
-(Supplement~S.2.2). GAMLSS-SST is close to the conformal shift on both axes.
-Purpose-built VaR models face the same short-window constraint: under the 250-day
-protocol, GARCH-N with conformal correction outperforms EVT-POT and filtered
-historical simulation, with EVT-POT weakened by GPD estimation failures.
-
-One number in that table is worth isolating. The raw row's mean violation rate is
-$0.078$, which is not a statement about forecasters but about the two series
-sampled at the checkpoint default; before the corrections of
-Section~\ref{sec:interface_failure} it read $0.319$.
-
-\subsection{Simulation and robustness}
-\label{sec:simulation}
-
-A Monte Carlo study over five data-generating processes
-($T \in \{1{,}000, 5{,}000\}$, 500 replications) confirms the direction of
-Theorem~\ref{thm:dependent_conformal_var}: corrected coverage converges toward
-nominal as $T$ grows, with Basel green frequencies rising from 76--81\% at
-$T = 1{,}000$ to 96--98\% at $T = 5{,}000$ (Table~S.25, design in
-Supplement~S.4.1).
-
-Five robustness checks are reported in full in Supplement~S.4. Calibration-fraction
-sensitivity is limited over $f_c \in [0.50, 0.80]$; rolling-window length
-($w \in \{125, 250, 500\}$) preserves the ordering by $\bar R$; the theoretical
-gap $g_n$ has negligible empirical effect, at most $0.0058$ in $\hat\pi$ within
-the COVID window and $0.0005$ over the full sample; and block-bootstrap intervals
-for $\qVstat$ are narrow relative to the spread across forecasters. The
-tail-completion rule is the exception and is not a sensitivity in the usual
-sense: it moves $\bar R$ by a factor of 3 to 76 within a single model--asset pair
-and can change the Basel zone, which is why Section~\ref{sec:interface_failure}
-treats the closure as part of the forecaster rather than as an implementation
-detail.
-
-%══════════════════════════════════════════════════════════════════════════════
-%─── PART 7b: What the diagnostics could not see ────────────────────────────
-%══════════════════════════════════════════════════════════════════════════════
-\section{What the Standard Diagnostics Cannot Diagnose}
-\label{sec:blindspot}
-
-Four defective series passed every backtest reported in the earlier version of
-this paper. This section asks why. The answer is not that the tests were applied
-carelessly, and it is not that they are blind to miscalibration --- Kupiec's test
-rejects most of this panel, defective series included. It is narrower and more
-awkward: a coverage test reports \emph{that} a series miscovers, never
-\emph{why}. It cannot separate a model that is genuinely poor in the tail from
-one whose predictive distribution was truncated by a sampling default, whose
-quantile was stored with the wrong sign, or whose returns were misaligned. All
-four present as the same rejection. Add that at $\alpha = 0.01$ these tests have
-their least power exactly where the regulatory framework places them, and that
-the correction applied downstream of them removes the evidence they would need,
-and a defect can pass through a pipeline untouched.
-
-\subsection{The independence test is frequently undefined}
-\label{sec:blindspot_cc}
-
-The independence component of \citet{christoffersen1998} conditions on the
-transition counts of the exceedance indicator. When no two violations fall on
-consecutive days the table is degenerate: $\hat\pi_{11}$ is estimated at the
-boundary of the parameter space, the likelihood ratio can be defined by
-continuity but its $\chi^2_1$ calibration is not valid there, and the test has
-essentially no power against the alternative it is meant to detect. Standard
-implementations differ in what they do about this --- ours returns a missing
-value, others return a $p$-value computed from a statistic whose asymptotics do
-not hold. We call the test undefined in that state, and the substantive point
-does not depend on the word: in a degenerate table the test carries no evidence
-either way. At $\alpha = 0.01$ this is not a corner case: across our 312
-model--asset pairs the test is undefined on 34.6\% of the raw series, and on
-53.5\% of the same pairs after recalibration. The share falls monotonically with
-the nominal level --- 11.5\%, 1.0\% and 0.0\% raw at $\alpha = 0.025$, $0.05$ and
-$0.10$ --- so this is a property of the tail probability, not of our panel.
-
-Two things follow. First, recalibration makes the problem worse rather than
-better, because a correction that restores coverage also spaces violations out,
-and the tests are usually run on the corrected series. Second, and more
-seriously, a degenerate table is an absence of evidence, but the natural
-implementation returns ``no rejection'', which reads as a pass. A test with no power on half of its
-applications, reported as passing on all of them, is not evidence of
-independence. Where the test \emph{is} defined it
-rejects on 27.5\% of raw pairs and 48.3\% of recalibrated ones, so the
-non-degenerate cases are not reassuring either.
-
-\subsection{Unconditional coverage rejects almost everything}
-\label{sec:blindspot_kupiec}
-
-The test of \citet{kupiec1995} is always defined, and at $\alpha = 0.01$ it
-rejects 69.9\% of the 312 pairs, against 39.4\% at $\alpha = 0.10$. No forecaster
-in the panel passes on more than \nMainBestKupiec{} of \nMainAssets{} assets at the 1\% level. A test that
-rejects the majority of defensible models carries little information about any
-one of them, and --- decisively for the question of this paper --- it does not
-separate a series with a traced defect from one that is merely imperfect.
-
-We measured that separation rather than asserting it. Treating the five series
-with traced defects as positives and the eight without as negatives, Kupiec's
-majority-fail rule attains sensitivity 5/5 at specificity 2/8, a Fisher exact
-$p$ of $0.49$: it flags 11 of 13 forecasters, which is not discrimination. The
-independence test attains 0/5. A severe cut on the violation rate --- rejecting
-$\hat\pi > 0.10$ or $\hat\pi < 0.005$ --- attains 5/5 at 8/8, $p = 0.00078$. The
-finding is about a \emph{threshold}, not about a statistic: what separates defects
-from ordinary miscalibration is severity, and Kupiec's threshold is calibrated to
-sample size instead. All six Kupiec flags on forecasters with no traced defect
-were followed to a verdict, as pre-registered; none is a defect, so the 2/8
-figure stands as measured rather than as an artefact of unexamined positives.
-
-\subsection{Recalibration conceals what it corrects}
-\label{sec:blindspot_conformal}
-
-Split-conformal recalibration targets marginal coverage regardless of the
-forecaster it is applied to --- exactly in finite samples when the scores are
-exchangeable \citep{vovk2005algorithmic,lei2018distribution}, and asymptotically
-under the dependence assumptions of Theorem~\ref{thm:dependent_conformal_var},
-which our contiguous split does not satisfy exactly
-(Remark~\ref{rem:gap_vs_protocol}). What matters for this section is what both
-versions share: the guarantee is indifferent to the forecaster. In this panel it
-delivers:
-335 of 384 pairs reach the Basel green zone after correction. Applied to the
-Chronos series truncated at $\texttt{top\_k} = 50$ --- a series whose predictive
-dispersion is 0.12 of realised volatility and whose exceedance rate is nearly
-invariant to the nominal level --- it produces $\hat\pi = 0.0108$ and places 19 of
-24 assets in the green zone. Applied to the sign-inverted series it did the same.
-
-Coverage-based backtests downstream of that step therefore lose most of their
-power to separate: after correction \nMainGreen{} of \nMainPairs{} pairs are in
-the green zone and the violation rates of every forecaster cluster within a
-fraction of a percentage point of nominal, defective series included. This
-is not a failure of the method: a correction that guarantees coverage cannot
-diagnose the forecaster it corrects, precisely because the guarantee holds
-whatever the forecaster is. The practical implication is that a pipeline which
-validates \emph{after} recalibration has, by construction, no test of the
-forecaster at all.
-
-\subsection{The uncomfortable retrospective}
-\label{sec:blindspot_retro}
-
-The instruments were not silent. In the submitted version of this paper, Table~1
-partitioned the panel on $R > 1$ into ``signal-preserving'' and ``effective
-replacement'' regimes. The replacement panel contained exactly four series ---
-Chronos-Small at $R = 17.3$, Chronos-Mini at $23.5$, TimesFM~2.5 and Moirai~2.0
-at $3.2$ --- and those four are exactly the four defective foundation-model
-series. The fifth defect appears in the same submission: in the cross-sectional
-table, GJR-GARCH's correlation between $\qVstat$ and annualised volatility is
-$-0.786$, the only negative value against $+0.67$ to $+0.97$ for every other
-model, and the manuscript explained it as conditional variance dynamics absorbing
-volatility into raw VaR.
-
-Every defect family was flagged, in printed tables, before anyone knew a defect
-existed --- and every flag was read as a property of the model. This disposes of
-the obvious objection that the detection result above is circular, since the
-flags predate the discovery. It also states the real lesson more sharply than any
-sensitivity figure can: the failure was one of interpretation, not of
-instrumentation. A large correction was reported as a finding about a forecaster
-when it should have been read as a question about a pipeline.
-
-
-%══════════════════════════════════════════════════════════════════════════════
-%─── PART 7c: Structural validation ─────────────────────────────────────────
-%══════════════════════════════════════════════════════════════════════════════
-\section{Structural Validation}
-\label{sec:gate}
-
-If coverage cannot detect these failures, validation must not be based on
-coverage. We therefore check a forecast series against properties it must have
-\emph{to be a Value-at-Risk series at all}, before it is calibrated, evaluated or
-compared with anything.
-
-Ten such checks are stated in Supplement~S.11 and implemented
-in \texttt{scripts/promotion\_gate.py}: a lower quantile whose median is not
-negative, quantiles that are not ordered across $\alpha$, an exceedance rate that
-does not respond to the nominal level, a predictive dispersion far from realised
-volatility, a support of a handful of distinct values.
-
-They are not all the same kind of thing, and we distinguish them rather than
-present ten items of equal standing. Two are invariants that follow from what a
-quantile forecast is and carry no tunable constant; one is an invariant tested
-through a proxy with a threshold; the remaining seven are plausibility bands
-whose cutoffs we chose and state. Eight of the ten need nothing but the forecast
-series and the returns. The other two --- $\alpha$-responsiveness and coverage
-plausibility --- need an evaluation window, so the gate is not entirely upstream
-of the data a backtest consumes. What separates them from a backtest is the
-question they ask: not whether a coverage rate is statistically distinguishable
-from nominal, but whether the series responds to the level it was asked for at
-all. No $p$-value is computed, no benchmark is required, and none of the ten
-needs access to the hardware that produced the forecasts.
-
-\paragraph{Scoping is declared, not assumed} Two checks are inapplicable to
-order-statistic estimators, which may legitimately tie across adjacent $\alpha$
-and hold constant for long stretches as a window slides; a discrete predictive
-support may tie for the same reason. The gate records the estimator class of each
-series in a manifest and declares the check inapplicable rather than returning a
-verdict on it. A check that cannot fail informatively should say so.
-
-\begin{table}[htbp]
-	\centering
-	\caption{The ten checks, stated on the lower quantile $\hat q^{lo}_\alpha$
-		(negative), which is what the forecast files store. Full conditions,
-		scoping rules and the per-series results are in Supplement~S.11.}
-	\label{tab:gate_compact}
-	\footnotesize
-	\begin{tabular}{@{}llp{5.4cm}@{}}
-		\toprule
-		\textbf{Check} & \textbf{Kind} & \textbf{Needs} \\
-		\midrule
-		Sign & invariant & forecast only \\
-		Monotonicity across $\alpha$ & invariant & forecast only \\
-		Alignment (no look-ahead) & invariant, proxy test & returns \\
-		\midrule
-		Support cardinality & band & forecast only \\
-		Extremes & band & forecast only \\
-		Scale against realised $\sigma$ & band & realised $\sigma$ \\
-		Predictive dispersion & band & realised $\sigma$ \\
-		$\alpha$-responsiveness & band & evaluation window \\
-		Coverage plausibility & band & evaluation window \\
-		Tail reach & band & sample paths \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-\paragraph{Result on this panel} The gate blocks \nGateBlocked{} of the \nGateSeries{} promoted series.
-Two are the Chronos series sampled at the checkpoint default, which fail
-monotonicity, scale, $\alpha$-response, coverage and dispersion on all 24 assets.
-Two are their analytic counterparts, which fail only the coverage-plausibility
-band, and only on one asset each --- the residual tail deficiency of
-Section~\ref{sec:mechanism:consequence}, correctly recorded as a block requiring
-a written diagnosis rather than silently admitted.
-
-\paragraph{What this evidence is worth} These checks were written after the
-defects were known, several of them because a specific defect had already got
-past whatever checks existed at the time. Their performance on those defects is
-in-sample by construction and is not evidence of their general sensitivity, and
-we do not present it as such. What can be claimed is narrower and still useful:
-each check is a property a practitioner would endorse before seeing any data,
-each is arithmetic rather than inferential, and each addresses a failure mode
-that the coverage-based tests of Section~\ref{sec:blindspot} provably cannot
-address. The truncated series fail five of the ten checks; the analytic series
-fail none of the structural ones.
-
-
-
-	%══════════════════════════════════════════════════════════════════════════════
-	%─── PART 9: Discussion ─────────────────────────────────────────────────────
-	%══════════════════════════════════════════════════════════════════════════════
-\section{Discussion}
-\label{sec:discuss}
-
-\subsection{Methodological Limitations}
-\label{sec:failure}
-
-As documented in Section~\ref{sec:recalib}, a scalar shift restores unconditional violation frequency but cannot reshape the conditional dynamics of the violation process; this is a structural limitation, not a tuning issue. The rolling variant captures time variation in miscalibration magnitude but remains a location adjustment, not a fully conditional recalibration rule. More flexible state-dependent recalibration, such as one-sided extensions of Adaptive Conformal Inference \citep{gibbs2021adaptive} or the PID framework of \citet{angelopoulos2024pid}, lies beyond the present framework.
-
-A related limitation concerns identification. The positive cross-sectional association between $\qVstat$ and asset-level volatility or tail frequency (Supplement~S.5.1) is consistent with pre-training domain mismatch, but the zero-shot design does not permit causal attribution. The audit identifies \emph{where} tail signal is missing, not \emph{why}.
-
-\subsection{Operational Failure Modes}
-\label{sec:operational_failure}
-
-Operational failure modes can be mitigated. Small calibration sets ($n_{\mathrm{cal}} < 200$) produce unstable corrections; a minimum calibration size or cross-asset aggregation is advisable. Very high score persistence ($\hat\rho > 0.95$) weakens the $\beta$-mixing bound, and GARCH pre-filtering can reduce dependence. Over-conservative base forecasts ($\qVstat < 0$) may lose coverage under non-stationarity; imposing $\qVstat \geq 0$ provides a guard for systemically over-conservative models. Structural breaks can cause temporary under-protection when the calibration window predates the break; shortening $w$ or incorporating stressed subsamples increases adaptivity at the cost of higher variance.
-
-Figure~S.5 illustrates the structural-break case during the COVID-19 shock. The trailing-window design produces a measurable lag: seven of the thirteen forecasters reach their post-shock $\qVroll$ maximum within the acute window, four peak 77 calendar days later, and the two GJR-GARCH variants take 161 days. The lag is a property of the window rather than of the forecaster class --- Historical Simulation and EWMA are among the fastest, GARCH-N among the slowest. The drift diagnostic $\hat{\delta}_w(t)$ flags this regime in real time (Supplement~S.4, Figure~S.1 of the supplement), allowing operational deployment to detect the lag before it propagates.
-
+Ten alternatives to the one-parameter shift, a five-process Monte Carlo study and
+five robustness checks are reported in Supplement~S.2, S.4 and S.12. Three
+results from them bear on the argument and are stated here. Performance across
+the alternatives is governed less by flexibility than by whether the
+recalibration layer respects the tail-sparsity constraint of
+Remark~\ref{rem:tail_sparsity}: the one-parameter shift has the best quantile
+score of the ten alternatives and the raw baseline compared, and the more
+flexible ones do not improve on it.
+Corrected coverage converges toward nominal as the sample grows, with Basel green
+frequencies rising from 76--81\% at $T = 1{,}000$ to 96--98\% at $T = 5{,}000$.
+And the tail-completion rule is not a sensitivity in the usual sense: it moves
+$\bar R$ by a factor of 3 to 76 within a single model--asset pair and changes the
+Basel zone on BTC, which is why Section~\ref{sec:interface_failure} treats the
+closure as part of the forecaster.
 
 
 \subsection{Capital arithmetic, and what it now shows}
@@ -1395,14 +1567,52 @@ $W < k_{\mathrm{Yellow}}/k_{\mathrm{Green}} \approx 1.22$. Under FRTB the bindin
 measure is ES at 97.5\% and this arithmetic describes the backtesting channel
 rather than the capital channel; we report it as illustrative.
 
-On the corrected panel nothing comes close to the break-even widening. Relative
-to GJR-GARCH the corrected thresholds run from $W = 0.98$ for the analytic
-Chronos series to $W = 1.14$ for Lag-Llama, with TimesFM~2.5 at
-$\nWidthRatioTimesFM$ and Moirai~2.0 at $\nWidthRatioMoiraiTwo$. Correction is
-therefore capital-cheap across the board --- a duller statement than the one this
-subsection used to make, and a true one. The earlier $W \approx 1.6$--$1.75$ for
-the two quantile-grid models was the sign defect, whose inverted thresholds the
-correction had to replace outright.
+Nothing in this panel comes close to the break-even widening. Relative to
+GJR-GARCH the corrected thresholds run from $W = \nLitWMin$ for the analytic Chronos series to $W = \nLitWMax$ for Lag-Llama, with TimesFM~2.5 at $\nWidthRatioTimesFM$ and
+Moirai~2.0 at $\nWidthRatioMoiraiTwo$. Correction is therefore capital-cheap
+across the board, and the backtesting channel rather than the sharpness cost is
+what governs the arithmetic here.
+
+The identification result of Section~\ref{sec:blindspot} bears on this
+arithmetic directly, and the statement does not depend on foundation models or on
+any forecaster in this panel. Two models can report thresholds differing by half
+--- one at $\nGapVaRHonest\sigma_t$, the other at $\nGapVaRAlt\sigma_t$, both stated in units of
+the true conditional scale rather than an estimate of it --- while exceeding on
+the same days at the same rate, passing Kupiec, Christoffersen and
+the dynamic quantile test with the same verdicts, and sitting in the same Basel
+zone. The second holds barely half the capital of the first, is fully compliant
+on the traffic light, and is not distinguishable from it by any test of a
+predictable moment restriction on the exceedance sequence. A capital requirement
+is a function of a reported threshold and a violation count; the pair shows that
+those two numbers do not determine the threshold's adequacy. What separates them
+is the reported quantile measured against an estimated scale --- the structural
+check of Section~\ref{sec:gate}, applied before any of this arithmetic is run.
+
+\section{Discussion}
+\label{sec:discuss}
+
+\subsection{Limitations}
+\label{sec:failure}
+
+A scalar shift restores unconditional violation frequency but cannot reshape the
+conditional dynamics of the violation process; the rolling variant captures time
+variation in the magnitude of miscalibration but remains a location adjustment.
+State-dependent recalibration --- one-sided adaptive conformal inference
+\citep{gibbs2021adaptive}, the PID framework of \citet{angelopoulos2024pid} ---
+lies outside the present framework. Identification is limited in a second sense:
+the positive cross-sectional association between $\qVstat$ and asset-level
+volatility (Supplement~S.5.1) is consistent with pre-training domain mismatch,
+but the zero-shot design does not permit causal attribution. The audit locates
+\emph{where} tail signal is missing, not \emph{why}.
+
+Operationally, small calibration sets ($n_{\mathrm{cal}} < 200$) produce unstable
+corrections, very high score persistence weakens the mixing bound, and structural
+breaks cause temporary under-protection when the calibration window predates the
+break. The trailing-window design produces a measurable lag: around the COVID-19
+shock seven of the thirteen forecasters reach their post-shock maximum within the
+acute window, four peak 77 calendar days later, and the two GJR-GARCH variants
+take 161 days. Mitigations and the drift diagnostic that flags the regime in real
+time are in Supplement~S.9.5.
 
 \subsection{Practitioner guidance}
 \label{sec:practitioner}
@@ -1421,83 +1631,100 @@ and a version that appears to be free is one evaluated on the window it used to
 decide.
 
 \emph{Choose the forecaster for the constraint, not the label.} With adequate
-per-asset history, GJR-GARCH-$t$ with conformal correction has the best corrected
-quantile score in this panel. Where per-asset estimation is infeasible --- scale,
+per-asset history, the GJR-GARCH family with conformal correction attains the
+best corrected quantile score in this panel, and the two variants within it are
+not distinguishable: their mean corrected scores differ by \nGapQSGapPct\%, the ordering
+reverses between per-asset and pooled aggregation, and a Diebold--Mariano test on
+the corrected loss differentials with Driscoll--Kraay panel-HAC variance returns $t = \nGapDMt$, $p = \nGapDMp$ over 24 assets. We therefore name the family and not a
+winner within it. Where per-asset estimation is infeasible --- scale,
 short history, latency --- a correctly configured zero-shot foundation model with
 the same correction is competitive with the GARCH family at the 1\% level, which
 is a real operational option and not a claim of superiority.
 
 \emph{Monitor the signed shift, not the ratio.} $\qVstat$ carries the diagnosis:
-negative means an over-conservative base that the correction tightens, releasing
-capital. $\bar R$ cannot carry it, being a ratio of absolute values. On the
-corrected panel negative values are rare and belong to no single forecaster ---
-three assets for TimesFM~2.5, two for Moirai~2.0, one each for Moirai~1.1 and
-GJR-GARCH-$t$. GJR-GARCH itself is now positive on all \nMainAssets{} assets; it
-was the systematically over-conservative forecaster of earlier drafts only
-because its quantile map inflated every threshold by 45\%.
+a negative value means an over-conservative base forecast that the correction
+tightens, releasing capital, and a positive one means the reverse. $\bar R$
+cannot carry it, being a ratio of absolute values, which is why the two are
+reported separately throughout. In this panel negative values are rare and belong
+to no single forecaster --- three assets for TimesFM~2.5, two for Moirai~2.0, one
+each for Moirai~1.1 and GJR-GARCH-$t$ --- while GJR-GARCH is positive on all
+\nMainAssets{} assets (\nGJRnegqV{} negative). A forecaster that is
+systematically over-conservative across an entire asset universe is worth
+inspecting at the level of its quantile map before it is interpreted as a
+modelling choice: the Student-$t$ failure mode of
+Table~\ref{tab:failure_modes} presents exactly that way.
 
 %══════════════════════════════════════════════════════════════════════════════
 \section{Conclusion}
 \label{sec:conclude}
 
 A Value-at-Risk forecast is produced by code, and the step in which a predictive
-distribution becomes a threshold is where the pipelines we examined failed. In
-this panel that step, not the architecture of the model or the format in which it
-exposes its distribution, is what separates a forecaster that is roughly usable
-at the 1\% level from one that violates on 40\% of days. The clearest instance is
-a documented sampling default in a public checkpoint --- correct for the task it
-was written for, silently catastrophic for this one --- and the mechanism is
+distribution becomes a threshold determines what the resulting series is. In this
+panel that step --- not the architecture of the model, nor the format in which it
+exposes its distribution --- is what separates a forecaster that is roughly
+usable at the 1\% level from one that violates on four days in ten. The clearest
+instance is a documented sampling default in a public checkpoint, correct for the
+task it was written for and silently wrong for this one, and the mechanism is
 established by controlled experiment rather than inferred: dispersion recovers
 monotonically as the truncation is relaxed, one thousand draws under the default
 contain exactly fifty distinct values, and the parameters a careful analyst would
 vary move nothing.
 
-The finding that matters beyond this panel is that the instruments in standard
-use cannot see such failures. At $\alpha = 0.01$ the independence test is
-undefined on a third of raw pairs and on more than half of recalibrated ones,
-while unconditional coverage rejects seven pairs in ten and so cannot separate a
-defect from ordinary miscalibration. Post-hoc recalibration compounds the
-problem, because a guarantee that holds regardless of the forecaster cannot
-diagnose the forecaster: applied to a truncated series it restored
-$\hat\pi = 0.0108$ and 19 of 24 Basel green zones, and every backtest downstream
-of it passed. Validation that runs after a correction is not validation of the
+The result that generalises beyond this panel is an identification result. A
+coverage backtest reports that a series miscovers and cannot report why, and the
+sources it cannot distinguish --- a poor tail model, a truncated predictive
+support, an inverted sign convention, a misalignment, a stale vintage --- call
+for different remedies. At $\alpha = 0.01$ the instruments are additionally at
+their weakest: the independence test is degenerate on a third of raw pairs and on
+more than half of recalibrated ones, where its asymptotics do not hold, while
+unconditional coverage rejects seven pairs in ten and so carries little
+information about any one of them. Post-hoc recalibration does not repair this
+and makes it harder to see, because a guarantee that holds regardless of the
+forecaster cannot diagnose the forecaster: applied to a truncated series it
+returns $\hat\pi = \nTruncCorPi$ and \nTruncCorGreen{} of \nMainAssets{} Basel
+green zones. Validation that runs after a correction is not validation of the
 model.
 
 We therefore propose checking forecast series structurally, against properties
 they must have to be Value-at-Risk series at all, before they are calibrated or
-evaluated. Ten such checks are cheap, require no benchmark or test window, and
-block 4 of the 13 series promoted here. We state plainly that they were written
-after the defects were known and that their performance on those defects is
-in-sample; the argument for them is not their measured sensitivity but that the
-alternative provably cannot do the job.
+evaluated. Ten such checks are cheap, eight of them need nothing but the series
+and the returns, and they block \nGateBlocked{} of the \nGateSeries{} series
+here. Two are invariants, one is an invariant tested through a proxy, and seven
+are plausibility bands whose thresholds we state rather than derive; all ten were
+specified after the failure modes they address had been identified, so their
+performance on those failure modes is in-sample by construction. The argument for
+them is not their measured sensitivity but that the alternative provably cannot
+do this job.
 
-On recalibration itself, our claims narrow rather than change. The conformal
-shift restores marginal coverage under $\beta$-mixing dependence, and that is
-all it does. It is an intervention with an indication: under the rolling
-estimator, \nWellCalRollWorse{} of the \nWellCalRollN{} pairs that pass Kupiec on
-the test window are degraded by correcting them, and gating the correction on a
-calibration-window backtest avoids \nGateRollAvoidedPct\% of that damage at the
-cost of \nGateRollUpgradesLost{} of \nGateRollUpgrades{} Basel zone upgrades ---
-a quarter of the benefit that the same rule shows when it is allowed to peek at
-the evaluation window, which is how such rules are usually reported. It
-reaches only part of the problem --- in the decomposition of
-\citet{gneiting2023regression} a constant shift addresses a median of \nuMCBSharePct\% of
-total miscalibration on well-specified series, the remainder being conditional
---- and it does not restore violation independence. The magnitude $R$ that an
-earlier version of this paper offered as an audit statistic is withdrawn as such:
-among well-specified forecasters it is a rank-preserving transform of the
-violation rate, and we retain it only as a scale-interpretable statement of how
-much of a forecast survives correction.
+On recalibration itself the claims are narrow. The conformal shift restores
+marginal coverage under $\beta$-mixing dependence --- asymptotically, with an
+explicit remainder, and under a gap-separation condition that the contiguous
+split used here does not satisfy (Remark~S.9.3) --- and that
+is all it does. It is an intervention with an indication rather than a default
+step: under the rolling estimator, \nWellCalRollWorse{} of the \nWellCalRollN{}
+pairs that pass Kupiec on the test window are degraded by correcting them, and
+gating the correction on a calibration-window backtest avoids
+\nGateRollAvoided{} of the \nDegradedRoll{} deteriorations at the cost of
+\nGateRollUpgradesLost{} of \nGateRollUpgrades{} Basel zone upgrades --- half the
+benefit that the same rule appears to deliver when it is allowed to read the
+window it is scored on. The shift reaches only part of the problem: in the
+decomposition of \citet{gneiting2023regression} a constant correction addresses a
+median of \nuMCBSharePct\% of total miscalibration on well-specified series, the
+remainder being conditional, and it does not restore violation independence. The
+magnitude $\bar R$ is retained as a scale-interpretable statement of how much of
+a forecast survives correction, not as an independent diagnostic; among
+well-specified forecasters it is a rank-preserving transform of the violation
+rate.
 
-What the corrected panel says about foundation models is deflationary and, we
-think, more useful than what we previously reported. Configured correctly, the
-zero-shot series here are neither the catastrophe of our earlier draft nor
-competitive: they sit alongside GARCH-family benchmarks at the 1\% level, a
+What the panel says about foundation models is deflationary. Configured
+correctly, the zero-shot series here are neither catastrophically miscalibrated
+nor superior: they sit alongside the GARCH-family benchmarks at the 1\% level, a
 per-asset CAViaR fitted the ordinary way outperforms all of them, and the
 residual miscalibration of the best of them is concentrated in the tail and
 largely gone by $\alpha = 0.10$. Whether fine-tuning closes that tail gap remains
-open. What is no longer open, in our view, is whether a tail-risk evaluation can
-be trusted without a structural check of the series it evaluates.
+open. What this paper does close, in our view, is the question of whether a
+tail-risk evaluation can be trusted without a structural check of the series it
+evaluates.
 
 \section*{Data and Code Availability}
 
@@ -1505,7 +1732,9 @@ The full replication pipeline --- data retrieval, foundation-model inference, co
 
 Return data are retrieved from Yahoo Finance. All foundation model checkpoints are open-weight and hosted on HuggingFace; no proprietary API access is required.
 
-A Python package implementing the audit, \texttt{conformal-oracle}, is available on PyPI (\url{https://pypi.org/project/conformal-oracle/}) and installable via \texttt{pip install conformal-oracle}. \revised{Every rolling-mode result reported in this paper was produced by the Quantlet replication pipeline, which has throughout computed the conformal correction as the finite-sample split-conformal quantile---the $\lceil(w+1)(1-\alpha)\rceil$-th order statistic of the trailing-window scores. Version~0.3.1 of the companion \texttt{conformal-oracle} package aligns its packaged rolling implementation with this same convention, which earlier package versions had implemented as the plain empirical $(1-\alpha)$ quantile; consequently no result reported here depended on the affected code path.}
+A Python package implementing the framework, \texttt{conformal-oracle}, is available on PyPI (\url{https://pypi.org/project/conformal-oracle/}) and installable via \texttt{pip install conformal-oracle}. Every rolling-mode result reported here was produced by the Quantlet replication pipeline, which computes the conformal correction as the finite-sample split-conformal quantile, the $\lceil(w+1)(1-\alpha)\rceil$-th order statistic of the trailing-window scores; version~0.3.1 of the package follows the same convention.
+
+Each series admitted to the analysis carries a manifest entry recording its model, asset, path, vintage and estimator class, and each passes --- or is recorded as blocked by --- the structural gate of Section~\ref{sec:gate} before entering any table. The numbers asserted in the text are emitted as macros by \texttt{scripts/paper\_numbers.py}, which recomputes each of them from the artefacts and fails the build when a value in the manuscript differs from the value in the data.
 
 
 	\section*{Acknowledgements}
