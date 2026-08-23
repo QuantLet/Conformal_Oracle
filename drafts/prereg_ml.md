@@ -255,3 +255,71 @@ exactly as in Section 7.2.
 
 No threshold here is moved after the panel is seen. The band edge itself is not
 adjusted under any outcome.
+
+---
+
+## Amendment 3 — 2026-08-23T19:43:53Z
+
+Written **before the panel script exists**. No panel output has been produced.
+This amendment precedes the launch, not the completion, per the procedure fixed
+in Amendment 1.
+
+### The paired configurations, fixed now
+
+F1 falsified the direction assumed in P3: for LightGBM the 1% tail improves as
+leaf size *rises*, not falls. The pair is still "library default against one
+parameter changed", and the changed value is declared here so it cannot be chosen
+after the panel is seen. Both values are endpoints of the grid already swept in
+the dose–response arm; neither is new.
+
+| series | configuration | the one parameter |
+|---|---|---|
+| `lgbm_default` | LightGBM, library default | `min_data_in_leaf = 20` |
+| `lgbm_pooled` | LightGBM, leaf pooling raised | `min_data_in_leaf = 500` |
+| `qrf_default` | Quantile RF, library default | `min_samples_leaf = 1` |
+| `qrf_pooled` | Quantile RF, leaf pooling raised | `min_samples_leaf = 500` |
+
+Everything else is identical within each pair and across both: the nine features
+of P4, the 1,000-observation rolling window, refit every K = 25 trading days,
+seed 20260822, and the same dates.
+
+### Expected row counts, checked before any result is read
+
+PROTOCOL.md Rule 1, both fields.
+
+| output | unit | expected rows | what varies between rows, and over what range |
+|---|---|---|---|
+| series files | date within one series-asset | one per asset per config; length set by each asset's history after the 1,000-observation warm-up | the date; nothing else within a file |
+| panel summary | series-asset cell | 4 configs x 24 assets = **96** | the config and the asset only |
+| blind gate | series | **4** | the config only |
+| backtests | series-asset cell | **96** | as the panel |
+
+The four series take the sequence panel from 13 to **17** and its cells from 312
+to **408**; the main panel from 16 to **20** forecasters and 384 to **480**
+pairs. Both counts are recomputed from the artefacts before any "N of M" in the
+manuscript is touched.
+
+### Order of execution, and what may not be computed when
+
+1. Produce the four series: date, and the lower quantile at
+   $\alpha \in \{0.01, 0.025, 0.05, 0.10\}$. **Nothing else.** No violation
+   indicator, no coverage, no Kupiec, no Basel zone.
+2. Run the structural gate on the four series **blind**, writing its verdict and
+   reading (v) to `analysis/ml/GATE_BLIND.md` with a timestamp and a SHA-256 of
+   each series file. Commit that file.
+3. Only then compute backtests.
+
+Step 2 is the only out-of-sample test the gate will ever get: every check in it
+was written against failure modes identified in 2026, and these series did not
+exist when it was written. Computing coverage first would destroy that, because
+the coverage-plausibility band would then be checked against a number already in
+hand.
+
+### Scoping, confirmed against the dose–response arm
+
+- **Tail reach**: inapplicable, no sampled paths. Declared, not passed.
+- **Support cardinality**: a leaf-based estimator takes finitely many values,
+  bounded by the number of leaves, exactly as Historical Simulation is bounded by
+  its window. Expected inapplicable; the manifest records the estimator class and
+  the gate returns *inapplicable* rather than a verdict.
+- The remaining eight checks apply and return verdicts.
