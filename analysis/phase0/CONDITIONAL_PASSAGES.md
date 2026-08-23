@@ -36,7 +36,15 @@ second exhibit in Section 4, then:
 | S3.2.4 | "The comparison tests Remark 3.1: at alpha = 0.01, additional parameters increase variance faster than they reduce bias" | cites the remark in its old, single-layer form |
 | B6 recount list | — | both of the above join it |
 
-## Conditional on readings (ii) and (iv)
+## Readings (ii) and (iv): resolved, both falsified
 
-Nothing in the manuscript is conditional on these yet, because no ML text has
-been written. They govern what may be claimed, not what must be revised.
+Reading (ii) fails on all three control knobs (factors 3.31, 2.53, 1.60 against a
+1.5 threshold). Reading (iv) is contradicted (`num_leaves` 31 -> 127 leaves
+pi-hat at 0.0300, ratio 1.00). See `analysis/ml/DOSE_RESPONSE_REPORT.md`.
+
+**Consequence for placement, now forced rather than chosen.** The result is not a
+configuration trap and must not be placed beside Section 4, whose mechanism is a
+silent default surviving a sensitivity sweep. It is an instance of the
+tail-sparsity constraint and goes beside Remark 3.1. The two rows already listed
+under "conditional on the ML exhibit entering beside Remark 3.1" are therefore
+no longer conditional -- they are required.

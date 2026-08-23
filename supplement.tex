@@ -1718,6 +1718,43 @@ corrected panel as the manuscript.
 
 \input{Quantlets/CO_simulation_study/tab_simulation_extended}
 
+\subsection{Static versus rolling recalibration, in detail}
+\label{app:static_vs_rolling}
+
+The rolling variant re-estimates the shift on a trailing 250-day window, so
+$R_t = |\qVroll|/|\widehat{\VaR}^{\mathrm{raw}}_t|$ becomes a monitored series
+rather than a single number: sustained elevation indicates that the correction is
+setting the reported threshold, transient spikes are stress episodes. No
+threshold and no persistence rule are imposed on it.
+
+It improves unconditional coverage substantially and conditional adequacy not at
+all. Basel green rises from 89\% (278 of \nSeqPairs{} pairs) to 99\% (309), with
+twelve of the \nSeqForecasters{} forecasters reaching all \nMainAssets{} assets
+(Table~S.22). The gains concentrate where volatility moves: commodities go from
+67.3\% green to 100\% and bonds from 89.7\% to 100\%, while crypto and FX are at
+100\% either way. The single exception is Historical Simulation, which falls from
+22 to 21 assets green; its raw threshold is an order statistic of the same
+trailing window the rolling correction uses, so the two estimate from overlapping
+information and the second window reduces responsiveness rather than adding to it.
+
+Conditional coverage does not improve in parallel. GARCH-N attains the highest
+rolling Christoffersen pass rate, 10 of \nMainAssets{} assets, while the
+high-$\bar R$ foundation-model series remain at 0--5, reflecting violation
+clustering that survives the correction. This is a structural limitation of
+scalar recalibration rather than a tuning question
+(Section~9.1 of the manuscript). The S\&P~500 threshold path is in Figure~S.4.
+
+
+\subsection{Alternatives, simulation and robustness: the two results not in the body}
+\label{app:alt_detail}
+
+Corrected coverage converges toward nominal as the sample grows, with Basel green
+frequencies rising from 76--81\% at $T = 1{,}000$ to 96--98\% at $T = 5{,}000$.
+And the tail-completion rule is not a sensitivity in the usual sense: it moves
+$\bar R$ by a factor of 3 to 76 within a single model--asset pair and changes the
+Basel zone on BTC, which is why Section~5.2.2 of the manuscript treats the
+closure as part of the forecaster.
+
 \subsection{The Chronos sampling experiment}
 \label{app:chronos_sampling}
 

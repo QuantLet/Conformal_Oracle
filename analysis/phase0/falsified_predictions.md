@@ -46,3 +46,40 @@ varied parameter is unchanged; only the label of which member is the "tail
 configuration" flips. No threshold in P7 is moved: the default still has to reach
 twice nominal for the positive reading, and it does (3.0x). Recorded here rather
 than edited into the pre-registration, per its own rule.
+
+## F2 — the documented knobs would leave the tail alone
+
+**Pre-registered (P6, reading (ii)).** Learning rate, tree count and depth --
+"the parameters an analyst would sweep" -- do not move the 1% tail. Threshold set
+in Amendment 1 at a factor of 1.5.
+
+**Falsified.** All three move it, by factors of 3.31, 2.53 and 1.60. The
+prediction was carried over from the Chronos case, where temperature moves
+dispersion by 0.001 and nucleus sampling by 0.006, and it does not transfer.
+
+**What it changes.** There is no configuration trap in this family: an analyst
+sweeping the ordinary parameters finds the 1% tail unstable at once. The positive
+branch of P7 was written for a trap, so it no longer describes the result even
+though its numeric threshold is met (default at 3.0x nominal).
+
+## F3 — a second granularity parameter would move the tail the same way
+
+**Pre-registered (Amendment 1, reading (iv)).** If the mechanism is leaf
+resolution, raising `num_leaves` from 31 to 127 makes leaves finer and should move
+pi-hat upward, away from nominal.
+
+**Contradicted.** pi-hat is 0.0300 at both settings, ratio 1.00.
+
+**What it changes, and this is the useful part.** Together with reading (i) it
+separates two parameters the design had conflated. `min_data_in_leaf` sets how
+many observations stand behind each leaf estimate and moves the tail by a factor
+of 9.6; `num_leaves` sets how many leaves exist and moves it not at all. The
+mechanism is **estimability under sparsity**, not resolution -- which is what F1
+inferred from the direction of the leaf effect, now confirmed on an independent
+parameter.
+
+Reading (iv) was declared as evidence against the mechanism if it came back flat.
+It came back flat, and the mechanism it refutes is the one that was pre-registered.
+The mechanism that survives was not pre-registered and is therefore reported as a
+post-hoc reading of two falsified predictions, not as a finding the design
+anticipated.
