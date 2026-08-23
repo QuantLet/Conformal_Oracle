@@ -328,3 +328,68 @@ quietly widened or narrowed.
 All three were found by re-injecting the historical defects rather than by
 reading the code.
 
+
+## R11 — "p = 0.035 appears in no artefact and the paragraph's conclusion inverts" — RETRACTED
+
+**Asserted.** Section 5.6 read "EWMA is the only forecaster rejected by the
+cluster-robust test (p = 0.035)". I searched
+`Quantlets/CO_panel_wildcluster/`, found EWMA at `p_boot = 0.058` and no
+forecaster rejected by the bootstrap at 5%, reported the value as produced by no
+artefact, called the conclusion inverted, **and rewrote the paragraph**. Logged
+as C2, a confirmed defect found via a failing unit test.
+
+**Killed by.** `Quantlets/CO_multi_quantile_panel/panel_pooled_reproduced.csv`
+carries a `p_cluster` column. EWMA's value is **0.035192**, and it is the only
+series below 0.05 in that column. The manuscript's own wording said
+`p_{cluster}`, not `p_boot`. **The paper has two distinct cluster-robust
+procedures** -- a Driscoll-Kraay cluster statistic and a Rademacher wild-cluster
+bootstrap -- and I compared the text against the wrong one.
+
+The original sentence was **correct in every part**: EWMA is the only rejection
+under the cluster statistic; the other three pooled rejections (Moirai 2.0,
+Chronos-Small-A, GJR-GARCH) are not rejected by it; the pooled rates 0.0114,
+0.0113 and 0.0111 all check out.
+
+**The fourth instance of the same pattern.** R3 read a rectangular matrix as
+symmetric; R6 tested a correct model on a truncated grid; R9 calibrated on series
+medians where the gate uses cells; R11 compared a claim against a different
+statistic with a similar name. Correct arithmetic on the wrong object, and this
+time I did not merely mis-report it -- **I rewrote a correct paragraph on the
+strength of it**, and the rewrite was wrong.
+
+**What survives.** The two procedures disagree at the boundary, 0.035 against
+0.058 on the same series. That is worth reporting and now is, framed as a
+resolution limit at 24 clusters rather than as a verdict either way. Restored to
+Section 8.4 in corrected form.
+
+## R12 — "88.9% Green is computed on an undeclared nine-model subset" — RETRACTED
+
+**Asserted.** Supplement S.2.2 quoted "5/9 Kupiec rejections (vs. 0/9), and 88.9%
+Green (vs. 100%)". I compared against `tuned_gbm_qr_grid.csv`, which covers 13
+models with green rates of 82.7% and 76.9%, concluded the denominator was
+undeclared or the vintage superseded, **and deleted the sentence**.
+
+**Killed by.** `Quantlets/CO_baseline_comparison_tuned/REPRO_NOTES_E1.md`, dated
+2026-05-08, line 31: "Best QS config (n=100, d=3, lr=0.05): QS=4.40e-4, pi=.015,
+5/9 Kupiec rejections, 88.9% Green." Every figure in the sentence is in a
+provenance note that predates the audit. Same failure as R11: I searched one
+artefact directory and declared absence.
+
+**What survives.** The nine-series denominator was not declared *in the
+supplement*, only in the provenance note. The sentence is restored with the
+denominator stated in the text.
+
+## Consequence for the "unsourced literals" finding
+
+The claim was five. **Two of the five were my errors.** What stands:
+
+| claim | status |
+|---|---|
+| Z2: mean absolute difference 0.035 units, 97% classification agreement | **UNSOURCED.** `verify_z2.py` computes neither a mean absolute difference nor a classification-agreement rate. In the IJF submission, so it survived review. |
+| Raw rates 0.019 / 0.075 under two closures | **UNSOURCED.** `run_inner7_tail_closure.py` emits `pi_corr` only. |
+| ACI 0.0750 / 0.0443 | Sourced, but from an undeclared 216-pair panel. A panel-declaration issue, not a sourcing one. |
+| p_cluster = 0.035 | **SOURCED** (R11). |
+| 88.9% Green | **SOURCED** (R12). |
+
+Section 7 now says two, not five, and describes the two that stand. The cover
+letter must be corrected the same way before it is sent.

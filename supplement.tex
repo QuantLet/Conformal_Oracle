@@ -480,12 +480,13 @@ for the GBM-QR baseline on S\&P~500.  Each configuration trains a
 LightGBM quantile regression at $\alpha=0.01$ on the calibration
 sub-sample (70\%) of each of the nine base forecasters. The QS-optimal
 configuration ($n_\text{est}=100$, $d=3$, $\eta=0.05$) improves the
-pinball loss relative to the conservative setting ($\eta=0.01$) but pays in
-coverage, and the loss-versus-coverage trade-off runs in the same direction
-across the grid. Per-configuration counts are in
-\texttt{tuned\_gbm\_qr\_grid.csv}; the figures previously quoted here were
-computed on a nine-model subset that is not the panel of this paper and are
-withdrawn. Higher-capacity configurations
+pinball loss by 5\% relative to the conservative setting ($\eta=0.01$)
+but pays in coverage: $\hat\pi=.015$ (vs.\ .011), 5/9 Kupiec rejections
+(vs.\ 0/9), and 88.9\% Green (vs.\ 100\%). Those counts are over the nine
+series carried in the tuning ablation, not the full panel, and are recorded in
+\texttt{Quantlets/CO\_baseline\_comparison\_tuned/REPRO\_NOTES\_E1.md};
+per-configuration results for the whole grid are in
+\texttt{tuned\_gbm\_qr\_grid.csv}. Higher-capacity configurations
 ($d=5$ or $n_\text{est}=500$) do not improve QS further and degrade
 Green-zone rates, consistent with the bias-variance prediction of
 Remark~3.1.

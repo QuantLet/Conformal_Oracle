@@ -63,15 +63,24 @@ build guards run with negative controls: each is required to fail on a case
 constructed to make it fail before it is allowed to report a pass.
 
 We should disclose what that discipline found in our own manuscript. Converting
-the prose to generated macros — forced conversion, not inspection — surfaced
-assertions that no artefact produces, including a cluster-robust p-value whose
-correction inverts the conclusion of the paragraph containing it. Seventy-nine
-numeric claims sat outside the reach of the checking script, because a value that
-is never emitted cannot be checked by a tool that checks emitted values. That is
-the same structure the paper attributes to a degenerate test statistic, and we
-report it in Section 7 rather than in a footnote. We also report that one of our
-own ten structural checks blocks nothing on any series in the panel and therefore
-cannot fail informatively.
+the prose to generated macros — forced conversion, not inspection — surfaced two
+assertions that no artefact produces: a pair of figures comparing a modified and
+a canonical test statistic, which the verification script does not compute, and a
+pair of raw violation rates whose producer emits only corrected ones. Both were
+in the version submitted for review and survived it. Seventy-nine numeric claims
+sat outside the reach of the checking script, because a value that is never
+emitted cannot be checked by a tool that checks emitted values. That is the same
+structure the paper attributes to a degenerate test statistic, and we report it
+in Section 7 rather than in a footnote. We also report that one of our own ten
+structural checks blocks nothing on any series in the panel and therefore cannot
+fail informatively.
+
+The audit that produced those two findings initially produced five. Three were
+withdrawn on re-examination: two figures we had called unsourced are in
+provenance notes we had not searched, and a p-value we had called fabricated
+belongs to a second cluster-robust procedure the paper also runs. We mention this
+because the correction record is part of what we are offering, and a count that
+shrank under scrutiny is more informative than one that did not.
 
 We would rather submit a paper that says this than one that does not.
 

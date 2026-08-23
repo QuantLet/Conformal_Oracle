@@ -1292,13 +1292,11 @@ only reading the code distinguishes them. Structural validation and code
 provenance are complements, and neither is inferable from the other.
 
 \paragraph{Nor can it validate prose} The same limit applies one level up.
-Converting this manuscript's numeric claims to generated macros surfaced five
-assertions that no artefact produces: a cluster-robust $p$-value that inverts the
-conclusion of the paragraph containing it once the artefact is read, two figures
-comparing a modified and a canonical test statistic, a green-zone rate computed
-on an undeclared nine-model subset, and a pair of raw violation rates whose
-producer emits only corrected ones. One of the five survived a round of peer
-review. Seventy-nine numeric claims sat outside the reach of the script that
+Converting this manuscript's numeric claims to generated macros surfaced two
+assertions that no artefact produces: a pair of figures comparing a modified and
+a canonical test statistic, whose verification script computes neither of them,
+and a pair of raw violation rates whose producer emits only corrected ones. Both
+were in the version submitted for review and survived it. Seventy-nine numeric claims sat outside the reach of the script that
 checks the manuscript's arithmetic, and a literal that is never emitted cannot be
 checked by a tool that checks emitted values --- the structure of
 Section~\ref{sec:blindspot_cc}, one level up from the forecasts. A gate that
@@ -1514,13 +1512,30 @@ model fixed and varies only the reduction step. On identical weights, contexts
 and dates, reading the Chronos predictive distribution analytically beats
 sampling it at the checkpoint default: mean corrected quantile score $\nLitQSAnalyticSmall$ against $\nLitQSDefaultSmall \times 10^{-4}$ for
 Chronos-Small and $\nLitQSAnalyticMini$ against $\nLitQSDefaultMini$ for
-Chronos-Mini. These are computed on the dates the two configurations share, so
-they differ slightly from the per-asset averages of Table~\ref{tab:master},
-which run over each series' full test window for
-Chronos-Mini, both at $p < 0.001$. These are the \emph{corrected} series, so the
-difference survives a recalibration that has already restored coverage for both.
+Chronos-Mini, both at $p < 0.001$. These figures are computed on the dates the
+two configurations share, so they differ slightly from the per-asset averages of
+Table~\ref{tab:master}, which run over each series' full test window. They are
+the \emph{corrected} series, so the difference survives a recalibration that has
+already restored coverage for both.
 Cross-family score rankings are reported in Supplement~S.12 and no conclusion
 here rests on them.
+
+At the panel level the two cluster-robust procedures in this paper disagree, and
+the disagreement is the informative part. The pooled unconditional test rejects
+four forecasters at the 5\% level --- EWMA, Moirai~2.0, Chronos-Small read
+analytically and GJR-GARCH, at pooled rates of $0.0119$, $0.0114$, $0.0113$ and
+$0.0111$ against a nominal $0.01$. Allowing dependence within an asset through a
+Driscoll--Kraay cluster statistic leaves one rejection, EWMA at $p = 0.035$; a
+Rademacher wild-cluster bootstrap over the same \nMainAssets{} clusters with
+$B = 999$ replications leaves none, EWMA coming closest at $p = 0.058$. Neither
+procedure is the wrong one. With \nMainAssets{} clusters the bootstrap
+distribution is built from \nMainAssets{} sign flips, its resolution near the
+5\% boundary is coarse, and a forecaster sitting at $0.035$ under one and
+$0.058$ under the other has not been shown to be either adequately or
+inadequately calibrated. What the comparison establishes is narrower than either
+verdict: the pooled rejections are not robust to allowing within-asset
+dependence, and should not be read as evidence of miscalibration
+(Table~S.14).
 
 \subsection{Alternatives to the one-parameter shift}
 \label{sec:baselines}
