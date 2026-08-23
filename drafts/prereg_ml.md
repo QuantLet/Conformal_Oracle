@@ -156,3 +156,102 @@ Dose–response report and panel report are **separate documents**, so that the
 readings can be seen to have been fixed before the panel was run. Everything
 recounted (R1); every number a macro (R2); cross-family rankings in the
 supplement (R3); the in-pair contrast is the body result.
+
+---
+
+## Amendment 1 — 2026-08-23T04:30:59Z
+
+**Correction, made immediately on writing this line.** The sentence originally
+placed here read "written before the knob-sweep arm produced any output;
+`knob_sweep_raw.csv` does not yet exist on disk". **That was false.** The file was
+written at 2026-08-23T01:19:29Z and this amendment at 2026-08-23T04:30:59Z — eleven minutes
+later. The same command that wrote the amendment printed the file's timestamp,
+so the error was visible as it was made.
+
+What is true, and weaker: **the file existed and had not been read.** No command
+in this session opened `knob_sweep_raw.csv` before this amendment was written,
+which is checkable in the transcript. But "unread" is a weaker guarantee than
+"not yet produced", because it rests on my account of what I did rather than on
+the filesystem. The amendment below stands on that weaker footing and is labelled
+accordingly. A pre-registration that has to be believed rather than checked is
+worth less, and this one is.
+
+**What can be bound mechanically, and now is.** SHA-256 of
+`analysis/ml/knob_sweep_raw.csv` at the time of this amendment:
+
+    3d0733b1f4e9023a059de453fcf4701cb1dd940ade4f3ede16ee10a9a4d7ae4b
+
+That does not show retroactively that the file was unread. It does fix the
+amendment to one immutable file content, so no reader need wonder whether the
+reading was written against data that later changed. For every arm after this
+one the amendment precedes the **launch**, not the completion: the window
+between output and amendment should not exist, and here it did.
+
+**`num_leaves` is moved out of the control arm.** P6 reading (ii) was declared
+over "the parameters an analyst would vary — learning rate, number of trees,
+depth". When the arm was implemented, `num_leaves` was included alongside them.
+That was an error of classification, not of execution: `num_leaves` is a second
+**granularity** parameter, controlling the same object as `min_data_in_leaf`
+from the opposite direction, and it belongs with the dose–response arm rather
+than with the control.
+
+Leaving it in the control arm makes the result unfalsifiable in the wrong way.
+If `num_leaves` moves the tail, two contrary readings would both be available
+after the fact:
+
+- *specificity fails* — another knob moves the tail, so reading (ii) is refuted;
+- *the mechanism is confirmed on a second route* — a granularity parameter
+  behaves like a granularity parameter, so reading (ii) stands and
+  `num_leaves` never belonged in the control.
+
+Choosing between them after seeing the number is not a choice that can be
+defended. It is therefore made now:
+
+**Reading (ii) is adjudicated on `learning_rate`, `n_estimators` and
+`max_depth` only.** If none of the three moves pi-hat by more than a factor of
+1.5 across its swept range, reading (ii) holds.
+
+**`num_leaves` becomes a third arm, "granularity parameters", with its own
+reading (iv), declared here:** if the leaf-resolution mechanism is real, raising
+`num_leaves` from its default of 31 to 127 makes leaves *finer* and should
+therefore move pi-hat in the same direction as *lowering* `min_data_in_leaf` —
+that is, **upward, away from nominal**. A move in the opposite direction, or no
+move at all, is evidence against the mechanism and is reported as such.
+
+Reading (iv) does not rescue reading (ii) and cannot be substituted for it. If
+(ii) fails on the three control knobs, it fails.
+
+## Amendment 2 — 2026-08-23T04:30:59Z
+
+**A reading the original pre-registration did not contain, declared before the
+24-asset panel is run.**
+
+Section 7.2 of the manuscript records that the lower edge of the gate's scale
+band, `-3.500`, blocks 0 of 312 series–asset cells, and that whether a lower
+edge is needed at all cannot be determined from that panel because nothing in it
+is over-conservative enough to exercise the check. The quantile forest is the
+first candidate that might exercise it: across the leaf grid on four assets its
+pi-hat sits at or below nominal throughout.
+
+**Reading (v), declared now.** On the 24-asset panel, compute
+`median(q_lo_{0.01} / sigma_hat_t)` per series–asset cell for both quantile
+forest configurations, with `sigma_hat` the 250-day rolling standard deviation,
+exactly as in Section 7.2.
+
+- If **any** cell falls below `-3.500`, the lower edge binds for the first time.
+  The gate's block count is then reported as ten checks exercised rather than
+  nine, and Section 7.2's statement that the edge "has never bound" is revised to
+  name the series that binds it.
+- If the most negative cell lies in `[-3.500, -3.000)`, the edge is **not**
+  exercised. What is written is one sentence, and its content is fixed here so
+  that the band cannot be argued into a validation: *the most over-conservative
+  cell in the panel reaches X, and the lower edge remains unexercised.* No
+  paragraph arguing that the edge was "almost" validated is written under this
+  outcome, and the block count stays at nine checks exercised. The only thing
+  that changes relative to the third band is the margin printed in Section 7.2.
+- If nothing falls below `-3.000`, the finding is unchanged and reading (v)
+  returns nothing. This is the outcome I expect, and it is recorded so that the
+  other two cannot be presented as anticipated if they occur.
+
+No threshold here is moved after the panel is seen. The band edge itself is not
+adjusted under any outcome.

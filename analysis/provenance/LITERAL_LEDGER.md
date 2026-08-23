@@ -66,3 +66,17 @@ verified literals above are traced but not yet converted to generated macros.
 Conversion is the remaining mechanical work and is what turns the ledger from a
 one-off audit into a standing check. The guard runs its negative control first
 and reports BROKEN if the control does not fail.
+
+
+## B6 recount list, extended
+
+Added after the ML placement decision:
+
+- **Remark 3.1** — title and first sentence are scoped to the recalibration
+  layer and become a two-layer statement if the LightGBM result is placed there.
+- **Section 3.2.4** — cites Remark 3.1 in its single-layer form
+  ("the comparison tests Remark 3.1: at alpha = 0.01, additional parameters
+  increase variance faster than they reduce bias").
+
+Both are tracked in `analysis/phase0/CONDITIONAL_PASSAGES.md` and neither is
+touched until the placement is settled.

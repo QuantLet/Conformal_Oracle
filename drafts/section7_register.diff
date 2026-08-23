@@ -1,0 +1,186 @@
+--- /dev/fd/12	2026-08-23 07:32:09
++++ /dev/fd/13	2026-08-23 07:32:09
+@@ -1,13 +1,13 @@
+ \section{Structural Validation}
+ \label{sec:gate}
+ 
+-If a coverage test identifies only the realised tail probability
+-$u_t = F_t(\hat q^{lo}_t)$, then validation cannot be based on coverage. The
+-question this section answers is not whether structural checks are a good idea
+-but how much of the blind spot they remove, and the answer is: some of it, and
+-not all.
++A coverage test identifies only the realised tail probability
++$u_t = F_t(\hat q^{lo}_t)$, so validation must rest on something else. This
++section measures how much of the blind spot of
++Proposition~\ref{prop:blindspot_depth} a structural check removes: rather more
++than half, and not all of it.
+ 
+-We check a forecast series against properties it must have \emph{to be a
++A forecast series can be checked against properties it must have \emph{to be a
+ Value-at-Risk series at all}, before it is calibrated, evaluated or compared with
+ anything. The checks are stated on the lower quantile $\hat q^{lo}_\alpha$, which
+ is negative and is what the forecast files store, and not on the positive
+@@ -22,11 +22,10 @@
+ does not respond to the nominal level, a predictive dispersion far from realised
+ volatility, a support of a handful of distinct values.
+ 
+-They are not all the same kind of thing, and we distinguish them rather than
+-present ten items of equal standing. Two are invariants that follow from what a
++The ten are not of equal standing. Two are invariants that follow from what a
+ quantile forecast is and carry no tunable constant; one is an invariant tested
+ through a proxy with a threshold; the remaining seven are plausibility bands
+-whose cutoffs we chose and state. Seven of the ten need nothing but the forecast
++with chosen cutoffs, stated in Table~\ref{tab:gate_compact}. Seven of the ten need nothing but the forecast
+ series and the returns. Tail reach needs the model's sampled paths and is
+ inapplicable to grid and parametric forecasters; $\alpha$-responsiveness and
+ coverage plausibility need an evaluation window, so the gate is not entirely
+@@ -39,7 +38,7 @@
+ \subsection{How much of the blind spot the gate removes}
+ \label{sec:gate_residual}
+ 
+-The construction of Section~\ref{sec:blindspot} makes this measurable. For
++The construction of Section~\ref{sec:blindspot_pair} makes this measurable. For
+ a given restriction on the return law, let $\delta^\star$ be the largest
+ truncation depth admitting an alternative model that the available diagnostics
+ cannot distinguish from a correctly specified one, and read off the
+@@ -76,24 +75,21 @@
+ \textbf{\nGapUndGateNow\%}, and tightening the binding band to the edge of what
+ this panel permits takes it to \nGapUndTight\%. They do not cut it to zero. A pair exists that passes all ten checks, exceeds on the same
+ days at the same rate as a correctly specified forecaster, and still reports a
+-threshold a fifth too small. We state this as the gate's limit rather than
+-leaving it for a reader to construct.
++threshold a fifth too small. That residue is the gate's limit.
+ 
+-Two things follow, and they point in opposite directions. The gate is not a
+-complete complement of the test class, so no claim that structural validation
+-closes the identification gap is available. But it is the only instrument in this
+-paper whose contribution to that gap is measured rather than asserted: the
+-backtests remove none of it by construction, and the checks remove somewhat more
+-than half.
++The two halves of the result point in opposite directions. Structural validation
++does not close the identification gap, so the checks are not a complete
++complement of the test class. Against that, the size of their contribution is
++computed: the backtests remove none of the gap by construction, and the checks
++remove somewhat more than half of it.
+ 
+ \subsection{\texorpdfstring{Where the band edge can sit, and how much margin it has}{Where the band edge can sit, and how much margin it has}}
+ \label{sec:gate_band}
+ 
+ The scale band --- $\operatorname{median}(\hat q^{lo}_{0.01}/\hat\sigma_t)$
+ within $[\nGapBandLower, \nGapBandNow]$ --- is the check that binds, and its
+-edges were chosen by hand. What the panel shows is not that a better value
+-exists, but that on these data the choice does not matter, and we report the
+-separation rather than defending a constant.
++edges were chosen by hand. On these data the choice does not matter, and the
++separation that makes it not matter is the quantity worth reporting.
+ 
+ Evaluated on all \nGapCellsTotal{} series--asset cells, the two populations are
+ disjoint by a wide interval. The worst well-specified cell sits at
+@@ -101,17 +97,15 @@
+ of $\nGapGapWidth$ in units of estimated scale. \emph{Any} edge strictly inside
+ that interval blocks all \nGapCellsTrunc{} truncated cells and no well-specified
+ one, so the gate's verdict on this panel is invariant to where the edge is placed
+-within the gap. That is a stronger position than a calibrated value, because it
+-does not rest on a choice.
++within the gap. The verdict therefore does not rest on the choice at all.
+ 
+-The gap is not the safety margin, and the two should not be confused. The margin
+-is the distance from the edge to the nearest well-specified cell, and at
++The safety margin is a different quantity from the gap, and the smaller of the
++two. It is the distance from the edge to the nearest well-specified cell, and at
+ $\nGapBandNow$ it is $\nGapMarginUpper$ --- an order of magnitude smaller than
+ the gap. Tightening the edge to $\nGapBandTight$ reduces the residual
+ understatement from \nGapUndGateNow\% to \nGapUndTight\%, and leaves a margin of
+-$\nGapMarginTight$: essentially none. A reader who computes robustness from the
+-gap will conclude the check is sturdier than it is, so we print the margin
+-instead.
++$\nGapMarginTight$: essentially none. Robustness computed from the gap rather
++than from the margin overstates the check by an order of magnitude.
+ 
+ The margin also states the check's limit of generalisation, and it is a real one.
+ The separation here is clean because this panel contains no series that is
+@@ -137,12 +131,11 @@
+ two cases have the same structure: an absence of evidence returned in the form
+ that reads as a pass, and a pass rate reported as though it were an outcome.
+ 
+-We report this rather than adjusting the edge to make it bind, because adjusting
+-it would manufacture the outcome. What follows is a scoping statement, not a
+-repair: on this panel the scale check is a one-sided check, the band is strongly
+-asymmetric in risk, and whether a lower edge is needed at all cannot be
+-determined from these data, because nothing in them is over-conservative enough
+-to test one. The gate's block count should therefore be read as nine checks
++Adjusting the edge downward until it binds would manufacture the outcome, so the
++band stands as specified and its consequence is recorded instead. On this panel
++the scale check is one-sided; the band is asymmetric in risk; and whether a lower
++edge is needed at all cannot be determined from these data, because nothing in
++them is over-conservative enough to test one. The block count is nine checks
+ exercised and one that was not.
+ 
+ \paragraph{What the gate cannot see} The checks operate on a stored forecast
+@@ -155,28 +148,25 @@
+ only reading the code distinguishes them. Structural validation and code
+ provenance are complements, and neither is inferable from the other.
+ 
+-\paragraph{Nor can it validate prose} The same limit applies one level up, and we
+-report it against this paper rather than in the abstract. Converting the
+-manuscript's numeric claims to generated macros --- forced conversion, not
+-inspection --- surfaced five assertions that no artefact produces: a cluster-robust
+-$p$-value that inverts the conclusion of the paragraph containing it once the
+-artefact is read, two figures comparing a modified and a canonical test
+-statistic, a green-zone rate on an undeclared nine-model subset, and a pair of raw
+-violation rates whose producer emits only corrected ones. One of the five
+-survived a round of peer review. They were found because 79 literals sat outside
+-the reach of the script that checks the manuscript's arithmetic, and a literal
+-that is never emitted cannot be checked by a tool that checks emitted values ---
+-which is the same structure as a test that cannot fail informatively
+-(Section~\ref{sec:blindspot_cc}). A gate that validates series does not validate
+-the sentences written about them, and the argument of this paper applies to the
+-paper.
++\paragraph{Nor can it validate prose} The same limit applies one level up.
++Converting this manuscript's numeric claims to generated macros surfaced five
++assertions that no artefact produces: a cluster-robust $p$-value that inverts the
++conclusion of the paragraph containing it once the artefact is read, two figures
++comparing a modified and a canonical test statistic, a green-zone rate computed
++on an undeclared nine-model subset, and a pair of raw violation rates whose
++producer emits only corrected ones. One of the five survived a round of peer
++review. Seventy-nine numeric claims sat outside the reach of the script that
++checks the manuscript's arithmetic, and a literal that is never emitted cannot be
++checked by a tool that checks emitted values --- the structure of
++Section~\ref{sec:blindspot_cc}, one level up from the forecasts. A gate that
++validates series does not validate the sentences written about them.
+ 
+-\paragraph{Scoping is declared, not assumed} Support cardinality and tail reach
++\paragraph{Two checks are out of scope for order-statistic estimators} Support cardinality and tail reach
+ are inapplicable to order-statistic estimators, which may legitimately take few
+ distinct values and tie across adjacent $\alpha$ as a window slides; a discrete
+ predictive support may tie for the same reason. The gate records the estimator class of each
+ series in a manifest and declares the check inapplicable rather than returning a
+-verdict on it. A check that cannot fail informatively should say so.
++verdict on it.
+ 
+ \begin{table}[htbp]
+ 	\centering
+@@ -219,9 +209,8 @@
+ counterparts, which fail only the coverage-plausibility band, and only on one
+ asset each --- the residual tail deficiency of
+ Section~\ref{sec:mechanism:consequence}, recorded as a block requiring a written
+-diagnosis rather than silently admitted. The gate is therefore not a device that
+-passes everything a reader would want passed, and we report the two marginal
+-blocks rather than widening a band to absorb them.
++diagnosis rather than silently admitted. Two of the four blocks are therefore
++marginal, and the band that produces them is unchanged.
+ 
+ \paragraph{What this evidence is worth} The ten checks were specified after the
+ failure modes of Section~\ref{sec:audit_trail} had been identified, and several
+@@ -230,9 +219,8 @@
+ construction and is not evidence of sensitivity to failures of a kind not
+ represented here. The argument for them does not rest on that performance. It
+ rests on Table~\ref{tab:gate_residual}: the checks reduce a gap that the
+-coverage-based tests of Section~\ref{sec:blindspot} cannot reduce at all, by an
+-amount that is computed rather than claimed, and they leave a remainder that is
+-computed too.
++coverage-based tests of Section~\ref{sec:blindspot} cannot reduce at all, and both
++the reduction and the remainder are computed.
+ 
+ 
+ \section{Recalibration: What It Restores, and When to Apply It}

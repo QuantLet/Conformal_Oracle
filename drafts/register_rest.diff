@@ -1,0 +1,191 @@
+--- /tmp/pre_reg_rest.tex	2026-08-23 22:13:06
++++ main_R2.tex	2026-08-23 22:16:06
+@@ -176,7 +176,7 @@
+ concerns the tail-risk literature specifically --- they are invisible to the
+ backtests that regulate this domain.
+ 
+-That third claim is measured rather than asserted. At $\alpha = 0.01$ the
++That third claim was measured. At $\alpha = 0.01$ the
+ independence test of \citet{christoffersen1998} is \emph{degenerate} on
+ \nSeqCCUndefRawOne\% of the \nSeqPairs{} model--asset pairs with stored series,
+ because a 1\% tail generates too few exceedances to populate a transition table,
+@@ -230,19 +230,19 @@
+ is the second. This is the argument for validating a forecast series
+ structurally, before it is calibrated or evaluated.
+ 
+-Third, we propose such a validation gate --- ten checks on a forecast series, of
++Third, a validation gate --- ten checks on a forecast series, of
+ which two are invariants that follow from what a quantile forecast is, one is an
+ invariant tested through a proxy, and seven are plausibility bands with
+ thresholds we state rather than derive. Seven need nothing but the series and the
+ returns; one needs the model's sampled paths and two need an evaluation window,
+-and we say so rather than claim the gate is entirely free of one. Its scoping is declared in the other direction too: two
++so the gate is not entirely free of one. Two
+ checks are inapplicable to order-statistic estimators and record that rather than
+ returning a verdict, and all ten were specified after the failure modes had been
+ identified, so their performance on those failure modes is in-sample by
+ construction. The gate blocks \nGateBlocked{} of \nGateSeries{} series in this
+ panel.
+ 
+-Fourth, for the recalibration layer we give an asymptotic coverage guarantee for
++Fourth, the recalibration layer carries an asymptotic coverage guarantee for
+ the single-split estimator under $\beta$-mixing dependence with explicit
+ gap-separation conditions, together with finite-window bounds for the rolling
+ variant under distributional drift, and we report the intervention's
+@@ -257,8 +257,8 @@
+ \nDegradedRoll{} deteriorations at $\alpha = 0.01$ ---
+ \nGateRollAvoidedPct\% --- and costs \nGateRollUpgradesLost{} of
+ \nGateRollUpgrades{} Basel zone upgrades. Keyed on the evaluation window it would
+-avoid \nGateRollOracleAvoidedPct\% and cost none, and we report that only as the
+-oracle it is.
++avoid \nGateRollOracleAvoidedPct\% and cost none, which is an oracle bound rather
++than a deployable rule.
+ 
+ \paragraph{What this paper does not claim} It does not claim that foundation
+ models are unsuitable for tail-risk forecasting, nor that they are ready for it.
+@@ -785,8 +785,8 @@
+ \label{sec:results_raw}
+ 
+ Table~\ref{tab:master} reports raw and conformally corrected diagnostics across
+-\nMainForecasters{} forecasters and \nMainAssets{} assets, ordered by $\bar R$. Read it first for what it does
+-\emph{not} show. Once the two series sampled at the checkpoint default are set
++\nMainForecasters{} forecasters and \nMainAssets{} assets, ordered by $\bar R$. Its most useful feature is the
++narrowness of the range it spans. Once the two series sampled at the checkpoint default are set
+ aside, raw 1\% violation rates run from \nMainRawPiMin{} for CAViaR-AS to \nMainRawPiMax{} for GAS-$t$
+ --- a factor of three across dynamic-quantile models, score-driven models,
+ GARCH-family benchmarks, historical simulation and six zero-shot foundation-model
+@@ -856,22 +856,21 @@
+ part of the forecaster. That step is consequential: across three assets the same
+ grids give $\bar R$ between 0.005 and 1.70 depending on whether the closure is
+ Student-$t$, Gaussian or linear, and on BTC the choice moves both models from
+-the Basel yellow zone to the red one (Supplement~S.10). Reporting
+-``TimesFM~2.5 at the 1\% level'' without naming the closure describes an object
+-that does not exist.
++the Basel yellow zone to the red one (Supplement~S.10). A figure reported as
++``TimesFM~2.5 at the 1\% level'' therefore identifies the closure as much as the
++model, and is not interpretable without it.
+ 
+-The panel offers no controlled comparison of interfaces, and it is worth saying
+-why rather than substituting a within-family label for one. The two Moirai
++The panel offers no controlled comparison of interfaces, and a shared family
++name does not supply one. The two Moirai
+ releases are the natural candidate, and they run at $\nRawPiMoiraiOne$ and
+ $\nRawPiMoiraiTwo$, a gap of \nLitMoiraiGapPP{} percentage points. But Moirai~1.1 is a
+ masked-encoder model with multi-patch inputs and a mixture output, while
+ Moirai~2.0 replaces all three with a decoder-only architecture, a single patch
+ and a quantile loss, trained on a different corpus
+ \citep{woo2024moirai,liu2025moirai}. Output format, architecture and pretraining
+-data change together, so a gap of any size between them would be
+-unattributable. A shared family name is not evidence of a controlled comparison;
+-what differs between two releases is a primary-source question to settle before
+-the comparison is drawn rather than after. The one genuinely controlled contrast
++data change together, so a gap of any size between them would be unattributable.
++What differs between two releases is a primary-source question, and it settles
++before a comparison is drawn. The one genuinely controlled contrast
+ available here holds the weights, contexts and dates fixed and varies only the
+ code that reads the predictive law --- the two Chronos configurations of
+ Section~\ref{sec:mechanism}.\footnote{Every series in this table has been through the
+@@ -944,8 +943,7 @@
+ \nMainAssets{} assets for each truncated Chronos series against 17 of
+ \nMainAssets{} for each analytic counterpart, the sharpest separation any
+ diagnostic in this paper achieves (Supplement~S.1). That is the boundary of
+-Proposition~\ref{prop:identification} and we mark it here rather than leaving the
+-obvious question unanswered. It is not a general escape: the construction of
++Proposition~\ref{prop:identification}. It is not a general escape: the construction of
+ Section~\ref{sec:blindspot_pair} can be matched on mean expected shortfall as
+ well, after which a size-$5\%$ $Z_2$ test retains almost no power
+ (Supplement~S.9.7).
+@@ -988,7 +986,7 @@
+ The construction is explicit and is given in Supplement~S.9.7 as a linear
+ programme: the constraints --- coverage, variance, mean absolute deviation, and
+ the reported quantile --- are all linear in the probabilities of a discrete
+-symmetric law, so feasibility is decided rather than argued. The resulting pair
++symmetric law, so feasibility is decided by the programme. The resulting pair
+ is matched on the predictive standard deviation, on point-forecast accuracy in
+ both mean absolute error and root mean squared error, and on the median; it
+ differs only in the reported threshold and in the shape of the predictive law
+@@ -1056,7 +1054,7 @@
+ separate a series carrying an implementation failure from one that is merely
+ imperfect. Miscoverage is detected; its source is not identified.
+ 
+-That separation is measured rather than asserted. The exercise is run on the
++The separation was measured. The exercise is run on the
+ series as produced with each failure mode present, since that is the state in
+ which a diagnostic would have to identify one. Treating the five series affected
+ by an identified failure mode as positives and the eight unaffected series as
+@@ -1611,14 +1609,15 @@
+ take 161 days. Mitigations and the drift diagnostic that flags the regime in real
+ time are in Supplement~S.9.5.
+ 
+-\subsection{Practitioner guidance}
++\subsection{Implications for deployment}
+ \label{sec:practitioner}
+ 
+-\emph{Validate before you calibrate.} A recalibration decision taken on a series
+-that has not been structurally checked is a decision about an artefact, and the
+-correction will make it look correct (Section~\ref{sec:gate}).
++\emph{Structural validation precedes recalibration.} A recalibration decision
++taken on a series that has not been structurally checked is a decision about an
++artefact, and the correction will make it look correct
++(Section~\ref{sec:gate}).
+ 
+-\emph{Then decide whether to correct at all.} Apply the shift when the raw
++\emph{The correction has an indication.} The shift is warranted when the raw
+ forecast fails a backtest \emph{on the calibration window}, and not otherwise. At
+ $\alpha = 0.01$ that rule skips \nGateRollSkipped{} of \nSeqPairs{} pairs, avoids
+ \nGateRollAvoided{} of the \nDegradedRoll{} degradations the rolling estimator
+@@ -1627,27 +1626,29 @@
+ and a version that appears to be free is one evaluated on the window it used to
+ decide.
+ 
+-\emph{Choose the forecaster for the constraint, not the label.} With adequate
+-per-asset history, the GJR-GARCH family with conformal correction attains the
+-best corrected quantile score in this panel, and the two variants within it are
+-not distinguishable: their mean corrected scores differ by \nGapQSGapPct\%, the ordering
+-reverses between per-asset and pooled aggregation, and a Diebold--Mariano test on
+-the corrected loss differentials with Driscoll--Kraay panel-HAC variance returns $t = \nGapDMt$, $p = \nGapDMp$ over 24 assets. We therefore name the family and not a
+-winner within it. Where per-asset estimation is infeasible --- scale,
+-short history, latency --- a correctly configured zero-shot foundation model with
+-the same correction is competitive with the GARCH family at the 1\% level, which
+-is a real operational option and not a claim of superiority.
++\emph{The operative criterion is the estimation constraint, not the model class.}
++With adequate per-asset history, the GJR-GARCH family with conformal correction
++attains the best corrected quantile score in this panel, and the two variants
++within it are not distinguishable: their mean corrected scores differ by
++\nGapQSGapPct\%, the ordering reverses between per-asset and pooled aggregation,
++and a Diebold--Mariano test on the corrected loss differentials with
++Driscoll--Kraay panel-HAC variance returns $t = \nGapDMt$, $p = \nGapDMp$ over
++\nMainAssets{} assets. The family is therefore the identified unit, not a winner
++within it. Where per-asset estimation is infeasible --- scale, short history,
++latency --- a correctly configured zero-shot foundation model with the same
++correction is competitive with the GARCH family at the 1\% level, which is an
++operational option rather than a claim of superiority.
+ 
+-\emph{Monitor the signed shift, not the ratio.} $\qVstat$ carries the diagnosis:
+-a negative value means an over-conservative base forecast that the correction
+-tightens, releasing capital, and a positive one means the reverse. $\bar R$
+-cannot carry it, being a ratio of absolute values, which is why the two are
++\emph{The signed shift carries the diagnosis; the ratio does not.} $\qVstat$ is
++negative when the base forecast is over-conservative and the correction tightens
++it, releasing capital, and positive in the reverse case. $\bar R$ cannot carry
++that information, being a ratio of absolute values, which is why the two are
+ reported separately throughout. In this panel negative values are rare and belong
+ to no single forecaster --- three assets for TimesFM~2.5, two for Moirai~2.0, one
+ each for Moirai~1.1 and GJR-GARCH-$t$ --- while GJR-GARCH is positive on all
+ \nMainAssets{} assets (\nGJRnegqV{} negative). A forecaster that is
+-systematically over-conservative across an entire asset universe is worth
+-inspecting at the level of its quantile map before it is interpreted as a
++systematically over-conservative across an entire asset universe warrants
++inspection at the level of its quantile map before the pattern is read as a
+ modelling choice: the Student-$t$ failure mode of
+ Table~\ref{tab:failure_modes} presents exactly that way.
+ 
+@@ -1687,7 +1688,7 @@
+ evaluated. Ten such checks are cheap, eight of them need nothing but the series
+ and the returns, and they block \nGateBlocked{} of the \nGateSeries{} series
+ here. Two are invariants, one is an invariant tested through a proxy, and seven
+-are plausibility bands whose thresholds we state rather than derive; all ten were
++are plausibility bands with stated rather than derived thresholds; all ten were
+ specified after the failure modes they address had been identified, so their
+ performance on those failure modes is in-sample by construction. The argument for
+ them is not their measured sensitivity but that the alternative provably cannot

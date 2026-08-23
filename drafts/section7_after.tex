@@ -1,0 +1,226 @@
+\section{Structural Validation}
+\label{sec:gate}
+
+A coverage test identifies only the realised tail probability
+$u_t = F_t(\hat q^{lo}_t)$, so validation must rest on something else. This
+section measures how much of the blind spot of
+Proposition~\ref{prop:blindspot_depth} a structural check removes: rather more
+than half, and not all of it.
+
+A forecast series can be checked against properties it must have \emph{to be a
+Value-at-Risk series at all}, before it is calibrated, evaluated or compared with
+anything. The checks are stated on the lower quantile $\hat q^{lo}_\alpha$, which
+is negative and is what the forecast files store, and not on the positive
+threshold $\VaR_t^{\mathrm{raw}} = -\hat q_t^{lo}$ of
+equation~\eqref{eq:var_raw}; the two conventions differ by a sign, and a column
+named for a risk measure while holding a quantile is precisely the ambiguity
+that the first failure mode of Table~\ref{tab:failure_modes} exploits.
+
+Ten such checks are stated in Supplement~S.11 and implemented in
+\texttt{scripts/promotion\_gate.py}: a lower quantile whose median is not
+negative, quantiles that are not ordered across $\alpha$, an exceedance rate that
+does not respond to the nominal level, a predictive dispersion far from realised
+volatility, a support of a handful of distinct values.
+
+The ten are not of equal standing. Two are invariants that follow from what a
+quantile forecast is and carry no tunable constant; one is an invariant tested
+through a proxy with a threshold; the remaining seven are plausibility bands
+with chosen cutoffs, stated in Table~\ref{tab:gate_compact}. Seven of the ten need nothing but the forecast
+series and the returns. Tail reach needs the model's sampled paths and is
+inapplicable to grid and parametric forecasters; $\alpha$-responsiveness and
+coverage plausibility need an evaluation window, so the gate is not entirely
+upstream of the data a backtest consumes. What separates them from a backtest is the
+question they ask: not whether a coverage rate is statistically distinguishable
+from nominal, but whether the series responds to the level it was asked for at
+all. No $p$-value is computed, no benchmark is required, and none of the ten
+needs access to the hardware that produced the forecasts.
+
+\subsection{How much of the blind spot the gate removes}
+\label{sec:gate_residual}
+
+The construction of Section~\ref{sec:blindspot_pair} makes this measurable. For
+a given restriction on the return law, let $\delta^\star$ be the largest
+truncation depth admitting an alternative model that the available diagnostics
+cannot distinguish from a correctly specified one, and read off the
+Value-at-Risk understatement it permits.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Residual unidentifiable understatement, by what the diagnostic is
+		allowed to read. $\delta^\star$ is the largest truncation depth admitting
+		an indistinguishable alternative under a unimodal return law; the last
+		column is the Value-at-Risk understatement it permits, against a true 1\%
+		quantile of $\nGapQTrueStd$ in units of conditional scale. Each figure is
+		attained by an explicit pair, not merely bounded. The discretisation
+		converges from above, so every entry is an upper bound and the bias runs
+		toward overstating the blind spot.}
+	\label{tab:gate_residual}
+	\footnotesize
+	\setlength{\tabcolsep}{5pt}
+	\begin{tabular}{@{}>{\raggedright\arraybackslash}p{7.2cm}rr@{}}
+		\toprule
+		\textbf{Diagnostic reads} & $\bm{\delta^\star}$ & \textbf{understated by} \\
+		\midrule
+		the exceedance path alone, no restriction on returns & \nGapDeltaFree & \nGapUndFree\% \\
+		the exceedance path alone, unimodal returns & \nGapDeltaUni & \nGapUndUni\% \\
+		\addlinespace[2pt]
+		\quad + the series and the returns, scale band at $\nGapBandNow$ & \nGapDeltaGateNow & \nGapUndGateNow\% \\
+		\quad + the series and the returns, band tightened to $\nGapBandTight$ & 0.017 & \nGapUndTight\% \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+Table~\ref{tab:gate_residual} is the section's result. The structural checks cut
+the unidentifiable understatement from \textbf{\nGapUndUni\%} to
+\textbf{\nGapUndGateNow\%}, and tightening the binding band to the edge of what
+this panel permits takes it to \nGapUndTight\%. They do not cut it to zero. A pair exists that passes all ten checks, exceeds on the same
+days at the same rate as a correctly specified forecaster, and still reports a
+threshold a fifth too small. That residue is the gate's limit.
+
+The two halves of the result point in opposite directions. Structural validation
+does not close the identification gap, so the checks are not a complete
+complement of the test class. Against that, the size of their contribution is
+computed: the backtests remove none of the gap by construction, and the checks
+remove somewhat more than half of it.
+
+\subsection{\texorpdfstring{Where the band edge can sit, and how much margin it has}{Where the band edge can sit, and how much margin it has}}
+\label{sec:gate_band}
+
+The scale band --- $\operatorname{median}(\hat q^{lo}_{0.01}/\hat\sigma_t)$
+within $[\nGapBandLower, \nGapBandNow]$ --- is the check that binds, and its
+edges were chosen by hand. On these data the choice does not matter, and the
+separation that makes it not matter is the quantity worth reporting.
+
+Evaluated on all \nGapCellsTotal{} series--asset cells, the two populations are
+disjoint by a wide interval. The worst well-specified cell sits at
+$\nGapCellGoodWorst$ and the best truncated cell at $\nGapCellTruncBest$, a gap
+of $\nGapGapWidth$ in units of estimated scale. \emph{Any} edge strictly inside
+that interval blocks all \nGapCellsTrunc{} truncated cells and no well-specified
+one, so the gate's verdict on this panel is invariant to where the edge is placed
+within the gap. The verdict therefore does not rest on the choice at all.
+
+The safety margin is a different quantity from the gap, and the smaller of the
+two. It is the distance from the edge to the nearest well-specified cell, and at
+$\nGapBandNow$ it is $\nGapMarginUpper$ --- an order of magnitude smaller than
+the gap. Tightening the edge to $\nGapBandTight$ reduces the residual
+understatement from \nGapUndGateNow\% to \nGapUndTight\%, and leaves a margin of
+$\nGapMarginTight$: essentially none. Robustness computed from the gap rather
+than from the margin overstates the check by an order of magnitude.
+
+The margin also states the check's limit of generalisation, and it is a real one.
+The separation here is clean because this panel contains no series that is
+\emph{moderately} misspecified: it holds eleven series whose reported quantile
+sits between two and three estimated standard deviations below zero, and two
+whose truncation has driven it to a fifth of that. A forecaster reporting
+$-1.9\hat\sigma_t$ --- under-conservative, but by a quarter rather than by a
+factor of ten --- would be blocked as surely as a truncated one, and the block
+would be a false positive. What Section~\ref{sec:gate_residual} establishes is
+therefore that the check discriminates against gross reduction failures, on a
+panel that contains only gross ones and correctly specified ones. It says nothing
+about the intermediate range, because nothing in this panel occupies it.
+
+\paragraph{One of our own checks cannot fail, and that is the paper's argument
+turned on itself} The lower edge $\nGapBandLower$ blocks
+\nGapCellsLowerBlocks{} of \nGapCellsTotal{} cells. Nothing in the panel comes
+near it: the most negative cell anywhere is $\nGapCellGoodBest$, a margin of
+$\nGapMarginLower$, five times the margin at the upper edge. \emph{A check that
+blocks nothing on any series it has been shown cannot fail informatively, so a
+series passing it has not been tested --- which is precisely what
+Section~\ref{sec:blindspot_cc} says about a Christoffersen statistic computed on
+a degenerate transition table, and it is here in one of our own ten checks.} The
+two cases have the same structure: an absence of evidence returned in the form
+that reads as a pass, and a pass rate reported as though it were an outcome.
+
+Adjusting the edge downward until it binds would manufacture the outcome, so the
+band stands as specified and its consequence is recorded instead. On this panel
+the scale check is one-sided; the band is asymmetric in risk; and whether a lower
+edge is needed at all cannot be determined from these data, because nothing in
+them is over-conservative enough to test one. The block count is nine checks
+exercised and one that was not.
+
+\paragraph{What the gate cannot see} The checks operate on a stored forecast
+series and the returns. They can establish that a series has the properties a
+Value-at-Risk series must have, and they cannot establish that the estimator
+which produced it is the estimator the paper says produced it. A mismatch between
+a declared estimator and an implemented one leaves no trace in the series: both
+the plain empirical quantile and the conformal order statistic of
+equation~\eqref{eq:qV} yield a well-formed series that passes all ten checks, and
+only reading the code distinguishes them. Structural validation and code
+provenance are complements, and neither is inferable from the other.
+
+\paragraph{Nor can it validate prose} The same limit applies one level up.
+Converting this manuscript's numeric claims to generated macros surfaced five
+assertions that no artefact produces: a cluster-robust $p$-value that inverts the
+conclusion of the paragraph containing it once the artefact is read, two figures
+comparing a modified and a canonical test statistic, a green-zone rate computed
+on an undeclared nine-model subset, and a pair of raw violation rates whose
+producer emits only corrected ones. One of the five survived a round of peer
+review. Seventy-nine numeric claims sat outside the reach of the script that
+checks the manuscript's arithmetic, and a literal that is never emitted cannot be
+checked by a tool that checks emitted values --- the structure of
+Section~\ref{sec:blindspot_cc}, one level up from the forecasts. A gate that
+validates series does not validate the sentences written about them.
+
+\paragraph{Two checks are out of scope for order-statistic estimators} Support cardinality and tail reach
+are inapplicable to order-statistic estimators, which may legitimately take few
+distinct values and tie across adjacent $\alpha$ as a window slides; a discrete
+predictive support may tie for the same reason. The gate records the estimator class of each
+series in a manifest and declares the check inapplicable rather than returning a
+verdict on it.
+
+\begin{table}[htbp]
+	\centering
+	\caption{The ten checks, stated on the lower quantile $\hat q^{lo}_\alpha$
+		(negative), which is what the forecast files store. Full conditions,
+		scoping rules and the per-series results are in Supplement~S.11.}
+	\label{tab:gate_compact}
+	\footnotesize
+	\setlength{\tabcolsep}{4pt}
+	\begin{tabular}{@{}llp{4.9cm}@{}}
+		\toprule
+		\textbf{Check} & \textbf{Kind} & \textbf{Needs} \\
+		\midrule
+		Sign & invariant & forecast only \\
+		Monotonicity across $\alpha$ & invariant & forecast only \\
+		Alignment (no look-ahead) & invariant, proxy test & returns \\
+		\midrule
+		Support cardinality$^{\dagger}$ & band & forecast only \\
+		Extremes & band & forecast only \\
+		Scale against realised $\sigma$ & band & realised $\sigma$ \\
+		Predictive dispersion & band & realised $\sigma$ \\
+		$\alpha$-responsiveness & band & evaluation window \\
+		Coverage plausibility & band & evaluation window \\
+		Tail reach$^{\dagger}$ & band & sample paths \\
+		\bottomrule
+	\end{tabular}
+	\begin{minipage}{\linewidth}\scriptsize
+		\smallskip
+		$^{\dagger}$ Declared inapplicable to order-statistic estimators, which
+		take few distinct values by construction and may tie across adjacent
+		$\alpha$. The gate records the estimator class in the series manifest and
+		returns \emph{inapplicable} rather than a verdict.
+	\end{minipage}
+\end{table}
+
+\paragraph{Result on this panel} The gate blocks \nGateBlocked{} of the
+\nGateSeries{} series submitted to it. Two are the Chronos series sampled at the
+checkpoint default, which fail monotonicity, scale, $\alpha$-response, coverage
+and dispersion on all \nMainAssets{} assets. Two are their analytic
+counterparts, which fail only the coverage-plausibility band, and only on one
+asset each --- the residual tail deficiency of
+Section~\ref{sec:mechanism:consequence}, recorded as a block requiring a written
+diagnosis rather than silently admitted. Two of the four blocks are therefore
+marginal, and the band that produces them is unchanged.
+
+\paragraph{What this evidence is worth} The ten checks were specified after the
+failure modes of Section~\ref{sec:audit_trail} had been identified, and several
+exist because a failure of that class had already passed whatever checks were in
+place at the time. Their performance on those failure modes is in-sample by
+construction and is not evidence of sensitivity to failures of a kind not
+represented here. The argument for them does not rest on that performance. It
+rests on Table~\ref{tab:gate_residual}: the checks reduce a gap that the
+coverage-based tests of Section~\ref{sec:blindspot} cannot reduce at all, and both
+the reduction and the remainder are computed.
+
+
+\section{Recalibration: What It Restores, and When to Apply It}
