@@ -213,3 +213,50 @@ boundary, and it is not evidence that the reported quantile is the quantile it
 claims to be --- the two coincide only when the miscoverage is large enough to
 cross the boundary. Waiting for more data does not close that gap; it widens the
 share of replications in which the gap is invisible.
+
+\subsection{The harness}
+\label{sec:mc_harness}
+
+A simulation study is an instrument, and this paper's subject is what instruments
+miss. The design above was therefore gated on reproducing an existing
+two-sample-size study before any new sample size was reported, and the gate is
+stated here with what it can and cannot see.
+
+The published study reproduces from its 5{,}000 per-replication rows on every
+printed value. A fresh implementation of the recursions and the estimator
+reproduces all ten of its cells on all six reported quantities, at a tolerance of
+three standard errors of the \emph{difference} between two independent Monte Carlo
+estimates, with the new run at 2{,}000 replications so that the published run's
+$500$-replication error dominates the comparison. The smallest systematic
+discrepancy that tolerance admits is $2.1\times10^{-4}$ on mean $\qVstat$: the
+gate establishes agreement to Monte Carlo resolution, and not exact agreement.
+
+Two defects surfaced, both in the harness rather than in what it was measuring,
+and neither in a direction the results would have revealed.
+
+The first was a tolerance. The standard error of a standard deviation was taken as
+$\mathrm{sd}/\sqrt{2N}$, which assumes a normal replication distribution;
+$\qVstat$ is a $1\%$ order statistic of heavy-tailed scores and its replication
+distribution has skewness up to $+1.5$, so the declared tolerance understated the
+true sampling variability by up to $1.76$ times, worst in exactly the cell where
+the skew is largest. The second was a seed. Replications were keyed on Python's
+string \texttt{hash}, which is salted per interpreter process, so two runs of the
+same script drew different samples and the set of cells the gate flagged changed
+between them --- non-reproducibility introduced by the code written to check for
+it. Both were found because the gate failed, not because the results looked
+wrong; under a correctly specified tolerance and a deterministic seed all ten
+cells reproduce.
+
+Neither defect is in a forecasting model, and that is the reason for reporting
+them. This paper's argument is that the code converting a model output into a
+number is an object of study, and the same argument applies to the code that
+checks it. Section~\ref{sec:discuss} returns to the point with the second
+instance, which is in the estimator this paper offers as a remedy.
+
+One control is reported rather than repaired. Run on a forecaster given the
+correct innovation law, so that the population shift is zero, the harness returns
+zero at every calibration sample of 700 or more and a small negative value at 350
+--- the interpolated quantile's own downward bias in a right-skewed tail, running
+opposite to the conformal convention's upward one. At $\alpha = 0.01$ and
+$n = 350$ neither convention is unbiased. The $T = 500$ column of
+Table~\ref{tab:mc_grid} carries that and is reported with it.
