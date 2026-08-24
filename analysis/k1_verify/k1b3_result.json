@@ -1,0 +1,43 @@
+{
+  "raw": {
+    "A": 0,
+    "B": 108,
+    "C": 0,
+    "n11_zero": 108,
+    "code_rule": 108,
+    "stored_nan": 108,
+    "printed_pct": 34.6,
+    "n_pairs": 312
+  },
+  "cor": {
+    "A": 0,
+    "B": 167,
+    "C": 0,
+    "n11_zero": 167,
+    "code_rule": 167,
+    "stored_nan": 167,
+    "printed_pct": 53.5,
+    "n_pairs": 312
+  },
+  "neg_n11>0 (must NOT be flagged)": {
+    "n00": 991,
+    "n01": 3,
+    "n10": 3,
+    "n11": 2,
+    "flagged": false
+  },
+  "neg_all zeros (must be flagged)": {
+    "n00": 999,
+    "n01": 0,
+    "n10": 0,
+    "n11": 0,
+    "flagged": true
+  },
+  "neg_spread out, n11=0<n10 (condition B)": {
+    "n00": 991,
+    "n01": 4,
+    "n10": 4,
+    "n11": 0,
+    "flagged": true
+  }
+}

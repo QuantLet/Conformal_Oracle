@@ -1,0 +1,21 @@
+{
+  "CAViaR-AS": {
+    "pass_original": 15,
+    "pass_second_impl": 15,
+    "pass_second_impl_common_window": 15,
+    "vector_agreement": 24,
+    "vector_agreement_common": 24,
+    "max_abs_pihat_diff": 0.0007936507936507999,
+    "mean_pihat": 0.010993149849744088
+  },
+  "CAViaR-SAV": {
+    "pass_original": 14,
+    "pass_second_impl": 14,
+    "pass_second_impl_common_window": 16,
+    "vector_agreement": 24,
+    "vector_agreement_common": 22,
+    "max_abs_pihat_diff": 0.001180637544273902,
+    "mean_pihat": 0.011358690034742434
+  },
+  "negative_control_rejections": 24
+}

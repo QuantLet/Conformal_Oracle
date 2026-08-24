@@ -1,0 +1,12 @@
+{
+  "n_cells": 40,
+  "all_exactly_50": true,
+  "default_counts": [
+    50
+  ],
+  "top_k_10_counts": [
+    10
+  ],
+  "top_k_full_min": 331,
+  "top_k_full_max": 648
+}

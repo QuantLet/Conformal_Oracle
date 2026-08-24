@@ -1,0 +1,1583 @@
+                                     CAEPR Working Paper
+                                         #2012-003
+
+
+
+
+Pitfalls in Backtesting Historical Simulation VaR Models
+
+                             Juan Carlos Escanciano
+                                    Indiana University
+
+                                           Pei Pei
+         Indiana University and Chinese Academy of Finance and
+        Development, Central University of Finance and Economics
+
+                                     February 21, 2012
+
+
+
+
+This paper can be downloaded without charge from the Social Science Research Network
+electronic library at: http://ssrn.com/abstract=2026537.
+
+The Center for Applied Economics and Policy Research resides in the Department of Economics
+at Indiana University Bloomington. CAEPR can be found on the Internet at:
+http://www.indiana.edu/~caepr. CAEPR can be reached via email at caepr@indiana.edu or
+via phone at 812-855-4050.
+
+©2012 by Juan Carlos Escanciano and Pei Pei. All rights reserved. Short sections of text, not to
+exceed two paragraphs, may be quoted without explicit permission provided that full credit,
+including © notice, is given to the source.
+     PITFALLS IN BACKTESTING
+HISTORICAL SIMULATION VaR MODELS
+                        Juan Carlos Escanciano∗                   Pei, Pei†
+
+               First draft: October 2010. This draft: February 2012
+
+
+
+                                             Abstract
+
+          Historical Simulation (HS) and its variant, the Filtered Historical Simulation (FHS),
+      are the most widely used Value-at-Risk forecast methods at commercial banks. These
+      forecast methods are traditionally evaluated by means of the unconditional backtest.
+      This paper formally shows that the unconditional backtest is always inconsistent for
+      backtesting HS and FHS models, with a power function that can be even smaller than
+      the nominal level in large samples. Our findings have fundamental implications in
+      the determination of market risk capital requirements, and also explain Monte Carlo
+      and empirical findings in previous studies. We also propose a data-driven weighted
+      backtest with good power properties to evaluate HS and FHS forecasts. Finally, our
+      theoretical findings are confirmed in a Monte Carlo simulation study and an empirical
+      application with three U.S. stocks. The empirical application shows that multiplication
+      factors computed under the current regulatory framework are downward biased, as they
+      inherit the inconsistency of the unconditional backtest.
+
+      JEL classification: C52; C32; G21; G32
+      Keywords: Backtesting; Basel Accord; Risk management; Value at Risk; Conditional
+         quantile; Market Risk Capital requirements.
+
+
+
+
+  ∗
+     Department of Economics, Indiana University, 105 Wylie Hall, 100 South Woodlawn Avenue, Bloom-
+ington, IN 47405–7104, USA. E-mail: jescanci@indiana.edu. Web Page: http://mypage.iu.edu/˜jescanci/
+Research funded by the Spanish Plan Nacional de I+D+I, reference number SEJ2007-62908.
+   †
+     Department of Economics, Indiana University and Chinese Academy of Finance and Development, Cen-
+tral University of Finance and Economics. E-mail: peipei@indiana.edu.
+
+
+                                                 1
+1     Introduction
+
+Value-at-Risk (VaR) has become the standard tool for measuring market risk used by finan-
+cial institutions and their regulators. VaR is defined as the maximum expected loss on an
+investment over a specified horizon at a particular confidence level; see Jorion (2006). VaR
+summarizes market risk into a single number which, in statistical terms, is a quantile of
+the conditional distribution of portfolio returns given investor’s information set. Ever since
+the 1996 Amendment of the Basel Accord (see Basel Committee on Banking Supervision,
+1996a and 1996b), VaR not only offers a measure of market risk, but it also forms the basis
+for the determination of market risk capital. Obviously, the foremost concern of VaR users
+is to forecast VaRs accurately in order to guide their decisions. According to a recent in-
+ternational survey by Pérignon and Smith (2010), the Historical Simulation (HS) forecast
+model and its variant, the Filtered HS (FHS), are the most currently used methods at com-
+mercial banks.1 These methods use unconditional quantiles of raw data and standardized
+innovations, respectively, to forecast conditional quantiles of portfolio returns.
+    Within the framework of the Basel Accord, besides the VaR forecasts, other crucial
+ingredients in determining market risk capital requirements are the forecast evaluation or
+backtesting procedure and the multiplication factors based on the outcomes of the backtesting
+procedure.2 Therefore, backtesting, as a forecast evaluation method of a VaR model, is of
+vital importance for financial institutions and their regulators. There are several backtesting
+methods available. Among the most popular methods are the unconditional coverage test of
+Kupiec (1995, henceforth K-test), the conditional backtest of Christoffersen (1998, henceforth
+C-test), the CAViaR test of Engle and Manganelli (2004), the duration-based approach of
+Christoffersen and Pelletier (2004) and the density forecast evaluation approach of Berkowitz
+(2001). For an excellent review of these methods see Berkowitz, Christoffersen and Pelletier
+   1
+     These authors find that 73% of the banks that disclose their VaR methodology in their 2005 annual
+reports use HS or related techniques.
+   2
+     Currently, stressed VaR is also incorporated into the calculation of capital requirements, see Basel
+Committee on Banking Supervision (2011).
+
+
+
+                                                   2
+(2011). Arguably, the unconditional coverage test is the most widely employed backtesting
+procedure given its simplicity and also the one implicitly incorporated in the Basel Accord for
+determining market risk capital requirements (see Basel Committee on Banking Supervision,
+1996b). It simply computes the frequency of the ex-post trading outcomes that are less than
+or equal to the ex-ante VaR forecasts, and compares this frequency with the specified VaR
+level, e.g., 1%. Large differences between the empirical frequency and the theoretical VaR
+level indicates that, on average, the forecasts are not optimal.3
+    This paper draws on the observation that the most widely used VaR models, HS or FHS
+models, are commonly evaluated with the K-test, and it formally shows that this combination
+is highly misleading. We prove that the K-test is always inconsistent in detecting non-optimal
+HS or FHS forecasts. That is, the rejection probability of the K-test does not converge to
+one as the sample size increases for non-optimal forecasts. This theoretical finding explains
+the low power associated with the K-test in simulations carried out in the literature, see
+e.g., Kupiec (1995), Pritsker (2006) and Pérignon and Smith (2008), among many others.
+For instance, Pritsker (2006) provides Monte Carlo evidence on the low power of the K-
+test for detecting lack of optimality of HS models in generalized autoregressive conditional
+heteroscedastic (GARCH) models. Based on simulations, he concludes that the K-test is not
+useful in detecting some deficiencies of HS models.4 We remark that we do not address in
+this paper the evaluation of HS or FHS VaR models, which has been already investigated
+in Pritsker (2006), but rather the evaluation of the backtesting methods commonly used
+for assessing optimality of HS and FHS forecasts. Our results do provide a theoretical
+explanation for the aforementioned Monte Carlo findings.
+    As an alternative to the K-test we propose a new data-driven weighted backtest with
+good power properties for detecting lack of optimality of HS and FHS models. The new test
+statistic combines a well-known test, the independence test of Christoffersen (1998), with
+    3
+      As is standard in the VaR literature, optimality is with respect to the “tick” loss function; see next
+section for a formal definition of optimal forecast.
+    4
+      Pritsker (2006) shows theoretically that HS models are both under-responsive to changes in conditional
+risk, and respond to changes in risk in an asymmetric fashion.
+
+
+                                                     3
+an adaptive backtest using a nonparametric weight. This combination results in a test with
+good power performance as demonstrated in our Monte Carlo simulations and empirical
+application, since the two test statistics provide asymptotically independent information.
+The proposed test statistic is our preferred choice within a general class of weighted backtests
+discussed in the paper. We also show that this class contains many of the existing traditional
+backtests, and that within this class, our preferred choice possesses some optimal power
+properties for assessing optimality of HS and FHS forecasts.
+   As mentioned earlier, an important implication of backtesting results is the determination
+of the multiplication factors for market risk capital requirements. Our theoretical results
+imply that computing the multiplication factors based on the K-test, as suggested by the
+current regulatory framework, is highly misleading for HS and FHS models, because the lack
+of power of the K-test will result in underestimated multiplication factors, and then, in likely
+insufficient market risk capital reserves. An empirical application to U.S. stocks highlights
+this important implication of our theoretical results. To the best of our knowledge, this is
+the first paper that shows theoretically the important limitation of backtesting methods for
+HS and FHS models, and their implications on market risk capital requirements.
+   The remainder of the paper is organized as follows. Section 2 describes the forecast
+evaluation problem from a decision point of view and shows the inconsistency of the K-test
+for HS and FHS models. In Section 3 we propose a large class of weighted backtesting
+methods and a data-driven test within the class, which we term D-test, and we establish
+the asymptotic distribution theory for them. The finite-sample performances of the K-
+test, C-test and D-test for backtesting HS and FHS models are investigated using Monte
+Carlo methods in Section 4. Section 5 analyzes, in an application to several portfolios
+of U.S stock data, the testing results for the optimality of HS and FHS forecasts and the
+corresponding implications on the determination of the multiplication factors for market risk
+capital requirements. Our application illustrates the lack of power of the commonly used
+backtesting methods and the ability of the new backtesting method to uncover suboptimal
+
+
+                                               4
+VaR forecasts from HS and FHS models. Finally, section 6 concludes. Mathematical proofs
+are gathered in the Appendices at the end of the paper.
+
+
+
+2     Backtesting Historical Simulation Models
+
+In this section, we introduce the forecast evaluation problem for VaR models, and we prove
+the inconsistency of the K-test in testing optimality of HS and FHS forecasts. We denote
+the real-valued time series of portfolio returns or Profit and Loss (P&L) account by Yt , and
+assume that at time t − 1 the bank’s information set is given by It−1 , which contains past
+values of Yt and other relevant economic and financial variables. We assume that VaR users
+face the following decision problem: with the information available at time t − 1, they aim
+to find a measurable function q ∗ (It−1 ) minimizing the conditional expected asymmetric or
+“tick” loss function, that is
+
+
+                          q ∗ (It−1 ) := arg min E [Lα (Yt , q(It−1 )) | It−1 ] ,             (1)
+                                              q
+
+
+
+where Lα (Yt , q(It−1 )) := {α − 1(Yt ≤ q(It−1 ))} (Yt − q(It−1 )) and 1(A) is the indicator func-
+tion of the event A, that is, 1(A) = 1 if A occurs and 0 otherwise. The symbol := denotes
+definition. Henceforth, an optimal forecast according to this loss function is simply called
+optimal (see e.g., Christoffersen, 1998).
+    It is well-known that, provided the conditional distribution of Yt given It−1 is continuous,
+the optimal forecast q ∗ (It−1 ) in (1) is the α-th conditional quantile (i.e., VaR) of Yt given
+It−1 , say qα (It−1 ), which is implicitly defined by the restriction
+
+
+             P (Yt ≤ qα (It−1 ) | It−1 ) = α, almost surely (a.s.), α ∈ (0, 1), ∀t ∈ Z.       (2)
+
+
+A common approach in empirical work is to assume a parametric VaR model for qα (It−1 ),
+say M = {mα (It−1 , θ) : θ ∈ Θ ⊂ Rp }, and to proceed to make VaR forecasts using the model
+
+
+                                                    5
+M. In parametric models the unknown parameter θ0 belongs to a suitable parameter space
+Θ ⊂ Rp . The literature on parametric VaR modeling has been advancing rapidly, see e.g.,
+Engle and Manganelli (2004), Koenker and Xiao (2006) and Gourieroux and Jasiak (2006),
+among many others.5
+       The preferred model by financial institutions is the HS model or its variant, the FHS,
+see Barone-Adesi et al. (1998, 1999) and Barone-Adesi and Giannopoulos (2002). The HS
+model specifies a time-constant VaR model
+
+
+                                      mα (It−1 , θ0 ) = θ0 ≡ FY−1 (α),                                    (3)
+
+
+where, henceforth, for a generic strictly stationary sequence {Zt }t∈Z , FZ−1 (α) denotes the
+unconditional quantile function of Zt evaluated at α, i.e., FZ−1 (α) := inf{z ∈ R : FZ (z) ≥
+α}, where FZ (·) is the cumulative distribution function (cdf) of Zt . The main assumption
+underlying HS is the time-invariant conditional variance of returns, which is an unrealistic
+assumption and always empirically rejected.
+       In contrast, the FHS assumes an underlying time-variant location-scale structure, and
+hence it specifies a time-varying VaR model
+
+
+                mα (It−1 , θ0 ) = µ(It−1 , β0 ) + σ(It−1 , β0 )Fε−1 (α), θ0 = (β0 , Fε−1 (α)),            (4)
+
+
+where µt ≡ µ(It−1 , β0 ) and σt ≡ σ(It−1 , β0 ) are the conditional mean and standard deviation
+of Yt given It−1 , respectively, and the standardized innovations {εt := (Yt − µt )/σt }t∈Z are
+assumed to be independent and identically distributed (i.i.d.), and independent of It−1 . The
+unknown parameter θ0 comprises β0 and Fε−1 (α), which are the conditional mean and stan-
+dard deviation model parameter and the α-th unconditional quantile of the standardized
+   5
+    The reader should not be confused with a fully parametric approach in which the whole conditional
+distribution of Yt given It−1 is specified. We do not need such full parametric specification in VaR analysis,
+since our concern is just on the conditional quantile function at a particular quantile level α. In this sense
+and in the statistical jargon the specified conditional distribution is semiparametric.
+
+
+
+
+                                                      6
+innovations, respectively. Among the most common models for µt and σt are the autoregres-
+sive moving average (ARMA) and GARCH models, respectively, see Berkowitz and O’Brien
+(2002) for motivation of this specification in financial risk management.6 For a review of
+ARMA and GARCH models see e.g., Li, Ling and McAleer (2002).
+    Once a VaR model has been specified for forecasting, a natural testing problem is to
+evaluate the optimality of the resulting VaR forecasts. This is the so-called backtesting
+procedure for VaR models. That is, we aim to test for the null hypothesis
+
+
+                                H0 : mα (It−1 , θ0 ) is an optimal forecast,
+
+
+against the alternative hypothesis, say HA , that mα (It−1 , θ0 ) is not optimal. From our
+previous discussion, the null entails that mα (It−1 , θ0 ) is a correctly specified VaR model,
+mα (It−1 , θ0 ) = qα (It−1 ) a.s.. In this paper we are concerned with tests for H0 when mα (It−1 , θ0 )
+is given by a HS or FHS model in (3) or (4), respectively.
+    A necessary condition for an optimal forecast is that it is unbiased, i.e., (2) implies that
+
+
+                                              E[ht,α (θ0 )] = α,
+
+
+where ht,α (θ0 ) := 1(Yt ≤ mα (It−1 , θ0 )) is the so-called hit. This implication suggests a test
+for H0 based on rejecting for large absolute values of
+
+                                                            n
+                                               1 X
+                              KP ≡ K(P, R) := √         [ht,α (θ0 ) − α] ,
+                                                P t=R+1
+
+where P and R are the out-of-sample and in-sample sample sizes, respectively, and n :=
+P + R. This is the so-called unconditional backtest (Kupiec, 1995), in short K-test. The
+K-test is the reference backtest in the banking industry and the academia. Escanciano and
+   6
+     For example, the AR(1)-GARCH(1,1) model is one of the popular specifications for financial data,
+where µ(It−1 , β0 ) = µ00 Yt−1 and σ(It−1 , β0 ) = ω00 + ω01 (Yt−1 − µ00 Yt−2 )2 + ω02 σ 2 (It−2 , β0 ) with β0 =
+(µ00 , ω00 , ω01 , ω02 )0 , |µ00 | < 1, ω00 > 0, ω01 ≥ 0, ω02 ≥ 0 and ω01 + ω02 < 1.
+
+
+
+                                                       7
+Olmo (2010) has extended the K-test to a situation where the parameter θ0 is unknown
+and estimated. Our main result formally shows that the K-test and its generalization to
+estimated parameter are inconsistent in detecting non-optimal forecasts from HS or FHS
+models. Intuitively, the test statistic KP will remain “small” under the lack of forecast
+optimality for HS or FHS models, as the corresponding hit sequence has a mean equal to α
+under the alternative hypothesis. This intuition is formalized below in our Theorem 1.
+                                                                            p
+   Under appropriate regularity conditions and the null hypothesis, KP / α(1 − α) con-
+verges to a standard normal random variable, see Kupiec (1995). The asymptotic power
+function of Kupiec’s two sided test at τ % nominal level is then defined as
+                                                                             !
+                                                 KP
+                    Π(τ, α) := lim Pr      p         > z1−τ /2 | HA               ,
+                               P →∞         α(1 − α)
+
+where zτ is the corresponding τ -quantile from the standard normal distribution. That is,
+Π(τ, α) is the limit probability of rejecting optimality of HS or FHS forecasts when in fact
+they are not optimal. It will be shown that the asymptotic power function depends on the
+long-run variance
+
+                                           ∞
+                                           X
+                       2
+                      σK := α(1 − α) + 2         Cov (ht,α (θ0 ), ht−j,α (θ0 ))
+                                           j=1
+
+                          := α(1 − α) + 2σhK ,
+
+
+which is finite under Assumption A1 in Appendix A. The following Theorem shows the
+inconsistency of the K-test. Let Φ be the cdf of the standard normal random variable.
+
+Theorem 1: Assume that mα (It−1 , θ0 ) is given by a HS or FHS model, and let Assumption
+A1 in Appendix A hold. Then,
+
+                                                     p              !
+                                                         α(1 − α)
+                             Π(τ, α) = 2Φ zτ /2                         .
+                                                          σK
+
+
+
+                                                 8
+A consequence of Theorem 1 is that the K-test is inconsistent, that is, Π(τ, α) < 1. The
+                                                                                        2
+magnitude of the power function depends on the relative size of the long-run variance, σK ,
+                                                2
+and the asymptotic null variance, α(1 − α). If σK < α(1 − α), or equivalently σhK < 0, the
+power function is smaller than the nominal level τ, otherwise it is larger than τ . Empirically,
+σhK > 0 is more consistent with actual financial data due to the well-known property of
+clustering of extremes. Therefore, our theoretical results suggest that the K-test will have
+low power, but still larger than the nominal level for large sample sizes. Also, note that
+the larger σhK , the higher the power of the K-test. Thus, the inconsistency of the K-test is
+less problematic in periods of high persistence in the (left) tail dependence (e.g. during a
+financial crisis).
+   Theorem 1 is proved under a mixing condition, see Assumption A1 in Appendix A. We
+remark, however, that any other weak dependence concept leading to a Central Limit Theo-
+rem (CLT) for the K-test under the alternative hypothesis could be used here. Particularly
+                                                                            √
+in the extreme case of σhK = ∞, the CLT does not hold (at the usual rate of P ), and the
+K-test diverges to infinity under the alternative hypothesis. Thus, the assumption σhK < ∞
+is neccesary and sufficient for the inconsistency of the K-test. Strictly speaking, Theorem
+1 is not applicable when σhK = ∞, but it still provides useful information and explains
+simulations results obtained with models such as the JP Morgan’s (1996) RiskMetric model,
+see our simulations below.
+   Theorem 1 sheds light on simulations and applications carried out in the literature.
+We remark on some conclusions that the literature has drawn from simulations. First,
+our Theorem 1 shows that the low power of the K-test cannot be in general improved by
+considering small VaR confidence levels 1−α, large sample sizes P or different approximations
+to its finite-sample distributions, e.g., bootstrap. Second, the lack of power affects both HS
+and FHS models. Third, Theorem 1 also holds when θ0 is estimated. Most Monte Carlo
+studies in the literature have evaluated the performance of the classical K-test in a setting
+where θ0 is estimated and P/R is moderate or large. As shown in Escanciano and Olmo
+
+
+                                               9
+(2010), these existing Monte Carlo results have to be taken with caution, since the asymptotic
+                 p
+variance of KP / α(1 − α) evaluated at the estimated θ0 is not one unless P/R converges to
+zero. Hence, it is of fundamental importance to control the Type-I error, i.e., the probability
+of rejecting an optimal forecast, before evaluating the power performance of the K-test. This
+is done by replacing the critical value z1−τ /2 by an appropriate one, so that under the null
+the rejection probability of the test is τ , see Escanciano and Olmo (2010) for details. With
+the suitable choice of the critical value, the same conclusion of Theorem 1 holds when θ0 is
+estimated.
+
+
+
+3     A Class of Weighted Backtesting Procedures
+
+Motivated by the lack of power of the K-test, we propose a general class of weighted back-
+testing procedures based on the test statistic
+
+                                           n
+                                     1     X
+                         KP,w := p            w(It−1 )(ht,α (θbt−1 ) − α),                     (5)
+                                  B̂w P t=R+1
+
+                    Pn
+where B̂w := P −1            2                                             2
+                      t=R+1 w (It−1 ) is a consistent estimate of Bw := E[w (It−1 )], θt−1 is an
+                                                                                      b
+
+estimator for θ0 , see examples below, and w(It−1 ) is a bounded, non-zero weight function,
+whose choice will be based on power considerations of the resulting test, see our discussion
+after Theorem 2. First, we will develop the asymptotic theory of KP,w for a generic w. Large
+absolute values of KP,w will indicate non-optimality of the forecasts. Note that the K-test
+statistic corresponds to the choice w(It−1 ) ≡ 1.
+    For the sake of completeness we discuss the asymptotic distribution theory under three
+different forecasting schemes, namely, the recursive, rolling and fixed forecasting schemes.
+They differ in how the parameter θ0 of the HS or FHS model is estimated. In the recursive
+scheme, the estimator θbt is computed with all the sample available up to time t. In the rolling
+scheme, only the last R values of the series are used to estimate θbt , that is, θbt is constructed
+from the sample at periods s = t − R + 1, ..., t. Finally, in the fixed scheme, the parameter
+
+                                                10
+is not updated when new observations become available, i.e., θbt = θbR , for all t, R ≤ t ≤ n.
+   Examples of estimate θbt for HS and FHS models are as follows. In the HS model, the
+                                                                  −1                   −1
+natural estimate of θ0 is the empirical quantile estimator θbt = F1,t−1,Y (α), θbt = Ft−R,t−1,Y (α)
+           −1
+and θbt = F1,R,Y (α) for the recursive, rolling and fixed forecasting schemes, respectively, where
+  −1                                                                                 −1
+Fr,s,Y (α) denotes the α-th empirical quantile function of {Yt }st=r , r < s, i.e., Fr,s,Y (α) :=
+inf{z ∈ R : Fr,s,Y (z) ≥ α} with the empirical cdf Fr,s,Y (z) := (s − r + 1)−1 st=r 1{Yt ≤ z}.
+                                                                               P
+
+For example, if R = 100 and α = 5%, then θbt under the fixed forecasting scheme is simply
+the 5th order statistic of the sample {Yt }R
+                                           t=1 .
+
+   In the FHS model, the parameter β0 is usually estimated by the Quasi-Maximum Like-
+lihood Estimator (QMLE) that is routinely used for estimating GARCH models, say βbt , see
+(A.2), and estimators for Fε−1 (α) are constructed as for the HS but replacing {Yt }st=r by
+           εt }st=r , r < s, where
+residuals {b
+
+                                         Yt − µ(It−1 , βbt )
+                                εbt :=                       , t = 1, ..., n.
+                                            σ(It−1 , βbt )
+
+Now we establish the asymptotic theory of KP,w for HS and FHS models.
+Theorem 2: Let Assumptions A1-A5 in Appendix A hold . Then, for HS and FHS models:
+
+                           d
+  (i) Under H0 , KP,w −→ N (0, α(1 − α)).
+
+                              P                             √
+ (ii) Under HA , P −1/2 KP,w −→ E[w(It−1 )(ht,α (θ0 ) − α)]/ Bw .
+
+Theorem 2 establishes the asymptotic null distribution of KP,w and also shows the probability
+limit of P −1/2 KP,w under HA for both HS and FHS models. Notice that under HA , if
+E[w(It−1 )(ht,α (θ0 ) − α)] 6= 0, KP,w will diverge to ±∞, and the test based on KP,w will be
+consistent. On the contrary, if E[w(It−1 )(ht,α (θ0 ) − α)] = 0, then the test based on KP,w will
+be inconsistent, and an analogous result to Theorem 1 will hold.
+   Assumptions A1-A5 required in Theorem 2 are standard in the financial econometrics lit-
+erature, see Appendix A for detailed explanations. Here we particularly remark on Assump-
+tion A4, which requires that π := limn→∞ P/R = 0. This is an assumption systematically
+
+                                                     11
+employed in the literature, see e.g., Engle and Manganelli (2004), with the only exception of
+Escanciano and Olmo (2010, 2011) that concentrate on π > 0. The motivation for the latter
+was that financial institutions often choose R = P = 250. However, there are three important
+reasons to maintain the assumption π = 0 in our context. First, with the assumption π = 0,
+an in-sample size R that is much larger than 250 could be used, which guarantees a good
+precision of the extreme quantile estimators used in VaR inferences. Note that long spans
+of in-sample historical data are available in practice for VaR analysis carried out on a daily
+basis. Second, it is convenient to assume π = 0, as it substantially simplifies the asymptotic
+null variance of the test (cf. Escanciano and Olmo, 2011). Therefore, from a practical point
+of view, assuming π = 0 is highly desirable for VaR inferences to be simple and meaningful
+at low quantile levels such as 5% or 1%. Our simulations also show that a choice of π of 0.1,
+e.g. (R, P ) = (2500, 250), provides satisfactory finite sample performances of our proposed
+test. Finally, we stress that the choice of π is irrelevant to the main theoretical findings on
+the inconsistency of the K-test.
+   Now we investigate how to choose the weight function w in KP,w . The choice of w can be
+based on computational convenience and/or power considerations of the resulting test. It is
+interesting to notice that the class of weighted backtests we propose includes as particular
+cases traditional tests such as the test of independence of Christoffersen (1998), and its
+extensions to higher order autocorrelations (see Berkowitz, Christoffersen and Pelletier, 2011)
+by allowing for multivariate weights. To see this, take
+
+
+                        w(It−1 ) ≡ waj (It−1 ) := ht−j,α (θ0 ) − α, j ≥ 1,
+
+
+and note that
+
+
+                E[waj (It−1 )(ht,α (θ0 ) − α)] = Cov(ht−j,α (θ0 ), ht,α (θ0 )), j ≥ 1,
+
+
+which is the j−th order autocovariance of the hit sequence. Tests based on autocorrelations
+
+
+                                                 12
+of {ht,α (θ0 )} are computationally convenient. The power properties of the resulting tests
+depend on whether E[waj (It−1 )(ht,α (θ0 ) − α)] is zero or not under the alternative. Given the
+well-known clustering effect of financial data we expect tests based on autocorrelations to
+be powerful in detecting non-optimal forecasts of the HS model. However, for FHS,
+
+
+        E[waj (It−1 )(ht,α (θ0 ) − α)] = Cov(1(εt−j ≤ Fε−1 (α)), 1(εt ≤ Fε−1 (α)), j ≥ 1,   (6)
+
+
+so in this case the consistency of tests based on autocorrelations will depend on the depen-
+dence in the pseudo-innovations (here εt is the probabilistic limit of εt (βbt ) as n → ∞) at
+the left tail. Our simulations suggest that (6) was “small” for various commonly used data
+generating processes, leading to low power for autocorrelation-based tests.
+   Therefore, the above theoretical results suggest that the choice of w has an influential
+effect on the power properties of the resulting test. A natural question arises: does there
+exist a choice of w that leads to a test with omnibus power properties? We address this
+question in the next section.
+
+
+3.1    A Powerful Data-Driven Weighted Backtest
+
+In order to construct a powerful backtest, we must choose w such E[w(It−1 )(ht,α (θ0 ) − α)] is
+non-zero under the alternative (see Theorem 2). The following Lemma shows that there
+exists a choice of w that guarantees consistency of the test based on KP,w . Let FIt−1 (·)
+denote the conditional distribution of Yt given It−1 .
+
+Lemma 1: Let the assumptions of Theorem 2 hold. Then, with w∗ (It−1 ) := FIt−1 (mα (It−1 , θ0 )),
+the test based on KP,w∗ is consistent.
+
+Lemma 1 shows that our class of weighted backtests includes a consistent test. However,
+w∗ (It−1 ) = FIt−1 (mα (It−1 , θ0 )) is in general unknown, and its nonparametric estimation is
+generally complicated because w∗ will in general depend on the infinite-dimensional infor-
+mation set It−1 . If a nonparametric approach is entertained, we suggest to reduce the
+
+                                               13
+dimensionality of the problem and consider the choice
+
+
+                                w1∗ (Yt−1 ) = FYt−1 (mα (It−1 , θ0 )),                        (7)
+
+
+where FYt−1 (·) denotes the conditional distribution of Yt given Yt−1 . The resulting test
+will be consistent against the class of alternatives where FYt−1 (mα (It−1 , θ0 )) 6= α. This
+represents a large class of alternatives, while the so-called curse of dimensionality problem
+of nonparametric estimation is avoided. Hence, the proposed approach seems to be a good
+compromise between feasibility and power.
+   To estimate w1∗ in (7) nonparametrically, note that
+
+
+                           w1∗ (Yt−1 ) = E[ht,α (θ0 )|Yt−1 = y]
+
+                                     = E[ht,α (θ0 )|FY (Yt−1 ) = FY (y)]
+
+                                     := E[ht,α (θ0 )|Ut−1 = FY (y)],
+
+
+where the conditioning variable Yt−1 is normalized by taking an integral transformation,
+provided that FY is strictly increasing. That is, we define
+
+                                                                  n
+                                                              1X
+                Ut := FY (Yt ) and Un,t−1 := Fn (Yt−1 ) :=          1{Ys−1 ≤ Yt−1 },          (8)
+                                                              n s=1
+
+where the empirical cdf Fn is implicitly defined. Note that Ut is uniformly distributed over
+the interval [0, 1]. There are many nonparametric estimators available for the regression
+function w1∗ , see Li and Racine (2007). The popular kernel estimator is not recommended in
+our current setting, as it is known to be inaccurate at the tails of the conditional distribution.
+For our particular situation, one appealing estimator for w1∗ is a global estimator obtained
+by series methods.
+   We introduce the series estimator for w1∗ as follows. First, we consider a vector of series
+
+
+
+
+                                                 14
+base functions:
+                            pS (u) := (p0 (u), · · ·, pS (u))0 , u ∈ [0, 1], S ≥ 1,               (9)
+
+where p0 (u) ≡ 1 and pS (u) is a truncation of an orthogonal polynomial sequence {pS (u)}∞
+                                                                                         S=0 .
+
+Using these base functions, we approximate the regression function g(u) := E[ht,α (θ0 )|Ut−1 =
+u] by pS (u)0 γ with an appropriate vector γ. The parameter γ can be estimated by the
+                                                  h                             i0
+ordinary least squares (OLS) regression of Hn,α := h1,α (θbn ), ..., hn,α (θbn ) on Pn := [pS (Un,0 ),
+..., pS (Un,n−1 )]0 . We define the series estimator for g(u) as
+
+
+                                              ĝ(u) := pS (u)0 γn ,                              (10)
+
+
+where γn = [Pn0 Pn ]−1 Pn0 Hn,α is the OLS estimator for γ. Then, the final estimator for
+w1∗ (Yt−1 ) is
+                                  ŵ1∗ (Yt−1 ) := ĝ(Fn (Yt−1 )), 1 ≤ t ≤ n.                     (11)
+
+Note that Ŵ1∗ := (ŵ1∗ (Y0 ), ..., ŵ1∗ (Yn−1 ))0 are simply the fitted values of an OLS regression,
+that is, Ŵ1∗ = Pn [Pn0 Pn ]−1 Pn0 Hn,α . Then, we construct the weighted test statistic
+
+                                                  n
+                                          1       X
+                        KP,wb1∗ := q                     ŵ1∗ (Yt−1 )(ht,α (θbt−1 ) − α),        (12)
+                                        B̂ŵ1∗ P t=R+1
+
+                       Pn                  2
+where B̂ŵ1∗ := P −1             ∗
+                        t=R+1 [ŵ1 (Yt−1 )] . Note that KP,w
+                                                           b1∗ will depend on the number of com-
+
+                                  b1∗ , so we make this dependence explicit and write KP,wb1∗ (S).
+ponents S in the series estimator w
+Next, we address the challenging and important practical issue of “bandwidth” choice of S
+for testing purposes. Let Smax denote an upper bound for S, and γn = (γn0 , ..., γnSmax )0 the
+corresponding vector of OLS estimates. Note that under the null FYt−1 (mα (It−1 , θ0 )) = α,
+hence the coefficients γn1 , ..., γnSmax are expected to be close to zero, but significantly different
+from zero under the alternative if Smax is sufficiently large.
+
+
+
+
+                                                       15
+   Then, we construct an aggregate measure of significance as
+
+                                                S
+                                                X
+                                                  2
+                                          QS = n γnj ,
+                                                       j=1
+
+
+and choose S ∗ such that
+
+
+                    S ∗ = min{S : 1 ≤ S ≤ Smax ; LS ≥ Lh , h = 1, 2, ..., Smax }
+
+
+where LS = QS −S log n. The aggregate measure of significance QS is constructed as the sum
+of the squares of the normalized estimated coefficients of the series estimator, similar to Ney-
+man’s (1937) smooth test. Here, we follow Ledwina (1994) and employ the Schwarz’s (1978)
+Bayesian Information Criterion (BIC) to select the number of component S ∗ . Therefore, the
+selection of the number of components S in the series estimator is fully data-driven.
+   Our final recommended test combines the nonparametric weighted backtest with the test
+of independence of Christoffersen (1998). That is, we define
+
+                                                    2
+                                      KP,wb1∗ (S ∗ ) + (KP,wba1 )2
+                                Dn :=                              ,
+                                               α(1 − α)
+
+where w
+      ba1 := ht−1,α (θbt−2 )−α. We call the new test based on Dn the D-test, as it is fully Data-
+Driven. The motivation for this combination is that the two test statistics KP,wb1∗ (S ∗ ) and
+KP,wba1 are asymptotically independent under the null, so they provide independent pieces
+of information. In our simulations, we show that the D-test has good finite-sample size and
+power properties.
+   To investigate the consistency properties of Dn , we introduce a sequence of coordinates
+{γj }∞                               ∗
+     j=0 in the series expansion of w1 (·),
+
+
+                                                 ∞
+                                                 X
+                                 w1∗ (Yt−1 ) =         γj pj (FY (Yt−1 )),
+                                                 j=0
+
+
+
+
+                                                   16
+where γj = E[ht,α (θ0 )pj (FY (Yt−1 ))], j ∈ Z, γ0 = α and p0 (FY (Yt−1 )) ≡ 1. Our next result
+establishes the limiting distribution of Dn .
+
+Theorem 3: Let Assumptions 1-6 in Appendix A hold . Then, for HS and FHS models:
+
+
+    (i) Under H0 ,
+                                                      d
+                                                Dn −→ χ22 ,
+
+        where χ22 is the chi-squared random variable with two degrees of freedom.
+
+ (ii) Under HA , Dn −→ +∞, provided γj 6= 0 for some 0 < j ≤ Smax .
+
+
+The proposed data-driven test rejects H0 if Dn > χ22,1−τ , where χ22,1−τ denotes the (1 − τ )-th
+quantile of the chi-squared distribution with two degrees of freedom. The assumption for
+consistency is quite general, as there is always such j when Smax is sufficiently large, as
+long as FYt−1 (mα (It−1 , θ0 )) 6= α. Allowing Smax → ∞ with the sample size will lead to a
+consistent test for any alternative for which FYt−1 (mα (It−1 , θ0 )) 6= α. In finite samples, Smax
+is always finite, so for all practical matters a theory with finite Smax suffices. Unreported
+simulations suggest that the test is not sensitive to Smax , as long as it is moderate relative
+                                                                        
+to the sample size P . A rule of thumb that we choose is Smax = P 2/5 , where [·] represents
+the integer part, which seems to work well with the data generating processes considered in
+the simulations.
+
+
+
+4      Monte Carlo Experiments
+
+In this section, the traditional unconditional backtest of Kupiec (K-test), the conditional
+backtest of Christoffersen (C-test) and the proposed new data-driven test (D-test) are com-
+pared in a set of Monte Carlo experiments. As Theorem 1 proves, the K-test is inconsistent
+for evaluating optimality of the HS or FHS model forecasts. Therefore, the K-test is ex-
+pected to have poor power in finite samples. To see the impact of the data-driven selection
+
+
+                                                 17
+ of S ∗ on Dn , we also compare the finite sample performances of the proposed data-driven
+ D-test with the corresponding one using S = 5 (denoted as D5). To implement our test, we
+ employ a power series estimator using the Legendre polynomials defined on the unit interval
+ (after taking the integral transform of Yt−1 ) to estimate the nonparametric weights w1∗ .7 The
+ upper bound for the number of the base functions included in the series estimator is set to
+ be Smax = 9.
+        Under the null hypothesis, the data generating process (DGP) for the HS model is Yt = εt ,
+ where {εt }nt=1 are independent and identically distributed (i.i.d.) standard normal, in short
+ εt ∼ i.i.d.N (0, 1), denoted as A0HS . For the FHS model, we define the null model as a
+ GARCH(1,1) model, denoted as A0F HS :
+
+
+                                Yt = σt εt , σt2 = 0.05 + 0.1Yt−1
+                                                               2         2
+                                                                  + 0.85σt−1 ,
+
+
+ where {εt } are i.i.d. standardized student-t disturbances with ν = 5 degrees of freedom. The
+ GARCH(1,1) model is the most widely used specification for daily financial data, see e.g.,
+ Andersen et. al. (2006). Additionally, the parameter values we choose represent typical
+ parameter values in empirical applications. To investigate power performances, we choose
+ the following alternatives:
+
+ALT1: RiskMetrics model: Yt = σt εt , σt2 = 0.06Yt−1
+                                                  2         2
+                                                     + 0.94σt−1 .
+
+ALT2: AR(1)-GARCH(1,1) model: Yt = 0.3Yt−1 +ut , ut = σt εt , σt2 = 0.05+0.1u2t−1 +0.85σt−1
+                                                                                        2
+                                                                                            .
+
+ALT3: EGARCH(1,1) model: Yt = ht εt , ln h2t = 0.01 + 0.9 ln h2t−1 + 0.3(|εt−1 | − (2/π)1/2 ) −
+          0.8εt−1 .
+
+ALT4: TAR model: Yt = at Yt−1 + εt , at = 0.7 · 1(εt−1 < −0.5) − 0.7 · 1(εt−1 ≥ 0.5).
+    7
+        The Legendre polynomials ps (u) are defined as
+
+                                                      1 ds h 2    s i
+                                           ps (u) =          u − u     ,
+                                                      s! dus
+ where s is a nonnegative integer and u ∈ [0, 1]. The first few Legendre polynomials are p0 (u) = 1, p1 (u) =
+ 2u − 1, p2 (u) = 6u2 − 6u + 1, and p3 (u) = 20u3 − 30u2 + 12u − 1.
+
+
+                                                         18
+ALT5: Bilinear model (BIL): Yt = 0.7Yt−1 εt−1 + εt .
+
+                                                                     2
+ALT6: Exponential Autoregressive model (EXP): Yt = 0.6Yt−1 exp(−0.5Yt−1 ) + εt .
+
+ALT7: AR(1)-GARCH(1,1) model with Hansen’s (1994) skewed t innovations denoted by εt ∼
+       GT (·|ηt , λt ) (AR-GARCH-GT):
+
+
+                     Yt = 0.5Yt−1 + vt ,     vt = σt εt ,                                      (13)
+
+                    σt2 = 0.025 + 0.25vt−1
+                                       2         2
+                                           + 0.5σt−1 ,
+
+                     εt ∼ GT (·|ηt , λt ),   ηt = g(2.1,30) (e
+                                                             ηt ),   λt = g(−0.9,0.9) (λ
+                                                                                       et ),
+
+                                               2                                        2
+                     ηet = −1 − 0.5Yt−1 − 0.1Yt−1 ,         λt = −0.1 − 0.15Yt−1 − 0.1Yt−1
+                                                            e                              ,
+
+
+       where g is the logistic function, i.e., g(L,U ) (x) = L + (U − L)/(1 + exp(−x)).
+
+
+ In models ALT1-ALT6, εt ∼ i.i.d.N (0, 1). Model ALT1 is the JP Morgan’s (1996) RiskMetric
+ model. Model ALT3-ALT5 are studied in Escanciano and Olmo (2010). Model ALT6 is a
+ standard nonlinear model and model ALT7 is from Hansen (1994).
+     For all the tests implemented the nominal level is fixed at 5%, the asymptotic critical
+ values are used, and the rejection rates are calculated over 1000 Monte Carlo trials. We
+ consider two VaR levels, α = 5% and 1%, respectively. For simplicity, we employ the fixed
+ forecast scheme for both the HS and FHS models. In the simulations we consider two different
+ combinations of the in-sample and out-of-sample size. They are (R, P ) = (2500, 250) and
+ (R, P ) = (5000, 500). Note that P/R = 0.1, which allows us to use the asymptotic theory
+ with π = 0 as an approximation for the finite sample distribution. The large in-sample sizes R
+ considered also guarantee a good precision in the estimated quantiles and our nonparametric
+ estimates of FYt−1 (mα (It−1 , θ0 )).
+     Table 1 and Table 2 contain the simulation results for HS and FHS models, respectively.
+ The main conclusions from these tables are as follows. First, all the tests appear to have
+ satisfactory size performances, with rejection probabilities close to the nominal level of 5%.
+
+                                                     19
+The only exceptional case is the C-test, which is heavily undersized when backtesting 1%
+VaRs.
+
+                             TABLES 1 AND 2 ABOUT HERE
+
+   Second, the K-test generally displays very poor empirical power properties in detecting
+the lack of optimality of HS and FHS models for the alternatives considered, which supports
+our theoretical results. For HS models, the empirical power of the K-test is high for ALT1,
+moderate for ALT3 and ALT7, and low for the rest of the alternatives. For FHS models,
+the power is very low for all, but for ALT1. The high power against ALT1 is theoretically
+explained by the very large values of σK , see our Theorem 1. In cases where the K-test has
+low power, we do not see a significant increase of the power when the out-of-sample size P
+increases, which is also in accordance with our theoretical results.
+   Third, the C-test has reasonably good power for backtesting HS models, but it performs
+poorly for backtesting FHS models. This lack of power suggests that (6) takes on small values
+for these alternatives. Thus, this test is not recommended for detecting lack of optimality of
+FHS models.
+   Fourth, the D-test has satisfactory good power performances for backtesting both HS
+and FHS models. A comparison with D5 reveals that there are not substantial benefits
+from choosing S from the data in these simulations. It is unknown if this conclusion can be
+extrapolated to other DGPs.
+   Finally, we observe significant differences between the two VaR levels considered, with
+better performances at 5% VaR level. For example, the C-test has poor power performances
+in backtesting 1% VaRs, especially for FHS models. However, it should be stressed that
+the results at 1% have to be taken with caution given the relatively small out-of-sample
+sizes considered here; see Escanciano and Olmo (2010) for a discussion and illustration of
+misleading inferences at 1% VaR level.
+   To conclude, these simulations confirm our theoretical results. It is shown that the
+K-test is inconsistent for detecting non-optimality of HS and FHS forecasts, and that the
+
+                                              20
+new proposed data-driven test (D-test) has excellent empirical power properties, while being
+simple to implement.
+
+
+
+5         Application
+
+In this application we illustrate the practical importance of our theoretical results in financial
+risk management, particularly in the evaluation of HS and FHS models and in the subsequent
+determination of the multiplication factors for market risk capital requirements. To that end,
+we compare backtesting results from the aforementioned three tests, the K-test, C-test and
+the proposed D-test, using portfolios based on three representative U.S. stocks traded on
+the New York Stock Exchange (NYSE). The stocks are Walt Disney (DIS), General Electric
+(GE) and Merck & Company (MRK). Daily data on their market closure prices8 are collected
+over the period of 01/04/1999 - 12/31/2009, and then the daily returns are calculated as 100
+times the difference of the log prices. The compositions of the three portfolios considered
+are (0.4, 0.1, 0.5), (0.1, 0.1, 0.8) and (0.3, 0.1, 0.6), respectively, where the numbers in
+each parentheses from left to right represent the portfolio weights on DIS, GE and MRK,
+respectively. These weights are chosen for illustrative purposes but not based on any portfolio
+optimizing behavior. We would expect to obtain similar conclusions for optimal portfolios
+according to our theoretical results.
+        In order to get a preliminary view of the data set, we present some summary statistics
+in Table 3 and the graph of daily returns in Figure 1 for the three portfolios. Overall, the
+daily returns are highly volatile, slightly autocorrelated, negatively skewed, leptokurtic and
+exhibit volatility clustering.
+
+                              TABLE 3 AND FIGURE 1 ABOUT HERE
+
+        For each portfolio, we forecast daily VaRs for the last year of the chosen sample, 01/02/2009-
+12/31/2009, with a corresponding sample size of P = 252. For this application, following
+    8
+        Data source is Yahoo! Finance.
+
+
+                                                  21
+the standard practice we choose a rolling forecast scheme and backtest those VaR fore-
+casts with the K-test, C-test and D-test, respectively. The in-sample period is 01/04/1999
+- 12/31/2008, yielding an in-sample size of R = 2515. This large in-sample size, relative
+to the out-of-sample size, justifies the asymptotic approximations used. Both HS and FHS
+models at 5% and 1% VaR levels are considered in the application. For the FHS model,
+an AR(1)-GARCH(1,1) model is used. For each test, we report the p-value, denoted as
+pK , pC and pD , where the subscripts, K, C and D, represent the K-test, C-test and D-test,
+respectively. Under the current regulatory framework, the computation of the multiplication
+factors for market risk capital requirements, mf , is based on the number of VaR violations
+in the out-of-sample, say N := nt=R+1 ht,α (θbt−1 ), so we also report N and the corresponding
+                                P
+
+mf for each case.9
+
+
+                                     TABLE 4 ABOUT HERE
+
+
+       Table 4 collects the application results. The top panel reports the application results for
+backtesting HS models. As expected, HS is not the optimal model for the three portfolios, as
+it ignores some important properties of our data such as time-varying volatility and volatility
+clustering. We see that the K-test fails to reject the optimality of HS for the three portfolios
+with pK ≥ 0.1629. This result is in line with our theoretical findings on the inconsistency of
+the K-test. On the contrary, the proposed D-test is able to detect the non-optimality of the
+HS model. We observe that the D-test strongly rejects the optimality of HS for Portfolio 1
+at both 5% and 1% VaR levels with pD = 0.0127 and pD = 0.0000, respectively, for Portfolio
+   9
+    According to Basel Committee on Banking Supervision (1996b), the multiplication factors are determined
+by classifying the number of VaR violations in the out-of-sample into three zones, distinguished by colors
+into a hierarchy of responses. The green zone is the zone where the backtesting results are consistent
+with an accurate model; the yellow zone corresponds to the backtesting results that can be consistent with
+either accurate or inaccurate models; and the red zone is the range where the backtesting results almost
+certainly indicate an inaccurate model. For instance, for α = 0.01 and P = 250, see Campbell (2005), the
+multiplication factors mf are computed as
+                               
+                                       3.0,          if N ≤ 4, the green zone
+                         mf =     3 + 0.2(N − 4), if 5 ≤ N ≤ 9, the yellow zone
+                                        4.0,          if N ≥ 10, the red zone,
+                               
+
+
+
+
+                                                   22
+2 at 5% VaR level with pD = 0.0185, and for Portfolio 3 at 5% VaR level with pD = 0.0190.
+Hence, a researcher evaluating VaR forecasts based on the K-test would erroneously accept
+a non-optimal HS model as a good model for measuring market risk in these portfolios.
+   The results for backtesting FHS models are reported in the bottom panel of Table 4.
+FHS is expected to provide better VaR forecasts in the application, as it takes time-varying
+volatility into account. However, based on the backtesting results from the D-test, the
+optimality of FHS is still rejected for Portfolio 1 at both 5% and 1% VaR levels with pD =
+0.0183 and pD = 0.0000, respectively, for Portfolio 2 at 5% VaR level with pD = 0.0085,
+and for Portfolio 3 at 5% VaR level with pD = 0.0001, respectively. Again, we observe the
+inability of the K-test to reject the optimality of FHS for the three portfolios, with a p-value
+of pK ≥ 0.2439.
+   As for the determination of the multiplication factors, we see that they are all set at the
+lowest level of 3. The backtesting results that cause the lowest level of the multiplication
+factors do not suggest a problem with the VaR model used, which should not be the case
+in our application. For example, for Portfolio 1, HS and FHS models are rejected by the
+proposed D-test, so the multiplication factors should also be increased accordingly in order to
+compensate for the inefficient forecasts. Hence, our theoretical and empirical results suggest
+that in the current regulatory framework the multiplication factors are underestimated for
+the cases where HS or FHS is non-optimal. It is the inconsistency of the K-test that leads
+to such underestimation. In practice, the underestimated multiplication factors would make
+banks lose the incentives to improve their models, and also might result in insufficient market
+risk capital reserves, which expose banks to high risks. Therefore, a major implication of our
+results is that the multiplication factors determined by the current regulatory framework are
+highly misleading when HS and FHS provide inefficient forecasts.
+
+
+
+
+                                              23
+6    Conclusion
+
+In this paper, we prove that the traditional unconditional backtest is inconsistent in testing
+the optimality of HS or FHS models. We have shown that its asymptotic power function can
+be higher or lower than the nominal level, depending on the relative size of certain long run
+variance and the asymptotic null variance of the test, but it is always smaller than one. To
+overcome the inconsistency problem of the most commonly used unconditional backtest, we
+propose a general class of weighted backtesting procedures, which includes consistent tests
+and well known tests such as the independence test as special cases, and we select within
+this class a data-driven test with good power properties. Our test combines nonparametric
+weights estimated by a series method, with the classical backtest of independence. Our
+simulation experiments confirm our theoretical findings. An application to portfolios of
+some U.S stocks reveals the practical importance of our theoretical results in financial risk
+management. In practice, the use of the K-test for backtesting HS or FHS models might
+result in the erroneous acceptance of a non-optimal model, and in the underestimation of
+the multiplication factors derived from the current regulatory framework. Our findings
+suggest that a modification of the current computation of multiplication factors is needed,
+to account for the inconsistency of the K-test. A promising approach would be to base the
+computation of multiplication factors on the proposed D-test, given its excellent finite-sample
+performance. This topic is deferred for future research.
+
+
+
+
+                                              24
+Appendices
+
+A      Assumptions
+
+To derive our theoretical results, we first need to introduce some notations and assump-
+tions. Assume that It−1 = (Xt−1 , Xt−2 , ...), where Xt includes Yt , and define the α-mixing
+coefficients as
+                    α(m) =       sup        |P (A ∩ B) − P (A)P (B)| , m ≥ 1,              (A.1)
+                             B∈Fn ,A∈Pn+m
+
+
+where the σ-fields Fn and Pn are Fn := σ(εt , t ≤ n) and Pn := σ(εt , t ≥ n), respectively.
+Henceforth, we take the convention that εt = Yt for HS models.
+    Define the family of the conditional distributions Fx (y) := P (Yt ≤ y | It−1 = x) and let
+fx (y) be the associated conditional densities. The following regularity conditions are used
+in the main results.
+
+Assumption A1: {εt }t∈Z is strictly stationary and strong mixing process with mixing
+coefficients satisfying ∞
+                       P
+                         j=1 α(j) < ∞. Fε (y) is strictly increasing and continuous in y ∈ R.
+
+The conditional variance σ 2 (It−1 , β0 ) > 0 a.s. and σK
+                                                        2
+                                                          > 0.
+
+Assumption A2: The family of distributions functions {Fx : x ∈ R∞ } has Lebesgue densi-
+ties {fx : x ∈ R∞ } that are uniformly bounded from above and below, i.e., inf x∈R∞ ,y∈R |fx (y)| >
+C −1 and supx∈R∞ ,y∈R |fx (y)| ≤ C, for a positive constant C, and equicontinuous: for every
+ > 0 there exists a δ > 0 such that supx∈R∞ ,|y−z|≤δ |fx (y) − fx (z)| ≤ .
+Assumption A3: The parameter space Θ is compact in Rp . The true parameter θ0 belongs
+                                                             √
+to the interior of Θ. The estimator θbt is such that maxR≤t≤n t(θbt − θ0 ) = OP (1) under the
+null and maxR≤t≤n (θbt − θ0 ) = oP (1) under the alternative.
+
+Assumption A4: R, P → ∞ as n → ∞, and π := limn→∞ P/R = 0.
+
+Assumption A5: Assume µ(It−1 , β) and σ(It−1 , β) are continuously differentiable in β (a.s.)
+
+
+                                                 25
+such that E supβ∈B0 |µ̇t (β)|2 < C and E supβ∈B0 |σ̇t (β)|2 < C, for a neighborhood B0 of
+                                                        
+
+β0 .
+
+Assumption A6: The functions pj (u) for j = 0, ..., S are mutually orthogonal polynomials
+on [0, 1] and continuously differentiable with bounded derivatives.
+
+Assumptions A1 to A6 are standard in the literature. Assumption A1 suffices for Theorem
+1. For sufficient conditions for the α−mixing ARMA-GARCH processes, see e.g., Doukhan
+(1994), Carrasco and Chen (2002), Francq and Zakoı̈an (2006) and references therein. As-
+sumptions A1 to A5 are needed for Theorem 2. Assumption A2 is required as in Escanciano
+and Olmo (2010). Assumption A3 can be easily verified for the estimators involved in HS
+and FHS models such as the empirical quantile estimator in both HS and FHS models and
+the QMLE in FHS models. For example, in an AR(1)-GARCH(1,1) model under the fixed
+forecasting scheme where θ0 = (β0 , Fε−1 (α)), the parameter β0 can be estimated by the
+QMLE
+                                              R 
+                                                  (Ys − µ0 Ys−1 )2
+                                              X                                  
+                                         −1
+                  βbt ≡ βbR = arg minR                                     es2 (β)
+                                                                     + log σ         ,   (A.2)
+                               β∈Θβ           s=1
+                                                         es2 (β)
+                                                         σ
+
+      es2 is defined recursively, for s ≥ 1, by
+where σ
+
+
+                        es2 (β) = ω0 + ω1 (Ys−1 − µ0 Ys−2 )2 + ω2 σ
+                        σ                                           2
+                                                                  es−1 (β)
+
+
+and β = (µ0 , ω0 , ω1 , ω2 )0 ∈ Θβ ≡ {β ∈ R4 : |µ0 | < 1, ω0 > 0, ω1 ≥ 0, ω2 ≥ 0 and
+ω1 + ω2 < 1}. Francq and Zakoı̈an (2004) provide further details on the QMLE and sufficient
+conditions for Assumption A3 to hold. Sufficient conditions for Assumption 3 to hold with the
+empirical quantile estimator under α−mixing conditions have been provided by Yoshihara
+(1995) and Sun (2006) among many others. Assumption A4 has been discussed in the
+paper. Assumption A5 is standard in the literature and satisfied by ARMA-GARCH models
+under mild moment conditions. Assumption A6 is satisfied, for instance, by the Legendre
+polynomials used in the simulations.
+
+
+                                                    26
+B     Mathematical Proofs
+
+Proof of Theorem 1: Note that the hit sequence {ht,α (θ0 )}t∈Z is a function of {εt }t∈Z , and
+hence, is strictly stationary and strong mixing with mixing coefficients αh (j) bounded by
+α(j) in (A.1). Hence, by Assumption A1, the mixing coefficients satisfy ∞
+                                                                         P
+                                                                             j=1 αh (j) < ∞.
+
+In addition, by definition, for the HS model,
+
+
+              E[ht,α (θ0 ) − α] = E[1(Yt ≤ FY−1 (α))] − α = FY (FY−1 (α)) − α = 0,
+
+
+and for the FHS model,
+
+
+              E[ht,α (θ0 ) − α] = E[1(εt ≤ Fε−1 (α))] − α = Fε (Fε−1 (α)) − α = 0.
+
+
+Therefore, we have that the time series {ht,α (θ0 ) − α}nt=1+R is strictly stationary and strong
+mixing, has zero mean and is bounded for both the HS and FHS models. Thus, a strong
+mixing CLT applies to KP under the alternative hypothesis HA , and then it holds that
+
+
+                                            d      2
+                                      KP −→ N (0, σK ).
+
+
+Hence, the power function of KP at τ % nominal level is
+
+                                                        p              !
+                                        KP               α(1 − α)
+                    Π(τ, α) := lim Pr         > z1−τ /2           | HA
+                               P →∞      σK               σK
+                                               p          !!
+                                                 α(1 − α)
+                            = 2 1 − Φ z1−τ /2
+                                                   σK
+                                       p          !
+                                         α(1 − α)
+                            = 2Φ zτ /2              .
+                                          σK
+
+ 
+Proof of Theorem 2: The proof follows from Theorem 1 and Corollary 1 in Escanciano
+
+
+
+                                                27
+and Olmo (2010), but replacing Kn there by the weighted version
+
+                           n
+                     1    X
+                              w(It−1 ) ht,α (θ0 + c(t − 1)−1/2 ) − Ft−1 (θ0 + c(t − 1)−1/2 ) ,
+                                                                                           
+      Kn (c) := √
+                    Bw P t=R+1
+
+
+where we define, for θ ∈ Θ, Ft−1 (θ) := FIt−1 (mα (It−1 , θ)) to simplify notation. Notice that
+all the arguments used in Escanciano and Olmo (2010) apply to the current setting without
+changes. 
+Proof of Lemma 1: By the law of iterated expectations
+
+
+                  E[w∗ (It−1 )(ht,α (θ0 ) − α)] = V ar[FIt−1 (mα (It−1 , θ0 ))] ≥ 0,             (B.1)
+
+
+with equality to zero only when FIt−1 (mα (It−1 , θ0 )) = α a.s., that is, only under the null. 
+Proof of Theorem 3:
+We first prove (i). Define S ∗ = min{S : 1 ≤ S ≤ Smax ; LS ≥ Lh , h = 1, 2, ..., Smax }, where
+LS = QS − S log n. We prove that, under Assumptions A1-A6 and H0 ,
+
+
+                                        lim P (S ∗ = 1) = 1.                                     (B.2)
+                                        n→∞
+
+
+
+Notice that
+                                        S
+                                        Xmax                       S
+                                                                   Xmax
+
+                    P (S ∗ = 1) = 1 −          P (S ∗ = s) ≥ 1 −          P (Ls ≥ L1 ).
+                                        s=2                        s=2
+
+Now, for 1 < s ≤ Smax ,
+
+
+                              P (Ls ≥ L1 ) ≤ P (Qs ≥ (s − 1) log n).
+
+
+We shall show that under the null Qs = Op (1). To that end, let 1n be a n × 1 vector of ones,
+
+
+
+
+                                                    28
+and write
+
+
+                      γn = [n−1 Pn0 Pn ]−1 n−1 Pn0 (Hn,α − α1n ) + αn−1 Pn0 1n
+                                                                                      
+
+
+                           ≡ [n−1 Pn0 Pn ]−1 {A1n + αA2n } .
+
+
+Assumption A6 and the Glivenko-Cantelli’s theorem imply that
+
+
+                                   [n−1 Pn0 Pn ]−1 = [P 0 P ]−1 + oP (1),
+
+
+where P := [ps (U0 ), ..., ps (Un−1 )]0 . On the other hand,
+
+                                       n
+                     √           1 X s                           
+                         nA1n = √       p (Ut−1 ) ht,α (θbn ) − α
+                                  n t=1
+                                     n
+                                1 X s                                             
+                              +√        {p (Un,t−1 ) − ps (Ut−1 )} ht,α (θbn ) − α
+                                  n t=1
+
+                               =: A11n + A12n .
+
+
+An application of Theorem A1 in Delgado and Escanciano (2007) with (using their notation)
+
+
+                  w(εn,t , In,t , x) = pj (F (Yt−1 )) [ht,α (θ) − Ft−1 (θ)] , j = 0, ..., s,
+
+
+where x = (F, θ) ∈ Π := H × Θ, with H the class of non-decreasing functions of bounded
+variation, yields that A12n = op (1) by a stochastic equicontinuity argument. Similarly, by
+Escanciano and Olmo (2010) it can be shown that
+
+               n                                    n
+           1 X s                                1 X s                                   
+   A11n = √       p (Ut−1 ) (ht,α (θ0 ) − α) + √       p (Ut−1 ) Ft−1 (θbn ) − Ft−1 (θ0 ) + op (1)
+            n t=1                                n t=1
+                 n
+           1 X s                                            ∂Ft−1 (θ0 ) √ b
+         =√       p (Ut−1 ) (ht,α (θ0 ) − α) + E[ps (Ut−1 )            ] n(θn − θ0 ) + op (1)
+            n t=1                                              ∂θ0
+
+         = Op (1).
+
+
+
+                                                     29
+                                   √
+We write each component of             nA2n as
+
+                                   n
+                                                √
+                                                           Z
+                           1 X
+                          √       pj (Un,t−1 ) = n             pj (Fn (x))Fn (dx),
+                            n t=1
+
+
+where Fn is the empirical cdf of {Yt−1 }nt=1 . Lemma 20.10 in van der Vaart (1998) and the weak
+               √                           √
+convergence of n(Fn −FY ) imply that n (A2n − e1 ) = Op (1), where e1 = (1, 0, ...0) ∈ Rs+1 .
+From the previous arguments and the definition of Qs we conclude that under the null
+Qs = Op (1). It then follows that
+
+
+                            P (Qs ≥ (s − 1) log n) → 0, as n → ∞.
+
+
+Therefore, (B.2) holds.
+   To simplify notations, we write pb1,t−1 = p1 (Un,t−1 ) and p1,t−1 = p1 (Ut−1 ). With S ∗ = 1,
+the series estimators for the weights are
+
+
+                       ŵ1∗ (Yt−1 ) = γn0 + γn1 p1 (Un,t−1 ), t = R + 1, ..., n,
+
+
+where (γn0 , γn1 )0 is the OLS estimator γn with s = 1, i.e.,
+
+
+                                          γn0 = ht,α − γn1 pb1,t−1
+
+
+and                                 n h                    ih               i
+                               1
+                                   P
+                               n
+                                       ht,α (θbn ) − ht,α pb1,t−1 − pb1,t−1
+                                   t=1                                           an
+                       γn1 =                 n                        2
+                                                                              :=
+                                                                                 bn
+                                                 h                   i
+                                          1
+                                            P
+                                          n
+                                                   pb1,t−1 − pb1,t−1
+                                            t=1
+                  Pn           bn ) and pb1,t−1 = n−1 Pn pb1,t−1 . We show that, under Assump-
+with ht,α = n−1     t=1 ht,α (θ                        t=1
+
+tions A1-A6 and H0 , uniformly in y ∈ R,
+
+
+                                                  p
+                                          ŵ1∗ (y) −→ w1∗ (y) ≡ α.                        (B.3)
+
+
+                                                      30
+Notice that
+
+            n
+         1X
+  an =         [ht,α (θbn ) − ht,α ]b
+                                    p1,t−1
+         n t=1
+          n                                          n                                          n
+       1X                                         1X                                         1X
+     =       [ht,α (θn ) − α][b
+                    b         p1,t−1 − p1,t−1 ] +       [ht,α (θn ) − α]p1,t−1 + (α − ht,α )
+                                                               b                                   pb1,t−1
+       n t=1                                      n t=1                                      n t=1
+
+     := a1n + a2n + a3n ,
+
+
+                                                                                                        p
+Since the polynomial function p1 (·) is equicontinuous and supy∈R |Fn (y) − F (y)| −→ 0, then
+
+
+                                                                                               p
+                 max |b
+                      p1,t−1 − p1,t−1 | := max |p1 (Fn (Yt−1 )) − p1 (F (Yt−1 ))| −→ 0,
+                 1≤t≤n                            1≤t≤n
+
+
+
+and hence, a1n = op (1). By Lemma A1 in Escanciano and Olmo (2010) and the uniform law
+of large numbers (ULLN),
+
+                                 n
+                          1X                             p
+                    a2n =       [ht,α (θbn ) − α]p1,t−1 −→ cov(ht,α (θ0 ), p1,t−1 ) = 0.
+                          n t=1
+
+                   p
+Similarly, ht,α −→ E[ht,α (θ0 )] = α and pb1,t−1 = Op (1), so a3n = op (1). Hence, an = op (1), and
+                                     p                    p
+since bn = Op (1), then γn1 −→ 0 and γn0 −→ α. Therefore, (B.3) is proved. An implication
+of (B.3) is that B̂ŵ1∗ := P −1 nt=R+1 [ŵ1∗ (Yt−1 )]2 is a consistent estimator of Bw1∗ := α2 .
+                               P
+
+   Based on the above, we can write
+
+                                                 n
+                                          1      X
+                 KP,wb1∗ (S ∗ ) = q                   [ŵ1∗ (Yt−1 ) − w1∗ (Yt−1 )][ht,α (θbt−1 ) − α]
+                                         B̂ŵ1∗ P t=R+1
+                                            n
+                                  1        X
+                               +q               w1∗ (Yt−1 )[ht,α (θbt−1 ) − α]
+                                 B̂ŵ1∗ P t=R+1
+
+                               := K1n + K2n .
+
+
+An application of Theorem A1 in Delgado and Escanciano (2007) yields that K1n = oP (1),
+                                                                                  d
+and Slutsky’s Theorem and Theorem 2 imply that KP,wb1∗ (S ∗ ) −→ N (0, α(1 − α)).
+
+                                                              31
+                                                                                                         d
+   Theorem 2 in Escanciano and Olmo (2010) implies, with π = 0, that KP,ŵa1 −→
+N (0, α(1 − α)). It remains to prove that KP,wb1∗ (S ∗ ) and KP,ŵa1 are asymptotically inde-
+pendent under the null. This follows from the fact that
+
+                              
+      Cov KP,wb1∗ (1), KP,ŵa1 = Cov (α [ht,α (θ0 ) − α] , [ht−1,α (θ0 ) − α] [ht,α (θ0 ) − α]) + o(1)
+
+                                = α2 (1 − α)E [ht−1,α (θ0 ) − α] + o(1)
+
+                                = o(1).
+
+
+Thus, by Cramer-Wold Device,
+
+                                                  2
+                                    KP,wb1∗ (S ∗ ) + (KP,ŵa1 )2 d
+                               Dn =                             −→ χ22 ,
+                                             α(1 − α)
+
+where χ22 is the chi-squared random variable with two degrees of freedom.
+We now prove (ii). To that end, we need to prove that, under HA ,
+
+
+                                            P (S ∗ ≥ j) → 1,                                        (B.4)
+
+
+provided that γj 6= 0 for some 0 < j ≤ Smax , and γ1 = γ2 = · · · = γj−1 = 0.
+   For s = 1, ..., j − 1,
+                                       P (S ∗ = s) ≤ P (Ls ≥ Lj ).
+
+and
+                    P (Ls ≥ Lj ) = P (Qs ≥ (s − j) log n + Qj ) → 0, as n → ∞.
+
+The last convergence follows from the law of large numbers, since
+
+
+                                  n−1 Qs → 0 and n−1 Qj → γj2 > 0.
+
+
+
+
+                                                    32
+Therefore, for each M > 0,
+
+
+                       P (KP,wb1∗ (S ∗ ) ≤ M ) = P (KP,wb1∗ (S ∗ ) ≤ M, S ∗ ≥ j) + o(1)
+
+                                      ≤ P (KP,wb1∗ (j) ≤ M ) + o(1)
+
+                                      = o(1),
+
+
+where the last equality follows from the law of large numbers and the fact that
+
+        j                                                    j
+    "                         !                 #        "                           !   ∞
+                                                                                                                !#
+        X                                                    X                           X
+E             γk pk (FY (Yt−1 )) (ht,α (θ0 ) − α) = E              γk pk (FY (Yt−1 ))          γh ph (FY (Yt−1 ))
+        k=0                                                  k=0                         h=1
+
+                                                    = γj2 E[p2j (FY (Yt−1 ))] > 0,
+
+
+by the law of iterated expectations and the orthogonality of the polynomials. Then, KP,wb1∗ (S ∗ ) →
+∞, and hence Dn → ∞ as n → ∞. 
+
+
+
+
+                                                       33
+References
+
+Andersen, T., Bollerslev, T., Chirstoffersen, P.F., Diebold, F.X., 2006. Volatility and Cor-
+relation Forecasting. In: Elliot, G., Granger, C.W.J., Timmermann, A. (eds), Handbook of
+Economic Forecasting, North-Holland, Amsterdam, 778-878.
+   Barone-Adesi, G., Bourgoin, F., Giannopoulos, K., 1998. Don’t look back. Risk 11,
+100-104.
+   Barone-Adesi, G., Giannopoulos, K., Vosper L., 1999. VaR without correlations for
+nonlinear portfolios. Journal of Futures Markets 19, 583-602.
+   Barone-Adesi, G., Giannopoulos, K., 2002. Non-parametric VaR techniques: Myths and
+realities. Economic Notes 30, 167-181.
+   Basel Committee on Banking Supervision, 1996a. Amendment to the capital accord to
+incorporate market risks. Bank for International Settlements.
+   Basel Committee on Banking Supervision, 1996b. Supervisory framework for the use of
+backtesting in conjunction with the internal models approach to market risk capital require-
+ments. Bank for International Settlements.
+   Basel Committee on Banking Supervision, 2011. Revision to the Basel II market risk
+framework. Bank for International Settlements.
+   Berkowitz, J., 2001. Testing density forecasts with applications to risk management.
+Journal of Business and Economic Statistics 19, 4, 465-474.
+   Berkowitz, J., Christoffersen, P.F., Pelletier, D., 2011. Evaluating Value-at-Risk models
+with desk-level data. Management Science 57, 12, 2213-2227.
+   Berkowitz, J., and O’Brien, J., 2002. How accurate are Value at Risk models at com-
+mercial banks? Journal of Finance 57, 3, 1093-1111.
+   Campbell, S.D., 2005. A review of backtesting and backtesting procedures. Staff working
+papers in the Finance and Economics discussion series, 2005-21.
+   Carrasco M., Chen, X., 2002. Mixing and moment properties of various GARCH and
+stochastic volatility models. Econometric Theory 18, 17-39.
+
+                                             34
+   Christoffersen, P.F., 1998. Evaluating interval forecasts. International Economic Review
+39, 841-862.
+   Christoffersen, P.F., Pelletier, D., 2004. Backtesting Value-at-Risk: A duration-based
+approach. Journal of Financial Econometrics 2, 84-108.
+   Delgado, M.A., Escanciano, J.C., 2007. Nonparametric tests for conditional symmetry
+in dynamic models. Journal of Econometrics 141, 652-682.
+   Doukhan P., 1994. Mixing: properties and examples. Lecture Notes in Statistics, Vol.
+85 Springer, Berlin.
+   Engle, R.F., Manganelli, S., 2004. CAViaR: Conditional autoregressive Value at Risk by
+regression quantiles. Journal of Business and Economic Statistics 22, 4, 367-381.
+   Escanciano, J.C., Olmo, J., 2010. Backtesting parametric Value-at-Risk with estimation
+risk. Journal of Business and Economics Statistics 28, 36-51.
+   Escanciano, J.C., Olmo, J., 2011. Robust backtesting tests for Value-at-Risk models.
+Journal of Financial Econometrics 9, 132-161.
+   Francq, C., Zakoı̈an, J.-M., 2004. Maximum likelihood estimation of pure GARCH and
+ARMA-GARCH processes. Bernoulli 10(4), 605-637.
+   Francq, C., Zakoı̈an, J.-M., 2006. Mixing properties of a general class of GARCH(1,1)
+models without moment assumptions. Econometric Theory 22, 815-834.
+   Goureioux, C., Jasiak, J., 2006. Dynamic quantile models. Working Paper 2006-4,
+Department of Economics, York University.
+   Hansen, B.E., 1994. Autoregressive conditional density estimation. International Eco-
+nomic Review 35, 705-730.
+   Koenker, R., Xiao, Z., 2006. Quantile autoregression. Journal of the American Statistical
+Association 101, 980-990.
+   Kupiec, P., 1995. Techniques for verifying the accuracy of risk measurement models. The
+Journal of Derivatives 3, 73-84.
+   Ledwina, T., 1994. Data-driven version of Neyman’s smooth test of fit. Journal of the
+
+
+                                            35
+American Statistical Association 89, 1000-1005.
+   Li, W.K., Ling, S., McAleer, M., 2002. Recent theoretical results for time series models
+with GARCH errors. Journal of Economic Surveys, 16, 245-269.
+   Li, Q., Racine, J.S., 2007. Nonparametric Econometrics: Theory and Practice. Princeton
+University Press.
+   Neyman, J., 1937. Smooth test for goodness of fit. Scandinavian Aktuarietidskr 20,
+150-199.
+   Jorion, P., 2006. Value at Risk: The New Benchmark for Managing Financial Risk.
+McGrawHill, 3rd Edtion.
+   JP Morgan, 1996. RiskMetrics. Technical Document. 4th Edition. New York.
+   Pérignon, C., Smith, D.R., 2008. A new approach to comparing VaR estimation method.
+The Journal of Derivatives 16, 2, 54-66.
+   Pérignon, C., Smith, D.R., 2010. The level and quality of Value-at-Risk disclosure by
+commercial banks. Journal of Banking & Finance 34, 2, 362-377.
+   Pritsker, M., 2006. The hidden dangers of historical simulation. Journal of Banking &
+Finance 30, 2, 561-582.
+   Yoshihara, K.,1995. The Bahadur representation of sample quantile for sequences of
+strongly mixing random variables. Statistics & Probability Letters 24, 299–304.
+   Schwarz, G., 1978. Estimating the dimension of a model. The Annals of Statistics 6,
+461-464.
+   Sun, S.X., 2006. The Bahadur representation for sample quantiles under weak depen-
+dence. Statistics & Probability Letters 76, 1238–1244.
+   van der Vaart, A.W., 1998. Asymptotic Statistics. Cambridge University Press.
+
+
+
+
+                                            36
+Tables and Figures
+
+       Table 1: Simulation Results for Backtesting HS Models at 5% Nominal Level
+                K-test                D-test                D5-test             C-Test
+         5% VaR 1% VaR 5% VaR 1% VaR 5% VaR 1% VaR 5% VaR 1% VaR
+                                        R=2500, P=250
+ A0HS       0.047    0.040       0.069       0.044     0.066      0.061     0.050     0.008
+ ALT1       0.987    0.010       0.569       0.009     0.702      0.009     0.051     0.009
+ ALT2       0.276    0.137       0.709       0.325     0.678      0.377     0.721     0.222
+ ALT3       0.409    0.186       0.692       0.341     0.697      0.389     0.811     0.265
+ ALT4       0.076    0.055       0.623       0.206     0.574      0.326     0.363     0.084
+ ALT5       0.072    0.089       0.841       0.315     0.844      0.590     0.166     0.131
+ ALT6       0.151    0.081       0.791       0.286     0.730      0.385     0.627     0.140
+ ALT7       0.290    0.160       0.699       0.341     0.671      0.361     0.737     0.228
+                                        R=5000, P=500
+ A0HS       0.063    0.037       0.062       0.060     0.063      0.067     0.049     0.011
+ ALT1       1.000    0.998       0.724       0.002     0.883      0.002     0.003     0.001
+ ALT2       0.315    0.200       0.903       0.533     0.889      0.568     0.930     0.356
+ ALT3       0.421    0.289       0.881       0.535     0.888      0.557     0.951     0.400
+ ALT4       0.120    0.080       0.850       0.363     0.788      0.497     0.591     0.144
+ ALT5       0.107    0.095       0.980       0.795     0.982      0.794     0.193     0.200
+ ALT6       0.161    0.105       0.957       0.504     0.927      0.607     0.893     0.284
+ ALT7       0.326    0.220       0.864       0.500     0.860      0.511     0.937     0.334
+Notes: This table compares the size and power properties of Kupiec’s test, the proposed
+data-driven test with data-driven selection of S ∗ , the corresponding test with the chosen
+value of S ∗ = 5 and Christoffersen’s likelihood ratio test for HS models, denoted as K-test,
+D-test, D5-test and C-test, respectively. 1000 Monte Carlo replications.
+
+
+
+
+                                             37
+      Table 2: Simulation Results for Backtesting FHS Models at 5% Nominal Level
+                  K-test                D-test                D5-test             C-Test
+            5% VaR 1% VaR 5% VaR 1% VaR 5% VaR 1% VaR 5% VaR 1% VaR
+                                         R=2500, P=250
+ A0F HS      0.041     0.048      0.065       0.040      0.073      0.042     0.050    0.010
+  ALT1       0.353     0.011      0.157       0.020      0.212      0.015     0.249    0.002
+  ALT2       0.097     0.080      0.392       0.179      0.361      0.167     0.195    0.042
+  ALT3       0.132     0.138      0.387       0.208      0.341      0.180     0.209    0.073
+  ALT4       0.049     0.028      0.236       0.123      0.213      0.115     0.063    0.008
+  ALT5       0.118     0.212      0.507       0.321      0.513      0.330     0.159    0.043
+  ALT6       0.055     0.060      0.291       0.133      0.226      0.122     0.090    0.017
+  ALT7       0.111     0.083      0.347       0.129      0.319      0.125     0.203    0.039
+                                         R=5000, P=500
+ A0F HS      0.063     0.049      0.071       0.068      0.066      0.066     0.054    0.015
+  ALT1       0.889     0.817      0.705       0.007      0.784      0.004     0.192    0.002
+  ALT2       0.120     0.069      0.594       0.248      0.525      0.216     0.308    0.040
+  ALT3       0.173     0.172      0.626       0.368      0.527      0.314     0.323    0.090
+  ALT4       0.072     0.046      0.357       0.146      0.305      0.141     0.084    0.014
+  ALT5       0.199     0.264      0.743       0.469      0.749      0.486     0.352    0.102
+  ALT6       0.085     0.052      0.418       0.180      0.325      0.159     0.110    0.018
+  ALT7       0.138     0.057      0.532       0.182      0.471      0.168     0.305    0.029
+Notes: This table compares the size and power properties of Kupiec’s test, the proposed
+data-driven test with data-driven selection of S ∗ , the corresponding test with the chosen
+value of S ∗ = 5 and Christoffersen’s likelihood ratio test for FHS models, denoted as K-test,
+D-test, D5-test and C-test, respectively. 1000 Monte Carlo replications.
+
+                                Table 3: Summary Statistics
+
+                               Portfolio 1      Portfolio 2      Portfolio 3
+                                (0.4,0.1,0.5)    (0.1,0.1,0.8)    (0.3,0.1,0.6)
+                   Mean              -0.0311          -0.0470          -0.0364
+                   Variance           3.3390           4.5504           3.5718
+                   Kurtosis          55.0084        182.9456           96.2160
+                   Skewness          -2.8894          -7.3010          -4.4703
+                   Minimum          -35.3413         -56.2868         -42.3231
+                   Maximum           11.4305          10.4282          11.0964
+                   Autocorr.         -0.0317          -0.0208          -0.0285
+                   LB(10)             9.0524           0.2049           1.9774
+
+Notes: This table presents some summary statistics for the daily returns of the three port-
+folios. For each portfolio, the three numbers in the parentheses represent the corresponding
+portfolio weights on DIS, GE and MRK, respectively. The summary statistics include the
+first four moments, minimum, and maximum of each series, the first-order autocorrelation
+coefficient and the Ljung-Box Q-statistic of order 10 on the squared returns.
+
+                                                38
+     Figure 1: Daily Returns of the Three Portfolio
+
+
+
+
+39
+                               Table 4: Application Results
+
+                      Portfolio 1         Portfolio 2         Portfolio 3
+                       (0.4,0.1,0.5)       (0.1,0.1,0.8)       (0.3,0.1,0.6)
+                    5% VaR 1% VaR       5% VaR 1% VaR       5% VaR 1% VaR
+                         Application Results for Backtesting HS Models
+              N          14         4        16         1         16        2
+              mf          3         3         3         3          3        3
+              pK     0.3429    0.1744    0.1629    0.8321     0.1629   0.6290
+              pC     0.0992    0.0872    0.1353    0.5497     0.1353   0.9302
+              pD     0.0127    0.0000    0.0185    0.6290     0.0190   0.9430
+                        Application Results for Backtesting FHS Models
+              N          15         3        13         1         14        2
+              mf          3         3         3         3          3        3
+              pK     0.2439    0.3806    0.4540    0.8321     0.3429   0.6290
+              pC     0.1226    0.0629    0.0709    0.5497     0.0138   0.9302
+              pD     0.0183    0.0000    0.0085    0.6290     0.0001   0.9430
+
+Notes: N represents the number of violations, and mf the multiplication factor determined
+under the current regulatory framework. pK , pC and pD represent the p-value for the K-test,
+C-test and D-test, respectively.
+
+
+
+
+                                            40
+

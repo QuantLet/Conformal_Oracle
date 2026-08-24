@@ -1,0 +1,130 @@
+{
+  "SP500|amazon/chronos-t5-small|0.01": {
+    "mean_abs_A_MC": 0.00025618643131128935,
+    "mean_abs_B_MC": 0.00024758709449231795,
+    "mean_abs_stored_MC": 0.0002475870864516727,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "SP500|amazon/chronos-t5-small|0.025": {
+    "mean_abs_A_MC": 0.00020414110327044989,
+    "mean_abs_B_MC": 0.00021257237084663824,
+    "mean_abs_stored_MC": 0.00021257234649176837,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "SP500|amazon/chronos-t5-small|0.05": {
+    "mean_abs_A_MC": 0.00020430422463089127,
+    "mean_abs_B_MC": 0.00021273545171113137,
+    "mean_abs_stored_MC": 0.00021273544367048647,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "SP500|amazon/chronos-t5-small|0.1": {
+    "mean_abs_A_MC": 0.0002392643569167796,
+    "mean_abs_B_MC": 0.00019660386132437055,
+    "mean_abs_stored_MC": 0.0001966037473818738,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "SP500|amazon/chronos-t5-small|offset_bins": {
+    "mean": 0.9999990463256836,
+    "sd": 9.614813431917819e-17
+  },
+  "GOLD|amazon/chronos-t5-small|0.01": {
+    "mean_abs_A_MC": 0.00038768112276410527,
+    "mean_abs_B_MC": 0.0003534555837068409,
+    "mean_abs_stored_MC": 0.0003534556163466984,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "GOLD|amazon/chronos-t5-small|0.025": {
+    "mean_abs_A_MC": 0.00031918552918988043,
+    "mean_abs_B_MC": 0.00037616745625237703,
+    "mean_abs_stored_MC": 0.00037616740191017686,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "GOLD|amazon/chronos-t5-small|0.05": {
+    "mean_abs_A_MC": 0.0002963383357587501,
+    "mean_abs_B_MC": 0.0003533202628212467,
+    "mean_abs_stored_MC": 0.0003533205787396909,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "GOLD|amazon/chronos-t5-small|0.1": {
+    "mean_abs_A_MC": 0.00020520630118670002,
+    "mean_abs_B_MC": 0.00014822437412420343,
+    "mean_abs_stored_MC": 0.0001482244284664036,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "GOLD|amazon/chronos-t5-small|offset_bins": {
+    "mean": 0.9999990463256836,
+    "sd": 1.1102230246251565e-16
+  },
+  "EURUSD|amazon/chronos-t5-small|0.01": {
+    "mean_abs_A_MC": 0.00018759487245831875,
+    "mean_abs_B_MC": 0.0001694318911872307,
+    "mean_abs_stored_MC": 0.0001694319085087992,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "EURUSD|amazon/chronos-t5-small|0.025": {
+    "mean_abs_A_MC": 0.0001815771142221534,
+    "mean_abs_B_MC": 0.00016341424547816757,
+    "mean_abs_stored_MC": 0.00016341425127228693,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "EURUSD|amazon/chronos-t5-small|0.05": {
+    "mean_abs_A_MC": 0.00017551507136482903,
+    "mean_abs_B_MC": 0.00015735209009374082,
+    "mean_abs_stored_MC": 0.00015735210741530948,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "EURUSD|amazon/chronos-t5-small|0.1": {
+    "mean_abs_A_MC": 0.00014521725947544973,
+    "mean_abs_B_MC": 0.00011496040729013431,
+    "mean_abs_stored_MC": 0.0001149603378738151,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "EURUSD|amazon/chronos-t5-small|offset_bins": {
+    "mean": 0.9999990463256836,
+    "sd": 7.850462293418876e-17
+  },
+  "SP500|amazon/chronos-t5-mini|0.01": {
+    "mean_abs_A_MC": 0.00023882253780920236,
+    "mean_abs_B_MC": 0.0002303913107289616,
+    "mean_abs_stored_MC": 0.00023039131876960716,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "SP500|amazon/chronos-t5-mini|0.025": {
+    "mean_abs_A_MC": 0.0005114513005530341,
+    "mean_abs_B_MC": 0.000503020073472794,
+    "mean_abs_stored_MC": 0.0005030200815134389,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "SP500|amazon/chronos-t5-mini|0.05": {
+    "mean_abs_A_MC": 0.000417697031130615,
+    "mean_abs_B_MC": 0.00040926580405037486,
+    "mean_abs_stored_MC": 0.0004092658120910198,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "SP500|amazon/chronos-t5-mini|0.1": {
+    "mean_abs_A_MC": 0.0001278489600562649,
+    "mean_abs_B_MC": 8.518833868723132e-05,
+    "mean_abs_stored_MC": 8.518810183213432e-05,
+    "exact_hits_A": 0,
+    "exact_hits_B": 0
+  },
+  "SP500|amazon/chronos-t5-mini|offset_bins": {
+    "mean": 0.9999990463256836,
+    "sd": 9.614813431917819e-17
+  }
+}

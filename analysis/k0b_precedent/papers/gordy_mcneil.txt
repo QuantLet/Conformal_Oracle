@@ -1,0 +1,2237 @@
+                                                        Spectral backtests of forecast distributions
+                                                          with application to risk management∗
+                                                                                    Michael B. Gordy
+
+
+
+
+arXiv:1708.01489v6 [q-fin.RM] 29 Jul 2019
+                                                                     Federal Reserve Board, Washington DC
+
+                                                                                  Alexander J. McNeil
+
+                                                              The York Management School, University of York
+
+                                                                                       July 26, 2019
+
+
+                                                                                           Abstract
+                                                       We study a class of backtests for forecast distributions in which the test statistic
+                                                   depends on a spectral transformation that weights exceedance events by a function of
+                                                   the modeled probability level. The weighting scheme is specified by a kernel measure
+                                                   which makes explicit the user’s priorities for model performance. The class of spectral
+                                                   backtests includes tests of unconditional coverage and tests of conditional coverage. We
+                                                   show how the class embeds a wide variety of backtests in the existing literature, and
+                                                   further propose novel variants which are easily implemented, well-sized and have good
+                                                   power. In an empirical application, we backtest forecast distributions for the overnight
+                                                   P&L of ten bank trading portfolios. For some portfolios, test results depend materially
+                                                   on the choice of kernel.
+
+                                            JEL Codes: C52; G21; G28; G32
+                                            Keywords: Backtesting; Volatility; Risk management
+
+
+
+
+                                               ∗
+                                                We thank Harrison Katz and Sathya Ramesh for excellent research assistance. We have benefitted from
+                                            discussion with Mike Giles, Marie Kratz, Hsiao Yen Lok, David Lynch, David McArthur, Michael Milgram,
+                                            and Johanna Ziegel. The opinions expressed here are our own, and do not reflect the views of the Board of
+                                            Governors or its staff. Address correspondence to Michael Gordy, Federal Reserve Board, Washington DC
+                                            20551, USA, +1-202-452-3705, michael.gordy@frb.gov.
+
+
+                                                                                               1
+1    Introduction
+
+In many forecasting exercises, fitting some range of quantiles of the forecast distribution
+may be prioritized in model design and calibration. In risk management applications, which
+motivate this study, accuracy near the median of the distribution or in the “good tail” of high
+profits is generally much less important than accuracy in the “bad tail” of large losses. Even
+within the region of primary interest, preferences may be nonmonotonic in probabilities. For
+example, the modeller may care a great deal about assessing the magnitude of once-in-a-
+decade market disruptions, but care much less about quantiles in the extreme tail that are
+consequent to unsurvivable cataclysmic events. In this paper, we study a class of backtests
+for forecast distributions in which the test statistic weights exceedance events by a function
+of the modeled probability level. The weighting scheme is specified by a kernel measure
+which makes explicit the priorities for model performance. The backtest statistic and its
+asymptotic distribution are analytically tractable for a very large class of kernels.
+    Our approach unifies a wide variety of existing approaches to backtesting. In the area
+of risk management, the time-honored test statistic (dating back to Kupiec, 1995) is simply
+a count of “VaR exceedances,” i.e., indicator variables equal to one whenever the realized
+trading loss is in excess of the day-ahead value-at-risk (VaR) forecast. In our framework,
+this is the case where the kernel is Dirac measure concentrated at the target VaR level. At
+the other extreme, the tests applied in Diebold et al. (1998) represent a special case in which
+weights are uniform across all probability levels. The likelihood-ratio test of Berkowitz
+(2001) and the expected shortfall and spectral risk measure tests of Du and Escanciano
+(2017) and Costanzino and Curran (2015) represent intermediate cases of a kernel truncated
+to tail probabilities. While these works are related to our own, we make a distinct threefold
+contribution: (i) we offer an overarching testing framework that embeds many existing tests
+and many new ones, including discrete spectral tests and multivariate spectral tests; (ii) we
+emphasize the idea that choice of backtest should be guided by a user’s preferences for model
+performance as expressed in kernel choice, rather than by the blind pursuit of power; and
+
+                                               2
+(iii) we propose a general form of conditional test which may be combined with any kernel
+and which nests the unconditional test as a special case.
+   The application of a weighting function in this paper bears some similarity to the ap-
+proach of Amisano and Giacomini (2007) and Gneiting and Ranjan (2011) in the literature
+on comparisons of density forecasts. In both of those papers, weights are applied to a fore-
+cast scoring rule to obtain measures of forecast performance that accentuate the tails (or
+other regions) of the distribution. However, the measure for any one forecasting method has
+no absolute meaning and is designed to facilitate comparison with other methods using the
+general comparative testing approach proposed by Diebold and Mariano (1995). In contrast,
+our tests are absolute tests of forecast quality in the spirit of Diebold et al. (1998). While the
+comparative testing approach is useful for the internal refinement of the forecasting method
+by the forecaster, the absolute testing approach in this paper facilitates external evaluation
+of the forecaster’s results by another agent, such as a regulator. In this paper we adopt the
+perspective of such an agent who must make a judgement based on a predefined set of data
+supplied by the forecaster and who has very limited information about the model choices
+made by the forecaster.
+   Our investigation is motivated in part by a major expansion in the data available to
+regulators for the backtesting exercise. Prior to 2013, banks in the US reported to regulators
+VaR exceedances at the 99% level. The new Market Risk Rule mandates that banks report
+for each trading day the probability associated with the realized profit-and-loss (P&L) in
+the prior day’s forecast distribution, which is equivalent to providing the regulator with
+VaR exceedances at every level α ∈ [0, 1]. The expanded reporting regime allows us to
+assess the tradeoff between power and specificity in backtesting. If a regulator is concerned
+narrowly with the validation of reported VaR at level α, then a count of VaR exceedances is
+a sufficient statistic for a test for unconditional coverage. However, if the regulator is willing
+to assign positive weight to probability levels in a neighborhood of α, we can construct more
+powerful backtests. Furthermore, our approach is consistent with a broader view of the
+
+
+                                                3
+risk manager’s mandate to forecast probabilities over a range of large losses. The formal
+guidance of US regulators to banks on internal model validation explicitly requires “checking
+the distribution of losses against other estimated percentiles” (Board of Governors of the
+Federal Reserve System, 2011, p. 15).
+    Under the reforms mandated by the Fundamental Review of the Trading Book (Basel
+Committee on Bank Supervision, 2013), 99%-VaR is replaced by 97.5%-Expected Shortfall
+(ES) as the determinant of capital requirements. While there has been a lot of debate around
+the question of whether or not ES is amenable to direct backtesting (Gneiting, 2011; Acerbi
+and Szekely, 2014; Fissler et al., 2016), our contribution addresses a different issue. We
+devise tests of the forecast distribution from which risk measures are estimated and not tests
+of the risk measure estimates. When ES is of primary interest it may be argued that a
+satisfactory forecast of the tail of the loss distribution is of even greater importance, since
+the risk measure depends on the whole tail.
+    In Section 2, we lay out the statistical setting for the risk manager’s forecasting problem
+and the data to be collected for backtesting. The transformation that underpins the class of
+spectral backtests is introduced in Section 3. Spectral backtests of unconditional coverage
+are described in Section 4. In Section 5, we develop tests of conditional coverage based on
+the martingale difference property. As an application to real data, in Section 6 we backtest
+ten bank models for overnight P&L distributions for trading portfolios.
+
+
+
+2     Theory and practice of risk measurement
+
+We assume that a bank models P&L on a filtered probability space (Ω, F, (Ft )t∈N0 , P) where
+Ft represents the information available to the risk manager at time t, N0 = N ∪ {0} and N
+denotes the non-zero natural numbers. For any time t ∈ N, Lt is an Ft -measurable random
+variable representing portfolio loss (i.e., negative P&L) in currency units. We denote the
+
+
+
+
+                                               4
+conditional loss distribution given information to time t − 1 by
+
+
+                                   Ft (x) = P (Lt ⩽ x | Ft−1 ) .
+
+
+The loss distribution cannot be assumed to be time-invariant. The distribution of returns on
+the underlying risk factors (e.g., equity prices, exchange rates) is time-varying, most notably
+due to stochastic volatility. Furthermore, Ft depends on the composition of the portfolio.
+Because the portfolio is rebalanced in each period, Ft can evolve over time even when factor
+returns are iid.
+   For t ∈ N we can define the process (Ut ) by Ut = Ft (Lt ) using the probability integral
+transform (PIT). Under the assumption that the conditional loss distributions at each time
+point are continuous, the result of Rosenblatt (1952) implies that the process (Ut )t∈N is a
+sequence of iid standard uniform variables, notwithstanding the fact that (Lt ) is typically
+non-stationary. The risk manager builds a model Fbt of Ft based on information up to time
+t−1. Reported PIT-values are the corresponding rvs (Pt ) obtained by setting Pt = Fbt (Lt ) for
+t ∈ N. The regulator is assumed to have no direct knowledge of Fbt , but can draw inferences
+based on a sample of the PIT-values. If the models Fbt form a sequence of ideal probabilistic
+forecasts in the sense of Gneiting et al. (2007), i.e., coinciding with the conditional laws Ft
+of Lt for every t, then we expect the reported PIT-values to behave like an iid sample of
+standard uniform variates; tests of this property are tests that the sequence of models is
+calibrated in probability.
+                                       d α,t := Fbt← (α) be an estimate of the α-VaR con-
+   For any α in the unit interval, let VaR
+structed at time t − 1 by calculating the generalized inverse of Fbt at α. Since the VaR
+                       d α,t } is equal to the event {Pt ⩾ α}, the PIT-value provides a
+exceedance event {Lt ⩾ VaR
+sufficient statistic for the VaR exceedances at all possible levels. Thus, we would expect
+well-designed tests that use reported PIT-values to be more powerful than VaR exceedance
+tests in detecting deficiencies in the models Fbt .
+
+
+
+                                                 5
+   Our tests make no assumptions about the procedures and models used by the bank in
+forecasting. In practice, there is considerable heterogeneity in methodology. For nearly two
+decades, most large banks have relied primarily on some variant of historical sampling (HS),
+which is a nonparametric method based on re-sampling of historical risk-factor changes
+or returns. As HS fails to account for serial dependencies in returns due to time-varying
+volatility, some banks adopt filtered historical simulation (FHS) as suggested by Hull and
+White (1998) and Barone-Adesi et al. (1998). In this approach, the historical risk-factor
+returns are normalized by their estimated volatilities, which are typically obtained by taking
+an exponentially-weighted moving-average of past squared returns. Banks that do not use HS
+or FHS typically adopt a parametric model for the joint distribution of risk-factor changes.
+   In our empirical application, testing for delayed response to changes in volatility is of
+special interest. Assuming a roughly symmetric loss distribution centered at zero, the fre-
+quent switching between positive and negative values will tend to cause PIT values to be
+serially uncorrelated, even when volatility is misspecified in the model. However, extreme
+PIT-values (i.e., near 0 or 1) will tend to beget extreme PIT-values in high volatility periods,
+and middling PIT-values (i.e., near 1⁄2) will tend to beget middling PIT-values in low volatil-
+ity periods. This pattern can be inferred by examining autocorrelation in the transformed
+values |2Pt − 1|. We will exploit this transformation in implementing tests of conditional
+coverage in Section 6.
+   There are relatively few empirical studies of bank VaR forecasting. Berkowitz and O’Brien
+(2002) show that VaR estimates by US banks are conservative (i.e., there are fewer ex-
+ceedances than expected) and that the forecasts underperform simple time-series models
+applied to daily P&L. Conversative forecasts have been documented as well for Canadian
+banks (Pérignon et al., 2008) and in a larger international sample (Pérignon and Smith,
+2010). The sensitivity of such results to sample period is revealed by O’Brien and Szerszen
+(2017). In their sample of five large US banks from 2001–2014, tests of unconditional cov-
+erage reject VaR forecasts as excessively conservative for all banks in the periods of relative
+
+
+                                               6
+stability (2001–2006 and 2010–2014). In the crisis period of 2007–2009, however, O’Brien
+and Szerszen reject VaR forecasts as insufficiently conservative for all five banks, and serial
+independence is rejected for four of the banks. This pattern is consistent with a failure to
+model stochastic volatility.
+
+
+
+3    Spectral transformations of PIT exceedances
+
+The tests in this paper are based on transformations of indicator variables for PIT ex-
+ceedances. The transformations take the form
+
+                                          Z
+                                   Wt =           1{Pt ⩾u} dν(u)                           (1)
+                                          [0,1]
+
+
+
+where the kernel measure ν is a Lebesgue-Stieltjes measure defined on [0, 1]. The kernel
+measure is designed to apply weight to the probability levels of greatest interest, typically
+(in practice) in the region of the standard VaR level α = 0.99. With any Lebesgue-Stieltjes
+measure ν on domain [0, 1], there is an associated increasing right-continuous function Gν
+such that ν([0, u]) = Gν (u). It is easily seen that (1) is equivalent to the closed-form
+expression
+                                  Wt = ν([0, Pt ]) = Gν (Pt )                              (2)
+
+which shows that Wt is increasing in Pt . The measure can be normalized such that Gν (1) = 1
+without loss of generality, but we do not require it. To streamline the presentation, we will
+henceforth impose the following mild regularity condition on ν.
+
+Assumption 1. ν({0}) = ν({1}) = 0 and Gν is differentiable except at a finite set of points.
+
+   The kernel measure can be discrete, continuous or mixed. In the discrete case, it takes
+              P
+the form ν = m i=1 γi δαi for m ⩾ 1 where δ denotes Dirac measure. This places positive
+
+
+
+
+                                                  7
+mass γ1 , . . . , γm at the ordered values 0 < α1 < · · · < αm < 1 leading to
+
+                                                       m
+                                                       X
+                                                Wt =         γi 1{Pt ⩾αi } .                          (3)
+                                                       i=1
+
+
+For the continuous case, the measure has density dν(u) = gν (u)du for some nonnegative
+gν (u) defined on [0, 1] which we refer to as the kernel density. The univariate transformation
+extends naturally to the multivariate case in which a set of distinct kernel measures ν1 , . . . , νm
+is applied to PIT-values to obtain the vector-valued variables W1 . . . , Wn where
+
+
+               Wt = (Wt,1 , . . . , Wt,m )′ ,    Wt,j = νj ([0, Pt ]) = Gj (Pt ), j = 1, . . . , m.   (4)
+
+
+      We will refer to any backtest based on spectrally transformed PIT exceedances as a
+spectral backtest. For the purposes of this paper, we assume that the regulator can utilize
+only present and past values of Pt in the backtest statistic. This restriction could be relaxed
+considerably.1 What is essential to our contribution is that the regulator does not observe the
+entire distribution F̂t , but does observe more than the VaR exception indicator 1{Lt ⩾VaR
+                                                                                       d α,t } .
+
+      Let (Ft∗ ) be the regulator’s filtration generated by the PIT values, i.e., Ft∗ = σ({Ps : s ⩽
+t}) ⊂ Ft . Regardless of the form of the test, the null hypothesis is
+
+
+                                 H0 :           0
+                                          Wt ∼ FW and Wt ⊥⊥ Ft−1
+                                                             ∗
+                                                                 , ∀t,                                (5)
+
+
+where FW
+       0
+         denotes the distribution function of Wt when Pt is uniform. The null hypothesis (5)
+implies that the (Wt ) are iid but is weaker than a null hypothesis that the (Pt ) are iid
+Uniform. This is by intent. Since the regulator is free to choose ν in accordance with her
+priorities, she should not object to departures from uniformity and serial independence that
+arise outside the support of her chosen kernel.
+  1                                                                              d α,t ) and in publicly
+    Our approach could easily be generalized to incorporate information in (Lt , VaR
+observed market variables (such as VIX). However, frequent change in portfolio composition implies that
+lagged VaR values are less reliably informative than lagged PIT values.
+
+
+
+                                                             8
+   Several recent papers propose to correct tests of forecasts for estimation error; see, e.g.,
+Escanciano and Olmo (2010); Du and Escanciano (2017); Hurlin et al. (2017). Implementa-
+tion of these corrections generally requires knowledge of the forecasting model and estimation
+scheme and is thus infeasible in the regulatory context we describe. Our null hypothesis im-
+poses the high standard that the forecaster is an ideal forecaster working with a sequence of
+correctly specified, perfectly estimated models.
+   The spectral class encompasses a great variety of tests but we prioritize two general
+testing approaches: Z-tests and likelihood ratio (LR) tests. In the univariate case, the
+                                                                 P
+spectral Z-test is based on the asymptotic normality of W n = n−1 nt=1 Wt under the null
+hypothesis (5). Writing µW = E(Wt ) and σW
+                                         2
+                                           = var(Wt ) for the moments in the null model
+ 0
+FW , it follows from the central limit theorem that
+
+                                 √
+                                  n(W n − µW ) d
+                            Zn =              −−−→ N (0, 1).                               (6)
+                                     σW        n→∞
+
+
+                                             √               d
+In the multivariate case (dim Wt = m) we have n W n − µW −−−→ Nm (0, ΣW ) where
+                                                              n→∞
+           Pn
+             t=1 Wt and µW and ΣW are the mean vector and covariance matrix of the null
+        −1
+Wn = n
+distribution FW
+              0
+                . Hence a test can be based on assuming for large enough n that
+
+                                       ′           
+                        Tn = n W n − µW Σ−1             2
+                                          W W n − µW ∼ χm ,                                (7)
+
+
+where we refer to Tn as an m-spectral Z-test statistic.
+   The first moment of the transformed PIT-values under the null hypothesis is easily ob-
+tained as
+                                         Z
+                                  µW =            (1 − u)dν(u)                             (8)
+                                          [0,1]
+
+The variance σW
+              2
+                and the cross-moments in ΣW are obtained using a simple product rule for
+spectrally transformed PIT values.
+
+Theorem 3.1. The set of spectrally transformed PIT values defined by Wt,j = νj ([0, Pt ]) is
+
+
+                                                  9
+closed under multiplication. The product Wt∗ = Wt,1 Wt,2 is given by Wt∗ = ν ∗ ([0, Pt ]) where
+ν ∗ is a Lebesgue-Stieltjes measure which satisfies
+
+                   Z                                           Z                             
+      ∗                                      1                                         1
+    ν ([0, u]) =                ν2 ([0, s]) − ν2 ({s}) dν1 (s) +          ν1 ([0, s]) − ν1 ({s}) dν2 (s).
+                    [0,u]                    2                    [0,u]                2
+
+    It follows that σW
+                     2
+                       = µW ∗ − µ2W , where µW ∗ is found by applying (8) under the measure
+ν ∗ obtained when ν1 = ν2 = ν. This yields
+
+                                          Z
+                                 µW ∗ =           (1 − u) (2Gν (u) − ν({u})) dν(u) .                         (9)
+                                          [0,1]
+
+
+
+    The central limit theorem underpinning the Z-test requires finite second moments. For the
+univariate case, the following proposition provides a sufficient condition on the tail behavior
+of Gν .
+
+Proposition 3.2. If Gν (u) = O((1 − u)−0.5+ϵ ) as u → 1 for some ϵ > 0, then σW
+                                                                              2
+                                                                                is finite.
+
+In the multivariate setting, the asymptotic distribution in (7) holds if the condition in Propo-
+sition 3.2 are satisfied for each νj , j = 1, . . . , m.
+    Likelihood ratio tests are based on continuous parametric models FP (· | θ) for the PIT
+values Pt that nest uniformity as a special case corresponding to θ = θ0 . The implied
+model FW (· | θ) for the values Wt = Gν (Pt ) is used to test the null hypothesis (5) with
+ 0
+FW = FW (· | θ0 ); the alternative is that Wt ∼ FW (· | θ) with θ ̸= θ0 . Writing LW (θ | W )
+for the likelihood function, the test is based on the asymptotic chi-squared distribution of
+the statistic
+                                                           LW (θ0 | W )
+                                              LRW,n =                                                       (10)
+                                                           LW (θ̂ | W )
+
+where θ̂ denotes the maximum likelihood estimate based on the transformed sample (Wt ).
+    An important difference between the two classes of test is that the Z-test is sensitive
+to the choice of kernel whereas the LR-test is sensitive only to the support of the kernel.
+Considering the univariate case for simplicity, we show
+
+                                                           10
+Theorem 3.3. Let ν1 and ν2 be Lebesgue-Stieltjes measures satisfying Assumption 1, and
+let Wt,j = Gj (Pt ) for j = 1, 2 and t = 1, . . . , n be the respective samples of transformed PIT
+values. If supp(ν1 ) = supp(ν2 ) then LRW1 ,n = LRW2 ,n almost surely.
+
+This result can be viewed as a generalization of the invariance property of LR-tests under
+one-to-one transformations of the data.
+
+
+
+4    Tests of unconditional coverage
+
+It is common to divide backtesting methods into tests of unconditional coverage and tests of
+conditional coverage. In our setting, an unconditional test is a test for the distribution FW
+                                                                                            0
+
+
+implied by the uniformity of the PIT-values while a conditional test is a test for both the
+correct distribution and the independence of Wt and Ft−1
+                                                     ∗
+                                                         for all t.
+    In this section we present a number of unconditional tests based on the Z-test and LR-
+test ideas discussed in Section 3. It is important to note that the convergence results on
+which these tests are based, although mostly stated under iid assumptions, do hold in situa-
+tions where the independence assumption is relaxed, for example for stationary and ergodic
+martingale-difference processes (according to the martingale CLT of Billingsley (1961)). In
+the case of the univariate Z-test, the test will have no power to detect serial dependence
+                       √
+whenever limn→∞ var( nW n ) ≈ σW   2
+                                     . If, however, there is persistent positive serial correla-
+                                     √
+tion in (Wt ) leading to limn→∞ var( nW n ) > σW 2
+                                                    then the Z-test will have some power to
+detect dependencies; however, more targeted tests of the independence property are available
+and are the subject of Section 5.
+    Our unconditional testing approach subsumes a number of important published tests or
+close relatives thereof. The discrete weighting framework in Section 4.1 includes the binomial
+LR-test of Kupiec (1995) and Christoffersen (1998) for the number of VaR exceedances. It
+also includes the multilevel Pearson chi-squared test recommended by Campbell (2006) and
+the multilevel LR-test proposed in Pérignon and Smith (2008) which also underlies the work
+
+
+                                               11
+of Colletaz et al. (2013); see Kratz et al. (2018) for a comparative study of multilevel tests.
+   The continuous weighting framework in Section 4.2 builds on the seminal paper of Diebold
+et al. (1998). It is close in spirit to the approach of Crnkovic and Drachman (1996), who
+apply a statistic based on a weighted Kuiper distance between the distribution of PIT values
+and the uniform, and subsumes the likelihood ratio test of Berkowitz (2001) based on fitting
+a truncated normal distribution to probit-transformed PIT-values. Most closely related to
+our work, Du and Escanciano (2017) and Costanzino and Curran (2015) have proposed test
+statistics for spectral risk measures which can be viewed as special cases of our univariate
+spectral Z-test.
+
+
+4.1    Discrete weighting
+                                                                        Pm
+Discrete tests are based on the univariate transformation Wt =                   1
+                                                                           i=1 γi {Pt ⩾αi } as defined
+
+in (3) and the multivariate transformation Wt = (1{Pt ⩾α1 } , . . . , 1{Pt ⩾αm } )′ in (4) for the
+same set of ordered levels α1 < · · · < αm . Obviously, when m = 1 (and γ1 = 1) both
+transformations yield Wt = 1{Pt ⩾α} , so that we obtain iid Bernoulli(1 − α) variables under
+the null hypothesis (5). This is the basis for standard VaR exceedance testing based on the
+binomial distribution. The Z-test statistic (6) for Wt = 1{Pt ⩾α} coincides with the binomial
+score test statistic                                         
+                                          √
+                                              n W n − (1 − α)
+                                   Zn =         p              .                                 (11)
+                                                 α(1 − α)
+
+The LR-test uses an implicit nesting model for Pt in which the Wt are iid Bernoulli(p) and
+tests p = 1 − α against p ̸= 1 − α by comparing the statistic (10) to a χ21 distribution; this
+is the approach taken in Kupiec (1995) and Christoffersen (1998).
+                                   P
+    When m > 1 the variables Wt = m  i=1 γi 1{Pt ⩾αi } take the ordered values Γ0 < Γ1 < · · · <
+                            P
+Γm where Γ0 = 0 and Γk = ki=1 γi for k = 1, . . . , m. Under the null hypothesis (5) the
+distributions of Wt and Wt satisfy
+
+
+                   P(Wt = Γi ) = P(1′ Wt = i) = αi+1 − αi ,    i ∈ {0, 1, . . . , m},            (12)
+
+                                                  12
+where α0 = 0 and αm+1 = 1. In both cases this describes a multinomial distribution.
+   The univariate and multivariate tranformations result in different Z-tests which can be
+considered as alternative generalizations of the binomial score test (11). Application of
+Theorem 3.1 to the univariate case and use of (9) delivers moments under the null µW =
+Pm                          Pm ∗
+  i=1 γi (1 − αi ) and σW =  i=1 γi (1 − αi ) − µW where γi = (2Γi − γi )γi . In constructing
+                        2                        2        ∗
+
+
+the test statistic Zn in (6), we can vary the weights γi to emphasize different levels αi and
+obtain a variety of new tests.
+   In the multivariate case, we construct an m-spectral Z-test as in (7) with µW = (1 −
+α1 , . . . , 1 − αm )′ and second moment matrix ΣW with (i, j) element given by αi∧j (1 − αi∨j ).
+We then obtain the classical Pearson chi-squared statistic as proposed by Campbell (2006).
+
+Theorem 4.1.
+                                                               m
+                                                               X (Oi − nθi )2
+                         n(W n − µW ) Σ−1
+                                        ′
+                                       W (W n − µW ) =
+                                                               i=0
+                                                                        nθi
+             Pn
+where Oi =     t=1   1{1′ Wt =i} and θi = αi+1 − αi for i = 0, . . . , m.
+
+    To implement a multinomial (or multi-level) LR-test of (12) we use a nesting model for
+                                                 P
+Pt in which P(Wt = Γi ) = P(1′ Wt = i) = pi and m  i=0 pi = 1. The likelihoods based on (Wt )
+                                                    P                  P
+and (Wt ) yield the same sufficient statistics Oi = nt=1 1{Wt =Γi } = nt=1 1{1′ Wt =i} for the
+cell probabilities pi . By the likelihood principle the univariate and multivariate LR-tests are
+identical and depend only on the levels (α1 , . . . , αm ) and not the weights γi in the univariate
+transformation. The invariance of the univariate LR-test under different choices for the
+weights is also a consequence of Theorem 3.3.
+
+
+4.2    Continuous weighting
+
+Consider a kernel measure ν with associated absolutely continuous Gν . We assume that the
+kernel density satisfies gν (u) > 0 for α1 < u < α2 and gν (u) = 0 for u < α1 and u > α2 . We
+refer to supp(ν) = [α1 , α2 ] as the kernel window.
+   When ν1 and ν2 are both continuous kernels with the same kernel window, Theorem 3.1
+
+                                                   13
+simplifies. The kernel ν ∗ for the product Wt∗ = Wt,1 Wt,2 is continuous on the same kernel
+window with density g ∗ (u) = G1 (u)g2 (u) + G2 (u)g1 (u). Moments and cross-moments can
+be obtained analytically for a wide variety of kernel densities, e.g., based on polynomials,
+exponential functions, or on beta-type densities of the form (u−α1 )a−1 (α2 −u)b−1 for a, b > 0;
+see Section 4.3 for examples of new tests based on this idea. Thus, our compact presentation
+of the continuous spectral Z-test subsumes a very large class of possible tests.
+   For the LR-test, recall that we require a family of distributions FP (· | θ) for the PIT values
+that nests uniformity as a special case corresponding to θ = θ0 . Since supp(ν) = [α1 , α2 ]
+for all the kernels of this section, Theorem 3.3 implies that they all give rise to identical
+LR-tests, depending only on the kernel window [α1 , α2 ] and the nesting model FP (· | θ).
+The form taken by Gν on [α1 , α2 ] is immaterial.
+   Drawing upon the probitnormal model, we assume that the PIT values P1 , . . . , Pn have
+a distribution satisfying Φ−1 (Pt ) ∼ N (µ, σ 2 ). Writing θ = (µ, σ)′ , the distribution function
+and density of Pt are respectively
+
+                                        !                      −1     
+                              −1
+                            Φ (p) − µ                        ϕ Φ (p)−µ
+                                                                   σ
+           FP (p | θ) = Φ             ,       fP (p | θ) =                 ,   p ∈ [0, 1],   (13)
+                               σ                             ϕ(Φ−1 (p))σ
+
+
+and the uniform distribution corresponds to θ = θ0 = (0, 1)′ . The test of Berkowitz (2001)
+is a special case of the LR-test under this nesting model: choosing the kernel ν with Gν (u) =
+Φ−1 (α1 ∨u)−Φ−1 (α1 ) and kernel window [α1 , 1], we observe that Wt = Gν (Pt ) has a N (µ, σ 2 )
+distribution truncated to [Φ−1 (α1 ), ∞) and then translated to the left.
+   The probitnormal model truncated to the window [α1 , α2 ] also yields a further new bis-
+pectral Z-test based on a classical score test of θ = θ0 against the alternative θ ̸= θ0 . Full
+details of this test are found in our companion paper [supplementary material]. The
+resulting truncated probitnormal score test has a mixed weighting scheme (with discrete and
+
+
+
+
+                                               14
+continuous parts) in which
+
+                                                           Z α2
+              Wt,i = γi,1 1{Pt ⩾α1 } + γi,2 1{Pt ⩾α2 } +          gi (u)1{Pt ⩾u} du,   i = 1, 2,   (14)
+                                                            α1
+
+
+
+for known constants γi,1 ⩾ 0, γi,2 ⩾ 0 and known functions gi (u) which are positive and
+differentiable on [α1 , α2 ].
+ NOTE: For completeness and to preserve blinding, material drawn from the “companion
+paper” is appended to this paper as “supplementary material”.
+
+
+
+4.3    Size and power
+
+We have performed extensive Monte Carlo analyses of the size and power of unconditional
+spectral backtests. In this section, we offer representative examples which illustrate how
+the size and power of Z-tests depend on the kernel, and then briefly summarize other key
+findings. Full details of all simulation experiments may be found in the companion paper
+[supplementary material].
+   We consider kernels of discrete, continuous and mixed form. Parameters α1 and α2 control
+the kernel window. For the continuous tests, α1 and α2 are the infimum and supremum of
+the kernel support. For the discrete case, we consider 3-level kernels at the set of points
+(α1 , α∗ , α2 ), where α∗ = 0.99 is the conventional VaR level. We define a narrow window for
+which α1 = 0.985 and α2 = 0.995, and a wide window for which α1 = 0.95 and α2 = 0.995.
+Observe that the narrow window is symmetric around α∗ , whereas the wide window is
+asymmetric.
+   For the continuous case, there is a wide variety of plausible candidates for the kernel.
+Table 1 lists the kernels that we discuss below; each may be thought of as describing a
+family of kernel densities for different windows [α1 , α2 ]. For parsimony, all are special cases
+of the beta kernel. The uniform and hump-shaped Epanechnikov kernels are commonly used
+in the nonparametric statistics literature. In the supplementary material, we provide
+
+
+                                                    15
+analytical solutions for the moments of transformed PIT values for the general beta(a, b)
+case.
+
+                 Kernel family Mnemonic             Density g(u)        Beta representation
+                      Uniform        ZU             1 p                              1,1
+                        Arcsin       ZA             1/ u∗ (1 − u∗ )              1   ⁄2,1⁄2
+                Epanechnikov         ZE             1 − (2u∗ − 1)2                   2,2
+             Linear increasing       ZL+            u∗                               2,1
+             Linear decreasing       ZL−            1 − u∗                           1,2
+
+Table 1: Kernel density functions on [α1 , α2 ].
+u∗ denotes the rescaled value u∗ = (u − α1 )/(α2 − α1 ). Density functions are not scaled to integrate to 1.
+
+
+
+    We next list the backtests to be implemented, assigning to each a unique mnemomic.
+
+Binomial score test: the two-sided binomial score test at level α∗ (BIN);
+
+Multinomial tests: the 3-point discrete uniform kernel (ZU3) and 3-point Pearson test
+        (PE3);
+
+Continuous spectral tests: univariate tests based on the uniform kernel (ZU); the arcsin
+        kernel (ZA); Epanechnikov kernel (ZE); and increasing (ZL+ ) and decreasing (ZL− )
+        linear kernels;
+
+Continuous/mixed bispectral tests: we combine the increasing and decreasing linear
+        kernels (ZLL) and we also apply the truncated probitnormal score test (PNS).
+
+    We consider three different choices for the cdf F of the true model of Lt : the standard
+normal, the scaled t5 and scaled t3 . The Student t distributions are scaled to have variance
+one so differences stem from different tail shapes rather than different variances. We take
+the risk manager’s model Fb to be the standard normal, i.e., we transform the sampled Lt to
+PIT-values as Pt = Φ(Lt ). Therefore, when the samples of Lt are drawn from the standard
+normal, the PIT-values are uniformly distributed and are used to evaluate the size of the
+tests. The PIT samples arising from the Student t distributions show the kind of departures
+from uniformity that are observed when the risk manager’s model is too thin-tailed.
+
+                                                     16
+   We fix a sample size n = 750 corresponding approximately to the three-year samples of
+bank data studied in Section 6. In Table 2, we report the percentage of rejections of the
+null hypothesis at the 5% confidence level based on 216 = 65,536 replications. All reported
+p-values are based on two-sided tests, though one-sided versions of some tests are of course
+available.
+
+   window F | kernel BIN           ZU3     PE3     ZU     ZA      ZE    ZL+     ZL−    ZLL    PNS
+   narrow     Normal         6.1     4.9    5.3 4.7 4.7 4.7              4.6     4.8    4.8     4.9
+              Scaled t5     33.9    35.0   40.3 33.8 34.4 33.0          40.3    27.1   40.0    44.7
+              Scaled t3     24.0    24.8   43.4 23.9 24.3 23.3          32.7    16.5   43.3    50.5
+   wide       Normal         6.1     5.0    5.1 4.9 4.9 4.9              4.9     4.9    5.0     5.0
+              Scaled t5     33.9    10.7   55.5 6.4 6.6 6.1             11.9     5.8   45.1    57.5
+              Scaled t3     24.0    13.5   90.6 17.7 20.4 15.4           7.4    31.9   85.8    93.1
+
+Table 2: Estimated size and power of unconditional Z-tests.
+We report the percentage of rejections of the null hypothesis at the 5% confidence level based on
+216 = 65,536 replications. The number of days in each backtest sample is n = 750. The narrow window is
+[0.985, 0.995] and the wide window is [0.95, 0.995].
+
+
+
+   In both narrow and wide windows, we observe that the size of the Z-tests is very close
+to the nominal size of 5%, except in the case of the binomial score test, which is slightly
+oversized. The power of the tests, in contrast, is sensitive to the choice of kernel. We
+summarize the results as follows:
+
+   1. Differences across tests in power are more pronounced on the wide window than on the
+      narrow window. The monospectral tests (BIN, ZU, ZA, ZE, ZL+ , ZL− ) are broadly
+      similar in power to the binomial score test on the narrow window.
+
+   2. The monospectral tests offer more power against the scaled t5 model than the more
+      fat-tailed scaled t3 model on the narrow window, but the opposite is true in most cases
+      on the wide window.
+
+   3. Increasing the window width reduces the power of most of the monospectral tests.
+
+   4. For the wide window, the increasing linear kernel ZL+ offers more power than the
+
+
+                                                  17
+     decreasing linear kernel ZL− when the true model is the scaled t5 , but the opposite
+     holds when the true model is the scaled t3 .
+
+  5. The multispectral (PE3, ZLL, PNS) tests offer more power than the monospectral
+     tests, but the differences are relatively small in the case of the narrow window when
+     the true model is the scaled t5 .
+
+   The first finding is easily understood. For the families of kernel densities in Table 1, the
+associated function Gν converges to a step function as the window narrows. Put another way,
+all kernel families degenerate to the binomial score kernel as the window shrinks around α∗ .
+To illuminate the second finding, we plot in Figure 1 the distribution function for reported
+PIT-values under each of the true models, i.e., Pr(Pt ⩽ u) = Pr (Lt ⩽ Φ−1 (u)) = F (Φ−1 (u)).
+The cdf is simply the identity line (y = x) when the null hypothesis is true. Within the
+narrow window of [0.985, 0.995], the cdf for the scaled t3 lies closer to the identity line on
+average than does the cdf for the scaled t5 . The monospectral tests, being tests of the first
+moment of Wt = Gν (Pt ), are sensitive to this distance, so have greater power against the
+scaled t5 than the scaled t3 . On the wide window, however, the cdf for the scaled t5 lies
+closer to the identity line on average, so the tests have greater power against the scaled t3 .
+   The figure also illuminutes the third and fourth findings. Both of the scaled Student t
+cdfs cross the identity line outside the boundaries of the narrow window, but near the middle
+of the wide window. Crossings within the window reduce the average distance, so pose a
+particular challenge for the monospectral tests. On the wide window, the scaled t5 cdf crosses
+the identity line near 0.971, which is slightly below the midpoint. This slight asymmetry
+favors the ZL+ kernel, which puts heavier weight on the upper side of the window. The
+scaled t3 cdf crosses the identity line above the midpoint (near 0.982), and furthermore the
+distance between the cdf and identity line is much larger at the lower end of the window.
+This asymmetry favors the ZL− kernel.
+   Finally, the greater power of the multispectral tests is most apparent when the kernel
+window contains a crossing of the type just described. While the crossing reduces the average
+
+                                              18
+distance between the cdf of the reported PIT-values and the identity line, the cdf will be
+too steep or too shallow. Cross-moments of the kernels in a multispectral test can effectively
+detect such a slope violation. In contrast, when the cdf of the reported PIT-values lies
+roughly parallel to the identity line throughout the kernel window (as is the case for the
+scaled t5 in the narrow window), the advantage of the multispectral test is expected to be
+less pronounced.
+
+               1.00
+
+
+
+
+               0.98
+
+
+
+
+Pr(Pt ≤ PIT)
+
+
+
+
+               0.96
+
+
+
+
+                                                                          True model
+                                                                                  Normal
+                                                                                  Scaled t5
+                                                                                  Scaled t3
+
+
+
+
+                         0.950                                 0.985      0.995            1.000
+                                                  PIT
+
+
+
+Figure 1: Distribution functions for reported PIT-values.
+CDFs for the reported PIT-values when the risk manager assumes standard normal losses (Fb = Φ) but the
+true loss model F is standard normal (red line), scaled t5 (green liine) or scaled t3 (blue line).
+
+
+                  In our companion paper [supplementary material], we study three additional dimen-
+sions of test design. First within the set of discrete kernel Z-tests, we find that the 3-level
+tests considered in Table 2 perform very similarly to their 5-level counterparts. Second, our
+summary conclusions on Table 2 are robust to the choice of backtest sample size n. Third,
+and most importantly, we find that the multinomial Z-tests and the probitnormal score test
+outperform their corresponding likelihood ratio tests. The Z-tests are similar in power to
+
+                                                        19
+the LR-tests, but the LR-tests are less well sized.2 Therefore, we will henceforth limit our
+attention to the class of Z-tests.
+        As a general caveat, we do not advocate that power alone should dictate the choice of
+kernel. A general intuition from our simulation studies is that a test is most powerful in
+rejecting a false model when the kernel weights heavily on probability levels for which the
+quantiles of the risk manager’s model diverge from the true quantiles. As historical simulation
+in particular tends to understate the tails of the distribution, in practice we expect that the
+most powerful tests will weight heavily on extreme probability levels. However, this can come
+at the expense of the stability of the test, in the sense that the outcome can be determined by
+the presence or absence of one or two very large reported PIT-values. Furthermore, testing
+at very extreme tail values of α runs counter to a primary regulatory motivation for the
+backtest, which is to verify the bank’s 99% VaR.
+
+
+
+5         Tests of conditional coverage
+
+While the unconditional tests of Section 4 have some limited power to detect the presence of
+serial dependencies, the aim in this section is to propose conditional extensions of our spectral
+tests that explicitly address the independence of Wt and Ft−1
+                                                          ∗
+                                                              as well as the correctness of the
+distribution of Wt . These tests should have more power to detect departures from the null
+hypothesis resulting from a bank’s failure to use all the information in Ft−1 when building the
+predictive model Fbt , such as a failure to address time-varying volatility in adequate fashion.
+        Our tests of conditional coverage extend the regression-based approach to testing condi-
+tional coverage of VaR estimates and offer many new possibilities. They include a variant on
+the widely-applied test of Christoffersen (1998) and subsume the dynamic quantile (DQ) test
+of Engle and Manganelli (2004). The Christofferson test is an LR-test of first-order Markov
+dependence in VaR exceedances and has been generalized to a multilevel test by Leccadito
+et al. (2014). In the DQ test, VaR exceedance indicators are regressed on lagged exceedance
+    2
+        The superior performance of the Z-tests holds with a smaller backtest sample of n = 250 as well.
+
+
+                                                       20
+indicators and VaR estimates to assess whether exceedances occur independently at the
+desired rate.
+
+
+5.1    Tests of the martingale difference property
+
+A necessary condition for null hypothesis (5) to hold is the martingale difference (MD)
+property with respect to the regulator’s filtration (Ft∗ ):
+
+
+                                                 ∗
+                                    E(Wt − µW | Ft−1 )=0                                    (15)
+
+
+where we recall that Ft∗ = σ({Ps : s ⩽ t}). When the MD property (15) holds, we must
+have E(ht−1 (Wt − µW )) = 0 for any Ft−1
+                                     ∗
+                                         -measurable random variable ht−1 . Using a function
+h, which we refer to as a conditioning variable transformation (CVT), we form the k + 1-
+dimensional lagged vector ht−1 = (1, h(Pt−1 ), . . . , h(Pt−k ))′ . To guarantee the existence of
+the second moment of ht−1 , we assume that (Pt ) is covariance-stationary and that h is
+bounded. Particular examples that we will use in our empirical analysis are h(p) = 1{p⩾α}
+for some α and h(p) = |2p − 1|c for c > 0.
+                         ft ) denote the sequence of transformed reported PIT-values W
+   For convenience, let (W                                                           ft =
+
+Wt − µW centered at their theoretical mean µW . We base our test on the vector-valued
+                  ft for t = k + 1, . . . , n. Under the null hypothesis (5), (Yt ) is a MD
+process Yt = ht−1 W
+sequence satisfying E(Yt | Ft−1
+                            ∗
+                                ) = 0. We want to test that Yk+1 , . . . , Yn are close to the
+zero vector on average. We apply the conditional predictive test of Giacomini and White
+(2006) which was developed for comparing forecasting methods, and which has also been
+                                                                                 P
+used by Nolde and Ziegel (2017) in the backtesting context. Let Y n,k = (n − k)−1 nt=k+1 Yt
+and let Σ̂Y denote a consistent estimator of ΣY := cov(Yt ). Giacomini and White show that
+under very weak assumptions, for large enough n and fixed k,
+
+
+                                           ′
+                                (n − k) Y n,k Σ̂−1         2
+                                                Y Y n,k ∼ χk+1 .                            (16)
+
+
+
+                                               21
+                                                                                  Pn
+Giacomini and White (2006) use the estimator Σ̂GW
+                                               Y  = (n − k)−1                      t=k+1 Yt Yt but we can
+                                                                                              ′
+
+
+                    f 2 | F ∗ ) = σ 2 for all t under the null hypothesis (5) to form an
+use the fact that E(Wt     t−1     W
+
+alternative estimator. We compute that
+
+
+                                   ∗
+                                                              
+                  ΣY = E(cov(Yt | Ft−1 )) = E E Yt Yt′ | Ft−1
+                                                           ∗
+
+                                                                    
+                                          = E ht−1 h′t−1 E Wf2 | F ∗        2
+                                                                         = σW H                           (17)
+                                                              t   t−1
+
+
+                      
+where H = E ht−1 h′t−1 , which suggests the estimator Σ̂Y = σW
+                                                             2
+                                                               Ĥ where3
+
+                                                           n
+                                                           X
+                                     Ĥ = (n − k)     −1
+                                                                   ht−1 h′t−1 .                           (18)
+                                                           t=k+1
+
+
+       The decomposition in (17) has the advantage that it generalizes our unconditional spectral
+Z-test, which corresponds to the case k = 0. The case k = 1 may be viewed as a Z-test version
+of the first-order Markov chain test of Christoffersen (1998). To see that the conditional
+test also embeds the DQ test statistic proposed by Engle and Manganelli (2004), let X be
+the (n − k) × (k + 1) matrix whose rows are given by ht−1 for t = k + 1, . . . , n and let
+f = (W
+W    fk+1 , . . . , W
+                    fn )′ . It follows that
+
+                                               n
+                                               X
+                             2
+                      Σ̂Y = σW (n − k)−1              ht−1 h′t−1 = σW
+                                                                    2
+                                                                      (n − k)−1 X ′ X
+                                              t=k+1
+
+
+                          f so that (16) may be rewritten as
+and Y n,k = (n − k)−1 X ′ W
+
+
+                                     −2 f ′             f ∼ χ2 .
+                                    σW W X(X ′ X)−1 X ′ W    k+1                                          (19)
+
+
+The DQ test corresponds to the binomial score case, i.e., the case where Wt = 1{Pt ⩾α} and
+the CVT is h(p) = 1{p⩾α} 4 ’
+   3
+     It would also be possible to use a heteroscedasticity and autocorrelation-consistent (HAC) estimator of
+ΣY (Newey and West, 1987; Andrews, 1991). Our preferred estimator has the advantage of higher sensitivity
+to deviations from the null hypothesis of zero serial correlation.
+   4
+     Engle and Manganelli (2004) allow as well for lagged VaR values to be included as regressors, an extension
+
+
+                                                       22
+    It is straightforward to generalize the conditional spectral Z-test to a conditional bispec-
+tral Z-test; see Appendix B.
+
+
+5.2     Size and power
+
+We build on the Monte Carlo exercises of Section 4.3 to study the size and power of the
+conditional tests of coverage. Here we present a representative extract of simulation studies
+documented in our companion paper [supplementary material]. The data are generated
+from three different “true” models: iid standard normal; a time series model with underly-
+ing ARMA(1,1) structure and standard normal marginals; and a model with underlying
+ARMA(1,1) structure and scaled t5 marginal distribution. Our calibration of the ARMA pa-
+rameters (AR = 0.95, MA = -0.85) is described in the companion paper [supplementary
+material] and is designed to mimic the serial dependence in PIT values when stochastic
+volatility is neglected. As in Section 4.3, we assume the risk manager reports PIT-values
+based on the standard normal model Fb = Φ.
+    In addition to a choice of kernel, the MD test requires the choice of the number (k) of
+lagged PIT values and the conditioning variable transformation h(P ). Define V (u) = |2u−1|;
+this V-shaped transformation of PIT values is well-suited to uncover dependence arising from
+stochastic volatility. As listed in Table 3, we consider four candidates for the CVT. Whereas
+the DQ requires only a time-series of traditional exceedance indicators, the three CVT based
+on the V (u) transformation require that the regulator observe PIT values.
+
+ Mnemonic h(P )                Description
+ DQ             1{P ⩾0.99}     Flags upper-tail PIT values, as in Engle and Manganelli (2004).
+ V.BIN          1{V (P )⩾0.98} Two-tailed version of DQ, flags PIT values near zero or one.
+ V.4            V (P )4
+                p              Places heavier weight on tail PIT values in the recent past.
+ V.1⁄2             V (P )      Dampens sensitivity to tail PIT values relative to V.4.
+
+Table 3: Conditioning variable transformations. V (u) ≡ |2u − 1|
+
+possible in our framework, but change in portfolio composition implies that lagged VaR values are less
+informative than lagged PIT values.
+
+
+
+                                                    23
+    Table 4 gives a flavor of the main findings for the example of the uniform kernel (ZU)
+and the narrow kernel window of [0.985, 0.995]. We report the percentage of rejections of
+the null hypothesis at the 5% confidence level based on 216 = 65,536 replications. In the
+first column (CVT=“None”), we set k = 0 to obtain the unconditional Z-test. Each of the
+remaining columns corresponds to a CVT with k = 4. As seen in the first row (iid standard
+normal model), size is more difficult to control in the conditional tests. However, the CVT
+choices V.4 and V.1⁄2 are only slightly oversized whereas V.BIN and, in particular, DQ are
+very oversized.
+    The model depicted in the second row gives uniformly distributed PIT values with a
+serial dependence structure that is typical when stochastic volatility is ignored. The power
+of the unconditional test in this situation is very limited (10.8%), while the MD tests show
+power ranging from 21.7% to 32.6%. There is a further increase in power when the simulated
+PIT data are both non-uniform and serially dependent (third row).
+
+          F             Serial Dependence | CVT          None    DQ      V.BIN     V.4     V.1⁄2
+          Normal        None                             4.8     14.4 9.0          6.7 6.7
+          Normal        ARMA(1, 1)                       10.8    31.5 30.9         32.6 21.7
+          Scaled t5     ARMA(1, 1)                       36.2    54.9 52.7         60.7 54.5
+
+Table 4: Estimated size and power of conditional tests.
+MD tests using the ZU kernel on the narrow window [0.985, 0.995]. We report the percentage of rejections
+of the null hypothesis at the 5% confidence level based on 216 = 65,536 replications. The number of days in
+each backtest sample is n = 750. ARMA parameters are AR = 0.95, MA = -0.85.
+
+
+
+
+6     Application to bank-reported PIT values
+
+6.1     Data
+
+Our data consist of ten confidential backtesting samples provided by US banks to the Federal
+Reserve Board at the subportfolio level. Mandatory reporting to bank regulators pursuant
+to the Market Risk Rule took effect on January 1, 2013. For each significant subportfolio
+and each business day, the bank is required to report the overnight VaR at the 99% level, the
+
+                                                    24
+realized clean P&L, and the associated PIT-value (Federal Register, 2012, p. 53105). While
+the first two fields have been available to regulators for a long time (at least at an aggregate
+trading book level), access to PIT values is new. Each of our ten samples represents returns
+on an equity or foreign exchange subportfolio, which can include derivative as well as cash
+positions. Our samples are taken from the three-year period from 2014–2016.
+   Summary statistics for the unconditional distributions are found in Table 5. As is often
+the case with new regulatory reporting requirements, the data are not uniform in quality.
+Two of the samples (coded Pf 104 and Pf 110) have missing values (0.9% and 3.2% of trading
+days, respectively). Furthermore, close inspection reveals that most of the samples contain
+a small number of observations that are potentially spurious. In a few extreme cases, a
+PIT value of 1 is matched to a realized loss smaller than the forecast VaR. We apply a
+heuristic procedure to identify spurious values based on the distance between the reported
+PIT-value and an imputed value. The latter is constructed using a portfolio-specific model
+that fits PIT to the ratio of realized loss to VaR; details are provided in Appendix C. In test
+results reported below, we treat spurious values as missing to make the tests less sensitive to
+reporting error. Our conclusions are robust to taking all non-missing observations as valid.
+   Remaining columns of the table provide a histogram of PIT values. For some portfolios,
+tail PIT values are underrepresented (e.g., Pf 107) or overrepresented (e.g., Pf 105) in the
+sample. For some other portfolios, the histograms appear to be close to uniform, e.g., for
+Pf 110, 85.9% of PIT values lie in [0.05, 0.95) and remaining mass is distributed roughly
+symmetrically.
+
+
+6.2    Tests of unconditional coverage
+
+Due to the generality of our framework, application of spectral backtests to data involves
+choices along several dimensions. As in Section 4.3, we fix α∗ = 0.99 as the conventional VaR
+level, define a narrow window as [0.985, 0.995] and a wide window as [0.95, 0.995]. Kernels
+are drawn from Table 1. Guided by our simulation results and the need for brevity, we
+
+
+                                              25
+         ID    Trading days           of which:                                                 Frequencies
+                                 Missing Spurious        [0, .005)   [.005, .015)   [.015, .05) [.05, .95) [.95, .985)      [.985, .995)   [.995, 1]
+        101               756           0            0    0.0132         0.0172        0.0357      0.8796        0.0317         0.0106      0.0119
+        102               751           0            7    0.0027         0.0108        0.0215      0.9113        0.0323         0.0121      0.0094
+        103               750           0            8    0.0040         0.0040        0.0189      0.9474        0.0162         0.0081      0.0013
+        104               774           7            0    0.0000         0.0000        0.0026      0.9804        0.0104         0.0013      0.0052
+        105               750           0            2    0.0174         0.0214        0.0294      0.8596        0.0388         0.0187      0.0147
+26
+        106               629           0            1    0.0111         0.0191        0.0510      0.8328        0.0557         0.0175      0.0127
+        107               750           0            1    0.0000         0.0000        0.0013      0.9960        0.0027         0.0000      0.0000
+        108               756           0            8    0.0000         0.0053        0.0267      0.9278        0.0174         0.0120      0.0107
+        109               734           0            6    0.0082         0.0151        0.0495      0.8654        0.0371         0.0206      0.0041
+        110               774          25            0    0.0134         0.0200        0.0507      0.8585        0.0427         0.0107      0.0040
+
+     Table 5: Sample statistics.
+     Missing and spurious observations excluded from the reported frequencies. Sample period is 2014-01-01 to 2016-12-31.
+exclusively employ two-sided Z-tests in our empirical analysis.
+       Table 6 presents p-values for the tests of unconditional coverage.5 We find that the
+forecast models for portfolios Pf 105, Pf 106 and Pf 107 are rejected at the 1% level for all
+kernels and on both the narrow and wide kernel windows. In view of the histograms observed
+in Table 5, this is unsurprising. When an empirical distribution function (edf) lies above
+the uniform cdf within the kernel window (as observed for Pf 107), large PIT values are
+underepresented in the sample, which suggests that the forecast model overstates the upper
+quantiles of the loss distribution. When an edf lies below the uniform cdf (as observed for
+Pf 105 and Pf 106), large PIT values are overrepresented in the sample, which suggests that
+the forecast model understates the upper quantiles. By contrast, there are no rejections at
+all for Pf 110, for which the edf is reasonably close to the theoretical cdf throughout the
+upper tail.
+       For the remaining six portfolios, test results are sensitive to the choice of kernel. This
+is to be expected and desirable, as the different tests prioritize different quantiles of the
+unconditional distribution. To shed light on the differences, in Figure 2 we plot the edf for
+three portfolios on the narrow window (upper panel) and wide window (lower panel). This
+plot is the empirical counterpart to Figure 1 in Section 4.3. For Pf 104, we observe that the
+edf intersects with the theoretical cdf at the common upper window boundary α2 = 0.995,
+but lies above the theoretical cdf at lower PIT values. Over the wide window, the average
+distance between edf and theoretical cdf is large, so any test that assigns significant weight to
+PIT values near the center of the window will reject. When restricted to the narrow window,
+the average distance is reduced, so the tests fail to reject. The edf for portfolio Pf 103 (not
+shown) is qualitatively close to that of Pf 104, which explains the similarity in test results.
+       The edf for portfolio Pf 108 lies somewhat below and roughly parallel to the theoretical
+cdf throughout the narrow window. Tests reject at the 5% level for some of the kernels and
+   5
+    All p-values in the tables below should be interpreted in the context of a single test of the null hypothesis.
+If multiple tests are conducted, inferences would have to be based on a standard correction method such as
+that of Bonferroni; see Shaffer (1995) for a review.
+
+
+
+                                                       27
+                     ID    window        BIN       ZU3       PE3        ZU         ZA        ZE       ZL+       ZL−       ZLL       PNS
+                           narrow     0.1046 0.0340 0.0502 0.0356 0.0294 0.0436 0.0230 0.0572 0.0595 0.0352
+                    101
+                           wide       0.1046 0.1407 0.0593 0.2050 0.2300 0.1718 0.0610 0.4243 0.0128 0.0296
+                           narrow     0.0016 0.0200 0.0027 0.0800 0.0795 0.0802 0.1346 0.0558 0.1085 0.2153
+                    102
+                           wide       0.0016 0.0063 0.0121 0.2456 0.2484 0.2797 0.2114 0.2898 0.4477 0.2238
+                           narrow     0.1029 0.1158 0.4212 0.0987 0.1134 0.0882 0.1094 0.0995 0.2545 0.2804
+                    103
+                           wide       0.1029 0.0035 0.0229 0.0058 0.0041 0.0083 0.0156 0.0038 0.0126 0.0091
+                           narrow     0.1829 0.1691 0.1119 0.1651 0.1678 0.1633 0.3063 0.0987 0.0767 0.0657
+                    104
+                           wide       0.1829 0.0010 0.0002 0.0004 0.0003 0.0005 0.0031 0.0002 0.0003 0.0001
+                           narrow     0.0000 0.0000 0.0001 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+                    105
+                           wide       0.0000 0.0000 0.0002 0.0000 0.0000 0.0000 0.0000 0.0001 0.0001 0.0000
+                           narrow     0.0005 0.0004 0.0055 0.0010 0.0008 0.0012 0.0019 0.0007 0.0033 0.0036
+28                  106
+                           wide       0.0005 0.0000 0.0001 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+                           narrow     0.0059 0.0018 0.0097 0.0026 0.0020 0.0032 0.0062 0.0016 0.0053 0.0033
+                    107
+                           wide       0.0059 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000
+                           narrow     0.0166 0.0213 0.0933 0.0311 0.0290 0.0301 0.0191 0.0520 0.0482 0.0635
+                    108
+                           wide       0.0166 0.6971 0.0052 0.8422 0.8168 0.8545 0.5358 0.4445 0.0034 0.0070
+                           narrow     0.5217 0.2499 0.0222 0.1358 0.1237 0.1712 0.3171 0.0634 0.0165 0.0225
+                    109
+                           wide       0.5217 0.2584 0.3373 0.0563 0.0715 0.0525 0.0503 0.0706 0.1471 0.2814
+                           narrow     0.8514 0.9479 0.8692 0.6660 0.7719 0.6123 0.6321 0.7032 0.8737 0.9856
+                    110
+                           wide       0.8514 0.5407 0.6916 0.3017 0.2932 0.3442 0.4527 0.2325 0.3407 0.6253
+
+     Table 6: Tests of unconditional coverage.
+     We report p-values by portfolio, kernel window, and kernel family. Narrow kernel window is [0.985,0.995] and wide kernel window is [0.95,0.995].
+     Sample period is 2014-01-01 to 2016-12-31.
+fail to reject for others, but the p-values all lie between 1.5% and 10%. When we consider
+the wide window, we find that the edf lies above the theoretical cdf in the lower half of the
+window and below in the upper half, which implies that the forecast model underestimates
+quantiles at one boundary of the kernel window and overestimates quantiles at the other
+boundary, i.e., a slope deviation from the uniform cdf. As shown in Section 4.3, bispectral
+tests generally outperform monospectral tests in this situation. We find that the tests based
+on the bivariate ZLL and PNS kernels and the trivariate Pearson kernel reject at the 1%
+level. The edf for portfolio Pf 101 (not shown) also displays a slope violation on the wide
+window, and again we find the bivariate ZLL and PNS kernels most effective.
+   In the case of portfolio Pf 109, the edf displays a slope violation within the narrow
+window. As before, we find that the tests based on the bivariate ZLL and PNS kernels
+and the trivariate Pearson kernel reject at the 5% level, whereas the monospectral tests all
+fail to reject. On the wide window, the edf lies uniformly below the theoretical cdf, so the
+slope violation loses salience. The bispectral and trispectral tests now fail to reject, whereas
+several of the monospectral tests reject at a 10% level.
+
+
+6.3    Tests of conditional coverage
+
+In this section, we emphasize the role of the conditioning variable transformation h(P )
+in revealing serial dependence in PIT-values. For parsimony, we consider only a subset
+of the kernels used in the previous section. We include the binomial score kernel (BIN)
+as representative of the traditional test, the uniform kernel (ZU) as representative of the
+continuous monospectral tests, and the (ZLL) as representative of the multispectral tests.
+We fix k = 4 lags in the monospectral tests which corresponds to looking at dependencies
+over a time horizon of one trading week. To facilitate comparison to the monospectral tests,
+we fix (k1 = 4, k2 = 0) for the bispectral ZLL test.
+   Missing or spurious values may be especially troublesome in a test of conditional coverage
+because a PIT value missing at time t introduces missing regressors at t + 1, . . . , t + k. To
+
+
+                                              29
+                        Narrow window
+
+                1.000
+
+
+
+
+                0.995
+
+
+
+
+                0.990                                                          Portfolio
+
+
+
+Empirical CDF
+                                                                                    101
+                                                                                    103
+                                                                                    104
+                                                                                    108
+                                                                                    109
+                0.985
+
+
+
+
+                0.980
+
+
+
+
+                0.975
+
+                         0.980          0.985   0.990          0.995   1.000
+                                                 PIT
+
+                       Wide window
+
+                1.00
+
+
+
+
+                0.98
+
+                                                                               Portfolio
+
+
+
+Empirical CDF
+                                                                                    103
+                                                                                    105
+                                                                                    106
+                                                                                    108
+                                                                                    109
+
+                0.96
+
+
+
+
+                0.94
+
+                                         0.96           0.98           1.00
+                                                PIT
+
+
+Figure 2: Empirical distribution functions for select portfolios.
+EDFs for narrow kernel window (upper panel) and wide kernel window (lower panel). The uniform cdf is
+plotted as a dashed black line.
+
+
+                                                          30
+avoid losing the subsequent k observations, we replace missing or spurious Pt−ℓ with an
+inputed value when computing the lagged vector ht−1 . (As in the tests of unconditional
+coverage, we do not impute missing Pt to backfill the dependent variables Wt , but simply
+drop these observations.) Details of our imputation algorithm are found in Appendix C.
+   Table 7 presents p-values for the tests of conditional coverage. For portfolios Pf 105,
+Pf 106 and Pf 108, forecast models are strongly rejected (always at the 1% level, and nearly
+always at the 0.01% level) regardless of the choice of CVT or kernel; for brevity we drop
+these portfolios from the table. For only a single portfolio (Pf 109), the forecast model is
+never rejected. In the other six cases, choice of CVT and kernel matters.
+   For portfolios Pf 102 and Pf 110, the V.4 CVT generally leads to rejection at the 5% level,
+whereas tests using the DQ CVT generally do not. The V.BIN and V.1⁄2 CVT are effective
+in many cases, but appear less robust than V.4. This reflects the greater sensitivity of the
+V.4 transformation to local spikes in market volatility. In the case of portfolio Pf 103, the
+tests reject on the wide window except when using the DQ CVT.
+   For portfolios Pf 101 and Pf 104, variation in p-value across tests is driven primarily by
+kernel choice, and in a manner consistent with the tests of unconditional coverage in Table
+6. Thus, for these two portfolios, serial dependence in the PIT-values does not appear to be
+the salient shortcoming in the forecast model.
+   In the case of Pf 107, the test statistic is undefined for the DQ CVT and its two-tailed
+counterpart (V.BIN). As there were no observed violations in either tail (Pt < .01 or Pt >
+.99), in both cases the matrix Ĥ of (18) is singular, so Σ̂Y in the test statistic cannot be
+inverted. This demonstrates a practical limitation of a binary-valued CVT, as short samples
+may often contain no tail values. Observe also that the backtest fails to reject for the
+remaining two CVT on the narrow window, even though the forecast model for this portfolio
+is strongly rejected by the unconditional tests. Since Pt < α1 = 0.985 for all t, Wt has a
+degenerate distribution in the sample. In this situation, it may be shown that the conditional
+test statistic is invariant to the CVT and to k and is equal to the unconditional test statistic.
+
+
+                                               31
+                                                narrow window         wide window
+                     ID    CVT          BIN        ZU     ZLL           ZU     ZLL
+                        DQ            0.0017 0.0002       0.0020 0.0342 0.0092
+                        V.BIN         0.0084 0.0002       0.0009 0.0513 0.0115
+                    101
+                        V.4           0.0062 0.0003       0.0007 0.0921 0.0230
+                        V.1⁄2         0.0658 0.0063       0.0078 0.1376 0.0301
+                        DQ            0.0088 0.0975       0.1448 0.1873 0.1443
+                        V.BIN         0.0119 0.4716       0.3441 0.0201 0.0147
+                    102
+                        V.4           0.0000 0.0086       0.0023 0.0003 0.0006
+                        V.1⁄2         0.0000 0.0239       0.0111 0.0004 0.0005
+                        DQ            0.7540 0.7429       0.8408 0.1787 0.1879
+                        V.BIN         0.0773 0.0426       0.1331 0.0068 0.0149
+                    103
+                        V.4           0.3064 0.1372       0.2286 0.0074 0.0088
+                        V.1⁄2         0.5209 0.4194       0.5181 0.0318 0.0276
+                        DQ            0.8732 0.8501       0.5202 0.0295 0.0138
+                        V.BIN         0.8700 0.8456       0.5167 0.0289 0.0135
+                    104
+                        V.4           0.3225 0.2013       0.1287 0.0034 0.0022
+                        V.1⁄2         0.2085 0.0976       0.0689 0.0016 0.0011
+                        DQ               NA     NA           NA     NA     NA
+                        V.BIN            NA     NA           NA     NA     NA
+                    107
+                        V.4           0.1844 0.1071       0.1085 0.0001 0.0000
+                        V.1⁄2         0.1844 0.1071       0.1085 0.0001 0.0000
+                        DQ            0.9917 0.6351       0.0548 0.1465 0.1383
+                        V.BIN         0.8041 0.7510       0.1179 0.4522 0.5170
+                    109
+                        V.4           0.8929 0.8603       0.2067 0.5578 0.6225
+                        V.1⁄2         0.9313 0.6389       0.1327 0.4766 0.5266
+                        DQ            0.2658 0.3058       0.4121 0.1661 0.1395
+                        V.BIN         0.0041 0.0006       0.0009 0.0044 0.0108
+                    110
+                        V.4           0.0093 0.0008       0.0012 0.0100 0.0352
+                        V.1⁄2         0.1403 0.0513       0.0840 0.1508 0.2823
+
+Table 7: Tests of conditional coverage.
+We report test p-values by portfolio, conditioning variable transformation, kernel window and kernel family.
+The monospectral tests utilize k = 4 lags, and for the ZLL bispectral test we set (k1 = 4, k2 = 0). Narrow
+kernel window is [0.985,0.995] and wide kernel window is [0.95,0.995]. Sample period is 2014-01-01 to
+2016-12-31. Forecast models for Pf 105, Pf 106 and Pf 108 (not tabulated) are rejected at the 1% level for
+all choices of CVT and kernel.
+
+
+
+
+                                                    32
+Recalling that the test statistic has distribution χ21+k under the null hypothesis, we find that
+the p-value increases with k. This explains why unconditional backtests may have greater
+power than conditional backtests in situations where an overly conservative forecast model
+leads to degeneracy in Wt .
+
+
+
+7     Conclusion
+
+The class of spectral backtests embeds many of the most widely used tests of unconditional
+coverage and tests of conditional coverage, including the binomial likelihood ratio test of Ku-
+piec (1995), the interval likelihood ratio test of Berkowitz (2001), and the dynamic quantile
+test of Engle and Manganelli (2004). As we demonstrate with many examples, viewing these
+tests in terms of the associated kernels facilitates the construction of new tests. From the
+perspective of the practice of risk management, making explicit the choice of kernel measure
+may help to discipline the backtesting process because the kernel directly expresses the user’s
+priorities for model performance.
+    Different kernels are sensitive to different deviations from the null hypothesis. A tester
+who only cares about systematic under- or overestimation of quantiles within a narrow range
+is well served by a number of single kernels, discrete and continuous. A tester who wants
+to ensure maximum fidelity of the forecast models to the true distributions across a wider
+range of quantiles may worry more about slope violations (overestimation of quantiles at one
+end of a window and underestimation at the other). Such a tester may favor a multispectral
+test. However, to promote a single “best” test from the spectral family would be contrary to
+the philosophy of our contribution, and we refrain from doing so. The tester should reflect
+on performance priorities and select her kernel accordingly.
+    Our results illustrate the value to regulators of access to bank-reported PIT-values. Until
+recently, regulators effectively observed only a sequence of VaR exceedance event indicators
+at a single level α, and therefore backtests were designed to take such data as input. In some
+
+
+
+                                              33
+jurisdictions, including the United States, PIT-values have been collected for some time.
+Besides enabling the formation of spectral test statistics, lagged PIT-values are especially
+effective as conditioning variables in regression-based tests of conditional coverage.
+
+
+
+A      Proofs
+
+A.1      Proof of Theorem 3.1
+
+Let G1 and G2 be the increasing, right-continuous functions associated with the measures ν1
+and ν2 . It follows that Wt∗ = G1 (Pt )G2 (Pt ). The function G∗ (u) = G1 (u)G2 (u) must also be
+increasing and right-continuous and can thus be used to define a Lebesgue-Stieltjes measure
+ν ∗ by setting ν ∗ ({0}) = G∗ (0) = 0 and ν ∗ ((a, b]) = G∗ (b) − G∗ (a) for any 0 ⩽ a < b ⩽ 1. It
+follows that Wt∗ = G∗ (Pt ) = ν ∗ ([0, Pt ]).
+    The formula for ν ∗ is obtained by applying the integration-by-parts formula for the
+Lebesgue-Stieltjes integral (Hewitt, 1960, Theorem A).
+
+
+A.2      Proof of Proposition 3.2
+
+Since Gν (u) = O((1 − u)−1/2+ϵ ) as u → 1 for some small ϵ, there exists a value u0 and a
+positive constant C such that Gν (u) ⩽ C(1 − u)−1/2+ϵ for u ⩾ u0 . Let ū be the larger of u0
+and the last point at which Gν is not differentiable (there are only finitely so many points
+by Assumption 1). We can decompose (9) as
+
+             Z                                           Z
+ E(Wt2 ) =             (1−u) (2Gν (u) − ν({u})) dν(u)+            (1−u) (2Gν (u) − ν({u})) dν(u) (A.1)
+              [0,ū]                                     (ū,1]
+
+
+
+The integrand in the first term is bounded above by 2Gν (ū) and so the integral is finite. We
+only need to prove the finiteness of the second term which can be written as
+
+Z 1                                Z 1                                                  Z 1
+                                          d                           1
+     (1 − u)2Gν (u)gν (u)du =    (1 − u)    Gν (u)2 du = Gν (u)2 (1 − u) ū +                 Gν (u)2 du
+  ū                          ū         du                                              ū
+
+
+                                                  34
+using integration by parts.
+    Since 0 ⩽ Gν (u)2 (1 − u) ⩽ C 2 (1 − u)2ϵ for u ⩾ ū and (1 − u)2ϵ → 0 as u → 1, it follows
+                        1
+that [Gν (u)2 (1 − u)]ū = −Gν (ū)2 (1 − ū). Moreover, the second term is finite because
+
+                       Z 1                          Z 1
+                                                                                 1
+                             Gν (u) du ⩽ C
+                                  2             2
+                                                          (1 − u)−1+2ϵ du =         (1 − ū)2ϵ .
+                        ū                           ū                          2ϵ
+
+
+A.3      Proof of Theorem 3.3
+
+Let pt denote the realized value of Pt and wt,j = Gj (pt ) the corresponding realized value of
+Wt,j for t = 1, . . . , n and j = 1, 2. There are two cases to consider. Either pt occurs in an
+interval where the right derrivative of Gj is 0 or in an interval where the right derivative
+is positive. Let Gj denote the subset of [0, 1] consisting of all points for which the right
+derivative of Gj equals zero.
+    If pt ∈ Gj then, by the right-continuity of Gj , pt must occur in an interval of the form
+[at,j , bt,j ) (if there is a jump in Gj at bt,j ) or [at,j , bt,j ] (if Gj is continuous at bt,j ). In either
+case the contribution of wt,j to the likelihood is
+
+
+                   P (Wt,j = wt,j ) = P (Gj (Pt ) = Gj (pt )) = FP (bt,j ) − FP (at,j ) .
+
+
+If Pt ̸∈ Gj then wt,j satisfies P(Wt,j ⩽ wt,j ) = P(Pt ⩽ pt ) and pt = G−1
+                                                                        j (wt,j ), the unique
+
+inverse of Gj at wt,j . The contribution to the likelihood is a density contribution given by
+
+                                                                 fP (pt | θ)
+                                       fW (wt,j | θ) =                       .
+                                                                  G′j (pt )
+
+The general form of the realized likelihood given wj = (w1,j , . . . , wn,j )′ is thus
+
+                                        Y                                     Y fP (pt ) | θ)
+                     LWj (θ | wj ) =            (FP (bt,j ) − FP (at,j ))
+                                       pt ∈Gj                                pt ̸∈Gj
+                                                                                       G′j (pt )
+
+
+For the measures ν1 and ν2 the sets G1 and G2 may differ at most by a null set. Let us assume
+
+
+                                                            35
+that each realized point pt is either in both of the sets G1 and G2 or in neither of the sets.
+    If pt ∈ G1 and pt ∈ G2 then the agreement of the supports on (0, 1) implies that at,1 = at,2
+and bt,1 = bt,2 . Thus the likelihood contributions are identical.
+    If pt ̸∈ G1 and pt ̸∈ G2 then the likelihoods differ only by the scaling factor G′j (pt ) which
+does not involve the parameters θ. This factor will appear in the log-likelihood only as an
+unimportant additive term and cancel out of the LR test statistic.
+    It follows that the likelihoods LWj (θ | wj ) are maximized by the same values θ̂ and the
+LR-test statistics are identical.
+
+
+A.4      Proof of Theorem 4.1
+
+Let Xt = (Xt,0 , . . . , Xt,m )′ be the (m + 1)-dimensional random vector with Xt,i = 1{1′ Wt =i}
+for i = 0, . . . , m. Under (5) Xt has a multinomial distribution satisfying E(Xt,i ) = θi ,
+var(Xt,i ) = θi (1 − θi ) and cov(Xt,i , Xt,j ) = −θi θj for i ̸= j.
+    Now define Yt to be the m-dimensional random vector obtained from Xt by omitting the
+first component. Then E(Yt ) = θ = (θ1 , . . . , θm )′ and ΣY is the m × m submatrix of cov(Xt )
+                                                                          P
+resulting from deletion of the first row and column. Let Y = n−1 nt=1 Yt . A standard
+approach to the asymptotics of the Pearson test is to show that
+
+               m
+               X                   Xm   P
+                 (Oi − nθi )2          ( nt=1 Xt,i − nθi )2
+        Sm =                     =                          = n(Y − θ)′ Σ−1
+                                                                         Y (Y − θ),          (A.2)
+               i=0
+                        nθi        i=0
+                                              nθi
+
+
+and hence to argue that Sm ∼ χ2m in the limit as n → ∞ by the central limit theorem. It
+remains to show that the right-hand side of (A.2) has the spectral test representation (7).
+    Let A be the m × m matrix with rows given by (e1 − e2 , e2 − e3 , . . . , em ) where ei denotes
+the ith unit vector. It may be easily verified that Yt = AWt , θ = AµW and ΣY = AΣW A′ .
+It follows that
+
+
+                  n(W − µW )′ Σ−1                    ′ −1
+                               W (W − µW ) = n(Y − θ) ΣY (Y − θ) = Sm .
+
+
+
+
+                                                    36
+B        Conditional bispectral Z-test
+
+The conditional spectral Z-test generalizes to a conditional multispectral Z-test. In the
+bispectral case, we construct two sets of transformed reported PIT-values (Wt,1 , Wt,2 ) for
+t = 1, . . . , n, and form the vector Yt of length k1 + k2 + 2 given by
+
+                                                                   ′
+                                                  ft,1 , h′
+                                     Yt = h′t−1,1 W             ft,2 ,
+                                                                W                                           (B.1)
+                                                          t−1,2
+
+
+
+
+where W ft,i = Wt,i − µW,i and ht−1,i = (1, hi (Pt−1 ), . . . , hi (Pt−k ))′ . Parallel to the univariate
+                                                                        i
+                           P
+case, let Y n,k = (n−k)−1 nt=k+1 Yt for k = k1 ∨k2 , and let Σ̂Y denote a consistent estimator
+of ΣY := cov(Yt ). By the theory of Giacomini and White (2006), for n large and (k1 , k2 )
+fixed,
+                                               ′
+                                   (n − k) Y n,k Σ̂−1         2
+                                                   Y Y n,k ∼ χk1 +k2 +2 .                                   (B.2)
+
+    Working under the null hypothesis, we can generalize (17) to ΣY = AW ◦ H, where ◦
+denotes element-by-element multiplication (Hadamard product). The matrices are
+
+                                                                                                         
+                                                    
+      E                  E
+              ht−1,1 h′t−1,1        ht−1,1 h′t−1,2                         2
+                                                                        σW,1 Jk1 +1,k1 +1
+                                                                           σW,12 Jk1 +1,k2 +1 
+    H=                                    , A W =                                        
+        E ht−1,2 h′t−1,1 E ht−1,2 h′t−1,2                                   2
+                                                        σW,12 Jk2 +1,k1 +1 σW,2 Jk2 +1,k2 +1
+                                                                                                            (B.3)
+                                                                                               
+                                                          ft,1 W
+where Jm,n denotes the m × n matrix of ones and σW,12 = E W    ft,2 . Our tests use the
+
+estimator Σ̂Y = AW ◦ Ĥ, where Ĥ generalizes (18) as
+
+                                                   n
+                                                   X
+                 Ĥ = (n − (k1 ∨ k2 ))   −1
+                                                              (h′t−1,1 , h′t−1,2 )′ (h′t−1,1 , h′t−1,2 ).   (B.4)
+                                              t=(k1 ∨k2 )+1
+
+
+
+
+C        Identification of spurious PIT values
+
+Consider a stylized Gaussian model in which loss is given by Lt = σt−1 Zt , where (Zt ) is an iid
+sequence of standard normal random variables and volatility σt−1 is Ft−1 -measurable. Time
+
+
+
+                                                         37
+variation in σt may arise from stochastic volatility or from changes over time in portfolio
+composition. Suppose that the risk-manager knows the true underlying distribution and
+                                                                                    dt =
+the volatility. The risk-manager’s ideal value-at-risk forecast at α = 0.99 is then VaR
+Φ−1 (0.99)σt−1 , where Φ is the standard normal cdf. We do not observe σt−1 , but from
+                 d t , we can back out the realized value of Zt as
+observing Lt and VaR
+
+
+                                                        d t.
+                                  Zt = Φ−1 (0.99) × Lt /VaR                                   (C.1)
+
+
+Furthermore, the PIT values can be expressed as
+
+
+                             Pt = Fbt−1 (Lt ) = Φ(Lt /σt−1 ) = Φ(Zt ).                        (C.2)
+
+
+    In general, we would not expect the Zt to be Gaussian, so (C.2) will not hold. However,
+so long as (Zt ) is iid, there will still be a monotonic relationship between Zt (as defined
+by (C.1)) and Pt . We find that the predicted relationship holds qualitatively for all bank-
+reported portfolios, but with more noise in some portfolios than in others. This suggests
+that we can use violations of monotonicity to identify spurious PIT values, but the threshold
+for identification must vary across portfolios.
+    Let H(z; θi ) : R → [0, 1] be a family of fitting functions with parameter θi for portfolio i,
+and replace (C.2) by
+                                     Pi,t = H(Zi,t ; θi ) + ϵi,t                              (C.3)
+
+where the ϵi,t are white-noise residuals. Since the H function should be increasing, it is
+convenient to take H to be a cdf, even though it does not have a statistical interpretation
+in our context. For convenience, we take H to be the normal cdf with unrestricted (µi , σi )
+as θi .
+    For each portfolio i, we proceed as follows:
+
+   1. Fit θi by nonlinear least squares, and construct residuals ϵit = Pit − H(Zit ; θ̂i ).
+
+
+                                                 38
+  2. The (ϵit ) are bounded in the open interval (−1, 1), because H(Zit ) does not produce
+     boundary values. We model ϵit as drawn from a rescaled beta distribution on (−1, 1)
+     with parameters (a = τi /2, b = τi /2). This distribution has mean zero and variance
+     1/(τi + 1), so we simply fit τi to the variance of the regression residuals.
+
+  3. Let B(ϵ; τ̂i ) be the fitted beta distribution. We flag an observation Pit as spurious
+     whenever B(ϵit ; τ̂i ) < q/2 or B(ϵit ; τ̂i ) > 1 − q/2, where q is a tolerance parameter.
+
+  4. We reestimate τi as in step 3 on a sample that excludes the spurious observations.
+     Repeat step 4 with the updated τ̂i . An observation is flagged as spurious if it is
+     rejected in either round of estimation.
+
+   In our baseline procedure, we set the tolerance parameter to q = 10−5 , which is intended
+                                                                                d it ). A
+to flag only the most egregious inconsistencies between Pit and the pair (Lit , VaR
+typical case involves a PIT value very close to zero or one associated with a modest P&L
+                   d it . Setting q = 0 is equivalent to shutting down the identification of
+such that |Lit | < VaR
+spurious values.
+   The procedure yields imputed PIT values as P̂it = H(Zit ; θ̂i ). As noted in Section 6.3,
+we use the imputed values to fill in for spurious values in forming regressors in the tests of
+conditional coverage.
+
+
+References
+Acerbi, C., and B. Szekely, 2014, Back-testing expected shortfall, Risk 1–6.
+
+Amisano, G., and R. Giacomini, 2007, Comparing density forecasts via weighted likelihood
+ ratio tests, Journal of Business & Economic Statistics 25, 177–190.
+
+Andrews, D.W.K., 1991, Heteroskedasticity and autocorrelation consistent covariance matrix
+ estimation, Econometrica 59, 817–858.
+
+Barone-Adesi, G., F. Bourgoin, and K. Giannopoulos, 1998, Don’t look back, Risk 11, 100–
+  103.
+
+Basel Committee on Bank Supervision, 2013, Fundamental review of the trading book: A
+  revised market risk framework, Publication No. 265, Bank for International Settlements.
+
+                                               39
+Berkowitz, J., 2001, Testing the accuracy of density forecasts, applications to risk manage-
+  ment, Journal of Business & Economic Statistics 19, 465–474.
+
+Berkowitz, J., and J. O’Brien, 2002, How accurate are Value-at-Risk models at commercial
+  banks?, The Journal of Finance 57, 1093–1112.
+
+Billingsley, P., 1961, The Lindeberg–Lévy theorem for martingales, Proceedings of the Amer-
+  ican Mathematical Society 12, 788–792.
+
+Board of Governors of the Federal Reserve System, 2011, Supervisory guidance on model
+  risk management, SR Letter 11-7.
+
+Campbell, S.D., 2006, A review of backtesting and backtesting procedures, Journal of Risk
+  9, 1–17.
+
+Christoffersen, P., 1998, Evaluating interval forecasts, International Economic Review 39.
+
+Colletaz, Gilbert, Christophe Hurlin, and Christophe Pérignon, 2013, The risk map: A new
+  tool for validating risk models, Journal of Banking and Finance 37, 3843–3854.
+
+Costanzino, N., and M. Curran, 2015, Backtesting general spectral risk measures with ap-
+  plication to expected shortfall, The Journal of Risk Model Validation 9, 21–31.
+
+Crnkovic, C., and J. Drachman, 1996, Quality control, Risk 9, 139–143.
+
+Diebold, F.X., T.A. Gunther, and A.S. Tay, 1998, Evaluating density forecasts with appli-
+  cations to financial risk management, International Economic Review 39, 863–883.
+
+Diebold, F.X., and R.S. Mariano, 1995, Comparing predictive accuracy, Journal of Business
+  & Economic Statistics 13, 253–265.
+
+Du, Z., and J.C. Escanciano, 2017, Backtesting expected shortfall: accounting for tail risk,
+ Management Science 63, 940–958.
+
+Engle, R.F., and S. Manganelli, 2004, CAViaR: conditional autoregressive value at risk by
+  regression quantiles, Journal of Business & Economic Statistics 22, 367–381.
+
+Escanciano, J.C., and J. Olmo, 2010, Backtesting parametric value-at-risk with estimation
+  risk, Journal of Business & Economic Statistics 28, 36–51.
+
+Federal Register, 2012, Risk-based capital guidelines: Market risk.
+
+Fissler, T., J.F. Ziegel, and T. Gneiting, 2016, Expected shortfall is jointly elicitable with
+  value-at-risk: implications for backtesting, Risk 58–61.
+
+Giacomini, R., and H. White, 2006, Tests of conditional predictive ability, Econometrica 74,
+  1545–1578.
+
+Gneiting, T., 2011, Making and evaluating point forecasts, Journal of the American Statis-
+ tical Association 106, 746–762.
+
+                                             40
+Gneiting, T., F. Balabdaoui, and A.E. Raftery, 2007, Probabilistic forecasts, calibration and
+ sharpness, Journal of the Royal Statistical Society, Series B 69, 243–268.
+
+Gneiting, T., and R. Ranjan, 2011, Comparing density forecasts using threshold- and
+ quantile-weighted scoring rules, Journal of Business & Economic Statistics 29, 411–422.
+
+Hewitt, E., 1960, Integration by parts for Stieltjes integrals, The American Mathematical
+  Monthly 67, 419–423.
+
+Hull, J. C., and A. White, 1998, Incorporating volatility updating into the historical simu-
+ lation method for Value-at-Risk, Journal of Risk 1, 5–19.
+
+Hurlin, C., S. Laurent, R. Quaedvlieg, and S. Smeekes, 2017, Risk measure inference, Journal
+ of Business & Economic Statistics 35, 499–512.
+
+Kratz, M., Y.H. Lok, and A.J. McNeil, 2018, Multinomial VaR backtests: A simple implicit
+  approach to backtesting expected shortfall, Journal of Banking and Finance 88, 393–407.
+
+Kupiec, P. H., 1995, Techniques for verifying the accuracy of risk measurement models,
+ Journal of Derivatives 3, 73–84.
+
+Leccadito, Arturo, Simona Boffelli, and Giovanni Urga, 2014, Evaluating the accuracy of
+  Value-at-Risk forecasts: New multilevel tests, International Journal of Forecasting 30,
+  206–216.
+
+Newey, W., and K. West, 1987, A simple, positive semi-definite, heteroskedasticity and
+  autocorrelation consistent covariance matrix, Econometrica 55, 703–08.
+
+Nolde, N., and J.F. Ziegel, 2017, Elicitability and backtesting: Perspectives for banking
+  regulation, Annals of Applied Statistics 11, 1833–1874.
+
+O’Brien, J., and P.J. Szerszen, 2017, An evaluation of bank measures for market risk before,
+  during and after the financial crisis, Journal of Banking and Finance 80, 215–234.
+
+Pérignon, C., Z.Y. Deng, and Z.J. Wang, 2008, Diversification and Value-at-Risk, Journal
+  of Banking and Finance 32, 783–794.
+
+Pérignon, C., and D. R. Smith, 2010, The level and quality of Value-at-Risk disclosure by
+  commercial banks, Journal of Banking and Finance 34, 362–377.
+
+Pérignon, C., and D.R. Smith, 2008, A new approach to comparing VaR estimation methods,
+  Journal of Derivatives 16, 54–66.
+
+Rosenblatt, M., 1952, Remarks on a multivariate transformation, Annals of Mathematical
+  Statistics 23, 470–472.
+
+Shaffer, J. P., 1995, Multiple hypothesis testing, Annual Review of Psychology 46, 561–584.
+
+
+
+
+                                             41
+                                                      supplementary material
+                                                 Spectral backtests of forecast distributions
+                                                   with application to risk management
+
+
+
+
+arXiv:1708.01489v6 [q-fin.RM] 29 Jul 2019
+                                                                               July 26, 2019
+
+
+                                                                                  Abstract
+                                                We extract material from a companion paper (in progress) which elaborates on
+                                            certain results in our main paper. To avoid confusion with references to tables, figures
+                                            and equations in the main paper, we prepend “S” when numbering tables, figures and
+                                            equations contained in this supplement.
+Supplement A:                    Truncated probitnormal score test
+The probitnormal model yields a further new spectral test based on a classical score test of
+θ = θ0 against the alternative θ ̸= θ0 . Let LP (θ | Pt∗ ) denote the likelihood contribution of
+a truncated observation Pt∗ = α1 ∨ (Pt ∧ α2 ) when Pt follows (13) and write
+                                                                                 ′
+                                             ∂                   ∂
+                        St (θ) =                            ∗
+                                               ln LP (θ | Pt ),                 ∗
+                                                                   ln LP (θ | Pt )                                     (S.1)
+                                            ∂µ                  ∂σ
+                                                      P
+for the corresponding score vector. Let S n (θ0 ) = n1 nt=1 St (θ0 ) be the mean of the observed
+score vectors under the null.
+                                               √             d                 
+    Standard likelihood theory implies that nS n (θ0 ) −−−→ N2 0, I(θ0 ) under the null,
+                                                            n→∞
+where I(θ) denotes the covariance matrix of St (θ), i.e., the Fisher information matrix. For
+large n we have approximately that
+
+                                       nS n (θ0 )′ I(θ0 )−1 S n (θ0 ) ∼ χ22 .                                          (S.2)
+
+An analytical expression for I(θ0 ) is provided later in this appendix.
+   Under a restriction on the kernel window we can show that the score test (S.2) is a
+bispectral Z-test with kernel measures ν1 and ν2 given by sums of discrete and continuous
+parts.
+
+Theorem S.1. Let z0 be the unique solution to the equation
+
+                                           z 2 + (ϕ(z)/Φ(z)) z − 1 = 0.                                                (S.3)
+
+Provided Φ(z0 ) ⩽ α1 < α2 ⩽ 1, then St (θ0 ) = Wt − µW , almost surely, where
+                                                                           Z α2
+                    Wt,i = γi,1 1{Pt ⩾α1 } + γi,2 1{Pt ⩾α2 } +                    gi (u)1{Pt ⩾u} du                    (S.4)
+                                                                             α1
+
+
+for γi,1 ⩾ 0, γi,2 ⩾ 0 and gi (u) positive and differentiable on [α1 , α2 ].
+
+Proof.
+                                Y                             Y                              Y
+           LP (θ | P ∗ ) =                 FP (α1 | θ)                     fP (Pt∗ | θ)                 F̄P (α2 | θ)   (S.5)
+                             t : Pt∗ =α1                 t : α1 <Pt∗ <α2                  t : Pt∗ =α2
+
+
+where F̄ (u) denotes the tail probability 1 − F (u). The likelihood contributions LP (θ | Pt∗ )
+are given by the individual terms in (S.5) according to whether Pt∗ = α1 , α1 < Pt∗ < α2 or
+
+
+                                                             1
+Pt∗ = α2 . Computing the score statistic and evaluating it at θ0 = (0, 1)′ yields
+              
+              
+               ψ (α ) Pt∗ = α1 ,                                                                          !
+              
+               1 1                                                          −ϕ(Φ−1 (u))/u
+    St (θ0 ) = ψ∗ (Pt∗ ) α1 < Pt∗ < α2 ,          where ψ1 (u) =                                               ,
+              
+                                                                          −ϕ(Φ−1 (u))Φ−1 (u)/u
+              
+              ψ (α ) P ∗ = α .
+                 2  2     t     2
+
+
+
+                                      !                                                            !
+                       Φ−1 (u)                                       ϕ(Φ−1 (u))/(1 − u)
+        ψ∗ (u) =                           and ψ2 (u) =                                                .
+                     Φ−1 (u)2 − 1                                 ϕ(Φ−1 (u))Φ−1 (u)/(1 − u)
+
+The discontinuities at α1 and α2 are given by
+
+             (γ1,1 , γ2,1 )′ = ψ∗ (α1 ) − ψ1 (α1 ),        (γ1,2 , γ2,2 )′ = ψ2 (α2 ) − ψ∗ (α2 )
+
+and non-negativity of the γi,j in all cases is guaranteed provided ψ∗ (α1 ) − ψ1 (α1 ) ⩾ 0. The
+second component of this vector inequality leads to condition (S.3). The weighting functions
+can be obtained by differentiating ψ∗ (u) with respect to u on [α1 , α2 ] and are thus
+
+                                1                                      2Φ−1 (u)
+              g1 (u) =                1{α1 ⩽u⩽α2 } ,       g2 (u) =             1{α ⩽u⩽α2 } .
+                         ϕ(Φ−1 (u))                                   ϕ(Φ−1 (u)) 1
+
+Finally, since µW = Wt − St (θ0 ), we must have that µW = −ψ1 (α1 ).
+
+    We find Φ(z0 ) ≈ 0.8, so the constraint on α1 is unlikely to bind in application to the range
+of tail probability levels of practical interest. For α2 < 1 the Wt,i variables are bounded,
+guaranteeing that the elements of I(θ0 ) are finite. For α2 = 1 the Gν functions for ν1 and
+ν2 grow like Φ−1 (u) and Φ−1 (u)2 respectively. We can use the asymptotic approximation
+           p
+Φ−1 (u) ∼ −2 ln(1 − u) as u → 1 to verify that the condition of Proposition 3.2 is satisfied
+in both cases.
+
+
+Fisher information matrix
+The following identities are useful for dealing with the probitnormal distribution:
+                     Z α2
+                              Φ−1 (u)du = ϕ(Φ−1 (α1 )) − ϕ(Φ−1 (α2 ))                                          (S.6)
+                         α1
+             Z α2
+                                
+                    Φ−1 (u)2 − 1 du = Φ−1 (α1 )ϕ(Φ−1 (α1 )) − Φ−1 (α2 )ϕ(Φ−1 (α2 )).                           (S.7)
+              α1
+
+
+
+
+                                                       2
+Let ξ(p | θ) = (Φ−1 (p) − µ)/σ. The first derivatives of the log-likelihood of the truncated
+probitnormal distribution are
+                                                                       
+                                                        
+                                                            ϕ ξ(α1 |θ)
+                                                        
+                                                         −                    Pt∗ = α1 ,
+                                                        
+                                                           σΦ ξ(α1 |θ)
+                                                                 
+                               ∂                        ∗
+                                 ln L(θ | Pt∗ ) = − ξ Pt |θ                     α1 < Pt∗ < α2 ,                       (S.8)
+                              ∂µ                 
+                                                      σ      
+                                                 
+                                                 
+                                                 
+                                                 
+                                                   ϕ ξ(α 2 |θ)
+                                                                               Pt∗ = α2 ,
+                                                          σΦ ξ(α2 |θ)
+
+
+and                                                               
+                                                     
+                                                        ϕ ξ(α1 |θ) ξ(α1 |θ)
+                                                                       
+                                                     
+                                                      −                            Pt∗ = α1 ,
+                                                     
+                                                          σΦ ξ(α1 |θ)
+                                                               2
+                             ∂                         ∗
+                               ln L(θ | Pt∗ ) = − ξ Pt |θ +1                        α1 < Pt∗ < α2 ,                   (S.9)
+                            ∂σ                 
+                                                        σ
+                                               
+                                               
+                                               
+                                                ϕ ξ(α2 |θ) ξ(α2 |θ)
+                                                                                   Pt∗ = α2 .
+                                               
+                                                           σΦ ξ(α2 |θ)
+
+     Recall that the expected Fisher information matrix is defined as
+                                                                                 
+                                                               ∂2               ∗
+                                       I(θ)ij = −E                   ln L(θ | Pt ) .
+                                                             ∂θi ∂θj
+
+The conditional second derivatives of the log-likelihood are
+                                                                                        
+                                       
+                                        ϕ(ξ(α  |θ))  ϕ(ξ(α    |θ))+ξ(α   |θ)Φ(ξ(α   |θ))
+                                       
+                                       
+                                              1              1          1          1
+                                       
+                                                        σ 2 Φ(ξ(α1 |θ))2
+                                                                                              Pt∗ = α1 ,
+               ∂2                      
+          −       ln L(θ | Pt∗ ) = σ12                                                        α1 < Pt∗ < α2 ,        (S.10)
+              ∂µ2                 
+                                                                                    
+                                  
+                                  
+                                  
+                                   ϕ(ξ(α 2 |θ))   ϕ(ξ(α 2 |θ))−ξ(α 2 |θ)Φ(ξ(α 2 |θ))
+                                                                                             Pt∗ = α2 ,
+                                                          σ 2 Φ(ξ(α2 |θ))2
+
+                                                                                                        
+                              
+                                                   2                      3
+                                ϕ(ξ(α1 |θ)) ξ(α1 |θ) ϕ(ξ(α1 |θ))+ξ(α1 |θ) Φ(ξ(α1 |θ))−2ξ(α1 |θ)Φ(ξ(α1 |θ))
+                              
+                              
+                              
+                                                              σ 2 Φ(ξ(α1 |θ))2
+                                                                                                                Pt∗ = α1 ,
+     ∂2                       
+                               ∗    2 −1
+−        ln L(θ | Pt∗ ) = 3ξ(Ptσ|θ)
+                                 2                                                                              α1 < Pt∗ < α2 ,
+    ∂σ 2                 
+                                                                                                     
+                         
+                         
+                         
+                          ϕ(ξ(α2 |θ)) ξ(α2 |θ)2 ϕ(ξ(α2 |θ))−ξ(α2 |θ)3 Φ(ξ(α2 |θ))+2ξ(α2 |θ)Φ(ξ(α2 |θ))
+                                                                                                               Pt∗ = α2 ,
+                                                                 σ 2 Φ(ξ(α2 |θ))2
+                                                                                                                     (S.11)
+
+
+
+
+                                                                3
+                                                                                                      
+                               
+                                ϕ(ξ(α   |θ))  ϕ(ξ(α   |θ))ξ(α   |θ)−Φ(ξ(α    |θ))+ξ(α   |θ)2 Φ(ξ(α |θ))
+                               
+                               
+                                       1             1         1            1          1           1
+                               
+                                                             σ 2 Φ(ξ(α1 |θ))2
+                                                                                                            Pt∗ = α1 ,
+     ∂ 2                       
+                                ∗
+−        ln L(θ | Pt∗ ) = 2ξ(Pσt2 |θ)                                                                       α1 < Pt∗ < α2 ,
+    ∂µ∂σ                 
+                                                                                              
+                         
+                         
+                         
+                          ϕ(ξ(α 2 |θ))  ϕ(ξ(α 2 |θ))ξ(α 2 |θ)+Φ(ξ(α 2 |θ))−ξ(α2 |θ)2 Φ(ξ(α |θ))
+                                                                                           2
+                                                                          Pt∗ = α2 .
+                                                             σ 2 Φ(ξ(α2 |θ))2
+                                                                                     (S.12)
+By taking expectations using (S.6) and (S.7) and evaluating at θ0 = (0, 1)′ we obtain the
+elements of I(θ0 ):
+
+ I(θ0 )1,1 = ϕ(Φ−1 (α1 ))2 /α1 + ϕ(Φ−1 (α2 ))2 /(1 − α2 )
+                                   + ϕ(Φ−1 (α1 ))Φ−1 (α1 ) − ϕ(Φ−1 (α2 ))Φ−1 (α2 ) + (α2 − α1 ), (S.13)
+
+
+
+ I(θ0 )2,2 = ϕ(Φ−1 (α1 ))2 Φ−1 (α1 )2 /α1 + ϕ(Φ−1 (α1 ))Φ−1 (α1 )3
+                        + ϕ(Φ−1 (α1 ))Φ−1 (α1 ) + ϕ(Φ−1 (α2 ))2 Φ−1 (α2 )2 /(1 − α2 )
+                                − ϕ(Φ−1 (α2 ))Φ−1 (α2 )3 − ϕ(Φ−1 (α2 ))Φ−1 (α2 ) + 2(α2 − α1 ), (S.14)
+
+
+                                                                                         
+ I(θ0 )1,2 = ϕ(Φ−1 (α1 ))2 Φ−1 (α1 )/α1 + ϕ(Φ−1 (α1 )) 1 + Φ−1 (α1 )2
+                                                                                             
+                            + ϕ(Φ−1 (α2 ))2 Φ−1 (α2 )/(1 − α2 ) − ϕ(Φ−1 (α2 )) 1 + Φ−1 (α2 )2 . (S.15)
+
+
+Supplement B:                      Moments for the beta kernel
+We provide a general solution to the moments and cross-moments of the transformed PIT
+values when the kernel densities take the form
+
+                                                     (u − α1 )a−1 (α2 − u)b−1
+                                       gν (u) =
+                                                      (α2 − α1 )a+b−1 B(a, b)
+
+for parameters (a > 0, b > 0) and α1 ⩽ u ⩽ α2 . The normalization guarantees that
+Gν (α2 ) = 1, and helps align the solution with standard beta distribution functions provided
+by statistical packages. In R notation, the kernel function is simply
+                                                                                    
+                                                    max{α1 , min{u, α2 }} − α1
+                          Gν (u) = pbeta                                       , a, b .
+                                                             α2 − α1
+
+    Solving for moments and cross-moments of kernels (g1 (P ), g2 (P )) for uniform P involves
+
+
+
+                                                              4
+the following integral:
+                             Z α2
+  M (a1 , b1 , a2 , b2 ) =          (1 − u)g1 (u)G2 (u)du
+                              α1
+              B(a1 + a2 , 1 + b1 )
+             =                         3 F2 (a2 , a1 + a2 , 1 − b2 ; 1 + a2 , 1 + a1 + a2 + b1 ; 1)
+             a2 B(a1 , b1 )B(a2 , b2 )
+        B(a1 + a2 , 1 + b1 + b2 )
+      =                            3 F2 (1, a1 + a2 , a2 + b2 ; 1 + a2 , 1 + a1 + a2 + b1 + b2 ; 1) (S.16)
+         a2 B(a1 , b1 )B(a2 , b2 )
+
+where 3 F2 (c1 , c2 , c3 ; d1 , d2 ; 1) denotes a hypergeometric function of order (3, 2) and argument
+unity. The final line follows from the Thomae transformation T7 in Milgram (2010, Appendix
+A). Due to the normalization of the kernels, M does not depend on the choice of kernel
+window.
+     When its parameters are all positive, as in the final form in (S.16), numerical solution to
+3 F2 (c1 , c2 , c3 ; d1 , d2 ; 1) is straightforward via the standard hypergeometric series expansion.
+
+In practice, we are most often interested in integer-valued cases for which M has a simple
+closed-form solution.
+     For given kernel window and PIT value, let Wa,b be the transformed PIT value under
+a beta kernel with parameters (a, b). A recurrence rule for the incomplete beta function
+(Abramowitz and Stegun, 1965, eq. 6.6.7) leads to a linear relationship among “neighboring”
+transformations:
+                                           (a + b)Wa,b = aWa+1,b + bWa,b+1                       (S.17)
+
+An immediate implication is that the uniform, linear increasing and linear decreasing trans-
+formations (parameter sets (1,1), (2,1) and (1,2), respectively) are linearly dependent. Any
+pair of these kernels would yield an equivalent bispectral test, and a trispectral test using
+all three kernels would be undefined due to a singular covariance matrix ΣW . By iterating
+the recurrence relationship, we can derive linear relationships among sets of kernels with
+integer-valued parameter differences ai − aℓ and bi − bℓ , which would lead to redundancies
+among the corresponding j-spectral tests.
+
+
+Supplement C:                         Monte Carlo simulations
+To compare unconditional tests we generate pseudo PIT values by first sampling from stan-
+dard normal and scaled Student t5 and t3 distributions, which represent the true model. We
+then transform the values to the interval (0, 1) using the standard normal cdf which is taken
+to be the risk manager’s model. The Student distributions are scaled to have variance one so
+differences stem from different tail shapes rather than different variances. The PIT samples
+
+                                                        5
+arising from normal are uniformly distributed and are used to evaluate the size of the tests.
+The PIT samples arising from the Student t distributions show the kind of departures from
+uniformity that are observed when tails are poorly estimated.
+    The majority of the kernel and test abbreviations are explained in Section 4.3 of the main
+paper. Additional mnemonics used in this Supplement are
+
+5-level multinomial tests: we apply the Pearson test (PE5) and the Z-test with discrete
+     uniform kernel (ZU5) in addition to the 3-level tests used in the main paper.
+
+Discrete LR-tests: the binomial LR-test (LR1) and the 3-level multinomial LR-test (LR3).
+
+Continuous LR-test: the LR-test described in Section 4.2 of the main paper which may
+    be viewed as an extension of the test of Berkowitz (LRB).
+
+The baseline sample size is n = 750, which corresponds approximately to the three-year
+samples of bank data in the main paper. In all simulation experiments number of replications
+is 216 = 65,536.
+
+                      window F | kernel        BIN     ZU3    ZU5     PE3    PE5
+                      narrow     Normal         6.1     4.9    4.6     5.3     5.9
+                                 Scaled t5     33.9    35.0   34.0    40.3    33.5
+                                 Scaled t3     24.0    24.8   24.1    43.4    33.5
+                      wide       Normal         6.1     5.0    4.8     5.1     5.6
+                                 Scaled t5     33.9    10.7   11.5    55.5    46.3
+                                 Scaled t3     24.0    13.5   11.0    90.6    81.1
+
+Table S.1: Estimated size and power of unconditional discrete Z-tests.
+We report the percentage of rejections of the null hypothesis at the 5% confidence level based on 65,536
+replications. The number of days in each backtest sample is n = 750. The narrow window is [0.985, 0.995]
+and the wide window is [0.95, 0.995].
+
+
+    Table S.1 provides a comparison of the 5-level discrete Z-tests (ZU5 and PE5) with their
+3-level counterparts (ZU3 and PE3) and the binomial score test (BIN). For the discrete
+uniform kernel, the 5-level test is similar in size and power to the 3-level test. For the
+Pearson kernel, however, the 5-level test is notably less powerful than the 3-level test, and
+is slightly oversized. On this evidence, there appears to be no advantage in choosing 5-level
+tests over 3-level tests.
+    Table S.2 demonstrates that the conclusions drawn from Table 2 in the main paper are
+robust to the choice of backtest sample size n. As one would expect, power typically increases
+with n. For both scaled t distributions and both kernel windows, we find that the ordering
+
+
+                                                   6
+ window F                 n | kernel BIN        ZU3        PE3   ZU     ZA     ZE     ZL+     ZL−     ZLL PNS
+ narrow      Normal    250               4.1     4.2        5.0 3.9 3.9 3.9            4.1     3.7     5.3      5.1
+                       500               3.9     4.6        5.4 4.6 4.6 4.5            4.6     4.6     4.7      4.7
+                       750               6.1     4.9        5.3 4.7 4.7 4.7            4.6     4.8     4.8      4.9
+             Scaled t5 250              17.4    19.6       18.0 18.5 18.9 18.0        22.0    14.6    20.9     22.5
+                       500              22.1    27.1       30.9 26.5 26.9 25.7        31.5    21.6    30.2     33.6
+                       750              33.9    35.0       40.3 33.8 34.4 33.0        40.3    27.1    40.0     44.7
+             Scaled t3 250              13.4    15.3       17.5 14.3 14.7 13.8        19.2     9.7    20.8     22.9
+                       500              15.9    20.2       31.8 19.6 20.1 18.7        26.4    14.0    31.0     36.7
+                       750              24.0    24.8       43.4 23.9 24.3 23.3        32.7    16.5    43.3     50.5
+ wide        Normal    250               4.1     4.4        5.2 4.8     4.8 4.8        4.7     4.8     4.8      5.1
+                       500               3.9     4.7        5.1 4.9     4.9 4.8        4.7     4.9     4.8      5.0
+                       750               6.1     5.0        5.1 4.9     4.9 4.9        4.9     4.9     5.0      5.0
+             Scaled t5 250              17.4     8.1       23.0 5.9     6.3 5.7        8.9     4.9    17.2     24.4
+                       500              22.1     9.7       40.3 6.3     6.5 6.0       10.6     5.4    31.3     41.6
+                       750              33.9    10.7       55.5 6.4     6.6 6.1       11.9     5.8    45.1     57.5
+             Scaled t3 250              13.4     9.1       36.1 7.7     9.1 6.8        6.3    10.9    30.2     42.7
+                       500              15.9    11.3       70.9 12.8   14.8 11.1       6.8    21.5    64.9     77.4
+                       750              24.0    13.5       90.6 17.7   20.4 15.4       7.4    31.9    85.8     93.1
+
+Table S.2: Effect of backtest sample size on size and power of unconditional Z-tests. We report the
+percentage of rejections of the null hypothesis at the 5% confidence level based on 65,536 replications. The
+narrow window is [0.985, 0.995] and the wide window is [0.95, 0.995].
+
+
+
+
+                                                       7
+              window F | test          BIN    LR1        ZU3    PE3    LR3    PNS    LRB
+              narrow      Normal        6.1    4.1        4.9    5.3    8.2    4.9    5.5
+                          Scaled t5    33.9   24.0       35.0   40.3   34.3   44.7   37.6
+                          Scaled t3    24.0   16.1       24.8   43.4   46.5   50.5   49.2
+              wide        Normal        6.1    4.1        5.0    5.1    6.1    5.0    5.1
+                          Scaled t5    33.9   24.0       10.7   55.5   52.2   57.5   57.7
+                          Scaled t3    24.0   16.1       13.5   90.6   92.7   93.1   95.0
+
+Table S.3: Comparison of LR-tests and Z-tests in size and power.
+We report the percentage of rejections of the null hypothesis at the 5% confidence level based on 65,536
+replications. The number of days in each backtest sample is n = 750. The narrow window is [0.985, 0.995]
+and the wide window is [0.95, 0.995].
+
+
+across kernels in power is little changed. Most importantly, the five properties summarized
+in Section 4.3 hold regardless of n.
+    Table S.3 compares LR-tests with Z-tests. The binomial LR-test (LR1) is less powerful
+than the binomial score test; the former is slightly oversized while the latter is a touch
+undersized. The 3-level LR-test (LR3) is compared against a 3-level monospectral test
+(ZU3) and a trispectral Pearson test (PE3). The LR-test is similar to the Pearson test
+in power (and mostly more powerful than the ZU3 test), but the LR-test is oversized. The
+generalized Berkowitz test (LRB) performs slightly less well than the truncated probitnormal
+score test (PNS) for the narrow window and very slightly better for the wider window.
+Results of a similar exercise with smaller backtest samples (n = 250) are qualitatively similar
+(untabulated). We conclude that the Z-tests are preferred to their LR-test counterparts,
+particularly when size is a paramount concern.
+    The next two experiments relate to conditional Z-tests; the CVT choices are defined in
+Table 3 in the main paper. Note that when CVT takes the value None, the test is an uncon-
+ditional test. Table S.4 estimates the size of the tests when samples are uniformly distributed
+and serially independent. The same messages emerge as in the excerpt in Section 5.2: when
+the CVT is DQ or V.BIN the tests are quite badly oversized, particularly for the former;
+choosing V.4 or V.1⁄2 as CVT substantially mitigates (but does not eliminate) oversizing.
+    Table S.5 is an examination of power for the same kernels and CVT functions. The aim
+of the underlying simulation is to produce pseudo PIT values that are (i) serially dependent
+with a dependence structure that is typical when stochastic volatility in the data is ignored
+and (ii) possibly non-uniform with the same distributions used for the unconditional tests.
+    The data generating process is designed to mimic the behavior of volatile financial return
+series, such as daily log-returns on a stock index. Suppose we have empirical return data
+X1 , . . . , Xn and we form a version of the empirical cdf bounded away from 0 and 1 by taking
+
+
+                                                     8
+                window CVT | kernel           BIN        ZU    ZL+      ZL−    ZLL     PNS
+                narrow      None                6.2 4.8         4.6      4.9    4.9     5.0
+                            DQ                 13.3 14.4       16.0     11.5   11.8    10.4
+                            V.BIN               8.0 9.0        10.4      8.4    8.5     8.9
+                            V.4                 6.8 6.7         7.2      6.4    6.6     6.4
+                            V.1⁄2               6.7 6.7         7.0      6.4    6.6     6.4
+                wide        None                6.2 4.9         5.0      4.9    4.9     4.9
+                            DQ                 13.3 8.5         9.2      8.3    8.3     7.7
+                            V.BIN               8.0 7.3         8.1      7.0    6.9     6.7
+                            V.4                 6.8 5.3         5.6      5.2    5.3     5.4
+                            V.1⁄2               6.7 5.5         5.7      5.3    5.5     5.6
+
+Table S.4: Estimated size of tests of conditional coverage.
+We report the percentage of rejections of the null hypothesis at the 5% confidence level based on 65,536
+replications. The number of days in each backtest sample is n = 750. ARMA parameters are AR = 0.95,
+MA = -0.85. The narrow window is [0.985, 0.995] and the wide window is [0.95, 0.995].
+
+                      P
+Fbn (x) = (n + 1)−1 nt=1 1{Xt ⩽x} and then construct data U bt = Fbn (Xt ). The transformed re-
+turns (Ubt ) are close to uniformly distributed and show negligible serial correlation. However,
+under the v-shaped transformation V (u) = |2u − 1|, we obtain data (V (U      bt )) which remain
+approximately uniformly distributed but show strong serial correlation. Let T denote the
+transformation T (u) = Φ−1 (V (u)). If we fit Gaussian ARMA models to the transformed
+data (T (U bt )) we find that an ARMA(1,1) process often fits well and typical values for the
+AR and MA parameters are around 0.95 and -0.85.
+     We want to generate losses (Lt ) with marginal distribution F in Table S.5 such that,
+if Ut = F (Lt ), the process (T (Ut )) is exactly a Gaussian ARMA(1,1) process with AR
+parameter 0.95, MA parameter -0.85, mean zero and variance one. Let (Zt ) be such a
+Gaussian ARMA process and let (Dt ) be a series of iid Bernoulli variables with mean 0.5.
+We apply the following series of transformations to construct (Lt ):
+
+                 Ũt = Φ(Zt ),   Ut = 21 (1 + Ũt )Dt (1 − Ũt )(1−Dt ) ,   Lt = F −1 (Ut ).       (S.18)
+
+The first transformation induces uniformity; the second can be thought of as a method of
+stochastically inverting V (u) = |2u−1| while preserving uniformity; the third transformation
+gives losses with df F . As for the unconditional tests, pseudo PIT values are obtained by
+the transformation Pt = Φ(Lt ).
+    In Table S.5 we observe that there is generally a very large increase in power when we
+move from the unconditional tests (CVT = None) to the conditional tests. This is evident
+even when the distribution of the simulated data is uniform (F = Normal). The most
+
+
+                                                     9
+          window F                CVT | kernel      BIN     ZU     ZL+    ZL−     ZLL    PNS
+          narrow     Normal       None              12.1   10.8    10.0   11.2     9.1     9.5
+                                  DQ                30.0   31.5    32.0   29.4    29.1    28.1
+                                  V.BIN             28.1   30.9    31.8   30.2    29.5    30.5
+                                  V.4               30.3   32.6    30.7   33.6    32.3    33.4
+                                  V.1⁄2             19.3   21.7    19.9   22.5    22.0    23.2
+                     Scaled t5    None              36.0   36.2    40.9   31.4    41.2    45.1
+                                  DQ                47.4   54.9    59.7   46.1    53.4    53.4
+                                  V.BIN             48.4   52.7    56.8   49.5    54.7    56.4
+                                  V.4               56.4   60.7    63.1   57.2    61.1    62.0
+                                  V.1⁄2             49.6   54.5    57.3   50.5    55.6    56.8
+                     Scaled t3    None              28.1   28.3    35.0   22.2    44.1    50.7
+                                  DQ                42.2   50.4    56.1   39.7    53.3    54.3
+                                  V.BIN             42.5   47.3    53.5   42.6    53.3    55.6
+                                  V.4               50.1   54.8    58.9   49.7    58.8    60.4
+                                  V.1⁄2             44.1   49.5    54.1   43.7    54.2    56.2
+          wide       Normal       None              12.1   17.8    15.9   18.3    14.6    15.4
+                                  DQ                30.0   31.1    30.1   31.6    30.4    30.3
+                                  V.BIN             28.1   36.0    34.5   36.2    34.6    34.9
+                                  V.4               30.3   52.1    46.4   54.1    51.2    53.8
+                                  V.1⁄2             19.3   44.9    36.9   48.0    44.7    48.6
+                     Scaled t5    None              36.0   19.5    22.3   19.2    52.9    63.9
+                                  DQ                47.4   35.4    38.9   31.5    49.8    57.9
+                                  V.BIN             48.4   41.0    45.3   37.7    55.1    62.6
+                                  V.4               56.4   55.2    56.7   52.8    67.2    74.1
+                                  V.1⁄2             49.6   51.1    51.4   49.2    65.7    73.5
+                     Scaled t3    None              28.1   28.4    18.5   39.3    87.6    93.9
+                                  DQ                42.2   32.8    32.6   34.2    71.1    82.1
+                                  V.BIN             42.5   38.8    38.7   40.1    75.3    85.2
+                                  V.4               50.1   50.7    48.4   52.7    82.5    90.2
+                                  V.1⁄2             44.1   48.1    43.4   51.2    83.6    91.1
+
+Table S.5: Estimated power of tests of conditional coverage when DGP is based on an ARMA(1,1) model.
+We report the percentage of rejections of the null hypothesis at the 5% confidence level based on 65,536
+replications. The number of days in each backtest sample is n = 750. ARMA parameters are AR = 0.95,
+MA = -0.85. The narrow window is [0.985, 0.995] and the wide window is [0.95, 0.995].
+
+
+
+
+                                                   10
+powerful tests are bispectral tests applied to the wider window using the CVT functions V.4
+and V.1⁄2.
+
+
+References
+Abramowitz, M., and I. A. Stegun, eds., 1965, Handbook of Mathematical Functions (Dover
+ Publications, New York).
+
+Milgram, Michael S., 2010, On hypergeometric 3F2(1) - a review, Working Paper 1011.4546,
+ arXiv.
+
+
+
+
+                                            11
+

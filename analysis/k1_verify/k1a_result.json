@@ -1,0 +1,80 @@
+{
+  "asset": "SP500",
+  "checkpoint": "amazon/chronos-t5-small",
+  "block": [
+    "2013-09-24",
+    "2014-07-10"
+  ],
+  "n_dates": 200,
+  "comparisons": [
+    {
+      "tag": "VaR_0.01 (keep)",
+      "median_rel": 0.002506263212897402,
+      "max_rel": 0.00309597211510774,
+      "agree": false
+    },
+    {
+      "tag": "VaR_0.01 (renorm)",
+      "median_rel": 0.002506263212897402,
+      "max_rel": 0.00309597211510774,
+      "agree": false
+    },
+    {
+      "tag": "VaR_0.025 (keep)",
+      "median_rel": 0.0030581009342374042,
+      "max_rel": 0.003875965328072104,
+      "agree": false
+    },
+    {
+      "tag": "VaR_0.025 (renorm)",
+      "median_rel": 0.0030581009342374042,
+      "max_rel": 0.003875965328072104,
+      "agree": false
+    },
+    {
+      "tag": "VaR_0.05 (keep)",
+      "median_rel": 0.003724404092490791,
+      "max_rel": 0.0048780441374951695,
+      "agree": false
+    },
+    {
+      "tag": "VaR_0.05 (renorm)",
+      "median_rel": 0.003731339661361814,
+      "max_rel": 0.0048780441374951695,
+      "agree": false
+    },
+    {
+      "tag": "VaR_0.1 (keep)",
+      "median_rel": 0.004975119548482418,
+      "max_rel": 0.006666660162607972,
+      "agree": false
+    },
+    {
+      "tag": "VaR_0.1 (renorm)",
+      "median_rel": 0.004975119548482418,
+      "max_rel": 0.006666660162607972,
+      "agree": false
+    }
+  ],
+  "negative_controls": [
+    {
+      "tag": "stored shifted by one bin width",
+      "median_rel": 2.3901611617013465e-09,
+      "max_rel": 8.094005391563121e-08,
+      "agree": true
+    },
+    {
+      "tag": "vs default-sampled series",
+      "median_rel": 11.533064934580299,
+      "max_rel": 57.71426104747322,
+      "agree": false
+    },
+    {
+      "tag": "vs stored VaR_0.10 (wrong level)",
+      "median_rel": 0.9760760296623974,
+      "max_rel": 1.2345678665383253,
+      "agree": false
+    }
+  ],
+  "negative_controls_all_failed": false
+}

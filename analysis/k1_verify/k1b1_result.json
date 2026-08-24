@@ -1,0 +1,82 @@
+{
+  "TimesFM-2.5": {
+    "cell_mean": 0.014336685301682814,
+    "panel_pooled": 0.014731605991035313,
+    "stored_cell_mean": 0.014336685301682769,
+    "stored_panel_pooled": 0.014731605991035313,
+    "printed": 0.0143,
+    "n_test_total": 36588,
+    "n_test_total_stored": 36588
+  },
+  "Moirai-2.0": {
+    "cell_mean": 0.017831665944894014,
+    "panel_pooled": 0.018202689406362743,
+    "stored_cell_mean": 0.017831665944893965,
+    "stored_panel_pooled": 0.018202689406362743,
+    "printed": 0.0178,
+    "n_test_total": 36588,
+    "n_test_total_stored": 36588
+  },
+  "Chronos-Small-A": {
+    "cell_mean": 0.017500891329967638,
+    "panel_pooled": 0.01760139936591232,
+    "stored_cell_mean": 0.01750089132996759,
+    "stored_panel_pooled": 0.01760139936591232,
+    "printed": 0.0175,
+    "n_test_total": 36588,
+    "n_test_total_stored": 36588
+  },
+  "Chronos-Mini-A": {
+    "cell_mean": 0.017809416980433285,
+    "panel_pooled": 0.01790204438613753,
+    "stored_cell_mean": 0.01780941698043324,
+    "stored_panel_pooled": 0.01790204438613753,
+    "printed": 0.0178,
+    "n_test_total": 36588,
+    "n_test_total_stored": 36588
+  },
+  "Moirai-1.1": {
+    "cell_mean": 0.015413259461199086,
+    "panel_pooled": 0.01541489012791079,
+    "stored_cell_mean": 0.015413259461199038,
+    "stored_panel_pooled": 0.01541489012791079,
+    "printed": 0.0154,
+    "n_test_total": 36588,
+    "n_test_total_stored": 36588
+  },
+  "Lag-Llama": {
+    "cell_mean": 0.029379863484821855,
+    "panel_pooled": 0.02927189242374549,
+    "stored_cell_mean": 0.02937986348482181,
+    "stored_panel_pooled": 0.02927189242374549,
+    "printed": 0.0294,
+    "n_test_total": 36588,
+    "n_test_total_stored": 36588
+  },
+  "Chronos-Small": {
+    "cell_mean": 0.3883747401613453,
+    "panel_pooled": 0.3895266207499727,
+    "stored_cell_mean": 0.38837474016134527,
+    "stored_panel_pooled": 0.3895266207499727,
+    "printed": null,
+    "n_test_total": 36588,
+    "n_test_total_stored": 36588
+  },
+  "Chronos-Mini": {
+    "cell_mean": 0.4188408561087112,
+    "panel_pooled": 0.418552530884443,
+    "stored_cell_mean": 0.4188408561087112,
+    "stored_panel_pooled": 0.418552530884443,
+    "printed": null,
+    "n_test_total": 36588,
+    "n_test_total_stored": 36588
+  },
+  "neg_inequality reversed": {
+    "cell_mean": 0.9856633146983172,
+    "panel_pooled": 0.9852683940089647
+  },
+  "neg_full sample not test window": {
+    "cell_mean": 0.0140517165040705,
+    "panel_pooled": 0.014369725154400728
+  }
+}
