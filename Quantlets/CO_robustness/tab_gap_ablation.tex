@@ -3,8 +3,11 @@
 \caption{Gap-parameter ablation: corrected violation rate
     $\hat\pi$ under adjacent splits ($g_n = 0$) versus a
     theoretically compliant gap ($g_n = \lceil c \log n \rceil$,
-    $c = 1/|\!\log\hat\rho|$). Four representative
-    model--asset pairs spanning all classification regimes.}
+    $c = 1/|\!\log\hat\rho|$), on the full sample. Four representative
+    model--asset pairs. Chronos enters as the analytic series: an ablation
+    of the gap parameter on a support-truncated predictive law would
+    measure the truncation, not the gap. The shift is
+    equation~(8) throughout.}
 \label{tab:gap_ablation}
 \footnotesize
 \begin{tabular}{@{}ll rr cc c@{}}
@@ -13,10 +16,10 @@ Model & Asset & $\hat\rho$ & $g_n$
 & $\hat\pi_{g=0}$ & $\hat\pi_{g>0}$
 & $|\Delta\hat\pi|$ \\
 \hline
-Chronos-Small & SP500 & -0.15 & 8 & 0.014 & 0.014 & 0.000 \\
-Lag-Llama & BTC & +0.05 & 5 & 0.004 & 0.004 & 0.000 \\
-GJR-GARCH & WTI & +0.64 & 19 & 0.011 & 0.010 & 0.002 \\
-Moirai 2.0 & NATGAS & +0.25 & 6 & 0.076 & 0.076 & 0.000 \\
+Chronos-Small-A & SP500 & +0.32 & 7 & 0.0132 & 0.0132 & 0.0001 \\
+Lag-Llama & BTC & +0.05 & 5 & 0.0027 & 0.0027 & 0.0000 \\
+GJR-GARCH & WTI & +0.46 & 11 & 0.0141 & 0.0136 & 0.0005 \\
+Moirai-2.0 & NATGAS & +0.19 & 5 & 0.0152 & 0.0153 & 0.0000 \\
 \hline\hline
 \end{tabular}
 \end{table}

@@ -1,0 +1,49 @@
+file	code	convention	produces	note
+scripts/baseline_aci.py	q_hat = np.quantile(window_scores, min(q_level, 1.0))	NOT_THE_SHIFT	ACI baseline	adaptive level 1-alpha_t by construction; ACI is not the conformal shift
+scripts/baseline_aci.py	q_hat = np.quantile(window, min(q_level, 1.0))	NOT_THE_SHIFT	ACI baseline	as above
+scripts/build_qs_sequences.py	scores = np.sort(v_cal - r_cal)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+scripts/build_rolling_qv_series.py	out[t] = np.sort(scores[t - w:t])[k]	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+scripts/capital_charge_comparison.py	q_hat_V = np.sort(s_V)[k - 1]	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+scripts/fz_scores.py	q_hat_V = np.quantile(s_V, ceil((n_cal + 1) * (1 - alpha)) / n_cal)	LEVEL_K_OVER_N	Table S.1 (FZ scores)	interpolates ABOVE the order statistic; impact measured, see QV_CONVENTION.md
+scripts/qV_block_bootstrap.py	ss = np.sort(boot_scores)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+scripts/qV_block_bootstrap.py	ss = np.sort(scores)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+scripts/qV_block_bootstrap.py	lo, hi = np.quantile(boot, [0.025, 0.975])	NOT_THE_SHIFT	Table S.9	percentiles of the bootstrap distribution, not a shift
+scripts/r4_rolling_and_frontier.py	return np.sort(scores)[k]	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+scripts/regenerate_rolling_vs_static.py	return np.sort(scores)[k]	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+scripts/regenerate_rolling_vs_static.py	sorted_s = np.sort(scores)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+scripts/table_c1_es_correction.py	q_hat_V = np.sort(s_V)[k_v - 1]	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+scripts/tail_completion_robustness.py	ss = np.sort(cal_scores)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+Quantlets/CFP_Capital_Charge/CFP_Capital_Charge.py	q_hat_V = np.sort(s_V)[k - 1]	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+Quantlets/CFP_ES_Correction_Z2/CFP_ES_Correction_Z2.py	q_hat_V = np.sort(s_V)[k_v - 1]	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+Quantlets/CO_baseline_comparison/compile_tab_baselines.py	sorted_scores = np.sort(scores)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+Quantlets/CO_full_evaluation/run_full_evaluation.py	scores = np.sort(v_cal - r_cal)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+Quantlets/CO_fz_scores/run_fz_scores.py	q_hat_V = np.quantile(s_V,	LEVEL_K_OVER_N	Table S.1 (FZ scores)	same site, Quantlet copy
+Quantlets/CO_garch_conformal/run_conformal_garch_ewma.py	q_hat_V = np.quantile(s_V_valid, q_level)	LEVEL_K_OVER_N	Table S.23 (rolling vs static)	q_level = ceil((n+1)(1-a))/n
+Quantlets/CO_identification/run_identification.py	q_hat_v = np.quantile(s_v, q_level)	LEVEL_K_OVER_N	Section 8 identification exhibit	q_level = min(ceil((n+1)(1-a))/n, 1)
+Quantlets/CO_marginal_vs_conditional/run_marginal_vs_conditional.py	s = np.sort(v[:n_cal] - r[:n_cal])	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+Quantlets/CO_regime_sensitivity/run_regime_sensitivity.py	q_V_t = np.quantile(valid, k_level)	LEVEL_K_OVER_N	Table S.20 (regime sensitivity)	k_level is a k/n level
+Quantlets/CO_robustness/run_robustness_summary.py	ss = np.sort(scores)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+Quantlets/CO_robustness_inner7/run_inner7_tail_closure.py	ss = np.sort(cal_scores)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+Quantlets/CO_simulation_study/run_simulation_study.py	q_hat_V = np.quantile(s_V, q_level)	LEVEL_K_OVER_N	Table S.26, SUPERSEDED by Table 1 of the manuscript	superseded; retained as the record of the two-sample-size study
+Quantlets/cfp_config.py	x = np.sort(np.asarray(scores, dtype=float))	CANONICAL		conformal_quantile: the single definition
+Quantlets/cfp_config.py	s = np.sort(np.asarray(scores, dtype=float))	CANONICAL		qhat_ceil: the pre-existing house helper, same value
+python/src/conformal_oracle/conformal/bootstrap.py	lo = float(np.quantile(qv_boots, tail))	NOT_THE_SHIFT	Table S.9	CI bound
+python/src/conformal_oracle/conformal/bootstrap.py	hi = float(np.quantile(qv_boots, 1 - tail))	NOT_THE_SHIFT	Table S.9	CI bound
+python/src/conformal_oracle/conformal/quantile.py	s = np.sort(np.asarray(scores, dtype=float))	CANONICAL	conformal-oracle on PyPI	the package's canonical implementation
+python/src/conformal_oracle/conformal/rolling.py	scores[t] = forecasts[t].quantile(alpha) - realised[t]	NOT_THE_SHIFT		the forecast's own quantile, which is the score input
+python/src/conformal_oracle/conformal/static.py	Score S_t = forecasts[t].quantile(alpha) - realised[t].	NOT_THE_SHIFT		docstring
+python/src/conformal_oracle/conformal/static.py	q_t = forecasts[t].quantile(alpha)	NOT_THE_SHIFT		the forecast's own quantile
+python/src/conformal_oracle/recalibration/aci.py	self._q_v = float(np.quantile(scores, 1 - alpha_t))	NOT_THE_SHIFT	ACI baseline	as above
+python/src/conformal_oracle/recalibration/aci.py	q_t = float(np.quantile(scores_cal, 1 - alpha_t))	NOT_THE_SHIFT	ACI baseline	as above
+analysis/ae_point4/run_ae_point4.py	return float(np.sort(scores)[k])	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+analysis/convention/measure_gap_ablation.py	def q_plain(s, a=ALPHA): return float(np.quantile(s, 1 - a))	PLAIN_QUANTILE	nothing published	deliberate: one arm of the convention comparison
+analysis/convention/measure_gap_ablation.py	x = np.sort(np.asarray(s)); n = len(x)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+analysis/detection/run_detection.py	s = np.sort(v[:nc] - r[:nc])	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+analysis/k0a_mcb/run_k0a.py	s = np.sort(np.asarray(s)); n = len(s)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+analysis/k0a_mcb/run_k0a.py	"return float(np.quantile(q - y, 1 - a, method=""linear""))"	NOT_THE_SHIFT	K0a verdict	the score-OPTIMAL shift delta*, which is the plain quantile by definition
+analysis/k0a_mcb/run_k0a.py	q0 = np.quantile(y, ALPHA)	NOT_THE_SHIFT	K0a verdict	constructs a forecast for the negative control
+analysis/k1_verify/k1b3_cc_degeneracy.py	s = np.sort(np.asarray(scores)); n = len(s)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+analysis/k2_sim/run_grid.py	"qV = np.quantile(s, lvl, axis=1, method=""linear"")"	LEVEL_K_OVER_N	nothing published	deliberate: reproduces the committed simulation study's convention for the gate
+analysis/k2_sim/run_grid.py	s = np.sort(rng0.standard_normal(n) * 0.01)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
+analysis/k2_sim/run_grid.py	"comm = np.quantile(s, min(k / n, 1.0), method=""linear"")"	LEVEL_K_OVER_N	nothing published	deliberate: the exact no-Monte-Carlo convention check
+analysis/umcb/run_umcb.py	"lo, hi = sub[""implied_f""].quantile([0.05, 0.95])"	NOT_THE_SHIFT	uMCB memo	percentiles of an implied density, not a shift

@@ -667,6 +667,28 @@ evidence with controlled Monte Carlo results on small-sample behaviour,
 calibration-fraction sensitivity at low $T$, and the stability of rolling
 $\qVroll$ across regime changes.
 
+\paragraph{The small-sample rows are in a different regime, not a noisier one}
+Equation (8) sets $k = \lceil (n+1)(1-\alpha)\rceil$, and $k \ge n$ whenever
+$n < 2/\alpha - 1$. At $\alpha = 0.01$ that bound is $n \le 198$: for any
+calibration sample of 198 observations or fewer the conformal shift \emph{is the
+sample maximum}, an extreme-value statistic rather than an interior order
+statistic. The $T = 250$ rows of Table~\ref{tab:small_sample_qV} have
+$n_{\mathrm{cal}} = 175$ and sit inside that regime; every larger $T$ sits
+outside it. The discontinuity between the first two rows of each block is
+therefore a change of estimator and not a small-sample artefact, and it is the
+reason the corrected violation rate at $T = 250$ is conservative --- $0.008$
+against a nominal $0.010$ --- rather than excessive. Section~5 of the manuscript
+finds the same conservatism, independently, on a forecaster given the true
+conditional volatility.
+
+These three tables were previously computed with the plain empirical quantile
+$Q_{1-\alpha}$ rather than equation (8), which is a different estimator by one
+order statistic and, at $n_{\mathrm{cal}} = 175$, by a great deal more. They have
+been recomputed; every site in the repository that takes a quantile of
+nonconformity scores is now enumerated with its convention, and
+\texttt{scripts/audit\_qv\_convention.py} fails the build when an undeclared one
+appears.
+
 \begin{table}[htbp]
 	\centering
 	\caption{Robustness summary (Chronos-Small, 24 assets,

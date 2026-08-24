@@ -10,6 +10,10 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 from scipy.stats import chi2
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1] / 'Quantlets'))
+from cfp_config import conformal_quantile  # the single definition of the shift
+
 
 BASE = Path(__file__).resolve().parent.parent / 'cfp_ijf_data'
 RET_DIR = BASE / 'returns'
@@ -58,7 +62,7 @@ def conformal_with_gap(scores_arr, gap, alpha=ALPHA, fc=FC):
     n = len(scores_arr)
     n_cal = int(fc * n)
     cal_scores = scores_arr[:n_cal]
-    qV = np.quantile(cal_scores, 1 - alpha)
+    qV = conformal_quantile(cal_scores, alpha)
 
     test_start = n_cal + gap
     if test_start >= n:
@@ -148,3 +152,42 @@ for period in PERIODS:
     merged['delta_pi'] = abs(merged['pi_hat_g0'] - merged['pi_hat_gl'])
     max_delta = merged['delta_pi'].max()
     print(f'  {period:6s}: max |Δπ̂| = {max_delta:.4f} ({max_delta*100:.2f} pp)')
+
+
+# --------------------------------------------------------------------------- #
+# Emit the table.
+#
+# Until now this script wrote only the CSV, and Quantlets/CO_robustness/
+# tab_gap_ablation.tex was authored by hand from an earlier vintage. It carried
+# Chronos-Small where this script uses the analytic series, rho_hat = -0.15
+# against +0.32, and Moirai-2.0/NATGAS at pi = 0.076 against 0.0152. Giving the
+# table a producer is the fix; hand-authoring it again is not.
+# --------------------------------------------------------------------------- #
+full = df_out[df_out['period'] == 'Full']
+g0 = full[full['gap_label'] == 'g=0'].set_index(['model', 'asset'])
+gl = full[full['gap_label'] == 'g=c*log(n)'].set_index(['model', 'asset'])
+
+lines = [
+    r'\begin{table}[htbp]', r'\centering',
+    r'\caption{Gap-parameter ablation: corrected violation rate',
+    r'    $\hat\pi$ under adjacent splits ($g_n = 0$) versus a',
+    r'    theoretically compliant gap ($g_n = \lceil c \log n \rceil$,',
+    r'    $c = 1/|\!\log\hat\rho|$), on the full sample. Four representative',
+    r'    model--asset pairs. Chronos enters as the analytic series: an ablation',
+    r'    of the gap parameter on a support-truncated predictive law would',
+    r'    measure the truncation, not the gap. The shift is',
+    r'    equation~(8) throughout.}',
+    r'\label{tab:gap_ablation}', r'\footnotesize',
+    r'\begin{tabular}{@{}ll rr cc c@{}}', r'\hline\hline',
+    r'Model & Asset & $\hat\rho$ & $g_n$',
+    r'& $\hat\pi_{g=0}$ & $\hat\pi_{g>0}$',
+    r'& $|\Delta\hat\pi|$ \\', r'\hline',
+]
+for key in g0.index:
+    a, b = g0.loc[key], gl.loc[key]
+    model = str(key[0]).replace('-A', r'-A').replace('_', r'\_')
+    lines.append(f'{model} & {key[1]} & {a.rho_hat:+.2f} & {int(b.gap_value)} & '
+                 f'{a.pi_hat:.4f} & {b.pi_hat:.4f} & {abs(a.pi_hat - b.pi_hat):.4f} \\\\')
+lines += [r'\hline\hline', r'\end{tabular}', r'\end{table}']
+(OUT_DIR / 'tab_gap_ablation.tex').write_text('\n'.join(lines) + '\n')
+print(f'Saved {OUT_DIR / "tab_gap_ablation.tex"}')

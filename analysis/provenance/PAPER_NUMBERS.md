@@ -210,5 +210,8 @@ not possible without editing this file's producer.
 | `\nGapGapAblFull` | 0.0005 | -- |
 | `\nGapFisherKupiec` | 0.49 | -- |
 | `\nGapFisherSevere` | 0.00078 | -- |
+| `\nGapAblRhoLo` | +0.05 | -- |
+| `\nGapAblRhoHi` | +0.46 | -- |
+| `\nGapAblPairs` | 4 | -- |
 | `\nSpearmanRPi` | 0.991 | -- |
 | `\nSpearmanRPiN` | 14 | -- |

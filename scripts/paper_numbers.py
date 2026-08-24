@@ -225,6 +225,24 @@ def collect() -> dict:
     for k, v in p2.items():
         n[f"Gap{k}"] = v
 
+    # ---- the gap ablation, recomputed from its own artefact ---------------
+    # GapAblFull, GapAblCovid, RhoLo and RhoHi were hand-entered into
+    # phase2_numbers.json and therefore checked against nothing. The two
+    # ablation figures are recomputed here from the CSV that
+    # scripts/gap_ablation.py writes, so the build fails when the two diverge.
+    # The rho range is the ablation's OWN four pairs; the six-pair range behind
+    # the remainder estimate is a different set and keeps its own macro.
+    abl = pd.read_csv(Q / "CO_robustness" / "gap_ablation.csv")
+    for per, key in (("Full", "GapAblFull"), ("COVID", "GapAblCovid")):
+        sub = abl[abl["period"] == per]
+        a = sub[sub["gap_label"] == "g=0"].set_index(["model", "asset"])["pi_hat"]
+        b = sub[sub["gap_label"] == "g=c*log(n)"].set_index(["model", "asset"])["pi_hat"]
+        n[f"Gap{key}"] = float((a - b).abs().max())
+    rho = abl[abl["period"] == "Full"]["rho_hat"]
+    n["GapAblRhoLo"] = float(rho.min())
+    n["GapAblRhoHi"] = float(rho.max())
+    n["GapAblPairs"] = int(abl[abl["period"] == "Full"]["model"].nunique())
+
     n["SpearmanRPi"] = sp.statistic
     n["SpearmanRPiN"] = len(ws)
     return n
@@ -251,12 +269,18 @@ def fmt(key: str, v) -> str:
         return f"{v:.2f}"
     if key.startswith("Lit"):
         return f"{v:.3f}"
-    if key in ("GapFisherSevere", "GapGapAblFull", "GapGapAblCovid"):
+    if key == "GapFisherSevere":
         return f"{v:g}"
+    if key in ("GapGapAblFull", "GapGapAblCovid"):
+        return f"{v:.4f}"
     if key in ("GapDMt", "GapDMp", "GapQSGapPct", "GapVaRHonest", "GapVaRAlt",
                "GapRhoLo", "GapRhoHi", "GapDeltaHatLo", "GapDeltaHatHi",
                "GapEmpCoverage", "GapFisherKupiec"):
         return f"{v:g}"
+    if key == "GapAblPairs":
+        return str(int(v))
+    if key in ("GapAblRhoLo", "GapAblRhoHi"):
+        return f"{v:+.2f}"
     if key.startswith("GapCells"):
         return str(int(v))
     if key.startswith("GapBand") or key.startswith("GapCell") or key.startswith("GapQTrue") \

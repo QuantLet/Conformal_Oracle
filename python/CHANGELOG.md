@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.3.4] - 2026-08-24
+
+### Fixed
+
+- **`bootstrap_qv_ci` computed its replicates with a different estimator from the
+  point estimate it was reported around.** Each bootstrap replicate used
+  `np.quantile(sample, 1 - alpha)`, the plain empirical quantile, while
+  `conformal_shift` returns `conformal_quantile()`, the
+  `ceil((n + 1)(1 - alpha))`-th order statistic. The two differ by one order
+  statistic — a median 5% of the shift on the study panel, and far more on short
+  windows. The interval was therefore centred on a quantity the caller was not
+  estimating. Replicates now call `conformal_quantile`.
+
+### Note on short calibration samples
+
+`conformal_quantile` returns the sample maximum whenever
+`ceil((n + 1)(1 - alpha)) >= n`, which holds for `n < 2/alpha - 1` — at
+`alpha = 0.01`, for every calibration sample of 198 observations or fewer. In
+that regime the shift is an extreme-value statistic with no stable variance, not
+a noisy interior order statistic. This has always been the behaviour; it is now
+documented, and `cfp_config.conformal_index` reports it.
+
 ## [0.3.3] - 2026-08-22
 
 ### Fixed (documentation of a released estimator)

@@ -130,14 +130,65 @@ The right-hand panel of Table~\ref{tab:mc_grid} reports the share of replication
 whose \emph{raw} forecasts are classified green, and it does not behave like the
 left-hand panel.
 
-The Basel green zone is $\hat\pi\le 4/250 = 0.016$
-\citep{basel1996}. As $T$ grows the sampling distribution of $\hat\pi$
-concentrates on its population value, so the green share runs to $100$\% or to
-$0$\% according to which side of $0.016$ that value falls --- a fact verified
-replication by replication, with the green share equal to the share of
-replications on the correct side of the threshold in all 25 cells. Sample size
-therefore sharpens the classification without moving the boundary, and the two
-directions are visible in the same table.
+The behaviour has a limit, and it can be stated.
+
+\begin{proposition}[Asymptotic content of the traffic-light classification]
+	\label{prop:traffic_limit}
+	Let a forecast series have long-run violation probability
+	$\pi = \lim_{T}\E[\hat\pi_T]$, let $\hat\pi_T$ be the realised violation rate
+	over a test block of length $n_T\to\infty$ with $\hat\pi_T\to\pi$ in
+	probability, and let $\tau = 4/250$ be the Basel green-zone threshold on the
+	scaled exceedance count \citep{basel1996}. If $\pi\neq\tau$, then
+	\begin{equation}
+		\label{eq:traffic_limit}
+		\P(\text{green})
+		\;=\;
+		\P\!\left(\hat\pi_T\le\tau\right)
+		\;\longrightarrow\;
+		\mathbf 1\{\pi<\tau\}.
+	\end{equation}
+	The classification therefore identifies $\operatorname{sign}(\pi-\tau)$ in the
+	limit and nothing else: two forecasters whose long-run violation rates lie on
+	the same side of $\tau$ receive the same verdict with probability tending to
+	one, however far apart those rates are and however far either is from the
+	nominal $\alpha$.
+\end{proposition}
+
+\begin{proof}
+	$\P(\hat\pi_T\le\tau)=\P(\hat\pi_T-\pi\le\tau-\pi)$, which tends to $1$ when
+	$\tau-\pi>0$ and to $0$ when $\tau-\pi<0$ by convergence in probability. The
+	excluded case $\pi=\tau$ is the one in which the limit is not degenerate.
+\end{proof}
+
+\begin{corollary}[The interval the classification cannot resolve]
+	\label{cor:traffic_interval}
+	At $\alpha = 0.01$ the threshold is $\tau = 1.6\,\alpha$. Every forecast series
+	whose reported threshold cuts off a long-run tail probability in
+	$(0,\,1.6\,\alpha)$ is classified green with probability tending to one.
+	Under standardised Student-$t_5$ innovations, whose $1\%$ quantile is
+	$\nGapQTrueStd$ in units of conditional scale, a series at the upper end of
+	that interval reports a Value-at-Risk understated by $12.4$\%; under
+	standardised $t_3$ the figure is $16.3$\% and under Normal innovations
+	$7.8$\%.
+\end{corollary}
+
+Three features of Proposition~\ref{prop:traffic_limit} distinguish it from the
+identification result of Section~\ref{sec:precede}. It requires no construction,
+no restriction on the return law and no matched alternative --- only consistency
+of a sample frequency. It does not shrink with evidence: the interval in
+Corollary~\ref{cor:traffic_interval} is the same at every sample size, and what
+grows with $T$ is the confidence with which a series inside it is passed. And it
+applies even where the identification constraint does not bind, since it concerns
+what the classification retains from the exceedance path rather than what that
+path can distinguish.
+
+Table~\ref{tab:mc_grid} is the finite-sample version. The green share equals the
+share of replications with $\hat\pi\le\tau$ in all 25 cells exactly, and tracks
+the normal approximation
+$\Phi\!\left((\tau-\pi)/\mathrm{sd}(\hat\pi_T)\right)$ to within 2.5 percentage
+points on average. The boundary case behaves as the proposition says it must: a
+process with $\pi = \tau$ exactly gives a green share of $48$ to $55$\% at every
+sample size from $T = 1{,}000$ to $T = 10{,}000$, converging to nothing.
 
 The skewed-$t$ process, whose population rate of $0.0233$ clears the boundary, is
 driven out: $36.4$\% green at $T = 500$ falls to $0.4$\% at $T = 10{,}000$. The
@@ -148,10 +199,8 @@ $T = 500$ rises to $74.2$\% at $T = 10{,}000$. Student-$t(3)$ at $0.0136$ rises
 from $69.6$\% to $85.6$\%, and the mixture at $0.0125$ from $68.4$\% to $96.4$\%.
 
 More data makes the traffic light more confident, and for three of the four
-misspecified processes here it makes it more confidently green. The classification
-converges to a verdict determined by the position of the true miscoverage relative
-to a fixed threshold, and not to the miscoverage. What converges to the
-miscoverage is $\qVstat$.
+misspecified processes here it makes it more confidently green. What converges to
+the miscoverage is $\qVstat$.
 
 This is the identification constraint of Section~\ref{sec:precede} in a setting
 where the truth is known by construction, and it is worth separating from a claim

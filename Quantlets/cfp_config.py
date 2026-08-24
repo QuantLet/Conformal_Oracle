@@ -30,6 +30,48 @@ from math import ceil
 
 import numpy as np
 
+
+# --------------------------------------------------------------------------- #
+# The conformal shift, in one place
+#
+# The convention was documented in the module docstring above and implemented
+# nowhere, so every producer wrote it again. Four of them wrote it differently:
+# the plain empirical quantile in gap_ablation.py and run_robustness_mc.py, and
+# np.quantile at level k/n -- which interpolates -- in fz_scores.py and
+# run_simulation_study.py. A fifth was a matter of time.
+#
+# scripts/audit_qv_convention.py fails the build when a site computes a quantile
+# of nonconformity scores without going through this function and without an
+# entry in analysis/provenance/QV_CONVENTION_SITES.tsv saying why.
+# --------------------------------------------------------------------------- #
+
+def conformal_quantile(scores, alpha=None):
+    """The finite-sample split-conformal shift: S_(k), k = ceil((n+1)(1-alpha)).
+
+    NOT np.quantile(scores, 1-alpha), which interpolates below the order
+    statistic, and NOT np.quantile(scores, k/n), which interpolates above it.
+    Both gaps are O(1/n) asymptotically and neither is O(1/n) in a short window.
+
+    When k >= n the shift IS the sample maximum, an extreme-value statistic with
+    no stable variance. At alpha = 0.01 that happens for every calibration sample
+    of 125 observations or fewer, which is inside the range of rolling windows a
+    referee may ask for. `conformal_index` reports it.
+    """
+    a = ALPHA if alpha is None else alpha
+    x = np.sort(np.asarray(scores, dtype=float))
+    n = x.size
+    if n == 0:
+        raise ValueError("conformal_quantile: empty score sample")
+    k = ceil((n + 1) * (1.0 - a))
+    return float(x[min(k, n) - 1])
+
+
+def conformal_index(n, alpha=None):
+    """(k, is_sample_maximum) for a calibration sample of size n."""
+    a = ALPHA if alpha is None else alpha
+    k = ceil((n + 1) * (1.0 - a))
+    return k, k >= n
+
 # --------------------------------------------------------------------------- #
 # Stale-price screen
 #

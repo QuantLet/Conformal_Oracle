@@ -213,9 +213,9 @@ apply to the estimator as run.}
 
 This is the standard operational choice in conformal prediction, and it is not
 covered by the result above. What is available in its place is an ablation, and
-it is evidence rather than proof. Two implementations are compared on four
-representative model--asset pairs spanning score persistence
-$\hat\rho\in[\nGapRhoLo,\nGapRhoHi]$: $g_n = 0$, and
+it is evidence rather than proof. Two implementations are compared on
+\nGapAblPairs{} representative model--asset pairs spanning score persistence
+$\hat\rho\in[\nGapAblRhoLo,\nGapAblRhoHi]$: $g_n = 0$, and
 $g_n = \lceil c\log n\rceil$ with $c = 1/\lvert\log\hat\rho\rvert$, the minimal
 gap satisfying~\eqref{eq:garch_gap_rate}. Inserting the gap moves the corrected
 violation rate by at most $\nGapGapAblFull$ over the full sample and

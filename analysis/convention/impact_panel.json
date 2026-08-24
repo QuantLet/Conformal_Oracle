@@ -1,0 +1,20 @@
+{
+  "order": {
+    "median_rel": 0.0,
+    "max_rel": 0.0,
+    "pairs_violation_count_changed": 0,
+    "cell_mean_pi": 0.010617210335478487
+  },
+  "level": {
+    "median_rel": 0.0003065674817004293,
+    "max_rel": 0.3383718694554026,
+    "pairs_violation_count_changed": 0,
+    "cell_mean_pi": 0.010617210335478487
+  },
+  "plain": {
+    "median_rel": 0.05057540284092174,
+    "max_rel": 8.929675681308241,
+    "pairs_violation_count_changed": 120,
+    "cell_mean_pi": 0.010989154296081332
+  }
+}

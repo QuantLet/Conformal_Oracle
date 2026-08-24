@@ -19,6 +19,10 @@ from scipy import stats
 from scipy.stats import norm, ttest_ind
 import warnings, time, os, shutil
 from pathlib import Path
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[2] / 'Quantlets'))
+from cfp_config import conformal_quantile  # the single definition of the shift
+
 
 warnings.filterwarnings('ignore')
 np.random.seed(42)
@@ -119,7 +123,7 @@ def conformal_static(returns, var_forecasts, alpha=ALPHA, fc=FC_DEFAULT):
         return np.nan, np.nan, np.nan, np.nan
 
     scores_cal = (-var_forecasts[cal_idx]) - returns[cal_idx]
-    q_V = np.quantile(scores_cal, 1 - alpha)
+    q_V = conformal_quantile(scores_cal, alpha)
 
     raw_pi = (returns[test_idx] < -var_forecasts[test_idx]).mean()
 
@@ -143,7 +147,7 @@ def rolling_conformal(returns, var_forecasts, alpha=ALPHA, window=250):
         t = valid[i]
         cal_indices = valid[i - window:i]
         scores = (-var_forecasts[cal_indices]) - returns[cal_indices]
-        q_V_t = np.quantile(scores, 1 - alpha)
+        q_V_t = conformal_quantile(scores, alpha)
         q_V_roll.append(q_V_t)
         times.append(t)
         corrected_var_t = q_V_t + var_forecasts[t]
