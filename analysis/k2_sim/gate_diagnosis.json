@@ -1,0 +1,38 @@
+[
+  {
+    "dgp": "t5",
+    "T": 1000,
+    "mean_qV_exact": -0.0003947622124763574,
+    "three_se_exact": 0.0004381236992497216,
+    "mean_qV_conformal": 0.0008064536830649571,
+    "three_se_conformal": 0.0004829101616991223,
+    "ratio_conf_over_exact": 2.0428846976159254
+  },
+  {
+    "dgp": "t5",
+    "T": 5000,
+    "mean_qV_exact": -0.00011680093465199125,
+    "three_se_exact": 0.00021501183039723896,
+    "mean_qV_conformal": 0.00013238438663430648,
+    "three_se_conformal": 0.00022060577645881745,
+    "ratio_conf_over_exact": 1.1334188979629845
+  },
+  {
+    "dgp": "t3",
+    "T": 1000,
+    "mean_qV_exact": -0.0005310702899826976,
+    "three_se_exact": 0.0005528604862802199,
+    "mean_qV_conformal": 0.0011613776378927758,
+    "three_se_conformal": 0.0006498183931923847,
+    "ratio_conf_over_exact": 2.1868623792353623
+  },
+  {
+    "dgp": "t3",
+    "T": 5000,
+    "mean_qV_exact": -0.00013080846846972048,
+    "three_se_exact": 0.0002363998677587572,
+    "mean_qV_conformal": 0.00017737128882039136,
+    "three_se_conformal": 0.00024484760587072785,
+    "ratio_conf_over_exact": 1.3559618187980638
+  }
+]

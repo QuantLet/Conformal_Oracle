@@ -1,0 +1,166 @@
+%══════════════════════════════════════════════════════════════════════════════
+%─── Section 5: Monte Carlo ──────────────────────────────────────────────────
+%══════════════════════════════════════════════════════════════════════════════
+\section{Monte Carlo Evidence}
+\label{sec:mc}
+
+Theorem~\ref{thm:dependent_conformal_var} is asymptotic and its remainder is
+conservative. This section measures what the correction delivers at sample sizes
+a practitioner has, under misspecification of a known kind and severity, and
+records one thing that does not converge.
+
+\paragraph{Design} Returns follow $r_t = \sigma_t\varepsilon_t$ with a
+GARCH$(1,1)$ recursion at $\omega = 10^{-5}$, $\alpha_1 = 0.10$,
+$\beta_1 = 0.85$, so Corollary~\ref{cor:garch} applies to every cell. Five
+innovation laws are used, in increasing order of tail departure: Normal, which is
+correct specification; Student-$t(5)$; Student-$t(3)$; the skewed-$t(3,-0.5)$ of
+\citet{hansen1994autoregressive}; and the mixture
+$0.95\,\mathcal N(0,1)+0.05\,\mathcal N(0,25)$. All are standardised to unit
+variance. The forecaster is given the \emph{true} GARCH parameters and assumes
+Normal innovations, so the only quantity varying across the five processes is the
+innovation law and the only defect is distributional.
+
+Sample sizes are $T\in\{500,\,1000,\,2000,\,5000,\,10000\}$ with $f_c = 0.70$ and
+$\alpha = 0.01$, giving calibration samples from 350 to 7{,}000 observations, and
+each cell is replicated 500 times: 12{,}500 replications in total. The shift is
+equation~\eqref{eq:qV} throughout.
+
+\subsection{What converges}
+\label{sec:mc_converges}
+
+Table~\ref{tab:mc_grid} reports the grid and Figure~\ref{fig:mc_convergence}
+plots it.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Monte Carlo across five data-generating processes and five sample
+		sizes, 500 replications per cell, $\alpha = 0.01$, $f_c = 0.70$. All
+		processes are GARCH$(1,1)$ with $\omega = 10^{-5}$, $\alpha_1 = 0.10$,
+		$\beta_1 = 0.85$; the forecaster uses the true GARCH parameters and
+		assumes Normal innovations. Corrected $\hat\pi$ is the post-correction
+		violation rate on the test block, averaged across replications; Green is
+		the share of replications whose \emph{raw} forecasts fall in the Basel
+		green zone. The green zone is $\hat\pi\le 4/250 = 0.016$, and the
+		population violation rate of each process is given in the first column
+		for comparison against it. The $T = 500$ row of each panel carries a
+		small-sample bias in $\qVstat$ of both signs and is reported with that
+		qualification (Supplement~S.4.1).}
+	\label{tab:mc_grid}
+	\footnotesize
+	\setlength{\tabcolsep}{4.5pt}
+	\begin{tabular}{@{}lc rrrrr rrrrr@{}}
+		\toprule
+		& population
+		& \multicolumn{5}{c}{corrected $\hat\pi$}
+		& \multicolumn{5}{c}{raw forecasts in the green zone (\%)} \\
+		\cmidrule(lr){3-7}\cmidrule(l){8-12}
+		Innovations & $\hat\pi$
+		& 500 & 1{,}000 & 2{,}000 & 5{,}000 & 10{,}000
+		& 500 & 1{,}000 & 2{,}000 & 5{,}000 & 10{,}000 \\
+		\midrule
+		Normal (correct) & 0.0100 & 0.0076 & 0.0101 & 0.0100 & 0.0100 & 0.0100 & 83.4 & 80.6 & 92.6 & 98.8 & 100.0 \\
+		Student-$t$(5) & 0.0150 & 0.0085 & 0.0100 & 0.0100 & 0.0102 & 0.0098 & 61.6 & 54.2 & 57.8 & 65.0 & 74.2 \\
+		Student-$t$(3) & 0.0136 & 0.0084 & 0.0095 & 0.0099 & 0.0098 & 0.0101 & 69.6 & 61.4 & 67.4 & 81.6 & 85.6 \\
+		Skewed-$t$(3, $-0.5$) & 0.0233 & 0.0083 & 0.0104 & 0.0105 & 0.0101 & 0.0101 & 36.4 & 18.0 & 10.8 & 3.2 & 0.4 \\
+		Mixture of Normals & 0.0125 & 0.0084 & 0.0094 & 0.0098 & 0.0100 & 0.0099 & 68.4 & 68.2 & 79.8 & 90.8 & 96.4 \\
+		\midrule
+		\multicolumn{12}{@{}l}{\textit{Mean $\qVstat$ (left) and its standard deviation across replications (right)}} \\[2pt]
+		Normal (correct) & --- & 0.00165 & 0.00030 & 0.00015 & 0.00008 & 0.00003 & 0.00307 & 0.00192 & 0.00132 & 0.00088 & 0.00064 \\
+		Student-$t$(5) & --- & 0.00758 & 0.00459 & 0.00405 & 0.00369 & 0.00372 & 0.00687 & 0.00383 & 0.00268 & 0.00163 & 0.00113 \\
+		Student-$t$(3) & --- & 0.00868 & 0.00493 & 0.00424 & 0.00365 & 0.00360 & 0.01093 & 0.00526 & 0.00331 & 0.00200 & 0.00142 \\
+		Skewed-$t$(3, $-0.5$) & --- & 0.02112 & 0.01383 & 0.01249 & 0.01220 & 0.01214 & 0.01888 & 0.00843 & 0.00479 & 0.00302 & 0.00222 \\
+		Mixture of Normals & --- & 0.01451 & 0.00863 & 0.00727 & 0.00631 & 0.00601 & 0.01274 & 0.00846 & 0.00622 & 0.00388 & 0.00286 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{fig_mc_convergence}
+	\caption{Monte Carlo across five data-generating processes and five sample
+		sizes, 500 replications per cell. Panel (a): the post-correction
+		violation rate against the nominal $\alpha = 0.01$. Panel (b): the share
+		of replications whose raw forecasts fall in the Basel green zone. Panel
+		(c): the standard deviation of $\qVstat$ across replications, on
+		logarithmic axes, against a $T^{-1/2}$ reference.}
+	\label{fig:mc_convergence}
+\end{figure}
+
+Three readings follow from the upper panel of Table~\ref{tab:mc_grid}.
+
+\emph{Coverage is restored across every process.} From $T = 1{,}000$ onward the
+corrected violation rate lies within $0.0006$ of nominal for all five processes,
+including the skewed-$t$, whose raw rate is $0.0233$ --- more than twice the level
+it reports. The residual falls with $T$ and there is no ordering of it by the
+severity of the misspecification: a one-parameter shift removes as much of a
+severe unconditional error as of a mild one.
+
+\emph{$\qVstat$ converges to the population miscalibration, which does not vanish
+with data.} Under correct specification it tends to zero, from $0.00165$ at
+$T = 500$ to $0.00003$ at $T = 10{,}000$. Under each misspecification it converges
+instead to a non-zero limit, ordered by the severity of the tail departure:
+$0.0037$ for Student-$t(5)$, $0.0036$ for Student-$t(3)$, $0.0060$ for the
+mixture, $0.0121$ for the skewed-$t$. The quantity being estimated is a property
+of the pair of laws, not an artefact of the sample.
+
+\emph{Its variance falls at the parametric rate.} The replication standard
+deviation of $\qVstat$ under correct specification falls from $0.00307$ to
+$0.00064$ across a twentyfold increase in $T$, a factor of $4.80$ against
+$\sqrt{20} = 4.47$. Lemma~\ref{lem:quantile_mixing} carries an additional
+$\sqrt{\log n}$; over this range of $T$ the two rates are not separable, and no
+attempt is made to separate them.
+
+\paragraph{The small-sample cost of the finite-sample convention} At $T = 500$
+the corrected rate is $0.0076$ to $0.0085$ across all five processes, including
+the correctly specified one --- systematically conservative rather than nominal.
+The mechanism is the conformal index of Section~\ref{sec:theory_lemmas}: at
+$n = 350$ the level $\lceil (n+1)(1-\alpha)\rceil/n$ is $0.9943$ rather than
+$0.99$, an overshoot of $0.0043$, and $\qVstat$ inherits it. Under correct
+specification, where the population shift is zero, the overshoot is the entire
+signal: mean $\qVstat$ runs $0.00165,\,0.00030,\,0.00015,\,0.00008,\,0.00003$
+across the grid, against overshoots of $0.0043,\,0.0014,\,0.0007,\,0.0003,\,0.0001$.
+The correction is upward-biased on a forecaster that needs no correction, by
+construction rather than by misspecification, and the bias is $\mathcal O(1/n)$.
+Section~\ref{sec:recal} reports the panel consequence.
+
+\subsection{What does not converge}
+\label{sec:mc_diverges}
+
+The right-hand panel of Table~\ref{tab:mc_grid} reports the share of replications
+whose \emph{raw} forecasts are classified green, and it does not behave like the
+left-hand panel.
+
+The Basel green zone is $\hat\pi\le 4/250 = 0.016$
+\citep{basel1996}. As $T$ grows the sampling distribution of $\hat\pi$
+concentrates on its population value, so the green share runs to $100$\% or to
+$0$\% according to which side of $0.016$ that value falls --- a fact verified
+replication by replication, with the green share equal to the share of
+replications on the correct side of the threshold in all 25 cells. Sample size
+therefore sharpens the classification without moving the boundary, and the two
+directions are visible in the same table.
+
+The skewed-$t$ process, whose population rate of $0.0233$ clears the boundary, is
+driven out: $36.4$\% green at $T = 500$ falls to $0.4$\% at $T = 10{,}000$. The
+Student-$t(5)$ process is not. Its population rate is $0.0150$ --- a forecaster
+understating its exceedance probability by half --- and it sits inside the
+boundary, so the same concentration works the other way: $61.6$\% green at
+$T = 500$ rises to $74.2$\% at $T = 10{,}000$. Student-$t(3)$ at $0.0136$ rises
+from $69.6$\% to $85.6$\%, and the mixture at $0.0125$ from $68.4$\% to $96.4$\%.
+
+More data makes the traffic light more confident, and for three of the four
+misspecified processes here it makes it more confidently green. The classification
+converges to a verdict determined by the position of the true miscoverage relative
+to a fixed threshold, and not to the miscoverage. What converges to the
+miscoverage is $\qVstat$.
+
+This is the identification constraint of Section~\ref{sec:precede} in a setting
+where the truth is known by construction, and it is worth separating from a claim
+the design does not support. The zone boundary is not miscalibrated: a forecaster
+at $\hat\pi = 0.0150$ genuinely produces fewer than four exceedances per
+250 days more often than not, which is what the zone is defined to detect. The
+point is narrower and is about what a practitioner may infer. A green zone
+sustained over a longer record is evidence that the exceedance count is below the
+boundary, and it is not evidence that the reported quantile is the quantile it
+claims to be --- the two coincide only when the miscoverage is large enough to
+cross the boundary. Waiting for more data does not close that gap; it widens the
+share of replications in which the gap is invisible.

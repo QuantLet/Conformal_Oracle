@@ -198,9 +198,9 @@ Post-hoc recalibration does not resolve the situation; it conceals it. A
 split-conformal shift restores marginal coverage regardless of the forecaster it
 is applied to --- exactly and in finite samples under exchangeability
 \citep{vovk2005algorithmic,lei2018distribution}, and asymptotically under the
-$\beta$-mixing conditions of Theorem~S.9.2, which
+$\beta$-mixing conditions of Theorem~\ref{thm:dependent_conformal_var}, which
 require a separation between calibration and evaluation that the contiguous split
-used here does not provide, as Remark~S.9.3 sets out. Neither
+used here does not provide, as Section~\ref{sec:theory_gap} sets out. Neither
 guarantee therefore covers the estimator exactly as it is run; the distinction
 matters for the theory and not for the point of this paragraph, since on these
 data the correction delivers coverage either way. Applied to a series whose predictive
@@ -436,28 +436,14 @@ The one-sided design is dictated by the regulatory loss function, not by a symme
 \label{sec:validity}
 
 Standard conformal coverage guarantees require exchangeability, which volatility
-clustering and serial dependence in financial returns violate. Supplement~S.9
-states an asymptotic coverage result for the single-split estimator under
-geometric $\beta$-mixing, with an explicit remainder
-$\Delta_n \le C\sqrt{(\log n)/n} + \beta(g_n)$, together with the GARCH
-corollary that makes the mixing rate concrete. Two features of it matter here and
-are stated rather than left to the appendix.
-
-First, the result requires a gap $g_n\to\infty$ separating the calibration block
-from the evaluation point, exceeding the forecaster's context length. The
-protocol used throughout is a contiguous $70/30$ split: $g_n = 0$. \emph{The
-theorem therefore does not apply to the estimator as run.} We report the gap
-ablation for exactly that reason (Supplement~S.4): inserting a gap moves
-$\hat\pi$ by at most $0.0005$ over the full sample and $\nGapGapAblCovid$ within the COVID window, which is evidence and not a proof, and is offered as such.
-
-Second, no finite-sample coverage claim is made anywhere in this paper for the
-dependent case. The conclusion is asymptotic, with an explicit remainder, and on
-six representative pairs spanning score persistence $\hat\rho \in [\nGapRhoLo, \nGapRhoHi]$
-the estimated remainder lies between $\nGapDeltaHatLo$ and $\nGapDeltaHatHi$ --- a coverage floor
-near 88\% against empirical coverage averaging \nGapEmpCoverage\%. The bound is conservative
-at financial sample sizes and does the work of justifying the correction under
-dependence, not of certifying it.
-
+clustering and serial dependence in financial returns violate.
+Section~\ref{sec:theory} replaces that assumption with geometric $\beta$-mixing
+and states an asymptotic coverage result for the single-split estimator, a
+corollary fixing the mixing rate for GARCH data-generating processes, and two
+bounds for objects adjacent to the rolling variant. The construction here makes
+no parametric assumption on returns; what it requires of the dependence
+structure, and the one condition the contiguous split does not meet, are set out
+there.
 
 \subsubsection{Rolling Conformal Calibration}
 \label{sec:rolling_method}
@@ -473,9 +459,9 @@ Financial time series exhibit time-varying volatility and structural change, mot
 \end{equation}
 where $S_{(1)}\le\cdots\le S_{(w)}$ are the order statistics of the trailing-window scores, so the rolling shift uses the same finite-sample conformal convention as equation~\eqref{eq:qV} and not the plain empirical quantile. The recalibrated lower quantile and VaR follow from equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{roll}}(t) = \qVroll$.
 
-The rolling variant is an operational heuristic, not a construction with finite-sample conformal validity: Theorem~S.9.2 covers the single-split estimator only, and recomputing the threshold from a trailing window violates the single-split assumption.\footnote{Complementary results from the online learning literature \citep{zinkevich2003online} and the weighted conformal framework \citep{barber2023conformal,angelopoulos2024pid} bound time-average miscoverage and finite-window deviation under drift, but cover related objects --- exact OGD updates and exponentially weighted quantiles, respectively --- not the uniform-weight rolling quantile used here. Propositions~S.9.4 and~S.9.6 in Supplement~S.9 adapt these bounds; the proofs are included for completeness.} Empirical support comes from the simulation study in Section~\ref{sec:baselines} and from the drift diagnostic $\hat\delta_w(t)$ (Supplement~S.9.5), which flags windows where local recalibration departs from the global one.
+The rolling variant is an operational heuristic, not a construction with finite-sample conformal validity: Theorem~\ref{thm:dependent_conformal_var} covers the single-split estimator only, and recomputing the threshold from a trailing window violates the single-split assumption.\footnote{Complementary results from the online learning literature \citep{zinkevich2003online} and the weighted conformal framework \citep{barber2023conformal,angelopoulos2024pid} bound time-average miscoverage and finite-window deviation under drift, but cover related objects --- exact OGD updates and exponentially weighted quantiles, respectively --- not the uniform-weight rolling quantile used here. Propositions~\ref{prop:ogd_regret} and~\ref{prop:rolling_drift} state what is available for them.} Empirical support comes from the Monte Carlo study of Section~\ref{sec:mc} and from the drift diagnostic $\hat\delta_w(t)$ (Supplement~S.9.6), which flags windows where local recalibration departs from the global one.
 
-The formal conformal guarantee in Theorem~S.9.2 applies to the single-split estimator. The rolling estimator should be read as a locally adaptive engineering variant whose validity is assessed empirically and supported by the time-average and drift bounds in Supplement~S.9, not as an exact conformal procedure.
+Remark~\ref{rem:rolling_status} states what the rolling estimator is entitled to claim.
 
 \subsubsection{Alternative Recalibration Baselines}
 \label{sec:alternatives}
@@ -532,9 +518,13 @@ manuscript drifts from the value in the data.
 
 \textbf{The comparison is deliberately asymmetric, and we state that here rather than as a qualification later.} The classical and dynamic benchmarks are estimated per asset and re-estimated at every step; the foundation models are deployed strictly zero-shot, with no fine-tuning and no per-asset adaptation. These are not equivalent adaptation regimes, and any Quantile Score comparison between the two groups reflects that difference as well as any difference in model quality. We retain the asymmetry because it is the operationally relevant contrast --- a zero-shot model is what a practitioner can deploy without an estimation pipeline per instrument --- but no conclusion in this paper rests on a TSFM-versus-GARCH score ranking. The audit's findings are within-group: the interface contrast is between two releases of the same family under identical deployment, and the recalibration results are computed separately for every forecaster.
 
-All forecasts are one-step-ahead. TSFMs use a fixed context length of 512 observations, the default for all six pretrained checkpoints (Supplement~S.8). The GARCH-family benchmarks and Historical Simulation are estimated on rolling windows of 250 observations, following the Basel convention \citep{basel1996}, with parameters re-estimated at each step. EWMA carries no estimation window: its variance is the RiskMetrics recursion at the conventional $\lambda = 0.94$, so its memory is geometrically decaying rather than truncated. That distinction is immaterial numerically --- the weight beyond lag $k$ is $\lambda^k$, which is $\nLitLambdaTail$ at $k = 250$ --- but it is material for the finite-context condition of Lemma~S.9.4, and Supplement~S.9 treats it explicitly rather than folding EWMA into the 250-observation convention.
+All forecasts are one-step-ahead. TSFMs use a fixed context length of 512 observations, the default for all six pretrained checkpoints (Supplement~S.8). The GARCH-family benchmarks and Historical Simulation are estimated on rolling windows of 250 observations, following the Basel convention \citep{basel1996}, with parameters re-estimated at each step. EWMA carries no estimation window: its variance is the RiskMetrics recursion at the conventional $\lambda = 0.94$, so its memory is geometrically decaying rather than truncated. That distinction is immaterial numerically --- the weight beyond lag $k$ is $\lambda^k$, which is $\nLitLambdaTail$ at $k = 250$ --- but it is material for the finite-context condition of Lemma~\ref{lem:score_mixing}, and Remark~\ref{rem:finite_context} treats it explicitly rather than folding EWMA into the 250-observation convention.
 
 A warm-up period (512 observations for TSFMs, 250 for the windowed classical benchmarks) precedes the calibration--test split. For full-history series (2000--2026), the test sample is approximately 1{,}500 observations per asset, yielding roughly 36{,}600 panel observations per model and 366 expected violations at $\alpha = 0.01$.
+\input{sections/sec4_theory}
+
+\input{sections/sec5_montecarlo}
+
 %══════════════════════════════════════════════════════════════════════════════
 %─── PART 6b: The sampling mechanism ────────────────────────────────────────
 %══════════════════════════════════════════════════════════════════════════════
@@ -736,13 +726,14 @@ every instrument in Section~\ref{sec:blindspot}.
 		\midrule
 		\multicolumn{4}{@{}l}{\emph{In the forecast-reduction step}}\\
 		Lower quantile stored with inverted sign \emph{(TimesFM~2.5)}
-		& the stored series is reproduced to ten decimal places by
-		$-F^{-1}(\alpha)$ from the distributional parameters recorded in the
-		same file & $0.990$ & \nRawPiTimesFM \\
+		& the stored lower quantile is positive on every observation of every
+		asset, and its ordering across $\alpha$ is reversed on every day, against
+		0\% and 0\% for every other series in the panel
+		& $0.990$ & \nRawPiTimesFM \\
 		\hspace{1em}\emph{(Moirai~2.0)}
-		& as above; 8 of 10 forecast directories store the opposite sign, so the
-		convention is not uniform across the pipeline
-		& $0.988$ & \nRawPiMoiraiTwo \\
+		& as above, on all \nMainAssets{} assets; 8 of 10 forecast directories
+		store the opposite sign, so the convention is not uniform across the
+		pipeline & $0.988$ & \nRawPiMoiraiTwo \\
 		Predictive support truncated before the quantile is read
 		\emph{(both Chronos checkpoints)}
 		& dose--response at fixed context, seed and weights; 1000 draws contain
@@ -936,7 +927,7 @@ Section~\ref{sec:diag}.
 	satisfy the restriction exactly.
 \end{proposition}
 
-The proof is one application of iterated conditioning and is in Supplement~S.9.6.
+The proof is one application of iterated conditioning and is in Supplement~S.9.7.
 Statistics that read the \emph{magnitude} of an exceedance rather than its
 occurrence lie outside the class, and on this panel they do separate: the
 Acerbi--Sz\'ekely $Z_2$ statistic of Section~\ref{sec:diag} passes 0 of
@@ -946,7 +937,7 @@ diagnostic in this paper achieves (Supplement~S.1). That is the boundary of
 Proposition~\ref{prop:identification}. It is not a general escape: the construction of
 Section~\ref{sec:blindspot_pair} can be matched on mean expected shortfall as
 well, after which a size-$5\%$ $Z_2$ test retains almost no power
-(Supplement~S.9.7).
+(Supplement~S.9.8).
 The class named in the proposition contains every instrument this paper uses:
 Kupiec's unconditional coverage test is a function of $\sum_t V_t$; both
 Christoffersen components are functions of the transition counts of $V$; the
@@ -967,7 +958,7 @@ indistinguishable alternatives contains objects a risk manager would care to
 separate. It does. Let $\delta$ denote the \emph{truncation depth}: the
 probability mass discarded from each tail of a predictive law before its
 $\alpha$-quantile is read. It is distinct from the drift diagnostic
-$\hat\delta_w(t)$ of Supplement~S.9.5, which shares no more than the letter.
+$\hat\delta_w(t)$ of Supplement~S.9.6, which shares no more than the letter.
 
 \begin{proposition}[The depth of the blind spot]
 	\label{prop:blindspot_depth}
@@ -983,7 +974,7 @@ $\hat\delta_w(t)$ of Supplement~S.9.5, which shares no more than the letter.
 	$\delta > \delta^\star$ no such unimodal law exists.
 \end{proposition}
 
-The construction is explicit and is given in Supplement~S.9.7 as a linear
+The construction is explicit and is given in Supplement~S.9.8 as a linear
 programme: the constraints --- coverage, variance, mean absolute deviation, and
 the reported quantile --- are all linear in the probabilities of a discrete
 symmetric law, so feasibility is decided by the programme. The resulting pair
@@ -998,7 +989,7 @@ of \nGapUndFree\%; requiring in addition a fourth moment no larger than the
 honest model's lowers it to $0.046$; confining the alternative to a GARCH class
 with standardised Student-$t$ innovations leaves only $10.6$\%. The discretisation
 converges from above, so each figure is an upper bound and the bias runs toward
-overstating the blind spot. Supplement~S.9.7 gives the full table.
+overstating the blind spot. Supplement~S.9.8 gives the full table.
 
 Two consequences run through the rest of the paper. Section~\ref{sec:gate}
 measures how much of this depth structural checks remove. And the Chronos
@@ -1106,9 +1097,9 @@ $\alpha = 0.01$ is most of them.
 Split-conformal recalibration targets marginal coverage regardless of the
 forecaster it is applied to --- exactly in finite samples when the scores are
 exchangeable \citep{vovk2005algorithmic,lei2018distribution}, and asymptotically
-under the dependence assumptions of Theorem~S.9.2,
+under the dependence assumptions of Theorem~\ref{thm:dependent_conformal_var},
 which the contiguous split used here does not satisfy exactly
-(Remark~S.9.3). What matters for this section is what both
+(Section~\ref{sec:theory_gap}). What matters for this section is what both
 versions share: the guarantee is indifferent to the forecaster it is applied to.
 In this panel \nMainGreen{} of \nMainPairs{} pairs reach the Basel green zone
 after correction. Applied to the Chronos series truncated at
@@ -1135,6 +1126,7 @@ forecaster at all.
 %══════════════════════════════════════════════════════════════════════════════
 \section{Structural Validation}
 \label{sec:gate}
+\label{sec:precede}
 
 A coverage test identifies only the realised tail probability
 $u_t = F_t(\hat q^{lo}_t)$, so validation must rest on something else. This
@@ -1603,7 +1595,7 @@ break. The trailing-window design produces a measurable lag: around the COVID-19
 shock seven of the thirteen forecasters reach their post-shock maximum within the
 acute window, four peak 77 calendar days later, and the two GJR-GARCH variants
 take 161 days. Mitigations and the drift diagnostic that flags the regime in real
-time are in Supplement~S.9.5.
+time are in Supplement~S.9.6.
 
 \subsection{Implications for deployment}
 \label{sec:practitioner}
@@ -1693,7 +1685,7 @@ do this job.
 On recalibration itself the claims are narrow. The conformal shift restores
 marginal coverage under $\beta$-mixing dependence --- asymptotically, with an
 explicit remainder, and under a gap-separation condition that the contiguous
-split used here does not satisfy (Remark~S.9.3) --- and that
+split used here does not satisfy (Section~\ref{sec:theory_gap}) --- and that
 is all it does. It is an intervention with an indication rather than a default
 step: under the rolling estimator, \nWellCalRollWorse{} of the \nWellCalRollN{}
 pairs that pass Kupiec on the test window are degraded by correcting them, and

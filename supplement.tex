@@ -611,13 +611,43 @@ Supplement~\ref{app:robustness}
 \subsection{Monte Carlo Design}
 \label{app:mc_design}
 
-The Monte Carlo study (Section~5.8 of the manuscript) uses five
+Section~5 of the manuscript reports the Monte Carlo study. It uses five
 data-generating processes: (i) Normal innovations, corresponding to correct
 specification; (ii) Student-$t(5)$; (iii) Student-$t(3)$; (iv) skewed-$t(3,
 -0.5)$ \citep{hansen1994autoregressive}; and (v) a mixture of Normals,
-$0.95\,\mathcal N(0,1)+0.05\,\mathcal N(0,25)$. In all cases the forecaster
+$0.95\,\mathcal N(0,1)+0.05\,\mathcal N(0,25)$, all standardised to unit
+variance. In every case the forecaster is given the true GARCH parameters and
 assumes Normal innovations, so the progression from (i) to (v) introduces
-increasing tail misspecification.
+increasing tail misspecification and nothing else. The grid runs
+$T\in\{500,1000,2000,5000,10000\}$ at 500 replications per cell, 12{,}500 in
+total.
+
+\paragraph{The two smallest calibration samples} At $T = 500$ the calibration
+block holds $n = 350$ observations, and at $\alpha = 0.01$ the two quantile
+conventions of Section~4.2 of the manuscript are biased in opposite directions
+there. The conformal index sits at $\lceil (n+1)(1-\alpha)\rceil/n = 0.9943$
+rather than $0.99$, an overshoot of $0.0043$ that inflates $\qVstat$; the
+interpolated empirical quantile at exactly $1-\alpha$ has its own small-sample
+downward bias in a right-skewed tail. Measured against a forecaster given the
+correct innovation law, so that the population shift is zero, the interpolated
+quantile returns a mean of $-0.00066$ ($t_5$) and $-0.00071$ ($t_3$) at
+$T = 500$, both within or marginally outside a three-standard-error band, and
+falls monotonically to $-0.00004$ and $-0.00003$ at $T = 10{,}000$. The
+conformal convention returns $+0.0037$ and $+0.0048$ at $T = 500$, falling to
+$+0.00008$ and $+0.00012$. From $T = 1{,}000$ upward the same control returns
+zero for the interpolated quantile on every cell. The $T = 500$ column of
+Table~1 of the manuscript is reported with this qualification rather than
+dropped.
+
+\paragraph{Reproduction} The published two-sample-size study reproduces exactly
+from its 5{,}000 per-replication rows. The grid above was produced by a fresh
+implementation, gated on reproducing that study's ten cells on all six reported
+quantities before any new sample size was reported; the comparison tolerance is
+three standard errors of the \emph{difference} between two independent Monte
+Carlo estimates, with the new run at 2{,}000 replications so that the published
+run's error dominates it. The smallest systematic discrepancy that tolerance
+admits is $2.1\times10^{-4}$ on mean $\qVstat$, so the check establishes
+agreement to Monte Carlo resolution and not exact agreement.
 
 \begin{figure}[H]
 	\centering
@@ -670,7 +700,7 @@ $\qVroll$ across regime changes.
 \subsection{Gap Parameter Ablation}
 \label{app:gap_ablation}
 
-Theorem~\ref{thm:dependent_conformal_var} requires a gap of
+Theorem~4.5 of the manuscript requires a gap of
 $g_n \to \infty$ unused observations between calibration and
 evaluation, ensuring that the test point is far enough from the
 calibration sample for the $\beta$-mixing bound to be tight. The
@@ -888,81 +918,21 @@ benchmarks used in the empirical analysis.
 \label{app:proofs}
 %============================================================
 
-This appendix states and proves the coverage result for the single-split
-conformal estimator under weak dependence, together with its supporting lemmas
-and the GARCH corollary. Section~3.2.2 of the manuscript summarises the result
-and its two limitations; everything else about it is here.
+Section~4 of the manuscript states the assumption, the two lemmas, the coverage
+theorem, the GARCH corollary and the two rolling-estimator bounds, together with
+their scope. This appendix carries the proofs, and each is labelled by the
+numbering of the statement it proves. No statement is repeated here in a second
+form.
 
-\begin{assumption}\label{ass:main}
-	Let $S_t = \hat q_t^{lo} - r_t$ denote the nonconformity score process and let
-	$n = \lfloor f_c T \rfloor$ be the calibration sample size.
-	\begin{enumerate}[label=\textup{(A\arabic*)}]
-		\item\label{ass:stationary} $\{S_t\}$ is strictly stationary and
-		geometrically $\beta$-mixing: $\beta(k) \le C\rho^k$, $\rho \in (0,1)$.
-		\item\label{ass:density} The marginal distribution $F_S$ admits a density
-		$f_S$ that is continuous and bounded away from zero near the
-		$(1-\alpha)$-quantile $q_{1-\alpha}$.
-		\item\label{ass:weak_dep} There exists a gap sequence $g_n \to \infty$,
-		$g_n/n \to 0$, such that the test score $S_{n+g_n+1}$ is evaluated after
-		the calibration sample $\mathcal D_n = (S_1, \ldots, S_n)$, separated by
-		$g_n$ unused observations.
-	\end{enumerate}
-\end{assumption}
+For reference while reading them, Assumption~4.1 of the manuscript requires
+(A1) that the score process $S_t = \hat q_t^{lo} - r_t$ be strictly stationary
+and geometrically $\beta$-mixing, $\beta(k)\le C\rho^k$; (A2) that the marginal
+law $F_S$ have a continuous density bounded away from zero near
+$q_{1-\alpha}$; and (A3) that the evaluated score be separated from the
+calibration block by a gap $g_n\to\infty$ with $g_n/n\to0$.
 
-\begin{theorem}
-	\label{thm:dependent_conformal_var}
-	Under Assumption~\ref{ass:main}, the single-split conformal VaR estimator with
-	$\qVstat$ given by equation~(7) of the manuscript satisfies
-	\begin{equation}
-		\label{eq:coverage_bound}
-		\mathbb P\!\left(
-		r_{n+g_n+1} \ge \hat q_{n+g_n+1}^{lo} - \qVstat
-		\right)
-		\ge
-		1 - \alpha - \Delta_n,
-	\end{equation}
-	where $\Delta_n \le C\sqrt{(\log n)/n} + \beta(g_n)$ and $C > 0$ depends on
-	the density near $q_{1-\alpha}$ and on the mixing rate.
-\end{theorem}
-
-\begin{remark}[What the theorem assumes, and what the protocol does]
-	\label{rem:gap_vs_protocol}
-	The theorem requires a separation $g_n\to\infty$ between the calibration block
-	and the evaluation point, and by Lemma~\ref{lem:score_mixing} that separation
-	has to exceed the forecaster's context length $m$ before the mixing bound
-	bites at all. The protocol used throughout the empirical sections is a
-	\emph{contiguous} $70/30$ split: $g_n = 0$. The theorem therefore does not
-	apply to the estimator as run, and the gap ablation of
-	Supplement~\ref{app:gap_ablation} is reported for exactly that reason ---
-	which is evidence, not a proof, and is offered as such.
-
-	Separately, the finite-sample conformal guarantee is a statement about
-	exchangeable scores. Financial return series are not exchangeable, which is
-	what this theorem exists to address; its conclusion is asymptotic, with an
-	explicit remainder, and no finite-sample coverage claim is made anywhere in
-	this paper for the dependent case.
-\end{remark}
-
-\subsection{Supporting Lemmas}
-
-\begin{lemma}[Inheritance of weak dependence by the score process]
-	\label{lem:score_mixing}
-	Let $\{r_t\}$ be strictly stationary and $\beta$-mixing with coefficients
-	$\beta_r(k)$. Suppose the forecast $\hat q_t^{lo}$ is
-	$\mathcal F_{t-1}$-measurable and generated by a time-invariant measurable
-	functional $g$ of a \emph{finite context} of length $m$,
-	\begin{equation}
-		\label{eq:app_forecast_functional}
-		\hat q_t^{lo}=g(r_{t-1},\ldots,r_{t-m}).
-	\end{equation}
-	Then the score process $S_t=\hat q_t^{lo}-r_t$ is strictly stationary
-	and $\beta$-mixing with coefficients satisfying
-	\begin{equation}
-		\label{eq:app_score_mixing_bound}
-		\beta_S(k)\le \beta_r(k-m),
-		\qquad k> m.
-	\end{equation}
-\end{lemma}
+\subsection{Proof of Lemma~4.2 (inheritance of weak dependence)}
+\label{app:lem_score_mixing}
 
 \begin{remark}[Why the context must be finite]
 	\label{rem:finite_context}
@@ -998,7 +968,7 @@ and its two limitations; everything else about it is here.
 	
 	Let $\mathcal S_{-\infty}^t=\sigma(S_s:s\le t)$ and
 	$\mathcal S_{t+k}^{\infty}=\sigma(S_s:s\ge t+k)$. By
-	\eqref{eq:app_forecast_functional}, $S_t$ is a measurable function of
+	equation~(10) of the manuscript, $S_t$ is a measurable function of
 	$(r_t,r_{t-1},\ldots,r_{t-m})$, so
 	\[
 	\mathcal S_{-\infty}^t
@@ -1012,7 +982,7 @@ and its two limitations; everything else about it is here.
 	\mathcal R_{t+k-m}^{\infty}:=\sigma(r_s:s\ge t+k-m).
 	\]
 	It is this second inclusion that fails without a finite context
-	(Remark~\ref{rem:finite_context}).
+	(Remark~S.9.1).
 	By monotonicity of $\beta$-mixing coefficients under measurable
 	transformations,
 	\[
@@ -1023,31 +993,14 @@ and its two limitations; everything else about it is here.
 	\beta_r(k-m),
 	\qquad k>m,
 	\]
-	which is \eqref{eq:app_score_mixing_bound}.
+	which is equation~(11) of the manuscript.
 \end{proof}
 
-\begin{lemma}[Empirical quantile deviation under $\beta$-mixing]
-	\label{lem:quantile_mixing}
-	Under Assumption~3.2 of the manuscript, let
-	\[
-	\qVstat=\hat F_n^{-1}(1-\alpha),
-	\qquad
-	q_{1-\alpha}=F_S^{-1}(1-\alpha).
-	\]
-	Then
-	\begin{equation}
-		\label{eq:app_quantile_rate}
-		|\qVstat-q_{1-\alpha}|
-		=
-		\mathcal O_p\!\left(
-		\frac{1}{f_S(q_{1-\alpha})}
-		\sqrt{\frac{\log n}{n}}
-		\right).
-	\end{equation}
-\end{lemma}
+\subsection{Proof of Lemma~4.4 (empirical quantile deviation)}
+\label{app:lem_quantile}
 
 \begin{proof}
-	Under geometric $\beta$-mixing as in Assumption~3.2(A1) of the manuscript,
+	Under geometric $\beta$-mixing as in Assumption~4.1(A1) of the manuscript,
 	the empirical CDF satisfies the uniform concentration bound
 	\begin{equation}
 		\label{eq:app_ecdf_bound}
@@ -1068,7 +1021,7 @@ and its two limitations; everything else about it is here.
 	\le
 	\sup_s|\hat F_n(s)-F_S(s)|+\mathcal O(1/n).
 	\]
-	By the density condition in Assumption~3.2 of the manuscript,
+	By the density condition in Assumption~4.1 of the manuscript,
 	$f_S(q_{1-\alpha})$ is bounded away from zero in a neighbourhood of
 	$q_{1-\alpha}$. A first-order expansion around $q_{1-\alpha}$ gives
 	\[
@@ -1082,7 +1035,8 @@ and its two limitations; everything else about it is here.
 	which yields the stated rate.
 \end{proof}
 
-\subsection{Proof of Theorem~\ref{thm:dependent_conformal_var}}
+\subsection{Proof of Theorem~4.5 (coverage under $\beta$-mixing)}
+\label{app:thm_coverage}
 
 \begin{proof}
 	The proof proceeds in three steps.
@@ -1106,7 +1060,7 @@ and its two limitations; everything else about it is here.
 	
 \textit{Step 2: Quantile approximation.}
 Let $q_{1-\alpha}=F_S^{-1}(1-\alpha)$. By
-Lemma~\ref{lem:quantile_mixing},
+Lemma~4.4 of the manuscript,
 \begin{equation}
 	\label{eq:proof_qv_rate}
 	|\qVstat-q_{1-\alpha}|
@@ -1159,7 +1113,8 @@ Setting
 completes the proof.
 \end{proof}
 
-\subsection{The GARCH corollary}
+\subsection{Proof of Corollary~4.6 (GARCH data-generating processes)}
+\label{app:cor_garch}
 
 \begin{proof}
 	Under $\omega>0$, $\alpha_1,\beta_1\ge0$, and
@@ -1172,7 +1127,7 @@ completes the proof.
 	\beta_r(k)\le a\rho^k,
 	\qquad \rho\in(0,1).
 	\]
-	By Lemma~\ref{lem:score_mixing}, the score process is also strictly
+	By Lemma~4.2 of the manuscript, the score process is also strictly
 	stationary and geometrically $\beta$-mixing. The density condition holds
 	under the assumed continuous innovation density near the target quantile.
 	
@@ -1185,7 +1140,7 @@ completes the proof.
 		=
 		o\!\left(\sqrt{\frac{\log n}{n}}\right).
 	\end{equation}
-	Theorem~\ref{thm:dependent_conformal_var} therefore applies with
+	Theorem~4.5 of the manuscript therefore applies with
 	\[
 	\Delta_n
 	=
@@ -1193,37 +1148,15 @@ completes the proof.
 	\]
 \end{proof}
 
-\subsection{Online Quantile Tracking: an Exact Telescoping Bound}
+\subsection{Proof of Proposition~4.7 (online quantile tracking)}
 \label{app:ogd_regret}
 
-The result below concerns the online quantile update, and its scope relative to
-the estimator actually used in the empirical sections is stated after the proof.
-It is deterministic: it holds for every score sequence, with no probabilistic
-assumption whatsoever.
+Proposition~4.7 of the manuscript is deterministic: it holds for every score
+sequence, with no probabilistic assumption whatsoever. Its scope relative to the
+estimator actually used in the empirical sections is stated after the proof.
 
-\begin{proposition}[Time-average coverage of the online quantile update]
-	\label{prop:ogd_regret}
-	Let $q_1 \in [-R, R]$ and let $q_t$ evolve according to
-	\begin{equation}
-		\label{eq:ogd_update}
-		q_{t+1}=q_t+\eta\!\left[(1-\alpha)-\mathbf 1\{s_t\le q_t\}\right]
-		= q_t + \eta\!\left[\mathbf 1\{s_t> q_t\}-\alpha\right],
-	\end{equation}
-	with step size $\eta>0$ and scores satisfying $|s_t|\le R$ for all $t$. Then
-	\begin{equation}
-		\label{eq:ogd_bound}
-		\left|\frac1T\sum_{t=1}^{T}\mathbf 1\{s_t>q_t\}-\alpha\right|
-		\;\le\;
-		\frac{2R+\eta}{\eta T},
-	\end{equation}
-	and in particular, for $\eta=R/\sqrt T$,
-	\[
-	\left|\frac1T\sum_{t=1}^{T}\mathbf 1\{s_t>q_t\}-\alpha\right|
-	\le \frac{2+T^{-1/2}}{\sqrt T}\le \frac{3}{\sqrt T}.
-	\]
-\end{proposition}
 
-\begin{proof}[Proof of Proposition~\ref{prop:ogd_regret}]
+\begin{proof}[Proof of Proposition~4.7 of the manuscript]
 	\emph{Step 1: the iterates stay bounded, without projection.} We claim
 	$q_t\in[-R-\eta\alpha,\;R+\eta(1-\alpha)]$ for every $t\ge1$. The claim
 	holds at $t=1$ by assumption. Suppose it holds at $t$. For the upper end,
@@ -1238,7 +1171,7 @@ assumption whatsoever.
 	most $2R+\eta$.
 
 	\emph{Step 2: telescoping.} Summing the second form of
-	\eqref{eq:ogd_update} over $t=1,\ldots,T$,
+	equation~(15) of the manuscript over $t=1,\ldots,T$,
 	\[
 	\eta\sum_{t=1}^{T}\left[\mathbf 1\{s_t>q_t\}-\alpha\right]
 	=\sum_{t=1}^{T}\left(q_{t+1}-q_t\right)
@@ -1250,7 +1183,7 @@ assumption whatsoever.
 	=\frac{|q_{T+1}-q_1|}{\eta T}
 	\le\frac{2R+\eta}{\eta T},
 	\]
-	which is \eqref{eq:ogd_bound}. Substituting $\eta=R/\sqrt T$ gives
+	which is equation~(16) of the manuscript. Substituting $\eta=R/\sqrt T$ gives
 	$\eta T=R\sqrt T$ and the stated rate.
 \end{proof}
 
@@ -1268,12 +1201,12 @@ assumption whatsoever.
 	Three limitations should be read alongside it. It controls the
 	\emph{time-average} of the coverage indicator, not conditional coverage and
 	not coverage over any subwindow: a sequence can satisfy
-	\eqref{eq:ogd_bound} while violating badly in one regime and
+	equation~(16) of the manuscript while violating badly in one regime and
 	over-covering in another, which is exactly the behaviour
 	Section~6 of the manuscript warns about. It requires bounded scores, which
 	rules out nothing empirically but is an assumption. And, most importantly
 	for this paper, it is a statement about the \emph{online update}
-	\eqref{eq:ogd_update}, whereas the rolling estimator used throughout the
+	equation~(15) of the manuscript, whereas the rolling estimator used throughout the
 	empirical sections is a trailing-window empirical quantile, which is not
 	literal online gradient descent. In stationary regimes the two target the
 	same population quantile; under drift the window trades bias for variance
@@ -1282,43 +1215,26 @@ assumption whatsoever.
 	cover for the estimator we run.
 \end{remark}
 
-\subsection{Non-Exchangeable Coverage Bound with Distributional Drift}
+\subsection{Proof of Proposition~4.8 (finite-window coverage under drift)}
 \label{app:rolling_drift}
 
-The next statement is a \emph{supporting bound}, not a result we ask the reader
-to lean on. Its conclusion holds under the total-variation drift measure defined
-below, but that measure is not estimable from a single path without further
+Proposition~4.8 of the manuscript is a supporting bound. Its conclusion holds
+under the total-variation drift measure $\delta_w(t)$ of equation~(17) of the
+manuscript, which is not estimable from a single path without further
 assumptions, and the constant it produces is too loose to be informative at
-$\alpha = 0.01$. We keep it because it makes precise \emph{which} quantity has to
-be small for a trailing window to work, and we use $\hat\delta_w(t)$ operationally
-as a monitoring diagnostic rather than as a certified bound.
+$\alpha = 0.01$. It is retained because it makes precise which quantity has to be
+small for a trailing window to work; $\hat\delta_w(t)$ below is the operational
+monitoring diagnostic that replaces it in practice.
 
-\begin{proposition}[Finite-window coverage under drift; heuristic]
-	\label{prop:rolling_drift}
-	Let
-	\[
-	\qVroll=Q_{1-\alpha}\!\left(\{s_\tau\}_{\tau=t-w}^{t-1}\right)
-	\]
-	and define
-	\[
-	\delta_w(t)=\max_{\tau\in[t-w,t-1]}d_{\mathrm{TV}}(\mathcal L(S_\tau),\mathcal L(S_t)).
-	\]
-	Under local stationarity conditions analogous to
-	Assumption~3.2 of the manuscript,
-	\[
-	\P(r_t\ge \hat q_t^{lo}-\qVroll)\ge 1-\alpha-\delta_w(t)-\Delta_w,
-	\]
-	where $\Delta_w\le C\sqrt{(\log w)/w}$.
-\end{proposition}
 
-\begin{proof}[Proof of Proposition~\ref{prop:rolling_drift}]
-	Let $S_t=\hat q_t^{lo}-r_t$ and
-	\begin{equation}
-		\label{eq:app_rolling_qvt}
-		\qVroll
-		=
-		Q_{1-\alpha}\left(\{S_\tau\}_{\tau=t-w}^{t-1}\right).
-	\end{equation}
+\begin{proof}[Proof of Proposition~4.8 of the manuscript]
+	Let $S_t=\hat q_t^{lo}-r_t$ and let $\qVroll$ be the trailing-window
+	conformal shift of equation~(9) of the manuscript, the
+	$\lceil (w+1)(1-\alpha)\rceil$-th order statistic of
+	$\{S_\tau\}_{\tau=t-w}^{t-1}$. It differs from the plain empirical quantile
+	$Q_{1-\alpha}$ of the same window by one order statistic, an
+	$\mathcal O(1/w)$ gap that is absorbed into $\Delta_w$ below without changing
+	its rate.
 	The coverage event satisfies
 	\begin{equation}
 		\label{eq:app_rolling_score_event}

@@ -22,9 +22,9 @@ Status values: DONE, IN PROGRESS, BLOCKED, NOT STARTED.
 | §4.4 analytic estimator | NOT STARTED | moves to the supplement **with** the Chronos exhibit (K3); the corrected numbers still enter the body wherever the body cites them | |
 | K2 §1 Introduction | NOT STARTED | | |
 | K2 §2 Related Literature | NOT STARTED | after K0b | |
-| K2 §3 Methodology, eq. (10) | NOT STARTED | third variant found: Supplement `prop:rolling_drift` and eq. (S.31) define q_V^roll as the plain $Q_{1-\alpha}$, contradicting §3.2.1 and Data & Code | |
-| K2 §4 Theory | NOT STARTED | uncontested; write at full length | |
-| K2 §5 Monte Carlo | NOT STARTED | | |
+| K2 §3 Methodology, eq. (10) | PARTLY DONE | **Three** further variants found, two now fixed. (a) Supplement `prop:rolling_drift` and its proof wrote the plain $Q_{1-\alpha}$ — **fixed**, now states eq. (9) with the O(1/w) gap named. (b) Supplement `lem:quantile_mixing` wrote $\hat F_n^{-1}(1-\alpha)$ — **fixed**, the body's Lemma 4.4 states eq. (8) and the O(1/n) gap is absorbed into the remainder explicitly. (c) `run_simulation_study.py` uses `np.quantile` at level k/n with linear interpolation, a **third convention** — gap 2.8e-06 (0.01%), numerically negligible but contradicts "every static and rolling result in this paper uses equation (8)". Still to reconcile in §3. | `analysis/k2_sim/GATE_REVISION.md` |
+| K2 §4 Theory | **DONE** | Theory moved from Supplement S.9 into the body as §4, at full length: Assumption 4.1, Lemmas 4.2/4.4, Theorem 4.5, **Corollary 4.6 — newly stated**, Propositions 4.7/4.8, Remarks 4.3/4.9. The GARCH corollary previously had a proof and **no statement anywhere in either document**. Supplement S.9 reduced to proofs only; every S.9.x back-reference repointed and verified against its heading. | `sections/sec4_theory.tex` |
+| K2 §5 Monte Carlo | **DONE** | Grid extended from 2 to 5 sample sizes, T ∈ {500…10000}, 12,500 replications. Published Table S.26 **reproduces exactly** from its per-replication artefact. All four pre-registered predictions hold, including the fourth: **the raw Basel classification diverges rather than converging** — Student-t(5), miscovering by 51%, is green 61.6% → **74.2%** as T grows twentyfold. New: `figures/fig_mc_convergence`. | `sections/sec5_montecarlo.tex`, `analysis/k2_sim/` |
 | K2 §6 What recalibration restores | NOT STARTED | after K0a | |
 | K2 §7 What it costs and when | NOT STARTED | | |
 | K2 §8 Why structural validation precedes correction | NOT STARTED | after K0b; keeps δ* | |
@@ -32,4 +32,4 @@ Status values: DONE, IN PROGRESS, BLOCKED, NOT STARTED.
 | K3 moves to supplement | NOT STARTED | | |
 | K4a zero-shot vs fitted | NOT STARTED | | |
 | K4b hyperparameters, w ∈ {125,250,500} | NOT STARTED | | |
-| K5 recounts and hygiene | NOT STARTED | | |
+| K5 recounts and hygiene | IN PROGRESS | New audit `scripts/audit_supplement_targets.py`: the existing reference check passed on *resolution*, which is satisfied by a reference pointing at the wrong subsection — and that is what the renumbering produced. The new one prints the target heading beside the citing sentence. Orphan logged: `cfp_ijf_data/paper_outputs/tables/simulation_results.csv` (6 April) disagrees with the published table on every number and backs nothing. | `scripts/audit_supplement_targets.py` |
