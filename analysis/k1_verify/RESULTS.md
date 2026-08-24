@@ -60,12 +60,24 @@ needs no model. The reconstruction rule was checked against the 200 re-run dates
 analytic route still removes the sampler, the residual is still a tail deficiency
 that shrinks with α, and 1.73× nominal is the same finding as 1.75×.
 
-**But the defect is in the estimator the paper offers as the fix**, and it went
-undetected because the paper's own validation — agreement with full-vocabulary
-sampling to within 0.3% on dispersion — is four times too coarse to see a one-bin
-offset. That is worth a sentence in Section 9 and a line in the failure-mode
-table's own terms: the reduction step failed again, in the code written to stop it
-failing, and the check that was supposed to catch it had the wrong resolution.
+**But the defect is in the estimator the paper offers as the fix**, and the
+paper's own validation was **blind to it, not merely coarse**. Section 4.4 reports
+two agreements against full-vocabulary sampling on 40 SP500 dates:
+
+- *predictive standard deviations to within 0.3%* — but the defect is a uniform
+  translation of the support, which leaves the second central moment **exactly**
+  invariant. That is not a loose tolerance; it is a tolerance on a quantity the
+  defect does not move, and no tighter choice would have helped.
+- *violation rates at all four levels agreeing to four decimal places* — on 40
+  dates at α = 0.01, where the expected count is 0.4 and the rate lives on a grid
+  of 1/40 = 0.025. The offset is 0.249% of VaR₀.₀₁ and 0.591% of the predictive
+  standard deviation. Neither is resolvable on that grid.
+
+Comparing the per-date quantiles — the object rather than two summaries of it —
+would have found it in one line. Registered as **R14** with the pattern named,
+and `PROTOCOL.md` Rule 2 gains a subsection: every validation tolerance is
+declared together with the size of the defect it cannot see, and with whether the
+statistic being compared is one the failure mode moves at all.
 
 **Recommendation.** Regenerate both analytic panels with the corrected map before
 submission. The correction is exact and needs no model re-run; the model re-run is
@@ -146,13 +158,28 @@ $0$ — which is the *other* half of the manuscript's own sentence, and that hal
 is correct. `analysis/cc_column/MEMO.md` carries the same error in its
 parenthetical "(n₁₁ = n₁₀ = 0)".
 
-**This is not cosmetic.** Under the manuscript's stated mechanism the degenerate
-pairs are the sparse ones and the reader concludes the test needs a longer window.
-Under the actual mechanism, a pair with 20 well-spaced exceedances in 1,500 days —
-the picture of an independent exceedance process — is recorded as *undefined*,
-and a longer window does not fix it. The correct sentence is stronger for the
-paper: the independence test returns no verdict precisely on the series that most
-look independent.
+**This converts a sparsity argument into a structural one, and the manuscript
+must say so in those terms.** The two readings differ in what they imply:
+
+| | the published mechanism | what the panel shows |
+|---|---|---|
+| why the test is undefined | too few exceedances to fill the table | π̂₁₁ is at the boundary because no exceedance is followed by another |
+| what the degenerate pairs look like | sparse, short windows | 20-odd exceedances in ~1,500 days, well spaced |
+| what fixes it | a longer window, or a higher α | **nothing about the sample.** A longer window from the same process adds exceedances that are still not consecutive |
+| what a "pass" means | absence of evidence from scarcity | absence of evidence from the estimator hitting its own boundary |
+
+The sentence to write: *the Christoffersen independence test returns no verdict
+precisely on the series whose exceedances look most independent, because the
+transition probability it estimates is then at the boundary of the parameter
+space where its χ²₁ calibration fails — and this is a property of the test at
+α = 0.01, not of the sample size.* That is a structural limitation of the
+instrument, which is the paper's argument, and not a data limitation, which is a
+weaker and different claim.
+
+It also sharpens the α-monotonicity already reported: the share falls to 0.0% at
+α = 0.10 not because there are more exceedances in some incidental sense, but
+because at a tenth of the tail depth consecutive exceedances become common enough
+for π̂₁₁ to leave the boundary.
 
 **Negative controls.** A constructed sequence with n₁₁ > 0 is not flagged; an
 all-zero sequence is; a spread-out sequence with n₁₁ = 0 < n₁₀ is flagged. All fire.

@@ -79,6 +79,63 @@ lower edge of the gate's scale band blocks 0 of 312 cells and therefore carries
 no evidence when a series passes it. Reported in Section 7 rather than quietly
 adjusted.
 
+### The tolerance is part of the check
+
+Rule 2 is not satisfied by a check that *can* fail. It is satisfied by a check
+that can fail **at the resolution of the defect it exists to exclude**. A
+tolerance chosen loosely enough turns a real guard into a false one without ever
+looking broken, because its negative control still fires — on a defect larger than
+the one that matters.
+
+**Every validation tolerance is therefore declared together with the size of the
+defect it cannot see.** Not the tolerance alone: the tolerance and the smallest
+error that would pass it, in the units of the quantity being checked.
+
+Two cases in this project, and they are the same failure at two scales.
+
+- **The gate's lower band edge** at −3.500 blocks 0 of 312 cells. Its resolution
+  is not merely coarse, it is infinite: no series in this panel could fail it.
+  Caught by asking how many cells the check rejects.
+- **The analytic estimator's validation** (R14). Section 4.4 validates the
+  closed-form quantiles against full-vocabulary sampling on 40 SP500 dates and
+  reports two agreements: predictive standard deviations "to within 0.3%", and
+  violation rates at all four levels "to four decimal places". The defect present
+  in the estimator was a one-bin offset — a **uniform translation of the support**.
+  Neither announced agreement could have seen it, and for two different reasons:
+
+  - A translation leaves the second central moment **exactly** unchanged. The
+    dispersion check has not a coarse resolution against this defect but a null
+    one. The 0.3% figure is not a tolerance that was too loose; it is a tolerance
+    on a quantity the defect does not touch.
+  - The violation-rate check ran on 40 dates at α = 0.01, where the expected
+    count is 0.4 and the rate lives on a grid of 1/40 = 0.025. "Agreement to four
+    decimal places" there means both routes returned the same integer, almost
+    always zero. The offset is 0.249% of VaR₀.₀₁ and 0.591% of the predictive
+    standard deviation; nothing on a 0.025 grid resolves it.
+
+  The check ran, passed, and was incapable of seeing what it was written to
+  exclude. Not caught by asking how often it fails; caught only by rebuilding the
+  estimator from the prose.
+
+The second case is the one the row-count discipline of Rule 1 does not reach and
+the negative-control discipline of Rule 2 does not reach either. Two implementations
+of the same estimator differed by one quantisation bin, and every aggregate the
+project computed from them — dispersion ratios, violation rates, Kupiec counts —
+agreed to the precision at which those aggregates are printed.
+
+**What the rule requires.** Beside every reported agreement, state (i) the
+tolerance, (ii) the smallest defect that would survive it, and (iii) whether the
+statistic being compared is one the failure mode moves at all. Point (iii) is the
+one R14 adds: a tolerance is meaningless on a quantity that is invariant to the
+defect, and no choice of tolerance repairs it. If (ii) exceeds the scale of a
+plausible failure mode, or (iii) fails, the check is recorded as non-informative
+and reported as such, exactly as the −3.500 edge is.
+
+The corollary for validating an estimator against a second route: compare the
+**object**, not a summary of it. Comparing per-date quantiles would have found
+this in one line; comparing dispersion and coverage could not have found it at
+any sample size.
+
 ## Rule 3 — pre-register, then run
 
 Write down the expected result and what would falsify it, before computing. Files

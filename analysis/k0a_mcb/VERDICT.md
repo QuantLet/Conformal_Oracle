@@ -43,14 +43,18 @@ rank correlation falls to **0.52 among well-specified series**. Under the
 pre-registered rule (ρ > 0.95 and median gap below a quarter of the IQR) the
 verdict on that second comparison is "differs", on every subset.
 
-**But the mechanism is estimation error, not independent content.** The two
-quantities differ because a 1%-level order statistic estimated on one window does
-not reproduce the 1%-level optimum of the next window, not because q̂_V reads
-something uMCB cannot. The pre-registration anticipated this reading and fixed the
-consequence in advance: *"A high correlation with a handful of separating pairs is
-the first interpretation, not the second."* Here there is not even a high
-correlation, and what that argues against is treating **either** ordering as
-evidence about a forecaster.
+**What that does and does not license.** The gap between ρ = 0.993 within the
+estimation window and ρ = 0.52 outside it says that q̂_V estimates δ* with noise.
+It says nothing about δ* — the score-optimal shift is a well-defined property of
+the pair and this measurement does not bear on what it contains. The conclusion
+is narrower than "q̂_V carries no independent content", and it is the narrow one
+that enters the text:
+
+> **q̂_V does not support an out-of-sample ordering between forecasters.**
+
+That is what a rank correlation of 0.52 between the estimate and the quantity it
+estimates, measured across the window boundary the ordering would have to cross,
+establishes. Nothing further.
 
 ## AE-3, verified
 
@@ -90,10 +94,13 @@ Both fire. The decomposition code can tell a calibrated forecast from a shifted 
 the conformal shift is an out-of-sample estimate of the constant displacement that
 minimises the quantile score — the argmin of the Gneiting–Resin unconditional
 miscalibration term — reported in the units of the forecast rather than of a
-score. Its value to a reader is the scale it is on. It does not rank forecasters:
-its rank correlation with the evaluation-window optimum is 0.52 on well-specified
-series, and the ordering by q̂_V is therefore a description of how much correction
-each pair required on its own calibration window, nothing more.
+score. Its value to a reader is the scale it is on.
+
+**It does not support an ordering between forecasters out of sample**: its rank
+correlation with the evaluation-window optimum is 0.52 on well-specified series.
+The ordering by q̂_V is a description of how much correction each pair required on
+its own calibration window. That is a claim about the estimator's out-of-sample
+stability, not a claim that the quantity it estimates is uninformative.
 
 **The abstract does not change.** It does not claim q̂_V is a new statistic.
 

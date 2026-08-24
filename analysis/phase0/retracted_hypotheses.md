@@ -393,3 +393,131 @@ The claim was five. **Two of the five were my errors.** What stands:
 
 Section 7 now says two, not five, and describes the two that stand. The cover
 letter must be corrected the same way before it is sent.
+
+## R13 — the sign inversion is real; the diagnostic Table 1 claimed for it is not
+
+**Challenged.** Whether the two grid series were sign-inverted at all.
+
+**The conclusion holds, and on better evidence than I had cited.**
+`analysis/interface/sign_diagnostic.csv` carries 240 per-cell rows, 10 models by
+24 assets. For TimesFM-2.5 and Moirai-2.0 the stored lower quantile is positive
+in **48 of 48 cells**, `pct_positive = 1.0000` in every one, and the ordering
+across alpha is reversed on **100% of days in every cell**. Every other series:
+median negative, positive on at most 10% of observations, reversed on 0% of days.
+The implied violation rate from the stored threshold is 0.9748-0.9940, matching
+the 0.990 and 0.988 the paper published. Two saturated signatures, both derived
+from the data rather than from a label.
+
+**But Table 1 described a diagnostic that does not exist.** It read: "the stored
+series is reproduced to ten decimal places by $-F^{-1}(\alpha)$ from the
+distributional parameters recorded in the same file." `sign_diagnostic.py`
+performs no such reconstruction. It measures sign, monotonicity and the implied
+rate. Its `code_path` classification -- the label `student_t_negated` -- is a
+**hard-coded dictionary** with the comment "read from the pipeline notebooks",
+which is an author's reading of source, not a computation.
+
+**And it cannot now be run.** No vintage with a positive stored lower quantile
+remains in the repository: both `cfp_ijf_data/timesfm25` and the quarantined
+six-column vintage have median VaR at -0.019. The defective input was replaced by
+the correction, so the strongest-sounding diagnostic in the table is the one that
+can least be re-executed.
+
+**Fixed** by stating what was measured. This is the class of defect the paper is
+about, found in the paper's own audit table: a claim about verification stronger
+than the verification performed.
+
+## R14 — the analytic Chronos estimator is off by one quantisation bin — STANDS
+
+Registered as R14, not R11: the R11 slot is occupied by the `p_cluster = 0.035`
+retraction above. This entry is a defect that survived challenge, in the class of
+R13 rather than of R1–R12.
+
+**Proposed.** Section 4.4 describes the analytic estimator in five numbered steps.
+Rebuilt from that prose alone — no file in `scripts/`, `pipeline/` or
+`Quantlets/` opened — it disagreed with the shipped series on 200 contiguous
+SP500 dates: median relative deviation 2.5e-03 on VaR₀.₀₁, rising to 5.0e-03 at
+the 10% level.
+
+**Survived its own negative control, which is how it was found.** Three controls
+were declared in advance. The one built to fail — *the stored series shifted by
+one bin width* — **agreed**, to a median relative deviation of 2.4e-09 and a
+maximum of 8.1e-08. A control that agrees is a comparison rule that cannot detect
+a wrong answer, and reporting that rather than the headline disagreement is what
+located the defect.
+
+**Adjudicated, without Monte Carlo error.** The two candidates are:
+- A: pair `p[id]` with `centres[id − n_special − 1]` — the map the library's own
+  `MeanScaleUniformBins.output_transform` uses to decode a sampled token;
+- B: pair `p[id]` with `centres[id − n_special]` — one bin higher.
+
+Sampling cannot separate them: at 2,000 draws the Monte Carlo error on the 1%
+quantile is about five bins, and |A − MC| and |B − MC| differ in the fifth decimal.
+Forcing `top_k = 1` removes the error entirely — every draw is the arg-max token,
+and what the library decodes it to is a fact, not an estimate. **On 12 of 12
+cells across SP500, GOLD and EURUSD the library's decoder returns A exactly
+(gap 0.000 bins) and B is one full bin above (gap −1.000).** The shipped analytic
+series is B.
+
+**Confirmed as systematic, not local.** stored − rebuilt = 0.999999 bin widths,
+sd ≈ 1e-16, on SP500, GOLD and EURUSD for `chronos-t5-small` and SP500 for
+`chronos-t5-mini`.
+
+**Why the paper's own validation could not have caught it.** Section 4.4 reports
+two agreements against full-vocabulary sampling on 40 SP500 dates. Neither is
+sensitive to this defect, and not because the tolerances were loose:
+
+- The defect is a **uniform translation of the support**, which leaves the
+  predictive standard deviation *exactly* invariant. The "0.3%" dispersion
+  agreement is a tolerance on a quantity the defect does not move.
+- The violation-rate agreement "to four decimal places" ran on 40 dates at
+  α = 0.01, expected count 0.4, on a rate grid of 1/40 = 0.025. The offset is
+  0.249% of VaR₀.₀₁ and 0.591% of the predictive standard deviation. Nothing on
+  a 0.025 grid resolves either.
+
+Comparing the per-date quantiles — the object, rather than two summaries of it —
+would have found this in one line.
+
+**What it moves.** The offset is deterministic: stored = correct + binwidth ×
+scale_t, and scale_t is the mean absolute value of the 512-day context, which
+needs no model. The reconstruction rule was checked against the 200 re-run dates
+(max relative error 8.1e-08) before being applied to all 24 assets.
+
+| | published | corrected |
+|---|---|---|
+| Chronos-Small-A, π̂ at α = 0.01 | 0.0175 | **0.0173** |
+| Chronos-Mini-A, π̂ at α = 0.01 | 0.0178 | **0.0177** |
+| Chronos-Small-A, ratio π̂/α | 1.750 | **1.733** |
+| Chronos-Mini-A, ratio π̂/α | 1.781 | **1.772** |
+| Chronos-Small-A, π̂ at α = 0.10 | 0.1036 | **0.1027** |
+| Chronos-Mini-A, π̂ at α = 0.10 | 0.0989 | **0.0981** |
+| Chronos-Mini-A, Kupiec passes at α = 0.10 | 22/24 | **20/24** |
+| Kupiec passes at α = 0.01, both | 8/24 | 8/24 (unchanged) |
+| Quantile score at α = 0.01, both | — | −0.09% |
+
+Nothing qualitative moves. The sampler is still removed, the residual is still a
+tail deficiency that shrinks with α, and 1.73× nominal is the same finding as
+1.75×.
+
+**The pattern, which is new to this register.** R1, R2, R3, R7, R9 and R12 are
+*correct arithmetic on the wrong object* — Rule 1 catches them by declaring the
+unit. R6 is a correct model on a malformed support — Rule 1a catches it by
+declaring the range. R14 is neither. The arithmetic is right, the object is
+right, the unit is right, and the range is right. What failed is that **the
+check written to exclude the defect was calibrated on a statistic the defect
+leaves invariant.** It is the second instance in this project of a validation
+that could not fail informatively — the first being the gate's lower band edge at
+−3.500, which blocks 0 of 312 cells — and the two are now Rule 2's subsection in
+`PROTOCOL.md`.
+
+**And the location is the point.** This is not a defect in a benchmark or in an
+input series. It is in the estimator Section 4.4 offers as the *remedy* for a
+configuration failure, presented as having "no `num_samples`, no `top_k`, no
+`top_p`, no temperature and no seed — there is no configuration to get wrong."
+That claim stands: there was no configuration to get wrong, and the estimator was
+got wrong anyway, in the arithmetic beneath the configuration. Section 9 says so.
+
+**Disposition.** Both analytic panels are regenerated with the corrected map
+before submission; the corrected figures enter wherever they appear, including
+whatever remains in the body after the Chronos exhibit moves to the supplement.
+Evidence: `analysis/k1_verify/` (`k1a_result.json`, `k1a_decide.json`,
+`k1a_adjudicate.json`, `k1a_impact.json`).
