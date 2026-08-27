@@ -213,5 +213,22 @@ not possible without editing this file's producer.
 | `\nGapAblRhoLo` | +0.05 | -- |
 | `\nGapAblRhoHi` | +0.46 | -- |
 | `\nGapAblPairs` | 4 | -- |
+| `\nTLTau` | 0.016 | -- |
+| `\nTLTauOverAlpha` | 1.6 | -- |
+| `\nTLUndTFive` | 12.4 | -- |
+| `\nTLUndTThree` | 16.3 | -- |
+| `\nTLUndNormal` | 7.8 | -- |
+| `\nMCGreenTFiveSmall` | 61.6 | -- |
+| `\nMCGreenTFiveLarge` | 74.2 | -- |
+| `\nMCPiTFive` | 0.0148 | -- |
+| `\nMCGreenSkewSmall` | 36.4 | -- |
+| `\nMCGreenSkewLarge` | 0.4 | -- |
+| `\nMCTMax` | 10{,}000 | -- |
+| `\nMCTMin` | 500 | -- |
+| `\nMCReps` | 500 | -- |
+| `\nMCDgps` | 5 | -- |
+| `\nGateRollUpgradesLostWorse` | 11 | SEQ (312) |
+| `\nGateRollUpgradesLostNet` | 9 | SEQ (312) |
+| `\nGateRollUpgradeAndDeteriorate` | 72 | SEQ (312) |
 | `\nSpearmanRPi` | 0.991 | -- |
 | `\nSpearmanRPiN` | 14 | -- |
