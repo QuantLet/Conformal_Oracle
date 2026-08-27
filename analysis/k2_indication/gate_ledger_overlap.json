@@ -1,0 +1,30 @@
+{
+  "static_cal": {
+    "upgrades": 182,
+    "kept": 172,
+    "lost": 10,
+    "lost_but_score_worse": 0,
+    "upgrade_and_deterioration": 6
+  },
+  "static_test": {
+    "upgrades": 182,
+    "kept": 182,
+    "lost": 0,
+    "lost_but_score_worse": 0,
+    "upgrade_and_deterioration": 6
+  },
+  "roll_cal": {
+    "upgrades": 205,
+    "kept": 185,
+    "lost": 20,
+    "lost_but_score_worse": 11,
+    "upgrade_and_deterioration": 72
+  },
+  "roll_test": {
+    "upgrades": 205,
+    "kept": 205,
+    "lost": 0,
+    "lost_but_score_worse": 0,
+    "upgrade_and_deterioration": 72
+  }
+}

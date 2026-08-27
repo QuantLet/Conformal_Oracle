@@ -1,0 +1,23 @@
+{
+  "static": {
+    "n_upgrades": 182,
+    "upgrade_and_coverage": 182,
+    "upgrade_and_score": 176,
+    "upgrade_coverage_away": 0,
+    "upgrade_score_worse": 6,
+    "no_upgrade_coverage_improved": 73,
+    "pct_U_implies_C": 100.0,
+    "pct_U_implies_S": 96.7032967032967
+  },
+  "rolling": {
+    "n_upgrades": 205,
+    "upgrade_and_coverage": 205,
+    "upgrade_and_score": 133,
+    "upgrade_coverage_away": 0,
+    "upgrade_score_worse": 72,
+    "no_upgrade_coverage_improved": 69,
+    "pct_U_implies_C": 100.0,
+    "pct_U_implies_S": 64.8780487804878
+  },
+  "negative_control_passes": true
+}
