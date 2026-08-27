@@ -243,6 +243,38 @@ def collect() -> dict:
     n["GapAblRhoHi"] = float(rho.max())
     n["GapAblPairs"] = int(abl[abl["period"] == "Full"]["model"].nunique())
 
+    # ---- Proposition 5.1 and Corollary 5.2 -------------------------------
+    from scipy import stats as _st
+    tau = 4.0 / 250.0
+    n["TLTau"] = tau
+    n["TLTauOverAlpha"] = tau / 0.01
+    _q = lambda pr: _st.t.ppf(pr, 5) / np.sqrt(5.0 / 3.0)
+    n["TLUndTFive"] = 100 * (1 - abs(_q(tau)) / abs(_q(0.01)))
+    n["TLUndTThree"] = 100 * (1 - abs(_st.t.ppf(tau, 3) / np.sqrt(3.0))
+                          / abs(_st.t.ppf(0.01, 3) / np.sqrt(3.0)))
+    n["TLUndNormal"] = 100 * (1 - abs(_st.norm.ppf(tau)) / abs(_st.norm.ppf(0.01)))
+
+    # ---- the Monte Carlo grid --------------------------------------------
+    grid = pd.read_csv(BASE / "analysis" / "k2_sim" / "grid.csv")
+    _g = lambda dgp, T, col: float(grid[(grid["dgp"] == dgp) & (grid["T"] == T)][col].iloc[0])
+    n["MCGreenTFiveSmall"] = _g("t5", 500, "RawGreen")
+    n["MCGreenTFiveLarge"] = _g("t5", 10000, "RawGreen")
+    n["MCPiTFive"] = _g("t5", 10000, "Raw_pi")
+    n["MCGreenSkewSmall"] = _g("skewt3", 500, "RawGreen")
+    n["MCGreenSkewLarge"] = _g("skewt3", 10000, "RawGreen")
+    n["MCTMax"] = int(grid["T"].max())
+    n["MCTMin"] = int(grid["T"].min())
+    n["MCReps"] = 500
+    n["MCDgps"] = int(grid["dgp"].nunique())
+
+    # ---- the gated rule's cost, decomposed -------------------------------
+    ov = json.loads((BASE / "analysis" / "k2_indication"
+                     / "gate_ledger_overlap.json").read_text())
+    n["GateRollUpgradesLostWorse"] = ov["roll_cal"]["lost_but_score_worse"]
+    n["GateRollUpgradesLostNet"] = (ov["roll_cal"]["lost"]
+                                    - ov["roll_cal"]["lost_but_score_worse"])
+    n["GateRollUpgradeAndDeteriorate"] = ov["roll_cal"]["upgrade_and_deterioration"]
+
     n["SpearmanRPi"] = sp.statistic
     n["SpearmanRPiN"] = len(ws)
     return n
@@ -252,6 +284,9 @@ def fmt(key: str, v) -> str:
     if isinstance(v, str):
         return v
     if isinstance(v, (int, np.integer)):
+        # sample sizes are printed with the thousands separator the paper uses
+        if key.startswith("MCT"):
+            return f"{int(v):,}".replace(",", "{,}")
         return str(int(v))
     if key.startswith("GapUnd"):
         return f"{v:.1f}"
@@ -286,6 +321,18 @@ def fmt(key: str, v) -> str:
     if key.startswith("GapBand") or key.startswith("GapCell") or key.startswith("GapQTrue") \
             or key.startswith("GapGap") or key.startswith("GapMargin"):
         return f"{v:.3f}"
+    if key in ("TLTauOverAlpha",):
+        return f"{v:.1f}"
+    if key == "TLTau":
+        return f"{v:.3f}"
+    if key.startswith("TLUnd"):
+        return f"{v:.1f}"
+    if key.startswith("MCGreen") or key.startswith("MCPi"):
+        return f"{v:.1f}" if key.startswith("MCGreen") else f"{v:.4f}"
+    if key.startswith("MCT") or key == "MCReps" or key == "MCDgps":
+        return f"{int(v):,}".replace(",", "{,}")
+    if key.startswith("GateRollUpgradesLost") or key == "GateRollUpgradeAndDeteriorate":
+        return str(int(v))
     if key.startswith("SeqDQRej"):
         return f"{v:.1f}"
     if key.endswith("Pct") or key.startswith("SeqCC") or key.startswith("SeqKupiec"):
