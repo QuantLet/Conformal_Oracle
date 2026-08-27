@@ -1,5 +1,7 @@
 # Rebuild ledger — one entry per item
 
+**What is still to do is in `NEXT.md` beside this file.**
+
 Reconstruction of the manuscript as a recalibration paper. Theory at the centre;
 non-identification demoted from thesis to the reason for the ordering. Nothing is
 deleted from the repository; material leaving the body moves to the supplement
