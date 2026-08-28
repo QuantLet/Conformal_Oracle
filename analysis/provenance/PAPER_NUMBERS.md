@@ -179,8 +179,8 @@ not possible without editing this file's producer.
 | `\nFisherSevere` | 0.00078 | -- |
 | `\nTightBand` | -1.94 | -- |
 | `\nTightMargin` | 0.007 | -- |
-| `\nTightUndHi` | 27.1 | -- |
-| `\nTightUndLo` | 23.3 | -- |
+| `\nTightUnd` | 25.6 | -- |
+| `\nTightDelta` | 0.017 | -- |
 | `\nPairVaRHonest` | 2.61 | -- |
 | `\nPairVaRAlt` | 1.46 | -- |
 | `\nPairCapitalPct` | 56 | -- |

@@ -29,6 +29,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -249,9 +250,15 @@ def collect() -> dict:
     _worst = float(_good["ratio"].max())
     n["TightBand"] = float(np.ceil(_worst * 100) / 100)
     n["TightMargin"] = abs(_worst - n["TightBand"])
-    _bs = pd.read_csv(BASE / "analysis" / "phase2" / "band_sweep.csv")
-    n["TightUndHi"] = float(_bs.loc[np.isclose(_bs["edge"], -1.9), "und"].iloc[0])
-    n["TightUndLo"] = float(_bs.loc[np.isclose(_bs["edge"], -2.0), "und"].iloc[0])
+    # The understatement at that edge is a closed form, not a solver output, and
+    # emit_band_sweep.py reproduces every row of band_sweep.csv from it to 1e-10.
+    # So the figure is computed at the tightened edge rather than bracketed by the
+    # grid's neighbours, and the file that feeds the 30.9% of Table 2 is no longer
+    # an artefact nothing writes.
+    sys.path.insert(0, str(BASE / "analysis" / "phase2"))
+    from emit_band_sweep import understatement as _und, critical_delta as _cdelta
+    n["TightUnd"] = float(_und(n["TightBand"]))
+    n["TightDelta"] = float(_cdelta(n["TightBand"]))
 
     # The constructed pair, and the GJR-vs-GJR-t comparison. Both sets of figures
     # sat in phase2_numbers.json with no producer. The pair's thresholds are in
@@ -495,6 +502,8 @@ def fmt(key: str, v) -> str:
         return f"{v:.2f}"
     if key.startswith("TightUnd"):
         return f"{v:.1f}"
+    if key.startswith("TightDelta"):
+        return f"{v:.3f}"
     if key.startswith(("PairVaR", "PairDMt")):
         return f"{v:.2f}"
     if key.startswith(("PairQSGapPct", "PairCapitalPct")):

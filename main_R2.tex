@@ -1215,7 +1215,7 @@ Value-at-Risk understatement it permits.
 		the exceedance path alone, unimodal returns & \nGapDeltaUni & \nGapUndUni\% \\
 		\addlinespace[2pt]
 		\quad + the series and the returns, scale band at $\nGapBandNow$ & \nGapDeltaGateNow & \nGapUndGateNow\% \\
-		\quad + the series and the returns, band tightened to $\nTightBand$ & 0.017 & \nTightUndLo--\nTightUndHi\% \\
+		\quad + the series and the returns, band tightened to $\nTightBand$ & \nTightDelta & \nTightUnd\% \\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -1223,7 +1223,7 @@ Value-at-Risk understatement it permits.
 Table~\ref{tab:gate_residual} is the section's result. The structural checks cut
 the unidentifiable understatement from \textbf{\nGapUndUni\%} to
 \textbf{\nGapUndGateNow\%}, and tightening the binding band to the edge of what
-this panel permits takes it to between \nTightUndLo\% and \nTightUndHi\%. They do not cut it to zero. A pair exists that passes all ten checks, exceeds on the same
+this panel permits takes it to \nTightUnd\%. They do not cut it to zero. A pair exists that passes all ten checks, exceeds on the same
 days at the same rate as a correctly specified forecaster, and still reports a
 threshold a fifth too small. That residue is the gate's limit.
 
@@ -1257,10 +1257,7 @@ The safety margin is a different quantity from the gap, and the smaller of the
 two. It is the distance from the edge to the nearest well-specified cell, and at
 $\nGapBandNow$ it is $\nGapMarginUpper$ --- an order of magnitude smaller than
 the gap. Tightening the edge to $\nTightBand$ reduces the residual understatement from
-\nGapUndGateNow\% to between \nTightUndLo\% and \nTightUndHi\% --- the band
-sweep is on a grid of $0.1$ and the machinery that would evaluate the
-intermediate edge is not in the replication archive, so the figure is bracketed
-rather than interpolated --- and leaves a margin of $\nTightMargin$: essentially none. At the current edge of $\nGapBandNow$ the
+\nGapUndGateNow\% to \nTightUnd\%, and leaves a margin of $\nTightMargin$: essentially none. At the current edge of $\nGapBandNow$ the
 gap exceeds the margin by a factor of eleven; at $\nTightBand$ it exceeds it
 by more than two hundred. Robustness read off the gap rather than the margin
 therefore overstates the check by one order of magnitude at the edge as
@@ -1599,9 +1596,10 @@ what governs the arithmetic here.
 
 The identification result of Section~\ref{sec:blindspot} bears on this
 arithmetic directly, and the statement does not depend on foundation models or on
-any forecaster in this panel. Two models can report thresholds differing by half
---- one at $\nPairVaRHonest\sigma_t$, the other at $\nPairVaRAlt\sigma_t$, both stated in units of
-the true conditional scale rather than an estimate of it --- while exceeding on
+any forecaster in this panel. Two models can report thresholds nearly a factor of
+two apart --- one at $\nPairVaRHonest\sigma_t$, the other at
+$\nPairVaRAlt\sigma_t$, both stated in units of the true conditional scale
+rather than an estimate of it --- while exceeding on
 the same days at the same rate, passing Kupiec, Christoffersen and
 the dynamic quantile test with the same verdicts, and sitting in the same Basel
 zone. The second holds \nPairCapitalPct\% of the capital of the first, is fully compliant
@@ -1664,7 +1662,10 @@ within it are not distinguishable: their mean corrected scores differ by
 and a Diebold--Mariano test on the corrected loss differentials with a
 Driscoll--Kraay panel-HAC variance --- cross-sectional mean per date, Bartlett
 kernel at \nPairDMLags{} lags --- returns $t = \nPairDMt$, $p = \nPairDMp$ over
-\nMainAssets{} assets. The family is therefore the identified unit, not a winner
+\nMainAssets{} assets. The sign of that statistic is itself a function of the
+weighting: equal weight on dates favours one variant and equal weight on
+observations the other, which is the same reversal the per-asset and pooled
+averages show, arriving a third time. The family is therefore the identified unit, not a winner
 within it. Where per-asset estimation is infeasible --- scale, short history,
 latency --- a correctly configured zero-shot foundation model with the same
 correction is competitive with the GARCH family at the 1\% level, which is an

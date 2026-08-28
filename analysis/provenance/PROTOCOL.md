@@ -149,6 +149,33 @@ weak" loses the remedy each time.
 | **cannot run** | the check exists only where it was written | three of the four audits `MIGRATION.md` requires, and `build_guards.py` itself, matched by the `/scripts/*` glob and never re-included | the build fails when the written discipline names a file git does not carry — guard 4 |
 | **verdict outlives its state** | it ran, it passed, and the thing it described changed underneath | `MANIFEST.md` grading `tab_regime_sensitivity.tex` `OK` before the 2026-08-17 sign correction, still reading as a live guarantee in the working tree it does not examine | a passing verdict carries the state it was computed against, or it is re-run |
 
+### A fifth mode, and it is not a defect of a check
+
+The four above are ways a check fails to be evidence. This one is a way a
+*number* fails, and it is the worst thing in this register because it cannot be
+caught by re-running anything.
+
+The manuscript reported a constructed pair of forecasters whose thresholds
+"differ by half", one at 2.61 sigma and the other at 1.32 sigma. The construction
+in `analysis/phase2/pair.npz` gives 1.46 sigma: the alternative holds 56 percent
+of the honest capital, not half. The printed 1.32 is the value at which the
+sentence's own word --- "half" --- comes out exact.
+
+Every other defect in this register is a pipeline fault: a stale vintage, a
+missing producer, a convention reimplemented four ways, an off-by-one in a token
+map. Each was found by recomputing the object. This one would survive any amount
+of recomputation of the pipeline, because the pipeline never produced it. The
+number was fitted to the prose.
+
+**What the rule requires.** A figure that appears in the text and in no artefact
+is not a rounding of an artefact until that has been checked in the direction the
+rounding would have to go. Where a number and a word agree suspiciously well ---
+"half", "double", "an order of magnitude", "a third" --- the word is written from
+the number, never the number from the word, and the artefact is named beside it.
+The remedy is `PRODUCERS.tsv` and guard 5 for tables, `DECLARED_CONSTANTS.md` and
+guard 2 for literals; for this class the only instrument is the discipline of
+computing the figure before writing the sentence that characterises it.
+
 The third is the one that reaches outside the machine. A rule that names its own
 enforcement harness, in a repository published on Quantlet and distributed on
 PyPI, while that harness is excluded from the distribution, is a rule nobody but
