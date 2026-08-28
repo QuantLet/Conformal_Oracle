@@ -172,6 +172,43 @@ The behaviour has a limit, and it can be stated.
 	$7.8$\%.
 \end{corollary}
 
+\begin{proposition}[Zone improvement is a sub-event of coverage improvement]
+	\label{prop:zone_inclusion}
+	Let $\hat\pi$ and $\hat\pi'$ be the realised exceedance rates of a forecast
+	series before and after a correction, and let $Z(\cdot)$ be the traffic-light
+	classification, a non-decreasing step function of the exceedance count whose
+	boundaries lie at $\tau = 1.6\,\alpha$ and $3.6\,\alpha$, both strictly above
+	nominal. If $Z(\hat\pi') < Z(\hat\pi)$ --- a zone upgrade --- and the
+	correction does not carry the rate below $\alpha$ by more than its initial
+	excess, then $|\hat\pi' - \alpha| < |\hat\pi - \alpha|$. The converse fails:
+	$|\hat\pi' - \alpha| < |\hat\pi - \alpha|$ is compatible with
+	$Z(\hat\pi') = Z(\hat\pi)$ for any movement that does not cross a boundary.
+\end{proposition}
+
+The proof is immediate. Every boundary of $Z$ sits above $\alpha$, so a downward
+crossing begins strictly above nominal and ends nearer to it; and $Z$ is constant
+between boundaries, so any movement interior to a zone is invisible to it. The
+content is not the implication but its asymmetry, and that asymmetry is what
+Proposition~\ref{prop:traffic_limit} predicts: an instrument that resolves
+$\mathrm{sign}(\pi - \tau)$ can register a change of sign and nothing finer, so it
+must undercount improvement and can never overcount it.
+
+The panel is the measurement rather than an illustration. Across the
+\nZoneCells{} model--asset pairs at $\alpha = 0.01$, the rolling correction
+produces \nZoneUpgrades{} zone upgrades and moves \nZoneCloser{} pairs closer to
+nominal. Every upgrade is among the latter: the count of pairs upgraded without
+moving closer is \nZoneUpNotCloser{}. In the other direction \nZoneCloserNotUp{}
+pairs move closer with no zone change at all --- a quarter of the improvement the
+classification does not see. Zero counterexamples in \nZoneUpgrades{} trials is
+not a strong correlation; it is the inclusion the proposition forces, visible in
+the data without any further assumption.
+
+This is the bridge between the limit statement above and the cost accounting of
+Section~\ref{sec:recal}. A benefit measured in zone upgrades is a benefit
+measured through a sign, and Section~\ref{sec:recal} therefore prices the
+indication rule in the quantile score and keeps the zone count as the
+administrative figure a supervisor reads.
+
 Three features of Proposition~\ref{prop:traffic_limit} distinguish it from the
 identification result of Section~\ref{sec:precede}. It requires no construction,
 no restriction on the return law and no matched alternative --- only consistency

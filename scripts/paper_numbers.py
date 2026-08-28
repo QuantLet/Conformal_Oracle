@@ -36,6 +36,7 @@ import pandas as pd
 
 BASE = Path(__file__).resolve().parent.parent
 Q = BASE / "Quantlets"
+DATA_QS = BASE / "cfp_ijf_data" / "paper_outputs" / "qs_sequences"
 OUT_TEX = BASE / "numbers.tex"
 OUT_MD = BASE / "analysis" / "provenance" / "PAPER_NUMBERS.md"
 
@@ -215,6 +216,88 @@ def collect() -> dict:
     n["LagMidN"] = int((cv["lag_calendar_days"] == _mid[0]).sum())
     n["LagLateDays"] = int(_mid[-1])
     n["LagLateN"] = int((cv["lag_calendar_days"] == _mid[-1]).sum())
+
+    # Proposition: zone improvement is a sub-event of coverage improvement. The
+    # inclusion is measured on the panel rather than asserted, and the count that
+    # matters is the number of counterexamples, which must be zero.
+    _zb = json.loads((BASE / "analysis" / "k2_indication" /
+                      "benefit_measures.json").read_text())
+    n["ZoneCells"] = int(_zb["cells"])
+    n["ZoneUpgrades"] = int(_zb["zone_upgrades"])
+    n["ZoneCloser"] = int(_zb["closer_to_nominal"])
+    n["ZoneUpNotCloser"] = int(_zb["zone_up_not_closer"])
+    n["ZoneCloserNotUp"] = int(_zb["closer_not_zone_up"])
+    n["ZoneGivenUp"] = int(_zb["given_up"])
+    n["ZoneGivenUpWorseScore"] = int(_zb["given_up_worse_on_score"])
+    n["ZoneNetCostScore"] = int(_zb["net_cost_by_score"])
+
+    # The two Fisher exact p-values, computed from the 2x2 tables the sentence
+    # itself prints rather than carried in a file with no producer.
+    from scipy import stats as _fs
+    n["FisherKupiec"] = float(_fs.fisher_exact([[5, 6], [0, 2]])[1])
+    n["FisherSevere"] = float(_fs.fisher_exact([[5, 0], [0, 8]])[1])
+
+    # The tightest band edge the panel admits: the worst well-specified cell,
+    # rounded toward zero on the 0.01 grid the band is stated on. The margin is
+    # what is left between the two. Both follow from the cell distribution; the
+    # understatement AT that edge does not -- the band-sweep machinery that would
+    # evaluate it is not in this repository, so it is bracketed by the two
+    # neighbouring rows of band_sweep.csv rather than interpolated between them.
+    _cells = pd.read_csv(BASE / "analysis" / "phase2" /
+                         "panel_scale_ratios_by_asset.csv")
+    _good = _cells[~_cells["series"].str.contains(r"\(default\)")]
+    _worst = float(_good["ratio"].max())
+    n["TightBand"] = float(np.ceil(_worst * 100) / 100)
+    n["TightMargin"] = abs(_worst - n["TightBand"])
+    _bs = pd.read_csv(BASE / "analysis" / "phase2" / "band_sweep.csv")
+    n["TightUndHi"] = float(_bs.loc[np.isclose(_bs["edge"], -1.9), "und"].iloc[0])
+    n["TightUndLo"] = float(_bs.loc[np.isclose(_bs["edge"], -2.0), "und"].iloc[0])
+
+    # The constructed pair, and the GJR-vs-GJR-t comparison. Both sets of figures
+    # sat in phase2_numbers.json with no producer. The pair's thresholds are in
+    # pair.npz; the published alternative, 1.32 sigma, is not -- the construction
+    # gives 1.46, which is 56% of the honest threshold rather than "half".
+    _pair = np.load(BASE / "analysis" / "phase2" / "pair.npz")
+    n["PairVaRHonest"] = abs(float(_pair["q_true"]))
+    n["PairVaRAlt"] = abs(float(_pair["q_trunc"]))
+    n["PairCapitalPct"] = 100 * n["PairVaRAlt"] / n["PairVaRHonest"]
+
+    _t = pd.read_csv(Q / "CO_full_evaluation" / "tab_master_results_r2.csv") \
+        .set_index("model")
+    _a, _b = float(_t.loc["GJR-GARCH", "cor_qs"]), float(_t.loc["GJR-GARCH-t", "cor_qs"])
+    n["PairQSGapPct"] = 100 * abs(_a - _b) / max(_a, _b)
+
+    # Diebold-Mariano on the corrected loss differentials with a Driscoll-Kraay
+    # panel-HAC variance. The convention is stated because the published t = 0.399
+    # cannot be reproduced from any artefact here and the convention behind it was
+    # never recorded: cross-sectional mean per date, Bartlett kernel, lag
+    # floor(4 (T/100)^(2/9)). The verdict is unchanged -- the two are not
+    # distinguishable -- but the statistic is now one the reader can recompute.
+    _q1 = pd.read_parquet(DATA_QS / "gjr_garch_qs.parquet")
+    _q2 = pd.read_parquet(DATA_QS / "gjr_t_qs.parquet")
+    _c = _q1.index.intersection(_q2.index)
+    _d = (_q1.loc[_c] - _q2.loc[_c]).mean(axis=1, skipna=True).dropna().to_numpy()
+    _T = len(_d); _m = int(np.floor(4 * (_T / 100) ** (2 / 9)))
+    _u = _d - _d.mean(); _s2 = (_u ** 2).mean()
+    for _l in range(1, _m + 1):
+        _s2 += 2 * (1 - _l / (_m + 1)) * (_u[_l:] * _u[:-_l]).mean()
+    from scipy import stats as _sst
+    n["PairDMt"] = float(_d.mean() / np.sqrt(_s2 / _T))
+    n["PairDMp"] = float(2 * _sst.norm.sf(abs(n["PairDMt"])))
+    n["PairDMLags"] = int(_m)
+
+    # The six-pair bound validation. These five sat in phase2_numbers.json, which
+    # has no producer, while their artefact was in the repository all along --
+    # and one of them had gone stale there: rho reaches 0.62, not the 0.67 the
+    # paper printed, because TimesFM's persistence moved with the sign correction.
+    bv = pd.read_csv(Q / "CO_bound_validation" / "tab_bound_validation.csv")
+    n["BoundPairs"] = int(len(bv))
+    n["BoundRhoLo"] = float(bv["rho_hat"].min())
+    n["BoundRhoHi"] = float(bv["rho_hat"].max())
+    n["BoundDeltaLo"] = float(bv["delta_n"].min())
+    n["BoundDeltaHi"] = float(bv["delta_n"].max())
+    n["BoundFloor"] = float(bv["guaranteed"].min())
+    n["BoundEmpirical"] = float(bv["empirical"].mean())
 
     # The tail-closure spread. Its lower end was printed as 0.005, which is also
     # the value DECLARED_CONSTANTS.md admits for the detection severity cut: the
@@ -402,6 +485,26 @@ def fmt(key: str, v) -> str:
     # Pooled panel rates sit within one thousandth of each other and of nominal;
     # three decimals prints them all as 0.011 and erases the comparison the
     # sentence makes. The p-values keep three.
+    if key.startswith("FisherSevere"):
+        return f"{v:.5f}"
+    if key.startswith("FisherKupiec"):
+        return f"{v:.2f}"
+    if key.startswith("TightMargin"):
+        return f"{v:.3f}"
+    if key.startswith("TightBand"):
+        return f"{v:.2f}"
+    if key.startswith("TightUnd"):
+        return f"{v:.1f}"
+    if key.startswith(("PairVaR", "PairDMt")):
+        return f"{v:.2f}"
+    if key.startswith(("PairQSGapPct", "PairCapitalPct")):
+        return f"{v:.0f}" if v > 1 else f"{v:.3f}"
+    if key.startswith("PairDMp"):
+        return f"{v:.2f}"
+    if key.startswith(("BoundRho", "BoundDelta")):
+        return f"{v:.3f}"
+    if key.startswith(("BoundFloor", "BoundEmpirical")):
+        return f"{v:.1f}"
     if key.startswith("LitClosureRMin"):
         return f"{v:.3f}"
     if key.startswith("LitClosureRMax"):

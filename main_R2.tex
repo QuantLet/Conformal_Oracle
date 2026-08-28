@@ -1015,8 +1015,9 @@ overstating the blind spot. Supplement~S.9.8 gives the full table.
 Two consequences run through the rest of the paper. Section~\ref{sec:gate}
 measures how much of this depth structural checks remove. And the Chronos
 configuration of Section~\ref{sec:mechanism} sits \emph{outside} the blind
-region: the effective tail probability it cuts off is near $\nGapDeltaChronos$, well beyond
-$\nGapDeltaFree$, which is why unconditional coverage rejects it on every asset
+region: the tail probability it cuts off shows up as a realised exceedance rate
+of $\nPiSmallDefaultOne$, well beyond $\nGapDeltaFree$, which is why
+unconditional coverage rejects it on every asset
 --- while rejecting \nSeqKupiecRejRawOne\% of the panel besides. Detection is not
 diagnosis, and the two separate exactly where Proposition~\ref{prop:blindspot_depth}
 says they should.
@@ -1071,10 +1072,10 @@ series as produced with each failure mode present, since that is the state in
 which a diagnostic would have to identify one. Treating the five series affected
 by an identified failure mode as positives and the eight unaffected series as
 negatives, Kupiec's majority-fail rule attains sensitivity 5/5 at
-specificity 2/8, a Fisher exact $p$ of $\nGapFisherKupiec$: it flags 11 of 13 forecasters,
+specificity 2/8, a Fisher exact $p$ of $\nFisherKupiec$: it flags 11 of 13 forecasters,
 which is not discrimination. The independence test attains 0/5. A severe cut on
 the violation rate --- rejecting $\hat\pi > 0.10$ or $\hat\pi < 0.005$ ---
-attains 5/5 at 8/8, $p = \nGapFisherSevere$. The finding concerns a \emph{threshold} rather
+attains 5/5 at 8/8, $p = \nFisherSevere$. The finding concerns a \emph{threshold} rather
 than a statistic: what separates an implementation failure from ordinary
 miscalibration is severity, while Kupiec's threshold is calibrated to sample
 size. The six Kupiec flags falling on unaffected forecasters were each followed
@@ -1214,7 +1215,7 @@ Value-at-Risk understatement it permits.
 		the exceedance path alone, unimodal returns & \nGapDeltaUni & \nGapUndUni\% \\
 		\addlinespace[2pt]
 		\quad + the series and the returns, scale band at $\nGapBandNow$ & \nGapDeltaGateNow & \nGapUndGateNow\% \\
-		\quad + the series and the returns, band tightened to $\nGapBandTight$ & 0.017 & \nGapUndTight\% \\
+		\quad + the series and the returns, band tightened to $\nTightBand$ & 0.017 & \nTightUndLo--\nTightUndHi\% \\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -1222,7 +1223,7 @@ Value-at-Risk understatement it permits.
 Table~\ref{tab:gate_residual} is the section's result. The structural checks cut
 the unidentifiable understatement from \textbf{\nGapUndUni\%} to
 \textbf{\nGapUndGateNow\%}, and tightening the binding band to the edge of what
-this panel permits takes it to \nGapUndTight\%. They do not cut it to zero. A pair exists that passes all ten checks, exceeds on the same
+this panel permits takes it to between \nTightUndLo\% and \nTightUndHi\%. They do not cut it to zero. A pair exists that passes all ten checks, exceeds on the same
 days at the same rate as a correctly specified forecaster, and still reports a
 threshold a fifth too small. That residue is the gate's limit.
 
@@ -1255,10 +1256,12 @@ within the gap. The verdict therefore does not rest on the choice at all.
 The safety margin is a different quantity from the gap, and the smaller of the
 two. It is the distance from the edge to the nearest well-specified cell, and at
 $\nGapBandNow$ it is $\nGapMarginUpper$ --- an order of magnitude smaller than
-the gap. Tightening the edge to $\nGapBandTight$ reduces the residual
-understatement from \nGapUndGateNow\% to \nGapUndTight\%, and leaves a margin of
-$\nGapMarginTight$: essentially none. At the current edge of $\nGapBandNow$ the
-gap exceeds the margin by a factor of eleven; at $\nGapBandTight$ it exceeds it
+the gap. Tightening the edge to $\nTightBand$ reduces the residual understatement from
+\nGapUndGateNow\% to between \nTightUndLo\% and \nTightUndHi\% --- the band
+sweep is on a grid of $0.1$ and the machinery that would evaluate the
+intermediate edge is not in the replication archive, so the figure is bracketed
+rather than interpolated --- and leaves a margin of $\nTightMargin$: essentially none. At the current edge of $\nGapBandNow$ the
+gap exceeds the margin by a factor of eleven; at $\nTightBand$ it exceeds it
 by more than two hundred. Robustness read off the gap rather than the margin
 therefore overstates the check by one order of magnitude at the edge as
 specified, and by two at the tightened one.
@@ -1597,11 +1600,11 @@ what governs the arithmetic here.
 The identification result of Section~\ref{sec:blindspot} bears on this
 arithmetic directly, and the statement does not depend on foundation models or on
 any forecaster in this panel. Two models can report thresholds differing by half
---- one at $\nGapVaRHonest\sigma_t$, the other at $\nGapVaRAlt\sigma_t$, both stated in units of
+--- one at $\nPairVaRHonest\sigma_t$, the other at $\nPairVaRAlt\sigma_t$, both stated in units of
 the true conditional scale rather than an estimate of it --- while exceeding on
 the same days at the same rate, passing Kupiec, Christoffersen and
 the dynamic quantile test with the same verdicts, and sitting in the same Basel
-zone. The second holds barely half the capital of the first, is fully compliant
+zone. The second holds \nPairCapitalPct\% of the capital of the first, is fully compliant
 on the traffic light, and is not distinguishable from it by any test of a
 predictable moment restriction on the exceedance sequence. A capital requirement
 is a function of a reported threshold and a violation count; the pair shows that
@@ -1657,9 +1660,10 @@ decide.
 With adequate per-asset history, the GJR-GARCH family with conformal correction
 attains the best corrected quantile score in this panel, and the two variants
 within it are not distinguishable: their mean corrected scores differ by
-\nGapQSGapPct\%, the ordering reverses between per-asset and pooled aggregation,
-and a Diebold--Mariano test on the corrected loss differentials with
-Driscoll--Kraay panel-HAC variance returns $t = \nGapDMt$, $p = \nGapDMp$ over
+\nPairQSGapPct\%, the ordering reverses between per-asset and pooled aggregation,
+and a Diebold--Mariano test on the corrected loss differentials with a
+Driscoll--Kraay panel-HAC variance --- cross-sectional mean per date, Bartlett
+kernel at \nPairDMLags{} lags --- returns $t = \nPairDMt$, $p = \nPairDMp$ over
 \nMainAssets{} assets. The family is therefore the identified unit, not a winner
 within it. Where per-asset estimation is infeasible --- scale, short history,
 latency --- a correctly configured zero-shot foundation model with the same

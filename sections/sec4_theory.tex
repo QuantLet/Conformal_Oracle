@@ -165,10 +165,10 @@ sample; $\beta(g_n)$ is residual dependence and falls with the separation.
 
 The conclusion is asymptotic. No finite-sample coverage claim is made anywhere in
 this paper for the dependent case, and the bound is conservative at financial
-sample sizes: on six representative pairs spanning score persistence
-$\hat\rho\in[\nGapRhoLo,\nGapRhoHi]$ the estimated remainder lies between
-$\nGapDeltaHatLo$ and $\nGapDeltaHatHi$, a coverage floor near 88\% against
-empirical coverage averaging \nGapEmpCoverage\%. The bound justifies the
+sample sizes: on \nBoundPairs{} representative pairs spanning score persistence
+$\hat\rho\in[\nBoundRhoLo,\nBoundRhoHi]$ the estimated remainder lies between
+$\nBoundDeltaLo$ and $\nBoundDeltaHi$, a guaranteed coverage floor of
+\nBoundFloor\% against empirical coverage averaging \nBoundEmpirical\%. The bound justifies the
 correction under dependence; it does not certify it.
 
 \begin{corollary}[GARCH data-generating processes]
