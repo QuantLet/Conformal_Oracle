@@ -1,0 +1,16 @@
+{
+  "cells": 312,
+  "zone_upgrades": 204,
+  "closer_to_nominal": 274,
+  "zone_up_not_closer": 0,
+  "closer_not_zone_up": 70,
+  "score_better": 138,
+  "given_up": 20,
+  "given_up_worse_on_score": 11,
+  "given_up_closer_to_nominal": 20,
+  "net_cost_by_zone": 20,
+  "net_cost_by_score": 9,
+  "corr_zone_closer": 0.5118229113859861,
+  "corr_zone_score": 0.5801561554920477,
+  "corr_closer_score": 0.29218689176321194
+}
