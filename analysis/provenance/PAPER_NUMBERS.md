@@ -129,27 +129,27 @@ not possible without editing this file's producer.
 | `\nDispNucleusLowMini` | 0.109 | -- |
 | `\nDoseCells` | 1600 | -- |
 | `\nPiSmallDefaultOne` | 0.3884 | -- |
-| `\nKupSmallDefaultOne` | 0 | -- |
+| `\nKupPassSmallDefaultOne` | 0 | -- |
 | `\nPiSmallDefaultTen` | 0.4177 | -- |
-| `\nKupSmallDefaultTen` | 0 | -- |
+| `\nKupPassSmallDefaultTen` | 0 | -- |
 | `\nRatioSmallDefaultOne` | 38.837 | -- |
 | `\nRatioSmallDefaultTen` | 4.177 | -- |
 | `\nPiSmallAnalyticOne` | 0.0173 | -- |
-| `\nKupSmallAnalyticOne` | 8 | -- |
+| `\nKupPassSmallAnalyticOne` | 8 | -- |
 | `\nPiSmallAnalyticTen` | 0.1027 | -- |
-| `\nKupSmallAnalyticTen` | 20 | -- |
+| `\nKupPassSmallAnalyticTen` | 20 | -- |
 | `\nRatioSmallAnalyticOne` | 1.733 | -- |
 | `\nRatioSmallAnalyticTen` | 1.027 | -- |
 | `\nPiMiniDefaultOne` | 0.4188 | -- |
-| `\nKupMiniDefaultOne` | 0 | -- |
+| `\nKupPassMiniDefaultOne` | 0 | -- |
 | `\nPiMiniDefaultTen` | 0.4477 | -- |
-| `\nKupMiniDefaultTen` | 0 | -- |
+| `\nKupPassMiniDefaultTen` | 0 | -- |
 | `\nRatioMiniDefaultOne` | 41.884 | -- |
 | `\nRatioMiniDefaultTen` | 4.477 | -- |
 | `\nPiMiniAnalyticOne` | 0.0177 | -- |
-| `\nKupMiniAnalyticOne` | 8 | -- |
+| `\nKupPassMiniAnalyticOne` | 8 | -- |
 | `\nPiMiniAnalyticTen` | 0.0981 | -- |
-| `\nKupMiniAnalyticTen` | 20 | -- |
+| `\nKupPassMiniAnalyticTen` | 20 | -- |
 | `\nRatioMiniAnalyticOne` | 1.772 | -- |
 | `\nRatioMiniAnalyticTen` | 0.981 | -- |
 | `\nGateBlocked` | 4 | SEQ (312) |
@@ -297,6 +297,32 @@ not possible without editing this file's producer.
 | `\nGateRollUpgradesLostWorse` | 11 | SEQ (312) |
 | `\nGateRollUpgradesLostNet` | 9 | SEQ (312) |
 | `\nGateRollUpgradeAndDeteriorate` | 71 | SEQ (312) |
+| `\nSeqLevelGapMedian` | 3.1\times 10^{-4} | SEQ (312) |
+| `\nSeqLevelChanged` | 0 | SEQ (312) |
+| `\nMainKupRejCorSmallAnalyticOne` | 5 | MAIN (384) |
+| `\nMainKupRejCorSmallAnalyticTwoFive` | 8 | MAIN (384) |
+| `\nMainKupRejCorSmallAnalyticFive` | 5 | MAIN (384) |
+| `\nMainKupRejCorSmallAnalyticTen` | 4 | MAIN (384) |
+| `\nMainKupRejRawSmallAnalyticOne` | 16 | MAIN (384) |
+| `\nMainKupRejCorSmallDefaultOne` | 10 | MAIN (384) |
+| `\nMainKupRejCorSmallDefaultTwoFive` | 14 | MAIN (384) |
+| `\nMainKupRejCorSmallDefaultFive` | 16 | MAIN (384) |
+| `\nMainKupRejCorSmallDefaultTen` | 15 | MAIN (384) |
+| `\nMainKupRejRawSmallDefaultOne` | 24 | MAIN (384) |
+| `\nMainZTwoPassTrunc` | 0 | MAIN (384) |
+| `\nMainZTwoPassAnalytic` | 17 | MAIN (384) |
+| `\nMainZTwoRejCorrTrunc` | 21 | MAIN (384) |
+| `\nMainZTwoPassRawMin` | 9 | MAIN (384) |
+| `\nMainZTwoPassCorrMin` | 23 | MAIN (384) |
+| `\nMainDQRejBenchmark` | 19 | MAIN (384) |
+| `\nMainDQRejGjrT` | 14 | MAIN (384) |
+| `\nSupRollCCBest` | 10 | -- |
+| `\nSupRollCCTsfmN` | 8 | -- |
+| `\nSupRollCCTsfmLo` | 2 | -- |
+| `\nSupRollCCTsfmHi` | 8 | -- |
+| `\nSupHistSimGreenStatic` | 22 | -- |
+| `\nSupHistSimGreenRoll` | 21 | -- |
+| `\nSeqRollAllAssets` | 12 | SEQ (312) |
 | `\nSupZTwoPiSmall` | 0.39 | -- |
 | `\nSupZTwoSmall` | -144 | -- |
 | `\nSupZTwoFlippedSmall` | 146 | -- |

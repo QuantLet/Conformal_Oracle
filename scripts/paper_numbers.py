@@ -167,7 +167,13 @@ def collect() -> dict:
                        ("Chronos-Mini", "MiniDefault"), ("Chronos-Mini-A", "MiniAnalytic")):
         for a, atag in ((0.01, "One"), (0.10, "Ten")):
             n[f"Pi{tag}{atag}"] = ar.loc[(model, a), "pihat"]
-            n[f"Kup{tag}{atag}"] = int(ar.loc[(model, a), "kupiec"])
+            # tab_alpha_response's "kupiec" column counts assets that PASS, not
+            # assets rejected: it is exactly 24 minus the rejection count in
+            # all_results, at all four levels and for both series. Every other
+            # Kupiec macro in this file counts rejections, so the name says
+            # which. The prose using it already read "passing Kupiec on ...",
+            # so nothing printed was wrong -- the trap was the name.
+            n[f"KupPass{tag}{atag}"] = int(ar.loc[(model, a), "kupiec"])
         n[f"Ratio{tag}One"] = ar.loc[(model, 0.01), "ratio"]
         n[f"Ratio{tag}Ten"] = ar.loc[(model, 0.10), "ratio"]
 
@@ -486,6 +492,91 @@ def collect() -> dict:
                                     - ov["roll_cal"]["lost_but_score_worse"])
     n["GateRollUpgradeAndDeteriorate"] = ov["roll_cal"]["upgrade_and_deterioration"]
 
+    # ---- claims that were half macro-backed -------------------------------- #
+    # Check 5 of audit_structural_claims.py skipped any "N of M" whose M was a
+    # macro, on the reasoning that one side came from an artefact. Eleven claims
+    # had that shape and none was ever checked. Their typed sides are lifted
+    # here; two of the eleven were wrong.
+
+    # The order-statistic convention against the level convention. Neither the
+    # median gap nor the "none" is catchable by guard 2: one is 3x10^-4 with an
+    # integer mantissa, the other is a word.
+    _cv = (BASE / "analysis" / "provenance" / "QV_CONVENTION.md").read_text()
+    _row = next(l for l in _cv.splitlines() if l.startswith("| `LEVEL_K_OVER_N`")
+                and "e-04" in l)
+    _cells = [c.strip() for c in _row.split("|")]
+    n["SeqLevelGapMedian"] = float(_cells[2])
+    n["SeqLevelChanged"] = int(_cells[4].split("of")[0].replace("*", "").strip())
+
+    # Kupiec rejection counts on the corrected series, across the four levels.
+    # "5, 9, 5 and 4" was printed for the analytic series; the panel gives 8 at
+    # alpha = 0.025, with ASX200 at p = 0.059 just outside the 5% edge.
+    _alphas = ((0.01, "One"), (0.025, "TwoFive"), (0.05, "Five"), (0.10, "Ten"))
+    for mdl, tag in (("Chronos-Small-A", "SmallAnalytic"),
+                     ("Chronos-Small", "SmallDefault")):
+        _m = g if False else d[d["model"] == mdl]
+        for a, atag in _alphas:
+            _c = _m[_m["alpha"] == a]
+            n[f"MainKupRejCor{tag}{atag}"] = int((_c["p_kup_cp"] < 0.05).sum())
+        n[f"MainKupRejRaw{tag}One"] = int(
+            (_m[_m["alpha"] == 0.01]["p_kup_raw"] < 0.05).sum())
+
+    # The Acerbi-Szekely separation, and the ES-correction counts.
+    _es = pd.read_csv(Q / "CFP_ES_Correction_Z2" / "table_c1_es_correction.csv")
+    _pv = _es.groupby("model")[["raw_pass", "corr_pass"]].sum()
+    _trunc, _anal = ["Chronos-Small", "Chronos-Mini"], ["Chronos-Small-A", "Chronos-Mini-A"]
+    assert _pv.loc[_trunc, "raw_pass"].nunique() == 1, "the two truncated series differ"
+    assert _pv.loc[_anal, "raw_pass"].nunique() == 1, "the two analytic series differ"
+    n["MainZTwoPassTrunc"] = int(_pv.loc[_trunc[0], "raw_pass"])
+    n["MainZTwoPassAnalytic"] = int(_pv.loc[_anal[0], "raw_pass"])
+    n["MainZTwoRejCorrTrunc"] = int(n["MainAssets"] - _pv.loc[_trunc, "corr_pass"].max())
+    _rest = _pv.drop(index=_trunc)
+    n["MainZTwoPassRawMin"] = int(_rest["raw_pass"].min())
+    n["MainZTwoPassCorrMin"] = int(_rest["corr_pass"].min())
+
+    # Dynamic-quantile rejections on the raw series, the counts Section 8 uses
+    # to say the test separates nothing.
+    _dq = pd.read_csv(BASE / "analysis" / "phase3" / "dq_panel.csv")
+    _dqr = _dq.assign(r=_dq["p_dq_raw"] < 0.05).groupby("model")["r"].sum()
+    assert _dqr[["GARCH-N", "EWMA", "GJR-GARCH"]].nunique() == 1, \
+        "the three benchmarks no longer share a DQ rejection count"
+    n["MainDQRejBenchmark"] = int(_dqr["GARCH-N"])
+    n["MainDQRejGjrT"] = int(_dqr["GJR-GARCH-t"])
+
+    # Rolling conditional coverage. "0--5" for the high-R-bar series is not in
+    # the artefact: the three largest R-bar -- Lag-Llama and the two truncated
+    # Chronos -- pass on 2 to 5 assets, and no series passes on none.
+    #
+    # The class is the table's own "kind" column, not a cut on R-bar. A cut at
+    # 0.35 would have been a constant chosen after seeing the data, and the
+    # rank-of-three that would replace it is not a natural grouping either:
+    # Lag-Llama sits at 0.357 against 0.184 for the next series down, a factor of
+    # 1.9, while the two truncated Chronos are at 17 and 24. An assertion
+    # demanding a clear gap below the top three fired, which is the check doing
+    # its job on a grouping written before it was measured.
+    _rs = pd.read_csv(Q / "CO_garch_conformal" / "tab_rolling_vs_static.csv") \
+        .set_index("model")
+    _rb = pd.read_csv(Q / "CO_full_evaluation" / "tab_master_results_r2.csv") \
+        .set_index("model")["R"]
+    n["SupRollCCBest"] = int(_rs["r_cc"].max())
+    _kind = pd.read_csv(Q / "CO_full_evaluation" / "tab_master_results_r2.csv") \
+        .set_index("model")["kind"]
+    _tsfm = [m for m in _kind[_kind.str.startswith("TSFM")].index if m in _rs.index]
+    n["SupRollCCTsfmN"] = len(_tsfm)
+    n["SupRollCCTsfmLo"] = int(_rs.loc[_tsfm, "r_cc"].min())
+    n["SupRollCCTsfmHi"] = int(_rs.loc[_tsfm, "r_cc"].max())
+    assert n["SupRollCCTsfmHi"] < n["SupRollCCBest"], \
+        "a foundation-model series now matches the best benchmark on rolling CC"
+    n["SupHistSimGreenStatic"] = int(_rs.loc["Hist-Sim", "s_grn"])
+    n["SupHistSimGreenRoll"] = int(_rs.loc["Hist-Sim", "r_grn"])
+
+    # Forecasters green on every asset after the rolling correction.
+    _zr2 = pd.read_csv(BASE / "analysis" / "k2_indication"
+                       / "zone_vs_coverage_rolling.csv")
+    n["SeqRollAllAssets"] = int(
+        (_zr2.assign(x=_zr2["TL_roll"] == "Green").groupby("model")["x"].sum()
+         == n["MainAssets"]).sum())
+
     # ---- SUP panel: the supplement's own prose figures --------------------- #
     # Guard 2 failed on 35 bare decimals in supplement.tex. Each is closed here
     # or declared in DECLARED_CONSTANTS.md; twelve of them did not reproduce and
@@ -686,6 +777,9 @@ def fmt(key: str, v) -> str:
         return f"{v:.4f}"
     if key.startswith(("SupCtlExact", "SupCtlConfLarge")):
         return f"{v:.5f}"
+    if key == "SeqLevelGapMedian":
+        m, e = f"{v:.1e}".split("e")
+        return rf"{m}\times 10^{{{int(e)}}}"
     if key.startswith("SupReproTol"):
         m, e = f"{v:.1e}".split("e")
         return rf"{m}\times 10^{{{int(e)}}}"

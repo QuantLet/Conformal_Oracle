@@ -136,6 +136,47 @@ The corollary for validating an estimator against a second route: compare the
 this in one line; comparing dispersion and coverage could not have found it at
 any sample size.
 
+### Where the negative control is planted
+
+Rule 2 says a check must be seen to fail. It does not say *on what*, and for a
+year that omission was invisible because every control happened to be planted in
+the case the check reads best.
+
+**A negative control is planted in the region the check covers worst, not in the
+region it covers most typically.**
+
+Two instruments failed this on the same day, in the same shape.
+
+- **Guard 2**, prose literals. Its control planted `0.7391` in running prose. The
+  guard replaced `\begin{tabular}...\end{tabular}` wholesale before extracting,
+  so it was blind to every table written by hand in either document -- and a
+  prose-only control cannot fail at the resolution of a table-only defect. It
+  reported "no bare decimal literals in prose" over `0.990` and `0.988`, the
+  violation rates under the inverted-sign defect, for as long as it existed.
+- **Check 5** of `audit_structural_claims.py`, "N of M" claims. Its control
+  planted two typed numbers, `7 of 99`. The check skipped any claim in which
+  *either* side was a macro, on the reasoning that one side then came from an
+  artefact. Eleven claims in the two documents had exactly that shape and none
+  was ever read. Two of the eleven were wrong.
+
+The common configuration is the point, and it is the worst one in a document:
+**a literal standing beside a macro.** It reads as verified to any reader,
+because half of it is; it read as verified to both instruments, for the same
+reason; and it is where a stale number survives longest, because everything
+around it is being regenerated. A control planted in the fully typed case cannot
+see it, and the fully typed case is the one a control naturally reaches for.
+
+The remedy is a question asked when the control is written, not when it is run:
+*which inputs does this check skip, ignore, or strip before it looks?* Whatever
+the answer names is where the control belongs. Guard 2's control now plants a
+literal inside a tabular whose column specification carries lengths; check 5's
+plants a typed numerator against a macro denominator.
+
+This is a rule about controls, so it stands beside the four modes rather than
+inside them. It is how a check ends up in the second mode --- "cannot see" ---
+without anyone noticing, because a check with a control in the wrong place looks
+exactly like a check that works.
+
 ### The four ways a check stops being evidence
 
 Rule 2 was written against one of these and has since met three more. They are
@@ -167,9 +208,36 @@ map. Each was found by recomputing the object. This one would survive any amount
 of recomputation of the pipeline, because the pipeline never produced it. The
 number was fitted to the prose.
 
+**There are now two, so it is not an accident.** The second is quieter and its
+mechanism is the same. Supplement S.5 reported the tuned GBM-QR ablation as
+"5/9 Kupiec rejections (vs. 0/9), and 88.9% Green (vs. 100%)", over what it
+called "the nine series carried in the tuning ablation". The shipped grid is
+8 configurations x **13** models, the summary records `n_pairs = 13` on every
+row, and the emitted table on the same page prints `8/13` and `84.6%`. 88.9% is
+8/9 exactly, and 8/9 is a ratio no count in the archive produces.
+
+The two instances differ in what the number was fitted to and agree in what
+made them survive:
+
+| | the constructed pair | the tuned ablation |
+|---|---|---|
+| printed | 1.32 sigma, "differing by half" | 88.9% Green, over "the nine series" |
+| artefact | 1.46 sigma, 56% of the honest threshold | 84.6%, over thirteen |
+| what the figure was fitted to | the sentence's own word, *half* | the panel size the sentence names, *nine* |
+| what made it survive | no artefact ever produced it | an artefact was re-run and its prose was not |
+
+The second adds a mechanism the first did not have: **a clause that names the
+object can be the false part.** "Those counts are over the nine series carried in
+the tuning ablation, not the full panel" reads as the careful qualification a
+referee looks for, and it is what made the numbers beside it look accounted for.
+A wrong count with a stated object is harder to catch than a wrong count with
+none, because the statement of the object is itself the reassurance.
+
 **What the rule requires.** A figure that appears in the text and in no artefact
 is not a rounding of an artefact until that has been checked in the direction the
-rounding would have to go. Where a number and a word agree suspiciously well ---
+rounding would have to go. A clause naming the object a figure was computed over
+is checked against the artefact like any other claim; it is evidence about the
+author's intent and none at all about the number. Where a number and a word agree suspiciously well ---
 "half", "double", "an order of magnitude", "a third" --- the word is written from
 the number, never the number from the word, and the artefact is named beside it.
 The remedy is `PRODUCERS.tsv` and guard 5 for tables, `DECLARED_CONSTANTS.md` and
@@ -189,6 +257,37 @@ It compares against the frozen submission rather than the working tree, so drift
 introduced after the submission is outside its field of view by construction, and
 nothing re-runs it when an input is corrected. A snapshot with no expiry is read
 as a guarantee.
+
+### The defect is in the instrument more often than in the object
+
+Counted over two days, not asserted. Six defects found; **four were in the
+checking apparatus and two in the thing being checked.**
+
+| where | what |
+|---|---|
+| instrument | guard 2 stripped every hand-authored tabular before reading |
+| instrument | check 5 skipped any "N of M" with a macro on either side |
+| instrument | `build_manifest.py` compares against the frozen submission, not the working tree |
+| instrument | `paper_numbers.py --check` regenerated the artefact it checks against, by importing a module that writes its own JSON at import time |
+| object | thirteen supplement literals that did not reproduce |
+| object | two half-macro claims that did not reproduce |
+
+The fourth is the sharpest and it was introduced and caught inside one session.
+Reading a grid spacing out of `delta_by_class.py` by importing it re-ran the
+module, and the module writes `delta_by_class.json` at module level. So
+`--check`, whose entire function is to fail when a stored number has gone stale,
+refreshed the stored number first. It could not have failed on the defect it
+exists to detect, and it would have reported "numbers.tex is current" forever.
+Fixed by reading the defaults with `ast` and verifying, across a `--check`, that
+the JSON is byte-identical.
+
+**What the rule requires.** A check reads its reference; it never writes,
+regenerates, or imports anything that writes. Where a check needs a value that
+lives in code, it parses the source rather than executing it. And when a defect
+turns up, the instrument that should have caught it is examined in the same pass
+as the object -- on this project's record that is where the defect is more often
+than not, and an instrument nobody audits is the one place a defect can sit
+indefinitely while every report says the work is clean.
 
 ## Rule 3 — pre-register, then run
 

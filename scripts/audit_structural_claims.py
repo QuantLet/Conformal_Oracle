@@ -282,8 +282,15 @@ def _typed_counts(tex: str) -> list[str]:
     bad = []
     for m in NOFM.finditer(body):
         a, b = m.group(1), m.group(2)
-        if a.startswith("\\n") or b.startswith("\\n"):
-            continue                      # at least one side comes from an artefact
+        if a.startswith("\\n") and b.startswith("\\n"):
+            continue                      # both sides come from an artefact
+        # One macro is not enough, and reading it as enough is what this check
+        # did until 2026-08-28. "16 of \nMainAssets{} assets" has a computed
+        # denominator and a typed numerator, and only the denominator cannot
+        # drift. A literal beside a macro is the worst configuration in the
+        # document, not a safe one: it reads as verified to any reader, and to
+        # this check it read as verified too. Same shape as guard 2 skipping
+        # every hand-authored tabular, in the same week.
         frag = " ".join(m.group(0).split())
         if frag.lower() in {c.lower() for c in _declared_counts()}:
             continue
@@ -292,8 +299,19 @@ def _typed_counts(tex: str) -> list[str]:
 
 
 def control_counts() -> bool:
-    """A claim with two typed numbers and no declaration must be caught."""
-    return len(_typed_counts(r"\begin{document} it blocks 7 of 99 series.")) == 1
+    """Two controls, planted where the check reads worst rather than typically.
+
+    (a) Two typed numbers, the shape this check was written for.
+    (b) A typed numerator against a MACRO denominator. This is the real defect:
+        11 claims in the two documents had exactly this form and every one of
+        them was skipped, because one macro was read as evidence for both sides.
+        A control that only plants (a) passes on a check blind to (b) -- and a
+        blindness in the half-macro form is worse than in the fully typed one,
+        since a literal standing beside a macro reads as verified.
+    """
+    typed = _typed_counts(r"\begin{document} it blocks 7 of 99 series.")
+    half = _typed_counts(r"\begin{document} it blocks 7 of \nMainAssets{} assets.")
+    return len(typed) == 1 and len(half) == 1
 
 
 def check_counts() -> bool:

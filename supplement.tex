@@ -283,9 +283,11 @@ correction on $Z_2$ across all thirteen forecasters.
 \end{table}
 
 Read on the corrected panel, $Z_2$ does discriminate at this level. It rejects
-the two truncated Chronos series on all \nMainAssets{} assets raw and on 21 of
+the two truncated Chronos series on all \nMainAssets{} assets raw and on
+\nMainZTwoRejCorrTrunc{} of
 \nMainAssets{} after the heuristic ES correction, while the remaining forecasters
-pass on between 9 and \nMainAssets{} assets raw and on 23 or \nMainAssets{}
+pass on between \nMainZTwoPassRawMin{} and \nMainAssets{} assets raw and on
+\nMainZTwoPassCorrMin{} or \nMainAssets{}
 corrected. The heuristic correction reduces $|Z_2|$ for every forecaster, sharply
 so for the truncated series, whose raw values of $-130$ and $-163$ reflect
 realised losses on violation days far in excess of a predictive distribution
@@ -655,7 +657,7 @@ quantities before any new sample size was reported; the comparison tolerance is
 three standard errors of the \emph{difference} between two independent Monte
 Carlo estimates, with the new run at 2{,}000 replications so that the published
 run's error dominates it. A systematic bias survives the gate only if it is
-inside the band in every one of the \nSupReproCells{} cells, so the smallest
+inside the band in all \nSupReproCells{} cells, so the smallest
 discrepancy the tolerance admits is $\nSupReproTol$ on mean $\qVstat$, at the
 loosest cell $\nSupReproTolMax$, and the check establishes
 agreement to Monte Carlo resolution and not exact agreement.
@@ -1692,20 +1694,21 @@ threshold and no persistence rule are imposed on it.
 
 It improves unconditional coverage substantially and conditional adequacy not at
 all. Basel green rises from \nSupGreenStatic{} of \nSeqPairs{} pairs to
-\nSupGreenRoll, with twelve of the \nSeqForecasters{} forecasters reaching all
+\nSupGreenRoll, with \nSeqRollAllAssets{} of the \nSeqForecasters{} forecasters reaching all
 \nMainAssets{} assets (Table~S.22). The gains concentrate where volatility
 moves: commodities go from \nSupGreenStaticPctComm\% green to
 \nSupGreenRollPctComm\% and bonds from \nSupGreenStaticPctBond\% to
 \nSupGreenRollPctBond\%, while crypto and FX are at
 \nSupGreenRollPctComm\% either way. The single exception is Historical Simulation, which falls from
-22 to 21 assets green; its raw threshold is an order statistic of the same
+\nSupHistSimGreenStatic{} to \nSupHistSimGreenRoll{} assets green; its raw threshold is an order statistic of the same
 trailing window the rolling correction uses, so the two estimate from overlapping
 information and the second window reduces responsiveness rather than adding to it.
 
 Conditional coverage does not improve in parallel. GARCH-N attains the highest
-rolling Christoffersen pass rate, 10 of \nMainAssets{} assets, while the
-high-$\bar R$ foundation-model series remain at 0--5, reflecting violation
-clustering that survives the correction. This is a structural limitation of
+rolling Christoffersen pass rate, \nSupRollCCBest{} of \nMainAssets{} assets,
+while the \nSupRollCCTsfmN{} foundation-model series pass on
+\nSupRollCCTsfmLo{} to \nSupRollCCTsfmHi, reflecting violation clustering that
+survives the correction. This is a structural limitation of
 scalar recalibration rather than a tuning question
 (Section~9.1 of the manuscript). The S\&P~500 threshold path is in Figure~S.4.
 

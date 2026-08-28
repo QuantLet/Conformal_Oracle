@@ -428,7 +428,7 @@ The nonconformity score $S_t$ from equation~\eqref{eq:score} is positive when th
 	\qquad
 	k = \left\lceil (n+1)(1-\alpha) \right\rceil,
 \end{equation}
-with $\qVstat = S_{(n)}$ when $k > n$, which occurs only for $\alpha < 1/(n+1)$. This is the conformal convention rather than the plain empirical quantile $Q_{1-\alpha}(\{S_t\})$, and the distinction is not cosmetic: the two differ by one order statistic, an $O(1/n)$ gap that can nonetheless change the sign of $\qVstat$ on assets whose calibration scores straddle zero near the $(1-\alpha)$ level. Every result in this paper that enters a headline table uses equation~\eqref{eq:qV}, and the rolling variant substitutes the trailing window of size $w$ for $\mathcal D_n$ and $k = \lceil (w+1)(1-\alpha)\rceil$. Six auxiliary artefacts compute the shift as $Q_{k/n}$, the empirical quantile at the level $k/n$ rather than the order statistic itself; on this panel the two differ by a median $3\times10^{-4}$ in relative terms and change the violation count of none of the \nSeqPairs{} pairs. That such a divergence existed at all has a cause worth naming, because it is the most productive single source of defect in this project: the convention was stated in a docstring and implemented in no function, so every producer rebuilt it, and four rebuilt it differently. A definition that lives in prose is not a definition that a pipeline can be held to. The shift is now defined once, in code, and every site in the repository that takes a quantile of nonconformity scores is enumerated with its convention by an audit that fails the build when an undeclared one appears. A further property of equation~\eqref{eq:qV} is worth stating where the reader meets it rather than where it bites: $k > n-1$ whenever $n < 2/\alpha - 1$, so at $\alpha = 0.01$ the shift is the \emph{sample maximum} for every calibration sample of 198 observations or fewer. A short calibration window therefore does not give a noisy estimate of the conformal quantile; it gives an extreme-value statistic with no stable variance. The bound is $n \le 198$ at $\alpha = 0.01$ and $n \le 78,\,38,\,18$ at $\alpha = 0.025,\,0.05,\,0.10$. The consequence for window choice is stated in Section~\ref{sec:recal}: the three trailing windows a reader would naturally compare at $\alpha = 0.01$, $w \in \{125, 250, 500\}$, are not three points on a variance curve, because at $w = 125$ the shift \emph{is} the window maximum while at $w = 250$ and $w = 500$ it is the second and fifth largest of the window. The recalibrated lower quantile and VaR are then given by equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$. A positive $\qVstat$ shifts the predicted quantile downward, increasing reported VaR and correcting underestimation of tail risk; a negative value indicates over-conservatism.
+with $\qVstat = S_{(n)}$ when $k > n$, which occurs only for $\alpha < 1/(n+1)$. This is the conformal convention rather than the plain empirical quantile $Q_{1-\alpha}(\{S_t\})$, and the distinction is not cosmetic: the two differ by one order statistic, an $O(1/n)$ gap that can nonetheless change the sign of $\qVstat$ on assets whose calibration scores straddle zero near the $(1-\alpha)$ level. Every result in this paper that enters a headline table uses equation~\eqref{eq:qV}, and the rolling variant substitutes the trailing window of size $w$ for $\mathcal D_n$ and $k = \lceil (w+1)(1-\alpha)\rceil$. Six auxiliary artefacts compute the shift as $Q_{k/n}$, the empirical quantile at the level $k/n$ rather than the order statistic itself; on this panel the two differ by a median $\nSeqLevelGapMedian$ in relative terms and change the violation count of \nSeqLevelChanged{} of the \nSeqPairs{} pairs. That such a divergence existed at all has a cause worth naming, because it is the most productive single source of defect in this project: the convention was stated in a docstring and implemented in no function, so every producer rebuilt it, and four rebuilt it differently. A definition that lives in prose is not a definition that a pipeline can be held to. The shift is now defined once, in code, and every site in the repository that takes a quantile of nonconformity scores is enumerated with its convention by an audit that fails the build when an undeclared one appears. A further property of equation~\eqref{eq:qV} is worth stating where the reader meets it rather than where it bites: $k > n-1$ whenever $n < 2/\alpha - 1$, so at $\alpha = 0.01$ the shift is the \emph{sample maximum} for every calibration sample of 198 observations or fewer. A short calibration window therefore does not give a noisy estimate of the conformal quantile; it gives an extreme-value statistic with no stable variance. The bound is $n \le 198$ at $\alpha = 0.01$ and $n \le 78,\,38,\,18$ at $\alpha = 0.025,\,0.05,\,0.10$. The consequence for window choice is stated in Section~\ref{sec:recal}: the three trailing windows a reader would naturally compare at $\alpha = 0.01$, $w \in \{125, 250, 500\}$, are not three points on a variance curve, because at $w = 125$ the shift \emph{is} the window maximum while at $w = 250$ and $w = 500$ it is the second and fifth largest of the window. The recalibrated lower quantile and VaR are then given by equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$. A positive $\qVstat$ shifts the predicted quantile downward, increasing reported VaR and correcting underestimation of tail risk; a negative value indicates over-conservatism.
 
 The construction makes no parametric assumption on returns; the coverage guarantee under temporal dependence is developed in Section~\ref{sec:validity}.
 
@@ -677,12 +677,13 @@ the $\alpha$-response check of Section~\ref{sec:gate}.
 sampler does not make the model well calibrated at the 1\% level. Read through
 its own predictive law, Chronos-Small delivers $\hat\pi = \nPiSmallAnalyticOne$
 against a nominal $0.0100$ --- \nRatioSmallAnalyticOne{} times nominal --- and
-unconditional coverage rejects on 16 of \nMainAssets{} assets. The residual is
+unconditional coverage rejects on \nMainKupRejRawSmallAnalyticOne{} of
+\nMainAssets{} assets. The residual is
 not a level shift, however. The ratio $\hat\pi/\alpha$ falls monotonically ---
 \nRatioSmallAnalyticOne, \nLitRatioSmallTwoFive, \nLitRatioSmallFive, \nRatioSmallAnalyticTen{} for Chronos-Small
 and \nRatioMiniAnalyticOne, \nLitRatioMiniTwoFive, \nLitRatioMiniFive, \nRatioMiniAnalyticTen{} for Chronos-Mini
 --- so that at $\alpha = 0.10$ the analytic forecasts are essentially calibrated,
-passing Kupiec on \nKupSmallAnalyticTen{} and \nKupMiniAnalyticTen{} of
+passing Kupiec on \nKupPassSmallAnalyticTen{} and \nKupPassMiniAnalyticTen{} of
 \nMainAssets{} assets. What survives the removal of the sampler is a specifically
 \emph{tail} deficiency, and that is a statement about the model and its
 quantisation grid rather than about the interface through which it is read.
@@ -950,8 +951,9 @@ Section~\ref{sec:diag}.
 The proof is one application of iterated conditioning and is in Supplement~S.9.7.
 Statistics that read the \emph{magnitude} of an exceedance rather than its
 occurrence lie outside the class, and on this panel they do separate: the
-Acerbi--Sz\'ekely $Z_2$ statistic of Section~\ref{sec:diag} passes 0 of
-\nMainAssets{} assets for each truncated Chronos series against 17 of
+Acerbi--Sz\'ekely $Z_2$ statistic of Section~\ref{sec:diag} passes \nMainZTwoPassTrunc{} of
+\nMainAssets{} assets for each truncated Chronos series against
+\nMainZTwoPassAnalytic{} of
 \nMainAssets{} for each analytic counterpart, the sharpest separation any
 diagnostic in this paper achieves (Supplement~S.1). That is the boundary of
 Proposition~\ref{prop:identification}. It is not a general escape: the construction of
@@ -1101,7 +1103,8 @@ correction --- a higher raw rejection rate than Kupiec's
 \nSeqKupiecRejRawOne\%, and one that falls on the well-specified series as
 heavily as on the others. The two truncated Chronos series are rejected on all
 \nMainAssets{} assets, as they should be; so are GARCH-N, EWMA and GJR-GARCH on
-19 of \nMainAssets{}, and GJR-GARCH-$t$ on 14. A test that rejects four series in
+\nMainDQRejBenchmark{} of \nMainAssets{}, and GJR-GARCH-$t$ on
+\nMainDQRejGjrT. A test that rejects four series in
 five, including every benchmark a practitioner would consider defensible,
 separates nothing.
 
@@ -1395,7 +1398,7 @@ the reduction and the remainder are computed.
 \subsection{Static Recalibration}
 \label{sec:recalib}
 
-The corrected columns of Table~\ref{tab:master} show that marginal coverage is restored across the panel: \nMainGreen{} of \nMainPairs{} model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%). What the ordering by $\bar R$ adds is the \emph{amount} of correction required to get there. For \nLitMainROkN{} of the sixteen forecasters it is between $\nLitMainRMinAll$ and $\nLitMainRMaxOK$ --- the correction moves the threshold by at most a third of its own size --- while the two series sampled at the checkpoint default sit at $\nMainRTruncOne$ and $\nMainRTruncTwo$, where the corrected forecast is an empirical fallback retaining nothing of the base model's tail estimate. Green-zone compliance after correction is therefore uninformative on its own about whether the corrected forecast carries any of the base model's information: the truncated series reach it as comfortably as the rest.
+The corrected columns of Table~\ref{tab:master} show that marginal coverage is restored across the panel: \nMainGreen{} of \nMainPairs{} model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%). What the ordering by $\bar R$ adds is the \emph{amount} of correction required to get there. For \nLitMainROkN{} of the \nMainForecasters{} forecasters it is between $\nLitMainRMinAll$ and $\nLitMainRMaxOK$ --- the correction moves the threshold by at most a third of its own size --- while the two series sampled at the checkpoint default sit at $\nMainRTruncOne$ and $\nMainRTruncTwo$, where the corrected forecast is an empirical fallback retaining nothing of the base model's tail estimate. Green-zone compliance after correction is therefore uninformative on its own about whether the corrected forecast carries any of the base model's information: the truncated series reach it as comfortably as the rest.
 
 We deliberately do not partition the panel. The ordering by $\bar R$ has structure at both ends and none in the middle: the largest consecutive ratio, a factor of 84, separates the dynamic-quantile forecasters from the rest near the \emph{bottom} of the range, where their raw coverage is already nominal, and the next, a factor of 48, separates Lag-Llama from the two truncated Chronos series at the top. Neither is a boundary between kinds of forecaster, and no single cutoff is distinguished by the data. Any threshold would inherit that arbitrariness, and the continuous statistic conveys the same information without it.
 
@@ -1523,10 +1526,12 @@ Evaluated at four levels the panel separates the two Chronos configurations more
 sharply than the 1\% table does, and it does so in the rejection counts rather
 than the violation rates: corrected rates sit near nominal at every level for
 every series, which is what the guarantee delivers and why the corrected column
-cannot rank anything. Read analytically, Chronos-Small is rejected on 5, 9, 5 and
-4 of \nMainAssets{} assets across $\alpha \in \{0.01, 0.025, 0.05, 0.10\}$ --- all
+cannot rank anything. Read analytically, Chronos-Small is rejected on \nMainKupRejCorSmallAnalyticOne,
+\nMainKupRejCorSmallAnalyticTwoFive, \nMainKupRejCorSmallAnalyticFive{} and
+\nMainKupRejCorSmallAnalyticTen{} of \nMainAssets{} assets across $\alpha \in \{0.01, 0.025, 0.05, 0.10\}$ --- all
 four counts on the \emph{corrected} series --- while the same weights sampled at
-the checkpoint default give 10, 14, 16 and 15. Recalibration at one level cannot
+the checkpoint default give \nMainKupRejCorSmallDefaultOne, \nMainKupRejCorSmallDefaultTwoFive,
+\nMainKupRejCorSmallDefaultFive{} and \nMainKupRejCorSmallDefaultTen. Recalibration at one level cannot
 repair a predictive distribution that is too narrow at all of them
 (Table~S.13).
 
