@@ -342,6 +342,16 @@ def collect() -> dict:
     n["RawPiGJRDefective"] = float(gjr[gjr["series"] == "superseded"]["pihat"].mean())
     n["RawPiGJRDefectivePct"] = 100 * n["RawPiGJRDefective"]
 
+    # The same quantity for the two series whose lower quantile was stored with
+    # an inverted sign. Section 8's failure-mode table printed these as literals
+    # in the "with the defect" column while the "without" column beside them was
+    # already a macro -- and guard 2 could not see them, because it replaced
+    # every tabular before reading. Cell means over the 24 assets.
+    sv = pd.read_csv(BASE / "analysis" / "recompute" / "sign_verification.csv")
+    for tag, mdl in (("TimesFM", "TimesFM-2.5"), ("MoiraiTwo", "Moirai-2.0")):
+        n[f"RawPi{tag}Defective"] = float(
+            sv[sv["model"] == mdl]["pihat_stored"].mean())
+
     # ---- POOL panel: one row is a forecaster pooled over assets and dates --- #
     # 36,588 observations for the foundation models, 38,473 for the benchmarks.
     # These were four prose literals beside two more; the pooled rate and the two
@@ -476,6 +486,174 @@ def collect() -> dict:
                                     - ov["roll_cal"]["lost_but_score_worse"])
     n["GateRollUpgradeAndDeteriorate"] = ov["roll_cal"]["upgrade_and_deterioration"]
 
+    # ---- SUP panel: the supplement's own prose figures --------------------- #
+    # Guard 2 failed on 35 bare decimals in supplement.tex. Each is closed here
+    # or declared in DECLARED_CONSTANTS.md; twelve of them did not reproduce and
+    # the disposition of all 35 is in
+    # analysis/provenance/SUPPLEMENT_LITERALS.md. The panel tag is "Sup".
+
+    # The Acerbi-Szekely sign defect. verify_z2.py is a second implementation
+    # with the canonical per-date denominator; the numbers the supplement quotes
+    # are its medians, and the violation rate is at the ES level, not at 1%.
+    z2v = pd.read_csv(BASE / "analysis" / "provenance" / "z2_verification.csv") \
+        .set_index("model")
+    for tag, mdl in (("Small", "Chronos-Small"), ("Mini", "Chronos-Mini")):
+        n[f"SupZTwoPi{tag}"] = float(z2v.loc[mdl, "pihat_at_ES_level"])
+        n[f"SupZTwo{tag}"] = float(z2v.loc[mdl, "Z2_canonical_median"])
+        # Dividing by the stored (negative) column maps z -> 2 - z, which is why
+        # the defective routine returned a large positive statistic.
+        n[f"SupZTwoFlipped{tag}"] = 2.0 - n[f"SupZTwo{tag}"]
+    n["SupZTwoAssets"] = int(z2v.loc["Chronos-Small", "n"])
+
+    # The tuned GBM-QR ablation. The prose reported 5/9, 0/9 and 88.9% Green
+    # from REPRO_NOTES_E1.md, which describes a nine-model run; the shipped grid
+    # is 8 configurations x 13 models and no count in it is 8/9.
+    tg = pd.read_csv(Q / "CO_baseline_comparison_tuned" / "tuned_gbm_qr_grid.csv")
+    _cfg = lambda ne, d, lr: tg[(tg["n_est"] == ne) & (tg["max_depth"] == d)
+                                & (tg["lr"] == lr)]
+    _best, _cons = _cfg(100, 3, 0.05), _cfg(100, 3, 0.01)
+    n["SupTunedSeries"] = int(len(_best))
+    n["SupTunedPiBest"] = float(_best["pi_hat"].mean())
+    n["SupTunedPiCons"] = float(_cons["pi_hat"].mean())
+    n["SupTunedKupBest"] = int((_best["kupiec_p"] < 0.05).sum())
+    n["SupTunedKupCons"] = int((_cons["kupiec_p"] < 0.05).sum())
+    n["SupTunedGreenBest"] = int((_best["TL"] == "Green").sum())
+    n["SupTunedGreenPctBest"] = 100 * float((_best["TL"] == "Green").mean())
+    n["SupTunedGreenPctCons"] = 100 * float((_cons["TL"] == "Green").mean())
+    n["SupTunedQSGainPct"] = 100 * float(
+        (_cons["QS"].mean() - _best["QS"].mean()) / _cons["QS"].mean())
+
+    # The conformal index at the smallest calibration block, and the Monte Carlo
+    # negative control that measures what the two quantile conventions do there.
+    gts = json.loads((BASE / "analysis" / "k2_sim" / "gates.json").read_text())
+    _ctl = {(c["dgp"], c["T"]): c for c in gts["negative_controls"]}
+    n["SupNCal"] = int(_ctl[("t5", 500)]["n_cal"])
+    # Closed form, not read off the control: k = ceil((n+1)(1-alpha)), index k/n.
+    _k = int(np.ceil((n["SupNCal"] + 1) * (1 - 0.01)))
+    n["SupConfIndex"] = _k / n["SupNCal"]
+    n["SupConfOvershoot"] = n["SupConfIndex"] - 0.99
+    assert abs(n["SupConfOvershoot"] - _ctl[("t5", 500)]["overshoot"]) < 1e-12, \
+        "the closed-form overshoot disagrees with the simulation's own record"
+    for tag, dgp in (("TFive", "t5"), ("TThree", "t3")):
+        n[f"SupCtlExactSmall{tag}"] = abs(float(_ctl[(dgp, 500)]["mean_qV_exact"]))
+        n[f"SupCtlExactLarge{tag}"] = abs(float(_ctl[(dgp, 10000)]["mean_qV_exact"]))
+        n[f"SupCtlConfSmall{tag}"] = float(_ctl[(dgp, 500)]["mean_qV_conformal"])
+        n[f"SupCtlConfLarge{tag}"] = float(_ctl[(dgp, 10000)]["mean_qV_conformal"])
+
+    # The reproduction gate's resolution. A systematic bias survives the gate
+    # only if it is under 3 SE in EVERY cell, so the figure is the minimum over
+    # cells. The published 2.1e-4 is the mean of the two Normal cells, quoted
+    # once as a minimum and once, in GATE_REVISION.md, as a maximum.
+    _ref = pd.read_csv(Q / "CO_simulation_study" / "simulation_study_results.csv")
+    _sd = _ref.groupby(["dgp_name", "T"])["q_hat_V"].std(ddof=1)
+    _nrep, _nrepro = 500, 2000
+    _tol = 3 * np.sqrt(1.0 + _nrep / _nrepro) * _sd / np.sqrt(_nrep)
+    n["SupReproTol"] = float(_tol.min())
+    n["SupReproTolMax"] = float(_tol.max())
+    n["SupReproCells"] = int(len(_tol))
+
+    # The corrected rate in the degenerate small-sample regime, where k >= n and
+    # the conformal shift is the window maximum.
+    _ss = pd.read_csv(Q / "CO_robustness" / "study1_small_sample.csv")
+    n["SupSmallPi"] = float(_ss[_ss["T"] == 250]["mean_corr_pi"].median())
+    n["SupSmallNCal"] = int(round(0.70 * 250))
+
+    # The delta-star ladder. Every entry of Table S.8 is in delta_by_class.json;
+    # the table was hand-authored, and guard 2 strips tabulars, so its literals
+    # were outside every check the project runs.
+    _dbc = {r["cls"]: r for r in json.loads(
+        (BASE / "analysis" / "phase2" / "delta_by_class.json").read_text())}
+    for tag, cls in (("Free", "no shape restriction"),
+                     ("Uni", "unimodal"),
+                     ("Moment", "unimodal, fourth moment <= that of P"),
+                     ("Pareto", "unimodal, Pareto tail index 5 beyond 3 sigma"),
+                     ("GarchT", "GARCH class, standardised Student-t innovations")):
+        n[f"SupQClass{tag}"] = float(_dbc[cls]["q"])
+        n[f"SupUndClass{tag}"] = float(_dbc[cls]["understatement"])
+        if not np.isnan(_dbc[cls]["delta"]):
+            n[f"SupDeltaClass{tag}"] = float(_dbc[cls]["delta"])
+
+    # The delta-star grid. Declaring 0.004 as a constant would widen the
+    # allow-list for every document, and 0.005 is already in it for an unrelated
+    # reason -- the collision this project has met once. Read the solver's own
+    # defaults instead, so the caption cannot drift from the grid it describes.
+    #
+    # Parsed, not imported. delta_by_class.py writes delta_by_class.json at
+    # module level, so importing it would make `paper_numbers.py --check`
+    # rewrite the artefact it checks against -- a check that cannot fail on a
+    # stale input because it refreshes the input first.
+    import ast
+    _src = ast.parse((BASE / "analysis" / "phase2" / "delta_by_class.py")
+                     .read_text(encoding="utf-8"))
+    _fn = next(d for d in ast.walk(_src)
+               if isinstance(d, ast.FunctionDef) and d.name == "feasible")
+    _dflt = dict(zip([a.arg for a in _fn.args.args][-len(_fn.args.defaults):],
+                     [ast.literal_eval(d) for d in _fn.args.defaults]))
+    n["SupDeltaCeiling"] = float(_dflt["hi"])
+    n["SupDeltaGrid"] = n["SupDeltaCeiling"] / (int(_dflt["m"]) - 1)
+
+    # The constructed pair's backtests. These seven figures had no producer at
+    # all: construct_pair.py stops at the linear programme, and sim.npz holds
+    # 20,000 draws and no statistic. Recomputed under a declared seed, with the
+    # pre-registration in analysis/phase2/PREREG_PAIR_BACKTESTS.md.
+    pb = json.loads((BASE / "analysis" / "phase2"
+                     / "pair_backtests.json").read_text())
+    n["SupPairT"] = int(pb["T_path"])
+    for tag, key in (("Honest", "honest"), ("Alt", "truncated")):
+        _p = pb["paths"][key]
+        n[f"SupPairPi{tag}"] = float(_p["pi_hat"])
+        n[f"SupPairKup{tag}"] = float(_p["kupiec_p"])
+        n[f"SupPairCC{tag}"] = float(_p["cc_ind_p"])
+        n[f"SupPairDQ{tag}"] = float(_p["dq_p"])
+    n["SupPairDQLags"] = 4
+    # Power of Z_2 against the mean-ES-matched alternative. The fifth constraint
+    # is feasible; the rejection frequency is reported with the interval that
+    # decides whether it is power at all.
+    n["SupPowerT"] = int(pb["T_power"])
+    n["SupPowerReps"] = int(pb["n_power"])
+    n["SupPowerRej"] = float(pb["power"]["rejection"])
+    n["SupPowerLo"] = float(pb["power"]["ci_lo"])
+    n["SupPowerHi"] = float(pb["power"]["ci_hi"])
+
+    # The tail-closure factor range. Its endpoints were printed as 3.3 and 76,
+    # which are per-pair ratios of the largest to the smallest R across closures.
+    _tc = pd.read_csv(Q / "CO_robustness_inner7" / "inner7_tail_closure.csv")
+    _f = _tc.groupby(["model", "asset"])["R"].agg(lambda v: v.max() / v.min())
+    n["SupClosureFactorLo"] = float(_f.min())
+    n["SupClosureFactorHi"] = float(_f.max())
+
+    # Green rates by asset class under the rolling correction. 278 static and
+    # 309 rolling of 312, and the two classes the sentence names.
+    sys.path.insert(0, str(Q))
+    from cfp_config import ASSET_CLASS as _AC
+    _zr = pd.read_csv(BASE / "analysis" / "k2_indication"
+                      / "zone_vs_coverage_rolling.csv")
+    _zr["cls"] = _zr["asset"].map(_AC)
+    n["SupGreenStatic"] = int((_zr["TL_static"] == "Green").sum())
+    n["SupGreenRoll"] = int((_zr["TL_roll"] == "Green").sum())
+    for tag, cls in (("Comm", "Commodity"), ("Bond", "Bond")):
+        _c = _zr[_zr["cls"] == cls]
+        n[f"SupGreenStaticPct{tag}"] = 100 * float((_c["TL_static"] == "Green").mean())
+        n[f"SupGreenRollPct{tag}"] = 100 * float((_c["TL_roll"] == "Green").mean())
+
+    # The COVID figure draws a 250-day annualised realised volatility and takes
+    # its response-lag reference date from the peak of a 20-day one. Both are
+    # measured here, because the caption quoted the second while pointing at the
+    # first.
+    _rq = pd.read_csv(BASE / "cfp_ijf_data" / "paper_outputs" / "tables"
+                      / "rolling_qv_SP500.csv", index_col=0, parse_dates=True)
+    _win = _rq["rvol"].dropna().loc["2019-07":"2021-07"]
+    n["SupRvolLongWindow"] = 250
+    n["SupRvolLongPeak"] = float(_win.max())
+    n["SupRvolLongPeakYear"] = int(_win.idxmax().year)
+    _ret = pd.read_csv(BASE / "cfp_ijf_data" / "returns" / "SP500.csv",
+                       index_col=0, parse_dates=True)["log_return"]
+    n["SupRvolShortWindow"] = 20
+    _short = (_ret.rolling(n["SupRvolShortWindow"]).std()
+              * np.sqrt(252)).loc["2019-07":"2021-07"]
+    n["SupRvolShortPeak"] = float(_short.max())
+    n["SupRvolShortPeakYear"] = int(_short.idxmax().year)
+
     n["SpearmanRPi"] = sp.statistic
     n["SpearmanRPiN"] = len(ws)
     return n
@@ -486,9 +664,46 @@ def fmt(key: str, v) -> str:
         return v
     if isinstance(v, (int, np.integer)):
         # sample sizes are printed with the thousands separator the paper uses
-        if key.startswith("MCT"):
+        if key.startswith("MCT") or key in ("SupPairT", "SupPowerT", "SupPowerReps"):
             return f"{int(v):,}".replace(",", "{,}")
         return str(int(v))
+
+    # ---- SUP panel. Precision is chosen per quantity, because the supplement
+    # compares several of these against nominal levels three and four places out
+    # and a shared default erases the comparison the sentence makes.
+    if key.startswith("SupZTwoPi"):
+        return f"{v:.2f}"
+    if key.startswith("SupZTwo"):
+        return f"{v:.0f}"
+    if key.startswith("SupTunedPi"):
+        return f"{v:.4f}"
+    if key.startswith(("SupTunedGreenPct", "SupTunedQSGainPct", "SupGreenStaticPct",
+                       "SupGreenRollPct", "SupUndClass")):
+        return f"{v:.1f}"
+    if key.startswith(("SupConfIndex", "SupConfOvershoot")):
+        return f"{v:.4f}"
+    if key.startswith("SupCtlConfSmall"):
+        return f"{v:.4f}"
+    if key.startswith(("SupCtlExact", "SupCtlConfLarge")):
+        return f"{v:.5f}"
+    if key.startswith("SupReproTol"):
+        m, e = f"{v:.1e}".split("e")
+        return rf"{m}\times 10^{{{int(e)}}}"
+    if key.startswith(("SupSmallPi", "SupQClass", "SupDeltaClass",
+                       "SupPairKup", "SupPairCC", "SupPairDQ", "SupPower")):
+        return f"{v:.3f}"
+    if key.startswith("SupPairPi"):
+        return f"{v:.4f}"
+    if key == "SupClosureFactorLo":
+        return f"{v:.1f}"
+    if key == "SupClosureFactorHi":
+        return f"{v:.0f}"
+    if key.startswith("SupRvol"):
+        return f"{v:.2f}"
+    if key == "SupDeltaCeiling":
+        return f"{int(v)}"
+    if key == "SupDeltaGrid":
+        return f"{v:.3f}"
     # Pooled panel rates sit within one thousandth of each other and of nominal;
     # three decimals prints them all as 0.011 and erases the comparison the
     # sentence makes. The p-values keep three.
@@ -526,6 +741,8 @@ def fmt(key: str, v) -> str:
         return f"{v:.1f}"
     if key.startswith("RawPiGJRDefective"):
         return f"{v:.4f}"
+    if key in ("RawPiTimesFMDefective", "RawPiMoiraiTwoDefective"):
+        return f"{v:.3f}"
     if key.startswith("PoolPi"):
         return f"{v:.4f}"
     if key.startswith("GapUnd"):

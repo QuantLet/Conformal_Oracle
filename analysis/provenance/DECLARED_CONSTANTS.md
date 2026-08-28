@@ -29,6 +29,8 @@ role.
 | -3.5, -1.8 | scale band edges | declared gate band, chosen not derived |
 | 0.5, 2.0 | dispersion band edges | declared gate band |
 | 3 | alpha-response band threshold | declared gate band |
+| 99.9 | monotonicity band: the fraction of days on which the quantile ordering across $\alpha$ must hold | declared gate band, chosen not derived; the band is the check, and the fraction observed on each series is what the gate reports against it |
+| 50 | extremes band multiplier, against the asset's own median $|\hat q^{lo}_{0.01}|$ | declared gate band |
 | 5 | coverage-plausibility band multiplier | declared gate band |
 
 | 0.001 | the reporting floor for a $p$-value | a convention for how small a $p$-value is printed, not a measurement; the statistic behind it is emitted |

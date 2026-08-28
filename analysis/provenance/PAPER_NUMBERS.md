@@ -204,6 +204,8 @@ not possible without editing this file's producer.
 | `\nLitAnalyticGrid` | 0.025 | -- |
 | `\nRawPiGJRDefective` | 0.0041 | MAIN (384) |
 | `\nRawPiGJRDefectivePct` | 0.4 | MAIN (384) |
+| `\nRawPiTimesFMDefective` | 0.990 | MAIN (384) |
+| `\nRawPiMoiraiTwoDefective` | 0.988 | MAIN (384) |
 | `\nPoolPiEWMA` | 0.0119 | -- |
 | `\nPoolPiMoiraiTwo` | 0.0114 | -- |
 | `\nPoolPiSmallAnalytic` | 0.0113 | -- |
@@ -295,5 +297,82 @@ not possible without editing this file's producer.
 | `\nGateRollUpgradesLostWorse` | 11 | SEQ (312) |
 | `\nGateRollUpgradesLostNet` | 9 | SEQ (312) |
 | `\nGateRollUpgradeAndDeteriorate` | 71 | SEQ (312) |
+| `\nSupZTwoPiSmall` | 0.39 | -- |
+| `\nSupZTwoSmall` | -144 | -- |
+| `\nSupZTwoFlippedSmall` | 146 | -- |
+| `\nSupZTwoPiMini` | 0.42 | -- |
+| `\nSupZTwoMini` | -389 | -- |
+| `\nSupZTwoFlippedMini` | 391 | -- |
+| `\nSupZTwoAssets` | 24 | -- |
+| `\nSupTunedSeries` | 13 | -- |
+| `\nSupTunedPiBest` | 0.0155 | -- |
+| `\nSupTunedPiCons` | 0.0110 | -- |
+| `\nSupTunedKupBest` | 8 | -- |
+| `\nSupTunedKupCons` | 0 | -- |
+| `\nSupTunedGreenBest` | 11 | -- |
+| `\nSupTunedGreenPctBest` | 84.6 | -- |
+| `\nSupTunedGreenPctCons` | 100.0 | -- |
+| `\nSupTunedQSGainPct` | 4.9 | -- |
+| `\nSupNCal` | 350 | -- |
+| `\nSupConfIndex` | 0.9943 | -- |
+| `\nSupConfOvershoot` | 0.0043 | -- |
+| `\nSupCtlExactSmallTFive` | 0.00066 | -- |
+| `\nSupCtlExactLargeTFive` | 0.00004 | -- |
+| `\nSupCtlConfSmallTFive` | 0.0037 | -- |
+| `\nSupCtlConfLargeTFive` | 0.00008 | -- |
+| `\nSupCtlExactSmallTThree` | 0.00070 | -- |
+| `\nSupCtlExactLargeTThree` | 0.00003 | -- |
+| `\nSupCtlConfSmallTThree` | 0.0048 | -- |
+| `\nSupCtlConfLargeTThree` | 0.00012 | -- |
+| `\nSupReproTol` | 1.3\times 10^{-4} | -- |
+| `\nSupReproTolMax` | 1.3\times 10^{-3} | -- |
+| `\nSupReproCells` | 10 | -- |
+| `\nSupSmallPi` | 0.008 | -- |
+| `\nSupSmallNCal` | 175 | -- |
+| `\nSupQClassFree` | -0.638 | -- |
+| `\nSupUndClassFree` | 75.5 | -- |
+| `\nSupDeltaClassFree` | 0.218 | -- |
+| `\nSupQClassUni` | -1.320 | -- |
+| `\nSupUndClassUni` | 49.4 | -- |
+| `\nSupDeltaClassUni` | 0.066 | -- |
+| `\nSupQClassMoment` | -1.504 | -- |
+| `\nSupUndClassMoment` | 42.3 | -- |
+| `\nSupDeltaClassMoment` | 0.046 | -- |
+| `\nSupQClassPareto` | -1.814 | -- |
+| `\nSupUndClassPareto` | 30.4 | -- |
+| `\nSupDeltaClassPareto` | 0.024 | -- |
+| `\nSupQClassGarchT` | -2.330 | -- |
+| `\nSupUndClassGarchT` | 10.6 | -- |
+| `\nSupDeltaCeiling` | 32 | -- |
+| `\nSupDeltaGrid` | 0.004 | -- |
+| `\nSupPairT` | 500{,}000 | -- |
+| `\nSupPairPiHonest` | 0.0099 | -- |
+| `\nSupPairKupHonest` | 0.680 | -- |
+| `\nSupPairCCHonest` | 0.611 | -- |
+| `\nSupPairDQHonest` | 0.998 | -- |
+| `\nSupPairPiAlt` | 0.0101 | -- |
+| `\nSupPairKupAlt` | 0.551 | -- |
+| `\nSupPairCCAlt` | 0.870 | -- |
+| `\nSupPairDQAlt` | 0.768 | -- |
+| `\nSupPairDQLags` | 4 | -- |
+| `\nSupPowerT` | 1{,}500 | -- |
+| `\nSupPowerReps` | 4{,}000 | -- |
+| `\nSupPowerRej` | 0.090 | -- |
+| `\nSupPowerLo` | 0.081 | -- |
+| `\nSupPowerHi` | 0.099 | -- |
+| `\nSupClosureFactorLo` | 3.3 | -- |
+| `\nSupClosureFactorHi` | 76 | -- |
+| `\nSupGreenStatic` | 278 | -- |
+| `\nSupGreenRoll` | 309 | -- |
+| `\nSupGreenStaticPctComm` | 67.3 | -- |
+| `\nSupGreenRollPctComm` | 100.0 | -- |
+| `\nSupGreenStaticPctBond` | 89.7 | -- |
+| `\nSupGreenRollPctBond` | 100.0 | -- |
+| `\nSupRvolLongWindow` | 250 | -- |
+| `\nSupRvolLongPeak` | 0.35 | -- |
+| `\nSupRvolLongPeakYear` | 2021 | -- |
+| `\nSupRvolShortWindow` | 20 | -- |
+| `\nSupRvolShortPeak` | 0.98 | -- |
+| `\nSupRvolShortPeakYear` | 2020 | -- |
 | `\nSpearmanRPi` | 0.991 | -- |
 | `\nSpearmanRPiN` | 14 | -- |

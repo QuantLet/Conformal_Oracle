@@ -125,6 +125,47 @@ def _declared() -> set[str]:
     return out
 
 
+
+_TAB_OPEN = re.compile(r"\\begin\{tabular[*x]?\}(\[[^\]]*\])?\{")
+
+
+def _strip_tabular_specs(s: str) -> str:
+    r"""Remove a tabular's COLUMN SPECIFICATION and keep its body.
+
+    The guard used to replace `\begin{tabular}...\end{tabular}` wholesale. That
+    is right for generated tables, which arrive by `\input` and are guard 5's
+    business -- and `\input{...}` is already replaced before this runs, so no
+    generated table ever reaches here. What it also removed was every table
+    written by hand in the document itself, which is prose wearing a table's
+    costume and is the only place guard 2 was the sole check.
+
+    It cost two measured rates: 0.990 and 0.988, the violation rates under the
+    inverted-sign defect, sat as literals in a Section 8 table whose neighbouring
+    column was already a macro. Guard 2 reported "no bare decimal literals in
+    prose" over them for as long as it existed.
+
+    Only the column specification goes, because `p{3.5cm}` and `p{1.3cm}` are
+    typesetting lengths and not claims -- the same reason `\includegraphics`
+    options are stripped above. Brace matching is done by scanning, since a
+    specification may nest: `>{\raggedright\arraybackslash}p{3.5cm}`.
+    """
+    out, i = [], 0
+    while True:
+        m = _TAB_OPEN.search(s, i)
+        if not m:
+            out.append(s[i:])
+            return "".join(out)
+        out.append(s[i:m.start()])
+        out.append(" TABULARSPEC ")
+        j, depth = m.end(), 1          # m.end() is just past the opening brace
+        while j < len(s) and depth:
+            if s[j] == "\\":
+                j += 2; continue
+            depth += (s[j] == "{") - (s[j] == "}")
+            j += 1
+        i = j
+
+
 def _prose_literals(tex: str) -> list[tuple[str, str]]:
     # The preamble is layout, not claims: colours, box offsets, font sizes.
     tex = tex.split(r"\begin{document}", 1)[-1]
@@ -140,7 +181,7 @@ def _prose_literals(tex: str) -> list[tuple[str, str]]:
     s = re.sub(r"GARCH\(\d,\d\)", " GARCHSPEC ", s)
     s = re.sub(r"\\n[A-Z][A-Za-z]*\{?\}?", " MACRO ", s)
     s = re.sub(r"\\input\{[^}]*\}", " INPUT ", s)
-    s = re.sub(r"\\begin\{tabular\}.*?\\end\{tabular\}", " TABULAR ", s, flags=re.S)
+    s = _strip_tabular_specs(s)
     s = re.sub(r"\\(?:label|ref|eqref|cite[a-z]*|href|url)\{[^}]*\}", " ", s)
     allow = _declared()
     out = []
@@ -154,12 +195,28 @@ def _prose_literals(tex: str) -> list[tuple[str, str]]:
 def control_literals() -> bool:
     """A fabricated decimal that no artefact emits must be flagged.
 
-    The control uses 0.7391, but the case that motivates this guard is real: a
-    p-value of 0.035 was typed into Section 5.6, matched no artefact, and was
-    never seen by paper_numbers.py because it was never emitted.
+    Two controls, because the guard has two reaches and the second was added
+    after the first had passed for a year over literals it could not see.
+
+    (a) In running prose. The control uses 0.7391, but the case that motivates
+        this guard is real: a p-value of 0.035 was typed into Section 5.6,
+        matched no artefact, and was never seen by paper_numbers.py because it
+        was never emitted.
+    (b) Inside a tabular written by hand in the document, with a column
+        specification carrying lengths that must NOT be flagged. This is the
+        real defect of 2026-08-28: 0.990 and 0.988 sat in a Section 8 table
+        beside a column that was already a macro, and the guard replaced the
+        whole environment before looking. A control that only plants a literal
+        in running prose passes on a guard blind to every hand-authored table,
+        which is what happened.
     """
-    body = r"\begin{document} The corrected rate is 0.7391 across the panel."
-    return len(_prose_literals(body)) == 1
+    prose = r"\begin{document} The corrected rate is 0.7391 across the panel."
+    table = (r"\begin{document}"
+             r"\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.5cm}p{1.3cm}@{}}"
+             r"Rate under the defect & $0.7391$ \\"
+             r"\end{tabular}")
+    return (len(_prose_literals(prose)) == 1
+            and len(_prose_literals(table)) == 1)
 
 def guard_literals() -> bool:
     good = True

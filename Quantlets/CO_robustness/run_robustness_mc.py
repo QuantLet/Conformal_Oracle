@@ -413,9 +413,11 @@ def write_tab_h14(df1):
 		confirming that estimation error in the conformal threshold is
 		dominated by tail sparsity at small sample sizes and vanishes at
 		the $O((\alpha T)^{-1/2})$ rate. At small sample sizes
-		($T \leq 500$), corrected violation rates exceed the nominal level
-		due to estimation noise in the empirical quantile, consistent with
-		finite-sample variability in extreme tails.
+		($T \leq 500$) the corrected violation rate falls \emph{below} the
+		nominal level, because equation~(8) sets $k \ge n$ whenever
+		$n < 2/\alpha - 1$ and the shift is then the sample maximum rather
+		than an interior order statistic. This is a change of estimator, not
+		estimation noise: Supplement~S.4.1 gives the bound.
 	\end{minipage}
 \end{table}""")
 

@@ -1,0 +1,47 @@
+{
+  "seed_paths": 20260828,
+  "seed_power": 20260829,
+  "T_path": 500000,
+  "T_power": 1500,
+  "n_power": 4000,
+  "n_null": 20000,
+  "size": 0.05,
+  "alpha": 0.01,
+  "paths": {
+    "honest": {
+      "threshold": 2.6064635693842795,
+      "pi_hat": 0.009942,
+      "kupiec_p": 0.6799118407849327,
+      "cc_ind_p": 0.6113152644468998,
+      "dq_p": 0.997952742902381,
+      "basel": "Green"
+    },
+    "truncated": {
+      "threshold": 1.4607067006519374,
+      "pi_hat": 0.010084,
+      "kupiec_p": 0.5510833146457901,
+      "cc_ind_p": 0.8703433576584685,
+      "dq_p": 0.7679077895419508,
+      "basel": "Green"
+    }
+  },
+  "exercise_a_blocked": [],
+  "es_matched": {
+    "feasible": true,
+    "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+    "grid_ceiling": 64.0,
+    "n_grid": 6001,
+    "es_honest": -3.448836760048017,
+    "q_trunc": -1.4607067006519374,
+    "es_alternative": -3.44883676004861,
+    "u_alternative": 0.010000000000001657
+  },
+  "power": {
+    "critical_value": -0.45864797746266883,
+    "rejection": 0.08975,
+    "se": 0.004519262591950151,
+    "ci_lo": 0.0808922453197777,
+    "ci_hi": 0.09860775468022229,
+    "covers_size": false
+  }
+}

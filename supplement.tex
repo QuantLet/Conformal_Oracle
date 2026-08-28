@@ -241,14 +241,16 @@ days exceed the forecast ES.
 \paragraph{The sign convention, and why it matters here}
 Equation~\eqref{eq:app_z2} requires $\widehat{\ES}_t$ to enter as a positive
 magnitude. The forecast files store a lower-tail quantity, which is negative, so
-dividing by the stored column directly reverses the sign of every term of the
-sum and returns a large positive statistic --- around $+146$ and $+391$ on the
+dividing by the stored column directly maps $Z_2$ to $2 - Z_2$, returning a large
+positive statistic --- $+\nSupZTwoFlippedSmall$ and $+\nSupZTwoFlippedMini$ on the
 two Chronos series sampled at $\texttt{top\_k} = 50$. A one-sided lower-tail test
-cannot reject such a value, so the routine would report 24 of 24 assets passing
-on series whose violation rate at the same level is 0.39 and 0.42.
+cannot reject such a value, so the routine would report \nSupZTwoAssets{} of
+\nSupZTwoAssets{} assets passing on series whose violation rate at the same level
+is \nSupZTwoPiSmall{} and \nSupZTwoPiMini{}.
 
-Entered as a magnitude, the statistic on those series is $-144$ and $-389$ and
-the test rejects on all \nMainAssets{} assets. This is the same sign ambiguity
+Entered as a magnitude, the median statistic on those series is
+$\nSupZTwoSmall$ and $\nSupZTwoMini$ and the test rejects on all
+\nMainAssets{} assets. This is the same sign ambiguity
 that the validation gate of Supplement~\ref{app:validation_gate} checks for in the
 forecast series, arising here in an evaluation routine instead, and it is worth
 stating explicitly for two reasons. First, a structural check on the forecast
@@ -478,13 +480,15 @@ estimation instability in short windows.
 Table~\ref{tab:gbm_tuned} reports the eight-configuration grid search
 for the GBM-QR baseline on S\&P~500.  Each configuration trains a
 LightGBM quantile regression at $\alpha=0.01$ on the calibration
-sub-sample (70\%) of each of the nine base forecasters. The QS-optimal
+sub-sample (70\%) of each of the \nSupTunedSeries{} base forecasters
+that carry a stored series. The QS-optimal
 configuration ($n_\text{est}=100$, $d=3$, $\eta=0.05$) improves the
-pinball loss by 5\% relative to the conservative setting ($\eta=0.01$)
-but pays in coverage: $\hat\pi=.015$ (vs.\ .011), 5/9 Kupiec rejections
-(vs.\ 0/9), and 88.9\% Green (vs.\ 100\%). Those counts are over the nine
-series carried in the tuning ablation, not the full panel, and are recorded in
-\texttt{Quantlets/CO\_baseline\_comparison\_tuned/REPRO\_NOTES\_E1.md};
+pinball loss by \nSupTunedQSGainPct\% relative to the conservative setting
+($\eta=0.01$) but pays in coverage: $\hat\pi=\nSupTunedPiBest$
+(vs.\ $\nSupTunedPiCons$), \nSupTunedKupBest{} of \nSupTunedSeries{} Kupiec
+rejections (vs.\ \nSupTunedKupCons{}), and \nSupTunedGreenPctBest\% Green
+(vs.\ \nSupTunedGreenPctCons\%). The counts are over the
+\nSupTunedSeries{} series of the tuning ablation, not the full panel;
 per-configuration results for the whole grid are in
 \texttt{tuned\_gbm\_qr\_grid.csv}. Higher-capacity configurations
 ($d=5$ or $n_\text{est}=500$) do not improve QS further and degrade
@@ -625,17 +629,22 @@ total.
 \paragraph{The two smallest calibration samples} At $T = 500$ the calibration
 block holds $n = 350$ observations, and at $\alpha = 0.01$ the two quantile
 conventions of Section~4.2 of the manuscript are biased in opposite directions
-there. The conformal index sits at $\lceil (n+1)(1-\alpha)\rceil/n = 0.9943$
-rather than $0.99$, an overshoot of $0.0043$ that inflates $\qVstat$; the
+there. The conformal index sits at $\lceil (n+1)(1-\alpha)\rceil/n =
+\nSupConfIndex$ rather than $0.99$, an overshoot of $\nSupConfOvershoot$ that
+inflates $\qVstat$; the
 interpolated empirical quantile at exactly $1-\alpha$ has its own small-sample
 downward bias in a right-skewed tail. Measured against a forecaster given the
 correct innovation law, so that the population shift is zero, the interpolated
-quantile returns a mean of $-0.00066$ ($t_5$) and $-0.00071$ ($t_3$) at
+quantile returns a mean of $-\nSupCtlExactSmallTFive$ ($t_5$) and
+$-\nSupCtlExactSmallTThree$ ($t_3$) at
 $T = 500$, both within or marginally outside a three-standard-error band, and
-falls monotonically to $-0.00004$ and $-0.00003$ at $T = 10{,}000$. The
-conformal convention returns $+0.0037$ and $+0.0048$ at $T = 500$, falling to
-$+0.00008$ and $+0.00012$. From $T = 1{,}000$ upward the same control returns
-zero for the interpolated quantile on every cell. The $T = 500$ column of
+falls monotonically to $-\nSupCtlExactLargeTFive$ and
+$-\nSupCtlExactLargeTThree$ at $T = 10{,}000$. The
+conformal convention returns $+\nSupCtlConfSmallTFive$ and
+$+\nSupCtlConfSmallTThree$ at $T = 500$, falling to
+$+\nSupCtlConfLargeTFive$ and $+\nSupCtlConfLargeTThree$. From $T = 1{,}000$
+upward the interpolated quantile is inside the three-standard-error band on
+every cell. The $T = 500$ column of
 Table~1 of the manuscript is reported with this qualification rather than
 dropped.
 
@@ -645,8 +654,10 @@ implementation, gated on reproducing that study's ten cells on all six reported
 quantities before any new sample size was reported; the comparison tolerance is
 three standard errors of the \emph{difference} between two independent Monte
 Carlo estimates, with the new run at 2{,}000 replications so that the published
-run's error dominates it. The smallest systematic discrepancy that tolerance
-admits is $2.1\times10^{-4}$ on mean $\qVstat$, so the check establishes
+run's error dominates it. A systematic bias survives the gate only if it is
+inside the band in every one of the \nSupReproCells{} cells, so the smallest
+discrepancy the tolerance admits is $\nSupReproTol$ on mean $\qVstat$, at the
+loosest cell $\nSupReproTolMax$, and the check establishes
 agreement to Monte Carlo resolution and not exact agreement.
 
 \begin{figure}[H]
@@ -676,8 +687,8 @@ statistic. The $T = 250$ rows of Table~\ref{tab:small_sample_qV} have
 $n_{\mathrm{cal}} = 175$ and sit inside that regime; every larger $T$ sits
 outside it. The discontinuity between the first two rows of each block is
 therefore a change of estimator and not a small-sample artefact, and it is the
-reason the corrected violation rate at $T = 250$ is conservative --- $0.008$
-against a nominal $0.010$ --- rather than excessive. Section~5 of the manuscript
+reason the corrected violation rate at $T = 250$ is conservative ---
+$\nSupSmallPi$ against a nominal $0.010$ --- rather than excessive. Section~5 of the manuscript
 finds the same conservatism, independently, on a forecaster given the true
 conditional volatility.
 
@@ -742,8 +753,8 @@ negligible empirical impact. The absolute difference in corrected
 violation rates is at most 0.2 percentage points, and Basel Traffic
 Light classifications are identical for all four pairs. The
 theoretical gap requirement is therefore empirically non-binding
-for the four pairs tested, which span the score-persistence range
-$\hat\rho \in [0.18, 0.67]$.
+for the \nGapAblPairs{} pairs tested, which span the full-period
+score-persistence range $\hat\rho \in [\nGapAblRhoLo, \nGapAblRhoHi]$.
 
 \input{Quantlets/CO_robustness/tab_gap_ablation}
 
@@ -1415,13 +1426,14 @@ that its density be non-increasing in $|x|$, gives a feasibility problem that is
 Feasibility is therefore decided by a linear programme rather than argued.
 Bisection on $\delta$ gives the largest feasible truncation depth
 $\delta^\star = \nGapDeltaUni$, at which the reported quantile is
-$-1.320$ and the Value-at-Risk is understated by \nGapUndUni\%.
+$\nSupQClassUni$ and the Value-at-Risk is understated by \nGapUndUni\%.
 
 \begin{table}[H]
 	\centering
 	\caption{$\delta^\star$ as a functional of the restriction placed on the
 		alternative return law, at $\alpha = 0.01$ against a standardised
-		Student-$t_5$ honest model. Grid spacing $0.004$, ceiling $32$;
+		Student-$t_5$ honest model. Grid spacing $\nSupDeltaGrid$, ceiling
+		$\nSupDeltaCeiling$;
 		$\delta^\star$ converges from above as the grid is refined, so each entry
 		is an upper bound and the bias overstates the blind spot.}
 	\label{tab:delta_by_class}
@@ -1430,11 +1442,11 @@ $-1.320$ and the Value-at-Risk is understated by \nGapUndUni\%.
 		\hline\hline
 		Restriction on the return law & $\delta^\star$ & reported $q$ & understated \\
 		\hline
-		none & \nGapDeltaFree & $-0.638$ & \nGapUndFree\% \\
-		unimodal & \nGapDeltaUni & $-1.320$ & \nGapUndUni\% \\
-		unimodal, fourth moment $\le$ honest model's & 0.046 & $-1.504$ & 42.3\% \\
-		unimodal, Pareto tail index 5 beyond $3\sigma$ & 0.024 & $-1.814$ & 30.4\% \\
-		GARCH class, standardised Student-$t$ innovations & --- & $-2.330$ & 10.6\% \\
+		none & \nGapDeltaFree & $\nSupQClassFree$ & \nGapUndFree\% \\
+		unimodal & \nGapDeltaUni & $\nSupQClassUni$ & \nGapUndUni\% \\
+		unimodal, fourth moment $\le$ honest model's & \nSupDeltaClassMoment & $\nSupQClassMoment$ & \nSupUndClassMoment\% \\
+		unimodal, Pareto tail index 5 beyond $3\sigma$ & \nSupDeltaClassPareto & $\nSupQClassPareto$ & \nSupUndClassPareto\% \\
+		GARCH class, standardised Student-$t$ innovations & --- & $\nSupQClassGarchT$ & \nSupUndClassGarchT\% \\
 		\hline\hline
 	\end{tabular}
 	\begin{minipage}{\linewidth}\scriptsize
@@ -1449,12 +1461,19 @@ $-1.320$ and the Value-at-Risk is understated by \nGapUndUni\%.
 The resulting pair is matched to machine precision on coverage
 ($u \equiv 0.01$), variance, mean absolute deviation, median and predictive
 standard deviation, and to three decimals on point-forecast mean absolute error
-and root mean squared error. Simulated at $T = 500{,}000$ it returns Kupiec
-$p = 0.138$ and $0.314$, Christoffersen independence $p = 0.776$ and $0.625$,
-Basel Green for both, and a dynamic quantile test at $p = 0.943$ and $0.831$ ---
-the last computed with four lagged exceedance indicators and the reported
-quantile as instruments. The reported thresholds are $2.61$ and $1.46$ in units
-of conditional scale.
+and root mean squared error. Both laws place exactly $\alpha$ mass strictly below
+their own reported threshold, so the exceedance indicator is Bernoulli($\alpha$)
+and serially independent under each, and every test of the exceedance path has
+the same null distribution on the two. Simulated at $T = \nSupPairT$ the realised
+rates are $\nSupPairPiHonest$ and $\nSupPairPiAlt$, both paths are Basel Green,
+and neither rejects at any conventional level on Kupiec
+($p = \nSupPairKupHonest$ and $\nSupPairKupAlt$), on Christoffersen independence
+($\nSupPairCCHonest$ and $\nSupPairCCAlt$), or on a dynamic quantile test with
+\nSupPairDQLags{} lagged exceedance indicators and the reported quantile as
+instruments ($\nSupPairDQHonest$ and $\nSupPairDQAlt$). The simulation checks
+that the sampled law reproduces the constraints the linear programme imposed;
+the indistinguishability itself is the equality above. The reported thresholds
+are $\nPairVaRHonest$ and $\nPairVaRAlt$ in units of conditional scale.
 
 Two further properties are worth recording. Truncation is not repairable by the
 sampling parameters an analyst would vary: restricting the support to its $k$
@@ -1463,8 +1482,10 @@ support below by $\min S_k$, so no temperature and no nucleus threshold recovers
 a quantile the truncation has removed. And matching \emph{mean} expected
 shortfall as a fifth linear constraint is also feasible, but it does not make
 magnitude-reading statistics blind: the law of $Z_2$ is not pinned by its mean,
-and at $T = 1{,}500$ a size-$5\%$ one-sided test calibrated on the honest model
-still rejects the alternative with probability $0.079$. Necessary, not
+and at $T = \nSupPowerT$ a size-$5\%$ one-sided test calibrated on the honest
+model still rejects the alternative with probability $\nSupPowerRej$ over
+\nSupPowerReps{} replications, a $95\%$ interval of $[\nSupPowerLo,
+\nSupPowerHi]$ that excludes the nominal size. Necessary, not
 sufficient.
 
 \section{Tail Completion Determines the Tail}
@@ -1479,8 +1500,9 @@ answer is: more than the model does.
 Table~\ref{tab:tail_closure_extended} compares the Student-$t$ closure used
 throughout the paper against a Gaussian closure and a linear extrapolation from
 the two lowest deciles, on three assets. The same grids, on the same days, give
-$\bar R$ ranging from $0.005$ to $1.70$. Within a single model--asset pair the
-closure rule moves $\bar R$ by a factor of 3.3 (Moirai~2.0 on BTC) to 76
+$\bar R$ ranging from $\nLitClosureRMin$ to $\nLitClosureRMax$. Within a single
+model--asset pair the closure rule moves $\bar R$ by a factor of
+\nSupClosureFactorLo{} (Moirai~2.0 on BTC) to \nSupClosureFactorHi{}
 (Moirai~2.0 on NATGAS). On BTC the choice moves both models out of the Basel
 yellow zone into the red one after correction, so it changes the regulatory
 verdict and not only a diagnostic magnitude.
@@ -1600,7 +1622,7 @@ most of a defensible panel. These two ask whether the series responds to the
 level it was asked for at all, and whether its exceedance rate is within a factor
 of five of nominal --- questions that a series carrying an implementation failure
 fails by orders of magnitude and an ordinary one passes comfortably. The truncated Chronos series fail
-$\alpha$-responsiveness with a ratio of 1.08 against a threshold of 3, and
+$\alpha$-responsiveness with a ratio of \nLitAlphaResp{} against a threshold of 3, and
 coverage with $\hat\pi/\alpha = 39$ against a bound of 5. No plausible tightening
 of a Kupiec test produces that separation, because Kupiec is not asking that
 question.
@@ -1669,11 +1691,13 @@ setting the reported threshold, transient spikes are stress episodes. No
 threshold and no persistence rule are imposed on it.
 
 It improves unconditional coverage substantially and conditional adequacy not at
-all. Basel green rises from 89\% (278 of \nSeqPairs{} pairs) to 99\% (309), with
-twelve of the \nSeqForecasters{} forecasters reaching all \nMainAssets{} assets
-(Table~S.22). The gains concentrate where volatility moves: commodities go from
-67.3\% green to 100\% and bonds from 89.7\% to 100\%, while crypto and FX are at
-100\% either way. The single exception is Historical Simulation, which falls from
+all. Basel green rises from \nSupGreenStatic{} of \nSeqPairs{} pairs to
+\nSupGreenRoll, with twelve of the \nSeqForecasters{} forecasters reaching all
+\nMainAssets{} assets (Table~S.22). The gains concentrate where volatility
+moves: commodities go from \nSupGreenStaticPctComm\% green to
+\nSupGreenRollPctComm\% and bonds from \nSupGreenStaticPctBond\% to
+\nSupGreenRollPctBond\%, while crypto and FX are at
+\nSupGreenRollPctComm\% either way. The single exception is Historical Simulation, which falls from
 22 to 21 assets green; its raw threshold is an order statistic of the same
 trailing window the rolling correction uses, so the two estimate from overlapping
 information and the second window reduces responsiveness rather than adding to it.
@@ -1723,7 +1747,7 @@ rows of Table~\ref{tab:dose_response} is the sampling rule.
 		recalibration of any kind. Read the first and third rows across rather
 		than down: the nominal exceedance probability changes tenfold between the
 		1\% and the 10\% level while the realised rate changes by a factor of
-		1.08, so the default configuration produces a series whose exceedance rate
+		\nLitAlphaResp, so the default configuration produces a series whose exceedance rate
 		is almost invariant to the level it was asked for.}
 	\label{tab:alpha_response}
 	\input{Quantlets/CO_chronos_sampling/tab_alpha_response}
@@ -1741,7 +1765,7 @@ rows of Table~\ref{tab:dose_response} is the sampling rule.
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\textwidth]{fig_covid_response}
-	\caption{Rolling conformal threshold $\qVroll$ for thirteen forecasters on S\&P~500 around the COVID-19 shock (2019-07 to 2021-07). Realised volatility (right axis, grey) peaks at $\approx 0.98$ annualised in March~2020.}
+	\caption{Rolling conformal threshold $\qVroll$ for thirteen forecasters on S\&P~500 around the COVID-19 shock (2019-07 to 2021-07). Realised volatility (right axis, grey) is a \nSupRvolLongWindow-day standard deviation, annualised, and peaks at $\nSupRvolLongPeak$ in \nSupRvolLongPeakYear. The response lags are measured from the peak of the \nSupRvolShortWindow-day measure, $\nSupRvolShortPeak$ on 27~March~\nSupRvolShortPeakYear, which is the date of the shock itself.}
 	\label{fig:covid_response}
 \end{figure}
 
