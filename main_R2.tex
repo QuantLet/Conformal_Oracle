@@ -637,11 +637,19 @@ wrong, and it costs one forward pass.
 A reconstruction of a model's support is a claim about that model and is checked
 against it before anything is concluded from it. Over 40 dates on SP500 we
 compare the analytic quantiles against sampling at full vocabulary with 4000
-draws: predictive standard deviations agree to within 0.3\% (1.041 against
-1.038 in units of realised volatility), and the violation rates at all four
-levels agree to four decimal places. The two routes disagree only where Monte
-Carlo error predicts they should. The sampled default, on the same dates, gives
-dispersion 0.128 and a 1\% violation rate of 0.3942.
+draws: predictive standard deviations agree to within \nLitAnalyticSdPct\%, and
+the violation rates at all four levels agree to four decimal places.
+
+Both agreements are reported with the defect they cannot see. A one-bin
+translation of the support leaves the predictive standard deviation
+\emph{exactly} invariant, so the first is a tolerance on a quantity the failure
+mode does not move; and on \nLitAnalyticDates{} dates the realised rate lives on
+a grid of \nLitAnalyticGrid{}, so ``agreement to four decimal places'' there
+means the two routes returned the same multiple of that grid. Neither could have
+detected a uniform translation of the support, and no choice of tolerance would
+have repaired either. The sampled default, by contrast, is separated from
+both by a quantity that does move: its predictive dispersion is
+\nDispDefaultSmall{} against \nDispFullSmall{} at full vocabulary.
 
 Cost is not a consideration either. Across 24 assets and both checkpoints the
 analytic route required one forward pass per date --- 121{,}923 dates per
@@ -853,7 +861,7 @@ What can be said is narrower, and is a statement about specification rather than
 about models. A nine-decile grid whose lowest point is the 10\% quantile does
 not contain a 1\% quantile, so a tail-completion step must supply it and becomes
 part of the forecaster. That step is consequential: across three assets the same
-grids give $\bar R$ between 0.005 and 1.70 depending on whether the closure is
+grids give $\bar R$ between $\nLitClosureRMin$ and $\nLitClosureRMax$ depending on whether the closure is
 Student-$t$, Gaussian or linear, and on BTC the choice moves both models from
 the Basel yellow zone to the red one (Supplement~S.10). A figure reported as
 ``TimesFM~2.5 at the 1\% level'' therefore identifies the closure as much as the
@@ -998,8 +1006,9 @@ away from it.
 $\delta^\star$ belongs to the restriction placed on the return law and is not a
 constant. Dropping unimodality raises it to $\nGapDeltaFree$, an understatement
 of \nGapUndFree\%; requiring in addition a fourth moment no larger than the
-honest model's lowers it to $0.046$; confining the alternative to a GARCH class
-with standardised Student-$t$ innovations leaves only $10.6$\%. The discretisation
+honest model's lowers it to $\nGapDeltaMoment$; confining the alternative to a
+GARCH class with standardised Student-$t$ innovations leaves only
+\nGapUndGarchT\%. The discretisation
 converges from above, so each figure is an upper bound and the bias runs toward
 overstating the blind spot. Supplement~S.9.8 gives the full table.
 
@@ -1386,7 +1395,7 @@ the reduction and the remainder are computed.
 \subsection{Static Recalibration}
 \label{sec:recalib}
 
-The corrected columns of Table~\ref{tab:master} show that marginal coverage is restored across the panel: \nMainGreen{} of \nMainPairs{} model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%). What the ordering by $\bar R$ adds is the \emph{amount} of correction required to get there. For thirteen of the sixteen forecasters it is between $\nLitMainRMinAll$ and $0.18$ --- the corrected forecast is the raw forecast to two or three decimal places --- while the two series sampled at the checkpoint default sit at $\nMainRTruncOne$ and $\nMainRTruncTwo$, where the corrected forecast is an empirical fallback retaining nothing of the base model's tail estimate. Green-zone compliance after correction is therefore uninformative on its own about whether the corrected forecast carries any of the base model's information: the truncated series reach it as comfortably as the rest.
+The corrected columns of Table~\ref{tab:master} show that marginal coverage is restored across the panel: \nMainGreen{} of \nMainPairs{} model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%). What the ordering by $\bar R$ adds is the \emph{amount} of correction required to get there. For \nLitMainROkN{} of the sixteen forecasters it is between $\nLitMainRMinAll$ and $\nLitMainRMaxOK$ --- the correction moves the threshold by at most a third of its own size --- while the two series sampled at the checkpoint default sit at $\nMainRTruncOne$ and $\nMainRTruncTwo$, where the corrected forecast is an empirical fallback retaining nothing of the base model's tail estimate. Green-zone compliance after correction is therefore uninformative on its own about whether the corrected forecast carries any of the base model's information: the truncated series reach it as comfortably as the rest.
 
 We deliberately do not partition the panel. The ordering by $\bar R$ has structure at both ends and none in the middle: the largest consecutive ratio, a factor of 84, separates the dynamic-quantile forecasters from the rest near the \emph{bottom} of the range, where their raw coverage is already nominal, and the next, a factor of 48, separates Lag-Llama from the two truncated Chronos series at the top. Neither is a boundary between kinds of forecaster, and no single cutoff is distinguished by the data. Any threshold would inherit that arbitrariness, and the continuous statistic conveys the same information without it.
 
@@ -1437,9 +1446,9 @@ correction has nothing to remove and adds the estimation noise of $\qVstat$. Of
 the \nWellCalStaticN{} pairs whose raw forecast passes Kupiec on the test set,
 the single-split correction degrades \nWellCalStaticWorse{} (mean
 $\Delta\mathrm{QS} = \nWellCalStaticMeanPct\%$ of $\mathrm{QS}_{\mathrm{raw}}$,
-Wilcoxon $p = 9.3 \times 10^{-5}$) and the rolling variant degrades
+Wilcoxon $p = \nWellCalStaticWilcoxon$) and the rolling variant degrades
 \nWellCalRollWorse, with mean $\nWellCalRollMeanPct\%$ and
-$p \approx 10^{-16}$. The rolling estimator re-estimates the shift on a 250-day
+$p \approx \nWellCalRollWilcoxon$. The rolling estimator re-estimates the shift on a 250-day
 window and is correspondingly noisier, which is why its deterioration rate is
 roughly double at every level. The pattern holds at
 $\alpha \in \{0.025, 0.05, 0.10\}$, where it applies to a larger share of the

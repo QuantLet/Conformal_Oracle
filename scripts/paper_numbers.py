@@ -135,6 +135,15 @@ def collect() -> dict:
       n[f"WellCal{tag}N"] = int(w["n"])
       n[f"WellCal{tag}Worse"] = int(w["n_worse"])
       n[f"WellCal{tag}MeanPct"] = w["mean_pct"]
+      # The Wilcoxon p was a prose literal, and it moved with R14: 9.3e-5 to
+      # 8.9e-5. Emitted as a formatted string so the exponent travels with it.
+      _p = float(w["wilcoxon_p"])
+      _e = int(np.floor(np.log10(_p)))
+      # Below 1e-10 the paper writes the order of magnitude alone, so the
+      # exponent is rounded to nearest rather than floored: 9.94e-17 is 10^{-16}.
+      n[f"WellCal{tag}Wilcoxon"] = (
+          f"{_p / 10 ** _e:.1f} \\times 10^{{{_e}}}" if _e > -10
+          else f"10^{{{int(round(np.log10(_p)))}}}")
     n["GateRollAvoidedPct"] = 100 * n["GateRollAvoided"] / n["DegradedRoll"]
     n["GateRollOracleAvoidedPct"] = 100 * n["GateRollOracleAvoided"] / n["DegradedRoll"]
     n["GateStaticAvoidedPct"] = 100 * n["GateStaticAvoided"] / n["DegradedStatic"]
@@ -181,6 +190,34 @@ def collect() -> dict:
                 if len(row):
                     n[f"GateExtremes{tag}"] = int(str(row.iloc[0]["extremes"]).split("/")[0])
 
+
+    # The tail-closure spread. Its lower end was printed as 0.005, which is also
+    # the value DECLARED_CONSTANTS.md admits for the detection severity cut: the
+    # same literal standing for two unrelated things is exactly what a macro name
+    # is for.
+    tc = pd.read_csv(Q / "CO_robustness_inner7" / "inner7_tail_closure.csv")
+    n["LitClosureRMin"] = float(tc["R"].min())
+    n["LitClosureRMax"] = float(tc["R"].max())
+
+    # Two rungs of the delta-star ladder were prose literals while the rest were
+    # macros: the fourth-moment restriction and the GARCH-t class. Both are in
+    # delta_by_class.json and were simply never lifted into the registry.
+    dbc = {r["cls"]: r for r in json.loads(
+        (BASE / "analysis" / "phase2" / "delta_by_class.json").read_text())}
+    n["GapDeltaMoment"] = float(dbc["unimodal, fourth moment <= that of P"]["delta"])
+    n["GapUndGarchT"] = float(
+        dbc["GARCH class, standardised Student-t innovations"]["understatement"])
+
+    # Section 4.4's validation of the analytic estimator against full-vocabulary
+    # sampling, recomputed after the R14 map was corrected in analytic_quantiles.py
+    # -- which had carried a second copy of the defect, so the announced agreement
+    # was measured on the support it was meant to check.
+    av = pd.read_csv(BASE / "analysis" / "chronos_sampling" /
+                     "analytic_validation_SP500.csv")
+    n["LitAnalyticDates"] = int(len(av))
+    n["LitAnalyticSdPct"] = 100 * abs(av["an_std"].mean() - av["sm_std"].mean()) \
+        / av["sm_std"].mean()
+    n["LitAnalyticGrid"] = 1.0 / len(av)
 
     # The rate the GJR-GARCH series reported before the unstandardised Student-t
     # quantile was corrected. It appeared twice as a literal -- "0.4\%" in the
@@ -239,6 +276,11 @@ def collect() -> dict:
     n["LitAlphaResp"] = _pi("Chronos-Small", 0.10) / _pi("Chronos-Small", 0.01)
     n["LitMainRMinAll"] = float(t["R"].min())
     n["LitMainRMaxOK"] = float(ok["R"].max())
+    # The prose said "thirteen of the sixteen ... between 0.001 and 0.18". At that
+    # bound the count is eleven; at the count it claims the bound is 0.32. Both
+    # halves are now taken from the same object: the forecasters that are not the
+    # two sampled at the checkpoint default, and their largest R-bar.
+    n["LitMainROkN"] = int(len(ok))
     n["LitQSMin"] = float(t["cor_qs"].min())
     n["LitQSMax"] = float(t["cor_qs"].max())
     n["LitWMin"] = float(t["w_gjr"].min())
@@ -335,6 +377,14 @@ def fmt(key: str, v) -> str:
     # Pooled panel rates sit within one thousandth of each other and of nominal;
     # three decimals prints them all as 0.011 and erases the comparison the
     # sentence makes. The p-values keep three.
+    if key.startswith("LitClosureRMin"):
+        return f"{v:.3f}"
+    if key.startswith("LitClosureRMax"):
+        return f"{v:.2f}"
+    if key.startswith("LitAnalyticSdPct"):
+        return f"{v:.2f}"
+    if key.startswith("LitAnalyticGrid"):
+        return f"{v:.3f}"
     if key.startswith("RawPiGJRDefectivePct"):
         return f"{v:.1f}"
     if key.startswith("RawPiGJRDefective"):

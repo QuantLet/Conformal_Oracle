@@ -84,6 +84,7 @@ not possible without editing this file's producer.
 | `\nWellCalStaticN` | 94 | SEQ (312) |
 | `\nWellCalStaticWorse` | 58 | SEQ (312) |
 | `\nWellCalStaticMeanPct` | -1.3 | SEQ (312) |
+| `\nWellCalStaticWilcoxon` | 8.9 \times 10^{-5} | SEQ (312) |
 | `\nGateRollApplied` | 259 | SEQ (312) |
 | `\nGateRollSkipped` | 53 | SEQ (312) |
 | `\nGateRollAvoided` | 44 | SEQ (312) |
@@ -105,6 +106,7 @@ not possible without editing this file's producer.
 | `\nWellCalRollN` | 94 | SEQ (312) |
 | `\nWellCalRollWorse` | 89 | SEQ (312) |
 | `\nWellCalRollMeanPct` | -7.4 | SEQ (312) |
+| `\nWellCalRollWilcoxon` | 10^{-16} | SEQ (312) |
 | `\nGateRollAvoidedPct` | 25.3 | SEQ (312) |
 | `\nGateRollOracleAvoidedPct` | 51.1 | SEQ (312) |
 | `\nGateStaticAvoidedPct` | 25.8 | SEQ (312) |
@@ -154,6 +156,13 @@ not possible without editing this file's producer.
 | `\nGateSeries` | 13 | SEQ (312) |
 | `\nGateExtremesSmall` | 19 | SEQ (312) |
 | `\nGateExtremesMini` | 15 | SEQ (312) |
+| `\nLitClosureRMin` | 0.005 | -- |
+| `\nLitClosureRMax` | 1.70 | -- |
+| `\nGapDeltaMoment` | 0.046 | -- |
+| `\nGapUndGarchT` | 10.6 | -- |
+| `\nLitAnalyticDates` | 40 | -- |
+| `\nLitAnalyticSdPct` | 0.55 | -- |
+| `\nLitAnalyticGrid` | 0.025 | -- |
 | `\nRawPiGJRDefective` | 0.0041 | MAIN (384) |
 | `\nRawPiGJRDefectivePct` | 0.4 | MAIN (384) |
 | `\nPoolPiEWMA` | 0.0119 | -- |
@@ -175,6 +184,7 @@ not possible without editing this file's producer.
 | `\nLitAlphaResp` | 1.08 | -- |
 | `\nLitMainRMinAll` | 0.001 | -- |
 | `\nLitMainRMaxOK` | 0.357 | -- |
+| `\nLitMainROkN` | 14 | -- |
 | `\nLitQSMin` | 4.67 | -- |
 | `\nLitQSMax` | 5.83 | -- |
 | `\nLitWMin` | 0.98 | -- |
