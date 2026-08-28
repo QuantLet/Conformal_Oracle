@@ -4,9 +4,9 @@
 \cmidrule(lr){2-4}
 $R$ threshold & 10\,d & 20\,d & 50\,d \\
 \midrule
-$R > 1.2$ & 138/240 & 125/240 & 113/240 \\
-$R > 1.5$ & 123/240 & 115/240 & 102/240 \\
-$R > 2.0$ & 107/240 & 100/240 & 98/240 \\
+$R > 1.2$ & 121/240 & 101/240 & 84/240 \\
+$R > 1.5$ & 97/240 & 84/240 & 69/240 \\
+$R > 2.0$ & 72/240 & 59/240 & 53/240 \\
 \bottomrule
 \end{tabular}
 
@@ -21,7 +21,7 @@ Model & 10\,d & 20\,d & 50\,d & 10\,d & 20\,d & 50\,d & 10\,d & 20\,d & 50\,d \\
 \multicolumn{10}{@{}l}{\textit{Panel~A\@: Signal-preserving models}} \\[2pt]
 Moirai 1.1 & 8 & 4 & 2 & 5 & 2 & 0 & 3 & 2 & 0 \\
 Lag-Llama & 8 & 3 & 1 & 5 & 2 & 0 & 2 & 0 & 0 \\
-GJR-GARCH & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+GJR-GARCH & 8 & 5 & 2 & 4 & 3 & 2 & 2 & 1 & 0 \\
 GARCH-N & 8 & 5 & 1 & 2 & 1 & 0 & 1 & 0 & 0 \\
 Hist.\ Sim. & 4 & 3 & 2 & 2 & 2 & 1 & 1 & 1 & 1 \\
 EWMA & \textbf{14} & \textbf{14} & 11 & \textbf{13} & 12 & 5 & 4 & 1 & 1 \\
@@ -29,8 +29,8 @@ EWMA & \textbf{14} & \textbf{14} & 11 & \textbf{13} & 12 & 5 & 4 & 1 & 1 \\
 \multicolumn{10}{@{}l}{\textit{Panel~B\@: Replacement models}} \\[2pt]
 Chronos-Small & 24 & 24 & 24 & 24 & 24 & 24 & 24 & 24 & 24 \\
 Chronos-Mini & 24 & 24 & 24 & 24 & 24 & 24 & 24 & 24 & 24 \\
-TimesFM 2.5 & 24 & 24 & 24 & 24 & 24 & 24 & 24 & 24 & 24 \\
-Moirai 2.0 & 24 & 24 & 24 & 24 & 24 & 24 & 24 & 24 & 24 \\
+TimesFM 2.5 & 11 & 7 & 7 & 7 & 5 & 4 & 4 & 2 & 1 \\
+Moirai 2.0 & 12 & 12 & 10 & 11 & 9 & 9 & 7 & 4 & 2 \\
 \bottomrule
 \multicolumn{10}{@{}p{0.95\linewidth}}{\footnotesize Cells show the number of assets (out of 24) for which the model--asset pair is classified as replacement regime. Bold marks signal-preserving models that switch to majority-replacement ($>12/24$).} \\
 \end{tabular}

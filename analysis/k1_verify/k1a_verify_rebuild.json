@@ -1,0 +1,72 @@
+{
+  "chronos_small_analytic": {
+    "n_files": 24,
+    "n_rows": 121923,
+    "levels": {
+      "0.01": {
+        "median_rel": 2.3385344703632113e-09,
+        "max_rel": 0.12499997274404927,
+        "mean_shift_bins": 0.9946031650741815,
+        "frac_exactly_one_bin": 0.9947097758421298
+      },
+      "0.025": {
+        "median_rel": 2.854124467477738e-09,
+        "max_rel": 0.07241583500498235,
+        "mean_shift_bins": 0.9946113681790706,
+        "frac_exactly_one_bin": 0.9946851701483723
+      },
+      "0.05": {
+        "median_rel": 3.474621082321888e-09,
+        "max_rel": 0.4999995233599001,
+        "mean_shift_bins": 0.9940371900825182,
+        "frac_exactly_one_bin": 0.9942504695586559
+      },
+      "0.1": {
+        "median_rel": 4.6117844852052256e-09,
+        "max_rel": 1.0000019054896117,
+        "mean_shift_bins": 0.9932580389952056,
+        "frac_exactly_one_bin": 0.9932990494000312
+      }
+    },
+    "negative_control_median_rel": 0.0024509780478450044,
+    "negative_control_disagrees": true,
+    "std_median_rel": 0.0019509915335397636,
+    "std_max_rel": 0.659121895996468,
+    "mean_shift_bins": 0.8944902362166245
+  },
+  "chronos_mini_analytic": {
+    "n_files": 24,
+    "n_rows": 121923,
+    "levels": {
+      "0.01": {
+        "median_rel": 2.3571777260531238e-09,
+        "max_rel": 0.07241583500498235,
+        "mean_shift_bins": 0.9966864020821865,
+        "frac_exactly_one_bin": 0.9966864332406519
+      },
+      "0.025": {
+        "median_rel": 2.859987563992917e-09,
+        "max_rel": 0.07241583500498235,
+        "mean_shift_bins": 0.9963419559187138,
+        "frac_exactly_one_bin": 0.9963419535280464
+      },
+      "0.05": {
+        "median_rel": 3.4685815457571074e-09,
+        "max_rel": 0.07241583500498235,
+        "mean_shift_bins": 0.9962517306664007,
+        "frac_exactly_one_bin": 0.9962517326509355
+      },
+      "0.1": {
+        "median_rel": 4.575579164797329e-09,
+        "max_rel": 0.07241583500498235,
+        "mean_shift_bins": 0.9958088229778457,
+        "frac_exactly_one_bin": 0.9958088301632998
+      }
+    },
+    "negative_control_median_rel": 0.002475245133788811,
+    "negative_control_disagrees": true,
+    "std_median_rel": 0.0020291722495576125,
+    "std_max_rel": 0.48471660506657055,
+    "mean_shift_bins": 0.9190325638871932
+  }
+}

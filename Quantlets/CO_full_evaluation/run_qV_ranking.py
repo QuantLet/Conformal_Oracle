@@ -41,8 +41,13 @@ SLIDE_DIR = BASE / 'ICFS 2026'
 OUT = SCRIPT_DIR
 
 df = pd.read_csv(DATA / 'all_results.csv')
-m11 = pd.read_csv(DATA / 'moirai11_full_results.csv')
-df = pd.concat([df, m11], ignore_index=True)
+# Moirai-1.1 used to live in a separate file and was concatenated here. Since
+# 2026-08-17 all_results.csv is regenerated over every model in cfp_config and
+# carries it directly, so concatenating both entered the model twice -- and the
+# separate file is a pre-correction vintage, so the duplicate rows disagreed
+# with the live ones. See analysis/moirai11_reconciliation/.
+dup = df.duplicated(subset=['model', 'symbol', 'alpha']).sum()
+assert dup == 0, f'{dup} duplicated (model, symbol, alpha) rows in all_results.csv'
 d01 = df[df['alpha'] == 0.01].copy()
 
 MODEL_ORDER = ['Chronos-Small', 'Chronos-Mini', 'TimesFM-2.5',

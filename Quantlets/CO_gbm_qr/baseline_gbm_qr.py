@@ -121,6 +121,17 @@ def fit_gbm_qr(X_train, y_train, X_val, y_val):
         feature_fraction=0.9,
         bagging_fraction=0.8,
         bagging_freq=5,
+        # Bagging and feature subsampling make training stochastic. With no seed
+        # declared, the run was reproducible only against the LightGBM build that
+        # happened to be installed: 58 of the 216 rows change their violation
+        # count between 4.6.0 and 4.7.0, up to 45% relative. The seeds are part of
+        # the estimator's definition and are now written down.
+        seed=20260827,
+        bagging_seed=20260827,
+        feature_fraction_seed=20260827,
+        data_random_seed=20260827,
+        deterministic=True,
+        force_row_wise=True,
         verbose=-1,
     )
     dtrain = lgb.Dataset(X_train, label=y_train)

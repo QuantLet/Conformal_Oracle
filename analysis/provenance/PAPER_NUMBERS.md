@@ -33,8 +33,8 @@ not possible without editing this file's producer.
 | `\nRawPiMoiraiOne` | 0.0154 | MAIN (384) |
 | `\nRawPiMoiraiTwo` | 0.0178 | MAIN (384) |
 | `\nRawPiLagLlama` | 0.0294 | MAIN (384) |
-| `\nRawPiChronosSmallA` | 0.0175 | MAIN (384) |
-| `\nRawPiChronosMiniA` | 0.0178 | MAIN (384) |
+| `\nRawPiChronosSmallA` | 0.0173 | MAIN (384) |
+| `\nRawPiChronosMiniA` | 0.0177 | MAIN (384) |
 | `\nRawPiGJR` | 0.0200 | MAIN (384) |
 | `\nRawPiGJRt` | 0.0145 | MAIN (384) |
 | `\nRawPiCAViaRAS` | 0.0110 | MAIN (384) |
@@ -47,18 +47,18 @@ not possible without editing this file's producer.
 | `\nSeqCCUndefCorOne` | 53.5 | SEQ (312) |
 | `\nSeqCCRejCorOne` | 48.3 | SEQ (312) |
 | `\nSeqKupiecRejRawTwoFive` | 62.8 | SEQ (312) |
-| `\nSeqCCUndefRawTwoFive` | 11.5 | SEQ (312) |
-| `\nSeqCCRejRawTwoFive` | 19.6 | SEQ (312) |
+| `\nSeqCCUndefRawTwoFive` | 11.9 | SEQ (312) |
+| `\nSeqCCRejRawTwoFive` | 19.3 | SEQ (312) |
 | `\nSeqCCUndefCorTwoFive` | 26.6 | SEQ (312) |
 | `\nSeqCCRejCorTwoFive` | 30.6 | SEQ (312) |
 | `\nSeqKupiecRejRawFive` | 47.8 | SEQ (312) |
 | `\nSeqCCUndefRawFive` | 1.0 | SEQ (312) |
-| `\nSeqCCRejRawFive` | 22.3 | SEQ (312) |
+| `\nSeqCCRejRawFive` | 22.0 | SEQ (312) |
 | `\nSeqCCUndefCorFive` | 4.5 | SEQ (312) |
 | `\nSeqCCRejCorFive` | 24.5 | SEQ (312) |
-| `\nSeqKupiecRejRawTen` | 39.4 | SEQ (312) |
+| `\nSeqKupiecRejRawTen` | 40.1 | SEQ (312) |
 | `\nSeqCCUndefRawTen` | 0.0 | SEQ (312) |
-| `\nSeqCCRejRawTen` | 26.6 | SEQ (312) |
+| `\nSeqCCRejRawTen` | 26.0 | SEQ (312) |
 | `\nSeqCCUndefCorTen` | 0.0 | SEQ (312) |
 | `\nSeqCCRejCorTen` | 28.5 | SEQ (312) |
 | `\nTruncCorPi` | 0.0108 | -- |
@@ -67,17 +67,20 @@ not possible without editing this file's producer.
 | `\nGateStaticSkipped` | 53 | SEQ (312) |
 | `\nGateStaticAvoided` | 17 | SEQ (312) |
 | `\nGateStaticForgone` | 36 | SEQ (312) |
-| `\nGateStaticUpgrades` | 182 | SEQ (312) |
-| `\nGateStaticUpgradesKept` | 172 | SEQ (312) |
+| `\nGateStaticUpgrades` | 181 | SEQ (312) |
+| `\nGateStaticUpgradesKept` | 171 | SEQ (312) |
 | `\nGateStaticOracleApplied` | 218 | SEQ (312) |
 | `\nGateStaticOracleSkipped` | 94 | SEQ (312) |
 | `\nGateStaticOracleAvoided` | 58 | SEQ (312) |
 | `\nGateStaticOracleForgone` | 36 | SEQ (312) |
-| `\nGateStaticOracleUpgrades` | 182 | SEQ (312) |
-| `\nGateStaticOracleUpgradesKept` | 182 | SEQ (312) |
+| `\nGateStaticOracleUpgrades` | 181 | SEQ (312) |
+| `\nGateStaticOracleUpgradesKept` | 181 | SEQ (312) |
 | `\nDegradedStatic` | 66 | SEQ (312) |
 | `\nDegradedStaticZoneUp` | 6 | SEQ (312) |
 | `\nDegradedStaticNoChange` | 60 | SEQ (312) |
+| `\nDegradedStaticAlreadyGreen` | 59 | SEQ (312) |
+| `\nDegradedStaticSameNotGreen` | 1 | SEQ (312) |
+| `\nDegradedStaticZoneDown` | 0 | SEQ (312) |
 | `\nWellCalStaticN` | 94 | SEQ (312) |
 | `\nWellCalStaticWorse` | 58 | SEQ (312) |
 | `\nWellCalStaticMeanPct` | -1.3 | SEQ (312) |
@@ -85,17 +88,20 @@ not possible without editing this file's producer.
 | `\nGateRollSkipped` | 53 | SEQ (312) |
 | `\nGateRollAvoided` | 44 | SEQ (312) |
 | `\nGateRollForgone` | 9 | SEQ (312) |
-| `\nGateRollUpgrades` | 205 | SEQ (312) |
-| `\nGateRollUpgradesKept` | 185 | SEQ (312) |
+| `\nGateRollUpgrades` | 204 | SEQ (312) |
+| `\nGateRollUpgradesKept` | 184 | SEQ (312) |
 | `\nGateRollOracleApplied` | 218 | SEQ (312) |
 | `\nGateRollOracleSkipped` | 94 | SEQ (312) |
 | `\nGateRollOracleAvoided` | 89 | SEQ (312) |
 | `\nGateRollOracleForgone` | 5 | SEQ (312) |
-| `\nGateRollOracleUpgrades` | 205 | SEQ (312) |
-| `\nGateRollOracleUpgradesKept` | 205 | SEQ (312) |
+| `\nGateRollOracleUpgrades` | 204 | SEQ (312) |
+| `\nGateRollOracleUpgradesKept` | 204 | SEQ (312) |
 | `\nDegradedRoll` | 174 | SEQ (312) |
-| `\nDegradedRollZoneUp` | 72 | SEQ (312) |
-| `\nDegradedRollNoChange` | 102 | SEQ (312) |
+| `\nDegradedRollZoneUp` | 71 | SEQ (312) |
+| `\nDegradedRollNoChange` | 103 | SEQ (312) |
+| `\nDegradedRollAlreadyGreen` | 100 | SEQ (312) |
+| `\nDegradedRollSameNotGreen` | 1 | SEQ (312) |
+| `\nDegradedRollZoneDown` | 2 | SEQ (312) |
 | `\nWellCalRollN` | 94 | SEQ (312) |
 | `\nWellCalRollWorse` | 89 | SEQ (312) |
 | `\nWellCalRollMeanPct` | -7.4 | SEQ (312) |
@@ -104,7 +110,7 @@ not possible without editing this file's producer.
 | `\nGateStaticAvoidedPct` | 25.8 | SEQ (312) |
 | `\nGateRollUpgradesLost` | 20 | SEQ (312) |
 | `\nGateStaticUpgradesLost` | 10 | SEQ (312) |
-| `\nDegradedRollNoChangePct` | 58.6 | SEQ (312) |
+| `\nDegradedRollNoChangePct` | 59.2 | SEQ (312) |
 | `\nDispDefaultSmall` | 0.121 | -- |
 | `\nDispDefaultMini` | 0.115 | -- |
 | `\nDispTwoHundredSmall` | 0.331 | -- |
@@ -126,36 +132,46 @@ not possible without editing this file's producer.
 | `\nKupSmallDefaultTen` | 0 | -- |
 | `\nRatioSmallDefaultOne` | 38.837 | -- |
 | `\nRatioSmallDefaultTen` | 4.177 | -- |
-| `\nPiSmallAnalyticOne` | 0.0175 | -- |
+| `\nPiSmallAnalyticOne` | 0.0173 | -- |
 | `\nKupSmallAnalyticOne` | 8 | -- |
-| `\nPiSmallAnalyticTen` | 0.1036 | -- |
+| `\nPiSmallAnalyticTen` | 0.1027 | -- |
 | `\nKupSmallAnalyticTen` | 20 | -- |
-| `\nRatioSmallAnalyticOne` | 1.750 | -- |
-| `\nRatioSmallAnalyticTen` | 1.036 | -- |
+| `\nRatioSmallAnalyticOne` | 1.733 | -- |
+| `\nRatioSmallAnalyticTen` | 1.027 | -- |
 | `\nPiMiniDefaultOne` | 0.4188 | -- |
 | `\nKupMiniDefaultOne` | 0 | -- |
 | `\nPiMiniDefaultTen` | 0.4477 | -- |
 | `\nKupMiniDefaultTen` | 0 | -- |
 | `\nRatioMiniDefaultOne` | 41.884 | -- |
 | `\nRatioMiniDefaultTen` | 4.477 | -- |
-| `\nPiMiniAnalyticOne` | 0.0178 | -- |
+| `\nPiMiniAnalyticOne` | 0.0177 | -- |
 | `\nKupMiniAnalyticOne` | 8 | -- |
-| `\nPiMiniAnalyticTen` | 0.0989 | -- |
-| `\nKupMiniAnalyticTen` | 22 | -- |
-| `\nRatioMiniAnalyticOne` | 1.781 | -- |
-| `\nRatioMiniAnalyticTen` | 0.989 | -- |
+| `\nPiMiniAnalyticTen` | 0.0981 | -- |
+| `\nKupMiniAnalyticTen` | 20 | -- |
+| `\nRatioMiniAnalyticOne` | 1.772 | -- |
+| `\nRatioMiniAnalyticTen` | 0.981 | -- |
 | `\nGateBlocked` | 4 | SEQ (312) |
 | `\nGateSeries` | 13 | SEQ (312) |
+| `\nGateExtremesSmall` | 19 | SEQ (312) |
+| `\nGateExtremesMini` | 15 | SEQ (312) |
+| `\nRawPiGJRDefective` | 0.0041 | MAIN (384) |
+| `\nRawPiGJRDefectivePct` | 0.4 | MAIN (384) |
+| `\nPoolPiEWMA` | 0.0119 | -- |
+| `\nPoolPiMoiraiTwo` | 0.0114 | -- |
+| `\nPoolPiSmallAnalytic` | 0.0113 | -- |
+| `\nPoolPiGJR` | 0.0111 | -- |
+| `\nPoolBootEWMA` | 0.058 | -- |
+| `\nPoolClusterEWMA` | 0.035 | -- |
 | `\nuMCBShareWellSpec` | 0.270 | -- |
-| `\nuMCBShareAll` | 0.330 | -- |
+| `\nuMCBShareAll` | 0.329 | -- |
 | `\nuMCBSharePct` | 27.0 | -- |
 | `\nLitTempGap` | 0.001 | -- |
 | `\nLitNucleusGap` | 0.005 | -- |
 | `\nLitSupportPct` | 98.8 | -- |
-| `\nLitRatioSmallTwoFive` | 1.35 | -- |
-| `\nLitRatioSmallFive` | 1.15 | -- |
-| `\nLitRatioMiniTwoFive` | 1.33 | -- |
-| `\nLitRatioMiniFive` | 1.12 | -- |
+| `\nLitRatioSmallTwoFive` | 1.34 | -- |
+| `\nLitRatioSmallFive` | 1.14 | -- |
+| `\nLitRatioMiniTwoFive` | 1.32 | -- |
+| `\nLitRatioMiniFive` | 1.11 | -- |
 | `\nLitAlphaResp` | 1.08 | -- |
 | `\nLitMainRMinAll` | 0.001 | -- |
 | `\nLitMainRMaxOK` | 0.357 | -- |
@@ -229,6 +245,6 @@ not possible without editing this file's producer.
 | `\nMCDgps` | 5 | -- |
 | `\nGateRollUpgradesLostWorse` | 11 | SEQ (312) |
 | `\nGateRollUpgradesLostNet` | 9 | SEQ (312) |
-| `\nGateRollUpgradeAndDeteriorate` | 72 | SEQ (312) |
+| `\nGateRollUpgradeAndDeteriorate` | 71 | SEQ (312) |
 | `\nSpearmanRPi` | 0.991 | -- |
 | `\nSpearmanRPiN` | 14 | -- |

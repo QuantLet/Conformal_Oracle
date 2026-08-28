@@ -63,10 +63,14 @@ def step1_logits(pipe, ctx: torch.Tensor):
 def analytic_quantiles(logits, scale, centers, n_special, alphas=ALPHAS):
     p = np.exp(logits - logits.max())
     p = p / p.sum()
-    # token id t maps to centers[t - n_special]; ids below the offset are special
+    # token id t maps to centers[t - n_special - 1], which is what the tokenizer's
+    # own MeanScaleUniformBins.output_transform does. This file carried the same
+    # off-by-one as build_analytic_series.py -- R14 -- and is the script that
+    # produced the validation figures Section 4.4 quotes, so those figures were
+    # measured on the defective support they were meant to check.
     ids = np.arange(len(p))
-    keep = (ids >= n_special) & (ids - n_special < len(centers))
-    vals = centers[ids[keep] - n_special] * scale
+    keep = (ids >= n_special + 1) & (ids - n_special - 1 < len(centers))
+    vals = centers[ids[keep] - n_special - 1] * scale
     pk = p[keep]
     pk = pk / pk.sum()
     o = np.argsort(vals)

@@ -1,0 +1,48 @@
+{
+  "Chronos-Small-A|0.01": {
+    "pi_rebuilt": 0.017329,
+    "ratio_rebuilt": 1.7329,
+    "kupiec_rebuilt": 8
+  },
+  "Chronos-Small-A|0.025": {
+    "pi_rebuilt": 0.033466,
+    "ratio_rebuilt": 1.3386,
+    "kupiec_rebuilt": 10
+  },
+  "Chronos-Small-A|0.05": {
+    "pi_rebuilt": 0.056946,
+    "ratio_rebuilt": 1.1389,
+    "kupiec_rebuilt": 14
+  },
+  "Chronos-Small-A|0.1": {
+    "pi_rebuilt": 0.102719,
+    "ratio_rebuilt": 1.0272,
+    "kupiec_rebuilt": 20
+  },
+  "Chronos-Small-A|QS_1e4": {
+    "rebuilt": 5.2114
+  },
+  "Chronos-Mini-A|0.01": {
+    "pi_rebuilt": 0.017724,
+    "ratio_rebuilt": 1.7724,
+    "kupiec_rebuilt": 8
+  },
+  "Chronos-Mini-A|0.025": {
+    "pi_rebuilt": 0.032883,
+    "ratio_rebuilt": 1.3153,
+    "kupiec_rebuilt": 12
+  },
+  "Chronos-Mini-A|0.05": {
+    "pi_rebuilt": 0.055277,
+    "ratio_rebuilt": 1.1055,
+    "kupiec_rebuilt": 17
+  },
+  "Chronos-Mini-A|0.1": {
+    "pi_rebuilt": 0.098082,
+    "ratio_rebuilt": 0.9808,
+    "kupiec_rebuilt": 20
+  },
+  "Chronos-Mini-A|QS_1e4": {
+    "rebuilt": 5.1781
+  }
+}

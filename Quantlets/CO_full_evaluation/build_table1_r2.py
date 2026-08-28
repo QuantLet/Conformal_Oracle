@@ -119,13 +119,16 @@ def build(d: pd.DataFrame) -> pd.DataFrame:
 
 
 def to_tex(r: pd.DataFrame) -> str:
+    # Width/GJR is printed because the body cites it by name -- "Table 1,
+    # Width/GJR column" -- and the table carried only Width. The ratio was in the
+    # companion CSV and in no column a reader could look at.
     L = [r"\setlength{\tabcolsep}{1pt}",
-         r"\begin{tabular}{@{}ll rr rr r rr rr r@{}}", r"\toprule",
+         r"\begin{tabular}{@{}ll rr rr r rr rrr r@{}}", r"\toprule",
          r"& & \multicolumn{2}{c}{$\hat\pi$} & \multicolumn{2}{c}{Kupiec pass}",
-         r"& CC pass & \multicolumn{2}{c}{QS} & & & \\",
+         r"& CC pass & \multicolumn{2}{c}{QS} & & & & \\",
          r"\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){8-9}",
          r"Forecaster & Interface & Raw & Corr. & Raw & Corr. & Corr.",
-         r"& Raw & Corr. & Width & Green & $\bar{R}$ \\", r"\midrule"]
+         r"& Raw & Corr. & Width & W/GJR & Green & $\bar{R}$ \\", r"\midrule"]
     for _, x in r.iterrows():
         L.append(
             f"{LABELS.get(x['model'], x['model'])} & {x['kind']} "
@@ -133,8 +136,9 @@ def to_tex(r: pd.DataFrame) -> str:
             f"& {x['raw_kup']}/{x['n']} & {x['cor_kup']}/{x['n']} "
             f"& {x['cc_pass']}/{x['cc_defined']} "
             f"& {rhu(x['raw_qs'], 1)} & {rhu(x['cor_qs'], 1)} "
-            f"& {strip0(rhu(x['width'], 3))} & {x['green']}/{x['n']} "
-            f"& {x['R']:.4g} \\\\")
+            f"& {strip0(rhu(x['width'], 3))} & {rhu(x['w_gjr'], 2)} "
+            f"& {x['green']}/{x['n']} "
+            f"& {x['R']:.3g} \\\\")
     L += [r"\bottomrule", r"\end{tabular}"]
     return "\n".join(L) + "\n"
 
@@ -171,19 +175,30 @@ def main() -> int:
     k = next((i for i in range(len(r) - 1)
               if r.iloc[i]["model"] not in DEFECTIVE
               and r.iloc[i + 1]["model"] in DEFECTIVE), None)
+    # Every ratio in this note is computed from unrounded values, and every
+    # operand beside it used to be printed to three decimals. At the bottom of
+    # the range that is one significant figure: 0.001012 prints as 0.001, so a
+    # reader dividing the printed endpoints got 23,500 where the sentence said
+    # 23,264, and 91 where it said 84. The operands now carry three significant
+    # figures and the span factor two, so no product a reader can form from the
+    # printed numbers contradicts the printed ratio.
+    def sig3(x):
+        return f"{x:#.3g}".rstrip(".")
+
     second = ""
     if k is not None and k != j:
         second = (f" A second discontinuity of {rs[k + 1] / rs[k]:.0f}$\\times$ "
-                  f"separates {lab(r.iloc[k]['model'])} ({rs[k]:.3f}) from "
-                  f"{lab(r.iloc[k + 1]['model'])} ({rs[k + 1]:.1f}); that one "
+                  f"separates {lab(r.iloc[k]['model'])} ({sig3(rs[k])}) from "
+                  f"{lab(r.iloc[k + 1]['model'])} ({sig3(rs[k + 1])}); that one "
                   "marks the boundary of the two series sampled at the "
                   "checkpoint default.")
+    span = r['R'].max() / r['R'].min()
     note = (f"Overall: {g}/{n} Green ({100 * g / n:.1f}\\%). "
-            f"$\\bar R$ spans {r['R'].min():.3f} ({lab(r.iloc[0]['model'])}) to "
-            f"{r['R'].max():.1f} ({lab(r.iloc[-1]['model'])}), a factor of "
-            f"{r['R'].max() / r['R'].min():.0f}. The largest consecutive ratio "
+            f"$\\bar R$ spans {sig3(r['R'].min())} ({lab(r.iloc[0]['model'])}) to "
+            f"{sig3(r['R'].max())} ({lab(r.iloc[-1]['model'])}), a factor of "
+            f"{float(f'{span:#.2g}'):,.0f}. The largest consecutive ratio "
             f"is {ratios[j]:.0f}$\\times$, between {lab(lo['model'])} "
-            f"({rs[j]:.3f}) and {lab(hi['model'])} ({rs[j + 1]:.3f}), where the "
+            f"({sig3(rs[j])}) and {lab(hi['model'])} ({sig3(rs[j + 1])}), where the "
             "dynamic-quantile forecasters sit apart because their raw coverage "
             f"is already nominal.{second} $\\bar R$ therefore has structure at "
             "both ends of its range and supports no single binary split.")

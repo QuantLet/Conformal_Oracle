@@ -31,6 +31,10 @@ role.
 | 3 | alpha-response band threshold | declared gate band |
 | 5 | coverage-plausibility band multiplier | declared gate band |
 
+| 0.001 | the reporting floor for a $p$-value | a convention for how small a $p$-value is printed, not a measurement; the statistic behind it is emitted |
+| 0.010 | the 1\% level written to three places | same level as 0.01, matched to the precision of the corrected rates it is compared against |
+| 1.9 | the illustrative under-conservative forecaster, $-1.9\hat\sigma_t$ | a worked example chosen to sit inside the traffic-light green zone, not a fitted or measured quantity |
+
 ## Not admitted here
 
 Typesetting lengths (`\includegraphics[width=0.85\textwidth]`,

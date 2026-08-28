@@ -1,0 +1,292 @@
+{
+  "artefacts": {
+    "Quantlets/CFP_ES_Correction_Z2/tab_es_correction.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "CFP_ES_Correction_Z2.py"
+      ],
+      "inputs": {
+        "CFP_ES_Correction_Z2.py": "0e5fc341e12d2cce"
+      }
+    },
+    "Quantlets/CO_baseline_comparison/tab_baselines.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "compile_tab_baselines.py"
+      ],
+      "inputs": {
+        "compile_tab_baselines.py": "ec40fdf1380edd18",
+        "tables/baseline_comparison.csv": "8ccdfe34f673eaf9",
+        "tables/rolling_vs_static.csv": "9339a2a4c1b315d4"
+      }
+    },
+    "Quantlets/CO_baseline_comparison_tuned/tab_gbm_tuned.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_tuned_gbm_qr.py"
+      ],
+      "inputs": {
+        "run_tuned_gbm_qr.py": "bbec582f6881ae3c"
+      }
+    },
+    "Quantlets/CO_cross_sectional/tab_cross_sectional.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_cross_sectional.py"
+      ],
+      "inputs": {
+        "run_cross_sectional.py": "c69813f341d8ab2a",
+        "tables/all_results.csv": "47c6b003aff0677a",
+        "tables/cross_sectional.csv": "91bd156dca7b6b35",
+        "tables/cross_sectional_reproduced.csv": "cbba58d83a27d60b"
+      }
+    },
+    "Quantlets/CO_diagnostic_regression/tab_diag_regression.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_diag_regression.py"
+      ],
+      "inputs": {
+        "run_diag_regression.py": "036f514cfd90001e",
+        "tables/all_results.csv": "47c6b003aff0677a"
+      }
+    },
+    "Quantlets/CO_full_evaluation/tab_master_results.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "build_table1_r2.py",
+        "rebuild_master_table.py",
+        "run_master_table.py"
+      ],
+      "inputs": {
+        "build_table1_r2.py": "748b99a265541992",
+        "tables/all_results.csv": "47c6b003aff0677a",
+        "tables/moirai11_full_results.csv": "aead7bcd16bea4ab",
+        "rebuild_master_table.py": "574918006fe1636b",
+        "run_master_table.py": "ea0e4c2c7a518edd"
+      }
+    },
+    "Quantlets/CO_fz_scores/tab_fz_scores.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_fz_scores.py"
+      ],
+      "inputs": {
+        "run_fz_scores.py": "dc7753c03cae652b"
+      }
+    },
+    "Quantlets/CO_garch_conformal/tab_rolling_vs_static.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_rolling_vs_static.py"
+      ],
+      "inputs": {
+        "run_rolling_vs_static.py": "c52abd4a55aea1c7",
+        "tables/rolling_vs_static.csv": "9339a2a4c1b315d4"
+      }
+    },
+    "Quantlets/CO_model_overview/tab_models.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_model_overview.py"
+      ],
+      "inputs": {
+        "run_model_overview.py": "870a68be50edd998",
+        "tables/models.csv": "33303a7b23edba68"
+      }
+    },
+    "Quantlets/CO_multi_quantile_panel/tab_multiquantile.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_multiquantile.py"
+      ],
+      "inputs": {
+        "run_multiquantile.py": "e6e208763808eb89",
+        "tables/all_results.csv": "47c6b003aff0677a"
+      }
+    },
+    "Quantlets/CO_multi_quantile_panel/tab_panel_by_class.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_panel_by_class.py"
+      ],
+      "inputs": {
+        "run_panel_by_class.py": "f33ad1bafd1ee49e",
+        "tables/all_results.csv": "47c6b003aff0677a"
+      }
+    },
+    "Quantlets/CO_multi_quantile_panel/tab_panel_pooled.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_panel_pooled.py"
+      ],
+      "inputs": {
+        "run_panel_pooled.py": "746585068e8f1349",
+        "tables/all_results.csv": "47c6b003aff0677a",
+        "tables/panel_pooled.csv": "de3d04047fed26ba"
+      }
+    },
+    "Quantlets/CO_panel_wildcluster/tab_panel_wildcluster_dm.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_wild_cluster_bootstrap.py"
+      ],
+      "inputs": {
+        "run_wild_cluster_bootstrap.py": "42fa1167154d8f53"
+      }
+    },
+    "Quantlets/CO_panel_wildcluster/tab_panel_wildcluster_kupiec.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_wild_cluster_bootstrap.py"
+      ],
+      "inputs": {
+        "run_wild_cluster_bootstrap.py": "42fa1167154d8f53"
+      }
+    },
+    "Quantlets/CO_quantile_scores/tab_dm_pvalues.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_dm_pvalues.py"
+      ],
+      "inputs": {
+        "run_dm_pvalues.py": "c5e918c6dd595e1b"
+      }
+    },
+    "Quantlets/CO_regime_sensitivity/tab_regime_sensitivity.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_regime_sensitivity.py"
+      ],
+      "inputs": {
+        "run_regime_sensitivity.py": "62565ad659b027de",
+        "tables/moirai11_results.csv": "d6d25d13eac2fccb"
+      }
+    },
+    "Quantlets/CO_robustness/tab_h14_small_sample.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_robustness_mc.py"
+      ],
+      "inputs": {
+        "run_robustness_mc.py": "abc99b155919208c"
+      }
+    },
+    "Quantlets/CO_robustness/tab_h15_fc_sensitivity.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_robustness_mc.py"
+      ],
+      "inputs": {
+        "run_robustness_mc.py": "abc99b155919208c"
+      }
+    },
+    "Quantlets/CO_robustness/tab_h16_regime_stability.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_robustness_mc.py"
+      ],
+      "inputs": {
+        "run_robustness_mc.py": "abc99b155919208c"
+      }
+    },
+    "Quantlets/CO_robustness/tab_qV_bootstrap_ci.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_qV_bootstrap_table.py"
+      ],
+      "inputs": {
+        "run_qV_bootstrap_table.py": "5fb91370aec59c6b"
+      }
+    },
+    "Quantlets/CO_robustness/tab_robustness_summary.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_robustness_summary.py"
+      ],
+      "inputs": {
+        "run_robustness_summary.py": "06bec56d2c7b52b8",
+        "tables/all_results.csv": "47c6b003aff0677a",
+        "tables/rolling_vs_static.csv": "9339a2a4c1b315d4"
+      }
+    },
+    "Quantlets/CO_robustness_inner7/tab_tail_closure_extended.tex": {
+      "status": "DIFFERS",
+      "generators": [
+        "run_inner7_tail_closure.py"
+      ],
+      "inputs": {
+        "run_inner7_tail_closure.py": "096c1098e1cf5b65"
+      }
+    },
+    "Quantlets/CO_robustness/tab_gap_ablation.tex": {
+      "status": "NOT_EMITTED",
+      "generators": [],
+      "inputs": {}
+    },
+    "Quantlets/CO_simulation_study/tab_simulation_extended.tex": {
+      "status": "RUN_FAILED",
+      "generators": [
+        "run_simulation_study.py"
+      ],
+      "inputs": {
+        "run_simulation_study.py": "d1c3a4fea04a7a0a"
+      }
+    },
+    "Quantlets/CO_asset_overview/tab_assets.tex": {
+      "status": "COSMETIC",
+      "generators": [
+        "run_asset_overview.py"
+      ],
+      "inputs": {
+        "run_asset_overview.py": "024467e02474b47d",
+        "tables/assets.csv": "8ace586e07d2567b"
+      }
+    },
+    "capital_charge_cumulative": {
+      "status": "FIGURE",
+      "generators": [],
+      "inputs": {}
+    },
+    "fig_covid_response": {
+      "status": "FIGURE",
+      "generators": [],
+      "inputs": {}
+    },
+    "fig_drift_diagnostic": {
+      "status": "FIGURE",
+      "generators": [],
+      "inputs": {}
+    },
+    "fig_forensic_tsfm": {
+      "status": "FIGURE",
+      "generators": [],
+      "inputs": {}
+    },
+    "fig_frontier_killer": {
+      "status": "FIGURE",
+      "generators": [],
+      "inputs": {}
+    },
+    "fig_rolling_qv.pdf": {
+      "status": "FIGURE",
+      "generators": [],
+      "inputs": {}
+    },
+    "fig_traffic_light": {
+      "status": "FIGURE",
+      "generators": [],
+      "inputs": {}
+    },
+    "ql_logo.png": {
+      "status": "FIGURE",
+      "generators": [],
+      "inputs": {}
+    },
+    "qr_logo.png": {
+      "status": "FIGURE",
+      "generators": [],
+      "inputs": {}
+    }
+  }
+}

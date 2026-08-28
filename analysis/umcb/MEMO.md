@@ -17,8 +17,8 @@ Decomposition identity check: max |S_raw - (MCB - DSC + UNC)| = 1.73e-18.
 
 | Subset | n | Pearson | Spearman | p |
 |---|---|---|---|---|
-| all pairs | 312 | 0.875 | **0.704** | 4.9e-48 |
-| well-specified series only | 264 | 0.567 | **0.527** | 3.1e-20 |
+| all pairs | 312 | 0.875 | **0.703** | 6.8e-48 |
+| well-specified series only | 264 | 0.567 | **0.525** | 3.9e-20 |
 | top_k-truncated series only | 48 | 0.836 | **0.924** | 7.9e-21 |
 
 ## Where the two rankings disagree most
@@ -27,20 +27,20 @@ Decomposition identity check: max |S_raw - (MCB - DSC + UNC)| = 1.73e-18.
 |---|---|---|---|---|---|---|
 | GJR-GARCH-t | BTC | 0.01744 | 3.400e-07 | 258 | 18 | 240 |
 | Moirai-2.0 | DJCI | 0.00040 | 6.332e-05 | 10 | 238 | 228 |
-| Chronos-Small-A | DJCI | 0.00071 | 6.431e-05 | 22 | 240 | 218 |
-| Chronos-Mini-A | DJCI | 0.00065 | 6.248e-05 | 20 | 235 | 215 |
+| Chronos-Small-A | DJCI | 0.00065 | 6.332e-05 | 21 | 239 | 218 |
+| Chronos-Mini-A | DJCI | 0.00060 | 6.157e-05 | 18 | 235 | 217 |
 | GARCH-N | ICLN | 0.00574 | -7.275e-08 | 214 | 2 | 212 |
-| Chronos-Mini-A | ICLN | 0.00763 | 3.618e-07 | 231 | 20 | 211 |
+| Chronos-Mini-A | ICLN | 0.00754 | 4.195e-07 | 230 | 20 | 210 |
 | Moirai-2.0 | ICLN | 0.00681 | 2.207e-07 | 223 | 15 | 208 |
-| TimesFM-2.5 | DJCI | 0.00015 | 3.883e-05 | 2 | 202 | 200 |
+| TimesFM-2.5 | DJCI | 0.00015 | 3.883e-05 | 2 | 203 | 201 |
 | TimesFM-2.5 | ETH | 0.00786 | 9.932e-07 | 232 | 32 | 200 |
-| Chronos-Small-A | ICLN | 0.00507 | 7.184e-08 | 200 | 11 | 189 |
+| Chronos-Small-A | ICLN | 0.00502 | 1.319e-07 | 199 | 12 | 187 |
 
 ## Why the two are not interchangeable
 
 A second-order expansion of the quantile loss gives uMCB ≈ ½·f·q_V², with f the residual density at the alpha-quantile. Solving for the implied f per pair (the two top_k-truncated Chronos series excluded, and the 5 pairs with numerically negative uMCB dropped):
 
-- 5th-95th percentile of implied f: **0.1 to 25.2**, a factor of 481; median 2.5.
+- 5th-95th percentile of implied f: **0.1 to 25.2**, a factor of 489; median 2.5.
 
 The same q_V therefore maps to score penalties differing by an order of magnitude depending on the asset's tail density. The two quantities are not readable off one another without f.
 
@@ -50,7 +50,7 @@ The same q_V therefore maps to score penalties differing by an order of magnitud
 
 | Subset | mean uMCB/MCB | median |
 |---|---|---|
-| all | 0.390 | 0.330 |
-| well-specified series only | 0.282 | 0.270 |
+| all | 0.390 | 0.329 |
+| well-specified series only | 0.281 | 0.270 |
 | top_k-truncated series only | 0.987 | 0.992 |
 

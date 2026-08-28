@@ -34,6 +34,7 @@ import shutil
 import subprocess
 import sys
 import hashlib
+import json
 import tempfile
 from pathlib import Path
 
@@ -54,6 +55,65 @@ KNOWN = {
                     "correct. Built from the stale moirai11_full_results.csv, "
                     "now replaced."),
 }
+
+
+# ---------------------------------------------------------------------------
+# Verdict freshness. A verdict is a statement about a state, and this file used
+# to record it without recording the state: `tab_regime_sensitivity.tex` was
+# graded OK, the sign defect was corrected on 2026-08-17, its inputs moved, and
+# the OK stayed on the page reading as a live guarantee. PROTOCOL.md calls this
+# the fourth way a check stops being evidence -- the verdict outliving its state.
+#
+# Each verdict is therefore stamped with the SHA-256 of its producer and of every
+# canonical table that producer reads. `--check-stale` re-hashes them and reports
+# STALE for any verdict whose inputs have moved since it was recorded.
+TABLES_DIR = BASE / "cfp_ijf_data" / "paper_outputs" / "tables"
+STAMPS = OUT / "MANIFEST_STAMPS.json"
+
+
+def _sha(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()[:16] if path.is_file() else "absent"
+
+
+def input_stamp(generators) -> dict:
+    """Producer hashes, plus the canonical tables those producers name."""
+    st = {}
+    for g in generators:
+        gp = Path(g) if Path(g).is_absolute() else BASE / g
+        if not gp.is_file():
+            # the manifest records generators by basename, not by path
+            hits = sorted(BASE.glob(f"Quantlets/*/{g}")) + sorted(BASE.glob(f"scripts/{g}"))
+            gp = hits[0] if hits else gp
+        if not gp.is_file():
+            st[str(g)] = "absent"
+            continue
+        st[str(g)] = _sha(gp)
+        text = gp.read_text(encoding="utf-8", errors="replace")
+        for t in sorted(TABLES_DIR.glob("*.csv")):
+            if t.name in text:
+                st[f"tables/{t.name}"] = _sha(t)
+    return st
+
+
+def check_stale() -> int:
+    if not STAMPS.is_file():
+        print("no MANIFEST_STAMPS.json; run build_manifest.py --run to record one")
+        return 2
+    rec = json.loads(STAMPS.read_text())
+    stale = []
+    for art, e in rec.get("artefacts", {}).items():
+        now = input_stamp(e.get("generators", []))
+        moved = [k for k in set(now) | set(e.get("inputs", {}))
+                 if now.get(k) != e.get("inputs", {}).get(k)]
+        if moved:
+            stale.append((art, e.get("status", "?"), moved))
+    for art, status, moved in stale:
+        print(f"  STALE  {art}  (recorded {status})  inputs moved: {', '.join(sorted(moved)[:4])}")
+    if stale:
+        print(f"\n{len(stale)} verdict(s) describe a state that has changed since they were recorded.")
+        return 1
+    print(f"{len(rec.get('artefacts', {}))} verdict(s), none stale")
+    return 0
 
 
 def inventory() -> tuple[list[str], list[str]]:
@@ -129,8 +189,13 @@ def numbers(text: str) -> list[str]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", action="store_true")
+    ap.add_argument("--check-stale", action="store_true",
+                    help="re-hash each verdict's inputs and report those that moved")
     ap.add_argument("--only", default=None)
     args = ap.parse_args()
+
+    if args.check_stale:
+        return check_stale()
 
     inputs, figs = inventory()
     rows = []
@@ -255,6 +320,11 @@ def main() -> int:
     L.append("")
 
     (OUT / "MANIFEST.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    STAMPS.write_text(json.dumps(
+        {"artefacts": {r["artefact"]: {"status": r["status"],
+                                       "generators": list(r["generators"]),
+                                       "inputs": input_stamp(r["generators"])}
+                       for r in rows}}, indent=2), encoding="utf-8")
     shutil.rmtree(tmp, ignore_errors=True)
     print(f"{len(rows)} artefacts; " +
           "  ".join(f"{k}={v}" for k, v in sorted(counts.items())))

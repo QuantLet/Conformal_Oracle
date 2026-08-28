@@ -110,6 +110,16 @@ garch_conformal_detail.csv
 !/scripts/qV_block_bootstrap.py
 !/scripts/gap_ablation.py
 !/scripts/regenerate_rolling_vs_static.py
+# Added 2026-08-27. MIGRATION.md tells the new machine to run four audits before
+# trusting the move; three of them, and the guard harness PROTOCOL.md Rule 2
+# points at, were never re-included here and so did not travel. build_dq_panel.py
+# joins them: it produces analysis/phase3/dq_panel.csv, which until now had no
+# producer at all.
+!/scripts/audit_qv_convention.py
+!/scripts/audit_structural_claims.py
+!/scripts/audit_supplement_targets.py
+!/scripts/build_guards.py
+!/scripts/build_dq_panel.py
 
 # Root-level images (Quantlets have their own)
 /ql_logo.png

@@ -1,0 +1,42 @@
+# Every \input target of main_R2.tex, supplement.tex and sections/*.tex, with the
+# script that writes it. Guard 5 in scripts/build_guards.py fails the build when a
+# document inputs a file this manifest does not declare.
+#
+# Written 2026-08-27, after the third artefact in this project turned out to have
+# no producer: Table S.10 (hand-authored from a pre-correction vintage), two .tex
+# files edited after generation, and tab_master_results.tex, whose only writer was
+# a script MANIFEST.md had marked SUPERSEDED. Three instances make a class, and a
+# class gets a guard rather than another note.
+#
+# kind: generated = a script writes it; authored = prose, written by hand on purpose.
+target	kind	producer
+Quantlets/CFP_ES_Correction_Z2/tab_es_correction	generated	Quantlets/CFP_ES_Correction_Z2/CFP_ES_Correction_Z2.py
+Quantlets/CO_asset_overview/tab_assets	generated	Quantlets/CO_asset_overview/run_asset_overview.py
+Quantlets/CO_baseline_comparison/tab_baselines	generated	Quantlets/CO_baseline_comparison/compile_tab_baselines.py
+Quantlets/CO_baseline_comparison_tuned/tab_gbm_tuned	generated	Quantlets/CO_baseline_comparison_tuned/run_tuned_gbm_qr.py
+Quantlets/CO_chronos_sampling/tab_alpha_response	generated	Quantlets/CO_chronos_sampling/run_alpha_response.py
+Quantlets/CO_chronos_sampling/tab_dose_response	generated	Quantlets/CO_chronos_sampling/run_dose_table.py
+Quantlets/CO_cross_sectional/tab_cross_sectional	generated	Quantlets/CO_cross_sectional/run_cross_sectional.py
+Quantlets/CO_diagnostic_regression/tab_diag_regression	generated	Quantlets/CO_diagnostic_regression/run_diag_regression.py
+Quantlets/CO_full_evaluation/tab_master_results_r2	generated	Quantlets/CO_full_evaluation/build_table1_r2.py
+Quantlets/CO_full_evaluation/tab_master_results_r2_note	generated	Quantlets/CO_full_evaluation/build_table1_r2.py
+Quantlets/CO_fz_scores/tab_fz_scores	generated	Quantlets/CO_fz_scores/run_fz_scores.py
+Quantlets/CO_garch_conformal/tab_rolling_vs_static	generated	Quantlets/CO_garch_conformal/run_rolling_vs_static.py
+Quantlets/CO_model_overview/tab_models	generated	Quantlets/CO_model_overview/run_model_overview.py
+Quantlets/CO_multi_quantile_panel/tab_multiquantile	generated	Quantlets/CO_multi_quantile_panel/run_multiquantile.py
+Quantlets/CO_multi_quantile_panel/tab_panel_by_class	generated	Quantlets/CO_multi_quantile_panel/run_panel_by_class.py
+Quantlets/CO_multi_quantile_panel/tab_panel_pooled	generated	Quantlets/CO_multi_quantile_panel/run_panel_pooled.py
+Quantlets/CO_panel_wildcluster/tab_panel_wildcluster_dm	generated	Quantlets/CO_panel_wildcluster/run_wild_cluster_bootstrap.py
+Quantlets/CO_panel_wildcluster/tab_panel_wildcluster_kupiec	generated	Quantlets/CO_panel_wildcluster/run_wild_cluster_bootstrap.py
+Quantlets/CO_quantile_scores/tab_dm_pvalues	generated	Quantlets/CO_quantile_scores/run_dm_pvalues.py
+Quantlets/CO_robustness/tab_gap_ablation	generated	scripts/gap_ablation.py
+Quantlets/CO_robustness/tab_h14_small_sample.tex	generated	Quantlets/CO_robustness/run_robustness_mc.py
+Quantlets/CO_robustness/tab_h15_fc_sensitivity.tex	generated	Quantlets/CO_robustness/run_robustness_mc.py
+Quantlets/CO_robustness/tab_h16_regime_stability.tex	generated	Quantlets/CO_robustness/run_robustness_mc.py
+Quantlets/CO_robustness/tab_qV_bootstrap_ci	generated	Quantlets/CO_robustness/run_qV_bootstrap_table.py
+Quantlets/CO_robustness/tab_robustness_summary	generated	Quantlets/CO_robustness/run_robustness_summary.py
+Quantlets/CO_robustness_inner7/tab_tail_closure_extended	generated	Quantlets/CO_robustness_inner7/run_inner7_tail_closure.py
+Quantlets/CO_simulation_study/tab_simulation_extended	generated	Quantlets/CO_simulation_study/run_simulation_study.py
+numbers	generated	scripts/paper_numbers.py
+sections/sec4_theory	authored	-
+sections/sec5_montecarlo	authored	-

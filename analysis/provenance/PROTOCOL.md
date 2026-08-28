@@ -136,6 +136,33 @@ The corollary for validating an estimator against a second route: compare the
 this in one line; comparing dispersion and coverage could not have found it at
 any sample size.
 
+### The four ways a check stops being evidence
+
+Rule 2 was written against one of these and has since met three more. They are
+distinct failures with distinct remedies, and collapsing them into "the check was
+weak" loses the remedy each time.
+
+| mode | what happens | instance | remedy |
+|---|---|---|---|
+| **cannot fail** | no case in the population would trip it | the gate's lower band edge at −3.500, blocking 0 of 312 cells | state how many cases the check rejects |
+| **cannot see** | it fails informatively, but on a statistic the defect leaves invariant | R14: a support translation against a dispersion tolerance | state the smallest defect that survives, and whether the statistic moves at all |
+| **cannot run** | the check exists only where it was written | three of the four audits `MIGRATION.md` requires, and `build_guards.py` itself, matched by the `/scripts/*` glob and never re-included | the build fails when the written discipline names a file git does not carry — guard 4 |
+| **verdict outlives its state** | it ran, it passed, and the thing it described changed underneath | `MANIFEST.md` grading `tab_regime_sensitivity.tex` `OK` before the 2026-08-17 sign correction, still reading as a live guarantee in the working tree it does not examine | a passing verdict carries the state it was computed against, or it is re-run |
+
+The third is the one that reaches outside the machine. A rule that names its own
+enforcement harness, in a repository published on Quantlet and distributed on
+PyPI, while that harness is excluded from the distribution, is a rule nobody but
+its author can apply — not a referee reproducing the result, and not the same
+author after the migration `MIGRATION.md` describes. The discipline was written
+down and shipped without the instrument.
+
+The fourth is the reason `build_manifest.py` did not raise any of the ten
+divergences in `L1_TABLE_REPRODUCTION.md`. Its verdicts were true when recorded.
+It compares against the frozen submission rather than the working tree, so drift
+introduced after the submission is outside its field of view by construction, and
+nothing re-runs it when an input is corrected. A snapshot with no expiry is read
+as a guarantee.
+
 ## Rule 3 — pre-register, then run
 
 Write down the expected result and what would falsify it, before computing. Files

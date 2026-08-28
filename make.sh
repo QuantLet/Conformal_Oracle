@@ -50,6 +50,20 @@ copy_fig() {
 }
 
 # ──────────────────────────────────────────────────────────────
+# Target: guards
+#   Run the build guards. Each runs its negative control first and
+#   reports BROKEN if the control does not fail. Nothing called this
+#   before 2026-08-27: the harness PROTOCOL.md Rule 2 points at was
+#   never invoked by the build, which is the "cannot run" mode of the
+#   table in PROTOCOL.md.
+# ──────────────────────────────────────────────────────────────
+do_guards() {
+    info "=== GUARDS ==="
+    python "$ROOT/scripts/build_guards.py" || fail "build guards"
+    ok "=== GUARDS PASSED ==="
+}
+
+# ──────────────────────────────────────────────────────────────
 # Target: tables
 #   Regenerate all .tex table files from canonical data.
 #   Does NOT include Monte Carlo tables (use 'mc' target).
@@ -67,7 +81,16 @@ do_tables() {
     run_py "Quantlets/CO_cross_sectional/run_cross_sectional.py" "T3  Cross-sectional"
 
     # T4: Master results (Table 4)
-    run_py "Quantlets/CO_full_evaluation/run_master_table.py" "T4  Master results"
+    # run_master_table.py used to be called here. It emits ten columns over nine
+    # models and cannot produce the published table at all, which MANIFEST.md
+    # records as SUPERSEDED -- so every rebuild regressed tab_master_results.tex
+    # from twelve columns to ten. The live table of R2 is tab_master_results_r2,
+    # and rebuild_master_table.py is the reproducible successor to the R1 print.
+    run_py "Quantlets/CO_full_evaluation/build_table1_r2.py" "T4  Master results (R2)"
+    info "T4b Master results (R1 successor)"
+    python "$ROOT/Quantlets/CO_full_evaluation/rebuild_master_table.py" --convention published \
+        || fail "T4b Master results (R1 successor)"
+    ok "T4b Master results (R1 successor)"
 
     # T5: Multi-quantile (Table 5)
     run_py "Quantlets/CO_multi_quantile_panel/run_multiquantile.py" "T5  Multi-quantile"
@@ -256,6 +279,7 @@ do_manuscript() {
 # ──────────────────────────────────────────────────────────────
 do_all() {
     info "=== FULL REBUILD (tables + figures + manuscript) ==="
+    do_guards
     do_tables
     do_figures
     do_manuscript
@@ -352,6 +376,7 @@ do_verify() {
 # ──────────────────────────────────────────────────────────────
 case "${1:-help}" in
     all)        do_all ;;
+    guards)     do_guards ;;
     tables)     do_tables ;;
     figures)    do_figures ;;
     mc)         do_mc ;;
@@ -360,9 +385,10 @@ case "${1:-help}" in
     clean)      do_clean ;;
     verify)     do_verify ;;
     help|*)
-        echo "Usage: $0 {all|tables|figures|mc|rr|manuscript|clean|verify}"
+        echo "Usage: $0 {all|guards|tables|figures|mc|rr|manuscript|clean|verify}"
         echo ""
-        echo "  all         Tables + figures + manuscript (excludes MC)"
+        echo "  all         Guards + tables + figures + manuscript (excludes MC)"
+        echo "  guards      Build guards, each with its negative control"
         echo "  tables      Regenerate all table .tex files (~2 min)"
         echo "  figures     Regenerate all figure PDFs (~5 min)"
         echo "  mc          Run Monte Carlo studies, Tables D.16-D.18 (~30 min)"

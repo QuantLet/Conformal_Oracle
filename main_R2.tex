@@ -150,7 +150,7 @@ five such failure modes, each located in a specific step and each established by
 a diagnostic that is arithmetic rather than inferential. They are set out once,
 in Table~\ref{tab:failure_modes}, and not re-enumerated thereafter. Their
 measured effect on reported 1\% violation rates spans factors between five and seventy, and it runs in both directions: one of them inflates every threshold by
-roughly 45\%, producing a 0.4\% violation rate against a nominal 1\% and a Basel
+roughly 45\%, producing a \nRawPiGJRDefectivePct\% violation rate against a nominal 1\% and a Basel
 green zone on all \nMainAssets{} assets. A reduction rule that reports fewer
 exceedances than nominal attracts no scrutiny from a system built to count them.
 
@@ -284,6 +284,10 @@ Section~\ref{sec:lit} situates the contribution in the literature on tail
 miscalibration, regulatory backtesting, and post-hoc calibration.
 Section~\ref{sec:framework} develops the two-layer framework and describes the
 asset universe, the forecasters, and the experimental design.
+Section~\ref{sec:theory} gives the coverage theory under temporal dependence,
+with the remainder made explicit and the separation condition stated rather than
+assumed. Section~\ref{sec:mc} reports the Monte Carlo evidence, including the
+limit behaviour of the traffic-light classification.
 Section~\ref{sec:mechanism} establishes the sampling mechanism by controlled
 experiment and gives the analytic estimator that removes it.
 Section~\ref{sec:results} presents the audit and the raw panel.
@@ -294,10 +298,9 @@ quantifies how much of that blind spot it removes.
 Section~\ref{sec:recal} reports what recalibration restores, when it should be
 applied, and the capital arithmetic that follows.
 Section~\ref{sec:discuss} sets out limitations and implications for deployment,
-and Section~\ref{sec:conclude} concludes. Proofs, the Monte Carlo study, the
-recalibration baselines, the static-versus-rolling detail, the
-calibration--sharpness frontier and the supplementary tables are in the
-supplement.
+and Section~\ref{sec:conclude} concludes. Proofs, the recalibration baselines,
+the static-versus-rolling detail, the calibration--sharpness frontier and the
+supplementary tables are in the supplement.
 
 Data and code accompanying this paper are available via the Quantlet platform \quantlet{https://github.com/QuantLet/Conformal_Oracle/}; slides are on the Quantinar platform \quantinar{https://quantinar.com/course/100048/recalibrating-tail-risk-forecasts-under-temporal-dependence}.
 	
@@ -536,8 +539,9 @@ A warm-up period (512 observations for TSFMs, 250 for the windowed classical ben
 \label{sec:mechanism}
 
 This section establishes, by controlled experiment, that a single documented
-default in a checkpoint's packaged inference routine accounts for a
-thirty-nine-fold exceedance of a nominal 1\% Value-at-Risk, and then removes the
+default in a checkpoint's packaged inference routine accounts for a realised
+exceedance rate of \nPiSmallDefaultOne{} against a nominal $\alpha = 0.01$ for
+Chronos-Small, and \nPiMiniDefaultOne{} for Chronos-Mini, and then removes the
 sampler from the estimation path entirely. The case is developed on Chronos-T5
 \citep{ansari2024chronos} because it is independently reproducible: the
 checkpoint is public, the sampling routine ships with it, and the experiment
@@ -749,7 +753,7 @@ every instrument in Section~\ref{sec:blindspot}.
 		\emph{(GJR-GARCH)}
 		& the quantile map read directly from the generator: $t_\nu^{-1}(\alpha)$
 		applied without the variance standardisation, inflating every threshold
-		by 45\% & $0.004$ & \nRawPiGJR \\
+		by 45\% & $\nRawPiGJRDefective$ & \nRawPiGJR \\
 		\addlinespace[2pt]
 		\multicolumn{4}{@{}l}{\emph{In data assembly}}\\
 		Identifier alias resolving to a different instrument
@@ -868,11 +872,15 @@ What differs between two releases is a primary-source question, and it settles
 before a comparison is drawn. The one genuinely controlled contrast
 available here holds the weights, contexts and dates fixed and varies only the
 code that reads the predictive law --- the two Chronos configurations of
-Section~\ref{sec:mechanism}.\footnote{Every series in Table~\ref{tab:master} has been through the
-scripted validation gate of Section~\ref{sec:gate} and
-Supplement~S.11. \nGateBlocked{} do not pass it: the two Chronos series
+Section~\ref{sec:mechanism}.\footnote{The \nGateSeries{} series with forecast files in the replication
+archive have been through the scripted validation gate of
+Section~\ref{sec:gate} and Supplement~S.11. The three dynamic-quantile
+forecasters of Table~\ref{tab:master} --- CAViaR-AS, CAViaR-SAV and GAS-t ---
+are estimated per asset by a separate pipeline that stores no series, so the
+gate has no object to run on and they are ungated rather than passed. \nGateBlocked{} do not pass it: the two Chronos series
 sampled at the checkpoint default, which fail five checks each, and their
-analytic counterparts, which fail the coverage band on one asset apiece. The
+analytic counterparts, which fail the coverage band on one asset apiece, and
+Chronos-Mini-A the $\alpha$-response band on one asset besides. The
 first two are retained in Table~\ref{tab:master} deliberately, as the measured
 consequence of that configuration rather than as candidate forecasters; a blocked series is
 reported with its diagnosis, not silently dropped.}
@@ -1306,6 +1314,15 @@ predictive support may tie for the same reason. The gate records the estimator c
 series in a manifest and declares the check inapplicable rather than returning a
 verdict on it.
 
+That scoping has a consequence worth stating rather than leaving to the
+manifest: on this panel tail reach returns \emph{inapplicable} for all
+\nGateSeries{} series, because none of the shipped forecast files stores sampled
+paths. It contributes no verdict to any of the blocks reported below, and the
+gate that operates here is nine checks wide, not ten. A check that cannot return
+a verdict on the population it is run against carries no evidence when that
+population passes --- the same reading this paper applies to the lower band edge
+of Section~\ref{sec:blindspot}, and it is recorded for the same reason.
+
 \begin{table}[htbp]
 	\centering
 	\caption{The ten checks, stated on the lower quantile $\hat q^{lo}_\alpha$
@@ -1343,9 +1360,11 @@ verdict on it.
 \paragraph{Result on this panel} The gate blocks \nGateBlocked{} of the
 \nGateSeries{} series submitted to it. Two are the Chronos series sampled at the
 checkpoint default, which fail monotonicity, scale, $\alpha$-response, coverage
-and dispersion on all \nMainAssets{} assets. Two are their analytic
-counterparts, which fail only the coverage-plausibility band, and only on one
-asset each --- the residual tail deficiency of
+and dispersion on all \nMainAssets{} assets, and the extremes band on
+\nGateExtremesSmall{} and \nGateExtremesMini{} of them. Two are their analytic
+counterparts, which fail the coverage-plausibility band on one asset each, and,
+for Chronos-Mini-A, $\alpha$-responsiveness on one asset as well --- the
+residual tail deficiency of
 Section~\ref{sec:mechanism:consequence}, recorded as a block requiring a written
 diagnosis rather than silently admitted. Two of the four blocks are therefore
 marginal, and the band that produces them is unchanged.
@@ -1389,7 +1408,7 @@ Conditional coverage is a different matter, and the reason is partly that the te
 	\end{minipage}
 \end{table}
 
-Corrected violation rates cluster tightly around $\hat\pi = 0.010$ for every forecaster in the table, which is what the guarantee promises and is exactly why the corrected column cannot rank them. The Quantile Score can: it runs from $\nLitQSMin \times 10^{-4}$ for the two GJR-GARCH variants, which are indistinguishable from one another (Section~\ref{sec:practitioner}), to $\nLitQSMax \times 10^{-4}$ for the truncated Chronos-Small, and the ordering it produces is close to the ordering by $\bar R$, because both are dominated by how far the raw forecast had to move.
+Corrected violation rates cluster tightly around $\hat\pi = 0.010$ for every forecaster in the table, which is what the guarantee promises and is exactly why the corrected column cannot rank them. The Quantile Score can: it runs from $\nLitQSMin \times 10^{-4}$ for the two GJR-GARCH variants, which are indistinguishable from one another (Section~\ref{sec:practitioner}), to $\nLitQSMax \times 10^{-4}$ for the truncated Chronos-Small, each over that series' full test window, and the ordering it produces is close to the ordering by $\bar R$, because both are dominated by how far the raw forecast had to move.
 
 Conformal corrections widen VaR for under-conservative forecasters and contract it for over-conservative ones; for the panel, the dominant effect is widening, raising implied capital requirements (Table~\ref{tab:master}, Width/GJR column). Calibration--efficiency trade-offs and the resulting capital arithmetic are discussed in Sections~\ref{sec:failure} and~\ref{sec:economic}.
 
@@ -1429,9 +1448,9 @@ panel because more raw forecasts are already acceptable at those levels.
 Whether a deterioration matters depends on whether it buys anything. Of the
 \nDegradedRoll{} pairs the rolling estimator degrades, \nDegradedRollZoneUp{}
 move from Yellow to Green --- a trade a risk manager can accept --- while
-\nDegradedRollNoChange{} obtain no zone improvement: 99 were already Green, one
-was not and stays where it was, and 2 move from Green to Yellow and worsen on
-both axes. On \nDegradedRollNoChangePct\% of the degradations the correction is
+\nDegradedRollNoChange{} obtain no zone improvement: \nDegradedRollAlreadyGreen{}
+were already Green, \nDegradedRollSameNotGreen{} was not and stays where it is,
+and \nDegradedRollZoneDown{} move from Green to Yellow and worsen on both axes. On \nDegradedRollNoChangePct\% of the degradations the correction is
 therefore not a trade-off but the wrong intervention.
 
 This suggests a deployment rule that requires no classification: apply the
@@ -1506,9 +1525,10 @@ The comparison that belongs in the body rather than a robustness appendix is the
 configuration one, because it is the only contrast in this paper that holds the
 model fixed and varies only the reduction step. On identical weights, contexts
 and dates, reading the Chronos predictive distribution analytically beats
-sampling it at the checkpoint default: mean corrected quantile score $\nLitQSAnalyticSmall$ against $\nLitQSDefaultSmall \times 10^{-4}$ for
-Chronos-Small and $\nLitQSAnalyticMini$ against $\nLitQSDefaultMini$ for
-Chronos-Mini, both at $p < 0.001$. These figures are computed on the dates the
+sampling it at the checkpoint default: mean corrected quantile score
+$\nLitQSAnalyticSmall \times 10^{-4}$ against $\nLitQSDefaultSmall \times
+10^{-4}$ for Chronos-Small and $\nLitQSAnalyticMini \times 10^{-4}$ against
+$\nLitQSDefaultMini \times 10^{-4}$ for Chronos-Mini, both at $p < 0.001$. These figures are computed on the dates the
 two configurations share, so they differ slightly from the per-asset averages of
 Table~\ref{tab:master}, which run over each series' full test window. They are
 the \emph{corrected} series, so the difference survives a recalibration that has
@@ -1519,15 +1539,17 @@ here rests on them.
 At the panel level the two cluster-robust procedures in this paper disagree, and
 the disagreement is the informative part. The pooled unconditional test rejects
 four forecasters at the 5\% level --- EWMA, Moirai~2.0, Chronos-Small read
-analytically and GJR-GARCH, at pooled rates of $0.0119$, $0.0114$, $0.0113$ and
-$0.0111$ against a nominal $0.01$. Allowing dependence within an asset through a
-Driscoll--Kraay cluster statistic leaves one rejection, EWMA at $p = 0.035$; a
+analytically and GJR-GARCH, at pooled rates of $\nPoolPiEWMA$,
+$\nPoolPiMoiraiTwo$, $\nPoolPiSmallAnalytic$ and $\nPoolPiGJR$ against a
+nominal $0.01$. Allowing dependence within an asset through a Driscoll--Kraay
+cluster statistic leaves one rejection, EWMA at $p = \nPoolClusterEWMA$; a
 Rademacher wild-cluster bootstrap over the same \nMainAssets{} clusters with
-$B = 999$ replications leaves none, EWMA coming closest at $p = 0.058$. Neither
+$B = 999$ replications leaves none, EWMA coming closest at
+$p = \nPoolBootEWMA$. Neither
 procedure is the wrong one. With \nMainAssets{} clusters the bootstrap
 distribution is built from \nMainAssets{} sign flips, its resolution near the
-5\% boundary is coarse, and a forecaster sitting at $0.035$ under one and
-$0.058$ under the other has not been shown to be either adequately or
+5\% boundary is coarse, and a forecaster sitting at $\nPoolClusterEWMA$ under
+one and $\nPoolBootEWMA$ under the other has not been shown to be either adequately or
 inadequately calibrated. What the comparison establishes is narrower than either
 verdict: the pooled rejections are not robust to allowing within-asset
 dependence, and should not be read as evidence of miscalibration
@@ -1541,7 +1563,10 @@ in Supplement~S.2, S.4 and S.12. One result from them bears on the argument here
 performance across the alternatives is governed less by flexibility than by
 whether the recalibration layer respects the tail-sparsity constraint of
 Remark~\ref{rem:tail_sparsity}, and the one-parameter shift has the best quantile
-score of the ten alternatives and the raw baseline compared.
+score of the nine alternatives that report one and of the raw baseline.
+Isotonic regression is the tenth and reports none: its step-function estimate is
+unstable or undefined at the 1\% tail for most pairs, which Table~S.25
+records rather than fills in.
 \subsection{Capital arithmetic, and what it now shows}
 \label{sec:economic}
 
@@ -1677,9 +1702,11 @@ model.
 
 We therefore propose checking forecast series structurally, against properties
 they must have to be Value-at-Risk series at all, before they are calibrated or
-evaluated. Ten such checks are cheap, eight of them need nothing but the series
-and the returns, and they block \nGateBlocked{} of the \nGateSeries{} series
-here. Two are invariants, one is an invariant tested through a proxy, and seven
+evaluated. Ten such checks are cheap, and seven of them need nothing but the
+forecast series and the returns: tail reach needs the model's sampled paths, and
+$\alpha$-responsiveness and coverage plausibility need an evaluation window, so
+the gate is not entirely upstream of the data a backtest consumes. Together they
+block \nGateBlocked{} of the \nGateSeries{} series here. Two are invariants, one is an invariant tested through a proxy, and seven
 are plausibility bands with stated rather than derived thresholds; all ten were
 specified after the failure modes they address had been identified, so their
 performance on those failure modes is in-sample by construction. The argument for

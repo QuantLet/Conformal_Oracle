@@ -95,9 +95,15 @@ def strip0(s: str) -> str:
 
 
 def load() -> pd.DataFrame:
-    ar = pd.read_csv(TABLES / "all_results.csv")
-    m11 = pd.read_csv(TABLES / "moirai11_full_results.csv")
-    d = pd.concat([ar, m11], ignore_index=True)
+    # Moirai-1.1 used to live in a separate file and was concatenated here. Since
+    # 2026-08-17 all_results.csv is regenerated over every model in cfp_config and
+    # carries it directly, so concatenating both entered the model twice: its
+    # count-based columns (Kupiec, CC, Green) came out at exactly 2x. The separate
+    # file is also a pre-correction vintage. See analysis/moirai11_reconciliation/.
+    d = pd.read_csv(TABLES / "all_results.csv")
+    dup = d.duplicated(subset=["model", "symbol", "alpha"]).sum()
+    if dup:
+        raise SystemExit(f"{dup} duplicated model/symbol/alpha rows in all_results.csv")
     return d[d["alpha"] == ALPHA].copy()
 
 

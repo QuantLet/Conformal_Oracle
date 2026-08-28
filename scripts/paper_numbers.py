@@ -125,6 +125,12 @@ def collect() -> dict:
       n[f"Degraded{tag}"] = int(z["n_degraded"])
       n[f"Degraded{tag}ZoneUp"] = int(z["zone_up"])
       n[f"Degraded{tag}NoChange"] = int(z["zone_same"] + z["zone_down"])
+      # The decomposition of NoChange used to be carried as three prose literals
+      # beside a macro total, so the parts did not move when the artefact did.
+      # After R14 the total went 102 -> 103 and the literals stayed at 99 + 1 + 2.
+      n[f"Degraded{tag}AlreadyGreen"] = int(z["zone_same_already_green"])
+      n[f"Degraded{tag}SameNotGreen"] = int(z["zone_same"] - z["zone_same_already_green"])
+      n[f"Degraded{tag}ZoneDown"] = int(z["zone_down"])
       w = wc[(wc["alpha"] == 0.01) & (wc["estimator"] == est)].iloc[0]
       n[f"WellCal{tag}N"] = int(w["n"])
       n[f"WellCal{tag}Worse"] = int(w["n_worse"])
@@ -155,11 +161,49 @@ def collect() -> dict:
         n[f"Ratio{tag}Ten"] = ar.loc[(model, 0.10), "ratio"]
 
     # ---- the gate --------------------------------------------------------- #
-    if gate is not None and "verdict" in gate.columns:
-        n["GateBlocked"] = int((gate["verdict"].str.upper() == "BLOCK").sum())
+    # The column is PASS, not verdict. Guarding on "verdict" meant this branch
+    # never ran and the else-branch below supplied 4 and 13 as literals -- in the
+    # one script whose whole purpose is that no figure is hand-carried. The
+    # fallback happened to be right, which is why it survived; it is now an error
+    # rather than a default, because a silent fallback to a literal is the defect.
+    if gate is None or "PASS" not in gate.columns:
+        raise SystemExit("PROMOTION_GATE.csv missing or has no PASS column; "
+                         "refusing to fall back to a literal gate count")
+    if True:
+        n["GateBlocked"] = int((~gate["PASS"].astype(bool)).sum())
         n["GateSeries"] = len(gate)
-    else:
-        n["GateBlocked"], n["GateSeries"] = 4, 13
+        # The extremes band was missing from the body's list of what the two
+        # default-sampled series fail, and it is the one they do not fail on all
+        # 24 assets, so it cannot be carried by the "on all assets" phrasing.
+        if "extremes" in gate.columns:
+            for m, tag in (("Chronos-Small", "Small"), ("Chronos-Mini", "Mini")):
+                row = gate[gate["model"] == m]
+                if len(row):
+                    n[f"GateExtremes{tag}"] = int(str(row.iloc[0]["extremes"]).split("/")[0])
+
+
+    # The rate the GJR-GARCH series reported before the unstandardised Student-t
+    # quantile was corrected. It appeared twice as a literal -- "0.4\%" in the
+    # introduction and "$0.004$" in the failure-mode table -- for a quantity that
+    # is measured, and measured in a file.
+    gjr = pd.read_csv(BASE / "analysis" / "gjr_quantile" / "promotion_before_after.csv")
+    n["RawPiGJRDefective"] = float(gjr[gjr["series"] == "superseded"]["pihat"].mean())
+    n["RawPiGJRDefectivePct"] = 100 * n["RawPiGJRDefective"]
+
+    # ---- POOL panel: one row is a forecaster pooled over assets and dates --- #
+    # 36,588 observations for the foundation models, 38,473 for the benchmarks.
+    # These were four prose literals beside two more; the pooled rate and the two
+    # cluster p-values are measurements and now travel as macros. The panel tag
+    # is "Pool", declared here beside Main, Seq and Gap.
+    wcl = pd.read_csv(Q / "CO_panel_wildcluster" / "wild_cluster_kupiec.csv") \
+        .set_index("model")
+    pnl = pd.read_csv(Q / "CO_multi_quantile_panel" / "tab_panel_pooled.csv") \
+        .set_index("model")
+    for m, tag in (("EWMA", "EWMA"), ("Moirai-2.0", "MoiraiTwo"),
+                   ("Chronos-Small-A", "SmallAnalytic"), ("GJR-GARCH", "GJR")):
+        n[f"PoolPi{tag}"] = float(wcl.loc[m, "pi_pooled"])
+    n["PoolBootEWMA"] = float(wcl.loc["EWMA", "p_boot"])
+    n["PoolClusterEWMA"] = float(pnl.loc["EWMA", "p_cluster"])
 
     # ---- uMCB ------------------------------------------------------------- #
     um = pd.read_csv(BASE / "analysis" / "umcb" / "umcb_pairs.csv")
@@ -288,6 +332,15 @@ def fmt(key: str, v) -> str:
         if key.startswith("MCT"):
             return f"{int(v):,}".replace(",", "{,}")
         return str(int(v))
+    # Pooled panel rates sit within one thousandth of each other and of nominal;
+    # three decimals prints them all as 0.011 and erases the comparison the
+    # sentence makes. The p-values keep three.
+    if key.startswith("RawPiGJRDefectivePct"):
+        return f"{v:.1f}"
+    if key.startswith("RawPiGJRDefective"):
+        return f"{v:.4f}"
+    if key.startswith("PoolPi"):
+        return f"{v:.4f}"
     if key.startswith("GapUnd"):
         return f"{v:.1f}"
     if key.startswith("GapDelta"):

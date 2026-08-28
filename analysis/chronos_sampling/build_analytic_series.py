@@ -78,21 +78,28 @@ def batch_logits(pipe, ctx: torch.Tensor):
             np.asarray(scale).reshape(-1).astype(float))
 
 
-def analytic_batch(logits, scales, centers, n_special):
-    """Categorical-CDF quantiles, mean and sd for each row of a logit batch."""
+def analytic_batch(logits, scales, centers, n_special, dtype=np.float64):
+    """Categorical-CDF quantiles, mean and sd for each row of a logit batch.
+
+    Token id t decodes to ``centers[t - n_special - 1]``, which is what the
+    tokenizer's own ``MeanScaleUniformBins.output_transform`` does. The value
+    tokens are therefore ids ``n_special + 1 .. n_special + len(centers)``.
+    Dropping the ``- 1`` pairs every probability with the next bin up and
+    translates the whole support by one bin width; that was R14.
+    """
     ids = np.arange(logits.shape[1])
-    keep = (ids >= n_special) & (ids - n_special < len(centers))
-    base = centers[ids[keep] - n_special]
+    keep = (ids >= n_special + 1) & (ids - n_special - 1 < len(centers))
+    base = centers[ids[keep] - n_special - 1].astype(dtype)
     order = np.argsort(base)
     base_sorted = base[order]
 
-    lg = logits[:, keep]
+    lg = logits[:, keep].astype(dtype)
     p = np.exp(lg - lg.max(axis=1, keepdims=True))
     p /= p.sum(axis=1, keepdims=True)
     p = p[:, order]
     cdf = np.cumsum(p, axis=1)
 
-    vals = base_sorted[None, :] * scales[:, None]        # scale is per row
+    vals = base_sorted[None, :] * scales.astype(dtype)[:, None]   # scale is per row
     mean = np.sum(vals * p, axis=1)
     var = np.sum(p * (vals - mean[:, None]) ** 2, axis=1)
     q = {}
@@ -103,6 +110,29 @@ def analytic_batch(logits, scales, centers, n_special):
     return q, mean, np.sqrt(var)
 
 
+
+def check_map(pipe, centers, n_special):
+    """Rule 2 guard: the map must agree with the tokenizer's own decoder, and the
+    map this script used before R14 must disagree with it. Runs before any date."""
+    ids = np.arange(n_special, n_special + len(centers) + 2)
+    ref = pipe.tokenizer.output_transform(
+        torch.tensor(ids).reshape(1, 1, -1), torch.tensor([1.0])
+    ).numpy().reshape(-1).astype(float)
+    interior = (ids >= n_special + 1) & (ids - n_special - 1 < len(centers))
+    ours = centers[ids[interior] - n_special - 1].astype(float)
+    prior = centers[np.clip(ids[interior] - n_special, 0, len(centers) - 1)].astype(float)
+    d_ours = float(np.max(np.abs(ours - ref[interior])))
+    d_prior = float(np.max(np.abs(prior - ref[interior])))
+    binw = float(np.diff(centers).mean())
+    print(f"  map check: |ours - decoder| {d_ours:.2e}  "
+          f"|pre-R14 map - decoder| {d_prior:.2e} ({d_prior / binw:.3f} bins)",
+          file=sys.stderr)
+    if d_ours != 0.0:
+        raise SystemExit("map does not reproduce the tokenizer decoder")
+    if d_prior <= binw / 2:
+        raise SystemExit("negative control did not fail: the guard cannot detect the defect")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="both", choices=["small", "mini", "both"])
@@ -110,25 +140,32 @@ def main() -> int:
     ap.add_argument("--assets", nargs="*", default=None)
     ap.add_argument("--limit", type=int, default=None,
                     help="cap dates per asset (smoke test only)")
+    ap.add_argument("--dtype", default="float64", choices=["float32", "float64"],
+                    help="precision of the softmax and the CDF. float32 leaves the "
+                         "bin the CDF crosses ambiguous on a small share of dates")
+    ap.add_argument("--dest-suffix", default="",
+                    help="write to <subdir><suffix>/ instead of over the shipped panels")
     a = ap.parse_args()
 
     from chronos import ChronosPipeline
     dev = ("mps" if torch.backends.mps.is_available()
            else ("cuda" if torch.cuda.is_available() else "cpu"))
+    prec = np.float32 if a.dtype == "float32" else np.float64
     assets = a.assets or SYMBOLS
     which = list(SPECS) if a.model == "both" else [a.model]
     print(f"backend {dev} | {len(assets)} assets | models {which} "
-          f"| batch {a.batch}", file=sys.stderr)
+          f"| batch {a.batch} | {a.dtype}", file=sys.stderr)
 
     summary = []
     for key in which:
         model_id, subdir = SPECS[key]
-        dest = DATA / subdir
+        dest = DATA / (subdir + a.dest_suffix)
         dest.mkdir(parents=True, exist_ok=True)
         pipe = ChronosPipeline.from_pretrained(model_id, dtype=torch.float32,
                                                device_map=dev)
         centers = pipe.tokenizer.centers.detach().cpu().numpy()
         n_special = pipe.model.config.n_special_tokens
+        check_map(pipe, centers, n_special)
         t0 = time.time()
 
         for ai, asset in enumerate(assets):
@@ -144,7 +181,7 @@ def main() -> int:
                     np.stack([vals[t - CONTEXT:t] for t in blk]),
                     dtype=torch.float32)
                 lg, sc = batch_logits(pipe, ctx)
-                q, mu, sd = analytic_batch(lg, sc, centers, n_special)
+                q, mu, sd = analytic_batch(lg, sc, centers, n_special, dtype=prec)
                 for j, t in enumerate(blk):
                     rows.append({"date": dates[t], "mean": float(mu[j]),
                                  "std": float(sd[j]),
