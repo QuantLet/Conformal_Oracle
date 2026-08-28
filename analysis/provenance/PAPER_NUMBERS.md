@@ -297,6 +297,44 @@ not possible without editing this file's producer.
 | `\nGateRollUpgradesLostWorse` | 11 | SEQ (312) |
 | `\nGateRollUpgradesLostNet` | 9 | SEQ (312) |
 | `\nGateRollUpgradeAndDeteriorate` | 71 | SEQ (312) |
+| `\nHarnessDefectsInstrument` | 4 | -- |
+| `\nHarnessDefectsObject` | 2 | -- |
+| `\nHarnessDefectsTotal` | 6 | -- |
+| `\nMLCells` | 40 | -- |
+| `\nMLDates` | 200 | -- |
+| `\nMLAssets` | 4 | -- |
+| `\nMLLeafSettings` | 5 | -- |
+| `\nMLPiGrid` | 0.5 | -- |
+| `\nMLGbmCells` | 20 | -- |
+| `\nMLGbmBlocked` | 15 | -- |
+| `\nMLGbmRatioLo` | -2.748 | -- |
+| `\nMLGbmRatioHi` | -1.264 | -- |
+| `\nMLQrfCells` | 20 | -- |
+| `\nMLQrfBlocked` | 0 | -- |
+| `\nMLQrfRatioLo` | -2.871 | -- |
+| `\nMLQrfRatioHi` | -1.997 | -- |
+| `\nMLBelowLowerEdge` | 0 | -- |
+| `\nMLRatioMostNegative` | -2.871 | -- |
+| `\nMLLowerEdgeMargin` | 0.629 | -- |
+| `\nMLUnderThreshold` | 2.5 | -- |
+| `\nMLBlockedUnder` | 13 | -- |
+| `\nMLBlockedNotUnder` | 2 | -- |
+| `\nMLPassedUnder` | 0 | -- |
+| `\nMLNewlyBlockedByTightening` | 0 | -- |
+| `\nMLGbmLeafDefault` | 20 | -- |
+| `\nMLKnobThreshold` | 1.5 | -- |
+| `\nMLGbmPiDefault` | 0.0300 | -- |
+| `\nMLGbmTailSpan` | 9.6 | -- |
+| `\nMLGbmCentreSpread` | 0.0083 | -- |
+| `\nMLQrfTailSpan` | 1.6 | -- |
+| `\nMLQuantUniform` | -1.697 | -- |
+| `\nMLQuantTriangular` | -2.103 | -- |
+| `\nMLQuantNormal` | -2.326 | -- |
+| `\nMLQuantTFive` | -2.606 | -- |
+| `\nMLWorkedExampleSigma` | 1.9 | -- |
+| `\nMLWorkedNormal` | 2.9 | -- |
+| `\nMLWorkedTFive` | 2.9 | -- |
+| `\nMLWorkedTThree` | 2.3 | -- |
 | `\nSeqLevelGapMedian` | 3.1\times 10^{-4} | SEQ (312) |
 | `\nSeqLevelChanged` | 0 | SEQ (312) |
 | `\nMainKupRejCorSmallAnalyticOne` | 5 | MAIN (384) |

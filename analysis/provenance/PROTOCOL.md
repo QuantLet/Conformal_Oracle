@@ -289,6 +289,35 @@ as the object -- on this project's record that is where the defect is more often
 than not, and an instrument nobody audits is the one place a defect can sit
 indefinitely while every report says the work is clean.
 
+### Groupings come from a column, not from a reading
+
+The rule this project needed while writing new prose around existing figures,
+and it was earned on an error caught at the moment of writing rather than at
+audit. Replacing a wrong range in Supplement S.12, the sentence "the three
+series with $\bar R$ above 0.35" was written -- a cut chosen after seeing the
+numbers -- and guarded with an assertion that the top three separate from the
+rest. The assertion fired: Lag-Llama sits at 0.357 against 0.184 below it, a
+factor of 1.9, while the two truncated Chronos are at 17 and 24. The
+two-order-of-magnitude gap is *inside* the proposed group, not below it. The
+sentence was rewritten on the master table's own `kind` column.
+
+**Every grouping, threshold, cut or subset that appears in the prose is a column
+of an artefact, or it does not appear.** "The eight foundation-model series" is a
+column. "The series with $\bar R$ above 0.35" is a reading of the data dressed as
+a category, and a reader cannot tell the two apart -- which is the same property
+that makes the fifth pattern's second instance hard to catch.
+
+Where no column exists and the grouping is genuinely needed, it is a declared
+constant with the choice stated at the point of use, exactly as
+`DECLARED_CONSTANTS.md` admits the detection severity cut at 0.005. What is not
+allowed is the third option, which is the one that happens by itself: a cut
+inferred from the numbers, written as though it were a property of the objects.
+
+This matters most where a lot of new prose is written around figures that already
+exist, because that is the configuration in which both of the half-macro defects
+survived. A sentence composed after looking at a table will land on the grouping
+the table happens to show.
+
 ## Rule 3 — pre-register, then run
 
 Write down the expected result and what would falsify it, before computing. Files

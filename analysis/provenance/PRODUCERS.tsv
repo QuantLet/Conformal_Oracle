@@ -40,3 +40,5 @@ Quantlets/CO_simulation_study/tab_simulation_extended	generated	Quantlets/CO_sim
 numbers	generated	scripts/paper_numbers.py
 sections/sec4_theory	authored	-
 sections/sec5_montecarlo	authored	-
+analysis/ml/tab_ml_dose	generated	analysis/ml/emit_dose_tables.py
+analysis/ml/tab_ml_knobs	generated	analysis/ml/emit_dose_tables.py

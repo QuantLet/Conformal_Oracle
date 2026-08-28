@@ -1781,6 +1781,96 @@ rows of Table~\ref{tab:dose_response} is the sampling rule.
 
 
 % Long DOIs and URLs in the reference list overrun the measure otherwise.
+\section{Leaf Resolution and the Tail: a Dose--Response Exhibit}
+\label{app:ml_dose}
+
+Remark~3.1 of the manuscript states that tail sparsity binds twice, on an
+estimator fitted to the tail and again on a correction estimated from it. The
+correction layer is tested by the baseline comparison of
+Section~\ref{app:benchmarks}. This section tests the forecaster layer directly, on
+a family whose tail resolution is set by a single parameter.
+
+\paragraph{Design, and what was fixed in advance} Two estimators --- gradient-boosted
+quantile regression and a quantile random forest --- on \nMLAssets{} assets at
+\nMLDates{} dates, across \nMLLeafSettings{} values of the leaf-size parameter.
+Four readings were registered before the arms ran, and two of the four failed;
+both failures are reported, and together they are what places this exhibit here
+rather than beside the sampling exercise of Section~\ref{app:chronos_sampling}. The
+registration and the outcome are in
+\texttt{analysis/ml/DOSE\_RESPONSE\_REPORT.md}.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Realised exceedance rate at $\alpha = 0.01$ against the leaf-size
+		parameter $\texttt{min\_data\_in\_leaf}$, pooled over \nMLAssets{} assets
+		at \nMLDates{} dates. The rate is pooled first and the ratio taken after;
+		a spread computed over asset-by-leaf cells is a different quantity.}
+	\label{tab:ml_dose}
+	\footnotesize
+	\input{analysis/ml/tab_ml_dose}
+\end{table}
+
+The boosted estimator moves its exceedance rate by a factor of \nMLGbmTailSpan{}
+across the grid from the second point upward, while the centre of the same
+predictive law moves by \nMLGbmCentreSpread{} estimated standard deviations. The
+response is not monotone at the fine end: between the first and second grid
+points the rate rises rather than falls, by less than one standard error on the
+pooled cells, and it is recorded as a non-monotonicity rather than dissolved by
+that observation. The forest spans a factor of \nMLQrfTailSpan{} over the same
+grid.
+
+\paragraph{Not a configuration trap} A tail that moves with a configuration
+parameter invites the reading that any documented knob would move it, in which
+case the exhibit would belong beside the sampling defect of
+Section~\ref{app:chronos_sampling}, where a silent default survives a sensitivity sweep.
+That reading was registered and it fails.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Each control knob moved alone from the library default, leaf size
+		held at $\texttt{min\_data\_in\_leaf} = \nMLGbmLeafDefault$, where
+		$\hat\pi = \nMLGbmPiDefault$. The range spans the swept values
+		\emph{and} the default, which is a point on it; reading the swept values
+		alone puts $\texttt{max\_depth}$ on the other side of the threshold. The
+		threshold of $\nMLKnobThreshold$ was declared before the arm ran.}
+	\label{tab:ml_knobs}
+	\footnotesize
+	\input{analysis/ml/tab_ml_knobs}
+\end{table}
+
+Three documented knobs move the tail past the declared threshold and a second
+granularity parameter does not move it at all. So the response is not a property
+of configuration in general; it is a property of the parameter that sets how many
+observations resolve a leaf, which is the tail sample size of Remark~3.1 under
+another name.
+
+\paragraph{What this family does to the gate's scale band} The two estimators
+also answer a question Section~7 of the manuscript leaves open: whether anything
+occupies the range between its well-specified and its truncated populations. Of
+the \nMLCells{} cells here, the forest places all \nMLQrfCells{} of its own
+inside the band, between $\nMLQrfRatioLo$ and $\nMLQrfRatioHi$, while the boosted
+estimator places \nMLGbmBlocked{} of \nMLGbmCells{} above the upper edge. Of
+those \nMLGbmBlocked{} blocks, \nMLBlockedUnder{} are on cells exceeding at
+\nMLUnderThreshold{} times nominal or more, and no cell the check passes exceeds
+at that rate.
+
+The remaining \nMLBlockedNotUnder{} cannot be adjudicated here, and the reason is
+worth stating because it limits every coverage statement in this section. At
+\nMLDates{} dates and $\alpha = 0.01$ the expected exceedance count is two, so
+$\hat\pi/\alpha$ moves in steps of \nMLPiGrid{} and takes no value between them.
+Those \nMLBlockedNotUnder{} cells return three exceedances where two were
+expected, which this window cannot separate from correct coverage. Coverage
+claims about this family are therefore stated in multiples of \nMLPiGrid{}
+nominal or not at all; the scale ratio carries no such limit, being a median of a
+continuous quantity over the same \nMLDates{} dates, which is why it is the
+statistic reported above.
+
+\paragraph{What is not settled} The lower edge of the scale band is not reached:
+the most negative cell here is $\nMLRatioMostNegative$, a margin of
+\nMLLowerEdgeMargin. That is not evidence the edge is unnecessary. This family is
+measured on \nMLAssets{} assets against the \nMainAssets{} of the main panel, so
+it could have shown the edge binding and cannot show that it does not.
+
 \sloppy\emergencystretch=3em
 \bibliographystyle{elsarticle-harv}
 \bibliography{calibrating_the_oracle}

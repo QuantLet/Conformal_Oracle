@@ -434,9 +434,11 @@ The construction makes no parametric assumption on returns; the coverage guarant
 
 The one-sided design is dictated by the regulatory loss function, not by a symmetry consideration. Basel III/FRTB capital and the Yellow/Red zone triggers are functions of loss-side exceedances alone (Section~\ref{sec:economic}): a day on which the realised return falls below the reported VaR is counted, a day on which it comfortably exceeds it is not. A correction applied to the upper tail would therefore alter no capital charge and no zone assignment, while widening the reported interval and degrading sharpness. We accordingly shift only $\hat q_t^{lo}$ and leave the remainder of the predictive distribution untouched; two-sided and distributional alternatives are evaluated in Section~\ref{sec:baselines}. Operational safeguards, including the non-negativity constraint $\qVstat \geq 0$, are discussed in Section~\ref{sec:failure}.
 
-\begin{remark}[Variance scaling under tail sparsity]
+\begin{remark}[Variance scaling under tail sparsity, in the forecaster and in the correction]
 	\label{rem:tail_sparsity}
-	Tail calibration relies on events $\{r_t \leq \hat q_t^{lo}\}$, whose expected number is $\E[N_\alpha] = \alpha T$. Estimators fitted to this tail subset inherit variance of order $k/N_\alpha$ for $k$ parameters. By contrast, $\qVstat$ is a single order statistic of the full calibration sample --- the $\lceil (n+1)(1-\alpha)\rceil$-th, by equation~\eqref{eq:qV}, and not a quantity estimated from the $N_\alpha$ tail observations alone. A one-parameter correction therefore enjoys a favourable bias--variance trade-off under tail sparsity, and the correction magnitude is interpretable as a diagnostic precisely because the construction adds no further parameters. Values of $\qVstat$ that dominate the scale of $\hat q_t^{lo}$ signal the high-$\bar R$ range.
+	Tail calibration relies on events $\{r_t \leq \hat q_t^{lo}\}$, whose expected number is $\E[N_\alpha] = \alpha T$. The constraint binds twice, and the two layers are worth separating. An \emph{estimator} fitted to that tail subset inherits variance of order $k/N_\alpha$ for $k$ parameters, whatever it is estimating; a \emph{correction} estimated from the same subset inherits it again. By contrast, $\qVstat$ is a single order statistic of the full calibration sample --- the $\lceil (n+1)(1-\alpha)\rceil$-th, by equation~\eqref{eq:qV}, and not a quantity estimated from the $N_\alpha$ tail observations alone. A one-parameter correction therefore enjoys a favourable bias--variance trade-off under tail sparsity, and the correction magnitude is interpretable as a diagnostic precisely because the construction adds no further parameters. Values of $\qVstat$ that dominate the scale of $\hat q_t^{lo}$ signal the high-$\bar R$ range.
+
+	The forecaster layer is visible directly. Gradient-boosted quantile regression on \nMLAssets{} assets and \nMLDates{} dates moves its realised exceedance rate by a factor of \nMLGbmTailSpan{} across the leaf-size grid, from the second grid point upward, while the centre of the same predictive law moves by \nMLGbmCentreSpread{} estimated standard deviations; at the library default of $\texttt{min\_data\_in\_leaf} = \nMLGbmLeafDefault$ the rate is $\nMLGbmPiDefault$. A quantile random forest on the same assets and dates spans a factor of \nMLQrfTailSpan. The parameter that resolves the leaf is a tail-sample-size parameter, so this is the remark's own mechanism and not a configuration accident: three documented control knobs each move the tail past the same threshold, and a second granularity parameter does not move it at all (Supplement~S.13).
 \end{remark}
 
 \subsubsection{Validity under Temporal Dependence}
@@ -473,7 +475,7 @@ Remark~\ref{rem:rolling_status} states what the rolling estimator is entitled to
 \subsubsection{Alternative Recalibration Baselines}
 \label{sec:alternatives}
 
-We compare the one-parameter conformal shift against alternatives that vary on three axes: parameter count, correction structure (location only, location--scale, monotone, fully nonparametric), and target object (correction, conditional distribution, or tail). We compare against ten baselines: five single-shot post-hoc corrections, adaptive conformal inference, two distributional or nonlinear methods (GAMLSS-SST and gradient-boosted quantile regression), and two dedicated VaR models (EVT-POT and filtered historical simulation). Full specifications are in Supplement~S.2; Table~S.3 of the supplement provides a compact reference. The comparison tests Remark~\ref{rem:tail_sparsity}: at $\alpha = 0.01$, additional parameters increase variance faster than they reduce bias. Empirical results are in Section~\ref{sec:baselines}.
+We compare the one-parameter conformal shift against alternatives that vary on three axes: parameter count, correction structure (location only, location--scale, monotone, fully nonparametric), and target object (correction, conditional distribution, or tail). We compare against ten baselines: five single-shot post-hoc corrections, adaptive conformal inference, two distributional or nonlinear methods (GAMLSS-SST and gradient-boosted quantile regression), and two dedicated VaR models (EVT-POT and filtered historical simulation). Full specifications are in Supplement~S.2; Table~S.3 of the supplement provides a compact reference. The comparison tests Remark~\ref{rem:tail_sparsity} on the correction layer: at $\alpha = 0.01$, additional parameters in the \emph{correction} increase variance faster than they reduce bias. The remark's forecaster layer is tested separately, by the leaf-resolution response recorded there. Empirical results are in Section~\ref{sec:baselines}.
 	%══════════════════════════════════════════════════════════════════════════════
 	%─── PART 7: Data and Experimental Setup ────────────────────────────────────
 	%══════════════════════════════════════════════════════════════════════════════
@@ -1266,17 +1268,42 @@ by more than two hundred. Robustness read off the gap rather than the margin
 therefore overstates the check by one order of magnitude at the edge as
 specified, and by two at the tightened one.
 
-The margin also states the check's limit of generalisation, and it is a real one.
-The separation here is clean because this panel contains no series that is
-\emph{moderately} misspecified: it holds eleven series whose reported quantile
-sits between two and three estimated standard deviations below zero, and two
-whose truncation has driven it to a fifth of that. A forecaster reporting
-$-1.9\hat\sigma_t$ --- under-conservative, but by a quarter rather than by a
-factor of ten --- would be blocked as surely as a truncated one, and the block
-would be a false positive. What Section~\ref{sec:gate_residual} establishes is
-therefore that the check discriminates against gross reduction failures, on a
-panel that contains only gross ones and correctly specified ones. It says nothing
-about the intermediate range, because nothing in this panel occupies it.
+The margin also states the check's limit of generalisation. The separation here
+is clean because this panel contains no series that is \emph{moderately}
+misspecified: it holds eleven series whose reported quantile sits between two and
+three estimated standard deviations below zero, and two whose truncation has
+driven it to a fifth of that. What the check does against a series in between is
+therefore not established by this panel, and a second estimator family supplies
+one.
+
+Gradient-boosted quantile regression and a quantile random forest were run on
+\nMLAssets{} assets across \nMLLeafSettings{} leaf resolutions,
+\nMLCells{} cells at \nMLDates{} dates each, and they land on opposite sides of
+the question. The forest places every cell inside the band, between
+$\nMLQrfRatioLo$ and $\nMLQrfRatioHi$. The boosted estimator places
+\nMLGbmBlocked{} of its \nMLGbmCells{} cells above the upper edge, between
+$\nGapCellGoodWorst$ and $\nGapCellTruncBest$ --- the interval this panel leaves
+empty --- and the check blocks all \nMLGbmBlocked. Of those,
+\nMLBlockedUnder{} exceed at \nMLUnderThreshold{} times nominal or more, and no
+cell the check passes exceeds at that rate; the remaining \nMLBlockedNotUnder{}
+return three violations where two were expected, which \nMLDates{} dates at
+$\alpha = 0.01$ cannot separate from correct coverage. On the one family
+available that occupies the intermediate range, the check discriminates rather
+than misfiring, and it misses nothing.
+
+The edge's false-positive region is then bounded in closed form rather than left
+open. A correctly specified forecaster is blocked at $\nGapBandNow$ only if its
+standardised innovation law puts its own $1\%$ quantile above that point, which
+requires a tail lighter than a triangular law's $\nMLQuantTriangular$: Normal
+innovations sit at $\nMLQuantNormal$ and standardised $t_5$ at $\nMLQuantTFive$,
+and only a bounded law as light as the uniform, at $\nMLQuantUniform$, is caught.
+The illustrative forecaster reporting $-\nMLWorkedExampleSigma\hat\sigma_t$ is
+not in that class. It is under-conservative by a quarter measured on the
+threshold and by a factor of \nMLWorkedNormal{} measured on coverage --- it
+exceeds at \nMLWorkedNormal{} times nominal under Normal innovations,
+\nMLWorkedTFive{} under standardised $t_5$ and \nMLWorkedTThree{} under $t_3$ ---
+so blocking it is a correct verdict. The two units differ by a factor of nearly
+three, and the limitation is the coverage one.
 
 \paragraph{One of our own checks cannot fail, and that is the paper's argument
 turned on itself} The lower edge $\nGapBandLower$ blocks
@@ -1295,7 +1322,12 @@ band stands as specified and its consequence is recorded instead. On this panel
 the scale check is one-sided; the band is asymmetric in risk; and whether a lower
 edge is needed at all cannot be determined from these data, because nothing in
 them is over-conservative enough to test one. The block count is nine checks
-exercised and one that was not.
+exercised and one that was not. The \nMLCells{} cells of the second estimator
+family do not settle it either: the most negative of them reaches
+$\nMLRatioMostNegative$, a margin of \nMLLowerEdgeMargin{} from the edge, and
+\nMLBelowLowerEdge{} of them fall below it. That family is measured on
+\nMLAssets{} assets rather than \nMainAssets, so it can only have shown the edge
+binding and cannot show that it does not.
 
 \paragraph{What the gate cannot see} The checks operate on a stored forecast
 series and the returns. They can establish that a series has the properties a
@@ -1772,6 +1804,8 @@ Return data are retrieved from Yahoo Finance. All foundation model checkpoints a
 A Python package implementing the framework, \texttt{conformal-oracle}, is available on PyPI (\url{https://pypi.org/project/conformal-oracle/}) and installable via \texttt{pip install conformal-oracle}. Every rolling-mode result reported here was produced by the Quantlet replication pipeline, which computes the conformal correction as the finite-sample split-conformal quantile, the $\lceil(w+1)(1-\alpha)\rceil$-th order statistic of the trailing-window scores. The shift is defined once, in \texttt{cfp\_config.conformal\_quantile}, and \texttt{scripts/audit\_qv\_convention.py} enumerates every site in the repository that takes a quantile of nonconformity scores, records the convention each uses, and fails the build when an undeclared one appears. Through version~0.3.1 of the \texttt{conformal-oracle} package the block-bootstrap confidence interval for $\qVstat$ computed its replicates with the plain empirical quantile while the point estimate used the order statistic; this is corrected and recorded in the package changelog.
 
 Each series admitted to the analysis carries a manifest entry recording its model, asset, path, vintage and estimator class, and each passes --- or is recorded as blocked by --- the structural gate of Section~\ref{sec:gate} before entering any table. The numbers asserted in the text are emitted as macros by \texttt{scripts/paper\_numbers.py}, which recomputes each of them from the artefacts and fails the build when a value in the manuscript differs from the value in the data.
+
+The verification apparatus was itself the more frequent site of defect. Of the \nHarnessDefectsTotal{} defects the project's computation protocol records, \nHarnessDefectsInstrument{} were in a check and \nHarnessDefectsObject{} in the quantity being checked: a literal screen that stripped every hand-authored table before reading it, a claim audit that read one generated number as evidence for both sides of a ratio, a manifest comparing against the frozen submission rather than the working tree, and a consistency check that regenerated the artefact it was verifying. The ratio is not incidental to the paper's subject. A validation instrument is an estimator like any other and fails in the same way the coverage test does --- by returning a pass that is an absence of evidence --- which is why every check in this repository carries a negative control that must be seen to fail before the check may report anything, and why the controls are planted where each check reads worst rather than where it reads typically.
 
 
 	\section*{Acknowledgements}

@@ -492,6 +492,100 @@ def collect() -> dict:
                                     - ov["roll_cal"]["lost_but_score_worse"])
     n["GateRollUpgradeAndDeteriorate"] = ov["roll_cal"]["upgrade_and_deterioration"]
 
+    # ---- the harness's own defect census ----------------------------------- #
+    # Counted from PROTOCOL.md's table rather than typed, so the figure in the
+    # manuscript cannot drift from the register it summarises. One row is one
+    # defect found during the audit, classified by where it sat.
+    _pr = (BASE / "analysis" / "provenance" / "PROTOCOL.md").read_text()
+    _tbl = _pr.split("### The defect is in the instrument more often than in the object")[1]
+    _tbl = _tbl.split("The fourth is the sharpest")[0]
+    _where = [l.split("|")[1].strip() for l in _tbl.splitlines()
+              if l.startswith("|") and not set(l) <= set("|- ")
+              and l.split("|")[1].strip() in ("instrument", "object")]
+    n["HarnessDefectsInstrument"] = _where.count("instrument")
+    n["HarnessDefectsObject"] = _where.count("object")
+    n["HarnessDefectsTotal"] = len(_where)
+    assert n["HarnessDefectsTotal"] >= 4, \
+        "the defect census parsed fewer rows than the register carries"
+
+    # ---- ML panel: 40 cells, 2 estimators x 4 assets x 5 leaf settings ----- #
+    # A separate unit from MAIN and SEQ, and never pooled with them. It exists to
+    # answer one question Section 7 left open: whether anything occupies the
+    # range between the well-specified and truncated populations. The panel tag
+    # is "ML", and every count below is out of 40 cells at 200 dates.
+    mlc = pd.read_csv(BASE / "analysis" / "ml" / "gate_cells.csv")
+    n["MLCells"] = int(len(mlc))
+    n["MLDates"] = 200
+    n["MLAssets"] = int(mlc["asset"].nunique())
+    n["MLLeafSettings"] = int(mlc["leaf"].nunique())
+    # The coverage statistic's resolution, stated because the sentence that
+    # motivated this exercise quoted a value off the grid: at 200 dates and
+    # alpha = 0.01 the expected count is 2 and pi-hat/alpha moves in halves.
+    n["MLPiGrid"] = 1.0 / (n["MLDates"] * 0.01)
+    for tag, est in (("Gbm", "LightGBM"), ("Qrf", "quantile forest")):
+        _e = mlc[mlc["est"] == est]
+        n[f"ML{tag}Cells"] = int(len(_e))
+        n[f"ML{tag}Blocked"] = int(_e["blocked"].sum())
+        n[f"ML{tag}RatioLo"] = float(_e["ratio"].min())
+        n[f"ML{tag}RatioHi"] = float(_e["ratio"].max())
+    n["MLBelowLowerEdge"] = int(mlc["below_lower"].sum())
+    n["MLRatioMostNegative"] = float(mlc["ratio"].min())
+    n["MLLowerEdgeMargin"] = abs(-3.5 - n["MLRatioMostNegative"])
+    _b = mlc[mlc["blocked"]]
+    n["MLUnderThreshold"] = 2.5
+    n["MLBlockedUnder"] = int((_b["pi_ratio"] >= n["MLUnderThreshold"]).sum())
+    n["MLBlockedNotUnder"] = int(len(_b) - n["MLBlockedUnder"])
+    n["MLPassedUnder"] = int(((~mlc["blocked"])
+                              & (mlc["pi_ratio"] >= n["MLUnderThreshold"])).sum())
+    # Cells the tightened edge of Table 2 row 4 adds over the standing edge.
+    n["MLNewlyBlockedByTightening"] = int(
+        ((mlc["ratio"] <= -1.800) & (mlc["ratio"] > -1.940)).sum())
+
+    # The dose-response itself, which is what places the exhibit beside the
+    # tail-sparsity remark rather than beside the sampling section: the tail
+    # moves by an order of magnitude across the leaf-size grid while the centre
+    # does not move. Aggregation is stated because it changes the answer --
+    # these pool over the 4 assets at each leaf setting, then take the ratio;
+    # a spread computed over asset-by-leaf cells is a different number.
+    _dr = pd.read_csv(BASE / "analysis" / "ml" / "dose_response_raw.csv")
+    _pi = _dr.assign(h=(_dr["realised"] < _dr["lgbm_q"]).astype(float)) \
+        .groupby("leaf")["h"].mean()
+    n["MLGbmLeafDefault"] = 20
+    # The knob threshold, read from the emitter that applies it rather than
+    # typed twice. Declared in drafts/prereg_ml.md before the knob arm ran.
+    import ast as _ast
+    _et = _ast.parse((BASE / "analysis" / "ml" / "emit_dose_tables.py")
+                     .read_text(encoding="utf-8"))
+    n["MLKnobThreshold"] = float(next(
+        _ast.literal_eval(t.value) for t in _et.body
+        if isinstance(t, _ast.Assign) and getattr(t.targets[0], "id", "") == "KNOB_THRESHOLD"))
+    n["MLGbmPiDefault"] = float(_pi.loc[n["MLGbmLeafDefault"]])
+    _mono = _pi[_pi.index >= 5]           # leaf 1 -> 5 is not monotone; reported so
+    n["MLGbmTailSpan"] = float(_mono.max() / _mono.min())
+    _cen = _dr.assign(c=_dr["lgbm_med"] / _dr["train_sd"]).groupby("leaf")["c"].median()
+    n["MLGbmCentreSpread"] = float(_cen.max() - _cen.min())
+    _qpi = _dr.assign(h=(_dr["realised"] < _dr["qrf_q"]).astype(float)) \
+        .groupby("leaf")["h"].mean()
+    n["MLQrfTailSpan"] = float(_qpi.max() / _qpi.min())
+
+    # Where the upper edge would block a CORRECTLY specified forecaster: the
+    # 1% quantile of its standardised innovation law, in sigma units. Closed
+    # form, so the limitation is bounded rather than left open.
+    from scipy import stats as _s2
+    n["MLQuantUniform"] = float(_s2.uniform(-np.sqrt(3), 2 * np.sqrt(3)).ppf(0.01))
+    n["MLQuantTriangular"] = float(
+        _s2.triang(0.5, loc=-np.sqrt(6), scale=2 * np.sqrt(6)).ppf(0.01))
+    n["MLQuantNormal"] = float(_s2.norm.ppf(0.01))
+    n["MLQuantTFive"] = float(_s2.t.ppf(0.01, 5) / np.sqrt(5 / 3))
+    # The worked example at -1.9 sigma, in coverage units rather than threshold
+    # units. Section 7 called it under-conservative "by a quarter", which is a
+    # statement about the threshold, and concluded the block would be a false
+    # positive, which is a statement about coverage. The two differ by a factor.
+    n["MLWorkedExampleSigma"] = 1.9
+    n["MLWorkedNormal"] = _s2.norm.cdf(-1.9) / 0.01
+    n["MLWorkedTFive"] = _s2.t.cdf(-1.9 * np.sqrt(5 / 3), 5) / 0.01
+    n["MLWorkedTThree"] = _s2.t.cdf(-1.9 * np.sqrt(3.0), 3) / 0.01
+
     # ---- claims that were half macro-backed -------------------------------- #
     # Check 5 of audit_structural_claims.py skipped any "N of M" whose M was a
     # macro, on the reasoning that one side came from an artefact. Eleven claims
@@ -792,6 +886,14 @@ def fmt(key: str, v) -> str:
         return f"{v:.1f}"
     if key == "SupClosureFactorHi":
         return f"{v:.0f}"
+    if key.startswith(("MLQuant", "MLRatioMostNegative", "MLGbmRatio",
+                       "MLQrfRatio", "MLLowerEdgeMargin")):
+        return f"{v:.3f}"
+    if key.startswith(("MLWorked", "MLPiGrid", "MLUnderThreshold",
+                       "MLGbmTailSpan", "MLQrfTailSpan", "MLKnobThreshold")):
+        return f"{v:.1f}"
+    if key.startswith(("MLGbmPiDefault", "MLGbmCentreSpread")):
+        return f"{v:.4f}"
     if key.startswith("SupRvol"):
         return f"{v:.2f}"
     if key == "SupDeltaCeiling":

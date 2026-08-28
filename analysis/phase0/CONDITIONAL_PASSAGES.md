@@ -1,5 +1,34 @@
 # Passages conditional on results not yet read
 
+**Status 2026-08-28: the first table is resolved, the second is applied.**
+Reading (v) itself remains BLOCKED — the 24-asset panel has never run — but the
+4-asset dose-response settles what it can, and the results are in
+`analysis/ml/RESULTS_READING_V.md` against
+`analysis/ml/PREREG_READING_V.md`. One row of seven was false as written:
+
+| row | verdict |
+|---|---|
+| "blocks 0 of 312 cells" | stands; no ML cell reaches the lower edge, most negative −2.871, margin 0.629 |
+| "the scale check is one-sided" | stands, and sharper: the upper edge fires 15 times on the ML family |
+| "whether a lower edge is needed cannot be determined" | stands, and the ML family cannot determine it either — 4 assets can show the edge binding and cannot show that it does not |
+| "nine checks exercised and one that was not" | stands |
+| the margin paragraph, "nothing in this panel occupies the intermediate range" | **FALSE as written.** 15 of 20 LightGBM cells sit in the gap; 0 of 20 quantile-forest cells do. Rewritten per estimator, and the edge's false-positive region is now bounded in closed form |
+| Table 2 row 4, tightened edge −1.940 | **recomputed, unchanged.** 0 of 40 ML cells lie in the strip the tightening adds |
+| S6 δ\* figures | unaffected, as declared |
+
+Two further findings from the same pass, neither anticipated here: the worked
+example of a forecaster at −1.9σ̂ was called a false positive on a threshold-unit
+reading, and exceeds at 2.3–2.9× nominal, so blocking it is correct; and this
+family's coverage statistic lives on a grid of 0.5× nominal at 200 dates, so the
+"0.6x to 1.0x" description below is off the grid it is measured on.
+
+The second table's rows are applied: Remark 3.1 is restated across both layers,
+§3.2.4 cites it on the correction layer explicitly, and the exhibit is written up
+as Supplement S.13.
+
+---
+
+
 Marked before the results exist, so that new data cannot silently contradict
 standing text. Nothing here is rewritten until the reading returns.
 
