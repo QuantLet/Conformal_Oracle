@@ -1,0 +1,18 @@
+# "N of M" claims the prose may carry with both numbers typed, each with the
+# object it rests on. Check 5 of scripts/audit_structural_claims.py fails the
+# build on any such claim that is not here and not macro-backed.
+#
+# Written 2026-08-28, after two of these went wrong in one round: "thirteen of
+# the sixteen forecasters have R-bar between 0.001 and 0.18" (eleven at that
+# bound, 0.32 at that count), and "eight of the ten need nothing but the series"
+# against a section saying seven. Check 3 above matches one sentence shape and
+# saw neither. A claim enters this file only with an object; "it reads correctly"
+# is not an object.
+claim	object	why it may stay typed
+11 of 13	the two fractions printed beside it, 5/5 and 2/8	5 + (8 - 2) = 11; the count follows from operands the same sentence prints, so it cannot drift from them
+Seven of the ten	Table 4's Needs column	checked independently by check 3, which counts the table's rows
+none of the ten	Table 4	a statement that no row of the table has a property, not a count that can move
+Two of the four	analysis/provenance/PROMOTION_GATE.csv	4 series block, of which the two analytic ones fail one band each; both halves are verified by the gate artefact and the four is macro-backed elsewhere as \nGateBlocked
+24 of 24	nothing --- it is hypothetical	the sentence describes what a routine *would* report on a series that does not exist, not a measurement
+Two of the ten	Supplement S.11's Kind column	the same table as "Seven of the ten"; a structural fact about how the checks are classified
+eight of the ten	analysis/recompute/sign_verification.csv, check 4	a census of the archive as it stood before the 2026-08-17 correction: two of the ten forecasters stored positive quantiles and eight negative. It is stated in the past tense because the archive no longer has that property --- all nine directories now store the loss-side sign

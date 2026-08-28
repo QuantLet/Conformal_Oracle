@@ -191,6 +191,31 @@ def collect() -> dict:
                     n[f"GateExtremes{tag}"] = int(str(row.iloc[0]["extremes"]).split("/")[0])
 
 
+    # The wild-cluster bootstrap passage in the supplement carried four typed
+    # numbers, all stale: GJR-GARCH's asymptotic and bootstrap Kupiec p, and a
+    # "16 of 20 DM pairs remain significant" that describes a 20-pair panel. The
+    # panel is 30 pairs now, and the bootstrap makes one MORE significant rather
+    # than fewer, so the sentence's direction inverted as well as its counts.
+    dmw = pd.read_csv(Q / "CO_panel_wildcluster" / "wild_cluster_dm.csv")
+    n["WCDMPairs"] = int(len(dmw))
+    n["WCDMSigBoot"] = int((dmw["p_boot"] < 0.05).sum())
+    n["WCDMSigAsymp"] = int((dmw["p_asymp"] < 0.05).sum())
+    _wck = pd.read_csv(Q / "CO_panel_wildcluster" / "wild_cluster_kupiec.csv") \
+        .set_index("model")
+    n["WCKupAsympGJR"] = float(_wck.loc["GJR-GARCH", "p_asymp"])
+    n["WCKupBootGJR"] = float(_wck.loc["GJR-GARCH", "p_boot"])
+
+    # The COVID response-lag decomposition: three counts that were typed while the
+    # artefact behind them is a 13-row table.
+    cv = pd.read_csv(Q / "CO_covid_response_lag" / "covid_response_lags.csv")
+    n["LagForecasters"] = int(len(cv))
+    n["LagImmediate"] = int((cv["lag_calendar_days"] == 0).sum())
+    _mid = sorted(d for d in cv["lag_calendar_days"].unique() if d > 0)
+    n["LagMidDays"] = int(_mid[0])
+    n["LagMidN"] = int((cv["lag_calendar_days"] == _mid[0]).sum())
+    n["LagLateDays"] = int(_mid[-1])
+    n["LagLateN"] = int((cv["lag_calendar_days"] == _mid[-1]).sum())
+
     # The tail-closure spread. Its lower end was printed as 0.005, which is also
     # the value DECLARED_CONSTANTS.md admits for the detection severity cut: the
     # same literal standing for two unrelated things is exactly what a macro name

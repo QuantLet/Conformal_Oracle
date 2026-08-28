@@ -248,7 +248,72 @@ def check_xrefs() -> bool:
     return True
 
 
+# ------------------------------------------------------------------ check 5 --
+# Every "N of M" claim must name an object, not two typed numbers.
+#
+# Check 3 above matches one sentence shape -- "(Six|...|Ten) of the ten need
+# nothing but the series" -- and so it saw neither "eight of them need nothing
+# but the series" in the conclusion, which is the same claim in lower case, nor
+# "thirteen of the sixteen forecasters have R-bar between 0.001 and 0.18", where
+# the count and the bound disagreed by three forecasters. A check written for one
+# sentence cannot see the class the sentence belongs to; PROTOCOL.md calls that
+# the second mode, and this file exists for exactly that class.
+
+COUNTS = BASE / "analysis" / "provenance" / "DECLARED_COUNTS.tsv"
+_WORD = (r"one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
+         r"thirteen|fourteen|fifteen|sixteen|twenty|none")
+_N = rf"(?:\\n[A-Za-z]+(?:\{{\}})?|\d+|{_WORD})"
+NOFM = re.compile(rf"({_N})\s+of\s+(?:the\s+)?({_N})\b", re.I)
+
+
+def _declared_counts() -> set[str]:
+    if not COUNTS.is_file():
+        return set()
+    out = set()
+    for line in COUNTS.read_text().splitlines():
+        if line.startswith("#") or not line.strip() or line.startswith("claim\t"):
+            continue
+        out.add(line.split("\t")[0].strip())
+    return out
+
+
+def _typed_counts(tex: str) -> list[str]:
+    body = " ".join(tex.split(r"\begin{document}", 1)[-1].split())
+    bad = []
+    for m in NOFM.finditer(body):
+        a, b = m.group(1), m.group(2)
+        if a.startswith("\\n") or b.startswith("\\n"):
+            continue                      # at least one side comes from an artefact
+        frag = " ".join(m.group(0).split())
+        if frag.lower() in {c.lower() for c in _declared_counts()}:
+            continue
+        bad.append(f"{frag}  ...{body[max(0, m.start()-52):m.start()]}")
+    return bad
+
+
+def control_counts() -> bool:
+    """A claim with two typed numbers and no declaration must be caught."""
+    return len(_typed_counts(r"\begin{document} it blocks 7 of 99 series.")) == 1
+
+
+def check_counts() -> bool:
+    ok = True
+    for doc in DOCS:
+        bad = _typed_counts((BASE / f"{doc}.tex").read_text(encoding="utf-8"))
+        if bad:
+            ok = False
+            print(f"  {RED}FAIL{OFF}   {doc}: {len(bad)} 'N of M' claim(s) with no "
+                  f"declared object")
+            for b in bad[:10]:
+                print(f"           {b[:104]}")
+        else:
+            print(f"  {GRN}pass{OFF}   {doc}: every 'N of M' claim is macro-backed "
+                  f"or declared")
+    return ok
+
+
 CHECKS = [("enumerated decompositions", control_decomposition, check_decomposition),
+          ("N-of-M claims name an object", control_counts, check_counts),
           ("table column claims", control_column, check_columns),
           ("gate item counts", control_itemcount, check_itemcounts),
           ("cross-document references", control_xref, check_xrefs)]

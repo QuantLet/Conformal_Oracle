@@ -747,9 +747,9 @@ every instrument in Section~\ref{sec:blindspot}.
 		0\% and 0\% for every other series in the panel
 		& $0.990$ & \nRawPiTimesFM \\
 		\hspace{1em}\emph{(Moirai~2.0)}
-		& as above, on all \nMainAssets{} assets; 8 of 10 forecast directories
-		store the opposite sign, so the convention is not uniform across the
-		pipeline & $0.988$ & \nRawPiMoiraiTwo \\
+		& as above, on all \nMainAssets{} assets; at the time of the audit eight
+		of the ten forecasters stored the opposite sign, so the convention was not
+		uniform across the pipeline & $0.988$ & \nRawPiMoiraiTwo \\
 		Predictive support truncated before the quantile is read
 		\emph{(both Chronos checkpoints)}
 		& dose--response at fixed context, seed and weights; 1000 draws contain
@@ -1630,9 +1630,10 @@ Operationally, small calibration sets ($n_{\mathrm{cal}} < 200$) produce unstabl
 corrections, very high score persistence weakens the mixing bound, and structural
 breaks cause temporary under-protection when the calibration window predates the
 break. The trailing-window design produces a measurable lag: around the COVID-19
-shock seven of the thirteen forecasters reach their post-shock maximum within the
-acute window, four peak 77 calendar days later, and the two GJR-GARCH variants
-take 161 days. Mitigations and the drift diagnostic that flags the regime in real
+shock \nLagImmediate{} of the \nLagForecasters{} forecasters reach their
+post-shock maximum within the acute window, \nLagMidN{} peak \nLagMidDays{}
+calendar days later, and the \nLagLateN{} GJR-GARCH variants take
+\nLagLateDays{} days. Mitigations and the drift diagnostic that flags the regime in real
 time are in Supplement~S.9.6.
 
 \subsection{Implications for deployment}

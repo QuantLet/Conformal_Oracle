@@ -156,6 +156,17 @@ not possible without editing this file's producer.
 | `\nGateSeries` | 13 | SEQ (312) |
 | `\nGateExtremesSmall` | 19 | SEQ (312) |
 | `\nGateExtremesMini` | 15 | SEQ (312) |
+| `\nWCDMPairs` | 30 | -- |
+| `\nWCDMSigBoot` | 30 | -- |
+| `\nWCDMSigAsymp` | 29 | -- |
+| `\nWCKupAsympGJR` | 0.029 | -- |
+| `\nWCKupBootGJR` | 0.234 | -- |
+| `\nLagForecasters` | 13 | -- |
+| `\nLagImmediate` | 7 | -- |
+| `\nLagMidDays` | 77 | -- |
+| `\nLagMidN` | 4 | -- |
+| `\nLagLateDays` | 161 | -- |
+| `\nLagLateN` | 2 | -- |
 | `\nLitClosureRMin` | 0.005 | -- |
 | `\nLitClosureRMax` | 1.70 | -- |
 | `\nGapDeltaMoment` | 0.046 | -- |

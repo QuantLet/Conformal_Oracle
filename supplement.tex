@@ -850,15 +850,17 @@ within-asset dependence.
 To assess finite-sample size distortion under cross-asset dependence,
 we apply a Rademacher wild-cluster bootstrap ($B = 999$, $J = 24$
 asset clusters) to the panel-pooled Kupiec LR and Diebold--Mariano
-statistics. Bootstrap $p$-values are uniformly more conservative than
-asymptotic counterparts (Table~\ref{tab:wildcluster_kupiec}):
-GJR-GARCH moves from $p_{\text{Kup}} = .004$ (asymptotic) to
-$p_{\text{boot}} = .200$, consistent with the asymptotic rejection
-being inflated by cross-asset dependence. For the DM comparisons,
-16 of 20 parametric-vs-TSFM pairs remain significant at 5\% under the
-bootstrap (Table~\ref{tab:wildcluster_dm}); the four reversals ---
-three involving Hist.\ Sim.\ and one involving GJR-GARCH vs
-TimesFM~2.5 --- occur where asymptotic margins were already thin.
+statistics. On the coverage statistic the bootstrap is the more conservative of
+the two (Table~\ref{tab:wildcluster_kupiec}): GJR-GARCH moves from
+$p_{\text{Kup}} = \nWCKupAsympGJR$ asymptotically to
+$p_{\text{boot}} = \nWCKupBootGJR$, consistent with the asymptotic rejection
+being inflated by cross-asset dependence. On the score comparisons it is not.
+All \nWCDMSigBoot{} of the \nWCDMPairs{} parametric-versus-TSFM pairs remain
+significant at 5\% under the bootstrap against \nWCDMSigAsymp{} asymptotically
+(Table~\ref{tab:wildcluster_dm}), so clustering costs the coverage test its
+rejection and costs the score comparisons nothing. The two statistics do not
+respond to cross-asset dependence in the same way, and only the first is the one
+the traffic light reads.
 
 \begin{table}[H]
 	\centering
