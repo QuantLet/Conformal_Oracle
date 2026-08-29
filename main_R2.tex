@@ -319,15 +319,46 @@ This paper relates to three strands: tail miscalibration in probabilistic foreca
 
 Tail miscalibration is well-documented across forecaster classes. Parametric volatility models can systematically under- or over-estimate extreme quantiles under heavy-tailed innovations or regime shifts \citep{christoffersen1998,mcneil2000estimation,nolde2017elicitability}. Recent time series foundation models (TSFMs) --- including Chronos \citep{ansari2024chronos,ansari2025chronos2}, TimesFM \citep{das2024timesfm}, Moirai \citep{woo2024moirai,liu2025moirai}, and Lag-Llama \citep{rasul2024lagllama} --- achieve competitive zero-shot forecasting performance but exhibit a similar pattern: \citet{goel2024tsfmvar} show that pre-trained quantiles require fine-tuning for acceptable Value-at-Risk (VaR) coverage, and \citet{pele2025llmvar} identify tail compression in instruction-tuned models, with similar miscalibration documented for volatility forecasting \citep{goel2025volatility,rahimikia2025revisiting}. These findings, spanning parametric and foundation-model regimes alike, motivate post-hoc calibration but do not address the identification constraint imposed by extreme-tail sparsity, and they stop short of a taxonomy of when post-hoc correction adjusts an informative base versus when it acts as an empirical fallback.
 
-Regulatory backtesting procedures \citep{kupiec1995,christoffersen1998,basel1996,acerbi2014back,fissler2016higher,nolde2017elicitability} detect violations of nominal coverage, exceedance dependence, and tail-loss inconsistency, but do not prescribe forecast corrections.
+Regulatory backtesting procedures \citep{kupiec1995,christoffersen1998,basel1996,acerbi2014back,fissler2016higher,nolde2017elicitability} detect violations of nominal coverage, exceedance dependence, and tail-loss inconsistency, but do not prescribe forecast corrections. Their limits at a $1\%$ level are established. \citet{escanciano2012pitfalls} prove the unconditional coverage test \emph{inconsistent} against Historical Simulation and Filtered Historical Simulation, the mechanism being that those estimators are unconditionally calibrated by construction, and their empirical application finds the regulatory multiplication factors set at the $3.00$ floor for portfolios their own consistent test rejects --- a capital multiplier at its minimum on a model a backtest has rejected, reported in 2012.
+
+A second line treats the poverty of the single-level exceedance indicator as a premise to design around rather than a result to state. \citet{gordy2020spectral} weight exceedance events by a function of the modelled probability level, reading the probability integral transform rather than the binary indicator, and say what that requires: the regulator must observe more than the exception indicator at one level. \citet{kratz2018multinomial} make the same move with a different instrument, taking exceptions at four or more levels and showing the multinomial test more powerful than the binomial one at a single level. Both establish what is available to a supervisor who holds the predictive distribution.
+
+\citet{cont2010robustness} supply the framing this paper's first layer rests on. They define a risk measurement procedure as the pair of an estimation step and a risk measure, and show that the same risk measure exhibits different sensitivities depending on the estimation procedure used, so that the procedure is part of the measured object rather than an implementation detail beneath it. The extension here is narrow and is stated as such: in a sample-based forecaster the estimation step is a \emph{documented software default} rather than a modelling choice, it is not reported, and it is invisible to every diagnostic the domain runs.
 
 Post-hoc calibration adjusts the output of a fixed forecaster without retraining \citep{gneiting2013combining,taillardat2016calibrated}. These procedures sit within the broader probabilistic-forecasting literature on calibration--sharpness trade-offs \citep{gneiting2007probabilistic,gneiting2014probabilistic}, where calibration restoration is balanced against sharpness loss. Model-based alternatives, such as CAViaR \citep{engle2004caviar} and conditional-density frameworks such as the Generalised Additive Model for Location, Scale and Shape \citep[GAMLSS;][]{rigby2005generalized}, estimate tail behaviour directly but impose structure on the conditional distribution. Conformal prediction \citep{vovk2005algorithmic}, applied to quantile regression by \citet{romano2019conformalized} as conformalized quantile regression (CQR), provides a model-free alternative. Standard guarantees rely on exchangeability, which is violated in financial time series by volatility clustering, serial dependence, and structural change; extensions to dependent or non-exchangeable data include weighted conformal methods \citep{barber2023conformal}, blocking schemes \citep{chernozhukov2018exact}, and adaptive procedures \citep{zaffran2022conformal,xu2024conformal,angelopoulos2024pid}.
 
 The TSFM literature receives closer attention above because this class is recent and has not yet been the subject of a systematic 1\% tail audit; the parametric volatility literature is mature and enters this paper through standard benchmarks rather than fresh review.
 
-Building on these strands, this paper differs from all of them in where it looks. \citet{goel2024tsfmvar} and \citet{goel2025volatility} reduce TSFM tail miscalibration by fine-tuning; \citet{gibbs2021adaptive} deliver adaptive coverage under nonstationarity by online updates of the miscoverage rate; \citet{tamingtailrisk2026} extend conformal risk control to nonstationary portfolio VaR through regime-similarity weighting. Each treats the forecast series as given and improves what is done to it. We ask instead whether the series is what it is claimed to be --- a question that turns on the code converting a predictive distribution into a threshold, and that no procedure downstream of that conversion can answer.
+The object this paper proves is identified has already appeared in that
+literature, as a weight. \citet{escanciano2012pitfalls}'s Lemma~1 derives the
+optimal weight for a weighted backtest,
+$w^\star(I_{t-1}) = F_{I_{t-1}}(m_\alpha(I_{t-1},\theta_0))$ --- the conditional
+distribution function of the return evaluated at the reported quantile --- which
+is exactly the realised tail probability $u_t$ of equation~\eqref{eq:u_process} below.
+The same functional carries opposite uses in the two papers: they weight by it to
+\emph{recover} power inside the exceedance class, and
+Proposition~\ref{prop:identification} shows that it \emph{exhausts} what the
+exceedance path carries. Their result and this one hold against different
+alternative sets --- theirs agree with the null on $\E[u_t]$, these on the whole
+process $\{u_t\}$ --- so a consistent weighted backtest and a non-identification
+result coexist, and the second says where the class ends rather than that the
+first is wrong.
 
-A reporting gap follows directly. For a sample-based forecaster the generation configuration is part of the estimator, in the same sense that a bandwidth is part of a kernel estimator: it determines the object whose quantile is reported. It is not, at present, part of what such studies report. In the recent tail-risk and volatility applications of sample-based foundation models we surveyed, none of \texttt{num\_samples}, \texttt{top\_k}, \texttt{top\_p}, temperature or seed appears in the text \citep[e.g.][]{rahimikia2025revisiting}. We draw no inference about the prevalence of misconfiguration from this, which our design does not identify; the observation is narrower and sufficient for the argument here, namely that the convention which would make a configuration of this kind visible to a reader does not currently exist.
+What differs is where the paper looks. \citet{goel2024tsfmvar} and
+\citet{goel2025volatility} reduce TSFM tail miscalibration by fine-tuning;
+\citet{gibbs2021adaptive} deliver adaptive coverage under nonstationarity by
+online updates of the miscoverage rate; \citet{tamingtailrisk2026} extend
+conformal risk control to nonstationary portfolio VaR through regime-similarity
+weighting. Each treats the forecast series as given and improves what is done to
+it. The question here is whether the series is what it is claimed to be, which
+turns on the code converting a predictive distribution into a threshold and which
+no procedure downstream of that conversion can answer. It is also a question
+posed on a poorer information set than the spectral and multinomial backtests
+require: a consumer of a third-party quantile series holds the thresholds and the
+realised returns, and cannot obtain a probability integral transform from a
+forecaster that never published a distribution.
+
+A reporting gap follows directly. For a sample-based forecaster the generation configuration is part of the estimator, in the same sense that a bandwidth is part of a kernel estimator: it determines the object whose quantile is reported. It is not, at present, part of what such studies report. In the recent tail-risk and volatility applications of sample-based foundation models surveyed here, none of \texttt{num\_samples}, \texttt{top\_k}, \texttt{top\_p}, temperature or seed appears in the text \citep[e.g.][]{rahimikia2025revisiting}. The prevalence of misconfiguration does not follow from that and this design does not identify it; what follows is narrower and sufficient here, that the convention which would make a configuration of this kind visible to a reader does not exist.
 
 	%══════════════════════════════════════════════════════════════════════════════
 	%─── PART 6: Framework ──────────────────────────────────────────────────────
