@@ -330,11 +330,95 @@ def check_counts() -> bool:
     return ok
 
 
+# ------------------------------------------------------------------ check 6 --
+# A hard-typed cross-document theorem reference that points at the wrong object.
+#
+# The supplement refers to the manuscript's numbered environments by literal
+# number -- "Remark~3.1" -- because \ref does not cross documents. Inserting one
+# remark in Section 3 on 2026-08-29 renumbered the tail-sparsity remark from 3.1
+# to 3.2, and four supplement references silently began pointing at a different
+# statement. They still resolved, because there was something numbered 3.1 to
+# resolve to. That is the failure audit_supplement_targets.py was written for,
+# in the direction it does not look: it checks S.x references INTO the
+# supplement and not theorem references OUT of it.
+THMREF = re.compile(r"(Remark|Proposition|Lemma|Theorem|Corollary)~(\d+\.\d+)")
+
+
+def _strip_locators(tex: str) -> str:
+    """Drop citation locators before reading theorem references.
+
+    \citep[Theorem~2.10]{francq2019garch} names the GARCH textbook's numbering,
+    not this manuscript's, and matching it would make the check fail on a
+    correct citation. Stripped for the same reason guard 2 strips them.
+    """
+    return re.sub(r"\\cite[a-z]*\[[^\]]*\]", " ", tex)
+
+
+def _thm_numbers() -> dict[str, tuple[str, str]]:
+    """{number: (kind, title)} from main_R2.aux."""
+    aux = BASE / "main_R2.aux"
+    if not aux.exists():
+        return {}
+    out = {}
+    for num, title in re.findall(
+            r"\\newlabel\{[^}]*\}\{\{(\d+\.\d+)\}\{\d+\}\{([^}]*)\}\{theorem\.",
+            aux.read_text(errors="ignore")):
+        out[num] = title
+    return out
+
+
+def _thm_mismatch(tex: str, known: dict) -> list[str]:
+    # A citation locator names someone else's theorem and is not a reference
+    # into this manuscript: \citep[Theorem~2.10]{francq2019garch} is the
+    # GARCH textbook's numbering, not ours. Stripped for the same reason
+    # guard 2 strips them before reading literals.
+    bad = []
+    for kind, num in THMREF.findall(_strip_locators(tex)):
+        if not known:
+            continue
+        if num not in known:
+            bad.append(f"{kind}~{num}: no numbered environment {num} in main_R2")
+    return bad
+
+
+def control_thmref() -> bool:
+    """A reference to a number the manuscript does not carry must be caught."""
+    planted = _thm_mismatch("see Remark~99.9 of the manuscript", {"3.1": "x"})
+    # and a citation locator with the same shape must NOT be flagged, or the
+    # check fails on every correct citation into someone else's numbering
+    locator = _thm_mismatch(r"\citep[Theorem~2.10]{francq2019garch}", {"3.1": "x"})
+    return len(planted) == 1 and len(locator) == 0
+
+
+def check_thmrefs() -> bool:
+    known = _thm_numbers()
+    if not known:
+        print(f"  {YEL}skip{OFF}   main_R2.aux absent; cannot resolve theorem numbers")
+        return True
+    ok = True
+    for doc in DOCS:
+        tex = (BASE / f"{doc}.tex").read_text(encoding="utf-8")
+        bad = _thm_mismatch(tex, known)
+        if bad:
+            ok = False
+            print(f"  {RED}FAIL{OFF}   {doc}: {len(bad)} theorem reference(s) with no target")
+            for b in bad[:6]:
+                print(f"           {b}")
+        else:
+            hits = THMREF.findall(_strip_locators(tex))
+            print(f"  {GRN}pass{OFF}   {doc}: {len(hits)} hard-typed theorem "
+                  f"reference(s), each resolving; targets printed below")
+            for kind, num in hits:
+                print(f"           {kind}~{num} -> {known[num]}")
+    return ok
+
+
 CHECKS = [("enumerated decompositions", control_decomposition, check_decomposition),
           ("N-of-M claims name an object", control_counts, check_counts),
           ("table column claims", control_column, check_columns),
           ("gate item counts", control_itemcount, check_itemcounts),
-          ("cross-document references", control_xref, check_xrefs)]
+          ("cross-document references", control_xref, check_xrefs),
+          ("cross-document theorem references", control_thmref, check_thmrefs)]
 
 
 def main() -> int:

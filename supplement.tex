@@ -495,7 +495,7 @@ per-configuration results for the whole grid are in
 \texttt{tuned\_gbm\_qr\_grid.csv}. Higher-capacity configurations
 ($d=5$ or $n_\text{est}=500$) do not improve QS further and degrade
 Green-zone rates, consistent with the bias-variance prediction of
-Remark~3.1.
+Remark~3.2.
 
 \begin{table}[htbp]
 	\centering
@@ -719,7 +719,7 @@ appears.
 		($\lambda=0.01$, $\mathrm{ESS}\approx200$) inflates the conformal
 		quantile and produces over-conservative VaR intervals, consistent
 		with the variance-scaling argument of
-		Remark~3.1. Calibration-fraction sensitivity is
+		Remark~3.2. Calibration-fraction sensitivity is
 		limited over $f_c\in[0.50,0.80]$.
 	\end{minipage}
 \end{table}
@@ -1344,7 +1344,7 @@ temporary deployment pause may be warranted.
 
 %============================================================
 
-\subsection{Proof of Proposition~6.1 of the manuscript}
+\subsection{Proof of Proposition~8.1 of the manuscript}
 \label{app:identification}
 
 Recall $u_t = F_t(\hat q^{lo}_t)$ and $V_t = \mathbf 1\{r_t < \hat q^{lo}_t\}$,
@@ -1399,7 +1399,7 @@ with $\hat q^{lo}_t$ measurable with respect to $\mathcal G_{t-1}$.
 	class entirely; Supplement~\ref{app:es} treats them.
 \end{remark}
 
-\subsection{Proposition~6.2: the construction, and the depth of the blind spot}
+\subsection{Proposition~8.2: the construction, and the depth of the blind spot}
 \label{app:blindspot_depth}
 
 Let $G$ be the standardised Student-$t_5$ law of the correctly specified model,
@@ -1784,7 +1784,7 @@ rows of Table~\ref{tab:dose_response} is the sampling rule.
 \section{Leaf Resolution and the Tail: a Dose--Response Exhibit}
 \label{app:ml_dose}
 
-Remark~3.1 of the manuscript states that tail sparsity binds twice, on an
+Remark~3.2 of the manuscript states that tail sparsity binds twice, on an
 estimator fitted to the tail and again on a correction estimated from it. The
 correction layer is tested by the baseline comparison of
 Section~\ref{app:benchmarks}. This section tests the forecaster layer directly, on
@@ -1849,7 +1849,7 @@ That reading was registered and it fails.
 Three documented knobs move the tail past the declared threshold and a second
 granularity parameter does not move it at all. So the response is not a property
 of configuration in general; it is a property of the parameter that sets how many
-observations resolve a leaf, which is the tail sample size of Remark~3.1 under
+observations resolve a leaf, which is the tail sample size of Remark~3.2 under
 another name.
 
 \paragraph{What this family does to the gate's scale band} The two estimators

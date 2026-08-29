@@ -314,6 +314,13 @@ not possible without editing this file's producer.
 | `\nMCBGapMagRatio` | 1.11 | -- |
 | `\nMCBRhoPlain` | 0.53 | -- |
 | `\nMCBRhoConverted` | 0.53 | -- |
+| `\nLevelBound` | 198 | -- |
+| `\nLevelMaxOvershoot` | 0.01 | -- |
+| `\nLevelDomRuns` | 2 | -- |
+| `\nLevelDomOneLo` | 99 | -- |
+| `\nLevelDomOneHi` | 198 | -- |
+| `\nLevelDomTwoLo` | 261 | -- |
+| `\nLevelDomTwoHi` | 298 | -- |
 | `\nWSweepCells` | 312 | -- |
 | `\nWSweepShortW` | 125 | -- |
 | `\nWSweepShortK` | 125 | -- |

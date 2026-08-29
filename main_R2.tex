@@ -435,6 +435,37 @@ The nonconformity score $S_t$ from equation~\eqref{eq:score} is positive when th
 \end{equation}
 with $\qVstat = S_{(n)}$ when $k > n$, which occurs only for $\alpha < 1/(n+1)$. This is the conformal convention rather than the plain empirical quantile $Q_{1-\alpha}(\{S_t\})$, and the distinction is not cosmetic: the two differ by one order statistic, an $O(1/n)$ gap that can nonetheless change the sign of $\qVstat$ on assets whose calibration scores straddle zero near the $(1-\alpha)$ level. Every result in this paper that enters a headline table uses equation~\eqref{eq:qV}, and the rolling variant substitutes the trailing window of size $w$ for $\mathcal D_n$ and $k = \lceil (w+1)(1-\alpha)\rceil$. Six auxiliary artefacts compute the shift as $Q_{k/n}$, the empirical quantile at the level $k/n$ rather than the order statistic itself; on this panel the two differ by a median $\nSeqLevelGapMedian$ in relative terms and change the violation count of \nSeqLevelChanged{} of the \nSeqPairs{} pairs. That such a divergence existed at all has a cause worth naming, because it is the most productive single source of defect in this project: the convention was stated in a docstring and implemented in no function, so every producer rebuilt it, and four rebuilt it differently. A definition that lives in prose is not a definition that a pipeline can be held to. The shift is now defined once, in code, and every site in the repository that takes a quantile of nonconformity scores is enumerated with its convention by an audit that fails the build when an undeclared one appears. A further property of equation~\eqref{eq:qV} is worth stating where the reader meets it rather than where it bites: $k > n-1$ whenever $n < 2/\alpha - 1$, so at $\alpha = 0.01$ the shift is the \emph{sample maximum} for every calibration sample of 198 observations or fewer. A short calibration window therefore does not give a noisy estimate of the conformal quantile; it gives an extreme-value statistic with no stable variance. The bound is $n \le 198$ at $\alpha = 0.01$ and $n \le 78,\,38,\,18$ at $\alpha = 0.025,\,0.05,\,0.10$. The consequence for window choice is measured in Section~\ref{sec:cost}: the three trailing windows a reader would naturally compare at $\alpha = 0.01$, $w \in \{125, 250, 500\}$, are not three points on a variance curve, because $k/w$ depends on $w$ and the three therefore target different effective levels --- $\nWSweepShortLevel$, $\nWSweepMidLevel$ and $\nWSweepLongLevel$ against a nominal $0.99$ --- with $w = 125$ the extreme case at which the shift \emph{is} the window maximum. The recalibrated lower quantile and VaR are then given by equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$. A positive $\qVstat$ shifts the predicted quantile downward, increasing reported VaR and correcting underestimation of tail risk; a negative value indicates over-conservatism.
 
+\begin{remark}[The effective level of the conformal shift]
+	\label{rem:effective_level}
+	Equation~\eqref{eq:qV} returns the $k$-th smallest of $n$ scores with
+	$k = \lceil (n+1)(1-\alpha)\rceil$, capped at $S_{(n)}$ when $k > n$. The
+	estimator therefore targets the \emph{effective level} $\min(k,n)/n$ and not
+	$1-\alpha$, and the difference is an overshoot
+	\[
+		0 \;<\; \frac{\min(k,n)}{n} - (1-\alpha) \;\le\; \alpha ,
+	\]
+	with equality at the upper bound for every $n \le 2/\alpha - 1$ --- exactly
+	the regime in which $k$ reaches $n$ and the shift is the sample maximum,
+	$n \le \nLevelBound$ at $\alpha = 0.01$. Away from that regime the overshoot
+	is $\Theta(1/n)$, while the sampling standard deviation of the empirical
+	level is $\Theta(n^{-1/2})$.
+
+	The two therefore trade places as $n$ grows, and not once: the overshoot is a
+	sawtooth in $n$, dropping whenever the ceiling increments and rising between,
+	against a smooth standard deviation. At $\alpha = 0.01$ it exceeds the
+	sampling standard deviation on $\nLevelDomOneLo \le n \le \nLevelDomOneHi$ and
+	again on $\nLevelDomTwoLo \le n \le \nLevelDomTwoHi$, and the first of those
+	runs ends precisely at the degeneracy boundary.
+
+	Two consequences follow, and both are used below. A comparison of the
+	estimator across sample sizes confounds the size with the level being
+	targeted, because the second is a function of the first. And the confound is
+	largest where the estimator is degenerate, so the two defects of a short
+	calibration window are one boundary apart rather than independent. Section~\ref{sec:window}
+	measures the confound on the rolling window and Supplement~S.4.1 measures it
+	on the Monte Carlo at $n_{\mathrm{cal}} = \nSupNCal$.
+\end{remark}
+
 The construction makes no parametric assumption on returns; the coverage guarantee under temporal dependence is developed in Section~\ref{sec:validity}.
 
 The one-sided design is dictated by the regulatory loss function, not by a symmetry consideration. Basel III/FRTB capital and the Yellow/Red zone triggers are functions of loss-side exceedances alone (Section~\ref{sec:economic}): a day on which the realised return falls below the reported VaR is counted, a day on which it comfortably exceeds it is not. A correction applied to the upper tail would therefore alter no capital charge and no zone assignment, while widening the reported interval and degrading sharpness. We accordingly shift only $\hat q_t^{lo}$ and leave the remainder of the predictive distribution untouched; two-sided and distributional alternatives are evaluated in Section~\ref{sec:baselines}. Operational safeguards, including the non-negativity constraint $\qVstat \geq 0$, are discussed in Section~\ref{sec:failure}.
@@ -1651,13 +1682,13 @@ observations or fewer makes the shift the \emph{maximum} of its window. At the
 three settings a reader would compare, $k$ is \nWSweepShortK, \nWSweepMidK{} and
 \nWSweepLongK: the maximum, the second largest, and the fifth largest.
 
-The consequence is not that the shortest window is noisier. It is that the
-three do not estimate the same quantity. The effective level $k/w$ is
-$\nWSweepShortLevel$, $\nWSweepMidLevel$ and $\nWSweepLongLevel$ against a
-nominal $0.99$, so the overshoot $k/w - (1-\alpha)$ falls from
-$\nWSweepShortOvershoot$ to $\nWSweepLongOvershoot$ across the sweep --- a factor
-of five --- and it is the same overshoot Supplement~S.4.1 reports
-for the Monte Carlo at $n_{\mathrm{cal}} = \nSupNCal$.
+The consequence is not that the shortest window is noisier. It is
+Remark~\ref{rem:effective_level}: the three do not estimate the same quantity.
+Their effective levels are $\nWSweepShortLevel$, $\nWSweepMidLevel$ and
+$\nWSweepLongLevel$ against a nominal $0.99$, so the overshoot falls from
+$\nWSweepShortOvershoot$ to $\nWSweepLongOvershoot$ across the sweep, a factor of
+five, and at $w = 125$ it sits at the remark's upper bound of
+$\nLevelMaxOvershoot$ because the estimator there is the window maximum.
 
 Over the \nWSweepCells{} cells of the sequence panel, the shift and the corrected
 rate both move with the overshoot rather than against the window length: the
@@ -1678,11 +1709,16 @@ either end.
 The ablation requested of $w \in \{125, 250, 500\}$ is therefore answered by
 saying that its three points are not comparable as a curve, and the degenerate
 estimator at $w = 125$ is the extreme case of a confound present at all three.
-No window recommendation follows: choosing by corrected coverage would select
-$w = 500$, whose rate sits closest to nominal here, but that is the setting with
-the smallest overshoot rather than the one with the best estimator, and
-separating the two would require holding $k/w$ fixed across $w$, which
-equation~\eqref{eq:qV} does not permit.
+No window recommendation follows, and the reason is worth stating in the form a
+practitioner would meet it. Choosing the window by corrected coverage selects
+$w = 500$, whose rate sits closest to nominal here. But $w = 500$ is the setting
+with the smallest overshoot, not the setting whose estimator is best calibrated,
+and the corrected rate moves with the overshoot. A reader who selects on that
+criterion is optimising the confound rather than the property: the ranking it
+produces is a ranking of effective levels, and it would come out the same on a
+panel where every window estimated equally well. Separating the two would require
+holding $k/w$ fixed as $w$ varies, which equation~\eqref{eq:qV} does not permit,
+so the sweep is reported and no setting is recommended from it.
 
 \subsection{Static versus rolling recalibration}
 \label{sec:static_vs_rolling}

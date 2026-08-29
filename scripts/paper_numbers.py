@@ -588,6 +588,39 @@ def collect() -> dict:
     n["MCBRhoConverted"] = float(_s3.spearmanr(0.5 * _ok["f"] * _ok["qV"] ** 2,
                                                _ok["uMCB_in_test"]).statistic)
 
+    # ---- the effective level of the conformal shift ------------------------ #
+    # Equation (8) returns the k-th smallest of n scores with
+    # k = ceil((n+1)(1-alpha)), capped at n. So the estimator targets k/n, not
+    # 1-alpha, and the overshoot is exactly alpha wherever k reaches n. The
+    # comparison against the sampling standard deviation is computed rather
+    # than asserted because the overshoot is a sawtooth in n -- it drops when
+    # the ceiling increments and rises between -- so there is no single
+    # crossover and a claim of one would be wrong.
+    from math import ceil as _ceil
+
+    def _overshoot(_n, _a=0.01):
+        return min(_ceil((_n + 1) * (1 - _a)), _n) / _n - (1 - _a)
+
+    _sd_level = lambda _n, _a=0.01: np.sqrt(_a * (1 - _a) / _n)
+    n["LevelBound"] = int(2 / 0.01 - 1 - 1)
+    n["LevelMaxOvershoot"] = 0.01
+    _dom = [_n for _n in range(20, 3001) if _overshoot(_n) > _sd_level(_n)]
+    _runs, _cur = [], [_dom[0]]
+    for _x in _dom[1:]:
+        if _x == _cur[-1] + 1:
+            _cur.append(_x)
+        else:
+            _runs.append((_cur[0], _cur[-1])); _cur = [_x]
+    _runs.append((_cur[0], _cur[-1]))
+    n["LevelDomRuns"] = len(_runs)
+    n["LevelDomOneLo"], n["LevelDomOneHi"] = _runs[0]
+    n["LevelDomTwoLo"], n["LevelDomTwoHi"] = _runs[1]
+    assert all(abs(_overshoot(_n) - 0.01) < 1e-12
+               for _n in range(20, n["LevelBound"] + 1)), \
+        "the overshoot is no longer exactly alpha in the degenerate regime"
+    assert n["LevelDomOneHi"] == n["LevelBound"], \
+        "the first dominance run no longer ends at the degeneracy boundary"
+
     # ---- the rolling window sweep, K4b ------------------------------------- #
     # Section 3.2.1 promises Section 7 reports what w = 125 does. The three
     # windows do not estimate the same quantity: k = ceil((w+1)(1-alpha)) makes
@@ -1068,6 +1101,8 @@ def fmt(key: str, v) -> str:
     if key.startswith("WSweep") and key.endswith("Pi"):
         return f"{v:.4f}"
     if key.startswith(("WSweepSdRatio", "WSweepExp", "WSweepSqrtTwo")):
+        return f"{v:.2f}"
+    if key == "LevelMaxOvershoot":
         return f"{v:.2f}"
     if key.startswith("MCBDensity"):
         return f"{v:.1f}"
