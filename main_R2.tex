@@ -1213,15 +1213,31 @@ levels, and Gordy and McNeil state the requirement plainly: what is essential is
 that the regulator observes more than the exception indicator at one level.
 
 Two things separate the present argument from that literature and neither is the
-observation of weakness. The first is the characterisation: for alternatives
-agreeing on the whole process $\{u_t\}$ rather than only on its mean, \emph{no}
-statistic measurable with respect to the exceedance sequence separates them, the
-consistent weighted backtests included. The second is the escape route. The
-richer input those papers require --- a PIT value, or exceptions at four levels
---- is available to a regulator holding the predictive distribution and not to a
-user consuming a third-party forecast series, which is the position this paper's
-panel is in. The structural checks read what such a user has: the series and the
-returns.
+observation of weakness.
+
+The first is the characterisation, and it is what lets the two results stand
+together. \citet{escanciano2012pitfalls}'s alternatives agree with the null on
+the \emph{mean} of $u_t$; the alternatives of
+Proposition~\ref{prop:identification} agree with it on the whole process
+$\{u_t\}$. Against the first, a weighted backtest recovers power, and their
+Lemma~1 constructs one. Against the second, \emph{no} statistic measurable with
+respect to the exceedance sequence separates them, that weighted backtest
+included. The two propositions are about different alternative sets and neither
+contradicts the other; what the second adds is where the exceedance class ends.
+
+The second is the information set, and it is not a weaker claim than theirs but a
+claim about a different one. \citet{gordy2020spectral} and
+\citet{kratz2018multinomial} establish what a supervisor can do who holds the
+predictive distribution: read the probability integral transform, or take
+exceptions at four levels, and recover power the single-level indicator cannot
+carry. That is correct and it is not available here. A firm consuming a
+third-party quantile series --- a vendor model, a pretrained checkpoint, a
+counterparty's reported thresholds --- holds the thresholds and the realised
+returns and nothing else, and cannot obtain a PIT value from a forecaster that
+never published a distribution. The structural checks are built for that
+position: they read the series and the returns, which is what such a user has.
+The two literatures are answering the same question on two information sets, and
+the second is the one most consumers of a forecast are in.
 
 This section measures how much of the blind spot of
 Proposition~\ref{prop:blindspot_depth} a structural check removes. Measured on
@@ -1859,11 +1875,11 @@ those two numbers do not determine the threshold's adequacy. What separates them
 is the reported quantile measured against an estimated scale --- the structural
 check of Section~\ref{sec:gate}, applied before any of this arithmetic is run.
 
-\section{Discussion}
+\section{Limitations}
 \label{sec:discuss}
-
-\subsection{Limitations}
 \label{sec:failure}
+
+\subsection{What a scalar shift cannot do}
 
 A scalar shift restores unconditional violation frequency but cannot reshape the
 conditional dynamics of the violation process; the rolling variant captures time
@@ -1886,7 +1902,82 @@ calendar days later, and the \nLagLateN{} GJR-GARCH variants take
 \nLagLateDays{} days. Mitigations and the drift diagnostic that flags the regime in real
 time are in Supplement~S.9.6.
 
-\subsection{Implications for deployment}
+\subsection{What the structural gate cannot do}
+\label{sec:gate_limits}
+
+The gate's limit is a bound rather than an anecdote. Its scale band blocks a
+correctly specified forecaster only if that forecaster's standardised innovation
+law places its own $1\%$ quantile above the upper edge $\nGapBandNow$, which
+requires a tail lighter than a triangular law's $\nMLQuantTriangular$; Normal
+innovations sit at $\nMLQuantNormal$ and standardised $t_5$ at $\nMLQuantTFive$,
+and only a bounded law as light as the uniform, at $\nMLQuantUniform$, is caught.
+For daily returns that region is empty in practice, so the band's false-positive
+exposure is bounded rather than unknown.
+
+What that bound does not cover is the range between the two populations of this
+panel, and there the evidence is one estimator family and \nMLAssets{} assets:
+of the \nMLGbmCells{} gradient-boosted cells, the gate blocks \nMLGbmBlocked, of
+which \nMLBlockedUnder{} exceed at \nMLUnderThreshold{} times nominal or more,
+and it passes no cell exceeding at that rate (Section~\ref{sec:gate_residual}).
+That is one family on \nMLAssets{} of \nMainAssets{} assets, measured at
+\nMLDates{} dates where a coverage ratio moves in steps of \nMLPiGrid, and it is
+the only out-of-sample evidence the gate has. A second family sitting in the same
+range and passing while under-covering would overturn it, and nothing here
+excludes one.
+
+\subsection{Three absences of verdict, reported as verdicts}
+\label{sec:absences}
+
+Three checks in this paper return no evidence and return it in the form that
+reads as a pass, and they are one failure rather than three: the Christoffersen
+independence test is degenerate on \nMainCCUndefined{} of the \nMainPairs{} pairs
+after correction, tail reach is inapplicable on all \nGateSeries{} gated series
+because no shipped forecast file stores sampled paths, and the lower edge of the
+gate's own scale band blocks \nGapCellsLowerBlocks{} of \nGapCellsTotal{} cells.
+A statistic that cannot be computed, a check with no object, and a bound nothing
+in the panel approaches all report the same thing --- absence of evidence --- in
+a format a reader counts as evidence of adequacy. The third is one of this
+paper's own ten checks, which is what makes the sentence worth writing: the gate
+is not exempt from the argument it is built on, and the block count in
+Section~\ref{sec:gate} is nine checks exercised and one that was not.
+
+\subsection{What the verification found, and where}
+\label{sec:harness_limits}
+
+The estimator this paper offers as a remedy carried a defect of the kind the
+paper is about. The analytic Chronos quantiles paired each bin's probability with
+the next bin up, a uniform one-bin translation of the support, and the validation
+that accompanied them could not have seen it: a translation leaves the predictive
+standard deviation exactly invariant, and the violation rates were compared on
+\nLitAnalyticDates{} dates where the rate moves in steps of \nLitAnalyticGrid.
+It was found by rebuilding the estimator from its own description rather than by
+re-running it, and the corrected figures are throughout.
+
+Two further defects sat in the verification apparatus itself, and both were found
+the same way. Of the defects this project's computation protocol records,
+\nHarnessDefectsInstrument{} of \nHarnessDefectsTotal{} were in a check and
+\nHarnessDefectsObject{} in the quantity being checked. That ratio is not an
+aside. A validation instrument is an estimator like any other, it fails in the
+same way a coverage test does --- by returning a pass that is an absence of
+evidence --- and it fails more often than the objects it validates. This is the
+paper's own argument measured on the paper: it is why a coverage test cannot
+carry the validation of a forecast series by itself, and why each check in the
+replication material carries a negative control that must be seen to fail before
+the check may report anything.
+
+One finding ran the other way, and it is the reason verification is worth the
+cost rather than a tax on it. The effective-level overshoot of
+Remark~\ref{rem:effective_level} was not derived and then confirmed. It appeared
+twice, from opposite directions --- once in a Monte Carlo control written to
+check that a harness returned zero on a correctly specified forecaster, where it
+did not, and once in a window sweep run to answer a referee's request for a
+variance curve, where the curve turned out not to exist. Neither exercise was
+looking for it. The overshoot is a property of equation~\eqref{eq:qV} that was
+visible in the algebra all along and was noticed only when two unrelated checks
+returned the same anomaly, which is verification producing a result rather than
+repairing one.
+
+\section{Implications for Deployment}
 \label{sec:practitioner}
 
 \emph{Structural validation precedes recalibration.} A recalibration decision
