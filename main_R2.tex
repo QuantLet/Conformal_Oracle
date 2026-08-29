@@ -182,9 +182,14 @@ backtests that regulate this domain.
 That third claim was measured. At $\alpha = 0.01$ the
 independence test of \citet{christoffersen1998} is \emph{degenerate} on
 \nSeqCCUndefRawOne\% of the \nSeqPairs{} model--asset pairs with stored series,
-because a 1\% tail generates too few exceedances to populate a transition table,
-and on \nSeqCCUndefCorOne\% of them once the forecasts have been recalibrated,
-since a correction that spaces violations out empties the table further. In that
+and on \nSeqCCUndefCorOne\% of them once the forecasts have been recalibrated.
+The mechanism is narrower than a sparse tail. The transition table is populated
+in every one of those cases --- \nSeqCCBothZeroRaw{} of them have no exceedance
+transitions at all --- and what is empty is a single cell of it: the
+\nSeqCCNoConsecRaw{} degenerate pairs raw, and \nSeqCCNoConsecCor{} corrected,
+are exactly those with no two exceedances on consecutive days, so $n_{11} = 0$
+while $n_{10} > 0$. A correction that spaces exceedances out empties that cell
+more often, which is why the share rises rather than falls. In that
 state the transition probability is estimated at the boundary of the parameter
 space and the $\chi^2_1$ calibration of the likelihood ratio does not hold; the
 share falls monotonically to \nSeqCCUndefRawTen\% at $\alpha = 0.10$ under both
@@ -1432,17 +1437,72 @@ coverage-based tests of Section~\ref{sec:blindspot} cannot reduce at all, and bo
 the reduction and the remainder are computed.
 
 
-\section{Recalibration: What It Restores, and When to Apply It}
+\section{What Recalibration Restores}
 \label{sec:recal}
 
 \subsection{Static Recalibration}
 \label{sec:recalib}
 
-The corrected columns of Table~\ref{tab:master} show that marginal coverage is restored across the panel: \nMainGreen{} of \nMainPairs{} model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%). What the ordering by $\bar R$ adds is the \emph{amount} of correction required to get there. For \nLitMainROkN{} of the \nMainForecasters{} forecasters it is between $\nLitMainRMinAll$ and $\nLitMainRMaxOK$ --- the correction moves the threshold by at most a third of its own size --- while the two series sampled at the checkpoint default sit at $\nMainRTruncOne$ and $\nMainRTruncTwo$, where the corrected forecast is an empirical fallback retaining nothing of the base model's tail estimate. Green-zone compliance after correction is therefore uninformative on its own about whether the corrected forecast carries any of the base model's information: the truncated series reach it as comfortably as the rest.
+Marginal coverage is restored across the panel. \nMainGreen{} of \nMainPairs{}
+model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%), and
+unconditional coverage passes rise from \nMainKupiecRawPasses{} pairs to
+\nMainKupiecCorPasses. Corrected violation rates cluster within a thousandth of
+$\hat\pi = 0.010$ for every forecaster in Table~\ref{tab:master}, which is what
+the guarantee promises, and it is the same fact that makes the corrected column
+useless for ranking: a column on which every entry is at nominal separates
+nothing. The restoration is indifferent to the forecaster, which is the result,
+and indifference is not a property one can order by.
 
-We deliberately do not partition the panel. The ordering by $\bar R$ has structure at both ends and none in the middle: the largest consecutive ratio, a factor of 84, separates the dynamic-quantile forecasters from the rest near the \emph{bottom} of the range, where their raw coverage is already nominal, and the next, a factor of 48, separates Lag-Llama from the two truncated Chronos series at the top. Neither is a boundary between kinds of forecaster, and no single cutoff is distinguished by the data. Any threshold would inherit that arbitrariness, and the continuous statistic conveys the same information without it.
+The ordering by $\bar R$ records the amount of correction each pair required.
+For \nLitMainROkN{} of the \nMainForecasters{} forecasters it is between
+$\nLitMainRMinAll$ and $\nLitMainRMaxOK$ --- the correction moves the threshold
+by at most a third of its own size --- while the two series sampled at the
+checkpoint default sit at $\nMainRTruncOne$ and $\nMainRTruncTwo$, where the
+corrected forecast is an empirical fallback retaining nothing of the base
+model's tail estimate. Green-zone compliance after correction therefore carries
+no information about whether the corrected forecast retains any of the base
+model's: the truncated series reach it as comfortably as the rest. The ordering
+has structure at both ends and none in the middle, and the two largest
+consecutive ratios fall in places that are not boundaries between kinds of
+forecaster --- a factor of 84 near the \emph{bottom} of the range, separating the
+dynamic-quantile forecasters whose raw coverage is already nominal, and a factor
+of 48 at the top, separating Lag-Llama from the two truncated Chronos series.
 
-Conditional coverage is a different matter, and the reason is partly that the test is often unavailable. The Christoffersen independence statistic is degenerate whenever no two violations fall on consecutive days: the transition probability is estimated at the boundary of the parameter space and the $\chi^2_1$ calibration of the likelihood ratio is not valid there. After correction at $\alpha = 0.01$ this is the case for \nMainCCUndefined{} of the \nMainPairs{} pairs of the main panel. On the \nMainCCDefined{} pairs where the test is informative, \nMainCCPass{} pass --- \nMainCCPassPct\%. We report that subset because counting a degenerate table as a pass, as is common, would turn the same evidence into a \nMainCCAsPassPct\% pass rate constructed largely from transition tables that carry no information. The degeneracy rate is itself a result, and Section~\ref{sec:blindspot} treats it as one: at the 1\% level, on samples of the length regulators use, the standard independence test has no evidence to work with on more than half the panel. Green Zone recovery should therefore be read as restored unconditional coverage and nothing more. The structural reasons why a scalar shift cannot reshape conditional dynamics are in Section~\ref{sec:failure}.
+\paragraph{What $\qVstat$ measures} $\qVstat$ is a measurement in the units of
+the forecast, not a test statistic. It is an out-of-sample estimate of the
+constant displacement minimising the quantile score --- the argmin of the
+unconditional miscalibration term in the \citet{gneiting2023regression}
+decomposition --- and it is that argmin, not the score reduction achieved there.
+The two are distinct objects: the reduction is approximately
+$\tfrac12 f \qVstat^2$ with $f$ the residual density at the $\alpha$-quantile,
+and the implied $f$ spans a factor of \nMCBDensitySpan{} across this panel, so
+the map from one to the other is not one-to-one. On the window it is estimated
+on, $\qVstat$ is that displacement to a rank correlation of \nMCBRhoCal{}; the
+residual is one order statistic and an interpolation convention. Across the
+window boundary it is \nMCBRhoTest{} on the \nMCBWellSpec{} well-specified
+pairs.
+
+That gap is a statement about the estimator and not about the quantity it
+estimates. It licenses one sentence and no more: \textbf{$\qVstat$ does not
+support an out-of-sample ordering between forecasters.} The ordering by $\bar R$
+in Table~\ref{tab:master} is a description of how much correction each pair
+required on its own calibration window, and it is presented as one.
+
+\paragraph{Conditional coverage, and where the test is unavailable} Conditional
+coverage is a different matter, and the reason is partly that the test cannot be
+run. The Christoffersen independence statistic is degenerate when no two
+exceedances fall on consecutive days, because the transition probability is then
+estimated at the boundary of the parameter space and the $\chi^2_1$ calibration
+of the likelihood ratio does not hold. After correction at $\alpha = 0.01$ that
+is the case for \nMainCCUndefined{} of the \nMainPairs{} pairs. On the
+\nMainCCDefined{} pairs where the test is informative, \nMainCCPass{} pass, or
+\nMainCCPassPct\%; counting a degenerate table as a pass would report
+\nMainCCAsPassPct\% from the same evidence. At the $1\%$ level, on samples of
+the length regulators use, the standard independence test has no evidence to
+work with on more than half the panel, and Section~\ref{sec:blindspot} takes
+that as a result rather than a caveat. Green Zone recovery is restored
+unconditional coverage and nothing further; the structural reasons a scalar
+shift cannot reshape conditional dynamics are in Section~\ref{sec:failure}.
 
 \begin{table}[htbp]
 	\centering
@@ -1460,7 +1520,7 @@ Conditional coverage is a different matter, and the reason is partly that the te
 	\end{minipage}
 \end{table}
 
-Corrected violation rates cluster tightly around $\hat\pi = 0.010$ for every forecaster in the table, which is what the guarantee promises and is exactly why the corrected column cannot rank them. The Quantile Score can: it runs from $\nLitQSMin \times 10^{-4}$ for the two GJR-GARCH variants, which are indistinguishable from one another (Section~\ref{sec:practitioner}), to $\nLitQSMax \times 10^{-4}$ for the truncated Chronos-Small, each over that series' full test window, and the ordering it produces is close to the ordering by $\bar R$, because both are dominated by how far the raw forecast had to move.
+The Quantile Score does order the panel where the corrected coverage column cannot: it runs from $\nLitQSMin \times 10^{-4}$ for the two GJR-GARCH variants, which are indistinguishable from one another (Section~\ref{sec:practitioner}), to $\nLitQSMax \times 10^{-4}$ for the truncated Chronos-Small, each over that series' full test window, and the ordering it produces is close to the ordering by $\bar R$, because both are dominated by how far the raw forecast had to move.
 
 Conformal corrections widen VaR for under-conservative forecasters and contract it for over-conservative ones; for the panel, the dominant effect is widening, raising implied capital requirements (Table~\ref{tab:master}, Width/GJR column). Calibration--efficiency trade-offs and the resulting capital arithmetic are discussed in Sections~\ref{sec:failure} and~\ref{sec:economic}.
 

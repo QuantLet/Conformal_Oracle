@@ -23,7 +23,10 @@ grid on five random pairs: closed form and grid argmin agree to between 5e-6 and
 - uMCB is the **score reduction achieved at that shift**. It is not a shift.
 
 The relation is $\mathrm{uMCB} \approx \tfrac12 f \hat q_V^2$ with $f$ the residual
-density at the α-quantile, and the implied $f$ on this panel spans a factor of 481
+density at the α-quantile, and the implied $f$ on this panel spans a factor of **489** between its 5th and
+95th percentiles (0.1 to 25.2 over 259 pairs; recomputed 2026-08-29 from
+`umcb_pairs.csv`, which is also what `analysis/umcb/MEMO.md` reports. The 481
+first written here reproduced from nothing and is corrected)
 (`analysis/umcb/MEMO.md`). So the answer to "is q̂_V a rewriting of uMCB?" is:
 **no, it is a rewriting of the argmin, and the map from the argmin to uMCB is not
 one-to-one across pairs.**

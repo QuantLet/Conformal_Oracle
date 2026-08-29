@@ -532,6 +532,39 @@ def collect() -> dict:
                                     - ov["roll_cal"]["lost_but_score_worse"])
     n["GateRollUpgradeAndDeteriorate"] = ov["roll_cal"]["upgrade_and_deterioration"]
 
+    # The Christoffersen degeneracy, decomposed. The manuscript said a 1% tail
+    # generates "too few exceedances to populate a transition table". K1b3
+    # measured the three states and the table is populated in every case: zero
+    # pairs have n11 = n10 = 0, and all of them have n11 = 0 with n10 > 0. What
+    # is empty is one cell of the table, not the table.
+    k1b3 = json.loads((BASE / "analysis" / "k1_verify"
+                       / "k1b3_result.json").read_text())
+    for tag, key in (("Raw", "raw"), ("Cor", "cor")):
+        n[f"SeqCCBothZero{tag}"] = int(k1b3[key]["A"])
+        n[f"SeqCCNoConsec{tag}"] = int(k1b3[key]["B"])
+    assert n["SeqCCBothZeroRaw"] == 0 and n["SeqCCBothZeroCor"] == 0, \
+        "a pair with an unpopulated transition table would change the sentence"
+
+    # The Gneiting-Resin decomposition, from K0a. Two objects that are not the
+    # same one: qV estimates the ARGMIN of the unconditional miscalibration
+    # term, uMCB is the score reduction achieved there. The map between them
+    # runs through the residual density, which is not constant across the panel.
+    _k0 = json.loads((BASE / "analysis" / "k0a_mcb" / "k0a_result.json").read_text())
+    n["MCBWellSpec"] = int(_k0["well_specified"]["n"])
+    n["MCBRhoCal"] = float(_k0["well_specified"]["spearman_qV_delta_cal"])
+    n["MCBRhoTest"] = float(_k0["well_specified"]["spearman_qV_delta_test"])
+    # The implied residual density, uMCB ~ f qV^2 / 2, on the pairs where the
+    # expansion is defined: the truncated series are excluded because their qV
+    # is not a small displacement, and the pairs whose uMCB is numerically
+    # negative are dropped rather than clipped.
+    _um = pd.read_csv(BASE / "analysis" / "umcb" / "umcb_pairs.csv")
+    _ok = _um[(~_um["defective"]) & (_um["uMCB"] > 0) & (_um["qV"].abs() > 0)]
+    _f = 2 * _ok["uMCB"] / _ok["qV"] ** 2
+    n["MCBDensityLo"] = float(_f.quantile(0.05))
+    n["MCBDensityHi"] = float(_f.quantile(0.95))
+    n["MCBDensitySpan"] = n["MCBDensityHi"] / n["MCBDensityLo"]
+    n["MCBDensityPairs"] = int(len(_ok))
+
     # ---- the harness's own defect census ----------------------------------- #
     # Counted from PROTOCOL.md's table rather than typed, so the figure in the
     # manuscript cannot drift from the register it summarises. One row is one
@@ -962,6 +995,12 @@ def fmt(key: str, v) -> str:
         return f"{v:.1f}"
     if key == "MLPooledGrid":
         return f"{v:.3f}"
+    if key in ("MCBRhoCal", "MCBRhoTest"):
+        return f"{v:.2f}"
+    if key == "MCBDensitySpan":
+        return f"{v:.0f}"
+    if key.startswith("MCBDensity"):
+        return f"{v:.1f}"
     if key == "MLGbmPiDefault":
         # 800 observations, so the grid is 1.25e-3 and four decimals claim a
         # resolution the panel does not have. Guard 6 caught this on its first

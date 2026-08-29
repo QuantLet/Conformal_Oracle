@@ -297,6 +297,17 @@ not possible without editing this file's producer.
 | `\nGateRollUpgradesLostWorse` | 11 | SEQ (312) |
 | `\nGateRollUpgradesLostNet` | 9 | SEQ (312) |
 | `\nGateRollUpgradeAndDeteriorate` | 71 | SEQ (312) |
+| `\nSeqCCBothZeroRaw` | 0 | SEQ (312) |
+| `\nSeqCCNoConsecRaw` | 108 | SEQ (312) |
+| `\nSeqCCBothZeroCor` | 0 | SEQ (312) |
+| `\nSeqCCNoConsecCor` | 167 | SEQ (312) |
+| `\nMCBWellSpec` | 264 | -- |
+| `\nMCBRhoCal` | 0.99 | -- |
+| `\nMCBRhoTest` | 0.52 | -- |
+| `\nMCBDensityLo` | 0.1 | -- |
+| `\nMCBDensityHi` | 25.2 | -- |
+| `\nMCBDensitySpan` | 489 | -- |
+| `\nMCBDensityPairs` | 259 | -- |
 | `\nHarnessDefectsInstrument` | 4 | -- |
 | `\nHarnessDefectsObject` | 2 | -- |
 | `\nHarnessDefectsTotal` | 6 | -- |
