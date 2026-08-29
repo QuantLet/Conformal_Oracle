@@ -47,3 +47,5 @@ analysis/k2_sim/run_grid.py	"qV = np.quantile(s, lvl, axis=1, method=""linear"")
 analysis/k2_sim/run_grid.py	s = np.sort(rng0.standard_normal(n) * 0.01)	ORDER_STATISTIC		np.sort(...)[k-1] with k = ceil((n+1)(1-alpha)); equation (8)
 analysis/k2_sim/run_grid.py	"comm = np.quantile(s, min(k / n, 1.0), method=""linear"")"	LEVEL_K_OVER_N	nothing published	deliberate: the exact no-Monte-Carlo convention check
 analysis/umcb/run_umcb.py	"lo, hi = sub[""implied_f""].quantile([0.05, 0.95])"	NOT_THE_SHIFT	uMCB memo	percentiles of an implied density, not a shift
+scripts/paper_numbers.py	n["MCBDensityLo"] = float(_ok["f"].quantile(0.05))	NOT_THE_SHIFT	Section 6	percentiles of the implied residual density across pairs, not of nonconformity scores
+scripts/paper_numbers.py	n["MCBDensityHi"] = float(_ok["f"].quantile(0.95))	NOT_THE_SHIFT	Section 6	as above

@@ -553,17 +553,40 @@ def collect() -> dict:
     n["MCBWellSpec"] = int(_k0["well_specified"]["n"])
     n["MCBRhoCal"] = float(_k0["well_specified"]["spearman_qV_delta_cal"])
     n["MCBRhoTest"] = float(_k0["well_specified"]["spearman_qV_delta_test"])
-    # The implied residual density, uMCB ~ f qV^2 / 2, on the pairs where the
-    # expansion is defined: the truncated series are excluded because their qV
-    # is not a small displacement, and the pairs whose uMCB is numerically
-    # negative are dropped rather than clipped.
-    _um = pd.read_csv(BASE / "analysis" / "umcb" / "umcb_pairs.csv")
-    _ok = _um[(~_um["defective"]) & (_um["uMCB"] > 0) & (_um["qV"].abs() > 0)]
-    _f = 2 * _ok["uMCB"] / _ok["qV"] ** 2
-    n["MCBDensityLo"] = float(_f.quantile(0.05))
-    n["MCBDensityHi"] = float(_f.quantile(0.95))
+    # The implied residual density, uMCB ~ f qV^2 / 2. WITHIN one window: the
+    # published 489 divided a test-window uMCB by a calibration-window qV, so it
+    # carried the estimation noise of both and was a cross-window quantity
+    # rather than a property of the density. Within window the span is 15.
+    # The truncated series are excluded because their qV is not a small
+    # displacement; pairs with non-positive uMCB are dropped, not clipped.
+    _kp = pd.read_csv(BASE / "analysis" / "k0a_mcb" / "k0a_pairs.csv")
+    _ok = _kp[(~_kp["truncated"].astype(bool)) & (_kp["uMCB_in_cal"] > 0)
+              & (_kp["qV"].abs() > 0)].copy()
+    _ok["f"] = 2 * _ok["uMCB_in_cal"] / _ok["qV"] ** 2
+    _ok["gap"] = (_ok["qV"] - _ok["delta_test"]).abs()
+    _ok = _ok[_ok["gap"] > 0]
+    n["MCBDensityLo"] = float(_ok["f"].quantile(0.05))
+    n["MCBDensityHi"] = float(_ok["f"].quantile(0.95))
     n["MCBDensitySpan"] = n["MCBDensityHi"] / n["MCBDensityLo"]
     n["MCBDensityPairs"] = int(len(_ok))
+
+    # The mechanism: the standard deviation of a sample alpha-quantile is
+    # sqrt(a(1-a)/n)/f, so the density predicts the size of the estimation error
+    # and therefore the collapse in rank correlation across the window boundary.
+    # Slope against a theoretical -1, and the magnitude with no fitted constant.
+    from scipy import stats as _s3
+    _lr = _s3.linregress(np.log(_ok["f"]), np.log(_ok["gap"]))
+    n["MCBGapSlope"] = float(_lr.slope)
+    n["MCBGapSlopeSE"] = float(_lr.stderr)
+    n["MCBGapSlopeSigma"] = abs(n["MCBGapSlope"] + 1.0) / n["MCBGapSlopeSE"]
+    _pred = np.sqrt(0.01 * 0.99 * (1 / _ok["n_cal"] + 1 / _ok["n_test"])) / _ok["f"]
+    n["MCBGapMagRatio"] = float(_ok["gap"].median() / _pred.median())
+    # And the branch that did NOT hold: supplying the density recovers nothing
+    # across the window boundary.
+    n["MCBRhoPlain"] = float(_s3.spearmanr(_ok["qV"].abs(),
+                                           _ok["uMCB_in_test"]).statistic)
+    n["MCBRhoConverted"] = float(_s3.spearmanr(0.5 * _ok["f"] * _ok["qV"] ** 2,
+                                               _ok["uMCB_in_test"]).statistic)
 
     # ---- the harness's own defect census ----------------------------------- #
     # Counted from PROTOCOL.md's table rather than typed, so the figure in the
@@ -999,6 +1022,12 @@ def fmt(key: str, v) -> str:
         return f"{v:.2f}"
     if key == "MCBDensitySpan":
         return f"{v:.0f}"
+    if key in ("MCBGapSlope", "MCBGapSlopeSE"):
+        return f"{v:.2f}"
+    if key in ("MCBGapSlopeSigma", "MCBGapMagRatio"):
+        return f"{v:.1f}" if key == "MCBGapSlopeSigma" else f"{v:.2f}"
+    if key in ("MCBRhoPlain", "MCBRhoConverted"):
+        return f"{v:.2f}"
     if key.startswith("MCBDensity"):
         return f"{v:.1f}"
     if key == "MLGbmPiDefault":

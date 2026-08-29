@@ -1475,18 +1475,35 @@ unconditional miscalibration term in the \citet{gneiting2023regression}
 decomposition --- and it is that argmin, not the score reduction achieved there.
 The two are distinct objects: the reduction is approximately
 $\tfrac12 f \qVstat^2$ with $f$ the residual density at the $\alpha$-quantile,
-and the implied $f$ spans a factor of \nMCBDensitySpan{} across this panel, so
-the map from one to the other is not one-to-one. On the window it is estimated
-on, $\qVstat$ is that displacement to a rank correlation of \nMCBRhoCal{}; the
-residual is one order statistic and an interpolation convention. Across the
-window boundary it is \nMCBRhoTest{} on the \nMCBWellSpec{} well-specified
-pairs.
+so the map from one to the other runs through a factor that is specific to the
+pair. On the window it is estimated on, $\qVstat$ is that displacement to a rank
+correlation of \nMCBRhoCal{}; the residual is one order statistic and an
+interpolation convention. Across the window boundary it is \nMCBRhoTest{} on the
+\nMCBWellSpec{} well-specified pairs.
 
-That gap is a statement about the estimator and not about the quantity it
-estimates. It licenses one sentence and no more: \textbf{$\qVstat$ does not
-support an out-of-sample ordering between forecasters.} The ordering by $\bar R$
-in Table~\ref{tab:master} is a description of how much correction each pair
-required on its own calibration window, and it is presented as one.
+That gap is a statement about the estimator, not about the quantity it estimates,
+and its size is predicted rather than merely named. The standard deviation of a
+sample $\alpha$-quantile is $\sqrt{\alpha(1-\alpha)/n}\,/\,f$, so the same
+density that converts a displacement into a score reduction also sets how
+precisely the displacement itself can be estimated. Across the \nMCBDensityPairs{}
+pairs on which $f$ is defined it spans a factor of \nMCBDensitySpan{} between its
+5th and 95th percentiles, \nMCBDensityLo{} to \nMCBDensityHi, and the estimation
+error tracks it: regressing $\log\lvert\qVstat - \delta^\star\rvert$ on $\log f$
+gives a slope of $\nMCBGapSlope$ with standard error \nMCBGapSlopeSE, which is
+\nMCBGapSlopeSigma{} standard errors from the theoretical $-1$, and the median
+gap is \nMCBGapMagRatio{} times the predicted standard deviation with no fitted
+constant. The collapse from \nMCBRhoCal{} to \nMCBRhoTest{} is sampling noise of
+the size a sparse residual tail implies.
+
+It does not follow, and is not true, that the density explains why $\qVstat$ and
+the score reduction order the panel differently. Supplying each pair's own $f$
+moves that rank correlation from \nMCBRhoPlain{} to \nMCBRhoConverted, which is
+nothing: the conversion factor operates within a window and carries no
+information across one. What the measurement licenses is one sentence:
+\textbf{$\qVstat$ does not support an out-of-sample ordering between
+forecasters.} The ordering by $\bar R$ in Table~\ref{tab:master} is a description
+of how much correction each pair required on its own calibration window, and it
+is presented as one.
 
 \paragraph{Conditional coverage, and where the test is unavailable} Conditional
 coverage is a different matter, and the reason is partly that the test cannot be
