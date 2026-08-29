@@ -1187,13 +1187,43 @@ forecaster at all.
 %══════════════════════════════════════════════════════════════════════════════
 %─── PART 7c: Structural validation ─────────────────────────────────────────
 %══════════════════════════════════════════════════════════════════════════════
-\section{Structural Validation}
+\section{Why Structural Validation Precedes Correction}
 \label{sec:gate}
 \label{sec:precede}
 
-A coverage test identifies only the realised tail probability
-$u_t = F_t(\hat q^{lo}_t)$, so validation must rest on something else. This
-section measures how much of the blind spot of
+The ordering is forced by two facts already established. The correction restores
+marginal coverage whatever the forecaster (Section~\ref{sec:recal}), so a
+pipeline that validates after correcting has no test of the forecaster; and a
+coverage test identifies only the realised tail probability
+$u_t = F_t(\hat q^{lo}_t)$ (Proposition~\ref{prop:identification}), so validating
+before correcting does not help either, if the validation is itself a coverage
+test. What is left is a check that reads the series rather than its exceedances,
+and it has to run first.
+
+\paragraph{What is new here, and what is not} That exceedance-based backtests are
+weak at $\alpha = 0.01$ is established, and this paper claims no priority over
+it. \citet{escanciano2012pitfalls} prove the unconditional test inconsistent
+against Historical Simulation and Filtered Historical Simulation, and their
+Lemma~1 then exhibits a weighted backtest that is consistent --- a result
+recovering inside the exceedance class the power the unconditional test loses.
+\citet{gordy2020spectral} and \citet{kratz2018multinomial} treat the poverty of
+the single-level indicator as a premise to design around, the first by reading
+the probability integral transform and the second by reading exceptions at four
+levels, and Gordy and McNeil state the requirement plainly: what is essential is
+that the regulator observes more than the exception indicator at one level.
+
+Two things separate the present argument from that literature and neither is the
+observation of weakness. The first is the characterisation: for alternatives
+agreeing on the whole process $\{u_t\}$ rather than only on its mean, \emph{no}
+statistic measurable with respect to the exceedance sequence separates them, the
+consistent weighted backtests included. The second is the escape route. The
+richer input those papers require --- a PIT value, or exceptions at four levels
+--- is available to a regulator holding the predictive distribution and not to a
+user consuming a third-party forecast series, which is the position this paper's
+panel is in. The structural checks read what such a user has: the series and the
+returns.
+
+This section measures how much of the blind spot of
 Proposition~\ref{prop:blindspot_depth} a structural check removes. Measured on
 the understatement it permits, which is the quantity
 Table~\ref{tab:gate_residual} reports, the answer is a little over a third.
