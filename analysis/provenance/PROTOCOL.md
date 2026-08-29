@@ -206,6 +206,41 @@ inside them. It is how a check ends up in the second mode --- "cannot see" ---
 without anyone noticing, because a check with a control in the wrong place looks
 exactly like a check that works.
 
+### A check states its own coverage
+
+The rule about where a control is planted has a companion, and it was found by
+asking the same question of an instrument that was passing: *what does this check
+skip, strip, or ignore before it looks?*
+
+Guard 1 reads two things --- the `.log` LaTeX writes, and the text of the PDF that
+shipped. Where poppler is absent it reads the PDF with pypdf, and pypdf prints
+`Exceeded 5000 form XObject invocations while extracting text; further form
+content is skipped`. That message says content was dropped and says nothing about
+how much, so a guard that prints `pass` beneath it is reporting a verdict over an
+unstated fraction of the document.
+
+**Measured rather than assumed.** pypdf recovers text from **76 of 76** pages of
+`main_R2.pdf` (158,978 characters) and **59 of 59** of `supplement.pdf`
+(103,440), with no page empty or thin. The skipped content is form XObject
+content, which in these documents is included graphics, not the page streams that
+carry body text. A `??` was then planted twice in the real document and rebuilt:
+once in the abstract, and once inside the Conclusion at page 72 of 76, well past
+the point where the budget is exceeded. Both were detected, by both limbs.
+
+What remains outside coverage is therefore narrow and worth stating exactly: a
+`??` rendered *inside an included graphic*. No `\ref` in these documents can
+produce one, because a reference in the source is typeset into the page stream;
+it would require a figure whose own source carried an unresolved reference when
+the figure was produced.
+
+**What the rule requires.** A check that reads a document, a panel or an archive
+**prints how much of it was read**, in the units of the thing --- pages,
+cells, rows, files --- beside the verdict. Guard 1 now prints its page and
+character coverage on every run. A pass over an unstated fraction is the same
+defect as a pass at an unstated tolerance, and it is invisible in exactly the
+same way: nothing in the output distinguishes a check that read everything from
+one that read half.
+
 ### The four ways a check stops being evidence
 
 Rule 2 was written against one of these and has since met three more. They are

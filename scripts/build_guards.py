@@ -85,6 +85,26 @@ def control_undefined() -> bool:
         # the control is only valid if it reproduces BOTH symptoms
         return bool(hits) and "??" in pdf and "Table 1" in pdf
 
+def _pdf_coverage(path) -> tuple[int, int, int]:
+    """Pages, pages yielding text, characters recovered.
+
+    Guard 1 reads the PDF with pypdf when poppler is absent, and pypdf stops
+    descending into form XObjects after 5,000 invocations. That warning is
+    printed by the library and says nothing about how much of the document was
+    read, so the guard states its own coverage rather than leaving a reader to
+    infer it from an absence of complaint.
+    """
+    try:
+        import pypdf
+    except ImportError:
+        return (0, 0, 0)
+    if shutil.which("pdftotext"):
+        t = _pdf_text(path)
+        return (-1, -1, len(t))          # poppler: no per-page accounting needed
+    pages = [p.extract_text() or "" for p in pypdf.PdfReader(str(path)).pages]
+    return (len(pages), sum(1 for t in pages if t.strip()), sum(len(t) for t in pages))
+
+
 def guard_undefined() -> bool:
     good = True
     for doc in DOCS:
@@ -100,7 +120,11 @@ def guard_undefined() -> bool:
             for h in hits[:4]: print(f"           {h}")
             good = False
         else:
-            _ok(f"{doc}: no undefined references in {doc}.log, no '??' in {doc}.pdf")
+            n_pg, n_txt, n_ch = _pdf_coverage(pdf) if pdf.exists() else (0, 0, 0)
+            cov = (f"{n_txt}/{n_pg} pages, {n_ch:,} characters"
+                   if n_pg > 0 else f"{n_ch:,} characters via pdftotext")
+            _ok(f"{doc}: no undefined references in {doc}.log, no '??' in "
+                f"{doc}.pdf ({cov})")
     return good
 
 
