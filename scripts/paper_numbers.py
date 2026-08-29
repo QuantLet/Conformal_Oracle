@@ -588,6 +588,37 @@ def collect() -> dict:
     n["MCBRhoConverted"] = float(_s3.spearmanr(0.5 * _ok["f"] * _ok["qV"] ** 2,
                                                _ok["uMCB_in_test"]).statistic)
 
+    # ---- the rolling window sweep, K4b ------------------------------------- #
+    # Section 3.2.1 promises Section 7 reports what w = 125 does. The three
+    # windows do not estimate the same quantity: k = ceil((w+1)(1-alpha)) makes
+    # the effective level k/w depend on w, and the overshoot over nominal falls
+    # by a factor of five across the sweep. Unit: one cell is one forecaster x
+    # one asset x one window, 312 cells per window.
+    _ws = pd.read_csv(BASE / "analysis" / "phase3_windows" / "w_sweep.csv")
+    n["WSweepCells"] = int(len(_ws) // _ws["w"].nunique())
+    for w in (125, 250, 500):
+        _gw = _ws[_ws["w"] == w]
+        tag = {125: "Short", 250: "Mid", 500: "Long"}[w]
+        n[f"WSweep{tag}W"] = int(w)
+        n[f"WSweep{tag}K"] = int(_gw["k"].iloc[0])
+        n[f"WSweep{tag}Level"] = float(_gw["k"].iloc[0]) / w
+        n[f"WSweep{tag}Overshoot"] = n[f"WSweep{tag}Level"] - 0.99
+        n[f"WSweep{tag}Shift"] = float(_gw["mean_shift"].median())
+        n[f"WSweep{tag}Sd"] = float(_gw["sd_shift"].median())
+        rate(n, f"WSweep{tag}Pi", float(_gw["pi_hat"].median()),
+             int(_gw["n"].sum()))
+    _pv = _ws.pivot_table(index=["model", "asset"], columns="w", values="sd_shift")
+    _sh = _ws.pivot_table(index=["model", "asset"], columns="w", values="mean_shift")
+    n["WSweepSdRatioShort"] = float((_pv[125] / _pv[250]).median())
+    n["WSweepSdRatioLong"] = float((_pv[250] / _pv[500]).median())
+    n["WSweepSqrtTwo"] = float(np.sqrt(2))
+    n["WSweepExpShort"] = float(np.log(n["WSweepSdRatioShort"]) / np.log(2))
+    n["WSweepExpLong"] = float(np.log(n["WSweepSdRatioLong"]) / np.log(2))
+    n["WSweepShiftLargerShort"] = int((_sh[125] > _sh[250]).sum())
+    n["WSweepBound"] = int(2 / 0.01 - 1 - 1)   # k >= w whenever w < 2/alpha - 1
+    assert n["WSweepShortLevel"] == 1.0, \
+        "w = 125 no longer targets the window maximum; the sentence changes"
+
     # ---- the harness's own defect census ----------------------------------- #
     # Counted from PROTOCOL.md's table rather than typed, so the figure in the
     # manuscript cannot drift from the register it summarises. One row is one
@@ -1027,6 +1058,16 @@ def fmt(key: str, v) -> str:
     if key in ("MCBGapSlopeSigma", "MCBGapMagRatio"):
         return f"{v:.1f}" if key == "MCBGapSlopeSigma" else f"{v:.2f}"
     if key in ("MCBRhoPlain", "MCBRhoConverted"):
+        return f"{v:.2f}"
+    if key.endswith("Level"):
+        return f"{v:.4f}"
+    if key.startswith("WSweep") and key.endswith("Overshoot"):
+        return f"{v:.4f}"
+    if key.startswith("WSweep") and (key.endswith("Shift") or key.endswith("Sd")):
+        return f"{v:.4f}"
+    if key.startswith("WSweep") and key.endswith("Pi"):
+        return f"{v:.4f}"
+    if key.startswith(("WSweepSdRatio", "WSweepExp", "WSweepSqrtTwo")):
         return f"{v:.2f}"
     if key.startswith("MCBDensity"):
         return f"{v:.1f}"

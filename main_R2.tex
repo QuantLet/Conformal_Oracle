@@ -433,7 +433,7 @@ The nonconformity score $S_t$ from equation~\eqref{eq:score} is positive when th
 	\qquad
 	k = \left\lceil (n+1)(1-\alpha) \right\rceil,
 \end{equation}
-with $\qVstat = S_{(n)}$ when $k > n$, which occurs only for $\alpha < 1/(n+1)$. This is the conformal convention rather than the plain empirical quantile $Q_{1-\alpha}(\{S_t\})$, and the distinction is not cosmetic: the two differ by one order statistic, an $O(1/n)$ gap that can nonetheless change the sign of $\qVstat$ on assets whose calibration scores straddle zero near the $(1-\alpha)$ level. Every result in this paper that enters a headline table uses equation~\eqref{eq:qV}, and the rolling variant substitutes the trailing window of size $w$ for $\mathcal D_n$ and $k = \lceil (w+1)(1-\alpha)\rceil$. Six auxiliary artefacts compute the shift as $Q_{k/n}$, the empirical quantile at the level $k/n$ rather than the order statistic itself; on this panel the two differ by a median $\nSeqLevelGapMedian$ in relative terms and change the violation count of \nSeqLevelChanged{} of the \nSeqPairs{} pairs. That such a divergence existed at all has a cause worth naming, because it is the most productive single source of defect in this project: the convention was stated in a docstring and implemented in no function, so every producer rebuilt it, and four rebuilt it differently. A definition that lives in prose is not a definition that a pipeline can be held to. The shift is now defined once, in code, and every site in the repository that takes a quantile of nonconformity scores is enumerated with its convention by an audit that fails the build when an undeclared one appears. A further property of equation~\eqref{eq:qV} is worth stating where the reader meets it rather than where it bites: $k > n-1$ whenever $n < 2/\alpha - 1$, so at $\alpha = 0.01$ the shift is the \emph{sample maximum} for every calibration sample of 198 observations or fewer. A short calibration window therefore does not give a noisy estimate of the conformal quantile; it gives an extreme-value statistic with no stable variance. The bound is $n \le 198$ at $\alpha = 0.01$ and $n \le 78,\,38,\,18$ at $\alpha = 0.025,\,0.05,\,0.10$. The consequence for window choice is stated in Section~\ref{sec:recal}: the three trailing windows a reader would naturally compare at $\alpha = 0.01$, $w \in \{125, 250, 500\}$, are not three points on a variance curve, because at $w = 125$ the shift \emph{is} the window maximum while at $w = 250$ and $w = 500$ it is the second and fifth largest of the window. The recalibrated lower quantile and VaR are then given by equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$. A positive $\qVstat$ shifts the predicted quantile downward, increasing reported VaR and correcting underestimation of tail risk; a negative value indicates over-conservatism.
+with $\qVstat = S_{(n)}$ when $k > n$, which occurs only for $\alpha < 1/(n+1)$. This is the conformal convention rather than the plain empirical quantile $Q_{1-\alpha}(\{S_t\})$, and the distinction is not cosmetic: the two differ by one order statistic, an $O(1/n)$ gap that can nonetheless change the sign of $\qVstat$ on assets whose calibration scores straddle zero near the $(1-\alpha)$ level. Every result in this paper that enters a headline table uses equation~\eqref{eq:qV}, and the rolling variant substitutes the trailing window of size $w$ for $\mathcal D_n$ and $k = \lceil (w+1)(1-\alpha)\rceil$. Six auxiliary artefacts compute the shift as $Q_{k/n}$, the empirical quantile at the level $k/n$ rather than the order statistic itself; on this panel the two differ by a median $\nSeqLevelGapMedian$ in relative terms and change the violation count of \nSeqLevelChanged{} of the \nSeqPairs{} pairs. That such a divergence existed at all has a cause worth naming, because it is the most productive single source of defect in this project: the convention was stated in a docstring and implemented in no function, so every producer rebuilt it, and four rebuilt it differently. A definition that lives in prose is not a definition that a pipeline can be held to. The shift is now defined once, in code, and every site in the repository that takes a quantile of nonconformity scores is enumerated with its convention by an audit that fails the build when an undeclared one appears. A further property of equation~\eqref{eq:qV} is worth stating where the reader meets it rather than where it bites: $k > n-1$ whenever $n < 2/\alpha - 1$, so at $\alpha = 0.01$ the shift is the \emph{sample maximum} for every calibration sample of 198 observations or fewer. A short calibration window therefore does not give a noisy estimate of the conformal quantile; it gives an extreme-value statistic with no stable variance. The bound is $n \le 198$ at $\alpha = 0.01$ and $n \le 78,\,38,\,18$ at $\alpha = 0.025,\,0.05,\,0.10$. The consequence for window choice is measured in Section~\ref{sec:cost}: the three trailing windows a reader would naturally compare at $\alpha = 0.01$, $w \in \{125, 250, 500\}$, are not three points on a variance curve, because $k/w$ depends on $w$ and the three therefore target different effective levels --- $\nWSweepShortLevel$, $\nWSweepMidLevel$ and $\nWSweepLongLevel$ against a nominal $0.99$ --- with $w = 125$ the extreme case at which the shift \emph{is} the window maximum. The recalibrated lower quantile and VaR are then given by equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$. A positive $\qVstat$ shifts the predicted quantile downward, increasing reported VaR and correcting underestimation of tail risk; a negative value indicates over-conservatism.
 
 The construction makes no parametric assumption on returns; the coverage guarantee under temporal dependence is developed in Section~\ref{sec:validity}.
 
@@ -1551,12 +1551,16 @@ Figure~\ref{fig:traffic_light} shows asset-level Basel classifications before an
 \end{figure}
 
 
+\section{What It Costs, and When to Apply It}
+\label{sec:cost}
+
 \subsection{When the Correction Helps, and What It Costs}
 \label{sec:when_to_apply}
 
-Aggregate improvements can conceal deteriorations. We therefore report the full
-distribution of $\Delta\mathrm{QS} = \mathrm{QS}_{\mathrm{raw}} -
-\mathrm{QS}_{\mathrm{corrected}}$ over model--asset pairs rather than its mean.
+Aggregate improvements conceal deteriorations, so the full distribution of
+$\Delta\mathrm{QS} = \mathrm{QS}_{\mathrm{raw}} -
+\mathrm{QS}_{\mathrm{corrected}}$ over model--asset pairs is reported rather than
+its mean.
 
 At $\alpha = 0.01$ the correction makes \nDegradedStatic{} of \nSeqPairs{} pairs
 worse under the single-split estimator and \nDegradedRoll{} of \nSeqPairs{} worse
@@ -1593,7 +1597,7 @@ applies to \nGateRollOracleApplied{} of \nSeqPairs{} pairs, skips
 \nDegradedRoll{} rolling deteriorations --- \nGateRollOracleAvoidedPct\% of the
 damage --- and retains \emph{all} \nGateRollOracleUpgrades{} Basel zone
 upgrades. But that rule reads the window it is then scored on. It is an oracle,
-and we report it only as an upper bound on what gating can buy.
+and it stands as an upper bound on what gating can buy, not as a rule.
 
 The deployable rule gates on the calibration window, which is the information
 available on the day the decision is taken. It is materially weaker. At
@@ -1602,7 +1606,20 @@ $\alpha = 0.01$ it applies to \nGateRollApplied{} pairs and skips only
 \nGateRollAvoidedPct\% of the damage rather than half; and it costs
 \nGateRollUpgradesLost{} of the \nGateRollUpgrades{} zone upgrades, so the claim
 that gating is free on the regulatory axis does not survive contact with the
-constraint. Under the single split the deployable rule avoids
+constraint.
+
+That cost is stated in the zone because the zone is what the rule is keyed on,
+and it is worth pricing in something else, because Proposition~\ref{prop:zone_inclusion}
+says the zone resolves a sign. Measured on the two quantities that are not
+functions of the violation count, the \nGateRollUpgradesLost{} upgrades given up
+divide: all \nGateRollUpgradesLost{} would have moved closer to nominal, and
+\nGateRollUpgradesLostWorse{} of them would have paid for that with a
+\emph{worse} quantile score. The net cost of the rule is therefore
+\nGateRollUpgradesLostNet{} pairs, not \nGateRollUpgradesLost, on the only
+measure here that does not read the exceedance count. The rule is better than
+its own accounting in zones made it look, and the discrepancy is not an
+accident of this panel: a benefit counted in a sign cannot distinguish a pair
+that gains from one that pays for the gain elsewhere. Under the single split the deployable rule avoids
 \nGateStaticAvoided{} of the \nDegradedStatic{} deteriorations and costs
 \nGateStaticUpgradesLost{} of \nGateStaticUpgrades{} upgrades.
 
@@ -1622,6 +1639,50 @@ specific to $\alpha = 0.01$ is not how often it fires but the size of the damage
 it avoids when it does. The decision problem is therefore sharpest in the extreme
 tail, which is where the identification constraint of
 Remark~\ref{rem:tail_sparsity} operates.
+
+\subsection{The trailing window, and why the three settings are not a curve}
+\label{sec:window}
+
+Section~\ref{sec:cqr_var} leaves this section a debt: what the shift does at
+$w = 125$. The answer is arithmetic before it is empirical. Equation~\eqref{eq:qV}
+sets $k = \lceil (w+1)(1-\alpha)\rceil$, and $k \ge w$ whenever
+$w < 2/\alpha - 1$, so at $\alpha = 0.01$ every window of \nWSweepBound{}
+observations or fewer makes the shift the \emph{maximum} of its window. At the
+three settings a reader would compare, $k$ is \nWSweepShortK, \nWSweepMidK{} and
+\nWSweepLongK: the maximum, the second largest, and the fifth largest.
+
+The consequence is not that the shortest window is noisier. It is that the
+three do not estimate the same quantity. The effective level $k/w$ is
+$\nWSweepShortLevel$, $\nWSweepMidLevel$ and $\nWSweepLongLevel$ against a
+nominal $0.99$, so the overshoot $k/w - (1-\alpha)$ falls from
+$\nWSweepShortOvershoot$ to $\nWSweepLongOvershoot$ across the sweep --- a factor
+of five --- and it is the same overshoot Supplement~S.4.1 reports
+for the Monte Carlo at $n_{\mathrm{cal}} = \nSupNCal$.
+
+Over the \nWSweepCells{} cells of the sequence panel, the shift and the corrected
+rate both move with the overshoot rather than against the window length: the
+median shift falls from $\nWSweepShortShift$ to $\nWSweepLongShift$ and the
+median corrected rate rises from $\nWSweepShortPi$ to $\nWSweepLongPi$, toward
+nominal from below. The shift at $w = 125$ is the larger of the two on
+\nWSweepShiftLargerShort{} of \nWSweepCells{} cells.
+
+Dispersion confirms that no variance curve is being read. Halving a window
+multiplies the standard deviation of an interior order statistic by
+$\sqrt 2 = \nWSweepSqrtTwo$; the observed ratios are $\nWSweepSdRatioShort$ from
+$w = 250$ to $w = 125$ and $\nWSweepSdRatioLong$ from $w = 500$ to $w = 250$.
+Written as $\mathrm{sd} \propto w^{-b}$, the implied exponent is
+$\nWSweepExpShort$ over the first step and $\nWSweepExpLong$ over the second. A
+variance curve returns one exponent, and $0.5$ at that; this returns neither, at
+either end.
+
+The ablation requested of $w \in \{125, 250, 500\}$ is therefore answered by
+saying that its three points are not comparable as a curve, and the degenerate
+estimator at $w = 125$ is the extreme case of a confound present at all three.
+No window recommendation follows: choosing by corrected coverage would select
+$w = 500$, whose rate sits closest to nominal here, but that is the setting with
+the smallest overshoot rather than the one with the best estimator, and
+separating the two would require holding $k/w$ fixed across $w$, which
+equation~\eqref{eq:qV} does not permit.
 
 \subsection{Static versus rolling recalibration}
 \label{sec:static_vs_rolling}
