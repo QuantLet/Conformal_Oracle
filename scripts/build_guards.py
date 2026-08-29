@@ -414,11 +414,140 @@ def _have_pdftext() -> bool:
     except ImportError:
         return False
 
+# ---------------------------------------------------------------- guard 6 ----
+# A rate printed to a precision finer than the grid it lives on.
+#
+# Third instance of one shape, which is why it is a check and not a note:
+#
+#   * Section 4.4 announced violation rates agreeing "to four decimal places"
+#     on 40 dates, where the rate moves in steps of 0.025;
+#   * the same section announced dispersion agreeing to 0.3% on a statistic a
+#     support translation leaves exactly invariant;
+#   * CONDITIONAL_PASSAGES.md described a family as sitting "at 0.6x to 1.0x
+#     nominal" on 200 dates, where the ratio moves in steps of 0.5x and 0.6 is
+#     not a value the panel can produce.
+#
+# A rate computed from N Bernoulli trials takes values on a grid of 1/N. Printing
+# it with a step finer than that claims resolution the data does not carry.
+# scripts/paper_numbers.py records N beside every rate it emits; this reads that
+# record and re-derives the requirement.
+RATES = BASE / "analysis" / "provenance" / "RATE_RESOLUTION.tsv"
+RATE_NAME = re.compile(r"^(?:Main|Seq|Pool|Sup|ML|Lit|Raw|Trunc|MC)?.*Pi(?![a-z])")
+
+
+def _rate_rows() -> list[tuple[str, str, int, int]]:
+    if not RATES.is_file():
+        return []
+    out = []
+    for line in RATES.read_text().splitlines():
+        if line.startswith("#") or not line.strip():
+            continue
+        f = line.split("\t")
+        if len(f) < 5:
+            continue
+        out.append((f[0], f[1], int(f[2]), int(f[4])))
+    return out
+
+
+def _over_precise(rows) -> list[str]:
+    """A printed step finer than 1/N over-claims. Reported with both numbers."""
+    bad = []
+    for key, val, n_obs, dp in rows:
+        if n_obs <= 0:
+            bad.append(f"{key}: no sample size recorded"); continue
+        if 10.0 ** (-dp) < 1.0 / n_obs:
+            bad.append(f"{key} = {val} printed to {dp} dp (step {10.0**-dp:.1e}) "
+                       f"on {n_obs:,} observations (grid {1.0/n_obs:.1e})")
+    return bad
+
+
+# Macros the name pattern catches that are not rates. Listed with a reason
+# rather than dissolved by loosening the pattern, so the exemption is visible
+# and a future rate cannot slip in behind a broadened regex.
+NOT_A_RATE = {
+    "RawPiGJRDefectivePct": "a percentage of a rate, not a rate; its N is "
+                            "recorded against RawPiGJRDefective",
+    "MLPiGrid": "the grid step itself, 1/(N alpha) -- the quantity this guard "
+                "checks others against",
+    "SpearmanRPi": "a rank correlation between two orderings, not a frequency; "
+                   "its resolution is set by the number of pairs, not by 1/N",
+}
+
+
+def _undeclared_rates() -> list[str]:
+    """A rate macro in numbers.tex that the registry does not carry.
+
+    The registry is written by the same script that emits the macros, so an
+    absence means a rate was emitted without its sample size -- which is the
+    state every rate in this project was in until this guard existed.
+    """
+    tex = BASE / "numbers.tex"
+    if not tex.exists():
+        return []
+    known = {k for k, _, _, _ in _rate_rows()}
+    out = []
+    for k, v in re.findall(r"\\newcommand\{\\n(\w+)\}\{([^}]*)\}",
+                           tex.read_text(encoding="utf-8")):
+        if not RATE_NAME.match(k) or k in known or k in NOT_A_RATE:
+            continue
+        if not re.fullmatch(r"0\.\d+", v):     # a rate is a bare fraction
+            continue
+        out.append(f"{k} = {v}")
+    return out
+
+
+def control_rate_resolution() -> bool:
+    """Planted where the guard reads worst, not where it reads typically.
+
+    Two controls. The first is the shape the guard was written for: four decimal
+    places on the 40-date validation, whose grid is 0.025 -- the R14 case, 250
+    times finer than the data. The second is the one a registry-driven check can
+    miss entirely: a rate that never reaches the registry at all. A guard that
+    only inspects the rows it is given passes on every rate nobody recorded, and
+    that was the state of all of them until now.
+    """
+    over = _over_precise([("Fake", "0.0125", 40, 4)])
+    # The positive case has to be chosen against the same grid: on 40 dates the
+    # grid is 0.025, so even two decimals over-claims and only one does not.
+    # Getting this wrong the first time is the point -- the guard reported
+    # BROKEN rather than passing on a control that could not distinguish.
+    fine = _over_precise([("Fake", "0.0", 40, 1)])
+    missed = _over_precise([("Fake", "0.01", 0, 2)])
+    return len(over) == 1 and len(fine) == 0 and len(missed) == 1
+
+
+def guard_rate_resolution() -> bool:
+    rows = _rate_rows()
+    if not rows:
+        _bad("no rate resolution registry -- run scripts/paper_numbers.py --write")
+        return False
+    good = True
+    bad = _over_precise(rows)
+    if bad:
+        _bad(f"{len(bad)} rate(s) printed finer than their grid")
+        for b in bad[:8]:
+            print(f"           {b}")
+        good = False
+    else:
+        _ok(f"{len(rows)} rate(s) printed no finer than the grid 1/N they live on")
+    miss = _undeclared_rates()
+    if miss:
+        _bad(f"{len(miss)} rate macro(s) emitted with no sample size recorded")
+        for m in miss[:8]:
+            print(f"           {m}")
+        good = False
+    else:
+        _ok("every rate macro in numbers.tex carries the N that sets its resolution")
+    return good
+
+
 GUARDS = [("undefined references", control_undefined, guard_undefined),
           ("prose numeric literals", control_literals, guard_literals),
           ("retired substring screen", control_substring_screen, guard_substring_screen),
           ("referenced files are tracked", control_referenced_tracked, guard_referenced_tracked),
-          ("inputs have declared producers", control_producers, guard_producers)]
+          ("inputs have declared producers", control_producers, guard_producers),
+          ("rates declare their resolution", control_rate_resolution,
+           guard_rate_resolution)]
 
 
 def main() -> int:

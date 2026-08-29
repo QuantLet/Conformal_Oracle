@@ -131,6 +131,35 @@ defect, and no choice of tolerance repairs it. If (ii) exceeds the scale of a
 plausible failure mode, or (iii) fails, the check is recorded as non-informative
 and reported as such, exactly as the −3.500 edge is.
 
+### A rate carries the grid it lives on
+
+Three instances of one shape, which is the count at which this project turns a
+note into a check.
+
+| where | the claim | the grid it was on |
+|---|---|---|
+| Section 4.4 | violation rates agree "to four decimal places" | 40 dates at alpha = 0.01: steps of 0.025 |
+| Section 4.4 | predictive dispersion agrees "to within 0.3%" | a statistic the defect leaves exactly invariant |
+| `CONDITIONAL_PASSAGES.md` | a family sits "at 0.6x to 1.0x nominal" | 200 dates: steps of 0.5x, and 0.6 is not on it |
+
+A rate computed from N Bernoulli trials takes values on a grid of 1/N. A figure
+printed with a step finer than that claims resolution the data does not carry,
+and the claim is invisible because nothing about the printed digits says how many
+observations produced them.
+
+**Every rate the manuscript prints is emitted together with the number of
+observations it summarises**, by `scripts/paper_numbers.py`'s `rate()`, and
+guard 6 fails the build when a printed step is finer than 1/N or when a rate
+reaches the registry without an N. On its first run it caught one figure written
+in the same session --- an ML exceedance rate at four decimals on 800
+observations, grid 0.00125 --- and one generated table carrying the same defect,
+which now prints exact counts rather than rounded rates.
+
+The rule has a corollary about presentation, not only precision. Where rounding
+to the grid would destroy the comparison a table is making, the answer is the
+**count out of N**, which is exact and loses nothing, rather than a rate rounded
+until the dose response disappears.
+
 The corollary for validating an estimator against a second route: compare the
 **object**, not a summary of it. Comparing per-date quantiles would have found
 this in one line; comparing dispersion and coverage could not have found it at

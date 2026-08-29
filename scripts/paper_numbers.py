@@ -42,7 +42,26 @@ OUT_TEX = BASE / "numbers.tex"
 OUT_MD = BASE / "analysis" / "provenance" / "PAPER_NUMBERS.md"
 
 
+# Every rate the manuscript prints carries the number of observations it was
+# computed over, because a rate on N observations lives on a grid of 1/N and
+# cannot carry more resolution than that. Three defects in this project were
+# this one shape: a dispersion tolerance on a quantity the defect left
+# invariant, "agreement to four decimal places" on 40 dates where the grid is
+# 0.025, and a family described as "0.6x to 1.0x nominal" on 200 dates where
+# the grid is 0.5x. Three makes it a check rather than a note; guard 6 reads
+# what this dict records.
+RATE_N: dict[str, int] = {}
+
+
+def rate(n: dict, key: str, value, n_obs: int):
+    """Record a rate together with the sample size that sets its resolution."""
+    n[key] = value
+    RATE_N[key] = int(n_obs)
+    return value
+
+
 def collect() -> dict:
+    RATE_N.clear()
     t = pd.read_csv(Q / "CO_full_evaluation" / "tab_master_results_r2.csv")
     d = pd.read_csv(Q / "CO_full_evaluation" / "results" / "all_results.csv")
     g = d[d["alpha"] == 0.01]
@@ -78,8 +97,8 @@ def collect() -> dict:
     n["MainCCAsPassPct"] = 100 * (n["MainCCPass"] + n["MainCCUndefined"]) / n["MainPairs"]
 
     ok = t[~t["model"].isin(["Chronos-Small", "Chronos-Mini"])]
-    n["MainRawPiMin"] = ok["raw_pi"].min()
-    n["MainRawPiMax"] = ok["raw_pi"].max()
+    rate(n, "MainRawPiMin", ok["raw_pi"].min(), int(g["n_test"].sum()))
+    rate(n, "MainRawPiMax", ok["raw_pi"].max(), int(g["n_test"].sum()))
     n["MainRMin"] = ok["R"].min()
     n["MainRMax"] = ok["R"].max()
     n["MainRTruncOne"] = t.set_index("model").loc["Chronos-Small", "R"]
@@ -89,7 +108,20 @@ def collect() -> dict:
                        ("ChronosSmallA", "Chronos-Small-A"), ("ChronosMiniA", "Chronos-Mini-A"),
                        ("GJR", "GJR-GARCH"), ("GJRt", "GJR-GARCH-t"),
                        ("CAViaRAS", "CAViaR-AS")):
-        n[f"RawPi{key}"] = t.set_index("model").loc[model, "raw_pi"]
+        # The three dynamic-quantile models have no series in the SEQ panel, so
+        # their observation counts live in the verification files instead. An
+        # absent count is an error, not a zero: a rate with N = 0 would divide
+        # by zero in the resolution guard, and silently defaulting it would put
+        # the rate back in the state the guard exists to end.
+        _n = int(g[g["model"] == model]["n_test"].sum())
+        if _n == 0:
+            _alt = BASE / "analysis" / "k1_verify" / f"k1c_{model}.csv"
+            if not _alt.is_file():
+                raise SystemExit(f"no observation count for {model}; a rate "
+                                 "cannot be emitted without the N that sets "
+                                 "its resolution")
+            _n = int(pd.read_csv(_alt)["n_test"].sum())
+        rate(n, f"RawPi{key}", t.set_index("model").loc[model, "raw_pi"], _n)
     n["WidthRatioTimesFM"] = t.set_index("model").loc["TimesFM-2.5", "w_gjr"]
     n["WidthRatioMoiraiTwo"] = t.set_index("model").loc["Moirai-2.0", "w_gjr"]
     n["GJRnegqV"] = int(t.set_index("model").loc["GJR-GARCH", "n_qV_neg"])
@@ -106,7 +138,8 @@ def collect() -> dict:
             n[f"SeqCCRej{lab}{tag}"] = 100 * rej / max(dfd, 1)
 
     # ---- recalibration as concealment ------------------------------------ #
-    n["TruncCorPi"] = t.set_index("model").loc["Chronos-Small", "cor_pi"]
+    rate(n, "TruncCorPi", t.set_index("model").loc["Chronos-Small", "cor_pi"],
+     int(g[g["model"] == "Chronos-Small"]["n_test"].sum()))
     n["TruncCorGreen"] = int(t.set_index("model").loc["Chronos-Small", "green"])
 
     # ---- the indication rule (SEQ panel, alpha = 0.01) -------------------- #
@@ -166,7 +199,8 @@ def collect() -> dict:
     for model, tag in (("Chronos-Small", "SmallDefault"), ("Chronos-Small-A", "SmallAnalytic"),
                        ("Chronos-Mini", "MiniDefault"), ("Chronos-Mini-A", "MiniAnalytic")):
         for a, atag in ((0.01, "One"), (0.10, "Ten")):
-            n[f"Pi{tag}{atag}"] = ar.loc[(model, a), "pihat"]
+            rate(n, f"Pi{tag}{atag}", ar.loc[(model, a), "pihat"],
+                 int(d[(d["model"] == model) & (d["alpha"] == a)]["n_test"].sum()))
             # tab_alpha_response's "kupiec" column counts assets that PASS, not
             # assets rejected: it is exactly 24 minus the rejection count in
             # all_results, at all four levels and for both series. Every other
@@ -345,7 +379,9 @@ def collect() -> dict:
     # introduction and "$0.004$" in the failure-mode table -- for a quantity that
     # is measured, and measured in a file.
     gjr = pd.read_csv(BASE / "analysis" / "gjr_quantile" / "promotion_before_after.csv")
-    n["RawPiGJRDefective"] = float(gjr[gjr["series"] == "superseded"]["pihat"].mean())
+    rate(n, "RawPiGJRDefective",
+     float(gjr[gjr["series"] == "superseded"]["pihat"].mean()),
+     int(gjr[gjr["series"] == "superseded"]["n"].sum()))
     n["RawPiGJRDefectivePct"] = 100 * n["RawPiGJRDefective"]
 
     # The same quantity for the two series whose lower quantile was stored with
@@ -355,8 +391,9 @@ def collect() -> dict:
     # every tabular before reading. Cell means over the 24 assets.
     sv = pd.read_csv(BASE / "analysis" / "recompute" / "sign_verification.csv")
     for tag, mdl in (("TimesFM", "TimesFM-2.5"), ("MoiraiTwo", "Moirai-2.0")):
-        n[f"RawPi{tag}Defective"] = float(
-            sv[sv["model"] == mdl]["pihat_stored"].mean())
+        rate(n, f"RawPi{tag}Defective",
+             float(sv[sv["model"] == mdl]["pihat_stored"].mean()),
+             int(sv[sv["model"] == mdl]["n"].sum()))
 
     # ---- POOL panel: one row is a forecaster pooled over assets and dates --- #
     # 36,588 observations for the foundation models, 38,473 for the benchmarks.
@@ -369,7 +406,8 @@ def collect() -> dict:
         .set_index("model")
     for m, tag in (("EWMA", "EWMA"), ("Moirai-2.0", "MoiraiTwo"),
                    ("Chronos-Small-A", "SmallAnalytic"), ("GJR-GARCH", "GJR")):
-        n[f"PoolPi{tag}"] = float(wcl.loc[m, "pi_pooled"])
+        rate(n, f"PoolPi{tag}", float(wcl.loc[m, "pi_pooled"]),
+             int(wcl.loc[m, "total_n"]))
     n["PoolBootEWMA"] = float(wcl.loc["EWMA", "p_boot"])
     n["PoolClusterEWMA"] = float(pnl.loc["EWMA", "p_cluster"])
 
@@ -416,7 +454,8 @@ def collect() -> dict:
     n["LitQSMax"] = float(t["cor_qs"].max())
     n["LitWMin"] = float(t["w_gjr"].min())
     n["LitWMax"] = float(t["w_gjr"].max())
-    n["LitCorPiTypical"] = float(t["cor_pi"].median())
+    rate(n, "LitCorPiTypical", float(t["cor_pi"].median()),
+     int(g["n_test"].sum() // t["model"].nunique()))
     n["LitMoiraiGapPP"] = 100 * abs(t.set_index("model").loc["Moirai-2.0", "raw_pi"]
                                     - t.set_index("model").loc["Moirai-1.1", "raw_pi"])
     n["LitLambdaTail"] = 0.94 ** 250
@@ -476,7 +515,8 @@ def collect() -> dict:
     _g = lambda dgp, T, col: float(grid[(grid["dgp"] == dgp) & (grid["T"] == T)][col].iloc[0])
     n["MCGreenTFiveSmall"] = _g("t5", 500, "RawGreen")
     n["MCGreenTFiveLarge"] = _g("t5", 10000, "RawGreen")
-    n["MCPiTFive"] = _g("t5", 10000, "Raw_pi")
+    rate(n, "MCPiTFive", _g("t5", 10000, "Raw_pi"),
+     int(grid[(grid["dgp"] == "t5") & (grid["T"] == 10000)]["n_test"].iloc[0]) * 500)
     n["MCGreenSkewSmall"] = _g("skewt3", 500, "RawGreen")
     n["MCGreenSkewLarge"] = _g("skewt3", 10000, "RawGreen")
     n["MCTMax"] = int(grid["T"].max())
@@ -551,6 +591,23 @@ def collect() -> dict:
     _pi = _dr.assign(h=(_dr["realised"] < _dr["lgbm_q"]).astype(float)) \
         .groupby("leaf")["h"].mean()
     n["MLGbmLeafDefault"] = 20
+    # The two dates that make the ML test out of sample, read from git rather
+    # than typed, so the claim "the band was fixed before the family was run"
+    # is checkable by the reader with the same command.
+    import subprocess as _sp
+    def _first_commit_date(path, pickaxe=None):
+        cmd = ["git", "log", "--format=%ad", "--date=format:%-d %B %Y"]
+        if pickaxe:
+            cmd += ["-S", pickaxe]
+        cmd += ["--", path]
+        out = _sp.run(cmd, cwd=BASE, capture_output=True, text=True).stdout.split("\n")
+        out = [x for x in out if x.strip()]
+        return out[-1] if out else ""
+    n["MLBandDeclared"] = _first_commit_date(
+        "analysis/provenance/DECLARED_CONSTANTS.md", "-3.5, -1.8")
+    n["MLPanelRun"] = _first_commit_date("analysis/ml/dose_response_raw.csv")
+    assert n["MLBandDeclared"] and n["MLPanelRun"], \
+        "the out-of-sample claim rests on two git dates and one is missing"
     # The knob threshold, read from the emitter that applies it rather than
     # typed twice. Declared in drafts/prereg_ml.md before the knob arm ran.
     import ast as _ast
@@ -559,7 +616,10 @@ def collect() -> dict:
     n["MLKnobThreshold"] = float(next(
         _ast.literal_eval(t.value) for t in _et.body
         if isinstance(t, _ast.Assign) and getattr(t.targets[0], "id", "") == "KNOB_THRESHOLD"))
-    n["MLGbmPiDefault"] = float(_pi.loc[n["MLGbmLeafDefault"]])
+    n["MLPooledObs"] = int((_dr["leaf"] == 20).sum())
+    n["MLPooledGrid"] = 1.0 / (n["MLPooledObs"] * 0.01)
+    rate(n, "MLGbmPiDefault", float(_pi.loc[n["MLGbmLeafDefault"]]),
+         int((_dr["leaf"] == n["MLGbmLeafDefault"]).sum()))
     _mono = _pi[_pi.index >= 5]           # leaf 1 -> 5 is not monotone; reported so
     n["MLGbmTailSpan"] = float(_mono.max() / _mono.min())
     _cen = _dr.assign(c=_dr["lgbm_med"] / _dr["train_sd"]).groupby("leaf")["c"].median()
@@ -683,7 +743,8 @@ def collect() -> dict:
     z2v = pd.read_csv(BASE / "analysis" / "provenance" / "z2_verification.csv") \
         .set_index("model")
     for tag, mdl in (("Small", "Chronos-Small"), ("Mini", "Chronos-Mini")):
-        n[f"SupZTwoPi{tag}"] = float(z2v.loc[mdl, "pihat_at_ES_level"])
+        rate(n, f"SupZTwoPi{tag}", float(z2v.loc[mdl, "pihat_at_ES_level"]),
+             int(d[(d["model"] == mdl) & (d["alpha"] == 0.025)]["n_test"].sum()))
         n[f"SupZTwo{tag}"] = float(z2v.loc[mdl, "Z2_canonical_median"])
         # Dividing by the stored (negative) column maps z -> 2 - z, which is why
         # the defective routine returned a large positive statistic.
@@ -698,8 +759,10 @@ def collect() -> dict:
                                 & (tg["lr"] == lr)]
     _best, _cons = _cfg(100, 3, 0.05), _cfg(100, 3, 0.01)
     n["SupTunedSeries"] = int(len(_best))
-    n["SupTunedPiBest"] = float(_best["pi_hat"].mean())
-    n["SupTunedPiCons"] = float(_cons["pi_hat"].mean())
+    rate(n, "SupTunedPiBest", float(_best["pi_hat"].mean()),
+         int(_best["n_test"].sum()))
+    rate(n, "SupTunedPiCons", float(_cons["pi_hat"].mean()),
+         int(_cons["n_test"].sum()))
     n["SupTunedKupBest"] = int((_best["kupiec_p"] < 0.05).sum())
     n["SupTunedKupCons"] = int((_cons["kupiec_p"] < 0.05).sum())
     n["SupTunedGreenBest"] = int((_best["TL"] == "Green").sum())
@@ -740,7 +803,12 @@ def collect() -> dict:
     # The corrected rate in the degenerate small-sample regime, where k >= n and
     # the conformal shift is the window maximum.
     _ss = pd.read_csv(Q / "CO_robustness" / "study1_small_sample.csv")
-    n["SupSmallPi"] = float(_ss[_ss["T"] == 250]["mean_corr_pi"].median())
+    # A Monte Carlo mean, so the resolution is the test window times the number
+    # of replications, not the window alone: 75 observations per replication
+    # would put the grid at 0.013 and make 0.008 against 0.010 unreadable.
+    _n250 = _ss[_ss["T"] == 250]
+    rate(n, "SupSmallPi", float(_n250["mean_corr_pi"].median()),
+         int((250 - round(0.70 * 250)) * _n250["n_valid"].min()))
     n["SupSmallNCal"] = int(round(0.70 * 250))
 
     # The delta-star ladder. Every entry of Table S.8 is in delta_by_class.json;
@@ -786,7 +854,7 @@ def collect() -> dict:
     n["SupPairT"] = int(pb["T_path"])
     for tag, key in (("Honest", "honest"), ("Alt", "truncated")):
         _p = pb["paths"][key]
-        n[f"SupPairPi{tag}"] = float(_p["pi_hat"])
+        rate(n, f"SupPairPi{tag}", float(_p["pi_hat"]), int(pb["T_path"]))
         n[f"SupPairKup{tag}"] = float(_p["kupiec_p"])
         n[f"SupPairCC{tag}"] = float(_p["cc_ind_p"])
         n[f"SupPairDQ{tag}"] = float(_p["dq_p"])
@@ -892,7 +960,14 @@ def fmt(key: str, v) -> str:
     if key.startswith(("MLWorked", "MLPiGrid", "MLUnderThreshold",
                        "MLGbmTailSpan", "MLQrfTailSpan", "MLKnobThreshold")):
         return f"{v:.1f}"
-    if key.startswith(("MLGbmPiDefault", "MLGbmCentreSpread")):
+    if key == "MLPooledGrid":
+        return f"{v:.3f}"
+    if key == "MLGbmPiDefault":
+        # 800 observations, so the grid is 1.25e-3 and four decimals claim a
+        # resolution the panel does not have. Guard 6 caught this on its first
+        # run, on a number written in this session.
+        return f"{v:.2f}"
+    if key == "MLGbmCentreSpread":
         return f"{v:.4f}"
     if key.startswith("SupRvol"):
         return f"{v:.2f}"
@@ -1031,6 +1106,22 @@ def main() -> int:
                   or k.startswith("WellCal") else "--")
         md.append(f"| `\\n{k}` | {fmt(k, v)} | {panel} |")
     OUT_MD.write_text("\n".join(md) + "\n", encoding="utf-8")
+
+    # The resolution registry. Every rate carries the number of observations it
+    # summarises, so guard 6 can check that nothing is printed to a precision
+    # finer than the grid 1/N the rate actually lives on.
+    res = ["# macro\tvalue\tn_obs\tgrid\tprinted_dp",
+           "# Written by scripts/paper_numbers.py. A rate computed from N",
+           "# observations moves in steps of 1/N and cannot carry more",
+           "# resolution than that. Guard 6 fails the build when a printed",
+           "# figure claims more. Three defects in this project were this one",
+           "# shape before it became a check.", ""]
+    for k in sorted(RATE_N):
+        v = fmt(k, n[k])
+        dp = len(v.split(".")[1]) if "." in v else 0
+        res.append(f"{k}\t{v}\t{RATE_N[k]}\t{1.0/RATE_N[k]:.3e}\t{dp}")
+    (BASE / "analysis" / "provenance" / "RATE_RESOLUTION.tsv").write_text(
+        "\n".join(res) + "\n", encoding="utf-8")
 
     if a.check and OUT_TEX.exists():
         cur = OUT_TEX.read_text(encoding="utf-8")

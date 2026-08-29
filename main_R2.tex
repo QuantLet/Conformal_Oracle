@@ -1268,28 +1268,36 @@ by more than two hundred. Robustness read off the gap rather than the margin
 therefore overstates the check by one order of magnitude at the edge as
 specified, and by two at the tightened one.
 
-The margin also states the check's limit of generalisation. The separation here
-is clean because this panel contains no series that is \emph{moderately}
-misspecified: it holds eleven series whose reported quantile sits between two and
-three estimated standard deviations below zero, and two whose truncation has
-driven it to a fifth of that. What the check does against a series in between is
-therefore not established by this panel, and a second estimator family supplies
-one.
+The margin measures the check against the panel that produced it, and on that
+panel the two populations are far apart: eleven series whose reported quantile
+sits between two and three estimated standard deviations below zero, and two
+whose truncation has driven it to a fifth of that, with nothing between. A
+separation established on a sample containing only gross failures and correct
+specifications is a weak thing to report, because the discriminating power is
+in-sample by construction. The band therefore has one test on this evidence
+that is not: a family it was never shown.
 
+The band edges were fixed before that family was run --- the declaration is dated
+\nMLBandDeclared{} and the estimator panel \nMLPanelRun{} --- so what follows is
+out of sample rather than a re-reading of the cells the edges were drawn around.
 Gradient-boosted quantile regression and a quantile random forest were run on
-\nMLAssets{} assets across \nMLLeafSettings{} leaf resolutions,
-\nMLCells{} cells at \nMLDates{} dates each, and they land on opposite sides of
-the question. The forest places every cell inside the band, between
-$\nMLQrfRatioLo$ and $\nMLQrfRatioHi$. The boosted estimator places
-\nMLGbmBlocked{} of its \nMLGbmCells{} cells above the upper edge, between
-$\nGapCellGoodWorst$ and $\nGapCellTruncBest$ --- the interval this panel leaves
-empty --- and the check blocks all \nMLGbmBlocked. Of those,
-\nMLBlockedUnder{} exceed at \nMLUnderThreshold{} times nominal or more, and no
-cell the check passes exceeds at that rate; the remaining \nMLBlockedNotUnder{}
-return three violations where two were expected, which \nMLDates{} dates at
-$\alpha = 0.01$ cannot separate from correct coverage. On the one family
-available that occupies the intermediate range, the check discriminates rather
-than misfiring, and it misses nothing.
+\nMLAssets{} assets across \nMLLeafSettings{} leaf resolutions, \nMLCells{} cells
+at \nMLDates{} dates each, and they land on opposite sides of the question. The
+forest places every cell inside the band, between $\nMLQrfRatioLo$ and
+$\nMLQrfRatioHi$. The boosted estimator places \nMLGbmBlocked{} of its
+\nMLGbmCells{} cells between $\nGapCellGoodWorst$ and $\nGapCellTruncBest$ ---
+the interval the sequence panel leaves empty --- and the check blocks all
+\nMLGbmBlocked. Of those, \nMLBlockedUnder{} are on cells exceeding at
+\nMLUnderThreshold{} times nominal or more, and no cell the check passes exceeds
+at that rate; the remaining \nMLBlockedNotUnder{} return three violations where
+two were expected, which \nMLDates{} dates at $\alpha = 0.01$ cannot separate
+from correct coverage.
+
+So the intermediate range is no longer empty and no longer untested. On the one
+family available that occupies it, the check discriminates rather than misfiring:
+it blocks under-covering cells, passes the rest, and misses none. That is the
+strongest statement this paper makes about the gate, and it is the only one
+measured on series the gate was not built around.
 
 The edge's false-positive region is then bounded in closed form rather than left
 open. A correctly specified forecaster is blocked at $\nGapBandNow$ only if its

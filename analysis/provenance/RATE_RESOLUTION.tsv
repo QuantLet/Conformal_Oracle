@@ -1,0 +1,44 @@
+# macro	value	n_obs	grid	printed_dp
+# Written by scripts/paper_numbers.py. A rate computed from N
+# observations moves in steps of 1/N and cannot carry more
+# resolution than that. Guard 6 fails the build when a printed
+# figure claims more. Three defects in this project were this one
+# shape before it became a check.
+
+LitCorPiTypical	0.011	30316	3.299e-05	3
+MCPiTFive	0.0148	1500000	6.667e-07	4
+MLGbmPiDefault	0.03	800	1.250e-03	2
+MainRawPiMax	0.0333	485069	2.062e-06	4
+MainRawPiMin	0.0110	485069	2.062e-06	4
+PiMiniAnalyticOne	0.0177	36588	2.733e-05	4
+PiMiniAnalyticTen	0.0981	36588	2.733e-05	4
+PiMiniDefaultOne	0.4188	36588	2.733e-05	4
+PiMiniDefaultTen	0.4477	36588	2.733e-05	4
+PiSmallAnalyticOne	0.0173	36588	2.733e-05	4
+PiSmallAnalyticTen	0.1027	36588	2.733e-05	4
+PiSmallDefaultOne	0.3884	36588	2.733e-05	4
+PiSmallDefaultTen	0.4177	36588	2.733e-05	4
+PoolPiEWMA	0.0119	38473	2.599e-05	4
+PoolPiGJR	0.0111	38473	2.599e-05	4
+PoolPiMoiraiTwo	0.0114	36588	2.733e-05	4
+PoolPiSmallAnalytic	0.0113	36588	2.733e-05	4
+RawPiCAViaRAS	0.0110	40272	2.483e-05	4
+RawPiChronosMiniA	0.0177	36588	2.733e-05	4
+RawPiChronosSmallA	0.0173	36588	2.733e-05	4
+RawPiGJR	0.0200	38473	2.599e-05	4
+RawPiGJRDefective	0.0041	128211	7.800e-06	4
+RawPiGJRt	0.0145	38473	2.599e-05	4
+RawPiLagLlama	0.0294	36588	2.733e-05	4
+RawPiMoiraiOne	0.0154	36588	2.733e-05	4
+RawPiMoiraiTwo	0.0178	36588	2.733e-05	4
+RawPiMoiraiTwoDefective	0.988	121923	8.202e-06	3
+RawPiTimesFM	0.0143	36588	2.733e-05	4
+RawPiTimesFMDefective	0.990	121923	8.202e-06	3
+SupPairPiAlt	0.0101	500000	2.000e-06	4
+SupPairPiHonest	0.0099	500000	2.000e-06	4
+SupSmallPi	0.008	37500	2.667e-05	3
+SupTunedPiBest	0.0155	24102	4.149e-05	4
+SupTunedPiCons	0.0110	24102	4.149e-05	4
+SupZTwoPiMini	0.42	36588	2.733e-05	2
+SupZTwoPiSmall	0.39	36588	2.733e-05	2
+TruncCorPi	0.0108	36588	2.733e-05	4

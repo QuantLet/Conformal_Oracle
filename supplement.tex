@@ -1801,18 +1801,26 @@ registration and the outcome are in
 
 \begin{table}[htbp]
 	\centering
-	\caption{Realised exceedance rate at $\alpha = 0.01$ against the leaf-size
-		parameter $\texttt{min\_data\_in\_leaf}$, pooled over \nMLAssets{} assets
-		at \nMLDates{} dates. The rate is pooled first and the ratio taken after;
-		a spread computed over asset-by-leaf cells is a different quantity.}
+	\caption{Exceedance counts at $\alpha = 0.01$ against the leaf-size
+		parameter $\texttt{min\_data\_in\_leaf}$, over the \nMLPooledObs{}
+		observations each grid point pools --- \nMLAssets{} assets at
+		\nMLDates{} dates. Counts rather than rates, because a rate over
+		\nMLPooledObs{} observations moves in steps of $1/\nMLPooledObs$ and
+		printing it to four decimals would claim a resolution the panel does not
+		have; the count is exact. The last row gives $\hat\pi/\alpha$, which
+		lives on a grid of \nMLPooledGrid{} nominal at this pooling and on
+		\nMLPiGrid{} in a single asset-by-leaf cell. The rate is pooled first
+		and the ratio taken after; a spread computed over cells is a different
+		quantity.}
 	\label{tab:ml_dose}
 	\footnotesize
 	\input{analysis/ml/tab_ml_dose}
 \end{table}
 
-The boosted estimator moves its exceedance rate by a factor of \nMLGbmTailSpan{}
-across the grid from the second point upward, while the centre of the same
-predictive law moves by \nMLGbmCentreSpread{} estimated standard deviations. The
+The boosted estimator moves its exceedance count by a factor of
+\nMLGbmTailSpan{} across the grid from the second point upward, while the centre
+of the same predictive law moves by \nMLGbmCentreSpread{} estimated standard
+deviations. The
 response is not monotone at the fine end: between the first and second grid
 points the rate rises rather than falls, by less than one standard error on the
 pooled cells, and it is recorded as a non-monotonicity rather than dissolved by

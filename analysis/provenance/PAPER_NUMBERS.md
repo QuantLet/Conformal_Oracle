@@ -322,8 +322,12 @@ not possible without editing this file's producer.
 | `\nMLPassedUnder` | 0 | -- |
 | `\nMLNewlyBlockedByTightening` | 0 | -- |
 | `\nMLGbmLeafDefault` | 20 | -- |
+| `\nMLBandDeclared` | 22 August 2026 | -- |
+| `\nMLPanelRun` | 23 August 2026 | -- |
 | `\nMLKnobThreshold` | 1.5 | -- |
-| `\nMLGbmPiDefault` | 0.0300 | -- |
+| `\nMLPooledObs` | 800 | -- |
+| `\nMLPooledGrid` | 0.125 | -- |
+| `\nMLGbmPiDefault` | 0.03 | -- |
 | `\nMLGbmTailSpan` | 9.6 | -- |
 | `\nMLGbmCentreSpread` | 0.0083 | -- |
 | `\nMLQrfTailSpan` | 1.6 | -- |
