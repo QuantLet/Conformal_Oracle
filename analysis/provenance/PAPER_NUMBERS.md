@@ -320,6 +320,16 @@ not possible without editing this file's producer.
 | `\nRuleFailPct` | 0.53 | -- |
 | `\nRuleValidationDates` | 200 | -- |
 | `\nRuleMissProb` | 35 | -- |
+| `\nSeqBestKupiec` | 13 | SEQ (312) |
+| `\nGapAblFullPP` | 0.05 | -- |
+| `\nGapAblCovidPP` | 0.58 | -- |
+| `\nFrontierTsfm` | 6 | -- |
+| `\nFrontierBench` | 4 | -- |
+| `\nFrontierSeries` | 10 | -- |
+| `\nMainCorPiLo` | 0.0095 | MAIN (384) |
+| `\nMainCorPiHi` | 0.0117 | MAIN (384) |
+| `\nMainCorKupLo` | 11 | MAIN (384) |
+| `\nMainCorKupHi` | 22 | MAIN (384) |
 | `\nLevelBound` | 198 | -- |
 | `\nLevelMaxOvershoot` | 0.01 | -- |
 | `\nLevelDomRuns` | 2 | -- |

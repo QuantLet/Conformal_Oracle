@@ -12,7 +12,8 @@
 \usepackage{algorithm,algpseudocode}
 \usepackage{natbib}
 \usepackage[hidelinks]{hyperref}
-\hypersetup{colorlinks=false, allbordercolors={1 1 1}, pdfborder={0 0 0}}
+\hypersetup{colorlinks=false, allbordercolors={1 1 1}, pdfborder={0 0 0},
+  pdftitle={Conformal Recalibration of Tail Quantile Forecasts under Temporal Dependence}}
 \usepackage{placeins}
 \usepackage{setspace,microtype,enumitem}
 \onehalfspacing
@@ -63,7 +64,7 @@
 	\begin{frontmatter}
 		
 		%─── PART 1: Title and Metadata ──────────────────────────────────────────────
-\title{Conformal Recalibration of Tail Quantile Forecasts under Temporal Dependence: An Intervention with an Indication}
+\title{Conformal Recalibration of Tail Quantile Forecasts under Temporal Dependence}
 
 		\author[1,2,3]{Daniel Traian Pele\corref{cor1}}
 		\ead{danpele@ase.ro}
@@ -121,14 +122,14 @@ $\beta$-mixing with an explicit remainder; the separation condition the theorem
 requires is one the contiguous split does not meet, and that gap is reported. Across \nMainForecasters{} forecasters and \nMainAssets{}
 assets it moves \nMainKupiecRawPasses{} unconditional-coverage passes to
 \nMainKupiecCorPasses{} whatever forecaster it is applied to, so the corrected
-column cannot rank the series that produced it.
+\emph{rate} cannot rank the series that produced it.
 
 Recalibration is therefore an intervention with an indication. It degrades
 \nWellCalRollWorse{} of \nWellCalRollN{} pairs already passing Kupiec. Gating on the calibration window avoids \nGateRollAvoided{} of
 \nDegradedRoll{} deteriorations at a cost of \nGateRollUpgradesLostNet{} pairs on
 the quantile score, against the \nGateRollUpgradesLost{} zone upgrades the
 traffic light records, \nGateRollUpgradesLostWorse{} of which the correction
-would have made worse. The gap between them is the first result.
+would have made worse. That gap is the traffic light's limit, in the ledger.
 
 	\bigskip\noindent
 	\textbf{Keywords:} Value-at-Risk; Structural validation; Time series
@@ -283,8 +284,9 @@ on a failed raw backtest helps, but far less than an in-sample evaluation of tha
 rule suggests: keyed on the calibration window, which is the only information
 available at the decision date, it avoids \nGateRollAvoided{} of the
 \nDegradedRoll{} deteriorations at $\alpha = 0.01$ ---
-\nGateRollAvoidedPct\% --- and costs \nGateRollUpgradesLost{} of
-\nGateRollUpgrades{} Basel zone upgrades. Keyed on the evaluation window it would
+\nGateRollAvoidedPct\% --- at a cost of \nGateRollUpgradesLostNet{} pairs on the
+quantile score, which the traffic light records as \nGateRollUpgradesLost{} of
+\nGateRollUpgrades{} zone upgrades foregone. Keyed on the evaluation window it would
 avoid \nGateRollOracleAvoidedPct\% and cost none, which is an oracle bound rather
 than a deployable rule.
 
@@ -492,7 +494,7 @@ We apply the standard regulatory backtests --- Kupiec~\citep{kupiec1995} for unc
 
 Tail-loss consistency is assessed through the $Z_2$ statistic \citep{acerbi2014back}, computed with the time-averaged ES denominator $Z_2^{\mathrm{mod}}$, which avoids division by near-zero daily ES on quiet days (Supplement~S.3). The statistic requires ES to enter as a positive magnitude, a sign convention that the stored lower-tail column does not satisfy and that Supplement~S.1 states explicitly. Beyond coverage, the Fissler--Ziegel scoring rule \citep{fissler2016higher} ranks $(\VaR, \ES)$ jointly; full construction is in Supplement~S.1. The conformal shift $\qVstat$ introduced in Section~\ref{sec:layer2} complements these tests by quantifying miscalibration on a continuous, signed scale; the ratio $\bar R$ built from it in Section~\ref{sec:R_meaning} is non-negative by construction and carries magnitude only.
 
-Beyond the per-asset backtests, four panel-level inferential procedures support the empirical audit: a diagnostic regression of the Quantile Score improvement on the conformal threshold, a cross-sectional association between the threshold and asset characteristics, a Diebold--Mariano pairwise forecast comparison with Driscoll--Kraay panel-HAC variance, and a panel-pooled Kupiec test with cluster-robust inference. Specifications are in Supplement~S.3; results enter the empirical sections at first use.
+Beyond the per-asset backtests, four panel-level inferential procedures support the empirical audit: a diagnostic regression of the Quantile Score improvement on the conformal threshold, a cross-sectional association between the threshold and asset characteristics, a Diebold--Mariano pairwise forecast comparison \citep{diebold1995comparing} with Driscoll--Kraay panel-HAC \citep{driscoll1998consistent} variance, and a panel-pooled Kupiec test with cluster-robust inference. Specifications are in Supplement~S.3; results enter the empirical sections at first use.
 
 \subsection{Layer~2: Conformal Recalibration}
 \label{sec:layer2}
@@ -859,10 +861,13 @@ Acerbi--Sz\'ekely $Z_2$ statistic of Section~\ref{sec:diag} passes \nMainZTwoPas
 \nMainZTwoPassAnalytic{} of
 \nMainAssets{} for each analytic counterpart, the sharpest separation any
 diagnostic in this paper achieves (Supplement~S.1). That is the boundary of
-Proposition~\ref{prop:identification}. It is not a general escape: the construction of
-Section~\ref{sec:blindspot_pair} can be matched on mean expected shortfall as
-well, after which a size-$5\%$ $Z_2$ test retains almost no power
-(Supplement~S.9.8).
+Proposition~\ref{prop:identification}. Matching the construction of
+Section~\ref{sec:blindspot_pair} on mean expected shortfall as well does not
+close it: a size-$5\%$ one-sided $Z_2$ test still rejects the matched
+alternative with probability \nSupPowerRej{} over \nSupPowerReps{} replications,
+a $95\%$ interval of $[\nSupPowerLo, \nSupPowerHi]$ that excludes the nominal
+size (Supplement~S.9.8). Matching the mean of the tail is necessary to hide from
+a magnitude-reading statistic and it is not sufficient.
 The class named in the proposition contains every instrument this paper uses:
 Kupiec's unconditional coverage test is a function of $\sum_t V_t$; both
 Christoffersen components are functions of the transition counts of $V$; the
@@ -965,8 +970,10 @@ recalibrated ones, so the non-degenerate cases are not reassuring either.
 
 The test of \citet{kupiec1995} is always defined, and at $\alpha = 0.01$ it
 rejects \nSeqKupiecRejRawOne\% of the \nSeqPairs{} pairs, against
-\nSeqKupiecRejRawTen\% at $\alpha = 0.10$. No forecaster in the panel passes on
-more than \nMainBestKupiec{} of \nMainAssets{} assets at the 1\% level. A test
+\nSeqKupiecRejRawTen\% at $\alpha = 0.10$. No forecaster with a stored series
+passes on more than \nSeqBestKupiec{} of \nMainAssets{} assets at the 1\% level,
+and none in the wider panel of Table~\ref{tab:master} on more than
+\nMainBestKupiec. A test
 that rejects the majority of defensible models carries little information about
 any one of them --- and, decisively for the question of this paper, it does not
 separate a series carrying an implementation failure from one that is merely
@@ -1320,7 +1327,7 @@ paths. It contributes no verdict to any of the blocks reported below, and the
 gate that operates here is nine checks wide, not ten. A check that cannot return
 a verdict on the population it is run against carries no evidence when that
 population passes --- the same reading this paper applies to the lower band edge
-of Section~\ref{sec:blindspot}, and it is recorded for the same reason.
+in Section~\ref{sec:gate_band}, and it is recorded for the same reason.
 
 \begin{table}[htbp]
 	\centering
@@ -1389,10 +1396,14 @@ Marginal coverage is restored across the panel. \nMainGreen{} of \nMainPairs{}
 model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%), and
 unconditional coverage passes rise from \nMainKupiecRawPasses{} pairs to
 \nMainKupiecCorPasses. Corrected violation rates cluster within a thousandth of
-$\hat\pi = 0.010$ for every forecaster in Table~\ref{tab:master}, which is what
-the guarantee promises, and it is the same fact that makes the corrected column
+$\hat\pi = 0.010$ for every forecaster in Table~\ref{tab:master} ---
+$\nMainCorPiLo$ to $\nMainCorPiHi$ across the whole table --- which is what the
+guarantee promises, and it is the same fact that makes the corrected \emph{rate}
 useless for ranking: a column on which every entry is at nominal separates
-nothing. The restoration is indifferent to the forecaster, which is the result,
+nothing. The claim is about the rate and not about everything computed from the
+corrected series: corrected Kupiec passes still run from \nMainCorKupLo{} to
+\nMainCorKupHi{} of \nMainAssets{} assets, because a test of a rate against
+nominal reads the sample size as well as the rate. The restoration is indifferent to the forecaster, which is the result,
 and indifference is not a property one can order by.
 
 The ordering by $\bar R$ records the amount of correction each pair required.
@@ -1495,6 +1506,12 @@ Figure~\ref{fig:traffic_light} shows asset-level Basel classifications before an
 
 \section{What It Costs, and When to Apply It}
 \label{sec:cost}
+
+A correction that restores coverage whatever the forecaster is not a step to be
+applied by default; it is an \emph{intervention}, and the question an
+intervention raises is not its average effect but its \emph{indication} --- on
+which series it is warranted, and at what cost where it is not. This section
+measures both.
 
 \subsection{When the Correction Helps, and What It Costs}
 \label{sec:when_to_apply}
@@ -1854,8 +1871,10 @@ artefact, and the correction will make it look correct
 forecast fails a backtest \emph{on the calibration window}, and not otherwise. At
 $\alpha = 0.01$ that rule skips \nGateRollSkipped{} of \nSeqPairs{} pairs, avoids
 \nGateRollAvoided{} of the \nDegradedRoll{} degradations the rolling estimator
-would otherwise cause, and costs \nGateRollUpgradesLost{} of
-\nGateRollUpgrades{} Basel zone upgrades. It is not free on the regulatory axis,
+would otherwise cause, at a cost of \nGateRollUpgradesLostNet{} pairs on the
+quantile score --- \nGateRollUpgradesLost{} of \nGateRollUpgrades{} zone upgrades
+as the traffic light counts them, \nGateRollUpgradesLostWorse{} of those being
+pairs the correction would have degraded. It is not free on the regulatory axis,
 and a version that appears to be free is one evaluated on the window it used to
 decide.
 
@@ -1864,8 +1883,8 @@ With adequate per-asset history, the GJR-GARCH family with conformal correction
 attains the best corrected quantile score in this panel, and the two variants
 within it are not distinguishable: their mean corrected scores differ by
 \nPairQSGapPct\%, the ordering reverses between per-asset and pooled aggregation,
-and a Diebold--Mariano test on the corrected loss differentials with a
-Driscoll--Kraay panel-HAC variance --- cross-sectional mean per date, Bartlett
+and a Diebold--Mariano test \citep{diebold1995comparing} on the corrected loss differentials with a
+Driscoll--Kraay panel-HAC variance \citep{driscoll1998consistent} --- cross-sectional mean per date, Bartlett
 kernel at \nPairDMLags{} lags --- returns $t = \nPairDMt$, $p = \nPairDMp$ over
 \nMainAssets{} assets. The sign of that statistic is itself a function of the
 weighting: equal weight on dates favours one variant and equal weight on
@@ -1941,10 +1960,11 @@ is all it does. It is an intervention with an indication rather than a default
 step: under the rolling estimator, \nWellCalRollWorse{} of the \nWellCalRollN{}
 pairs that pass Kupiec on the test window are degraded by correcting them, and
 gating the correction on a calibration-window backtest avoids
-\nGateRollAvoided{} of the \nDegradedRoll{} deteriorations at the cost of
-\nGateRollUpgradesLost{} of \nGateRollUpgrades{} Basel zone upgrades --- half the
-benefit that the same rule appears to deliver when it is allowed to read the
-window it is scored on. The shift reaches only part of the problem: in the
+\nGateRollAvoided{} of the \nDegradedRoll{} deteriorations at a cost of
+\nGateRollUpgradesLostNet{} pairs on the quantile score, which the traffic light
+records as \nGateRollUpgradesLost{} of \nGateRollUpgrades{} zone upgrades
+foregone --- half the benefit the same rule appears to deliver when it is allowed
+to read the window it is scored on. The shift reaches only part of the problem: in the
 decomposition of \citet{gneiting2023regression} a constant correction addresses a
 median of \nuMCBSharePct\% of total miscalibration on well-specified series, the
 remainder being conditional, and it does not restore violation independence. The

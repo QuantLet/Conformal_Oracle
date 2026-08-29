@@ -12,7 +12,8 @@
 \usepackage{algorithm,algpseudocode}
 \usepackage{natbib}
 \usepackage[hidelinks]{hyperref}
-\hypersetup{colorlinks=false, allbordercolors={1 1 1}, pdfborder={0 0 0}}
+\hypersetup{colorlinks=false, allbordercolors={1 1 1}, pdfborder={0 0 0},
+  pdftitle={Online Supplement to: Conformal Recalibration of Tail Quantile Forecasts under Temporal Dependence}}
 \usepackage{placeins}
 \usepackage{setspace,microtype,enumitem}
 \onehalfspacing
@@ -83,20 +84,24 @@
 
 \begin{center}
 	{\Large\bfseries Online Supplement}\\[4pt]
-	{\large What Backtests Cannot Diagnose:\\ Structural Validation of Tail-Risk Forecasting Pipelines}
+	{\large to: Conformal Recalibration of Tail Quantile Forecasts under
+	Temporal Dependence}
 \end{center}
 
 \bigskip
 
 \noindent
-This supplement holds four appendices of the manuscript: the Expected Shortfall
-computation and its heuristic correction (S.1), the specifications of the
-benchmark and alternative recalibration methods (S.2), backtesting
+This supplement holds fifteen appendices of the manuscript: the Expected
+Shortfall computation and its heuristic correction (S.1), the specifications of
+the benchmark and alternative recalibration methods (S.2), backtesting
 implementation details (S.3), the robustness battery (S.4), the auxiliary
 diagnostic tables (S.5), the multi-quantile and panel-pooled robustness results
 (S.6), the asset and model universes (S.7, S.8), all proofs (S.9), the
-tail-completion analysis (S.10) and the full statement of the validation gate
-(S.11). Every number in
+tail-completion analysis (S.10), the full statement of the validation gate
+(S.11), the secondary tables and figures (S.12), the leaf-resolution
+dose--response exhibit (S.13), the controlled case of support truncation in a
+sampled predictive law (S.14) and the five implementation failure modes (S.15).
+Every number in
 it is produced by the same replication package as the manuscript and is computed
 on the same corrected 13-forecaster panel.
 
@@ -250,7 +255,16 @@ is \nSupZTwoPiSmall{} and \nSupZTwoPiMini{}.
 
 Entered as a magnitude, the median statistic on those series is
 $\nSupZTwoSmall$ and $\nSupZTwoMini$ and the test rejects on all
-\nMainAssets{} assets. This is the same sign ambiguity
+\nMainAssets{} assets. Those two figures are not the ones in
+Table~\ref{tab:es_correction}, and the difference is the denominator rather than
+the aggregation. \citet{acerbi2014back} place $\mathrm{ES}_t$ inside the sum, so
+each day is divided by its own forecast; the routine that produced
+Table~\ref{tab:es_correction} divides the whole sum by a time-averaged
+$\overline{\mathrm{ES}}$, and the two coincide only if $\mathrm{ES}_t$ is
+constant. Taking medians of the time-averaged variant instead of means does not
+close the gap. The per-date form is the one reported here because it is the
+published definition; both are computed in
+\texttt{analysis/provenance/verify\_z2.py}. This is the same sign ambiguity
 that the validation gate of Supplement~\ref{app:validation_gate} checks for in the
 forecast series, arising here in an evaluation routine instead, and it is worth
 stating explicitly for two reasons. First, a structural check on the forecast
@@ -499,9 +513,9 @@ Remark~3.2.
 
 \begin{table}[htbp]
 	\centering
-	\caption{GBM-QR hyperparameter sensitivity on S\&P~500 (9 base
-		forecasters, $\alpha=0.01$). Metrics are pooled across the
-		nine base models.}
+	\caption{GBM-QR hyperparameter sensitivity on S\&P~500
+		(\nSupTunedSeries{} base forecasters, $\alpha=0.01$). Metrics are
+		pooled across those \nSupTunedSeries{} base models.}
 	\label{tab:gbm_tuned}
 	\scriptsize
 	\input{Quantlets/CO_baseline_comparison_tuned/tab_gbm_tuned}
@@ -560,8 +574,8 @@ estimated across $n = 312$ model--asset pairs $(m,a)$. Standard errors
 are computed under one-way clustering by asset (24 clusters) and,
 separately, by model (13 clusters). The partial $R^{2}$ for $\qVstat$
 is computed by Frisch--Waugh--Lovell residualisation on
-$\hat\pi^{\mathrm{raw}}$. Coefficients are reported in
-Supplement~\ref{app:backtesting}.
+$\hat\pi^{\mathrm{raw}}$. Coefficients are reported in Supplement~\ref{app:diag_regression},
+Table~\ref{tab:diag_regression}.
 
 \subsection{Diebold--Mariano with Panel HAC}
 \label{app:dm_panel}
@@ -605,8 +619,8 @@ at the asset level is obtained from the same Driscoll--Kraay panel
 HAC estimator used for the Diebold--Mariano statistic, with violations
 clustered by asset; the implied number of independent clusters is 24.
 Wild-cluster bootstrap finite-sample $p$-values are reported in
-Supplement~\ref{app:robustness}
-(Table~D.3).
+Supplement~\ref{app:panel_robustness}
+(Table~\ref{tab:wildcluster_kupiec}).
 
 %============================================================
 
@@ -665,10 +679,11 @@ agreement to Monte Carlo resolution and not exact agreement.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{fig_frontier_killer}
-	\caption{Calibration--efficiency frontier for four representative
-		forecasters. Each arrow traces one forecaster from its raw
-		(hollow marker) to its conformally corrected (filled marker)
-		position on the coverage--width plane.}
+	\caption{Calibration--efficiency frontier for the \nFrontierSeries{}
+		forecasters with stored series --- \nFrontierTsfm{} foundation-model
+		and \nFrontierBench{} benchmark. Each arrow traces one forecaster
+		from its raw (hollow marker) to its conformally corrected (filled
+		marker) position on the coverage--width plane.}
 	\label{fig:coverage_frontier}
 \end{figure}
 
@@ -752,7 +767,8 @@ $\hat\rho$ is the AR(1) coefficient of the calibration scores.
 
 Table~\ref{tab:gap_ablation} shows that the choice of $g_n$ has
 negligible empirical impact. The absolute difference in corrected
-violation rates is at most 0.2 percentage points, and Basel Traffic
+violation rates is at most \nGapAblFullPP{} percentage points over the full test
+window and \nGapAblCovidPP{} in the crisis sub-windows, and Basel Traffic
 Light classifications are identical for all four pairs. The
 theoretical gap requirement is therefore empirically non-binding
 for the \nGapAblPairs{} pairs tested, which span the full-period
@@ -810,7 +826,7 @@ between the conformal threshold $\qVstat$ and asset characteristics.
 \label{app:diag_regression}
 
 Table~\ref{tab:diag_regression} reports the full coefficients of the
-diagnostic regression in equation~(S.1) of the supplement, with
+diagnostic regression in equation~\eqref{eq:dqs_regression}, with
 clustered standard errors by asset and by model.
 
 \begin{table}[H]
@@ -818,7 +834,7 @@ clustered standard errors by asset and by model.
 	\caption{Diagnostic regression of Quantile Score improvement
 	$\Delta\mathrm{QS}=\mathrm{QS}^{\mathrm{raw}}-\mathrm{QS}^{\mathrm{cp}}$
 	on the conformal threshold and the raw violation rate
-	(equation~S.1 of the supplement), $n = 312$ model--asset pairs.
+	(equation~\eqref{eq:dqs_regression}), $n = 312$ model--asset pairs.
 	Standard errors in parentheses; clustering by asset and by
 	model reported separately. Significance: $^{*}$~10\%,
 	$^{**}$~5\%, $^{***}$~1\%.}
@@ -1675,7 +1691,7 @@ corrected panel as the manuscript.
 	\input{Quantlets/CO_quantile_scores/tab_dm_pvalues}
 	\begin{minipage}{\linewidth}\footnotesize
 		\smallskip
-		Harvey--Leybourne--Newbold small-sample correction applied. The displayed block reports the 30 benchmark-versus-TSFM comparisons under the Driscoll--Kraay specification (Bartlett kernel, Newey--West 1994 automatic bandwidth), consistent with the panel-pooled HAC methodology in Table~S.13; 18 are significant at the 5\% level. Across all 55 pairwise comparisons among the eleven forecasters, 26 are significant. The two Chronos series sampled at the checkpoint default are excluded from the comparison, since their loss is a property of a sampling parameter; the comparison that concerns them is reported below.
+		Harvey--Leybourne--Newbold small-sample correction applied. The displayed block reports the 30 benchmark-versus-TSFM comparisons under the Driscoll--Kraay specification (Bartlett kernel, Newey--West 1994 automatic bandwidth), consistent with the panel-pooled HAC methodology in Table~\ref{tab:app_panel}; 18 are significant at the 5\% level. Across all 55 pairwise comparisons among the eleven forecasters, 26 are significant. The two Chronos series sampled at the checkpoint default are excluded from the comparison, since their loss is a property of a sampling parameter; the comparison that concerns them is reported below.
 	\end{minipage}
 \end{table}
 

@@ -605,6 +605,43 @@ def collect() -> dict:
     # none of them, which is what makes the validation uninformative here.
     n["RuleMissProb"] = 100 * float(_lv["frac_exactly_one_bin"]) ** n["RuleValidationDates"]
 
+    # The best raw Kupiec count on the SEQ panel. MainBestKupiec is 15 and
+    # belongs to CAViaR-AS, which has no stored series and is therefore not in
+    # the 312-pair panel at all. Section 7.4 declares the SEQ panel in its own
+    # sentence and then used the MAIN figure -- Rule 1's unit confusion, in the
+    # section that argues coverage tests cannot separate.
+    _sq = g.assign(_p=g["p_kup_raw"] > 0.05).groupby("model")["_p"].sum()
+    n["SeqBestKupiec"] = int(_sq.max())
+    # The gap ablation in percentage points, which is the unit S.4.2 states it
+    # in. "At most 0.2 pp" is wrong in both directions: 0.05 over the full
+    # window and 0.58 once the crisis sub-windows are included.
+    n["GapAblFullPP"] = 100 * n["GapGapAblFull"]
+    n["GapAblCovidPP"] = 100 * n["GapGapAblCovid"]
+    assert n["SeqBestKupiec"] <= n["MainBestKupiec"], \
+        "the sequence panel cannot beat the main panel it is a subset of"
+
+    # The frontier figure's own series list, parsed from the script that draws
+    # it. Its caption said "four representative forecasters" while the figure
+    # showed ten; a caption and a plot drifting apart is the same defect class
+    # as a table note and its own column.
+    import ast as _ast2
+    _fr = _ast2.parse((BASE / "Quantlets" / "CFP_Calibration_Efficiency_Frontier"
+                       / "run_frontier.py").read_text(encoding="utf-8"))
+    _lists = {t.targets[0].id: _ast2.literal_eval(t.value)
+              for t in _fr.body if isinstance(t, _ast2.Assign)
+              and getattr(t.targets[0], "id", "") in ("TSFMS", "BENCHMARKS")}
+    n["FrontierTsfm"] = len(_lists["TSFMS"])
+    n["FrontierBench"] = len(_lists["BENCHMARKS"])
+    n["FrontierSeries"] = n["FrontierTsfm"] + n["FrontierBench"]
+
+    # The corrected column's two axes. The rate is flat across forecasters; the
+    # Kupiec count is not, so the claim that the corrected column "cannot rank"
+    # holds of the violation rate and not of the whole column.
+    rate(n, "MainCorPiLo", float(t["cor_pi"].min()), int(g["n_test"].sum()))
+    rate(n, "MainCorPiHi", float(t["cor_pi"].max()), int(g["n_test"].sum()))
+    n["MainCorKupLo"] = int(t["cor_kup"].min())
+    n["MainCorKupHi"] = int(t["cor_kup"].max())
+
     # ---- the effective level of the conformal shift ------------------------ #
     # Equation (8) returns the k-th smallest of n scores with
     # k = ceil((n+1)(1-alpha)), capped at n. So the estimator targets k/n, not
@@ -1120,6 +1157,10 @@ def fmt(key: str, v) -> str:
         return f"{v:.4f}"
     if key.startswith(("WSweepSdRatio", "WSweepExp", "WSweepSqrtTwo")):
         return f"{v:.2f}"
+    if key.startswith("GapAbl") and key.endswith("PP"):
+        return f"{v:.2f}"
+    if key.startswith("MainCorPi"):
+        return f"{v:.4f}"
     if key == "LevelMaxOvershoot":
         return f"{v:.2f}"
     if key == "RuleExactPct":
