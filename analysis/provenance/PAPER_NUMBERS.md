@@ -314,6 +314,12 @@ not possible without editing this file's producer.
 | `\nMCBGapMagRatio` | 1.11 | -- |
 | `\nMCBRhoPlain` | 0.53 | -- |
 | `\nMCBRhoConverted` | 0.53 | -- |
+| `\nRuleRows` | 121{,}923 | -- |
+| `\nRuleExactPct` | 99.47 | -- |
+| `\nRuleFailures` | 645 | -- |
+| `\nRuleFailPct` | 0.53 | -- |
+| `\nRuleValidationDates` | 200 | -- |
+| `\nRuleMissProb` | 35 | -- |
 | `\nLevelBound` | 198 | -- |
 | `\nLevelMaxOvershoot` | 0.01 | -- |
 | `\nLevelDomRuns` | 2 | -- |

@@ -588,6 +588,23 @@ def collect() -> dict:
     n["MCBRhoConverted"] = float(_s3.spearmanr(0.5 * _ok["f"] * _ok["qV"] ** 2,
                                                _ok["uMCB_in_test"]).statistic)
 
+    # The one-bin rule and where it fails. The closed-form correction
+    # `stored - binwidth * scale` was validated on a 200-date block and holds
+    # panel-wide on 99.47% of dates; it fails where the bin the CDF crosses
+    # moves index by one, which the 200-date block contains none of. A sample
+    # that small could not have exhibited a failure mode this rare.
+    _rb = json.loads((BASE / "analysis" / "k1_verify"
+                      / "k1a_verify_rebuild.json").read_text())
+    _lv = _rb["chronos_small_analytic"]["levels"]["0.01"]
+    n["RuleRows"] = int(_rb["chronos_small_analytic"]["n_rows"])
+    n["RuleExactPct"] = 100 * float(_lv["frac_exactly_one_bin"])
+    n["RuleFailures"] = int(round((1 - _lv["frac_exactly_one_bin"]) * n["RuleRows"]))
+    n["RuleFailPct"] = 100 - n["RuleExactPct"]
+    n["RuleValidationDates"] = 200
+    # The probability that a block of that size drawn from the panel contains
+    # none of them, which is what makes the validation uninformative here.
+    n["RuleMissProb"] = 100 * float(_lv["frac_exactly_one_bin"]) ** n["RuleValidationDates"]
+
     # ---- the effective level of the conformal shift ------------------------ #
     # Equation (8) returns the k-th smallest of n scores with
     # k = ceil((n+1)(1-alpha)), capped at n. So the estimator targets k/n, not
@@ -1037,7 +1054,8 @@ def fmt(key: str, v) -> str:
         return v
     if isinstance(v, (int, np.integer)):
         # sample sizes are printed with the thousands separator the paper uses
-        if key.startswith("MCT") or key in ("SupPairT", "SupPowerT", "SupPowerReps"):
+        if key.startswith("MCT") or key in ("SupPairT", "SupPowerT",
+                                           "SupPowerReps", "RuleRows"):
             return f"{int(v):,}".replace(",", "{,}")
         return str(int(v))
 
@@ -1104,6 +1122,12 @@ def fmt(key: str, v) -> str:
         return f"{v:.2f}"
     if key == "LevelMaxOvershoot":
         return f"{v:.2f}"
+    if key == "RuleExactPct":
+        return f"{v:.2f}"
+    if key == "RuleFailPct":
+        return f"{v:.2f}"
+    if key == "RuleMissProb":
+        return f"{v:.0f}"
     if key.startswith("MCBDensity"):
         return f"{v:.1f}"
     if key == "MLGbmPiDefault":

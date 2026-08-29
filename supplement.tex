@@ -1344,7 +1344,7 @@ temporary deployment pause may be warranted.
 
 %============================================================
 
-\subsection{Proof of Proposition~8.1 of the manuscript}
+\subsection{Proof of Proposition~7.1 of the manuscript}
 \label{app:identification}
 
 Recall $u_t = F_t(\hat q^{lo}_t)$ and $V_t = \mathbf 1\{r_t < \hat q^{lo}_t\}$,
@@ -1399,7 +1399,7 @@ with $\hat q^{lo}_t$ measurable with respect to $\mathcal G_{t-1}$.
 	class entirely; Supplement~\ref{app:es} treats them.
 \end{remark}
 
-\subsection{Proposition~8.2: the construction, and the depth of the blind spot}
+\subsection{Proposition~7.2: the construction, and the depth of the blind spot}
 \label{app:blindspot_depth}
 
 Let $G$ be the standardised Student-$t_5$ law of the correctly specified model,
@@ -1878,6 +1878,270 @@ the most negative cell here is $\nMLRatioMostNegative$, a margin of
 \nMLLowerEdgeMargin. That is not evidence the edge is unnecessary. This family is
 measured on \nMLAssets{} assets against the \nMainAssets{} of the main panel, so
 it could have shown the edge binding and cannot show that it does not.
+
+\section{A Controlled Case: Support Truncation in a Sampled Predictive Law}
+\label{app:mechanism}
+
+This section establishes, by controlled experiment, that a single documented
+default in a checkpoint's packaged inference routine accounts for a realised
+exceedance rate of \nPiSmallDefaultOne{} against a nominal $\alpha = 0.01$ for
+Chronos-Small, and \nPiMiniDefaultOne{} for Chronos-Mini, and then removes the
+sampler from the estimation path entirely. The case is developed on Chronos-T5
+\citep{ansari2024chronos} because it is independently reproducible: the
+checkpoint is public, the sampling routine ships with it, and the experiment
+below requires neither the forecasts nor the returns used elsewhere in this
+paper. A reader can run it and obtain the same mechanism.
+
+\subsection{What the default does}
+\label{app:mech_default}
+
+Chronos-T5 does not emit a parametric predictive law. It quantises the scaled
+context into 4093 value bins and treats forecasting as next-token prediction over
+that vocabulary, so its one-step predictive distribution is categorical with 4093
+atoms. Predictions are drawn from it by the same sampling machinery used for
+text, and that machinery has a $\texttt{top\_k}$ parameter, defaulted to 50:
+before a single path is drawn, the support is restricted to the 50 most probable
+bins and the remaining 4043 are assigned probability zero.
+
+Two properties of this restriction matter here. It removes \nLitSupportPct\% of the support,
+and it removes it \emph{from the tails inward}, because the discarded bins are by
+construction the least probable ones. A quantile read from the surviving support
+is therefore a quantile of a different, radically narrower distribution --- while
+the centre of that distribution, and hence any point forecast, is barely moved.
+
+\subsection{Design}
+\label{app:mech_design}
+
+The experiment varies one thing. For each of the two checkpoints
+\texttt{chronos-t5-small} and \texttt{chronos-t5-mini}, four assets of unlike
+character (SP500, GOLD, BTC, EURUSD) and 200 evenly spaced dates with a full
+512-observation context, we draw 1000 samples at horizon one under eight
+sampling configurations: $\texttt{top\_k} \in \{50, 200, 1000, 4094\}$,\footnote{The
+vocabulary holds 4096 tokens, of which two are special, leaving 4093 value bins
+plus the pad token. Setting $\texttt{top\_k} = 4094$ therefore disables the
+truncation with one place to spare; it is not an off-by-one against the 4093 bins
+quoted elsewhere in this paper.} then
+$\texttt{top\_p} \in \{0.9, 0.99\}$ and temperature $\in \{0.5, 2.0\}$ with
+$\texttt{top\_k}$ held at its default. Context, seed and weights are identical
+across configurations, so the only thing that differs between cells is the
+sampling rule.
+
+Three readings were fixed before the experiment was run. If the truncation is the
+mechanism, then (i) predictive dispersion recovers monotonically in
+$\texttt{top\_k}$ and reaches its target only at full vocabulary, (ii) dispersion
+is unmoved by temperature and by nucleus sampling, and (iii) the number of
+distinct values among 1000 draws under the default equals $\texttt{top\_k}$
+exactly, on every asset and both checkpoints.
+
+\subsection{Result}
+\label{app:mech_result}
+
+All three readings hold (Table~S.26). Dispersion --- the ratio of predictive
+standard deviation to the asset's 250-day realised volatility, for which 1.0 is
+the target --- recovers monotonically in $\texttt{top\_k}$: \nDispDefaultSmall,
+\nDispTwoHundredSmall, \nDispThousandSmall{} and \nDispFullSmall{} for
+Chronos-Small across $\texttt{top\_k} \in \{50, 200, 1000, 4094\}$, and
+\nDispDefaultMini{} to \nDispFullMini{} for Chronos-Mini. It reaches its target
+only when the vocabulary is not truncated at all. One thousand draws under the
+default contain exactly 50 distinct values in all \nDoseCells{}
+model--asset--date cells, without exception; this is a signature of the mechanism
+rather than evidence about the model, and it is the reading that makes the
+diagnosis arithmetic rather than inferential.
+
+The remaining rows are the reason such a configuration is durable. A fourfold
+change in temperature moves dispersion by \nLitTempGap{} (\nDispTempLowSmall{} against
+\nDispTempHighSmall) and nucleus sampling moves it by \nLitNucleusGap. These are the
+parameters that are documented, discussed in the literature and exposed in every
+tutorial; an analyst who conducts a careful sensitivity analysis over them
+obtains a flat response and correctly reports the model as robust. The one
+parameter that governs the tail is the one such a sweep does not vary.
+
+\subsection{Reading the distribution instead of sampling it}
+\label{app:mech_analytic}
+
+At a one-step horizon the sampler is unnecessary. The predictive law is
+categorical and exactly available, so its quantiles can be read in closed form:
+
+\begin{enumerate}
+	\item apply the softmax to the logits, giving probabilities over token
+	identifiers;
+	\item map each identifier to its bin centre, offset by the special-token
+	count;
+	\item multiply by the tokenizer's own scale, the mean absolute value of the
+	context;
+	\item sort the support and take the cumulative sum of the probabilities;
+	\item read $\mathrm{VaR}_\alpha$ as the smallest value whose cumulative
+	probability reaches $\alpha$.
+\end{enumerate}
+
+This estimator has no $\texttt{num\_samples}$, no $\texttt{top\_k}$, no
+$\texttt{top\_p}$, no temperature and no seed. There is no configuration to get
+wrong, and it costs one forward pass.
+
+A reconstruction of a model's support is a claim about that model and is checked
+against it before anything is concluded from it. Over 40 dates on SP500 we
+compare the analytic quantiles against sampling at full vocabulary with 4000
+draws: predictive standard deviations agree to within \nLitAnalyticSdPct\%, and
+the violation rates at all four levels agree to four decimal places.
+
+\paragraph{A third validation that could not have failed, and this one is
+arithmetic} The corrected panels can be obtained two ways: by re-running the
+estimator from the weights under the corrected token-to-bin map, or by the
+closed-form rule that subtracts one bin width scaled to the context. The rule
+was checked against \nRuleValidationDates{} re-run dates and agreed on all of
+them. Panel-wide it is not exact: over \nRuleRows{} dates per checkpoint it
+holds on \nRuleExactPct\% and fails on \nRuleFailures{} of them, where the bin
+the cumulative distribution crosses moves index by one and the offset is not one
+bin. The \nRuleValidationDates{}-date block contains none of those
+\nRuleFailures{} dates, and that is what a block of that size should be expected
+to do: drawing \nRuleValidationDates{} dates independently from a panel failing
+on \nRuleFailPct\% of them returns no failure about \nRuleMissProb\% of the
+time. The agreement observed is therefore consistent with the rule being exact
+and equally consistent with it failing as often as it does, which is the same
+form as the two agreements above --- a check run at a resolution the defect can
+sit inside. The corrected panels in this paper come from the re-run, not the
+rule, and the reason is this measurement rather than a preference.
+
+Both agreements are reported with the defect they cannot see. A one-bin
+translation of the support leaves the predictive standard deviation
+\emph{exactly} invariant, so the first is a tolerance on a quantity the failure
+mode does not move; and on \nLitAnalyticDates{} dates the realised rate lives on
+a grid of \nLitAnalyticGrid{}, so ``agreement to four decimal places'' there
+means the two routes returned the same multiple of that grid. Neither could have
+detected a uniform translation of the support, and no choice of tolerance would
+have repaired either. The sampled default, by contrast, is separated from
+both by a quantity that does move: its predictive dispersion is
+\nDispDefaultSmall{} against \nDispFullSmall{} at full vocabulary.
+
+Cost is not a consideration either. Across 24 assets and both checkpoints the
+analytic route required one forward pass per date --- 121{,}923 dates per
+checkpoint --- and completed in roughly ten minutes per checkpoint on a laptop
+GPU, against 1000 sampled paths per date for the sampling route. At horizon one,
+reading the distribution is both more accurate than sampling it and cheaper.
+
+\subsection{What this does to the forecasts}
+\label{app:mech_consequence}
+
+Table~S.27 reports the raw forecasts on the full panel, at four nominal levels
+and with no recalibration of any kind. Two things in it deserve separate
+statements.
+
+\paragraph{The default produces a series that is not a quantile forecast}
+Between the 1\% and the 10\% level the nominal exceedance probability changes
+tenfold; under the default configuration the realised rate changes by a factor of \nLitAlphaResp, from \nPiSmallDefaultOne{} at $\alpha = 0.01$ to \nPiSmallDefaultTen{} at $\alpha = 0.10$, both for Chronos-Small. A distribution truncated
+to its fifty most probable bins has so little spread that its $\alpha$-quantiles
+are nearly coincident, and the series built from them responds to the level it
+was asked for almost not at all. That property is diagnostic on its own: it needs
+no benchmark, no model of comparison and no significance calculation, and it is
+the $\alpha$-response check of Section~8 of the manuscript.
+
+\paragraph{The residual is a tail phenomenon, and it shrinks} Removing the
+sampler does not make the model well calibrated at the 1\% level. Read through
+its own predictive law, Chronos-Small delivers $\hat\pi = \nPiSmallAnalyticOne$
+against a nominal $0.0100$ --- \nRatioSmallAnalyticOne{} times nominal --- and
+unconditional coverage rejects on \nMainKupRejRawSmallAnalyticOne{} of
+\nMainAssets{} assets. The residual is
+not a level shift, however. The ratio $\hat\pi/\alpha$ falls monotonically ---
+\nRatioSmallAnalyticOne, \nLitRatioSmallTwoFive, \nLitRatioSmallFive, \nRatioSmallAnalyticTen{} for Chronos-Small
+and \nRatioMiniAnalyticOne, \nLitRatioMiniTwoFive, \nLitRatioMiniFive, \nRatioMiniAnalyticTen{} for Chronos-Mini
+--- so that at $\alpha = 0.10$ the analytic forecasts are essentially calibrated,
+passing Kupiec on \nKupPassSmallAnalyticTen{} and \nKupPassMiniAnalyticTen{} of
+\nMainAssets{} assets. What survives the removal of the sampler is a specifically
+\emph{tail} deficiency, and that is a statement about the model and its
+quantisation grid rather than about the interface through which it is read.
+
+\section{Five Implementation Failure Modes: a pipeline-hygiene note}
+\label{app:failure_modes}
+
+The forecast-production pipeline was audited step by step, from the raw price
+series to the stored threshold, before any forecast entered the evaluation.
+Table~\ref{tab:failure_modes_app} states what that audit isolates: five ways in which
+the reduction from a predictive object to a Value-at-Risk number can fail while
+leaving a plausible-looking series behind. They are grouped by the step at which
+they act --- three in the reduction itself, two in data assembly --- and each is
+paired with the diagnostic that identifies it, because a claim about a series is
+worth no more than the test that establishes it. Every diagnostic in the table is
+arithmetic: it compares a stored series against an independent reconstruction of
+what the same code path should produce, or against a controlled re-run under a
+single altered parameter. None of them is a hypothesis test, and none needs a
+benchmark forecaster.
+
+The two sign inversions and the truncated sampler are the failure modes with a
+measurable effect on the panel, and the last two columns report it: the realised 1\%
+violation rate of the same model on the same assets and dates, computed with the
+failure mode present and with it absent. The spread between the two columns is
+the quantity that matters for this paper's argument, because it is invisible to
+every instrument in Section~7 of the manuscript.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Implementation failure modes in the reduction from a predictive
+		object to a Value-at-Risk threshold, with the diagnostic that identifies
+		each. $\hat\pi$ is the raw violation rate at $\alpha = 0.01$, averaged
+		over \nMainAssets{} assets and computed on identical models, assets and
+		dates with the failure mode present and absent. Per-series diagnostics
+		and the scripts that produce them are in the replication package.}
+	\label{tab:failure_modes_app}
+	\footnotesize
+	\setlength{\tabcolsep}{3pt}
+	\renewcommand{\arraystretch}{1.15}
+	\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.5cm}
+			>{\raggedright\arraybackslash}p{5.6cm}
+			>{\raggedleft\arraybackslash}p{1.3cm}
+			>{\raggedleft\arraybackslash}p{1.3cm}@{}}
+		\toprule
+		& & \multicolumn{2}{c@{}}{$\hat\pi$ at $\alpha = 0.01$} \\
+		\cmidrule(l){3-4}
+		\textbf{Failure mode} & \textbf{Diagnostic} &
+		\textbf{with} & \textbf{without} \\
+		\midrule
+		\multicolumn{4}{@{}l}{\emph{In the forecast-reduction step}}\\
+		Lower quantile stored with inverted sign \emph{(TimesFM~2.5)}
+		& the stored lower quantile is positive on every observation of every
+		asset, and its ordering across $\alpha$ is reversed on every day, against
+		0\% and 0\% for every other series in the panel
+		& $\nRawPiTimesFMDefective$ & \nRawPiTimesFM \\
+		\hspace{1em}\emph{(Moirai~2.0)}
+		& as above, on all \nMainAssets{} assets; at the time of the audit eight
+		of the ten forecasters stored the opposite sign, so the convention was not
+		uniform across the pipeline & $\nRawPiMoiraiTwoDefective$ & \nRawPiMoiraiTwo \\
+		Predictive support truncated before the quantile is read
+		\emph{(both Chronos checkpoints)}
+		& dose--response at fixed context, seed and weights; 1000 draws contain
+		exactly $\texttt{top\_k}$ distinct values in every cell
+		(Section~\ref{app:mechanism})
+		& \nPiSmallDefaultOne\newline \nPiMiniDefaultOne
+		& \nPiSmallAnalyticOne\newline \nPiMiniAnalyticOne \\
+		Unstandardised Student-$t$ quantile with hard-coded $\nu$
+		\emph{(GJR-GARCH)}
+		& the quantile map read directly from the generator: $t_\nu^{-1}(\alpha)$
+		applied without the variance standardisation, inflating every threshold
+		by 45\% & $\nRawPiGJRDefective$ & \nRawPiGJR \\
+		\addlinespace[2pt]
+		\multicolumn{4}{@{}l}{\emph{In data assembly}}\\
+		Identifier alias resolving to a different instrument
+		& ticker audit against source metadata; the manifest requires each series
+		to declare model, asset, path and vintage
+		& \multicolumn{2}{r@{}}{quarantined} \\
+		Undated forecast vintage
+		& the same manifest audit; a series without a version stamp cannot be
+		matched to the code that produced it
+		& \multicolumn{2}{r@{}}{quarantined} \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+Two properties of this list are worth stating before the results. The first is
+that its members are not exotic. A sign convention, a sampling parameter, a
+standardisation constant, an identifier and a version stamp are the ordinary
+furniture of a forecasting pipeline, and each failure leaves the series
+well-formed: correct length, correct dates, plausible magnitudes, no missing
+values. The second is that this paper does not identify how often such failures
+occur elsewhere. Five are isolated here, in one pipeline, by an audit designed to
+find them; that establishes their consequences and their invisibility to standard
+diagnostics, and it establishes nothing about their prevalence.
+
+The primary evaluation unit throughout is the model--asset pair, because regulatory risk systems are backtested at the desk, asset, or portfolio level. Panel-pooled tests provide complementary evidence of average calibration across the asset universe, not substitutes for per-asset backtesting.
 
 \sloppy\emergencystretch=3em
 \bibliographystyle{elsarticle-harv}
