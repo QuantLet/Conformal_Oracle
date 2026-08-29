@@ -284,28 +284,54 @@ What can be said for all of them is that they are cheap, that each states a
 property a practitioner would endorse before seeing any data, and that the
 alternative --- coverage --- provably cannot do this job.
 
-The remainder of the paper is organised as follows.
+The three results are stated in three places, and the rest of the paper is what
+they rest on. \textbf{The first} is that the Basel classification identifies the
+sign of $\pi - \tau$ and nothing else, with $\tau = \nTLTauOverAlpha\alpha$ at
+$\alpha = 0.01$, and that a zone upgrade is a strict sub-event of a move toward
+nominal on the panel: Propositions~\ref{prop:traffic_limit} and
+\ref{prop:zone_inclusion} with Corollary~\ref{cor:traffic_interval}, in
+Section~\ref{sec:mc}.
+\textbf{The second} is the coverage guarantee for the conformal shift under
+geometric $\beta$-mixing, with an explicit remainder and the separation condition
+the contiguous split does not meet stated rather than assumed
+(Section~\ref{sec:theory}). \textbf{The third} follows from the first two: the
+correction is an intervention with an indication rather than a default step, and
+its cost cannot be priced in the instrument that triggers it
+(Section~\ref{sec:cost}).
+
+The remainder is organised as follows.
 Section~\ref{sec:lit} situates the contribution in the literature on tail
-miscalibration, regulatory backtesting, and post-hoc calibration.
-Section~\ref{sec:framework} develops the two-layer framework and describes the
-asset universe, the forecasters, and the experimental design.
-Section~\ref{sec:theory} gives the coverage theory under temporal dependence,
-with the remainder made explicit and the separation condition stated rather than
-assumed. Section~\ref{sec:mc} reports the Monte Carlo evidence, including the
-limit behaviour of the traffic-light classification.
-Section~\ref{sec:mechanism} establishes the sampling mechanism by controlled
-experiment and gives the analytic estimator that removes it.
-Section~\ref{sec:results} presents the audit and the raw panel.
+miscalibration, regulatory backtesting, and post-hoc calibration, and states what
+it does not claim priority over.
+Section~\ref{sec:framework} develops the two-layer framework, describes the asset
+universe, the forecasters and the experimental design, and records the effective
+level the conformal shift actually targets (Remark~\ref{rem:effective_level}).
+Section~\ref{sec:theory} gives the coverage theory.
+Section~\ref{sec:mc} reports the Monte Carlo evidence and the limit behaviour of
+the traffic-light classification.
+Section~\ref{sec:results} presents the panel of \nMainForecasters{} forecasters
+on \nMainAssets{} assets and the ordering by $\bar R$, the size of the correction
+each pair required.
 Section~\ref{sec:blindspot} states the identification result, bounds the blind
-spot it implies, and measures what the standard diagnostics can and cannot
-report. Section~\ref{sec:gate} states the structural validation gate and
-quantifies how much of that blind spot it removes.
-Section~\ref{sec:recal} reports what recalibration restores, when it should be
-applied, and the capital arithmetic that follows.
-Section~\ref{sec:discuss} sets out limitations and implications for deployment,
-and Section~\ref{sec:conclude} concludes. Proofs, the recalibration baselines,
-the static-versus-rolling detail, the calibration--sharpness frontier and the
-supplementary tables are in the supplement.
+spot it implies, and measures what the standard diagnostics report on a series
+carrying a known defect.
+Section~\ref{sec:gate} derives the ordering --- structural validation before
+correction --- and quantifies how much of that blind spot a structural check
+removes.
+Section~\ref{sec:recal} reports what recalibration restores and why the corrected
+column cannot rank the forecasters that produced it.
+Section~\ref{sec:cost} reports what it costs, when it is indicated, and the
+capital arithmetic that follows.
+Section~\ref{sec:discuss} sets out the limitations, including three checks in
+this paper that return no verdict and one defect found in the estimator it
+offers as a remedy; Section~\ref{sec:practitioner} draws the implications for
+deployment, and Section~\ref{sec:conclude} concludes.
+
+The supplement carries the material the argument points to rather than depends
+on: the proofs, the controlled sampling case in full (Supplement~S.14), the five
+implementation failure modes (S.15), the ten-check gate (S.11), the leaf-resolution
+exhibit (S.13), the recalibration baselines, the cross-family score rankings and
+the static-versus-rolling detail (S.12).
 
 Data and code accompanying this paper are available via the Quantlet platform \quantlet{https://github.com/QuantLet/Conformal_Oracle/}; slides are on the Quantinar platform \quantinar{https://quantinar.com/course/100048/recalibrating-tail-risk-forecasts-under-temporal-dependence}.
 	
@@ -626,10 +652,10 @@ forecasters.
 %══════════════════════════════════════════════════════════════════════════════
 %─── PART 8: Empirical Results ──────────────────────────────────────────────
 %══════════════════════════════════════════════════════════════════════════════
-\section{The Audit}
+\section{The Panel, and the Size of the Correction It Requires}
 \label{sec:results}
 
-\subsection{Five implementation failure modes}
+\subsection{What was checked before any series entered}
 \label{sec:audit_trail}
 
 The forecast-production pipeline was audited step by step, from the raw price
