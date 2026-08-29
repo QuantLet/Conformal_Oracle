@@ -104,11 +104,31 @@
 		%─── PART 2: Abstract ───────────────────────────────────────────────────────
 \begin{abstract}
 
-	A Value-at-Risk backtest reports \emph{that} a forecast series miscovers, and the Basel traffic light reports less than that. We show that the classification is asymptotically degenerate: as the evaluation window grows, the probability of a green verdict tends to one or to zero according to whether the long-run violation rate falls below or above the zone boundary $\tau = 4/250$, so the verdict identifies the sign of $\pi - \tau$ and nothing else. At $\alpha = 0.01$ the boundary is \nTLTauOverAlpha{} times nominal, and a forecaster whose reported threshold cuts off up to that much of the conditional mass is passed with probability tending to one --- a Value-at-Risk understated by \nTLUndTFive\% under standardised Student-$t_5$ innovations. The interval does not shrink with evidence. In a Monte Carlo over \nMCDgps{} data-generating processes and sample sizes to $T = \nMCTMax$, a series miscovering by half is classified green \nMCGreenTFiveSmall\% of the time at $T = \nMCTMin$ and \nMCGreenTFiveLarge\% at $T = \nMCTMax$: more data makes the classification more confident, not more informative. A diagnostic that identifies only a sign cannot say which forecasts need correcting.
+The Basel traffic light identifies the sign of $\pi - \tau$ and nothing else: in the limit a
+green verdict is certain or impossible according as the long-run violation rate
+falls below or above $\tau = 4/250$. The interval it cannot resolve does not shrink with
+evidence. At $\alpha = 0.01$ a forecaster cutting off up to \nTLTauOverAlpha{}
+times nominal is passed with probability tending to one, understating
+Value-at-Risk by \nTLUndTFive\% under standardised $t_5$ innovations. On \nSeqPairs{}
+model--asset pairs it is visible directly: a zone upgrade is
+a \emph{strict} sub-event of a move toward nominal, with \nZoneUpNotCloser{}
+pairs upgraded without moving closer and \nZoneCloserNotUp{} moving closer with
+no change of zone.
 
-	Recalibration answers the question of how to correct a series, and leaves open the question of which series to correct. A one-sided split-conformal shift restores marginal coverage exactly in finite samples under exchangeability, and asymptotically under geometric $\beta$-mixing with an explicit remainder $\Delta_n \le C\sqrt{(\log n)/n} + \beta(g_n)$; the separation condition the theorem requires is one the contiguous split does not meet, and the gap is reported rather than assumed away. On \nMainAssets{} assets and \nMainForecasters{} forecasters the correction moves \nMainKupiecRawPasses{} unconditional-coverage passes to \nMainKupiecCorPasses{} and \nMainGreen{} of \nMainPairs{} pairs into the green zone --- and it does so whichever forecaster it is applied to, which is why the corrected column cannot rank anything.
+A one-sided split-conformal shift restores marginal coverage exactly in finite
+samples under exchangeability, and asymptotically under geometric
+$\beta$-mixing with an explicit remainder; the separation condition the theorem
+requires is one the contiguous split does not meet, and that gap is reported. Across \nMainForecasters{} forecasters and \nMainAssets{}
+assets it moves \nMainKupiecRawPasses{} unconditional-coverage passes to
+\nMainKupiecCorPasses{} whatever forecaster it is applied to, so the corrected
+column cannot rank the series that produced it.
 
-	Recalibration is therefore an intervention, and the question it poses is one of indication rather than of average effect. It is close to free where it is not needed and harmful where the base forecast is already calibrated: under the rolling estimator \nWellCalRollWorse{} of the \nWellCalRollN{} pairs that pass Kupiec are degraded by correcting them. Gating on a failed raw backtest helps, and inherits the limitation above: keyed on the calibration window, the only information available at the decision date, it avoids \nGateRollAvoided{} of \nDegradedRoll{} deteriorations (\nGateRollAvoidedPct\%) against \nGateRollOracleAvoidedPct\% for the same rule keyed on the evaluation window, which is an oracle bound and not a deployable rule. Its advertised cost is \nGateRollUpgradesLost{} of \nGateRollUpgrades{} Basel zone upgrades, of which \nGateRollUpgradesLostWorse{} are pairs the correction degrades on the quantile score: the zone counts them as benefit because it reads a threshold crossing, which is the same limitation the first paragraph states, arriving in the ledger.
+Recalibration is therefore an intervention with an indication. It degrades
+\nWellCalRollWorse{} of \nWellCalRollN{} pairs already passing Kupiec. Gating on the calibration window avoids \nGateRollAvoided{} of
+\nDegradedRoll{} deteriorations at a cost of \nGateRollUpgradesLostNet{} pairs on
+the quantile score, against the \nGateRollUpgradesLost{} zone upgrades the
+traffic light records, \nGateRollUpgradesLostWorse{} of which the correction
+would have made worse. The gap between them is the first result.
 
 	\bigskip\noindent
 	\textbf{Keywords:} Value-at-Risk; Structural validation; Time series
