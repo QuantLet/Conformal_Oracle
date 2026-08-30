@@ -197,7 +197,7 @@ not possible without editing this file's producer.
 | `\nBoundEmpirical` | 98.9 | -- |
 | `\nLitClosureRMin` | 0.005 | -- |
 | `\nLitClosureRMax` | 1.70 | -- |
-| `\nGapDeltaMoment` | 0.046 | -- |
+| `\nGapDeltaMoment` | 0.0458 | -- |
 | `\nGapUndGarchT` | 10.6 | -- |
 | `\nLitAnalyticDates` | 40 | -- |
 | `\nLitAnalyticSdPct` | 0.55 | -- |
@@ -240,11 +240,11 @@ not possible without editing this file's producer.
 | `\nSeqDQCells` | 312 | SEQ (312) |
 | `\nSeqDQRejRaw` | 81.7 | SEQ (312) |
 | `\nSeqDQRejCor` | 53.8 | SEQ (312) |
-| `\nGapDeltaFree` | 0.218 | -- |
+| `\nGapDeltaFree` | 0.2181 | -- |
 | `\nGapUndFree` | 75.5 | -- |
-| `\nGapDeltaUni` | 0.066 | -- |
+| `\nGapDeltaUni` | 0.0659 | -- |
 | `\nGapUndUni` | 49.4 | -- |
-| `\nGapDeltaGateNow` | 0.024 | -- |
+| `\nGapDeltaGateNow` | 0.0244 | -- |
 | `\nGapUndGateNow` | 30.9 | -- |
 | `\nGapBandNow` | -1.800 | -- |
 | `\nGapBandLower` | -3.500 | -- |
@@ -330,6 +330,15 @@ not possible without editing this file's producer.
 | `\nMainCorPiHi` | 0.0117 | MAIN (384) |
 | `\nMainCorKupLo` | 11 | MAIN (384) |
 | `\nMainCorKupHi` | 22 | MAIN (384) |
+| `\nGapPanelCells` | 312 | -- |
+| `\nGapPanelGapLo` | 5 | -- |
+| `\nGapPanelGapHi` | 30 | -- |
+| `\nGapPanelGapMed` | 8 | -- |
+| `\nGapPanelGapPct` | 0.46 | -- |
+| `\nGapPanelDPiMed` | 0.000051 | -- |
+| `\nGapPanelDPiMax` | 0.000521 | -- |
+| `\nGapPanelZoneChanges` | 0 | -- |
+| `\nGapPanelKupFlips` | 1 | -- |
 | `\nLevelBound` | 198 | -- |
 | `\nLevelMaxOvershoot` | 0.01 | -- |
 | `\nLevelDomRuns` | 2 | -- |
@@ -441,6 +450,12 @@ not possible without editing this file's producer.
 | `\nSupZTwoMini` | -389 | -- |
 | `\nSupZTwoFlippedMini` | 391 | -- |
 | `\nSupZTwoAssets` | 24 | -- |
+| `\nSupZTwoModMeanSmall` | -130.5 | -- |
+| `\nSupZTwoModMedianSmall` | -134.4 | -- |
+| `\nSupZTwoRatioSmall` | 1.1 | -- |
+| `\nSupZTwoModMeanMini` | -162.6 | -- |
+| `\nSupZTwoModMedianMini` | -160.1 | -- |
+| `\nSupZTwoRatioMini` | 2.4 | -- |
 | `\nSupTunedSeries` | 13 | -- |
 | `\nSupTunedPiBest` | 0.0155 | -- |
 | `\nSupTunedPiCons` | 0.0110 | -- |
@@ -468,16 +483,16 @@ not possible without editing this file's producer.
 | `\nSupSmallNCal` | 175 | -- |
 | `\nSupQClassFree` | -0.638 | -- |
 | `\nSupUndClassFree` | 75.5 | -- |
-| `\nSupDeltaClassFree` | 0.218 | -- |
+| `\nSupDeltaClassFree` | 0.2181 | -- |
 | `\nSupQClassUni` | -1.320 | -- |
 | `\nSupUndClassUni` | 49.4 | -- |
-| `\nSupDeltaClassUni` | 0.066 | -- |
+| `\nSupDeltaClassUni` | 0.0659 | -- |
 | `\nSupQClassMoment` | -1.504 | -- |
 | `\nSupUndClassMoment` | 42.3 | -- |
-| `\nSupDeltaClassMoment` | 0.046 | -- |
+| `\nSupDeltaClassMoment` | 0.0458 | -- |
 | `\nSupQClassPareto` | -1.814 | -- |
 | `\nSupUndClassPareto` | 30.4 | -- |
-| `\nSupDeltaClassPareto` | 0.024 | -- |
+| `\nSupDeltaClassPareto` | 0.0236 | -- |
 | `\nSupQClassGarchT` | -2.330 | -- |
 | `\nSupUndClassGarchT` | 10.6 | -- |
 | `\nSupDeltaCeiling` | 32 | -- |

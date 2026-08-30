@@ -245,7 +245,12 @@ days exceed the forecast ES.
 
 \paragraph{The sign convention, and why it matters here}
 Equation~\eqref{eq:app_z2} requires $\widehat{\ES}_t$ to enter as a positive
-magnitude. The forecast files store a lower-tail quantity, which is negative, so
+magnitude. Everything in this subsection is $Z_2$ as
+equation~\eqref{eq:app_z2} defines it, with the forecast ES inside the sum, and
+not the time-averaged variant $Z_2^{\mathrm{mod}}$ of
+equation~\eqref{eq:app_z2_mod} that the pipeline implements; the argument here is
+about the published definition, so it is computed from the published definition.
+The forecast files store a lower-tail quantity, which is negative, so
 dividing by the stored column directly maps $Z_2$ to $2 - Z_2$, returning a large
 positive statistic --- $+\nSupZTwoFlippedSmall$ and $+\nSupZTwoFlippedMini$ on the
 two Chronos series sampled at $\texttt{top\_k} = 50$. A one-sided lower-tail test
@@ -253,18 +258,18 @@ cannot reject such a value, so the routine would report \nSupZTwoAssets{} of
 \nSupZTwoAssets{} assets passing on series whose violation rate at the same level
 is \nSupZTwoPiSmall{} and \nSupZTwoPiMini{}.
 
-Entered as a magnitude, the median statistic on those series is
+Entered as a magnitude, the median $Z_2$ on those series is
 $\nSupZTwoSmall$ and $\nSupZTwoMini$ and the test rejects on all
-\nMainAssets{} assets. Those two figures are not the ones in
-Table~\ref{tab:es_correction}, and the difference is the denominator rather than
-the aggregation. \citet{acerbi2014back} place $\mathrm{ES}_t$ inside the sum, so
-each day is divided by its own forecast; the routine that produced
-Table~\ref{tab:es_correction} divides the whole sum by a time-averaged
-$\overline{\mathrm{ES}}$, and the two coincide only if $\mathrm{ES}_t$ is
-constant. Taking medians of the time-averaged variant instead of means does not
-close the gap. The per-date form is the one reported here because it is the
-published definition; both are computed in
-\texttt{analysis/provenance/verify\_z2.py}. This is the same sign ambiguity
+\nMainAssets{} assets. These are not the figures in
+Table~\ref{tab:es_correction}, which reports $Z_2^{\mathrm{mod}}$ and gives
+$\nSupZTwoModMeanSmall$ and $\nSupZTwoModMeanMini$; the difference is the
+denominator and not the aggregation, since taking medians of
+$Z_2^{\mathrm{mod}}$ returns $\nSupZTwoModMedianSmall$ and
+$\nSupZTwoModMedianMini$ and closes none of it. The two statistics coincide only
+if $\widehat{\ES}_t$ is constant, and on Chronos-Mini they differ by a factor of
+$\nSupZTwoRatioMini$ because its per-day forecast ES is not. Both are computed in
+\texttt{analysis/provenance/verify\_z2.py}, and every figure in this subsection
+is $Z_2$. This is the same sign ambiguity
 that the validation gate of Supplement~\ref{app:validation_gate} checks for in the
 forecast series, arising here in an evaluation routine instead, and it is worth
 stating explicitly for two reasons. First, a structural check on the forecast
@@ -275,13 +280,17 @@ the first (\texttt{analysis/provenance/verify\_z2.py}), which is the only way a
 sign convention of this kind is reliably established.
 
 Table~\ref{tab:es_correction} reports the effect of the heuristic ES
-correction on $Z_2$ across all thirteen forecasters.
+correction on $Z_2^{\mathrm{mod}}$ across all thirteen forecasters.
 
 \begin{table}[htbp]
 	\centering
 	\caption{Heuristic ES correction results (mean across 24 assets,
-		$\alpha = 0.01$). $Z_2$ denotes the modified Acerbi--Sz\'{e}kely
-		statistic; pass criterion follows Appendix~\ref{app:backtesting}.}
+		$\alpha = 0.01$). The columns report $Z_2^{\mathrm{mod}}$, the
+		time-averaged-denominator variant of
+		equation~\eqref{eq:app_z2_mod}, not the per-date $Z_2$ of
+		equation~\eqref{eq:app_z2} used in
+		Supplement~\ref{app:es_empirical}; pass criterion follows
+		Appendix~\ref{app:backtesting}.}
 	\label{tab:es_correction}
 	\footnotesize
 	\input{Quantlets/CFP_ES_Correction_Z2/tab_es_correction}

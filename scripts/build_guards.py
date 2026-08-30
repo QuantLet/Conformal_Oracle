@@ -495,6 +495,10 @@ NOT_A_RATE = {
                 "checks others against",
     "SpearmanRPi": "a rank correlation between two orderings, not a frequency; "
                    "its resolution is set by the number of pairs, not by 1/N",
+    "GapPanelDPiMed": "a difference of two rates computed on DIFFERENT "
+                      "denominators, n and n - g_n, so it is not confined to "
+                      "either one's 1/N grid and can take values finer than both",
+    "GapPanelDPiMax": "as above",
 }
 
 

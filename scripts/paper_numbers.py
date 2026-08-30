@@ -642,6 +642,22 @@ def collect() -> dict:
     n["MainCorKupLo"] = int(t["cor_kup"].min())
     n["MainCorKupHi"] = int(t["cor_kup"].max())
 
+    # The separation gap of Theorem 4.5, applied to all 312 cells. Only the
+    # DIFFERENCES enter the manuscript: the levels come from a standalone
+    # recomputation in run_gap_panel.py and are not the pipeline's headline
+    # counts, which are produced elsewhere and differ in window construction.
+    gp = pd.read_csv(BASE / "analysis" / "convention" / "gap_panel.csv")
+    n["GapPanelCells"] = int(len(gp))
+    n["GapPanelGapLo"] = int(gp["gap"].min())
+    n["GapPanelGapHi"] = int(gp["gap"].max())
+    n["GapPanelGapMed"] = int(gp["gap"].median())
+    n["GapPanelGapPct"] = 100 * float(gp["gap"].median() / gp["g0_n_test"].median())
+    n["GapPanelDPiMed"] = float(gp["dpi"].median())
+    n["GapPanelDPiMax"] = float(gp["dpi"].max())
+    n["GapPanelZoneChanges"] = int((gp["g0_TL"] != gp["gn_TL"]).sum())
+    n["GapPanelKupFlips"] = int(((gp["g0_p_kupiec"] > 0.05)
+                                 != (gp["gn_p_kupiec"] > 0.05)).sum())
+
     # ---- the effective level of the conformal shift ------------------------ #
     # Equation (8) returns the k-th smallest of n scores with
     # k = ceil((n+1)(1-alpha)), capped at n. So the estimator targets k/n, not
@@ -924,6 +940,15 @@ def collect() -> dict:
         # the defective routine returned a large positive statistic.
         n[f"SupZTwoFlipped{tag}"] = 2.0 - n[f"SupZTwo{tag}"]
     n["SupZTwoAssets"] = int(z2v.loc["Chronos-Small", "n"])
+    # The time-averaged variant, which is what Table S.2 reports. Both the mean
+    # and the median are emitted because the reconciliation turns on the fact
+    # that switching aggregation does not close the gap -- the denominator does.
+    _es2 = pd.read_csv(Q / "CFP_ES_Correction_Z2" / "table_c1_es_correction.csv")
+    for tag, mdl in (("Small", "Chronos-Small"), ("Mini", "Chronos-Mini")):
+        _r = _es2[_es2["model"] == mdl]["z2_raw"]
+        n[f"SupZTwoModMean{tag}"] = float(_r.mean())
+        n[f"SupZTwoModMedian{tag}"] = float(_r.median())
+        n[f"SupZTwoRatio{tag}"] = abs(n[f"SupZTwo{tag}"]) / abs(n[f"SupZTwoModMean{tag}"])
 
     # The tuned GBM-QR ablation. The prose reported 5/9, 0/9 and 88.9% Green
     # from REPRO_NOTES_E1.md, which describes a nine-model run; the shipped grid
@@ -1096,11 +1121,24 @@ def fmt(key: str, v) -> str:
             return f"{int(v):,}".replace(",", "{,}")
         return str(int(v))
 
+    # delta-star at four decimals in both tables. At three, the gate-band row
+    # (0.0244) and the Pareto row (0.0236) both print 0.024 while their
+    # understatements differ, which reads as a table error. The bisection
+    # resolves delta to about 5e-7, so four places claim nothing the
+    # computation does not have.
+    if key in ("GapDeltaFree", "GapDeltaUni", "GapDeltaGateNow",
+               "GapDeltaMoment", "SupDeltaClassFree", "SupDeltaClassUni",
+               "SupDeltaClassMoment", "SupDeltaClassPareto"):
+        return f"{v:.4f}"
     # ---- SUP panel. Precision is chosen per quantity, because the supplement
     # compares several of these against nominal levels three and four places out
     # and a shared default erases the comparison the sentence makes.
     if key.startswith("SupZTwoPi"):
         return f"{v:.2f}"
+    if key.startswith("SupZTwoRatio"):
+        return f"{v:.1f}"
+    if key.startswith("SupZTwoMod"):
+        return f"{v:.1f}"
     if key.startswith("SupZTwo"):
         return f"{v:.0f}"
     if key.startswith("SupTunedPi"):
@@ -1161,6 +1199,10 @@ def fmt(key: str, v) -> str:
         return f"{v:.2f}"
     if key.startswith("MainCorPi"):
         return f"{v:.4f}"
+    if key.startswith("GapPanelDPi"):
+        return f"{v:.6f}"
+    if key == "GapPanelGapPct":
+        return f"{v:.2f}"
     if key == "LevelMaxOvershoot":
         return f"{v:.2f}"
     if key == "RuleExactPct":
