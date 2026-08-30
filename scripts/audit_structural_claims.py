@@ -202,9 +202,19 @@ def check_itemcounts() -> bool:
     "realised sigma" needs nothing the returns do not already supply. Rows
     needing an evaluation window or sampled paths do not count.
     """
+    # The gate table moved to the supplement on 2026-08-30 when the gate was
+    # demoted to an admission criterion. The claims it checks are still made in
+    # the manuscript, so the check reads the claims there and the table wherever
+    # it now lives, rather than assuming the two share a document.
     t = " ".join(_body("main_R2").split())
-    i = t.find(r"\label{tab:gate_compact}")
-    seg = t[i: i + 2500] if i >= 0 else ""
+    tab = " ".join(_body("supplement").split())
+    i = tab.find(r"\label{tab:gate_compact}")
+    if i < 0:
+        i = tab.find(r"\label{tab:validation_gate}")
+    if i < 0:
+        i = t.find(r"\label{tab:gate_compact}")
+        tab = t
+    seg = tab[i: i + 2500] if i >= 0 else ""
     from_series = len(re.findall(r"& forecast only", seg)) \
         + len(re.findall(r"& returns", seg)) \
         + len(re.findall(r"& realised \$\\sigma\$", seg))

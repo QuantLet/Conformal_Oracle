@@ -975,6 +975,9 @@ def collect() -> dict:
     gts = json.loads((BASE / "analysis" / "k2_sim" / "gates.json").read_text())
     _ctl = {(c["dgp"], c["T"]): c for c in gts["negative_controls"]}
     n["SupNCal"] = int(_ctl[("t5", 500)]["n_cal"])
+    # The same index at the calibration size Section 4.3 uses as its example.
+    n["TheoryNCal"] = int(_ctl[("t5", 1000)]["n_cal"])
+    n["TheoryConfIndex"] = int(np.ceil((n["TheoryNCal"] + 1) * 0.99)) / n["TheoryNCal"]
     # Closed form, not read off the control: k = ceil((n+1)(1-alpha)), index k/n.
     _k = int(np.ceil((n["SupNCal"] + 1) * (1 - 0.01)))
     n["SupConfIndex"] = _k / n["SupNCal"]
@@ -1146,7 +1149,7 @@ def fmt(key: str, v) -> str:
     if key.startswith(("SupTunedGreenPct", "SupTunedQSGainPct", "SupGreenStaticPct",
                        "SupGreenRollPct", "SupUndClass")):
         return f"{v:.1f}"
-    if key.startswith(("SupConfIndex", "SupConfOvershoot")):
+    if key.startswith(("SupConfIndex", "SupConfOvershoot", "TheoryConfIndex")):
         return f"{v:.4f}"
     if key.startswith("SupCtlConfSmall"):
         return f"{v:.4f}"

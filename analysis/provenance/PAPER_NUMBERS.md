@@ -466,6 +466,8 @@ not possible without editing this file's producer.
 | `\nSupTunedGreenPctCons` | 100.0 | -- |
 | `\nSupTunedQSGainPct` | 4.9 | -- |
 | `\nSupNCal` | 350 | -- |
+| `\nTheoryNCal` | 700 | -- |
+| `\nTheoryConfIndex` | 0.9914 | -- |
 | `\nSupConfIndex` | 0.9943 | -- |
 | `\nSupConfOvershoot` | 0.0043 | -- |
 | `\nSupCtlExactSmallTFive` | 0.00066 | -- |

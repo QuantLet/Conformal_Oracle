@@ -24,6 +24,11 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
 DOCS = ["main_R2", "supplement"]
+# Guard 2 reads DOCS only, and the two \input section files were never in it.
+# That left Section 4 and the whole of Section 5 -- 4,504 words, including a
+# hand-authored Monte Carlo table -- outside every literal check the project
+# runs, and it is where a stale 0.67 survived four corrections elsewhere.
+LITERAL_DOCS = DOCS + ["sections/sec4_theory", "sections/sec5_montecarlo"]
 RED, GRN, YEL = "\033[31m", "\033[32m", "\033[33m"; OFF = "\033[0m"
 
 
@@ -197,6 +202,8 @@ def _prose_literals(tex: str) -> list[tuple[str, str]]:
     # Typesetting lengths, citation locators and contract numbers are not claims.
     s = re.sub(r"\\includegraphics\[[^\]]*\]", " GRAPHIC ", s)
     s = re.sub(r"\\(?:renewcommand|setlength|arraystretch)\{[^}]*\}\{[^}]*\}", " LEN ", s)
+    # List and box geometry, the same class as a tabular column width.
+    s = re.sub(r"(?:leftmargin|itemsep|topsep|parsep|labelwidth|labelsep)\s*=\s*[\d.]+\s*(?:em|ex|pt|cm|in|mm)", " LEN ", s)
     s = re.sub(r"\\cite[a-z]*\[[^\]]*\]", " CITE ", s)
     s = re.sub(r"\b[A-Z]{2}\d+/\d[\d./]*", " CONTRACT ", s)
     s = re.sub(r"no\.\\?\s*\d[\d./]*", " CONTRACT ", s)
@@ -244,7 +251,7 @@ def control_literals() -> bool:
 
 def guard_literals() -> bool:
     good = True
-    for doc in DOCS:
+    for doc in LITERAL_DOCS:
         lits = _prose_literals((BASE / f"{doc}.tex").read_text(encoding="utf-8"))
         if lits:
             _bad(f"{doc}: {len(lits)} bare decimal literals in prose (should be macros)")

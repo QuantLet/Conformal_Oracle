@@ -129,8 +129,8 @@ $\lceil (n+1)(1-\alpha)\rceil$-th order statistic; the plain empirical quantile
 $Q_{1-\alpha}$ takes one order statistic lower. The gap is $\mathcal O(1/n)$ and
 is absorbed into the remainder of Theorem~\ref{thm:dependent_conformal_var}
 without changing its rate. It is not absorbed in finite samples, where it has a
-sign: at $\alpha = 0.01$ and $n = 700$ the conformal index sits at
-$k/n = 0.9914$ rather than $0.99$, so $\qVstat$ exceeds the sample
+sign: at $\alpha = 0.01$ and $n = \nTheoryNCal$ the conformal index sits at
+$k/n = \nTheoryConfIndex$ rather than $0.99$, so $\qVstat$ exceeds the sample
 $(1-\alpha)$-quantile, and Section~\ref{sec:mc} measures what that costs a
 correctly specified forecaster.
 
@@ -196,9 +196,10 @@ The corollary is the reason the theorem is usable rather than merely true. Its
 hypotheses are the standard conditions for strict stationarity and geometric
 ergodicity of GARCH$(1,1)$ \citep[Theorem~2.10]{francq2019garch,lindner2009stationarity},
 and they are satisfied by every parametric benchmark in this study. Under it the
-required separation is logarithmic in the calibration sample --- at $n = 3{,}500$
-and a score autocorrelation of $\hat\rho = 0.67$, $g_n$ is fewer than thirty
-observations --- so the condition is cheap where it can be met at all. The proof
+required separation is logarithmic in the calibration sample: across the
+\nGapPanelCells{} cells of the panel $g_n$ runs from \nGapPanelGapLo{} to
+\nGapPanelGapHi{} observations with a median of \nGapPanelGapMed, so the
+condition is cheap where it can be met at all. The proof
 is in Supplement~S.9.4.
 
 \subsection{The separation condition, and what the protocol does instead}

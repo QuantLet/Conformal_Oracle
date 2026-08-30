@@ -16,3 +16,4 @@ Two of the four	analysis/provenance/PROMOTION_GATE.csv	4 series block, of which 
 24 of 24	nothing --- it is hypothetical	the sentence describes what a routine *would* report on a series that does not exist, not a measurement
 Two of the ten	Supplement S.11's Kind column	the same table as "Seven of the ten"; a structural fact about how the checks are classified
 eight of the ten	analysis/recompute/sign_verification.csv, check 4	a census of the archive as it stood before the 2026-08-17 correction: two of the ten forecasters stored positive quantiles and eight negative. It is stated in the past tense because the archive no longer has that property --- all nine directories now store the loss-side sign
+three of the ten	Supplement S.11's Kind column	the same table as "Seven of the ten"; a structural fact about how the checks are classified, verified independently by check 3, which counts the table's rows

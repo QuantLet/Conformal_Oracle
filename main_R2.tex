@@ -105,31 +105,30 @@
 		%─── PART 2: Abstract ───────────────────────────────────────────────────────
 \begin{abstract}
 
-The Basel traffic light identifies the sign of $\pi - \tau$ and nothing else: in the limit a
-green verdict is certain or impossible according as the long-run violation rate
-falls below or above $\tau = 4/250$. The interval it cannot resolve does not shrink with
-evidence. At $\alpha = 0.01$ a forecaster cutting off up to \nTLTauOverAlpha{}
-times nominal is passed with probability tending to one, understating
-Value-at-Risk by \nTLUndTFive\% under standardised $t_5$ innovations. On \nSeqPairs{}
-model--asset pairs it is visible directly: a zone upgrade is
-a \emph{strict} sub-event of a move toward nominal, with \nZoneUpNotCloser{}
-pairs upgraded without moving closer and \nZoneCloserNotUp{} moving closer with
-no change of zone.
+Post-hoc conformal recalibration restores the coverage of a tail quantile
+forecast, but the standard guarantee assumes exchangeability, which financial
+return series violate. We prove asymptotic coverage for the one-sided
+split-conformal shift under geometric $\beta$-mixing, with an explicit remainder
+that separates estimation error in the calibration quantile from residual
+dependence, and a corollary fixing the mixing rate for GARCH data-generating
+processes. The required separation between calibration and evaluation is
+logarithmic in the calibration sample --- a median of \nGapPanelGapMed{}
+observations, \nGapPanelGapPct\% of the evaluation window --- and is imposed in
+the empirical protocol.
 
-A one-sided split-conformal shift restores marginal coverage exactly in finite
-samples under exchangeability, and asymptotically under geometric
-$\beta$-mixing with an explicit remainder; the separation condition the theorem
-requires is one the contiguous split does not meet, and that gap is reported. Across \nMainForecasters{} forecasters and \nMainAssets{}
-assets it moves \nMainKupiecRawPasses{} unconditional-coverage passes to
-\nMainKupiecCorPasses{} whatever forecaster it is applied to, so the corrected
-\emph{rate} cannot rank the series that produced it.
+On a panel of equity, bond, commodity, cryptocurrency and foreign-exchange
+series, the shift restores nominal coverage for every forecaster it is applied
+to, from GARCH-family benchmarks to zero-shot time series foundation models.
+That indifference has a cost: a corrected coverage column no longer ranks the
+forecasters that produced it, so the correction cannot be evaluated by the
+instrument that triggers it.
 
-Recalibration is therefore an intervention with an indication. It degrades
-\nWellCalRollWorse{} of \nWellCalRollN{} pairs already passing Kupiec. Gating on the calibration window avoids \nGateRollAvoided{} of
-\nDegradedRoll{} deteriorations at a cost of \nGateRollUpgradesLostNet{} pairs on
-the quantile score, against the \nGateRollUpgradesLost{} zone upgrades the
-traffic light records, \nGateRollUpgradesLostWorse{} of which the correction
-would have made worse. That gap is what the traffic light cannot price.
+We therefore treat recalibration as an intervention with an indication --- a
+treatment warranted under stated conditions and harmful outside them. Under the
+trailing-window variant it degrades \nWellCalRollWorse{} of the
+\nWellCalRollN{} forecasts in the panel that already pass their coverage
+backtest, and \nWellCalStaticWorse{} under the single split, and we give a rule,
+keyed only on information available at the decision date, for when to apply it.
 
 	\bigskip\noindent
 	\textbf{Keywords:} Value-at-Risk; Structural validation; Time series
@@ -175,21 +174,21 @@ roughly 45\%, producing a \nRawPiGJRDefectivePct\% violation rate against a nomi
 green zone on all \nMainAssets{} assets. A reduction rule that reports fewer
 exceedances than nominal attracts no scrutiny from a system built to count them.
 
-\paragraph{A controlled case} One of these failure modes can be demonstrated
-without reference to this study's data at all, and it is the one on which we
-develop the argument. Chronos-T5 \citep{ansari2024chronos} represents its
-one-step predictive distribution as a categorical law over 4093 quantised value
-bins. Its packaged sampling routine defaults to $\texttt{top\_k} = 50$, a value
-inherited from text generation, which restricts that support to its 50 most
-probable atoms before any quantile is computed --- and does so from the tails
-inward, since the discarded bins are by construction the least probable. The
-median is barely affected, so a point-forecast evaluation of this configuration
-is entirely unremarkable. The 1\% tail is not: the empirical violation rate
-reaches \nPiSmallDefaultOne{} and \nPiMiniDefaultOne{} for the two checkpoint
-sizes examined here, an exceedance that would place every asset in the Basel red
-zone. This is not a fault in Chronos. It is a documented default, correct for the
-task it was designed for and silently wrong for this one, and it reproduces from
-a public checkpoint and published code by any reader who runs it.
+\paragraph{A controlled case} One such failure is demonstrable without this
+study's data at all, and it is the worked example for why series are screened
+before they are used. Chronos-T5 \citep{ansari2024chronos} represents its
+one-step predictive law as a categorical distribution over quantised value bins,
+and its packaged sampling routine defaults to $\texttt{top\_k} = 50$ --- a value
+inherited from text generation, which discards all but the 50 most probable
+atoms, from the tails inward, before any quantile is read. The median is barely
+affected and a point-forecast evaluation is unremarkable; the $1\%$ tail reaches
+\nPiSmallDefaultOne{} and \nPiMiniDefaultOne{} for the two checkpoint sizes,
+which would put every asset in the Basel red zone. Reading the same weights
+analytically instead of sampling them returns \nPiSmallAnalyticOne{} and
+\nPiMiniAnalyticOne, so the defect is in the interface and not in the model. It
+is a documented default, correct for the task it was written for and silently
+wrong for this one, and it reproduces from a public checkpoint
+(Supplement~S.14).
 
 Three properties make such failures durable rather than merely possible. First,
 they are invisible to point-forecast evaluation, which is where forecasting
@@ -299,27 +298,44 @@ the GARCH-family benchmarks on the same assets and windows, and a per-asset
 CAViaR \citep{engle2004caviar} fitted the ordinary way outperforms all of them.
 It does not claim that implementation failure explains tail miscalibration in
 general: five failure modes are identified in one pipeline, and their prevalence
-in the literature is not identified by this study. And it does not claim that the
-ten structural checks are sufficient, or that more than three of them are
-necessary conditions in the strict sense; the other seven are plausibility bands.
-What can be said for all of them is that they are cheap, that each states a
-property a practitioner would endorse before seeing any data, and that the
-alternative --- coverage --- provably cannot do this job.
+in the literature is not identified by this study. It does not claim the
+structural checks are a contribution: they are an admission criterion, they are
+not sufficient, and only three of the ten are necessary conditions in the strict
+sense. And it does not claim a coverage guarantee for the rolling variant, which
+recomputes the shift from a trailing window and is outside what
+Theorem~\ref{thm:dependent_conformal_var} covers; where the two are compared, the
+rolling results are reported as an operational heuristic.
 
-The three results are stated in three places, and the rest of the paper is what
-they rest on. \textbf{The first} is that the Basel classification identifies the
-sign of $\pi - \tau$ and nothing else, with $\tau = \nTLTauOverAlpha\alpha$ at
-$\alpha = 0.01$, and that a zone upgrade is a strict sub-event of a move toward
-nominal on the panel: Propositions~\ref{prop:traffic_limit} and
-\ref{prop:zone_inclusion} with Corollary~\ref{cor:traffic_interval}, in
-Section~\ref{sec:mc}.
-\textbf{The second} is the coverage guarantee for the conformal shift under
-geometric $\beta$-mixing, with an explicit remainder and the separation condition
-the contiguous split does not meet stated rather than assumed
-(Section~\ref{sec:theory}). \textbf{The third} follows from the first two: the
-correction is an intervention with an indication rather than a default step, and
-its cost cannot be priced in the instrument that triggers it
-(Section~\ref{sec:cost}).
+The argument runs in four steps, and each rests on the one before it.
+\textbf{First}, the conformal guarantee survives the dependence of financial
+returns: Theorem~\ref{thm:dependent_conformal_var} gives asymptotic coverage for
+the one-sided split-conformal shift under geometric $\beta$-mixing with an
+explicit remainder, Corollary~\ref{cor:garch} fixes the mixing rate for GARCH
+data-generating processes, and the separation the theorem requires is imposed in
+the protocol rather than assumed away (Section~\ref{sec:theory}).
+\textbf{Second}, that guarantee is indifferent to the forecaster: on
+\nMainForecasters{} forecasters and \nMainAssets{} assets the shift moves
+\nMainKupiecRawPasses{} unconditional-coverage passes to
+\nMainKupiecCorPasses, whatever produced the series (Section~\ref{sec:recal}).
+\textbf{Third}, the indifference has a price. A corrected coverage column on
+which every entry sits at nominal separates nothing, so the correction cannot be
+evaluated by the instrument that triggers it --- a statement the exceedance
+sequence makes precise in Proposition~\ref{prop:identification}, which bounds
+what any function of that sequence can identify.
+\textbf{Fourth}, it follows that recalibration is not a default step but a
+treatment with an indication: a set of conditions under which applying it is
+warranted, and outside which it does harm. Under the rolling estimator it
+degrades \nWellCalRollWorse{} of the \nWellCalRollN{} pairs whose raw forecast
+already passes its coverage backtest, and Section~\ref{sec:cost} gives a rule,
+keyed only on information available at the decision date, for when to apply it.
+
+Two pieces of machinery serve those steps without being claims of their own. The
+identification result of Section~\ref{sec:blindspot} is what makes step three
+precise, and it is developed only as far as that step needs. The structural
+checks of Section~\ref{sec:gate} are the admission criterion for series entering
+the panel --- a series that fails them is not a Value-at-Risk series and its
+coverage is not evidence of anything --- and they block \nGateBlocked{} of the
+\nGateSeries{} series here.
 
 The remainder is organised as follows.
 Section~\ref{sec:lit} situates the contribution in the literature on tail
@@ -652,28 +668,34 @@ A warm-up period (512 observations for TSFMs, 250 for the windowed classical ben
 %══════════════════════════════════════════════════════════════════════════════
 %─── PART 6b: The sampling mechanism ────────────────────────────────────────
 %══════════════════════════════════════════════════════════════════════════════
-\subsection{A controlled case: support truncation in a sampled predictive law}
-\label{sec:mechanism}
+\subsection{Admission of series to the panel}
+\label{sec:gate}
 
-One instance motivates the audit and is developed in full in
-Supplement~S.14, with the numbers and the design intact. Chronos-T5
-\citep{ansari2024chronos} ships a packaged inference routine whose documented
-default truncates the predictive support to its \texttt{top\_k} most probable
-tokens. At the shipped setting the realised exceedance rate is
-\nPiSmallDefaultOne{} against a nominal $\alpha = 0.01$ for Chronos-Small and
-\nPiMiniDefaultOne{} for Chronos-Mini. Reading the checkpoint's own predictive
-distribution instead of sampling from it removes the sampler from the estimation
-path and returns \nPiSmallAnalyticOne{} and \nPiMiniAnalyticOne, so the defect is
-in the interface and not in the weights --- while what survives that removal is a
-narrower tail deficiency that belongs to the model's quantisation grid. The case
-is carried here because it is independently reproducible from the public
-checkpoint alone, and because the two truncated series appear throughout the
-panel below as the measured consequence of that default rather than as
-forecasters.
+A coverage backtest run on a series that is not a Value-at-Risk series reports a
+number about an artefact. Before any forecast enters the panel it therefore
+passes a set of structural checks: conditions a reported lower quantile must
+satisfy to be one at all --- a sign convention, monotonicity across $\alpha$, a
+scale commensurate with realised volatility, responsiveness to the level
+requested --- stated on the series and the returns, with no $p$-value and no
+benchmark. Ten such checks are used here, listed in full in Supplement~S.11 and
+motivated in Supplement~S.17.
 
-%══════════════════════════════════════════════════════════════════════════════
-%─── PART 8: Empirical Results ──────────────────────────────────────────────
-%══════════════════════════════════════════════════════════════════════════════
+They are an admission criterion and not a contribution. Three are invariants that
+a correct series cannot violate; the remaining seven are plausibility bands whose
+thresholds are stated rather than derived, and they were specified after the
+failure modes they address had been identified, so their performance on those
+failure modes is in-sample by construction. Their one out-of-sample test is in
+Supplement~S.13.
+
+On this panel they block \nGateBlocked{} of the \nGateSeries{} series with stored
+forecasts: the two Chronos series sampled at the checkpoint default, which fail
+five checks each, and their analytic counterparts, which fail a coverage band on
+one asset apiece. Blocked series are reported with their diagnosis rather than
+dropped, and the two sampled ones are retained in Table~\ref{tab:master} as the
+measured consequence of that configuration rather than as candidate forecasters.
+The three dynamic-quantile forecasters store no series, so the checks have no
+object to run on and those forecasters are ungated rather than passed.
+
 \section{The Panel, and the Size of the Correction It Requires}
 \label{sec:results}
 
@@ -786,7 +808,7 @@ What differs between two releases is a primary-source question, and it settles
 before a comparison is drawn. The one genuinely controlled contrast
 available here holds the weights, contexts and dates fixed and varies only the
 code that reads the predictive law --- the two Chronos configurations of
-Section~\ref{sec:mechanism}.\footnote{The \nGateSeries{} series with forecast files in the replication
+Supplement~S.14.\footnote{The \nGateSeries{} series with forecast files in the replication
 archive have been through the scripted validation gate of
 Section~\ref{sec:gate} and Supplement~S.11. The three dynamic-quantile
 forecasters of Table~\ref{tab:master} --- CAViaR-AS, CAViaR-SAV and GAS-t ---
@@ -862,7 +884,7 @@ Acerbi--Sz\'ekely $Z_2$ statistic of Section~\ref{sec:diag} passes \nMainZTwoPas
 \nMainAssets{} for each analytic counterpart, the sharpest separation any
 diagnostic in this paper achieves (Supplement~S.1). That is the boundary of
 Proposition~\ref{prop:identification}. Matching the construction of
-Section~\ref{sec:blindspot_pair} on mean expected shortfall as well does not
+Supplement~S.16 on mean expected shortfall as well does not
 close it: a size-$5\%$ one-sided $Z_2$ test still rejects the matched
 alternative with probability \nSupPowerRej{} over \nSupPowerReps{} replications,
 a $95\%$ interval of $[\nSupPowerLo, \nSupPowerHi]$ that excludes the nominal
@@ -880,57 +902,15 @@ That is a statement about what a rejection means, not a claim that these tests
 are badly designed. A rejection says $u_t\neq\alpha$; it does not say whether the
 cause lies in the model, in the reduction step, or in the returns.
 
-\subsection{\texorpdfstring{How large the resulting blind spot is}{How large the resulting blind spot is}}
-\label{sec:blindspot_pair}
-
-Proposition~\ref{prop:identification} is only useful if the set of
-indistinguishable alternatives contains objects a risk manager would care to
-separate. It does. Let $\delta$ denote the \emph{truncation depth}: the
-probability mass discarded from each tail of a predictive law before its
-$\alpha$-quantile is read. It is distinct from the drift diagnostic
-$\hat\delta_w(t)$ of Supplement~S.9.6, which shares no more than the letter.
-
-\begin{proposition}[The depth of the blind spot]
-	\label{prop:blindspot_depth}
-	Fix $\alpha = 0.01$ and a correctly specified forecaster whose returns are
-	standardised Student-$t_5$, so that its reported quantile is
-	$\nGapQTrueStd$ in units of conditional scale. If the alternative model's
-	return law is required only to be symmetric and unimodal with the same
-	variance and the same mean absolute deviation, then for every
-	$\delta \le \delta^\star = \nGapDeltaUni$ there exists a truncated
-	forecaster and a return law under which the exceedance sequence has exactly
-	the same law as under the correctly specified pair, while the reported
-	Value-at-Risk is understated by up to \nGapUndUni\%. For
-	$\delta > \delta^\star$ no such unimodal law exists.
-\end{proposition}
-
-The construction is explicit and is given in Supplement~S.9.8 as a linear
-programme: the constraints --- coverage, variance, mean absolute deviation, and
-the reported quantile --- are all linear in the probabilities of a discrete
-symmetric law, so feasibility is decided by the programme. The resulting pair
-is matched on the predictive standard deviation, on point-forecast accuracy in
-both mean absolute error and root mean squared error, and on the median; it
-differs only in the reported threshold and in the shape of the predictive law
-away from it.
-
-$\delta^\star$ belongs to the restriction placed on the return law and is not a
-constant. Dropping unimodality raises it to $\nGapDeltaFree$, an understatement
-of \nGapUndFree\%; requiring in addition a fourth moment no larger than the
-honest model's lowers it to $\nGapDeltaMoment$; confining the alternative to a
-GARCH class with standardised Student-$t$ innovations leaves only
-\nGapUndGarchT\%. The discretisation
-converges from above, so each figure is an upper bound and the bias runs toward
-overstating the blind spot. Supplement~S.9.8 gives the full table.
-
-Two consequences run through the rest of the paper. Section~\ref{sec:gate}
-measures how much of this depth structural checks remove. And the Chronos
-configuration of Section~\ref{sec:mechanism} sits \emph{outside} the blind
-region: the tail probability it cuts off shows up as a realised exceedance rate
-of $\nPiSmallDefaultOne$, well beyond $\nGapDeltaFree$, which is why
-unconditional coverage rejects it on every asset
---- while rejecting \nSeqKupiecRejRawOne\% of the panel besides. Detection is not
-diagnosis, and the two separate exactly where Proposition~\ref{prop:blindspot_depth}
-says they should.
+\paragraph{How large the blind spot is} The alternatives
+Proposition~\ref{prop:identification} cannot separate are not a technicality.
+Two forecasters whose reported thresholds differ by nearly a factor of two ---
+$\nPairVaRHonest$ and $\nPairVaRAlt$ in units of conditional scale, the second
+holding \nPairCapitalPct\% of the capital the first requires --- can be
+constructed to receive identical verdicts from every backtest in standard use,
+including the dynamic quantile test. The construction, the linear programme
+behind it and the depth of the blind spot under successively stronger
+restrictions on the return law are in Supplement~S.16.
 
 \subsection{The independence test is frequently degenerate}
 \label{sec:blindspot_cc}
@@ -1059,333 +1039,6 @@ forecaster at all.
 %══════════════════════════════════════════════════════════════════════════════
 %─── PART 7c: Structural validation ─────────────────────────────────────────
 %══════════════════════════════════════════════════════════════════════════════
-\section{Why Structural Validation Precedes Correction}
-\label{sec:gate}
-\label{sec:precede}
-
-The ordering is forced by two facts already established. The correction restores
-marginal coverage whatever the forecaster (Section~\ref{sec:recal}), so a
-pipeline that validates after correcting has no test of the forecaster; and a
-coverage test identifies only the realised tail probability
-$u_t = F_t(\hat q^{lo}_t)$ (Proposition~\ref{prop:identification}), so validating
-before correcting does not help either, if the validation is itself a coverage
-test. What is left is a check that reads the series rather than its exceedances,
-and it has to run first.
-
-\paragraph{What is new here, and what is not} That exceedance-based backtests are
-weak at $\alpha = 0.01$ is established, and this paper claims no priority over
-it. \citet{escanciano2012pitfalls} prove the unconditional test inconsistent
-against Historical Simulation and Filtered Historical Simulation, and their
-Lemma~1 then exhibits a weighted backtest that is consistent --- a result
-recovering inside the exceedance class the power the unconditional test loses.
-\citet{gordy2020spectral} and \citet{kratz2018multinomial} treat the poverty of
-the single-level indicator as a premise to design around, the first by reading
-the probability integral transform and the second by reading exceptions at four
-levels, and Gordy and McNeil state the requirement plainly: what is essential is
-that the regulator observes more than the exception indicator at one level.
-
-Two things separate the present argument from that literature and neither is the
-observation of weakness.
-
-The first is the characterisation, and it is what lets the two results stand
-together. \citet{escanciano2012pitfalls}'s alternatives agree with the null on
-the \emph{mean} of $u_t$; the alternatives of
-Proposition~\ref{prop:identification} agree with it on the whole process
-$\{u_t\}$. Against the first, a weighted backtest recovers power, and their
-Lemma~1 constructs one. Against the second, \emph{no} statistic measurable with
-respect to the exceedance sequence separates them, that weighted backtest
-included. The two propositions are about different alternative sets and neither
-contradicts the other; what the second adds is where the exceedance class ends.
-
-The second is the information set, and it is not a weaker claim than theirs but a
-claim about a different one. \citet{gordy2020spectral} and
-\citet{kratz2018multinomial} establish what a supervisor can do who holds the
-predictive distribution: read the probability integral transform, or take
-exceptions at four levels, and recover power the single-level indicator cannot
-carry. That is correct and it is not available here. A firm consuming a
-third-party quantile series --- a vendor model, a pretrained checkpoint, a
-counterparty's reported thresholds --- holds the thresholds and the realised
-returns and nothing else, and cannot obtain a PIT value from a forecaster that
-never published a distribution. The structural checks are built for that
-position: they read the series and the returns, which is what such a user has.
-The two literatures are answering the same question on two information sets, and
-the second is the one most consumers of a forecast are in.
-
-This section measures how much of the blind spot of
-Proposition~\ref{prop:blindspot_depth} a structural check removes. Measured on
-the understatement it permits, which is the quantity
-Table~\ref{tab:gate_residual} reports, the answer is a little over a third.
-
-A forecast series can be checked against properties it must have \emph{to be a
-Value-at-Risk series at all}, before it is calibrated, evaluated or compared with
-anything. The checks are stated on the lower quantile $\hat q^{lo}_\alpha$, which
-is negative and is what the forecast files store, and not on the positive
-threshold $\VaR_t^{\mathrm{raw}} = -\hat q_t^{lo}$ of
-equation~\eqref{eq:var_raw}; the two conventions differ by a sign, and a column
-named for a risk measure while holding a quantile is precisely the ambiguity
-that the first failure mode of Table~S.31 exploits.
-
-Ten such checks are stated in Supplement~S.11 and implemented in
-\texttt{scripts/promotion\_gate.py}: a lower quantile whose median is not
-negative, quantiles that are not ordered across $\alpha$, an exceedance rate that
-does not respond to the nominal level, a predictive dispersion far from realised
-volatility, a support of a handful of distinct values.
-
-The ten are not of equal standing. Two are invariants that follow from what a
-quantile forecast is and carry no tunable constant; one is an invariant tested
-through a proxy with a threshold; the remaining seven are plausibility bands
-with chosen cutoffs, stated in Table~\ref{tab:gate_compact}. Seven of the ten need nothing but the forecast
-series and the returns. Tail reach needs the model's sampled paths and is
-inapplicable to grid and parametric forecasters; $\alpha$-responsiveness and
-coverage plausibility need an evaluation window, so the gate is not entirely
-upstream of the data a backtest consumes. What separates them from a backtest is the
-question they ask: not whether a coverage rate is statistically distinguishable
-from nominal, but whether the series responds to the level it was asked for at
-all. No $p$-value is computed, no benchmark is required, and none of the ten
-needs access to the hardware that produced the forecasts.
-
-\subsection{How much of the blind spot the gate removes}
-\label{sec:gate_residual}
-
-The construction of Section~\ref{sec:blindspot_pair} makes this measurable. For
-a given restriction on the return law, let $\delta^\star$ be the largest
-truncation depth admitting an alternative model that the available diagnostics
-cannot distinguish from a correctly specified one, and read off the
-Value-at-Risk understatement it permits.
-
-\begin{table}[htbp]
-	\centering
-	\caption{Residual unidentifiable understatement, by what the diagnostic is
-		allowed to read. $\delta^\star$ is the largest truncation depth admitting
-		an indistinguishable alternative under a unimodal return law; the last
-		column is the Value-at-Risk understatement it permits, against a true 1\%
-		quantile of $\nGapQTrueStd$ in units of conditional scale. Each figure is
-		attained by an explicit pair, not merely bounded. The discretisation
-		converges from above, so every entry is an upper bound and the bias runs
-		toward overstating the blind spot.}
-	\label{tab:gate_residual}
-	\footnotesize
-	\setlength{\tabcolsep}{5pt}
-	\begin{tabular}{@{}>{\raggedright\arraybackslash}p{7.2cm}rr@{}}
-		\toprule
-		\textbf{Diagnostic reads} & $\bm{\delta^\star}$ & \textbf{understated by} \\
-		\midrule
-		the exceedance path alone, no restriction on returns & \nGapDeltaFree & \nGapUndFree\% \\
-		the exceedance path alone, unimodal returns & \nGapDeltaUni & \nGapUndUni\% \\
-		\addlinespace[2pt]
-		\quad + the series and the returns, scale band at $\nGapBandNow$ & \nGapDeltaGateNow & \nGapUndGateNow\% \\
-		\quad + the series and the returns, band tightened to $\nTightBand$ & \nTightDelta & \nTightUnd\% \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-Table~\ref{tab:gate_residual} is the section's result. The structural checks cut
-the unidentifiable understatement from \textbf{\nGapUndUni\%} to
-\textbf{\nGapUndGateNow\%}, and tightening the binding band to the edge of what
-this panel permits takes it to \nTightUnd\%. They do not cut it to zero. A pair exists that passes all ten checks, exceeds on the same
-days at the same rate as a correctly specified forecaster, and still reports a
-threshold a fifth too small. That residue is the gate's limit.
-
-The two halves of the result point in opposite directions. Structural validation
-does not close the identification gap, so the checks are not a complete
-complement of the test class. Against that, the size of their contribution is
-computed: the backtests remove none of the understatement by construction, and
-the checks remove a little over a third of it. In the unit of
-Proposition~\ref{prop:blindspot_depth} the same reduction is larger --- the
-admissible truncation depth falls from \nGapDeltaUni{} to
-\nGapDeltaGateNow{} --- and the two fractions are not comparable, so the
-understatement is used throughout.
-
-\subsection{\texorpdfstring{Where the band edge can sit, and how much margin it has}{Where the band edge can sit, and how much margin it has}}
-\label{sec:gate_band}
-
-The scale band --- $\operatorname{median}(\hat q^{lo}_{0.01}/\hat\sigma_t)$
-within $[\nGapBandLower, \nGapBandNow]$ --- is the check that binds, and its
-edges were chosen by hand. On these data the choice does not matter, and the
-separation that makes it not matter is the quantity worth reporting.
-
-Evaluated on all \nGapCellsTotal{} series--asset cells, the two populations are
-disjoint by a wide interval. The worst well-specified cell sits at
-$\nGapCellGoodWorst$ and the best truncated cell at $\nGapCellTruncBest$, a gap
-of $\nGapGapWidth$ in units of estimated scale. \emph{Any} edge strictly inside
-that interval blocks all \nGapCellsTrunc{} truncated cells and no well-specified
-one, so the gate's verdict on this panel is invariant to where the edge is placed
-within the gap. The verdict therefore does not rest on the choice at all.
-
-The safety margin is a different quantity from the gap, and the smaller of the
-two. It is the distance from the edge to the nearest well-specified cell, and at
-$\nGapBandNow$ it is $\nGapMarginUpper$ --- an order of magnitude smaller than
-the gap. Tightening the edge to $\nTightBand$ reduces the residual understatement from
-\nGapUndGateNow\% to \nTightUnd\%, and leaves a margin of $\nTightMargin$: essentially none. At the current edge of $\nGapBandNow$ the
-gap exceeds the margin by a factor of eleven; at $\nTightBand$ it exceeds it
-by more than two hundred. Robustness read off the gap rather than the margin
-therefore overstates the check by one order of magnitude at the edge as
-specified, and by two at the tightened one.
-
-The margin measures the check against the panel that produced it, and on that
-panel the two populations are far apart: eleven series whose reported quantile
-sits between two and three estimated standard deviations below zero, and two
-whose truncation has driven it to a fifth of that, with nothing between. A
-separation established on a sample containing only gross failures and correct
-specifications is a weak thing to report, because the discriminating power is
-in-sample by construction. The band therefore has one test on this evidence
-that is not: a family it was never shown.
-
-The band edges were fixed before that family was run --- the declaration is dated
-\nMLBandDeclared{} and the estimator panel \nMLPanelRun{} --- so what follows is
-out of sample rather than a re-reading of the cells the edges were drawn around.
-Gradient-boosted quantile regression and a quantile random forest were run on
-\nMLAssets{} assets across \nMLLeafSettings{} leaf resolutions, \nMLCells{} cells
-at \nMLDates{} dates each, and they land on opposite sides of the question. The
-forest places every cell inside the band, between $\nMLQrfRatioLo$ and
-$\nMLQrfRatioHi$. The boosted estimator places \nMLGbmBlocked{} of its
-\nMLGbmCells{} cells between $\nGapCellGoodWorst$ and $\nGapCellTruncBest$ ---
-the interval the sequence panel leaves empty --- and the check blocks all
-\nMLGbmBlocked. Of those, \nMLBlockedUnder{} are on cells exceeding at
-\nMLUnderThreshold{} times nominal or more, and no cell the check passes exceeds
-at that rate; the remaining \nMLBlockedNotUnder{} return three violations where
-two were expected, which \nMLDates{} dates at $\alpha = 0.01$ cannot separate
-from correct coverage.
-
-So the intermediate range is no longer empty and no longer untested. On the one
-family available that occupies it, the check discriminates rather than misfiring:
-it blocks under-covering cells, passes the rest, and misses none. That is the
-strongest statement this paper makes about the gate, and it is the only one
-measured on series the gate was not built around.
-
-The edge's false-positive region is then bounded in closed form rather than left
-open. A correctly specified forecaster is blocked at $\nGapBandNow$ only if its
-standardised innovation law puts its own $1\%$ quantile above that point, which
-requires a tail lighter than a triangular law's $\nMLQuantTriangular$: Normal
-innovations sit at $\nMLQuantNormal$ and standardised $t_5$ at $\nMLQuantTFive$,
-and only a bounded law as light as the uniform, at $\nMLQuantUniform$, is caught.
-The illustrative forecaster reporting $-\nMLWorkedExampleSigma\hat\sigma_t$ is
-not in that class. It is under-conservative by a quarter measured on the
-threshold and by a factor of \nMLWorkedNormal{} measured on coverage --- it
-exceeds at \nMLWorkedNormal{} times nominal under Normal innovations,
-\nMLWorkedTFive{} under standardised $t_5$ and \nMLWorkedTThree{} under $t_3$ ---
-so blocking it is a correct verdict. The two units differ by a factor of nearly
-three, and the limitation is the coverage one.
-
-\paragraph{One of our own checks cannot fail, and that is the paper's argument
-turned on itself} The lower edge $\nGapBandLower$ blocks
-\nGapCellsLowerBlocks{} of \nGapCellsTotal{} cells. Nothing in the panel comes
-near it: the most negative cell anywhere is $\nGapCellGoodBest$, a margin of
-$\nGapMarginLower$, five times the margin at the upper edge. \emph{A check that
-blocks nothing on any series it has been shown cannot fail informatively, so a
-series passing it has not been tested --- which is precisely what
-Section~\ref{sec:blindspot_cc} says about a Christoffersen statistic computed on
-a degenerate transition table, and it is here in one of our own ten checks.} The
-two cases have the same structure: an absence of evidence returned in the form
-that reads as a pass, and a pass rate reported as though it were an outcome.
-
-Adjusting the edge downward until it binds would manufacture the outcome, so the
-band stands as specified and its consequence is recorded instead. On this panel
-the scale check is one-sided; the band is asymmetric in risk; and whether a lower
-edge is needed at all cannot be determined from these data, because nothing in
-them is over-conservative enough to test one. The block count is nine checks
-exercised and one that was not. The \nMLCells{} cells of the second estimator
-family do not settle it either: the most negative of them reaches
-$\nMLRatioMostNegative$, a margin of \nMLLowerEdgeMargin{} from the edge, and
-\nMLBelowLowerEdge{} of them fall below it. That family is measured on
-\nMLAssets{} assets rather than \nMainAssets, so it can only have shown the edge
-binding and cannot show that it does not.
-
-\paragraph{What the gate cannot see} The checks operate on a stored forecast
-series and the returns. They can establish that a series has the properties a
-Value-at-Risk series must have, and they cannot establish that the estimator
-which produced it is the estimator the paper says produced it. A mismatch between
-a declared estimator and an implemented one leaves no trace in the series: both
-the plain empirical quantile and the conformal order statistic of
-equation~\eqref{eq:qV} yield a well-formed series that passes all ten checks, and
-only reading the code distinguishes them. Structural validation and code
-provenance are complements, and neither is inferable from the other.
-
-\paragraph{Nor can it validate prose} The same limit applies one level up.
-Converting this manuscript's numeric claims to generated macros surfaced two
-assertions that no artefact produces: a pair of figures comparing a modified and
-a canonical test statistic, whose verification script computes neither of them,
-and a pair of raw violation rates whose producer emits only corrected ones. Both
-were in the version submitted for review and survived it. Seventy-nine numeric claims sat outside the reach of the script that
-checks the manuscript's arithmetic, and a literal that is never emitted cannot be
-checked by a tool that checks emitted values --- the structure of
-Section~\ref{sec:blindspot_cc}, one level up from the forecasts. A gate that
-validates series does not validate the sentences written about them, and the
-argument of this paper applies to the paper.
-
-\paragraph{Two checks are out of scope for order-statistic estimators} Support cardinality and tail reach
-are inapplicable to order-statistic estimators, which may legitimately take few
-distinct values and tie across adjacent $\alpha$ as a window slides; a discrete
-predictive support may tie for the same reason. The gate records the estimator class of each
-series in a manifest and declares the check inapplicable rather than returning a
-verdict on it.
-
-That scoping has a consequence worth stating rather than leaving to the
-manifest: on this panel tail reach returns \emph{inapplicable} for all
-\nGateSeries{} series, because none of the shipped forecast files stores sampled
-paths. It contributes no verdict to any of the blocks reported below, and the
-gate that operates here is nine checks wide, not ten. A check that cannot return
-a verdict on the population it is run against carries no evidence when that
-population passes --- the same reading this paper applies to the lower band edge
-in Section~\ref{sec:gate_band}, and it is recorded for the same reason.
-
-\begin{table}[htbp]
-	\centering
-	\caption{The ten checks, stated on the lower quantile $\hat q^{lo}_\alpha$
-		(negative), which is what the forecast files store. Full conditions,
-		scoping rules and the per-series results are in Supplement~S.11.}
-	\label{tab:gate_compact}
-	\footnotesize
-	\setlength{\tabcolsep}{4pt}
-	\begin{tabular}{@{}llp{4.9cm}@{}}
-		\toprule
-		\textbf{Check} & \textbf{Kind} & \textbf{Needs} \\
-		\midrule
-		Sign & invariant & forecast only \\
-		Monotonicity across $\alpha$ & invariant & forecast only \\
-		Alignment (no look-ahead) & invariant, proxy test & returns \\
-		\midrule
-		Support cardinality$^{\dagger}$ & band & forecast only \\
-		Extremes & band & forecast only \\
-		Scale against realised $\sigma$ & band & realised $\sigma$ \\
-		Predictive dispersion & band & realised $\sigma$ \\
-		$\alpha$-responsiveness & band & evaluation window \\
-		Coverage plausibility & band & evaluation window \\
-		Tail reach$^{\dagger}$ & band & sample paths \\
-		\bottomrule
-	\end{tabular}
-	\begin{minipage}{\linewidth}\scriptsize
-		\smallskip
-		$^{\dagger}$ Declared inapplicable to order-statistic estimators, which
-		take few distinct values by construction and may tie across adjacent
-		$\alpha$. The gate records the estimator class in the series manifest and
-		returns \emph{inapplicable} rather than a verdict.
-	\end{minipage}
-\end{table}
-
-\paragraph{Result on this panel} The gate blocks \nGateBlocked{} of the
-\nGateSeries{} series submitted to it. Two are the Chronos series sampled at the
-checkpoint default, which fail monotonicity, scale, $\alpha$-response, coverage
-and dispersion on all \nMainAssets{} assets, and the extremes band on
-\nGateExtremesSmall{} and \nGateExtremesMini{} of them. Two are their analytic
-counterparts, which fail the coverage-plausibility band on one asset each, and,
-for Chronos-Mini-A, $\alpha$-responsiveness on one asset as well --- the
-residual tail deficiency of
-Supplement~S.14.5, recorded as a block requiring a written
-diagnosis rather than silently admitted. Two of the four blocks are therefore
-marginal, and the band that produces them is unchanged.
-
-\paragraph{What this evidence is worth} The ten checks were specified after the
-failure modes of Section~\ref{sec:audit_trail} had been identified, and several
-exist because a failure of that class had already passed whatever checks were in
-place at the time. Their performance on those failure modes is in-sample by
-construction and is not evidence of sensitivity to failures of a kind not
-represented here. The argument for them does not rest on that performance. It
-rests on Table~\ref{tab:gate_residual}: the checks reduce a gap that the
-coverage-based tests of Section~\ref{sec:blindspot} cannot reduce at all, and both
-the reduction and the remainder are computed.
-
-
 \section{What Recalibration Restores}
 \label{sec:recal}
 
@@ -1476,7 +1129,7 @@ shift cannot reshape conditional dynamics are in Section~\ref{sec:failure}.
 
 \begin{table}[htbp]
 	\centering
-	\caption{Forecast audit across 16 forecasters and 24 assets ($\alpha = 0.01$), ordered by $\bar R$. QS: Quantile Score ($\times 10^{4}$, lower is better). $\bar R = |\qVstat|/|\VaR_{\mathrm{raw}}|$, averaged over assets: the size of the conformal correction relative to the threshold it adjusts. Kind records the estimator class. The two Chronos rows without the analytic suffix are the checkpoint-default configuration of Section~\ref{sec:mechanism} and are retained in the table as the measured consequence of that default, not as forecasters. No threshold is applied and no classification is implied. $\bar R$ is a ratio of absolute values and is therefore non-negative by construction; the sign that carries the diagnosis belongs to $\qVstat$, and the last column counts the assets on which it is negative.}
+	\caption{Forecast audit across 16 forecasters and 24 assets ($\alpha = 0.01$), ordered by $\bar R$. QS: Quantile Score ($\times 10^{4}$, lower is better). $\bar R = |\qVstat|/|\VaR_{\mathrm{raw}}|$, averaged over assets: the size of the conformal correction relative to the threshold it adjusts. Kind records the estimator class. The two Chronos rows without the analytic suffix are the checkpoint-default configuration of Supplement~S.14 and are retained in the table as the measured consequence of that default, not as forecasters. No threshold is applied and no classification is implied. $\bar R$ is a ratio of absolute values and is therefore non-negative by construction; the sign that carries the diagnosis belongs to $\qVstat$, and the last column counts the assets on which it is negative.}
 	\label{tab:master}
 	\tiny
 	\setlength{\tabcolsep}{3pt}
@@ -1800,7 +1453,7 @@ What that bound does not cover is the range between the two populations of this
 panel, and there the evidence is one estimator family and \nMLAssets{} assets:
 of the \nMLGbmCells{} gradient-boosted cells, the gate blocks \nMLGbmBlocked, of
 which \nMLBlockedUnder{} exceed at \nMLUnderThreshold{} times nominal or more,
-and it passes no cell exceeding at that rate (Section~\ref{sec:gate_residual}).
+and it passes no cell exceeding at that rate (Supplement~S.17.1).
 That is one family on \nMLAssets{} of \nMainAssets{} assets, measured at
 \nMLDates{} dates where a coverage ratio moves in steps of \nMLPiGrid, and it is
 the only out-of-sample evidence the gate has. A second family sitting in the same
