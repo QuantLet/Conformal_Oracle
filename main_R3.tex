@@ -330,33 +330,18 @@ the panel --- a series that fails them is not a Value-at-Risk series and its
 coverage is not evidence of anything --- and they block \nGateBlocked{} of the
 \nGateSeries{} series here.
 
-The remainder is organised as follows.
-Section~\ref{sec:lit} situates the contribution in the literature on tail
-miscalibration, regulatory backtesting, and post-hoc calibration, and states what
-it does not claim priority over.
-Section~\ref{sec:framework} develops the two-layer framework, describes the asset
-universe, the forecasters and the experimental design, and records the effective
-level the conformal shift actually targets (Remark~\ref{rem:effective_level}).
-Section~\ref{sec:theory} gives the coverage theory.
-Section~\ref{sec:mc} reports the Monte Carlo evidence and the limit behaviour of
-the traffic-light classification.
-Section~\ref{sec:results} presents the panel of \nMainForecasters{} forecasters
-on \nMainAssets{} assets and the ordering by $\bar R$, the size of the correction
-each pair required.
-Section~\ref{sec:blindspot} states the identification result, bounds the blind
-spot it implies, and measures what the standard diagnostics report on a series
-carrying a known defect.
-Section~\ref{sec:gate} derives the ordering --- structural validation before
-correction --- and quantifies how much of that blind spot a structural check
-removes.
-Section~\ref{sec:recal} reports what recalibration restores and why the corrected
-column cannot rank the forecasters that produced it.
-Section~\ref{sec:cost} reports what it costs, when it is indicated, and the
-capital arithmetic that follows.
-Section~\ref{sec:discuss} sets out the limitations, including three checks in
-this paper that return no verdict and one defect found in the estimator it
-offers as a remedy; Section~\ref{sec:practitioner} draws the implications for
-deployment, and Section~\ref{sec:conclude} concludes.
+The remainder is organised as follows. Section~\ref{sec:lit} situates the
+contribution and states what it does not claim priority over.
+Section~\ref{sec:framework} develops the two-layer framework and the
+experimental design, Section~\ref{sec:theory} the coverage theory, and
+Section~\ref{sec:mc} the Monte Carlo evidence together with the limit behaviour
+of the traffic-light classification. Sections~\ref{sec:results}
+to~\ref{sec:gate} present the panel, state the identification result, bound the
+blind spot it implies, and derive the ordering of structural validation before
+correction. Sections~\ref{sec:recal} and~\ref{sec:cost} report what
+recalibration restores, what it costs and when it is indicated.
+Section~\ref{sec:discuss} sets out the limitations and
+Section~\ref{sec:conclude} concludes.
 
 The supplement carries the material the argument points to rather than depends
 on: the proofs, the controlled sampling case in full (\texttt{analysis/chronos\_sampling/RESULTS.md}), the five
@@ -542,7 +527,28 @@ The nonconformity score $S_t$ from equation~\eqref{eq:score} is positive when th
 	\qquad
 	k = \left\lceil (n+1)(1-\alpha) \right\rceil,
 \end{equation}
-with $\qVstat = S_{(n)}$ when $k > n$, which occurs only for $\alpha < 1/(n+1)$. This is the conformal convention rather than the plain empirical quantile $Q_{1-\alpha}(\{S_t\})$, and the distinction is not cosmetic: the two differ by one order statistic, an $O(1/n)$ gap that can nonetheless change the sign of $\qVstat$ on assets whose calibration scores straddle zero near the $(1-\alpha)$ level. Every result in this paper that enters a headline table uses equation~\eqref{eq:qV}, and the rolling variant substitutes the trailing window of size $w$ for $\mathcal D_n$ and $k = \lceil (w+1)(1-\alpha)\rceil$. Six auxiliary artefacts computed the shift as $Q_{k/n}$, the empirical quantile at that level rather than the order statistic itself; the two differ by a median $\nSeqLevelGapMedian$ here and change the violation count of \nSeqLevelChanged{} of the \nSeqPairs{} pairs. The shift is now defined once in code, and an audit enumerates every \nQVSites{} sites in the repository that take a quantile of nonconformity scores, failing the build when an undeclared convention appears (\texttt{analysis/provenance/SPLIT\_SITES.tsv}). A further property of equation~\eqref{eq:qV} is worth stating where the reader meets it rather than where it bites: $k > n-1$ whenever $n < 2/\alpha - 1$, so at $\alpha = 0.01$ the shift is the \emph{sample maximum} for every calibration sample of 198 observations or fewer. A short calibration window therefore does not give a noisy estimate of the conformal quantile; it gives an extreme-value statistic with no stable variance. The bound is $n \le 198$ at $\alpha = 0.01$ and $n \le 78,\,38,\,18$ at $\alpha = 0.025,\,0.05,\,0.10$. The consequence for window choice is measured in Section~\ref{sec:cost}: the three trailing windows a reader would naturally compare at $\alpha = 0.01$, $w \in \{125, 250, 500\}$, are not three points on a variance curve, because $k/w$ depends on $w$ and the three therefore target different effective levels --- $\nWSweepShortLevel$, $\nWSweepMidLevel$ and $\nWSweepLongLevel$ against a nominal $0.99$ --- with $w = 125$ the extreme case at which the shift \emph{is} the window maximum. The recalibrated lower quantile and VaR are then given by equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$. A positive $\qVstat$ shifts the predicted quantile downward, increasing reported VaR and correcting underestimation of tail risk; a negative value indicates over-conservatism.
+with $\qVstat = S_{(n)}$ when $k > n$, which occurs only for $\alpha < 1/(n+1)$.
+This is the conformal convention rather than the plain empirical quantile
+$Q_{1-\alpha}(\{S_t\})$, and the distinction is not cosmetic: the two differ by
+one order statistic, an $O(1/n)$ gap that can change the sign of $\qVstat$ on
+assets whose calibration scores straddle zero near the $(1-\alpha)$ level. Every
+result entering a headline table uses equation~\eqref{eq:qV}, and the rolling
+variant substitutes the trailing window of size $w$ with
+$k = \lceil (w+1)(1-\alpha)\rceil$. Six auxiliary artefacts computed the shift as
+$Q_{k/n}$ instead; the two differ by a median $\nSeqLevelGapMedian$ here and
+change the violation count of \nSeqLevelChanged{} of the \nSeqPairs{} pairs. The
+shift is now defined once in code, and an audit enumerates the \nQVSites{} sites
+in the repository that take a quantile of nonconformity scores, failing the build
+when an undeclared convention appears
+(\texttt{analysis/provenance/QV\_CONVENTION\_SITES.tsv}). The consequence for
+window choice is measured in Section~\ref{sec:cost}: at $\alpha = 0.01$ the
+windows $w \in \{125, 250, 500\}$ target effective levels $\nWSweepShortLevel$,
+$\nWSweepMidLevel$ and $\nWSweepLongLevel$ against a nominal $0.99$, so they are
+not three points on one variance curve. The recalibrated lower quantile and VaR
+follow from equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$:
+a positive $\qVstat$ shifts the predicted quantile downward, increasing reported
+VaR and correcting underestimation of tail risk, and a negative value indicates
+over-conservatism.
 
 The same failure has now occurred to a second convention in this section, and
 the pair is more informative than either instance. The calibration split is
@@ -588,9 +594,17 @@ output rather than a reading of the repository.
 	on the Monte Carlo at $n_{\mathrm{cal}} = \nSupNCal$.
 \end{remark}
 
-The construction makes no parametric assumption on returns; the coverage guarantee under temporal dependence is developed in Section~\ref{sec:validity}.
+The construction makes no parametric assumption on returns; coverage under
+temporal dependence is developed in Section~\ref{sec:validity}.
 
-The one-sided design is dictated by the regulatory loss function, not by a symmetry consideration. Basel III/FRTB capital and the Yellow/Red zone triggers are functions of loss-side exceedances alone (Section~\ref{sec:economic}): a day on which the realised return falls below the reported VaR is counted, a day on which it comfortably exceeds it is not. A correction applied to the upper tail would therefore alter no capital charge and no zone assignment, while widening the reported interval and degrading sharpness. We accordingly shift only $\hat q_t^{lo}$ and leave the remainder of the predictive distribution untouched; two-sided and distributional alternatives are evaluated in Section~\ref{sec:baselines}. Operational safeguards, including the non-negativity constraint $\qVstat \geq 0$, are discussed in Section~\ref{sec:failure}.
+The one-sided design follows the regulatory loss function rather than a
+symmetry consideration. Basel III/FRTB capital and the zone triggers are
+functions of loss-side exceedances alone (Section~\ref{sec:economic}), so a
+correction applied to the upper tail would alter no capital charge and no zone
+assignment while widening the interval and degrading sharpness. We accordingly
+shift only $\hat q_t^{lo}$; two-sided and distributional alternatives are
+evaluated in Section~\ref{sec:baselines}, and operational safeguards, including
+the constraint $\qVstat \geq 0$, in Section~\ref{sec:failure}.
 
 \begin{remark}[Variance scaling under tail sparsity, in the forecaster and in the correction]
 	\label{rem:tail_sparsity}
