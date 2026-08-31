@@ -1694,8 +1694,13 @@ The verification apparatus was itself the more frequent site of defect. Of the \
 	We acknowledge the support of the project ``MA'AT -- Autonomous
 	Model for Textual Assistance'', SMIS Code 2021+: 330941, funding contract no.\ 390090/11.11.2025, project co-financed by the European Regional Development Fund through the Smart Growth, Digitalisation and Financial Instruments Programme 2021--2027 (POCIDIF).
 
-	\paragraph*{Declaration of generative AI use}
-	The authors used Claude (Anthropic), ChatGPT (OpenAI), and Gemini (Google) for language editing and code review during manuscript preparation. All scientific content, analysis, and conclusions are the authors' own.
+	\paragraph*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
+	During the preparation of this work the authors used Claude (Anthropic), ChatGPT (OpenAI) and Gemini (Google) in order to draft and revise manuscript text, edit language, and review code. After using these tools the authors reviewed and edited the content as needed and take full responsibility for the content of the published article.
+
+	\paragraph*{Use of AI-assisted tools in the research process}
+	Elsevier's policy asks that AI used in research design, code development or data analysis be described with the methodology rather than in the declaration above, and in this study that use was substantial. Large language models were used to write and revise analysis code, to construct the verification apparatus described in Section~\ref{sec:harness_limits}, and to draft text that the authors then checked and edited. They were not used to generate data, to choose specifications after seeing results, or to produce any number reported here: every figure in the manuscript is emitted from the artefacts by \texttt{scripts/paper\_numbers.py} and the build fails when a printed value and a recomputed value disagree.
+
+	The working practice is part of the replication material rather than a claim about it. Individual commits in the repository record where a model contributed, each check carries a negative control that must be seen to fail before the check may report anything, and \texttt{analysis/provenance/PROTOCOL.md} records the rules the project worked under together with the defects the protocol caught --- including those it caught in itself. The authors are accountable for the design, the specifications, the interpretation and the conclusions.
 
 % Long DOIs and URLs in the reference list overrun the measure otherwise.
 \sloppy\emergencystretch=3em
