@@ -76,13 +76,48 @@ not invented the papers.
 | 2602.03903 | Schmitt, 2026-02-03 | Already cited as `tamingtailrisk2026`. Sequential one-sided VaR calibration; coverage bounds for data-driven weights under regime drift. |
 | 2507.05470 | Aich, Aich & Jain, 2025-07-07 | *Temporal Conformal Prediction.* Rolling split-conformal calibration benchmarked against GARCH, Historical Simulation, QR and ACI on S&P 500, Bitcoin and Gold. |
 
-**This narrows the one-sided wedge further than stated above.** The section
-"What none of them do" was written against the four papers the research pass
-verified, and it holds for those four. It does not hold against Cuonzo & Deliu,
-who construct one-sided split-conformal intervals with tail-specific coverage and
-carry the non-exchangeable case explicitly. Read from the abstract only; the
-overlap with Theorem 4.5 needs reading the paper before anything is written on
-it.
+### Both read in full, 2026-08-31. Neither preempts the theory.
+
+**Zhong (2603.22569), 44 pages.** A proxy-reliance parameter that interpolates
+between a constant shift and a fully volatility-proxy-scaled shift in one-sided
+VaR recalibration, with a six-ETF panel and VIX-linked state variables. Full-text
+counts: `mixing` 0, `split conformal` 0, `coverage guarantee` 0, `order
+statistic` 0, `exchangeab` 1, `traffic light` 0. Its Proposition 4.1 is an
+elasticity-and-invariance result about how the adjustment responds to proxy
+rescaling — a design-sensitivity statement, not a coverage bound. The 47 `Basel`
+hits are references to the Committee's documents, not a traffic-light analysis.
+
+*Verdict: closely related work, must be cited, preempts nothing.* It is in fact
+the natural citation for why this paper uses a constant shift: Zhong studies
+precisely the constant-versus-scaled choice and finds the constant end
+competitive in stressed states.
+
+**Cuonzo & Deliu (2606.18199), 52 pages.** One-sided split-conformal intervals
+with separately calibrated tail coverage, plus their intersection. Their
+exchangeable result (Propositions 1 and 5) is finite-sample and, in their own
+words, "follows verbatim the theorems in Lei et al. (2018)". Their
+non-exchangeable results are Proposition 2 and Theorem 4.2 "under the same
+conditions as Gibbs & Candes (2021)" and Proposition 3 under DtACI, all of the
+form
+
+> |(1/N) Σ err_i − α| ≤ (max{α_1, 1−α_1} + γ) / (Nγ)
+
+which is a **time-averaged empirical miscoverage** bound over an online horizon,
+not marginal coverage at a designated test point. The two `mixing` hits refer to
+the DtACI algorithm's own mixing sequences, not to a mixing condition on the
+data. GARCH(1,1)-t appears as the benchmark forecaster in their stock
+application, not as a data-generating process carrying a mixing rate. `Basel`: 0.
+
+*Verdict: closely related work, must be cited, preempts nothing here.* Their
+non-exchangeable case is the ACI family, which finding [5] of the research pass
+already established does not preempt marginal coverage under β-mixing.
+
+**Correction to the warning written above.** Read from the abstract, "guarantees
+are asymptotic" in the non-exchangeable setting looked like it could overlap
+Theorem 4.5. It does not. What these two papers do narrow is a different and
+weaker claim — that nobody has applied one-sided conformal calibration to VaR.
+Two people have, in 2026, and both must be cited. The coverage theorem's
+positioning is unaffected, because it is already attributed to Oliveira et al.
 
 ## Not citable
 
