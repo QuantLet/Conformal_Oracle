@@ -181,16 +181,6 @@ measured through a sign, and Section~\ref{sec:recal} therefore prices the
 indication rule in the quantile score and keeps the zone count as the
 administrative figure a supervisor reads.
 
-Three features of Proposition~\ref{prop:traffic_limit} distinguish it from the
-identification result of Section~\ref{sec:blindspot}. It requires no construction,
-no restriction on the return law and no matched alternative --- only consistency
-of a sample frequency. It does not shrink with evidence: the interval in
-Corollary~\ref{cor:traffic_interval} is the same at every sample size, and what
-grows with $T$ is the confidence with which a series inside it is passed. And it
-applies even where the identification constraint does not bind, since it concerns
-what the classification retains from the exceedance path rather than what that
-path can distinguish.
-
 Table~\ref{tab:mc_grid} is the finite-sample version. The green share equals the
 share of replications with $\hat\pi\le\tau$ in all 25 cells exactly, and tracks
 the normal approximation
@@ -219,14 +209,4 @@ claims to be --- the two coincide only when the miscoverage is large enough to
 cross the boundary. Waiting for more data does not close that gap; it widens the
 share of replications in which the gap is invisible.
 
-\subsection{What the harness can and cannot see}
-\label{sec:mc_harness}
-
-The design was gated on reproducing an existing two-sample-size study before any
-new sample size was reported. It does, on all ten cells and all six reported
-quantities, at a tolerance of three standard errors of the difference between two
-independent Monte Carlo estimates. Two defects surfaced in the course of that
-gate, both in the harness rather than in what it was measuring: a tolerance
-computed as if the replication distribution of a $1\%$ order statistic were
-normal, and a seed reused across processes. Both are stated in full, with what
-the corrected gate still cannot see, in \texttt{Quantlets/CO\_simulation\_study/run\_simulation\_study.py}.
+\medskip\noindent The harness has a gate of its own, and what that gate cannot see is recorded with the simulation code in \texttt{Quantlets/CO\_simulation\_study/run\_simulation\_study.py}.

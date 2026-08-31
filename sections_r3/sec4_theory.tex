@@ -329,93 +329,16 @@ estimator can read the difference off the figures above. What the theorem does
 not cover at all is the rolling variant, for the separate reason given in
 Section~\ref{sec:theory_rolling}.
 
-\subsection{The rolling estimator: two bounds, and what they cover}
+\subsection{The rolling estimator}
 \label{sec:theory_rolling}
 
-The rolling variant of equation~\eqref{eq:qV_roll} recomputes the shift from a
-trailing window, which violates the single-split assumption
-Theorem~\ref{thm:dependent_conformal_var} rests on. Two results bound related
-objects. Neither covers the uniform-weight trailing-window quantile exactly, and
-the scope of each is stated with it.
-
-\begin{proposition}[Time-average coverage of the online quantile update]
-	\label{prop:ogd_regret}
-	Let $q_1\in[-R,R]$ evolve by
-	\begin{equation}
-		\label{eq:ogd_update}
-		q_{t+1} = q_t + \eta\left[\mathbf 1\{s_t>q_t\}-\alpha\right],
-	\end{equation}
-	with step size $\eta>0$ and scores satisfying $|s_t|\le R$. Then
-	\begin{equation}
-		\label{eq:ogd_bound}
-		\left|\frac1T\sum_{t=1}^{T}\mathbf 1\{s_t>q_t\}-\alpha\right|
-		\;\le\;
-		\frac{2R+\eta}{\eta T},
-	\end{equation}
-	and with $\eta = R/\sqrt T$ the right-hand side is at most $3/\sqrt T$.
-\end{proposition}
-
-The bound is deterministic. It holds for every score sequence, with no
-probabilistic assumption whatsoever, and the proof in \texttt{PROOFS.tex} needs only
-two observations: the iterates cannot leave a bounded interval, because the
-update reverses sign as soon as they try; and the recursion telescopes exactly.
-The usual route to a statement of this kind invokes the online-convex-optimisation
-regret guarantee of \citet{zinkevich2003online} and converts average regret on
-the pinball loss into average miscoverage, a conversion that requires a local
-Lipschitz argument in the indicator parametrisation and does not follow from the
-regret bound alone.
-
-Three limitations bound its reach. It controls the time average of the coverage
-indicator, not conditional coverage and not coverage over any subwindow: a
-sequence can satisfy~\eqref{eq:ogd_bound} while violating badly in one regime and
-over-covering in another. It requires bounded scores. And it is a statement about
-the online update~\eqref{eq:ogd_update}, whereas the estimator run here is a
-trailing-window empirical quantile. In stationary regimes the two target the same
-population quantile; under drift the window trades bias for variance near
-transitions.
-
-\begin{proposition}[Finite-window coverage under drift]
-	\label{prop:rolling_drift}
-	Let $\qVroll$ be the trailing-window shift of
-	equation~\eqref{eq:qV_roll} over a window of size $w$, and let
-	\begin{equation}
-		\label{eq:drift_measure}
-		\delta_w(t) = \max_{\tau\in[t-w,\,t-1]}
-		d_{\mathrm{TV}}\!\left(\mathcal L(S_\tau),\mathcal L(S_t)\right).
-	\end{equation}
-	Under local stationarity conditions analogous to
-	Assumption~\ref{ass:main},
-	\begin{equation}
-		\label{eq:rolling_bound}
-		\P\!\left(r_t\ge\hat q_t^{lo}-\qVroll\right)
-		\;\ge\;
-		1-\alpha-\delta_w(t)-\Delta_w,
-		\qquad
-		\Delta_w\le C\sqrt{\frac{\log w}{w}}.
-	\end{equation}
-\end{proposition}
-
-The bound separates distributional drift, in $\delta_w(t)$, from finite-sample
-estimation error under dependence, in $\Delta_w$. Its conclusion holds under the
-total-variation drift measure~\eqref{eq:drift_measure}, but that measure is not
-estimable from a single path without further assumptions, and the constant it
-produces is too loose to be informative at $\alpha = 0.01$. It is retained
-because it makes precise \emph{which} quantity has to be small for a trailing
-window to work, and $\delta_w(t)$ is used operationally as a monitoring
-diagnostic rather than as a certified bound. The empirical proxy
-$\hat\delta_w(t)$, the total variation distance between the first and second
-halves of the window over $\sqrt w$ bins, is defined in \texttt{PROOFS.tex} and
-plotted for Lag-Llama on the S\&P~500 in Supplement Figure~S.2; it flags the
-global financial crisis, the COVID-19 shock and the March 2023 banking episode.
-
-\begin{remark}[What the rolling estimator is entitled to claim]
-	\label{rem:rolling_status}
-	The formal conformal guarantee, Theorem~\ref{thm:dependent_conformal_var},
-	covers the single-split estimator. The rolling estimator is a locally
-	adaptive engineering variant whose validity is assessed empirically, and
-	supported by the time-average bound of Proposition~\ref{prop:ogd_regret} and
-	the drift bound of Proposition~\ref{prop:rolling_drift} --- neither of which
-	is the estimator itself. It is described as a heuristic wherever it appears,
-	and the empirical comparison against the static variant is in
-	Section~\ref{sec:recal} and \texttt{scripts/regenerate\_rolling\_vs\_static.py}.
-\end{remark}
+The rolling variant recomputes the shift from a trailing window, which violates
+the single-split assumption Theorem~\ref{thm:dependent_conformal_var} rests on.
+Two results bound related objects: a deterministic regret bound for an online
+quantile update, which holds pathwise and assumes nothing about the data, and a
+finite-window coverage bound under distributional drift. Neither covers the
+uniform-weight trailing-window quantile exactly, and both are stated and proved
+in \texttt{PROOFS.tex} in the replication repository rather than here, because
+they describe estimators adjacent to the one this paper runs. The empirical
+rolling results below are reported as measurements, not as consequences of a
+theorem.

@@ -1498,59 +1498,23 @@ Section~\ref{sec:gate} is nine checks exercised and one that was not.
 \label{sec:harness_limits}
 
 The estimator this paper offers as a remedy carried a defect of the kind the
-paper is about. The analytic Chronos quantiles paired each bin's probability with
-the next bin up, a uniform one-bin translation of the support, and the validation
-that accompanied them could not have seen it: a translation leaves the predictive
-standard deviation exactly invariant, and the violation rates were compared on
-\nLitAnalyticDates{} dates where the rate moves in steps of \nLitAnalyticGrid.
-It was found by rebuilding the estimator from its own description rather than by
-re-running it, and the corrected figures are throughout.
+paper is about. The analytic Chronos quantiles paired each bin's probability
+with the next bin up, a uniform one-bin translation of the support, and the
+validation that accompanied them could not have seen it: a translation leaves
+the predictive standard deviation exactly invariant, and the violation rates
+were compared on \nLitAnalyticDates{} dates where the rate moves in steps of
+\nLitAnalyticGrid. It was found by rebuilding the estimator from its own
+description rather than by re-running it, and the corrected figures are
+throughout.
 
-Further defects sat in the verification apparatus itself, and were found the
-same way. What follows is a count, and a count exists only where something
-counts: a project that does not look finds none, and reports none. The number
-below is therefore not a measure of how defective this work is relative to work
-that reports nothing --- there is no such comparison available --- but a
-description of what a protocol of this kind turns up when it is run against its
-own output.
-
- Of the defects this project's computation protocol records --- counting those
-that reached a stored artefact or a claim in this manuscript, and not mistakes
-caught while writing ---
-\nHarnessDefectsInstrument{} of \nHarnessDefectsTotal{} were in a check and
-\nHarnessDefectsObject{} in the quantity being checked. That ratio is not an
-aside. A validation instrument is an estimator like any other, it fails in the
-same way a coverage test does --- by returning a pass that is an absence of
-evidence --- and it fails more often than the objects it validates. This is the
-paper's own argument measured on the paper: it is why a coverage test cannot
-carry the validation of a forecast series by itself, and why each check in the
-replication material carries a negative control that must be seen to fail before
-the check may report anything.
-
-Most of those \nHarnessDefectsInstrument{} failed the same way, and it is not
-the way a reader would expect. None had defective logic, a loose tolerance or a
-control that did not fire. Each was correct about what it examined and examined
-less than the object: the literal check read two of the four files the
-manuscript is assembled from, so the section carrying the central result had
-never been read by it at all, and a superseded persistence figure survived there
-through four rounds in which the same figure was corrected everywhere else. That
-is the failure this paper reports in its own gate, where tail reach returns
-\emph{inapplicable} on all \nGateSeries{} series and the block count is nine
-checks exercised and one that was not. A wrong threshold announces itself the
-first time it fires. A wrong scope never fires, and its silence cannot be told
-from a pass.
-
-One finding ran the other way, and it is the reason verification is worth the
-cost rather than a tax on it. The effective-level overshoot of
-Remark~\ref{rem:effective_level} was not derived and then confirmed. It appeared
-twice, from opposite directions --- once in a Monte Carlo control written to
-check that a harness returned zero on a correctly specified forecaster, where it
-did not, and once in a window sweep run to answer a referee's request for a
-variance curve, where the curve turned out not to exist. Neither exercise was
-looking for it. The overshoot is a property of equation~\eqref{eq:qV} that was
-visible in the algebra all along and was noticed only when two unrelated checks
-returned the same anomaly, which is verification producing a result rather than
-repairing one.
+Defects in the verification apparatus itself outnumbered defects in the
+quantities it checked, \nHarnessDefectsInstrument{} to
+\nHarnessDefectsObject{} of \nHarnessDefectsTotal. A validation instrument is
+an estimator like any other and fails in the same way a coverage test does, by
+returning a pass that is an absence of evidence, which is why every check in
+the replication material carries a negative control that must be seen to fail
+before the check may report anything. The census, the counting criterion and
+each defect are recorded in \texttt{analysis/provenance/PROTOCOL.md}.
 
 \section{Conclusion}
 \label{sec:conclude}
