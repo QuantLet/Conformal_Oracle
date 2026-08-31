@@ -801,6 +801,43 @@ score-persistence range $\hat\rho \in [\nGapAblRhoLo, \nGapAblRhoHi]$.
 	\label{fig:drift_diagnostic}
 \end{figure}
 
+\subsection{Two convention registries}
+\label{app:convention_registries}
+
+Two of this paper's definitions were stated in prose and taken to bind code that
+had never been checked against them. The estimator convention is
+equation~(8). \nQVSites{} sites in the repository take a quantile of
+nonconformity scores: \nQVOrderStat{} take the order statistic equation~(8)
+specifies, \nQVCanonical{} are the definition itself --- the single function and the two
+helpers that reproduce it --- \nQVLevelKN{} took the empirical quantile at level $k/n$ --- which
+interpolates above that order statistic --- \nQVPlain{} took $Q_{1-\alpha}$,
+and the remaining \nQVNotShift{} compute a quantile that is not the conformal
+shift at all, the adaptive and bootstrap baselines among them. The split convention is
+the chronological division of Section~3.2. \nSplitSites{} sites take such a
+split: \nSplitContiguous{} leave no separation between the calibration and test
+blocks, \nSplitGapped{} impose the gap of Corollary~4.6,
+\nSplitMeasurement{} compute both arms in order to compare them, and
+\nSplitNotPanel{} split simulated or resampled data rather than a forecast
+series, where the separation condition does not apply.
+
+Each registry is a tab-separated file --- \texttt{QV\_CONVENTION\_SITES.tsv} and
+\texttt{SPLIT\_SITES.tsv} under \texttt{analysis/provenance/} --- in which every
+site carries its convention and a note. The corresponding audits,
+\texttt{scripts/audit\_qv\_convention.py} and
+\texttt{scripts/audit\_split\_convention.py}, enumerate the sites from the source
+and fail the build on any that the registry does not declare, on any declaration
+whose site no longer exists, and on any convention outside the permitted set.
+Each runs a negative control first: a site planted with an undeclared
+convention must be flagged, and the audit reports nothing if that control does
+not fire. The counts above are those audits' output. Entries are keyed on file
+and code rather than on line number, so an edit that moves a site does not fail
+the build spuriously; the cost is that two identical split lines in one file
+share one declaration, which reduces \nSplitSites{} sites to \nSplitKeys{} keys.
+
+The registries record the state of the repository, not a claim about the
+results. The panel the tables report is computed on the contiguous split, and
+Section~4.4 measures what imposing the gap would change.
+
 %============================================================
 
 

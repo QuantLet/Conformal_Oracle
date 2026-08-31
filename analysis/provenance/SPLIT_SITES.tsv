@@ -1,0 +1,62 @@
+# Every chronological calibration/test split, with what it does
+# about the separation gap of Corollary 4.6. Emitted by
+# scripts/audit_split_convention.py --emit; the conventions are
+# then set by hand and the audit fails the build on an
+# undeclared site. See analysis/convention/GAP_SWITCH_SCOPE.md.
+file	code	convention	line	note
+scripts/baseline_aci.py	n_cal = int(T * F_CAL)	CONTIGUOUS	165	the protocol as reported; migrates if the panel switches
+scripts/baseline_gbm_qr.py	n_cal = int(T * F_CAL)	CONTIGUOUS	148	the protocol as reported; migrates if the panel switches
+scripts/baselines_evt_fhs.py	n_cal = int(N * F_CAL)	CONTIGUOUS	90	the protocol as reported; migrates if the panel switches
+scripts/build_dq_panel.py	n_cal = int(n * F_CAL)	CONTIGUOUS	74	the protocol as reported; migrates if the panel switches
+scripts/build_qs_sequences.py	n_cal = int(n * F_CAL)	CONTIGUOUS	93	the protocol as reported; migrates if the panel switches
+scripts/capital_charge_comparison.py	n_cal = int(N * F_CAL)	CONTIGUOUS	64	the protocol as reported; migrates if the panel switches
+scripts/fz_scores.py	n_cal = int(T * f_cal)	CONTIGUOUS	85	the protocol as reported; migrates if the panel switches
+scripts/fz_scores.py	n_cal = int(T * F_CAL)	CONTIGUOUS	157	the protocol as reported; migrates if the panel switches
+scripts/gap_ablation.py	n_cal = int(fc * n)	MEASUREMENT	63	computes the contiguous and gapped arms on purpose, to compare them
+scripts/qV_block_bootstrap.py	n_cal = int(F_C * n)	NOT_A_PANEL	76	splits simulated or resampled data, not a forecast series; the theorem's separation does not apply
+scripts/r4_rolling_and_frontier.py	n_cal = int(T * F_CAL)	CONTIGUOUS	111	the protocol as reported; migrates if the panel switches
+scripts/regenerate_rolling_vs_static.py	n_cal = int(n * f_cal)	CONTIGUOUS	87	the protocol as reported; migrates if the panel switches
+scripts/regenerate_rolling_vs_static.py	n_cal = int(n * f_cal)	CONTIGUOUS	129	the protocol as reported; migrates if the panel switches
+scripts/table_c1_es_correction.py	n_cal = int(N * F_CAL)	CONTIGUOUS	199	the protocol as reported; migrates if the panel switches
+scripts/tail_completion_robustness.py	n_cal = int(F_C * n)	CONTIGUOUS	81	the protocol as reported; migrates if the panel switches
+Quantlets/CFP_Capital_Charge/CFP_Capital_Charge.py	n_cal = int(N * F_CAL)	CONTIGUOUS	64	the protocol as reported; migrates if the panel switches
+Quantlets/CFP_ES_Correction_Z2/CFP_ES_Correction_Z2.py	n_cal = int(N * F_CAL)	CONTIGUOUS	207	the protocol as reported; migrates if the panel switches
+Quantlets/CO_aci_baseline/run_aci_baseline.py	n_cal = int(n * F_CAL)	CONTIGUOUS	128	the protocol as reported; migrates if the panel switches
+Quantlets/CO_aci_baseline/run_aci_baseline.py	n_cal = int(n * F_CAL)	CONTIGUOUS	328	the protocol as reported; migrates if the panel switches
+Quantlets/CO_baseline_comparison/compile_tab_baselines.py	n_cal = int(n * F_CAL)	CONTIGUOUS	218	the protocol as reported; migrates if the panel switches
+Quantlets/CO_baseline_comparison_tuned/run_tuned_gbm_qr.py	n_cal = int(T * F_CAL)	CONTIGUOUS	120	the protocol as reported; migrates if the panel switches
+Quantlets/CO_baselines_evt_fhs/run_baselines_evt_fhs.py	n_cal = int(N * F_CAL)	CONTIGUOUS	91	the protocol as reported; migrates if the panel switches
+Quantlets/CO_bound_validation/run_bound_validation.py	n_cal = int(n * F_CAL)	CONTIGUOUS	67	the protocol as reported; migrates if the panel switches
+Quantlets/CO_diagnostic_scale/run_diagnostic_scale.py	n_cal = int(len(r) * F_CAL)	CONTIGUOUS	121	the protocol as reported; migrates if the panel switches
+Quantlets/CO_full_evaluation/run_full_evaluation.py	n_cal = int(n * f_cal)	GAPPED	122	imposes separation_gap on the pair's own rho-hat
+Quantlets/CO_full_evaluation/run_full_evaluation.py	n_cal = int(len(r) * f_cal)	GAPPED	179	imposes separation_gap on the pair's own rho-hat
+Quantlets/CO_fz_scores/run_fz_scores.py	n_cal = int(T * F_CAL)	CONTIGUOUS	74	the protocol as reported; migrates if the panel switches
+Quantlets/CO_fz_scores/run_fz_scores.py	n_cal = int(T * F_CAL)	CONTIGUOUS	114	the protocol as reported; migrates if the panel switches
+Quantlets/CO_gamlss/baseline_gamlss.py	n_cal = int(T * F_CAL)	CONTIGUOUS	158	the protocol as reported; migrates if the panel switches
+Quantlets/CO_garch_conformal/run_conformal_garch_ewma.py	n_cal = int(T * f_cal)	CONTIGUOUS	140	the protocol as reported; migrates if the panel switches
+Quantlets/CO_gbm_qr/baseline_gbm_qr.py	n_cal = int(T * F_CAL)	CONTIGUOUS	155	the protocol as reported; migrates if the panel switches
+Quantlets/CO_identification/run_identification.py	n_cal = int(T * f_cal)	CONTIGUOUS	159	the protocol as reported; migrates if the panel switches
+Quantlets/CO_marginal_vs_conditional/run_marginal_vs_conditional.py	n_cal = int(n * f_cal)	CONTIGUOUS	75	the protocol as reported; migrates if the panel switches
+Quantlets/CO_multi_quantile_panel/compute_panel_pooled.py	n_cal = int(row['n_cal'])	CONTIGUOUS	75	the protocol as reported; migrates if the panel switches
+Quantlets/CO_regime_sensitivity/run_regime_sensitivity.py	n_cal = int(n * F_CAL)	CONTIGUOUS	211	the protocol as reported; migrates if the panel switches
+Quantlets/CO_robustness/run_robustness_mc.py	n_cal = int(len(valid) * fc)	NOT_A_PANEL	119	splits simulated or resampled data, not a forecast series; the theorem's separation does not apply
+Quantlets/CO_robustness/run_robustness_summary.py	n_cal = int(n * 0.70)	CONTIGUOUS	111	the protocol as reported; migrates if the panel switches
+Quantlets/CO_robustness/run_robustness_summary.py	n_cal = int(n * fc)	CONTIGUOUS	162	the protocol as reported; migrates if the panel switches
+Quantlets/CO_robustness/run_robustness_summary.py	n_cal = int(n * 0.70)	CONTIGUOUS	202	the protocol as reported; migrates if the panel switches
+Quantlets/CO_robustness_inner7/run_inner7_tail_closure.py	n_cal = int(F_C * n)	CONTIGUOUS	88	the protocol as reported; migrates if the panel switches
+Quantlets/CO_simulation_study/run_simulation_study.py	n_cal = int(T * f_cal)	NOT_A_PANEL	145	splits simulated or resampled data, not a forecast series; the theorem's separation does not apply
+python/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	142	the protocol as reported; migrates if the panel switches
+python/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	227	the protocol as reported; migrates if the panel switches
+analysis/ae_point4/run_ae_point4.py	n_cal = int(n * F_CAL)	CONTIGUOUS	145	the protocol as reported; migrates if the panel switches
+analysis/cc_column/verify_cc_conventions.py	n_cal = int(n * F_CAL)	CONTIGUOUS	109	the protocol as reported; migrates if the panel switches
+analysis/convention/measure_gap_ablation.py	n = len(s); n_cal = int(FC*n)	MEASUREMENT	42	computes the contiguous and gapped arms on purpose, to compare them
+analysis/convention/measure_gap_on_pipeline.py	n_cal = int(len(r) * rfe.F_CAL)	MEASUREMENT	24	computes the contiguous and gapped arms on purpose, to compare them
+analysis/convention/run_gap_panel.py	n_cal = int(FC * n)	MEASUREMENT	49	computes the contiguous and gapped arms on purpose, to compare them
+analysis/duration_tests/run_duration_tests.py	n_cal = int(n * F_CAL)	CONTIGUOUS	152	the protocol as reported; migrates if the panel switches
+analysis/moirai11_reconciliation/rebuild_moirai11.py	n_cal = int(n * F_CAL) # house convention: floor	CONTIGUOUS	99	the protocol as reported; migrates if the panel switches
+analysis/phase3_dynamic/run_dynamic_var.py	n_cal = int(n * F_CAL)	CONTIGUOUS	196	the protocol as reported; migrates if the panel switches
+analysis/phase3_dynamic/verify_caviar.py	n_cal = int(n * F_CAL)	CONTIGUOUS	135	the protocol as reported; migrates if the panel switches
+analysis/phase3_windows/run_window_sensitivity.py	n_cal = int(n * F_CAL)	CONTIGUOUS	109	the protocol as reported; migrates if the panel switches
+analysis/umcb/run_umcb.py	n_cal = int(n * F_CAL)	CONTIGUOUS	176	the protocol as reported; migrates if the panel switches
+conformal-oracle/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	137	the protocol as reported; migrates if the panel switches
+analysis/convention/measure_rho_census.py	n_cal = int(len(r) * rfe.F_CAL)	MEASUREMENT	56	census of rho-hat on the calibration block; computes no backtest and reports no coverage

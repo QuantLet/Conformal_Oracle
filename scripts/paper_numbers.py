@@ -1216,6 +1216,56 @@ def collect() -> dict:
     n["SupRvolShortPeak"] = float(_short.max())
     n["SupRvolShortPeakYear"] = int(_short.idxmax().year)
 
+    # Two convention registries, each an audit's verified output rather than a
+    # hand count. The paper states the class these belong to, so the class's
+    # size has to come from the registries themselves.
+    def _registry(name, col="convention"):
+        # Not pd.read_csv(comment="#"): a "#" inside a code cell would truncate
+        # that row and silently drop its convention. Header comments are
+        # stripped by line instead.
+        import io
+        raw = (BASE / "analysis" / "provenance" / name).read_text()
+        body = "\n".join(l for l in raw.splitlines() if not l.startswith("#"))
+        d = pd.read_csv(io.StringIO(body), sep="\t")
+        if d[col].isna().any():
+            raise SystemExit(f"{name}: {int(d[col].isna().sum())} row(s) with no "
+                             f"{col}; the registry is malformed")
+        return d, d[col].value_counts().to_dict()
+
+    _qv, _qvc = _registry("QV_CONVENTION_SITES.tsv")
+    n["QVSites"] = int(len(_qv))
+    n["QVOrderStat"] = int(_qvc.get("ORDER_STATISTIC", 0))
+    n["QVLevelKN"] = int(_qvc.get("LEVEL_K_OVER_N", 0))
+    n["QVCanonical"] = int(_qvc.get("CANONICAL", 0))
+    n["QVPlain"] = int(_qvc.get("PLAIN_QUANTILE", 0))
+    n["QVNotShift"] = int(_qvc.get("NOT_THE_SHIFT", 0))
+    _sp, _spc = _registry("SPLIT_SITES.tsv")
+    n["SplitSites"] = int(len(_sp))
+    n["SplitContiguous"] = int(_spc.get("CONTIGUOUS", 0))
+    n["SplitGapped"] = int(_spc.get("GAPPED", 0))
+    n["SplitKeys"] = int(len(_sp.drop_duplicates(subset=["file", "code"])))
+    n["SplitMeasurement"] = int(_spc.get("MEASUREMENT", 0))
+    n["SplitNotPanel"] = int(_spc.get("NOT_A_PANEL", 0))
+    for _fam, _tot, _parts in (
+            ("QV", n["QVSites"], ["QVOrderStat", "QVLevelKN", "QVCanonical",
+                                 "QVPlain", "QVNotShift"]),
+            ("Split", n["SplitSites"], ["SplitContiguous", "SplitGapped",
+                                        "SplitMeasurement", "SplitNotPanel"])):
+        if sum(n[k] for k in _parts) != _tot:
+            raise SystemExit(f"{_fam} registry parts do not sum to {_tot}; "
+                             "the supplement partitions them and would be wrong")
+
+    # Where Corollary 4.6's constant is undefined, and on which series.
+    # Pre-registered in analysis/convention/PREREG_RHO_CENSUS.md.
+    _rc = pd.read_csv(BASE / "analysis" / "convention" / "rho_census.csv")
+    n["RhoCells"] = int(len(_rc))
+    n["RhoFallback"] = int(_rc["fallback"].sum())
+    n["RhoFallbackTrunc"] = int((_rc["fallback"] & _rc["truncated"]).sum())
+    n["RhoTruncCells"] = int(_rc["truncated"].sum())
+    n["RhoMedTrunc"] = float(_rc.loc[_rc["truncated"], "rho"].median())
+    n["RhoMedOther"] = float(_rc.loc[~_rc["truncated"], "rho"].median())
+    n["RhoOtherCells"] = int((~_rc["truncated"]).sum())
+
     n["SpearmanRPi"] = sp.statistic
     n["SpearmanRPiN"] = len(ws)
     return n

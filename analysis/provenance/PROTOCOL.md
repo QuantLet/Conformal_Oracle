@@ -511,3 +511,24 @@ If a figure is carried forward from earlier context, mark it as such.
 `latexmk -C` destroyed the one log that would have settled how a stale-`.aux`
 build shipped with four unresolved references. Auxiliaries are evidence until the
 question they bear on is closed.
+
+## A convention is not binding until an audit enumerates its sites
+
+Two of this paper's definitions were stated in prose and taken to bind code that
+had never been checked against them: the estimator convention of equation (8),
+where six auxiliary artefacts took the empirical quantile at level k/n instead
+of the order statistic, and the chronological split, where 41 sites leave no
+separation between calibration and test. Neither was ambiguous as written.
+Both were unenforceable as written.
+
+**The rule.** A convention the paper states about its own pipeline is a claim
+about every site that implements it, and it may be asserted only when one
+function owns the definition and an audit enumerates the sites that do not call
+that function, failing the build on any it cannot match to a declaration. The
+count that reaches the text is that audit's output. A hand inventory of sites is
+the same defect one level up: an object counted outside the code that owns it.
+
+Two registries and two audits are in place --- `QV_CONVENTION_SITES.tsv` with
+`audit_qv_convention.py`, `SPLIT_SITES.tsv` with `audit_split_convention.py`.
+The split audit found 56 sites where the hand count had found 45, and caught
+`measure_rho_census.py` the same day it was written.

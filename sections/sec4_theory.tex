@@ -221,6 +221,20 @@ that the shift is computed on the same calibration sample and only the evaluatio
 window moves. It is computed on every cell of the panel and compared against the
 estimator the tables report.
 
+The constant is undefined where $\hat\rho \le 0$, and a floor of five
+observations is imposed there. That occurs on \nRhoFallback{} of the
+\nRhoCells{} cells, and \nRhoFallbackTrunc{} of those are the two truncated
+Chronos series: the median $\hat\rho$ is $\nRhoMedTrunc$ across their
+\nRhoTruncCells{} cells against $\nRhoMedOther$ across the remaining
+\nRhoOtherCells. The concentration follows from what the truncation does.
+Restricting the predictive law to its most probable atoms leaves a lower
+quantile that moves little between adjacent days while the return does not, so
+the score $\hat q^{lo}_t - r_t$ is dominated by $-r_t$ and inherits the return's
+lack of persistence. A degenerate constant is therefore the corollary reporting
+that those scores carry no dependence to separate, and the floor supplies more
+separation than the condition requires; the fallback is not concentrated where
+the gap would bind hardest but where it would bind least.
+
 Across all \nGapPanelCells{} cells the gap runs from \nGapPanelGapLo{} to
 \nGapPanelGapHi{} observations, a median of \nGapPanelGapMed{} and
 \nGapPanelGapPct\% of the test window. It moves the corrected violation rate by a

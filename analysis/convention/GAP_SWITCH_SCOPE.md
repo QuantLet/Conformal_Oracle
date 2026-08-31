@@ -42,6 +42,30 @@ everywhere it is used. That defect took a config function, a migration of every
 site, and an audit that fails the build on an undeclared one. The gap needs the
 same three things.
 
+## Where the gap is unconstrained, and why it is there
+
+45 of the 312 cells at $\alpha = 0.01$ have $\hat\rho \le 0$, so
+$c = 1/\lvert\log\hat\rho\rvert$ is undefined and a floor of five observations
+is imposed instead. **41 of those 45 are the two Chronos series sampled at the
+checkpoint default**, and that concentration is not a coincidence. Truncating a
+predictive law to its 50 most probable atoms leaves a threshold that barely
+moves from day to day while the returns do; the nonconformity scores are then
+dominated by the return and inherit its lack of persistence, so $\hat\rho$
+lands at or below zero. Median $\hat\rho$ is -0.027 across the 48 truncated
+cells against +0.326 across the other 264; measured by
+`measure_rho_census.py`, pre-registered in `PREREG_RHO_CENSUS.md`, written to
+`rho_census.csv`, and macro-backed in the paper. Concentration was claimed
+under a rule fixed before the run: ratio to panel share 5.78 against a
+threshold of 2, Fisher $p = 7.6\times10^{-37}$. The property that makes the
+corollary's gap degenerate
+on those series is the same property the paper retains them to measure.
+
+It is worth stating in the text for a second reason. A reader who sees the floor
+applied mostly to the truncated series will ask whether the gap is being avoided
+where it would bite hardest. The answer is the opposite: those are the series
+where the theorem asks for the least separation, because their scores carry the
+least dependence, and the floor gives them more than the corollary requires.
+
 ## What the repository is left in
 
 Consistent, on the contiguous split. `all_results.csv` is restored from the
