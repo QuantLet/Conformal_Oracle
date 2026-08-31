@@ -1,0 +1,78 @@
+# Priority check on Theorem 4.5 and Corollary 4.6
+
+Run 2026-08-31. Claims below were verified by downloading the primary PDFs and
+reading the theorem statements, not from search snippets or an agent's summary.
+
+## The finding
+
+**Theorem 4.5 is preceded.** Oliveira, Orenstein, Ramos & Romano, "Split
+Conformal Prediction and Non-Exchangeable Data", JMLR 25(225):1--38, 2024,
+Section 3.3 and Theorem 4. Verified verbatim from
+<https://www.jmlr.org/papers/volume25/23-1553/23-1553.pdf>:
+
+> **Theorem 4 (Marginal coverage: stationary β-mixing processes)** Suppose the
+> sample (X_i,Y_i) is stationary β-mixing. Then given α ∈ (0,1) and δ_cal > 0,
+> for i ∈ I_test, P[Y_i ∈ C_{1−α}(X_i)] ≥ 1 − α − η, with η = ε_cal + ε_train +
+> δ_cal
+
+with ε_cal at their eq. (12) carrying a `sqrt(4/(n_cal − r + 1) · log(...))`
+term plus `(r−1)/n_cal`, and ε_train a β-coefficient evaluated at a separation
+between the training block and the evaluated point. That is the shape of our
+remainder. They also name our data class explicitly:
+
+> This class of non-exchangeable data is broad enough to cover many important
+> applications, such as hidden Markov models and Markov chains as well as ARMA
+> and **GARCH** models (Carrasco and Chen, 2002; Mokkadem, 1988)
+
+**And the rate is superseded.** Barber & Pananjady, "Predictive inference for
+time series: why is split conformal effective despite temporal dependence?",
+arXiv:2510.02471, ALT 2026. Verified verbatim from
+<https://arxiv.org/pdf/2510.02471>, their own comparison paragraph:
+
+> Let us compare again with the result of Oliveira et al. (2024, Theorem 4), who
+> show that ... coverage loss for split conformal prediction on a β-mixing
+> process is bounded ... by a term of the order min_{τ,τ*}{√(τ/n)+√(τ*/n)+2β(τ)
+> +2β(τ*)}. As before, comparing with Corollary 2 above, note that our bound on
+> the coverage loss is tighter, scaling linearly in τ/n and τ*/n.
+
+Under geometric mixing with τ = c log n their remainder is O(log n / n) against
+our O(√(log n / n)).
+
+**Corollary 4.6's rate and constant are preceded.** Zheng & Proutiere,
+"Conformal Predictions under Markovian Data", ICML 2024, PMLR 235:61470--61497,
+Theorem 5.1 gives K* = O(ln n / ln(1/ρ)) under geometric ergodicity with rate ρ
+— the same rate and the same constant as g_n = ⌈c log n⌉, c = 1/|log ρ|. Not
+verified by me from the primary PDF; reported from the research pass, and to be
+checked before anything is written on it. The GARCH-to-geometric-β-mixing step
+is Carrasco & Chen, Econometric Theory 18(1):17--39, 2002 — a citation, not a
+result.
+
+## What none of them do
+
+Full-text searches of the four principal prior-art papers return zero hits for
+Value-at-Risk, Basel, one-sided, or volatility modelling. The one-sided
+regulatory specialization, the GARCH parameterization, the Basel traffic-light
+identification result of Propositions 5.1--5.3, and the empirical panel are not
+touched by this prior art.
+
+## What the manuscript currently cites
+
+`barber2023conformal`, `gibbs2021adaptive`, `zaffran2022conformal`. It does
+**not** cite Oliveira et al. (2024), Zheng & Proutiere (2024), or Barber &
+Pananjady (2026). Those three are the nearest prior art to Section 4 and their
+absence is the finding.
+
+## Not citable
+
+Four arXiv identifiers surfaced in search metadata and could not be retrieved at
+a real URL by any verifier: 2507.05470, 2602.03903, 2603.22569, 2606.18199. The
+last three have titles close enough to this manuscript's framing that they may
+be search noise or model-generated. They are recorded here as unfound leads and
+must not be cited. This repository has retracted one fabricated citation
+already.
+
+## Unanswered
+
+The research pass returned nothing verified on time-series foundation models for
+financial risk (whether anyone has documented the Chronos `top_k` truncation
+defect) and nothing on IRFA author requirements. Those two questions are open.

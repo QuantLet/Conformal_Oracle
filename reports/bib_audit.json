@@ -1,8 +1,8 @@
 {
- "bib": "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/2026 CFP LLM VaR/submission_IJF/calibrating_the_oracle.bib",
+ "bib": "/Users/danpele/dev/cfp-llm-var/submission_IJF/calibrating_the_oracle.bib",
  "tex": [
-  "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/2026 CFP LLM VaR/submission_IJF/main_R1.tex",
-  "/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/2026 CFP LLM VaR/submission_IJF/main_R1_anon.tex"
+  "/Users/danpele/dev/cfp-llm-var/submission_IJF/main_R1.tex",
+  "/Users/danpele/dev/cfp-llm-var/submission_IJF/main_R1_anon.tex"
  ],
  "n_entries": 56,
  "counts": {
@@ -511,9 +511,21 @@
    "problems": [
     "**DOI DOES NOT EXIST** \u2014 not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier."
    ],
-   "notes": [],
+   "notes": [
+    "arXiv preprint found by title: arXiv:2010.09107v15 (2020, similarity 1.0)"
+   ],
    "candidates": [],
-   "doi_exists": false
+   "doi_exists": false,
+   "arxiv_match": {
+    "title": "Conformal prediction for time series",
+    "authors": [
+     "Chen Xu",
+     "Yao Xie"
+    ],
+    "year": "2020",
+    "arxiv_id": "2010.09107v15",
+    "similarity": 1.0
+   }
   },
   {
    "key": "chernozhukov2018exact",
@@ -562,11 +574,28 @@
    "source": "crossref:10.1080/01621459.2024.2316667",
    "status": "UNRESOLVED",
    "problems": [
-    "**DOI DOES NOT EXIST** \u2014 not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier."
+    "**DOI DOES NOT EXIST** \u2014 not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier.",
+    "author(s) in our entry not on the source record: Candes, Jordan"
    ],
-   "notes": [],
+   "notes": [
+    "arXiv preprint found by title: arXiv:2208.02814v4 (2022, similarity 1.0)",
+    "author(s) on the source record missing from our entry: Fisch, Schuster"
+   ],
    "candidates": [],
-   "doi_exists": false
+   "doi_exists": false,
+   "arxiv_match": {
+    "title": "Conformal Risk Control",
+    "authors": [
+     "Anastasios N. Angelopoulos",
+     "Stephen Bates",
+     "Adam Fisch",
+     "Lihua Lei",
+     "Tal Schuster"
+    ],
+    "year": "2022",
+    "arxiv_id": "2208.02814v4",
+    "similarity": 1.0
+   }
   },
   {
    "key": "angelopoulos2024pid",

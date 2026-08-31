@@ -1,6 +1,6 @@
 # Bibliography audit — Phase 0
 
-- Bibliography: `/Users/danpele/Library/Mobile Documents/com~apple~CloudDocs/Documents/2026 CFP LLM VaR/submission_IJF/calibrating_the_oracle.bib`
+- Bibliography: `/Users/danpele/dev/cfp-llm-var/submission_IJF/calibrating_the_oracle.bib`
 - LaTeX sources scanned: `main_R1.tex`, `main_R1_anon.tex`
 - Entries: **56**
 - Verification: Crossref REST (`/works/{doi}`) for entries with a DOI; arXiv Atom API for preprints; entries with neither are **MANUAL** (a Crossref title search is run only to suggest a candidate DOI).
@@ -67,12 +67,16 @@ Resolved via `None`.
 Resolved via `crossref:10.1109/TPAMI.2024.3443853`.
 
 - **PROBLEM:** **DOI DOES NOT EXIST** — not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier.
+- note: arXiv preprint found by title: arXiv:2010.09107v15 (2020, similarity 1.0)
 
 ### `angelopoulos2024conformal` (article, line 158)
 
 Resolved via `crossref:10.1080/01621459.2024.2316667`.
 
 - **PROBLEM:** **DOI DOES NOT EXIST** — not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier.
+- **PROBLEM:** author(s) in our entry not on the source record: Candes, Jordan
+- note: arXiv preprint found by title: arXiv:2208.02814v4 (2022, similarity 1.0)
+- note: author(s) on the source record missing from our entry: Fisch, Schuster
 
 ### `baroneadesi1999var` (article, line 369)
 
@@ -88,7 +92,7 @@ Resolved via `crossref:10.1002/(SICI)1096-9934(199908)19:5<583::AID-FUT6>3.0.CO;
 | MISMATCH | `brehmer2021properification` | Properification--postprocessing of quantile and interval forecasts | Rate of estimation for the stationary distribution of jump-processes o | Brehmer / 2021 / 15 / 3692-3720 | Amorino / 2021 / 15 / — | TITLE MISMATCH (similarity 0.40): DOI resolves to a different work; first author 'Brehmer' vs Crossref 'Amorino' |
 | MISMATCH | `das2024timesfm` | A decoder-only foundation model for time-series forecasting | — | Das / 2024 / — / — | — | author(s) in our entry not on the source record: Leber, Mathews |
 | MISMATCH | `rasul2024lagllama` | Lag-Llama: Towards foundation models for probabilistic time series for | — | Rasul / 2024 / — / — | — | author(s) in our entry not on the source record: Bhatt, Thiele, Gasthaus |
-| UNRESOLVED | `angelopoulos2024conformal` | Conformal Risk Control | — | Angelopoulos / 2024 / — / — | — | **DOI DOES NOT EXIST** — not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier. |
+| UNRESOLVED | `angelopoulos2024conformal` | Conformal Risk Control | — | Angelopoulos / 2024 / — / — | — | **DOI DOES NOT EXIST** — not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier.; author(s) in our entry not on the s |
 | UNRESOLVED | `baroneadesi1999var` | VaR without Correlations for Portfolios of Derivative Securities | — | Barone-Adesi / 1999 / 19 / 583-602 | — | **DOI DOES NOT EXIST** — not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier. |
 | UNRESOLVED | `xu2024conformal` | Conformal Prediction for Time Series | — | Xu / 2024 / 46 / 9788-9804 | — | **DOI DOES NOT EXIST** — not registered at Crossref and doi.org returns 'DOI Not Found'. The cited object cannot be reached by this identifier. |
 | MANUAL | `acerbi2014back` | Back-Testing Expected Shortfall | — | Acerbi / 2014 / 27 / 76-81 | — | no DOI and no arXiv id in entry — not automatically verifiable |
