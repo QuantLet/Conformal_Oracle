@@ -142,20 +142,19 @@ carrying different digits read as a restatement rather than a contradiction. The
 $Z_2$ contradiction found in the same pass differed in wording as well as value,
 which is why that one was visible.
 
-The obvious remedy is a guard that compares, for every quantity used in both
-documents, the values they carry. It was written and then removed, for two
-reasons worth recording.
+The obvious remedy is a guard comparing, for every quantity used in both
+documents, the values they carry. It was written and removed, and the reason that
+matters is not that it produced false positives --- it did, reporting
+`\nMainForecasters` = 16 against `\nSeqForecasters` = 13, which is the panel
+prefix of Rule 1 doing its job, and that was repairable.
 
-**It fires on the convention it is supposed to respect.** `\nMainForecasters`
-is 16 and `\nSeqForecasters` is 13 because they are different panels, which is
-what the panel prefix of Rule 1 exists to say. Any rule that strips the prefix to
-compare stems deletes the distinction that makes the two correct, and reports
-`MainPairs` against `SeqPairs` as a contradiction.
-
-**It would not have caught the case that motivated it.** The supplement carried a
-macro; the manuscript carried a *typed literal*. A comparison over the registry
-sees one value and no disagreement, because the second value was never in the
-registry to compare.
+**The reason is that it could not have caught the case that motivated it.** The
+supplement carried a macro and the manuscript carried a *typed literal*. A
+comparison across the registry sees one value and no disagreement, because the
+second value was never in the registry to be compared. A guard that cannot see
+the defect it was built for is the second mode of this document's own taxonomy,
+and building one here would have added an instrument whose passing verdict meant
+nothing.
 
 What prevents the class is the invariant, not a comparison: **every figure in
 either document is a macro from one registry.** Two documents cannot then

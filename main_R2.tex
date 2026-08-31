@@ -111,13 +111,10 @@ return series violate. We prove asymptotic coverage for the one-sided
 split-conformal shift under geometric $\beta$-mixing, with an explicit remainder
 that separates estimation error in the calibration quantile from residual
 dependence, and a corollary fixing the mixing rate for GARCH data-generating
-processes. The required separation between calibration and evaluation is
-logarithmic in the calibration sample --- a median of \nGapPanelGapMed{}
-observations, \nGapPanelGapPct\% of the evaluation window --- and imposing it on
-all \nGapPanelCells{} panel cells moves the corrected violation rate by at most
-$\nGapPanelDPiMax$ and changes \nGapPanelZoneChanges{} regulatory
-classifications. The reported panel runs the contiguous split, so the theorem
-covers an estimator that differs from it by that much.
+processes. The separation the theorem requires is logarithmic in the calibration sample, a
+median of \nGapPanelGapMed{} observations; imposing it on the panel moves no
+regulatory classification and the corrected violation rate by at most
+$\nGapPanelDPiMax$.
 
 On a panel of equity, bond, commodity, cryptocurrency and foreign-exchange
 series, the shift brings every forecaster it is applied to --- from
@@ -1476,7 +1473,14 @@ It was found by rebuilding the estimator from its own description rather than by
 re-running it, and the corrected figures are throughout.
 
 Further defects sat in the verification apparatus itself, and were found the
-same way. Of the defects this project's computation protocol records --- counting those
+same way. What follows is a count, and a count exists only where something
+counts: a project that does not look finds none, and reports none. The number
+below is therefore not a measure of how defective this work is relative to work
+that reports nothing --- there is no such comparison available --- but a
+description of what a protocol of this kind turns up when it is run against its
+own output.
+
+ Of the defects this project's computation protocol records --- counting those
 that reached a stored artefact or a claim in this manuscript, and not mistakes
 caught while writing ---
 \nHarnessDefectsInstrument{} of \nHarnessDefectsTotal{} were in a check and
@@ -1616,7 +1620,7 @@ A Python package implementing the framework, \texttt{conformal-oracle}, is avail
 
 Each series admitted to the analysis carries a manifest entry recording its model, asset, path, vintage and estimator class, and each passes --- or is recorded as blocked by --- the structural gate of Section~\ref{sec:gate} before entering any table. The numbers asserted in the text are emitted as macros by \texttt{scripts/paper\_numbers.py}, which recomputes each of them from the artefacts and fails the build when a value in the manuscript differs from the value in the data.
 
-The verification apparatus was itself the more frequent site of defect. Of the \nHarnessDefectsTotal{} defects the project's computation protocol records, \nHarnessDefectsInstrument{} were in a check and \nHarnessDefectsObject{} in the quantity being checked: a literal screen that stripped every hand-authored table before reading it, a claim audit that read one generated number as evidence for both sides of a ratio, a manifest comparing against the frozen submission rather than the working tree, and a consistency check that regenerated the artefact it was verifying. The ratio is not incidental to the paper's subject. A validation instrument is an estimator like any other and fails in the same way the coverage test does --- by returning a pass that is an absence of evidence --- which is why every check in this repository carries a negative control that must be seen to fail before the check may report anything, and why the controls are planted where each check reads worst rather than where it reads typically.
+The verification apparatus was itself the more frequent site of defect. Of the \nHarnessDefectsTotal{} defects the project's computation protocol records, \nHarnessDefectsInstrument{} were in a check and \nHarnessDefectsObject{} in the quantity being checked: a literal screen whose file list held two of the four files the manuscript is assembled from, the same screen stripping every hand-authored table before reading it, a claim audit that read one generated number as evidence for both sides of a ratio, a manifest comparing against the frozen submission rather than the working tree, and a consistency check that regenerated the artefact it was verifying. The ratio is not incidental to the paper's subject. A validation instrument is an estimator like any other and fails in the same way the coverage test does --- by returning a pass that is an absence of evidence --- which is why every check in this repository carries a negative control that must be seen to fail before the check may report anything, and why the controls are planted where each check reads worst rather than where it reads typically.
 
 
 	\section*{Acknowledgements}
