@@ -400,7 +400,7 @@ the wrong thing on the first attempt --- is not a defect of the project; it is
 the work. Without that line the count is unfalsifiable, which is the wrong
 property for a number in a section about honest accounting.
 
-Nine defects found; **five were in the checking apparatus and four in the
+Ten defects found; **six were in the checking apparatus and four in the
 thing being checked.**
 
 | where | what | how it failed |
@@ -414,6 +414,7 @@ thing being checked.**
 | object | two half-macro claims that did not reproduce | --- |
 | object | a variance ratio printed as 4.80, obtained by dividing two already-rounded figures | double rounding |
 | object | the split-site inventory counted by hand and recorded as "about 45" against an enumerated 56 | hand inventory |
+| instrument | guard 4 read only the internal notes, and matched no LaTeX-escaped path | **scope** |
 
 **Three candidates rejected by the criterion, and they are worth naming so the
 count can be reproduced.** While clearing the section literals, a macro for the
@@ -651,4 +652,29 @@ rewrite: `run_dynamic_var.py` fits CAViaR on the calibration block, so no score
 sequence exists when the split is taken, and passing the returns instead would
 be a different quantity under the same name. It stays contiguous and the
 registry says why.
+
+## The fourth scoping defect, and it hid two files the manuscript promises
+
+Guard 4 checks that a file the project's written discipline names is tracked by
+git. It failed twice over, and the two failures compound.
+
+**It read the wrong documents.** `DISCIPLINE_DOCS` held `PROTOCOL.md` and
+`MIGRATION.md` — the internal notes — and not the manuscript. But the strongest
+promise in the project is the one made to a reader: Supplement S.4.3 states that
+`scripts/audit_split_convention.py` enumerates the split sites and fails the
+build on an undeclared one. That file was never tracked. A fresh clone did not
+contain the audit the supplement describes.
+
+**And its pattern could not see the paths it was given.** Every path in a LaTeX
+document has its underscores escaped. On
+`\texttt{scripts/audit\_split\_convention.py}` the path regex matched
+`_convention.py`, a fragment that is not a file, so nothing was checked and the
+guard reported "23 referenced files checked". After unescaping and widening the
+document set it reports 39, and it found both untracked audits immediately.
+
+This is the fourth scoping defect in three days, and the fourth with an
+unrelated mechanism: a file list, a parser flag, an unexamined artefact
+provenance, and now a pattern that silently matched a substring of what it was
+asked to check. The census counts it as an instrument defect; the untracked file
+counts as the claim it falsified, which was in the supplement.
 

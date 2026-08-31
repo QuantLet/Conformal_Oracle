@@ -1527,16 +1527,20 @@ checks exercised and one that was not. A wrong threshold announces itself the
 first time it fires. A wrong scope never fires, and its silence cannot be told
 from a pass.
 
-Three instances of that shape appeared in this project within two days, and
+Four instances of that shape appeared in this project within three days, and
 their mechanisms are unrelated, which is what makes it a class and not a
 statistic on a small sample. The literal check omitted two of the four files
 from its own list. A registry parser was told to treat a character as a comment
-mark, and a row containing it lost a field without losing the row. And the guard
-set read the built documents without anything having established that they came
-from the source it was checking, so it could report green on a manuscript that
-did not compile --- which it did. A file list, a parser flag, and an unexamined
-provenance: no shared implementation, no shared author error, and the same
-failure. Each check was correct on what it looked at, and what it looked at was
+mark, and a row containing it lost a field without losing the row. The guard set
+read the built documents without anything having established that they came from
+the source it was checking, so it could report green on a manuscript that did
+not compile --- which it did. And the guard that verifies a named file is
+present read only the project's internal notes and not this manuscript, while
+its path pattern matched a fragment of any path whose underscores LaTeX had
+escaped; between them, a script the supplement describes as failing the build
+was absent from the repository altogether. A file list, a parser flag, an
+unexamined provenance, and a pattern that matched a substring of its own input:
+no shared implementation, no shared author error, and the same failure. Each check was correct on what it looked at, and what it looked at was
 smaller than what it was believed to cover.
 
 Two later instances belong here, and the criterion separates them. The first is
@@ -1677,7 +1681,7 @@ The full replication pipeline --- data retrieval, foundation-model inference, co
 
 Return data are retrieved from Yahoo Finance. All foundation model checkpoints are open-weight and hosted on HuggingFace; no proprietary API access is required.
 
-A Python package implementing the framework, \texttt{conformal-oracle}, is available on PyPI (\url{https://pypi.org/project/conformal-oracle/}) and installable via \texttt{pip install conformal-oracle}. Every rolling-mode result reported here was produced by the Quantlet replication pipeline, which computes the conformal correction as the finite-sample split-conformal quantile, the $\lceil(w+1)(1-\alpha)\rceil$-th order statistic of the trailing-window scores. The shift is defined once, in \texttt{cfp\_config.conformal\_quantile}, and \texttt{scripts/audit\_qv\_convention.py} enumerates every site in the repository that takes a quantile of nonconformity scores, records the convention each uses, and fails the build when an undeclared one appears. The block-bootstrap confidence interval for $\qVstat$ in that package computes its replicates with the plain empirical quantile while the point estimate uses the order statistic, so the interval is centred on a quantity the caller is not estimating. This affects every released version up to and including 0.3.2, which is the current release; the correction is in the repository and is not yet published. No result in this paper depends on it --- the manuscript's intervals come from \texttt{scripts/qV\_block\_bootstrap.py}, which takes the order statistic in both places --- and it is stated here because the package is offered to readers.
+A Python package implementing the framework, \texttt{conformal-oracle}, is available on PyPI (\url{https://pypi.org/project/conformal-oracle/}) and installable via \texttt{pip install conformal-oracle}. Every rolling-mode result reported here was produced by the Quantlet replication pipeline, which computes the conformal correction as the finite-sample split-conformal quantile, the $\lceil(w+1)(1-\alpha)\rceil$-th order statistic of the trailing-window scores. The shift is defined once, in \texttt{cfp\_config.conformal\_quantile}, and \texttt{scripts/audit\_qv\_convention.py} enumerates every site in the repository that takes a quantile of nonconformity scores, records the convention each uses, and fails the build when an undeclared one appears. The block-bootstrap confidence interval for $\qVstat$ in that package computes its replicates with the plain empirical quantile while the point estimate uses the order statistic, so the interval is centred on a quantity the caller is not estimating. This affects every released version up to and including \texttt{0.3.2}, which is the current release; the correction is in the repository and is not yet published. No result in this paper depends on it --- the manuscript's intervals come from \texttt{scripts/qV\_block\_bootstrap.py}, which takes the order statistic in both places --- and it is stated here because the package is offered to readers.
 
 Each series admitted to the analysis carries a manifest entry recording its model, asset, path, vintage and estimator class, and each passes --- or is recorded as blocked by --- the structural gate of Section~\ref{sec:gate} before entering any table. The numbers asserted in the text are emitted as macros by \texttt{scripts/paper\_numbers.py}, which recomputes each of them from the artefacts and fails the build when a value in the manuscript differs from the value in the data.
 

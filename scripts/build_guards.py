@@ -209,6 +209,10 @@ def _prose_literals(tex: str) -> list[tuple[str, str]]:
     s = re.sub(r"no\.\\?\s*\d[\d./]*", " CONTRACT ", s)
     # Model release numbers are names, not results: Moirai~1.1, TimesFM~2.5.
     s = re.sub(r"(?<=[A-Za-z])~\d+\.\d+", " MODELVER ", s)
+    # A three-component semantic version in \texttt is a release NAME, like
+    # Moirai~1.1 above. Deliberately narrow: three components and inside
+    # \texttt, so a two-component decimal stays a claim and is still caught.
+    s = re.sub(r"\\texttt\{\d+\.\d+\.\d+\}", " PKGVER ", s)
     s = re.sub(r"GARCH\(\d,\d\)", " GARCHSPEC ", s)
     s = re.sub(r"\\n[A-Z][A-Za-z]*\{?\}?", " MACRO ", s)
     s = re.sub(r"\\input\{[^}]*\}", " INPUT ", s)
@@ -296,16 +300,31 @@ def guard_substring_screen() -> bool:
 # they were written -- not for a referee, and not after the migration the
 # document describes. A rule that points at a file nobody else has is not a rule.
 
+# The manuscript is the strongest form of written discipline: it promises a
+# reader that a file exists. This list held only the internal notes, so
+# scripts/audit_split_convention.py -- named in Supplement S.4.3 as failing
+# the build -- was untracked and unnoticed. A fresh clone did not contain it.
 DISCIPLINE_DOCS = [BASE / "analysis" / "provenance" / "PROTOCOL.md",
-                   BASE / "MIGRATION.md"]
+                   BASE / "MIGRATION.md",
+                   BASE / "main_R2.tex", BASE / "supplement.tex",
+                   BASE / "sections" / "sec4_theory.tex",
+                   BASE / "sections" / "sec5_montecarlo.tex"]
 # Backticks are not enough: MIGRATION.md gives the four audits as indented shell
 # commands, and those are exactly the files that did not travel.
 PATHISH = re.compile(r"[\w][\w./-]*\.(?:py|sh|tex|bib|csv|tsv|json|cls|lock)\b")
+# LaTeX escapes every underscore, and almost every script in this project has
+# one. On "\\texttt{scripts/audit\\_split\\_convention.py}" the pattern above
+# matches "_convention.py" -- a fragment that is not a file, so the guard
+# checked nothing and said "23 referenced files checked". Two audits were
+# untracked underneath it, including the one the supplement says fails the
+# build. Unescape before matching.
+def _unescape_tex(t: str) -> str:
+    return t.replace("\\_", "_").replace("\\%", "%").replace("\\&", "&")
 
 
 def _referenced_paths(text: str) -> set[str]:
     """Every token in the document that names a file, backticked or not."""
-    return {m.group(0).rstrip(".,;:") for m in PATHISH.finditer(text)}
+    return {m.group(0).rstrip(".,;:") for m in PATHISH.finditer(_unescape_tex(text))}
 
 
 def _untracked(paths: set[str]) -> list[str]:

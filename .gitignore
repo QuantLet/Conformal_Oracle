@@ -116,6 +116,11 @@ garch_conformal_detail.csv
 # joins them: it produces analysis/phase3/dq_panel.csv, which until now had no
 # producer at all.
 !/scripts/audit_qv_convention.py
+# The split-convention audit and the migration-scope audit. Both are named
+# in the manuscript and neither was allowlisted, so a fresh clone contained
+# neither. Guard 4 now reads the manuscript as well as the internal notes.
+!/scripts/audit_split_convention.py
+!/scripts/audit_migration_scope.py
 !/scripts/audit_structural_claims.py
 !/scripts/audit_supplement_targets.py
 !/scripts/build_guards.py

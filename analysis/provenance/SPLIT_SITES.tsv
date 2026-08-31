@@ -4,32 +4,20 @@
 # then set by hand and the audit fails the build on an
 # undeclared site. See analysis/convention/GAP_SWITCH_SCOPE.md.
 file	code	convention	line	note
-scripts/baseline_aci.py	n_cal = int(T * F_CAL)	CONTIGUOUS	165	the protocol as reported; migrates if the panel switches
-scripts/baseline_gbm_qr.py	n_cal = int(T * F_CAL)	CONTIGUOUS	148	the protocol as reported; migrates if the panel switches
-scripts/baselines_evt_fhs.py	n_cal = int(N * F_CAL)	CONTIGUOUS	90	the protocol as reported; migrates if the panel switches
+scripts/baselines_evt_fhs.py	n_cal = int(N * F_CAL)	CONTIGUOUS	90	not migrated: EVT-POT and FHS build the VaR path from the returns after this split, so no score sequence exists here to set the gap
 scripts/gap_ablation.py	n_cal = int(fc * n)	MEASUREMENT	63	computes the contiguous and gapped arms on purpose, to compare them
 scripts/qV_block_bootstrap.py	n_cal = int(F_C * n)	NOT_A_PANEL	76	splits simulated or resampled data, not a forecast series; the theorem's separation does not apply
-scripts/tail_completion_robustness.py	n_cal = int(F_C * n)	CONTIGUOUS	81	the protocol as reported; migrates if the panel switches
-Quantlets/CO_baseline_comparison_tuned/run_tuned_gbm_qr.py	n_cal = int(T * F_CAL)	CONTIGUOUS	120	the protocol as reported; migrates if the panel switches
-Quantlets/CO_baselines_evt_fhs/run_baselines_evt_fhs.py	n_cal = int(N * F_CAL)	CONTIGUOUS	91	the protocol as reported; migrates if the panel switches
-Quantlets/CO_diagnostic_scale/run_diagnostic_scale.py	n_cal = int(len(r) * F_CAL)	CONTIGUOUS	121	the protocol as reported; migrates if the panel switches
-Quantlets/CO_gamlss/baseline_gamlss.py	n_cal = int(T * F_CAL)	CONTIGUOUS	158	the protocol as reported; migrates if the panel switches
-Quantlets/CO_garch_conformal/run_conformal_garch_ewma.py	n_cal = int(T * f_cal)	CONTIGUOUS	140	the protocol as reported; migrates if the panel switches
-Quantlets/CO_gbm_qr/baseline_gbm_qr.py	n_cal = int(T * F_CAL)	CONTIGUOUS	155	the protocol as reported; migrates if the panel switches
-Quantlets/CO_identification/run_identification.py	n_cal = int(T * f_cal)	CONTIGUOUS	159	the protocol as reported; migrates if the panel switches
-Quantlets/CO_multi_quantile_panel/compute_panel_pooled.py	n_cal = int(row['n_cal'])	CONTIGUOUS	75	the protocol as reported; migrates if the panel switches
-Quantlets/CO_regime_sensitivity/run_regime_sensitivity.py	n_cal = int(n * F_CAL)	CONTIGUOUS	211	the protocol as reported; migrates if the panel switches
+Quantlets/CO_baselines_evt_fhs/run_baselines_evt_fhs.py	n_cal = int(N * F_CAL)	CONTIGUOUS	91	not migrated: EVT-POT and FHS build the VaR path from the returns after this split, so no score sequence exists here to set the gap
+Quantlets/CO_multi_quantile_panel/compute_panel_pooled.py	n_cal = int(row['n_cal'])	CONTIGUOUS	75	not migrated: this site does not take a split, it READS n_cal from a stored row of all_results. It follows the panel rather than setting it, and moves when the driver's gap column is non-zero
 Quantlets/CO_robustness/run_robustness_mc.py	n_cal = int(len(valid) * fc)	NOT_A_PANEL	119	splits simulated or resampled data, not a forecast series; the theorem's separation does not apply
-Quantlets/CO_robustness_inner7/run_inner7_tail_closure.py	n_cal = int(F_C * n)	CONTIGUOUS	88	the protocol as reported; migrates if the panel switches
 Quantlets/CO_simulation_study/run_simulation_study.py	n_cal = int(T * f_cal)	NOT_A_PANEL	145	splits simulated or resampled data, not a forecast series; the theorem's separation does not apply
 python/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	142	the published library must not import the paper's cfp_config; it would break for anyone who pip-installs it. The split stays contiguous here and the open question -- whether the shipped package should implement the separation of Corollary 4.6 -- is recorded in PACKAGE_STATE.md
 python/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	227	the published library must not import the paper's cfp_config; it would break for anyone who pip-installs it. The split stays contiguous here and the open question -- whether the shipped package should implement the separation of Corollary 4.6 -- is recorded in PACKAGE_STATE.md
-analysis/ae_point4/run_ae_point4.py	n_cal = int(n * F_CAL)	CONTIGUOUS	145	the protocol as reported; migrates if the panel switches
 analysis/convention/measure_gap_ablation.py	n = len(s); n_cal = int(FC*n)	MEASUREMENT	42	computes the contiguous and gapped arms on purpose, to compare them
 analysis/convention/measure_gap_on_pipeline.py	n_cal = int(len(r) * rfe.F_CAL)	MEASUREMENT	24	computes the contiguous and gapped arms on purpose, to compare them
 analysis/convention/run_gap_panel.py	n_cal = int(FC * n)	MEASUREMENT	49	computes the contiguous and gapped arms on purpose, to compare them
 analysis/phase3_dynamic/run_dynamic_var.py	n_cal = int(n * F_CAL)	CONTIGUOUS	196	not migrated: the nonconformity scores do not exist until CAViaR is fitted on the calibration block, so no score sequence is available to set the gap
-analysis/phase3_dynamic/verify_caviar.py	n_cal = int(n * F_CAL)	CONTIGUOUS	135	the protocol as reported; migrates if the panel switches
+analysis/phase3_dynamic/verify_caviar.py	n_cal = int(n * F_CAL)	CONTIGUOUS	135	not migrated, same reason as run_dynamic_var.py: CAViaR is fitted on the calibration block, so no nonconformity score sequence exists when the split is taken and the returns are not those scores
 conformal-oracle/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	137	stale duplicate tree at version 0.3.1; see PACKAGE_STATE.md
 analysis/convention/measure_rho_census.py	n_cal = int(len(r) * rfe.F_CAL)	MEASUREMENT	56	census of rho-hat on the calibration block; computes no backtest and reports no coverage
 Quantlets/CO_full_evaluation/run_full_evaluation.py	cal, test, g = split_indices(n, v - r, f_cal=f_cal, gap=gap)	MIGRATED	133	the panel driver; takes the split and the gap from cfp_config
@@ -62,3 +50,15 @@ scripts/fz_scores.py	_c2, _t2, _g2 = split_indices(T, var_t - r, f_cal=F_CAL)	MI
 scripts/r4_rolling_and_frontier.py	_cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)	MIGRATED	117	migrated; not re-run to completion here
 scripts/table_c1_es_correction.py	_cal, _test, _g = split_indices(N, var_t - r_t, f_cal=F_CAL)	MIGRATED	199	ran; the Quantlets copy the paper reads is unchanged
 scripts/audit_migration_scope.py	"and ""split_indices("" in p.read_text(encoding=""utf-8"", errors=""ignore"")]"	NOT_A_PANEL	89	the audit that scopes itself to the migrated population; it matches the call, it does not make one
+Quantlets/CO_baseline_comparison_tuned/run_tuned_gbm_qr.py	_cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)	MIGRATED	124	ran; no artefact change
+Quantlets/CO_diagnostic_scale/run_diagnostic_scale.py	_cal, _test, _g = split_indices(len(r), raw - r, f_cal=F_CAL)	MIGRATED	125	migrated; cannot run here -- conformal_oracle not installed, verified identical on the pre-migration revision
+Quantlets/CO_gamlss/baseline_gamlss.py	_cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)	MIGRATED	162	ran; no artefact change
+Quantlets/CO_garch_conformal/run_conformal_garch_ewma.py	_cal, _test, _g = split_indices(T, np.asarray(q_lo) - np.asarray(realized), f_cal=f_cal)	MIGRATED	144	migrated; cannot run here -- a GARCH pickle absent from the repo, verified identical on the pre-migration revision
+Quantlets/CO_gbm_qr/baseline_gbm_qr.py	_cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)	MIGRATED	159	ran; no artefact change
+Quantlets/CO_identification/run_identification.py	_cal, _test, _g = split_indices(T, -var_raw - returns, f_cal=f_cal)	MIGRATED	163	ran; figure regenerated, no numeric change
+Quantlets/CO_regime_sensitivity/run_regime_sensitivity.py	_cal, _test, _g = split_indices(n, q_lo - r, f_cal=F_CAL)	MIGRATED	215	ran; no artefact change
+Quantlets/CO_robustness_inner7/run_inner7_tail_closure.py	_cal, _test, _g = split_indices(n, (var_raw - ret).values, f_cal=F_C)	MIGRATED	92	ran; no artefact change
+analysis/ae_point4/run_ae_point4.py	_cal, _test, _g = split_indices(n, q - r, f_cal=F_CAL)	MIGRATED	149	ran; no artefact change
+scripts/baseline_aci.py	_cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)	MIGRATED	169	migrated; not re-run to completion here
+scripts/baseline_gbm_qr.py	_cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)	MIGRATED	152	ran; no artefact change
+scripts/tail_completion_robustness.py	_cal, _test, _g = split_indices(n, (var_raw - ret).values, f_cal=F_C)	MIGRATED	85	ran; no artefact change
