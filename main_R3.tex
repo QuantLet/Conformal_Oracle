@@ -161,7 +161,7 @@ information that would identify it has been discarded by then.
 A systematic audit of the forecast-production pipeline behind this panel isolates
 five such failure modes, each located in a specific step and each established by
 a diagnostic that is arithmetic rather than inferential. They are set out once,
-in Table~S.31, and not re-enumerated thereafter. Their
+in \texttt{analysis/provenance/PROTOCOL.md}, and not re-enumerated thereafter. Their
 measured effect on reported 1\% violation rates spans factors between five and seventy, and it runs in both directions: one of them inflates every threshold by
 roughly 45\%, producing a \nRawPiGJRDefectivePct\% violation rate against a nominal 1\% and a Basel
 green zone on all \nMainAssets{} assets. A reduction rule that reports fewer
@@ -263,24 +263,15 @@ identified, so their performance on those failure modes is in-sample by
 construction. The gate blocks \nGateBlocked{} of \nGateSeries{} series in this
 panel.
 
-Fourth, the recalibration layer carries an asymptotic coverage guarantee for
-the single-split estimator under $\beta$-mixing dependence with explicit
-gap-separation conditions, together with finite-window bounds for the rolling
-variant under distributional drift, and we report the intervention's
-\emph{indication} rather than its average effect. Recalibration is close to free
-where it is not needed and harmful where the base forecast is already calibrated:
-under the rolling estimator, \nWellCalRollWorse{} of the \nWellCalRollN{} pairs
-that pass Kupiec on the test window are degraded by correcting them --- a
-description of who is harmed, not yet a rule for deciding. Gating the correction
-on a failed raw backtest helps, but far less than an in-sample evaluation of that
-rule suggests: keyed on the calibration window, which is the only information
-available at the decision date, it avoids \nGateRollAvoided{} of the
-\nDegradedRoll{} deteriorations at $\alpha = 0.01$ ---
-\nGateRollAvoidedPct\% --- at a cost of \nGateRollUpgradesLostNet{} pairs on the
-quantile score, which the traffic light records as \nGateRollUpgradesLost{} of
-\nGateRollUpgrades{} zone upgrades foregone. Keyed on the evaluation window it would
-avoid \nGateRollOracleAvoidedPct\% and cost none, which is an oracle bound rather
-than a deployable rule.
+Fourth, we report the recalibration's \emph{indication} rather than its average
+effect. The coverage statement the estimator needs under dependence is a
+one-sided specialization of \citet{oliveira2024split}; what this paper adds is
+the mixing rate for GARCH processes, which turns the required separation into a
+number of trading days, and a measurement of what imposing it costs.
+Recalibration is close to free where it is not needed and harmful where the base
+forecast is already calibrated: under the rolling estimator,
+\nWellCalRollWorse{} of the \nWellCalRollN{} pairs that pass Kupiec on the test
+window are degraded by correcting them --- a
 
 \paragraph{What this paper does not claim} It does not claim that foundation
 models are unsuitable for tail-risk forecasting, nor that they are ready for it.
@@ -298,29 +289,6 @@ sense. And it does not claim a coverage guarantee for the rolling variant, which
 recomputes the shift from a trailing window and is outside what
 Theorem~\ref{thm:dependent_conformal_var} covers; where the two are compared, the
 rolling results are reported as an operational heuristic.
-
-The argument runs in four steps, and each rests on the one before it.
-\textbf{First}, the conformal guarantee survives the dependence of financial
-returns: Theorem~\ref{thm:dependent_conformal_var} gives asymptotic coverage for
-the one-sided split-conformal shift under geometric $\beta$-mixing with an
-explicit remainder, Corollary~\ref{cor:garch} fixes the mixing rate for GARCH
-data-generating processes, and the separation the theorem requires is imposed in
-the protocol rather than assumed away (Section~\ref{sec:theory}).
-\textbf{Second}, that guarantee is indifferent to the forecaster: on
-\nMainForecasters{} forecasters and \nMainAssets{} assets the shift moves
-\nMainKupiecRawPasses{} unconditional-coverage passes to
-\nMainKupiecCorPasses, whatever produced the series (Section~\ref{sec:recal}).
-\textbf{Third}, the indifference has a price. A corrected coverage column on
-which every entry sits at nominal separates nothing, so the correction cannot be
-evaluated by the instrument that triggers it --- a statement the exceedance
-sequence makes precise in Proposition~\ref{prop:identification}, which bounds
-what any function of that sequence can identify.
-\textbf{Fourth}, it follows that recalibration is not a default step but a
-treatment with an indication: a set of conditions under which applying it is
-warranted, and outside which it does harm. Under the rolling estimator it
-degrades \nWellCalRollWorse{} of the \nWellCalRollN{} pairs whose raw forecast
-already passes its coverage backtest, and Section~\ref{sec:cost} gives a rule,
-keyed only on information available at the decision date, for when to apply it.
 
 Two pieces of machinery serve those steps without being claims of their own. The
 identification result of Section~\ref{sec:blindspot} is what makes step three
@@ -343,11 +311,11 @@ recalibration restores, what it costs and when it is indicated.
 Section~\ref{sec:discuss} sets out the limitations and
 Section~\ref{sec:conclude} concludes.
 
-The supplement carries the material the argument points to rather than depends
-on: the proofs, the controlled sampling case in full (\texttt{analysis/chronos\_sampling/RESULTS.md}), the five
-implementation failure modes (S.15), the ten-check gate (S.11), the leaf-resolution
-exhibit (S.13), the recalibration baselines, the cross-family score rankings and
-the static-versus-rolling detail (S.12).
+The replication repository carries the material the argument points to rather
+than depends on: the proofs (\texttt{PROOFS.tex}), the controlled sampling case
+in full (\texttt{analysis/chronos\_sampling/RESULTS.md}), the ten-check
+validation gate (\texttt{scripts/promotion\_gate.py}), the recalibration
+baselines and the static-versus-rolling detail.
 
 Data and code accompanying this paper are available via the Quantlet platform \quantlet{https://github.com/QuantLet/Conformal_Oracle/}; slides are on the Quantinar platform \quantinar{https://quantinar.com/course/100048/recalibrating-tail-risk-forecasts-under-temporal-dependence}.
 	
@@ -495,7 +463,7 @@ and set
 \end{equation}
 The Student-$t$ closure is a parsimonious heavy-tailed default in financial VaR modelling \citep{bollerslev1987,hansen1994autoregressive,mcneil2000estimation}. It is not, however, an innocuous choice: \texttt{scripts/tail\_completion\_robustness.py} shows that the closure rule governs the tail behaviour of a grid model far more than the model does, so this decision is reported as part of the forecaster rather than as an implementation detail.
 
-For classical benchmarks (GJR-GARCH, GARCH-Normal, EWMA, Historical Simulation), VaR is computed from the model-implied conditional distribution or, for Historical Simulation, the empirical 250-day rolling distribution. EWMA is the exception to the rolling-window convention and is stated as such wherever it appears: its conditional variance is the RiskMetrics recursion at $\lambda = 0.94$ \citep{riskmetrics1996}, which is not truncated at 250 observations (, Table~S.19).
+For classical benchmarks (GJR-GARCH, GARCH-Normal, EWMA, Historical Simulation), VaR is computed from the model-implied conditional distribution or, for Historical Simulation, the empirical 250-day rolling distribution. EWMA is the exception to the rolling-window convention and is stated as such wherever it appears: its conditional variance is the RiskMetrics recursion at $\lambda = 0.94$ \citep{riskmetrics1996}, which is not truncated at 250 observations (, \texttt{Quantlets/CO\_robustness/run\_robustness\_summary.py}).
 
 Expected Shortfall is reported separately at $\alpha = 0.025$ following the Basel III/FRTB convention \citep{bcbs2019frtb} and is computed from the same predictive object as VaR. Because ES is not elicitable as a standalone functional \citep{gneiting2011making}, the conformal construction is developed for VaR only; ES computation details and the heuristic ES shift are in \texttt{scripts/table\_c1\_es\_correction.py}.
 
@@ -647,7 +615,7 @@ Remark~\ref{rem:rolling_status} states what the rolling estimator is entitled to
 \subsubsection{Alternative Recalibration Baselines}
 \label{sec:alternatives}
 
-We compare the one-parameter conformal shift against alternatives that vary on three axes: parameter count, correction structure (location only, location--scale, monotone, fully nonparametric), and target object (correction, conditional distribution, or tail). We compare against ten baselines: five single-shot post-hoc corrections, adaptive conformal inference, two distributional or nonlinear methods (GAMLSS-SST and gradient-boosted quantile regression), and two dedicated VaR models (EVT-POT and filtered historical simulation). Full specifications are in \texttt{scripts/baselines\_evt\_fhs.py}; Table~S.3 of the supplement provides a compact reference. The comparison tests Remark~\ref{rem:tail_sparsity} on the correction layer: at $\alpha = 0.01$, additional parameters in the \emph{correction} increase variance faster than they reduce bias. The remark's forecaster layer is tested separately, by the leaf-resolution response recorded there. Empirical results are in Section~\ref{sec:baselines}.
+We compare the one-parameter conformal shift against alternatives that vary on three axes: parameter count, correction structure (location only, location--scale, monotone, fully nonparametric), and target object (correction, conditional distribution, or tail). We compare against ten baselines: five single-shot post-hoc corrections, adaptive conformal inference, two distributional or nonlinear methods (GAMLSS-SST and gradient-boosted quantile regression), and two dedicated VaR models (EVT-POT and filtered historical simulation). Full specifications are in \texttt{scripts/baselines\_evt\_fhs.py}; \texttt{Quantlets/CO\_full\_evaluation/run\_full\_evaluation.py} of the supplement provides a compact reference. The comparison tests Remark~\ref{rem:tail_sparsity} on the correction layer: at $\alpha = 0.01$, additional parameters in the \emph{correction} increase variance faster than they reduce bias. The remark's forecaster layer is tested separately, by the leaf-resolution response recorded there. Empirical results are in Section~\ref{sec:baselines}.
 	%══════════════════════════════════════════════════════════════════════════════
 	%─── PART 7: Data and Experimental Setup ────────────────────────────────────
 	%══════════════════════════════════════════════════════════════════════════════
@@ -871,7 +839,7 @@ report when they are applied to such a series, and the answer is not that they
 are blind to miscalibration --- Kupiec's test rejects most of this panel. It is
 narrower: a coverage test reports \emph{that} a series miscovers, never
 \emph{why}. It cannot separate a model that is genuinely poor in the tail from a
-series carrying any of the failure modes of Table~S.31, all of
+series carrying any of the failure modes of \texttt{analysis/provenance/PROTOCOL.md}, all of
 which present as the same rejection. At $\alpha = 0.01$ these tests also have
 their least power exactly where the regulatory framework places them, and a
 correction applied downstream of them removes the evidence they would need. An
@@ -1306,71 +1274,15 @@ it avoids when it does. The decision problem is therefore sharpest in the extrem
 tail, which is where the identification constraint of
 Remark~\ref{rem:tail_sparsity} operates.
 
-\subsection{The trailing window, and why the three settings are not a curve}
+\subsection{The trailing window}
 \label{sec:window}
 
-Section~\ref{sec:cqr_var} leaves this section a debt: what the shift does at
-$w = 125$. The answer is arithmetic before it is empirical. Equation~\eqref{eq:qV}
-sets $k = \lceil (w+1)(1-\alpha)\rceil$, and $k \ge w$ whenever
-$w < 2/\alpha - 1$, so at $\alpha = 0.01$ every window of \nWSweepBound{}
-observations or fewer makes the shift the \emph{maximum} of its window. At the
-three settings a reader would compare, $k$ is \nWSweepShortK, \nWSweepMidK{} and
-\nWSweepLongK: the maximum, the second largest, and the fifth largest.
-
-The consequence is not that the shortest window is noisier. It is
-Remark~\ref{rem:effective_level}: the three do not estimate the same quantity.
-Their effective levels are $\nWSweepShortLevel$, $\nWSweepMidLevel$ and
-$\nWSweepLongLevel$ against a nominal $0.99$, so the overshoot falls from
-$\nWSweepShortOvershoot$ to $\nWSweepLongOvershoot$ across the sweep, a factor of
-five, and at $w = 125$ it sits at the remark's upper bound of
-$\nLevelMaxOvershoot$ because the estimator there is the window maximum.
-
-Over the \nWSweepCells{} cells of the sequence panel, the shift and the corrected
-rate both move with the overshoot rather than against the window length: the
-median shift falls from $\nWSweepShortShift$ to $\nWSweepLongShift$ and the
-median corrected rate rises from $\nWSweepShortPi$ to $\nWSweepLongPi$, toward
-nominal from below. The shift at $w = 125$ is the larger of the two on
-\nWSweepShiftLargerShort{} of \nWSweepCells{} cells.
-
-Dispersion confirms that no variance curve is being read. Halving a window
-multiplies the standard deviation of an interior order statistic by
-$\sqrt 2 = \nWSweepSqrtTwo$; the observed ratios are $\nWSweepSdRatioShort$ from
-$w = 250$ to $w = 125$ and $\nWSweepSdRatioLong$ from $w = 500$ to $w = 250$.
-Written as $\mathrm{sd} \propto w^{-b}$, the implied exponent is
-$\nWSweepExpShort$ over the first step and $\nWSweepExpLong$ over the second. A
-variance curve returns one exponent, and $0.5$ at that; this returns neither, at
-either end.
-
-The ablation requested of $w \in \{125, 250, 500\}$ is therefore answered by
-saying that its three points are not comparable as a curve, and the degenerate
-estimator at $w = 125$ is the extreme case of a confound present at all three.
-No window recommendation follows, and the reason is worth stating in the form a
-practitioner would meet it. Choosing the window by corrected coverage selects
-$w = 500$, whose rate sits closest to nominal here. But $w = 500$ is the setting
-with the smallest overshoot, not the setting whose estimator is best calibrated,
-and the corrected rate moves with the overshoot. A reader who selects on that
-criterion is optimising the confound rather than the property: the ranking it
-produces is a ranking of effective levels, and it would come out the same on a
-panel where every window estimated equally well. Separating the two would require
-holding $k/w$ fixed as $w$ varies, which equation~\eqref{eq:qV} does not permit,
-so the sweep is reported and no setting is recommended from it.
+The three trailing windows a reader would naturally compare at $\alpha = 0.01$, $w \in \{125, 250, 500\}$, are not three points on one variance curve: $k/w$ depends on $w$, so they target the effective levels $\nWSweepShortLevel$, $\nWSweepMidLevel$ and $\nWSweepLongLevel$ against a nominal $0.99$, with $w = 125$ the case in which the shift is the window maximum (Remark~\ref{rem:effective_level}). A window comparison therefore confounds sample size with the level being targeted. The sweep is in \texttt{analysis/phase3\_windows/run\_window\_sensitivity.py}.
 
 \subsection{Static versus rolling recalibration}
-\label{sec:static_vs_rolling}
+\label{sec:static_rolling}
 
-The rolling variant re-estimates the shift on a trailing 250-day window, so
-$R_t = |\qVroll|/|\widehat{\VaR}^{\mathrm{raw}}_t|$ becomes a monitored series
-rather than a single number. It improves unconditional coverage substantially and
-conditional adequacy not at all: Basel green rises from 89\% to 99\% of the
-\nSeqPairs{} pairs, while Christoffersen pass rates are unchanged within noise,
-which is a structural limitation of scalar recalibration rather than a tuning
-question (Section~\ref{sec:failure}). The per-forecaster comparison, the
-class-level breakdown and the single exception --- Historical Simulation, whose
-raw threshold is an order statistic of the same trailing window --- are in.
-\paragraph{Multiple levels} Recalibrating at one level does not repair a
-predictive distribution that is too narrow at all of them; the level-by-level
-counts, and the configuration contrast that holds the model fixed while varying
-only the code that reads it, are in \texttt{Quantlets/CO\_multi\_quantile\_panel/compute\_panel\_pooled.py}.
+The rolling variant reaches a higher green count than the static one and degrades more of the forecasts that already pass, which is the trade the indication rule of Section~\ref{sec:when_to_apply} prices. The per-pair comparison is in \texttt{scripts/regenerate\_rolling\_vs\_static.py}.
 
 \subsection{Alternatives to the one-parameter shift}
 \label{sec:baselines}
@@ -1382,45 +1294,12 @@ whether the recalibration layer respects the tail-sparsity constraint of
 Remark~\ref{rem:tail_sparsity}, and the one-parameter shift has the best quantile
 score of the nine alternatives that report one and of the raw baseline.
 Isotonic regression is the tenth and reports none: its step-function estimate is
-unstable or undefined at the 1\% tail for most pairs, which Table~S.25
+unstable or undefined at the 1\% tail for most pairs, which \texttt{scripts/build\_dq\_panel.py}
 records rather than fills in.
-\subsection{Capital arithmetic, and what it now shows}
+\subsection{Capital arithmetic}
 \label{sec:economic}
 
-Under the Basel~II/pre-FRTB internal-models framework the traffic-light zone sets
-a capital multiplier $k \in [3,4]$. With $W$ the widening of the corrected
-threshold relative to an uncorrected benchmark, the capital ratio between a
-corrected Green-zone forecast and an uncorrected Yellow-zone one is
-$(k_{\mathrm{Green}}/k_{\mathrm{Yellow}})\,W$, so correction pays whenever
-$W < k_{\mathrm{Yellow}}/k_{\mathrm{Green}} \approx 1.22$. Under FRTB the binding
-measure is ES at 97.5\% and this arithmetic describes the backtesting channel
-rather than the capital channel; we report it as illustrative.
-
-Nothing in this panel comes close to the break-even widening. Relative to
-GJR-GARCH the corrected thresholds run from $W = \nLitWMin$ for the analytic Chronos series to $W = \nLitWMax$ for Lag-Llama, with TimesFM~2.5 at $\nWidthRatioTimesFM$ and
-Moirai~2.0 at $\nWidthRatioMoiraiTwo$. Correction is therefore capital-cheap
-across the board, and the backtesting channel rather than the sharpness cost is
-what governs the arithmetic here.
-
-The identification result of Section~\ref{sec:blindspot} bears on this
-arithmetic directly, and the statement does not depend on foundation models or on
-any forecaster in this panel. Two models can report thresholds nearly a factor of
-two apart --- one at $\nPairVaRHonest\sigma_t$, the other at
-$\nPairVaRAlt\sigma_t$, both stated in units of the true conditional scale
-rather than an estimate of it --- while exceeding on
-the same days at the same rate, passing Kupiec, Christoffersen and
-the dynamic quantile test with the same verdicts, and sitting in the same Basel
-zone. The second holds \nPairCapitalPct\% of the capital of the first, is fully compliant
-on the traffic light, and is not distinguishable from it by any test of a
-predictable moment restriction on the exceedance sequence. A capital requirement
-is a function of a reported threshold and a violation count; the pair shows that
-those two numbers do not determine the threshold's adequacy. What separates them
-is the reported quantile measured against an estimated scale --- the structural
-check of Section~\ref{sec:gate}, applied before any of this arithmetic is run.
-
-\section{Limitations}
-\label{sec:discuss}
-\label{sec:failure}
+A zone upgrade lowers the Basel multiplier, so the corrections that move a series from Yellow to Green reduce the capital charge on that series. The arithmetic, for one forecaster over its test window, is in \texttt{scripts/capital\_charge\_comparison.py}.
 
 \subsection{What a scalar shift cannot do}
 
