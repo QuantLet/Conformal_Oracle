@@ -298,6 +298,14 @@ def collect() -> dict:
     sys.path.insert(0, str(BASE / "analysis" / "phase2"))
     from emit_band_sweep import understatement as _und, critical_delta as _cdelta
     n["TightUnd"] = float(_und(n["TightBand"]))
+    # What the same programme leaves unidentifiable at other scale edges. The
+    # reduction from the unrestricted-shape figure is a property of imposing a
+    # scale restriction at all; its size is a smooth function of where the edge
+    # sits, so Table 2's row is not a measurement of these particular checks.
+    n["UndBandLoose"] = float(_und(-1.70))
+    n["UndBandStrict"] = float(_und(-2.00))
+    n["BandLoose"] = -1.70
+    n["BandStrict"] = -2.00
     n["TightDelta"] = float(_cdelta(n["TightBand"]))
 
     # The constructed pair, and the GJR-vs-GJR-t comparison. Both sets of figures
@@ -999,6 +1007,28 @@ def collect() -> dict:
     _nrep, _nrepro = 500, 2000
     _tol = 3 * np.sqrt(1.0 + _nrep / _nrepro) * _sd / np.sqrt(_nrep)
     n["SupReproTol"] = float(_tol.min())
+    # The harness defect the gate revision records: the normal-formula standard
+    # error understates the true sampling variability of a 1% order statistic,
+    # whose replication distribution is skewed.
+    # Parsed by column position from the table's own header, not by pattern
+    # matching over the prose: a first attempt matched the kurtosis column and
+    # returned 4.16 for the skewness, which is the kind of error a regex over a
+    # document makes silently.
+    _gr = (BASE / "analysis" / "k2_sim" / "GATE_REVISION.md").read_text().splitlines()
+    _hdr = next(i for i, l in enumerate(_gr)
+                if l.startswith("| cell") and "skew" in l and "ratio" in l)
+    _cols = [c.strip() for c in _gr[_hdr].split("|")[1:-1]]
+    _isk, _ira = _cols.index("skew"), _cols.index("ratio")
+    _sk, _ra = [], []
+    for l in _gr[_hdr + 2:]:
+        if not l.startswith("|"):
+            break
+        f = [c.strip().replace("*", "").replace("\u00d7", "") for c in l.split("|")[1:-1]]
+        _sk.append(float(f[_isk])); _ra.append(float(f[_ira]))
+    n["MCSkewMax"] = max(_sk)
+    n["MCSEUnderstate"] = max(_ra)
+    assert 1.0 < n["MCSEUnderstate"] < 3.0 and 0.5 < n["MCSkewMax"] < 3.0, \
+        "the gate-revision table no longer parses to plausible values"
     n["SupReproTolMax"] = float(_tol.max())
     n["SupReproCells"] = int(len(_tol))
 
@@ -1158,6 +1188,8 @@ def fmt(key: str, v) -> str:
     if key == "SeqLevelGapMedian":
         m, e = f"{v:.1e}".split("e")
         return rf"{m}\times 10^{{{int(e)}}}"
+    if key in ("MCSkewMax", "MCSEUnderstate"):
+        return f"{v:.2f}"
     if key.startswith("SupReproTol"):
         m, e = f"{v:.1e}".split("e")
         return rf"{m}\times 10^{{{int(e)}}}"
@@ -1205,6 +1237,10 @@ def fmt(key: str, v) -> str:
     if key.startswith("GapPanelDPi"):
         return f"{v:.6f}"
     if key == "GapPanelGapPct":
+        return f"{v:.2f}"
+    if key.startswith("UndBand"):
+        return f"{v:.1f}"
+    if key.startswith("BandLoose") or key.startswith("BandStrict"):
         return f"{v:.2f}"
     if key == "LevelMaxOvershoot":
         return f"{v:.2f}"

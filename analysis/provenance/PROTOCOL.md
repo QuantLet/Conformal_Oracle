@@ -324,19 +324,41 @@ as a guarantee.
 
 ### The defect is in the instrument more often than in the object
 
-Counted over two days, not asserted. Six defects found; **four were in the
-checking apparatus and two in the thing being checked.**
+Counted, not asserted. Seven defects found; **five were in the checking
+apparatus and two in the thing being checked.**
 
-| where | what |
-|---|---|
-| instrument | guard 2 stripped every hand-authored tabular before reading |
-| instrument | check 5 skipped any "N of M" with a macro on either side |
-| instrument | `build_manifest.py` compares against the frozen submission, not the working tree |
-| instrument | `paper_numbers.py --check` regenerated the artefact it checks against, by importing a module that writes its own JSON at import time |
-| object | thirteen supplement literals that did not reproduce |
-| object | two half-macro claims that did not reproduce |
+| where | what | how it failed |
+|---|---|---|
+| instrument | guard 2's `DOCS` list omitted the `\input` section files | **scope** |
+| instrument | guard 2 stripped every hand-authored tabular before reading | scope |
+| instrument | check 5 skipped any "N of M" with a macro on either side | scope |
+| instrument | `build_manifest.py` compares against the frozen submission, not the working tree | scope |
+| instrument | `paper_numbers.py --check` regenerated the artefact it checks against | circularity |
+| object | thirteen supplement literals that did not reproduce | --- |
+| object | two half-macro claims that did not reproduce | --- |
 
-The fourth is the sharpest and it was introduced and caught inside one session.
+The first is the clearest of them and it is the one worth generalising. Guard 2
+had no defective logic: its pattern was right, its tolerance was right, its
+negative control fired. It read two files and the manuscript is four, so
+Section 4 --- the section carrying the paper's thesis --- and the whole of
+Section 5 had never been read by any literal check in the project's history. A
+stale $\hat\rho = 0.67$ survived there through four rounds in which the same
+figure was corrected everywhere else.
+
+**The failure mode is scoping, not calibration.** Four of the five instrument
+defects are that shape: a check that is correct about what it examines and
+examines less than the object. That is the same failure the paper reports in its
+own gate, where tail reach returns *inapplicable* on all thirteen series and the
+block count is nine checks exercised and one that was not --- an instrument
+whose verdict is silent about the part of the object it never reached. A wrong
+threshold announces itself the first time it fires; a wrong scope never fires at
+all, and its silence is indistinguishable from a pass.
+
+This is why the coverage rule above is stated in the units of the thing read:
+pages, cells, rows, files. A check that prints how much of the object it read
+cannot fail this way undetected.
+
+The circularity case was introduced and caught inside one session.
 Reading a grid spacing out of `delta_by_class.py` by importing it re-ran the
 module, and the module writes `delta_by_class.json` at module level. So
 `--check`, whose entire function is to fail when a stored number has gone stale,

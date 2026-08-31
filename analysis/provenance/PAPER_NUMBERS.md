@@ -180,6 +180,10 @@ not possible without editing this file's producer.
 | `\nTightBand` | -1.94 | -- |
 | `\nTightMargin` | 0.007 | -- |
 | `\nTightUnd` | 25.6 | -- |
+| `\nUndBandLoose` | 34.8 | -- |
+| `\nUndBandStrict` | 23.3 | -- |
+| `\nBandLoose` | -1.70 | -- |
+| `\nBandStrict` | -2.00 | -- |
 | `\nTightDelta` | 0.017 | -- |
 | `\nPairVaRHonest` | 2.61 | -- |
 | `\nPairVaRAlt` | 1.46 | -- |
@@ -375,9 +379,9 @@ not possible without editing this file's producer.
 | `\nWSweepExpLong` | 0.97 | -- |
 | `\nWSweepShiftLargerShort` | 281 | -- |
 | `\nWSweepBound` | 198 | -- |
-| `\nHarnessDefectsInstrument` | 4 | -- |
+| `\nHarnessDefectsInstrument` | 5 | -- |
 | `\nHarnessDefectsObject` | 2 | -- |
-| `\nHarnessDefectsTotal` | 6 | -- |
+| `\nHarnessDefectsTotal` | 7 | -- |
 | `\nMLCells` | 40 | -- |
 | `\nMLDates` | 200 | -- |
 | `\nMLAssets` | 4 | -- |
@@ -479,6 +483,8 @@ not possible without editing this file's producer.
 | `\nSupCtlConfSmallTThree` | 0.0048 | -- |
 | `\nSupCtlConfLargeTThree` | 0.00012 | -- |
 | `\nSupReproTol` | 1.3\times 10^{-4} | -- |
+| `\nMCSkewMax` | 1.51 | -- |
+| `\nMCSEUnderstate` | 1.76 | -- |
 | `\nSupReproTolMax` | 1.3\times 10^{-3} | -- |
 | `\nSupReproCells` | 10 | -- |
 | `\nSupSmallPi` | 0.008 | -- |

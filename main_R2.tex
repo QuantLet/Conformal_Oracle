@@ -117,22 +117,22 @@ observations, \nGapPanelGapPct\% of the evaluation window --- and is imposed in
 the empirical protocol.
 
 On a panel of equity, bond, commodity, cryptocurrency and foreign-exchange
-series, the shift restores nominal coverage for every forecaster it is applied
-to, from GARCH-family benchmarks to zero-shot time series foundation models.
-That indifference has a cost: a corrected coverage column no longer ranks the
-forecasters that produced it, so the correction cannot be evaluated by the
-instrument that triggers it.
+series, the shift brings every forecaster it is applied to --- from
+GARCH-family benchmarks to zero-shot time series foundation models --- into a
+corrected violation rate between $\nMainCorPiLo$ and $\nMainCorPiHi$ against a
+nominal $0.01$. That indifference has a cost: a corrected coverage column no
+longer ranks the forecasters that produced it, so the correction cannot be
+evaluated by the instrument that triggers it.
 
-We therefore treat recalibration as an intervention with an indication --- a
-treatment warranted under stated conditions and harmful outside them. Under the
+We therefore treat recalibration as conditional rather than default. Under the
 trailing-window variant it degrades \nWellCalRollWorse{} of the
-\nWellCalRollN{} forecasts in the panel that already pass their coverage
-backtest, and \nWellCalStaticWorse{} under the single split, and we give a rule,
-keyed only on information available at the decision date, for when to apply it.
+\nWellCalRollN{} forecasts that already pass their coverage backtest, and we
+give a rule, keyed only on information available at the decision date, for when
+to apply it.
 
 	\bigskip\noindent
-	\textbf{Keywords:} Value-at-Risk; Structural validation; Time series
-	foundation models; Conformal prediction; Regulatory backtesting
+	\textbf{Keywords:} Value-at-Risk; Conformal prediction; Temporal dependence; Time series
+	foundation models; Regulatory backtesting
 
 	\bigskip\noindent
 	\textbf{JEL:} C14\,|\,C53\,|\,C58\,|\,G17\,|\,G32
@@ -528,7 +528,7 @@ The nonconformity score $S_t$ from equation~\eqref{eq:score} is positive when th
 	\qquad
 	k = \left\lceil (n+1)(1-\alpha) \right\rceil,
 \end{equation}
-with $\qVstat = S_{(n)}$ when $k > n$, which occurs only for $\alpha < 1/(n+1)$. This is the conformal convention rather than the plain empirical quantile $Q_{1-\alpha}(\{S_t\})$, and the distinction is not cosmetic: the two differ by one order statistic, an $O(1/n)$ gap that can nonetheless change the sign of $\qVstat$ on assets whose calibration scores straddle zero near the $(1-\alpha)$ level. Every result in this paper that enters a headline table uses equation~\eqref{eq:qV}, and the rolling variant substitutes the trailing window of size $w$ for $\mathcal D_n$ and $k = \lceil (w+1)(1-\alpha)\rceil$. Six auxiliary artefacts compute the shift as $Q_{k/n}$, the empirical quantile at the level $k/n$ rather than the order statistic itself; on this panel the two differ by a median $\nSeqLevelGapMedian$ in relative terms and change the violation count of \nSeqLevelChanged{} of the \nSeqPairs{} pairs. That such a divergence existed at all has a cause worth naming, because it is the most productive single source of defect in this project: the convention was stated in a docstring and implemented in no function, so every producer rebuilt it, and four rebuilt it differently. A definition that lives in prose is not a definition that a pipeline can be held to. The shift is now defined once, in code, and every site in the repository that takes a quantile of nonconformity scores is enumerated with its convention by an audit that fails the build when an undeclared one appears. A further property of equation~\eqref{eq:qV} is worth stating where the reader meets it rather than where it bites: $k > n-1$ whenever $n < 2/\alpha - 1$, so at $\alpha = 0.01$ the shift is the \emph{sample maximum} for every calibration sample of 198 observations or fewer. A short calibration window therefore does not give a noisy estimate of the conformal quantile; it gives an extreme-value statistic with no stable variance. The bound is $n \le 198$ at $\alpha = 0.01$ and $n \le 78,\,38,\,18$ at $\alpha = 0.025,\,0.05,\,0.10$. The consequence for window choice is measured in Section~\ref{sec:cost}: the three trailing windows a reader would naturally compare at $\alpha = 0.01$, $w \in \{125, 250, 500\}$, are not three points on a variance curve, because $k/w$ depends on $w$ and the three therefore target different effective levels --- $\nWSweepShortLevel$, $\nWSweepMidLevel$ and $\nWSweepLongLevel$ against a nominal $0.99$ --- with $w = 125$ the extreme case at which the shift \emph{is} the window maximum. The recalibrated lower quantile and VaR are then given by equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$. A positive $\qVstat$ shifts the predicted quantile downward, increasing reported VaR and correcting underestimation of tail risk; a negative value indicates over-conservatism.
+with $\qVstat = S_{(n)}$ when $k > n$, which occurs only for $\alpha < 1/(n+1)$. This is the conformal convention rather than the plain empirical quantile $Q_{1-\alpha}(\{S_t\})$, and the distinction is not cosmetic: the two differ by one order statistic, an $O(1/n)$ gap that can nonetheless change the sign of $\qVstat$ on assets whose calibration scores straddle zero near the $(1-\alpha)$ level. Every result in this paper that enters a headline table uses equation~\eqref{eq:qV}, and the rolling variant substitutes the trailing window of size $w$ for $\mathcal D_n$ and $k = \lceil (w+1)(1-\alpha)\rceil$. Six auxiliary artefacts computed the shift as $Q_{k/n}$, the empirical quantile at that level rather than the order statistic itself; the two differ by a median $\nSeqLevelGapMedian$ here and change the violation count of \nSeqLevelChanged{} of the \nSeqPairs{} pairs. The shift is now defined once in code, and an audit enumerates every site in the repository that takes a quantile of nonconformity scores and fails the build when an undeclared convention appears (Supplement~S.11). A further property of equation~\eqref{eq:qV} is worth stating where the reader meets it rather than where it bites: $k > n-1$ whenever $n < 2/\alpha - 1$, so at $\alpha = 0.01$ the shift is the \emph{sample maximum} for every calibration sample of 198 observations or fewer. A short calibration window therefore does not give a noisy estimate of the conformal quantile; it gives an extreme-value statistic with no stable variance. The bound is $n \le 198$ at $\alpha = 0.01$ and $n \le 78,\,38,\,18$ at $\alpha = 0.025,\,0.05,\,0.10$. The consequence for window choice is measured in Section~\ref{sec:cost}: the three trailing windows a reader would naturally compare at $\alpha = 0.01$, $w \in \{125, 250, 500\}$, are not three points on a variance curve, because $k/w$ depends on $w$ and the three therefore target different effective levels --- $\nWSweepShortLevel$, $\nWSweepMidLevel$ and $\nWSweepLongLevel$ against a nominal $0.99$ --- with $w = 125$ the extreme case at which the shift \emph{is} the window maximum. The recalibrated lower quantile and VaR are then given by equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{stat}} = \qVstat$. A positive $\qVstat$ shifts the predicted quantile downward, increasing reported VaR and correcting underestimation of tail risk; a negative value indicates over-conservatism.
 
 \begin{remark}[The effective level of the conformal shift]
 	\label{rem:effective_level}
@@ -1048,9 +1048,9 @@ forecaster at all.
 Marginal coverage is restored across the panel. \nMainGreen{} of \nMainPairs{}
 model--asset pairs reach the Basel Green Zone (\nMainGreenPct\%), and
 unconditional coverage passes rise from \nMainKupiecRawPasses{} pairs to
-\nMainKupiecCorPasses. Corrected violation rates cluster within a thousandth of
-$\hat\pi = 0.010$ for every forecaster in Table~\ref{tab:master} ---
-$\nMainCorPiLo$ to $\nMainCorPiHi$ across the whole table --- which is what the
+\nMainKupiecCorPasses. Corrected violation rates fall between $\nMainCorPiLo$ and $\nMainCorPiHi$ for
+every forecaster in Table~\ref{tab:master}, a spread of under two thousandths
+around a nominal $0.010$, which is what the
 guarantee promises, and it is the same fact that makes the corrected \emph{rate}
 useless for ranking: a column on which every entry is at nominal separates
 nothing. The claim is about the rate and not about everything computed from the
@@ -1161,10 +1161,15 @@ Figure~\ref{fig:traffic_light} shows asset-level Basel classifications before an
 \label{sec:cost}
 
 A correction that restores coverage whatever the forecaster is not a step to be
-applied by default; it is an \emph{intervention}, and the question an
-intervention raises is not its average effect but its \emph{indication} --- on
-which series it is warranted, and at what cost where it is not. This section
-measures both.
+applied by default. The useful analogy is clinical. A treatment has an
+\emph{indication}: a stated set of conditions under which administering it is
+warranted, established separately from whether it works on average, and outside
+which it is expected to do harm. The question about such a treatment is not its
+mean effect over everyone but which patients it is for. Recalibration is in that
+position here --- it restores coverage on any series, including series it makes
+worse by every other measure --- so this section asks the indication question:
+on which forecasts the correction is warranted, and what it costs where it is
+not.
 
 \subsection{When the Correction Helps, and What It Costs}
 \label{sec:when_to_apply}
@@ -1314,55 +1319,10 @@ question (Section~\ref{sec:failure}). The per-forecaster comparison, the
 class-level breakdown and the single exception --- Historical Simulation, whose
 raw threshold is an order statistic of the same trailing window --- are in
 Supplement~S.12.
-\subsection{Multiple levels, and the configuration contrast}
-\label{sec:multiquantile}
-
-Evaluated at four levels the panel separates the two Chronos configurations more
-sharply than the 1\% table does, and it does so in the rejection counts rather
-than the violation rates: corrected rates sit near nominal at every level for
-every series, which is what the guarantee delivers and why the corrected column
-cannot rank anything. Read analytically, Chronos-Small is rejected on \nMainKupRejCorSmallAnalyticOne,
-\nMainKupRejCorSmallAnalyticTwoFive, \nMainKupRejCorSmallAnalyticFive{} and
-\nMainKupRejCorSmallAnalyticTen{} of \nMainAssets{} assets across $\alpha \in \{0.01, 0.025, 0.05, 0.10\}$ --- all
-four counts on the \emph{corrected} series --- while the same weights sampled at
-the checkpoint default give \nMainKupRejCorSmallDefaultOne, \nMainKupRejCorSmallDefaultTwoFive,
-\nMainKupRejCorSmallDefaultFive{} and \nMainKupRejCorSmallDefaultTen. Recalibration at one level cannot
-repair a predictive distribution that is too narrow at all of them
-(Table~S.13).
-
-The comparison that belongs in the body rather than a robustness appendix is the
-configuration one, because it is the only contrast in this paper that holds the
-model fixed and varies only the reduction step. On identical weights, contexts
-and dates, reading the Chronos predictive distribution analytically beats
-sampling it at the checkpoint default: mean corrected quantile score
-$\nLitQSAnalyticSmall \times 10^{-4}$ against $\nLitQSDefaultSmall \times
-10^{-4}$ for Chronos-Small and $\nLitQSAnalyticMini \times 10^{-4}$ against
-$\nLitQSDefaultMini \times 10^{-4}$ for Chronos-Mini, both at $p < 0.001$. These figures are computed on the dates the
-two configurations share, so they differ slightly from the per-asset averages of
-Table~\ref{tab:master}, which run over each series' full test window. They are
-the \emph{corrected} series, so the difference survives a recalibration that has
-already restored coverage for both.
-Cross-family score rankings are reported in Supplement~S.12 and no conclusion
-here rests on them.
-
-At the panel level the two cluster-robust procedures in this paper disagree, and
-the disagreement is the informative part. The pooled unconditional test rejects
-four forecasters at the 5\% level --- EWMA, Moirai~2.0, Chronos-Small read
-analytically and GJR-GARCH, at pooled rates of $\nPoolPiEWMA$,
-$\nPoolPiMoiraiTwo$, $\nPoolPiSmallAnalytic$ and $\nPoolPiGJR$ against a
-nominal $0.01$. Allowing dependence within an asset through a Driscoll--Kraay
-cluster statistic leaves one rejection, EWMA at $p = \nPoolClusterEWMA$; a
-Rademacher wild-cluster bootstrap over the same \nMainAssets{} clusters with
-$B = 999$ replications leaves none, EWMA coming closest at
-$p = \nPoolBootEWMA$. Neither
-procedure is the wrong one. With \nMainAssets{} clusters the bootstrap
-distribution is built from \nMainAssets{} sign flips, its resolution near the
-5\% boundary is coarse, and a forecaster sitting at $\nPoolClusterEWMA$ under
-one and $\nPoolBootEWMA$ under the other has not been shown to be either adequately or
-inadequately calibrated. What the comparison establishes is narrower than either
-verdict: the pooled rejections are not robust to allowing within-asset
-dependence, and should not be read as evidence of miscalibration
-(Table~S.14).
+\paragraph{Multiple levels} Recalibrating at one level does not repair a
+predictive distribution that is too narrow at all of them; the level-by-level
+counts, and the configuration contrast that holds the model fixed while varying
+only the code that reads it, are in Supplement~S.6.
 
 \subsection{Alternatives to the one-parameter shift}
 \label{sec:baselines}
@@ -1488,8 +1448,8 @@ standard deviation exactly invariant, and the violation rates were compared on
 It was found by rebuilding the estimator from its own description rather than by
 re-running it, and the corrected figures are throughout.
 
-Two further defects sat in the verification apparatus itself, and both were found
-the same way. Of the defects this project's computation protocol records,
+Further defects sat in the verification apparatus itself, and were found the
+same way. Of the defects this project's computation protocol records,
 \nHarnessDefectsInstrument{} of \nHarnessDefectsTotal{} were in a check and
 \nHarnessDefectsObject{} in the quantity being checked. That ratio is not an
 aside. A validation instrument is an estimator like any other, it fails in the
@@ -1499,6 +1459,19 @@ paper's own argument measured on the paper: it is why a coverage test cannot
 carry the validation of a forecast series by itself, and why each check in the
 replication material carries a negative control that must be seen to fail before
 the check may report anything.
+
+Four of the \nHarnessDefectsInstrument{} failed the same way, and it is not the
+way a reader would expect. None had defective logic, a loose tolerance or a
+control that did not fire. Each was correct about what it examined and examined
+less than the object: the literal check read two of the four files the
+manuscript is assembled from, so the section carrying the central result had
+never been read by it at all, and a superseded persistence figure survived there
+through four rounds in which the same figure was corrected everywhere else. That
+is the failure this paper reports in its own gate, where tail reach returns
+\emph{inapplicable} on all \nGateSeries{} series and the block count is nine
+checks exercised and one that was not. A wrong threshold announces itself the
+first time it fires. A wrong scope never fires, and its silence cannot be told
+from a pass.
 
 One finding ran the other way, and it is the reason verification is worth the
 cost rather than a tax on it. The effective-level overshoot of
@@ -1512,58 +1485,26 @@ visible in the algebra all along and was noticed only when two unrelated checks
 returned the same anomaly, which is verification producing a result rather than
 repairing one.
 
-\section{Implications for Deployment}
-\label{sec:practitioner}
-
-\emph{Structural validation precedes recalibration.} A recalibration decision
-taken on a series that has not been structurally checked is a decision about an
-artefact, and the correction will make it look correct
-(Section~\ref{sec:gate}).
-
-\emph{The correction has an indication.} The shift is warranted when the raw
-forecast fails a backtest \emph{on the calibration window}, and not otherwise. At
-$\alpha = 0.01$ that rule skips \nGateRollSkipped{} of \nSeqPairs{} pairs, avoids
-\nGateRollAvoided{} of the \nDegradedRoll{} degradations the rolling estimator
-would otherwise cause, at a cost of \nGateRollUpgradesLostNet{} pairs on the
-quantile score --- \nGateRollUpgradesLost{} of \nGateRollUpgrades{} zone upgrades
-as the traffic light counts them, \nGateRollUpgradesLostWorse{} of those being
-pairs the correction would have degraded. It is not free on the regulatory axis,
-and a version that appears to be free is one evaluated on the window it used to
-decide.
-
-\emph{The operative criterion is the estimation constraint, not the model class.}
-With adequate per-asset history, the GJR-GARCH family with conformal correction
-attains the best corrected quantile score in this panel, and the two variants
-within it are not distinguishable: their mean corrected scores differ by
-\nPairQSGapPct\%, the ordering reverses between per-asset and pooled aggregation,
-and a Diebold--Mariano test \citep{diebold1995comparing} on the corrected loss differentials with a
-Driscoll--Kraay panel-HAC variance \citep{driscoll1998consistent} --- cross-sectional mean per date, Bartlett
-kernel at \nPairDMLags{} lags --- returns $t = \nPairDMt$, $p = \nPairDMp$ over
-\nMainAssets{} assets. The sign of that statistic is itself a function of the
-weighting: equal weight on dates favours one variant and equal weight on
-observations the other, which is the same reversal the per-asset and pooled
-averages show, arriving a third time. The family is therefore the identified unit, not a winner
-within it. Where per-asset estimation is infeasible --- scale, short history,
-latency --- a correctly configured zero-shot foundation model with the same
-correction is competitive with the GARCH family at the 1\% level, which is an
-operational option rather than a claim of superiority.
-
-\emph{The signed shift carries the diagnosis; the ratio does not.} $\qVstat$ is
-negative when the base forecast is over-conservative and the correction tightens
-it, releasing capital, and positive in the reverse case. $\bar R$ cannot carry
-that information, being a ratio of absolute values, which is why the two are
-reported separately throughout. In this panel negative values are rare and belong
-to no single forecaster --- three assets for TimesFM~2.5, two for Moirai~2.0, one
-each for Moirai~1.1 and GJR-GARCH-$t$ --- while GJR-GARCH is positive on all
-\nMainAssets{} assets (\nGJRnegqV{} negative). A forecaster that is
-systematically over-conservative across an entire asset universe warrants
-inspection at the level of its quantile map before the pattern is read as a
-modelling choice: the Student-$t$ failure mode of
-Table~S.31 presents exactly that way.
-
-%══════════════════════════════════════════════════════════════════════════════
 \section{Conclusion}
 \label{sec:conclude}
+\label{sec:practitioner}
+
+Four things follow for a practitioner, and they are the paper's argument read
+backwards. A recalibration decision taken on a series that has not been
+structurally checked is a decision about an artefact, and the correction will
+make it look correct. The shift is warranted when the raw forecast fails a
+backtest \emph{on the calibration window} and not otherwise: at $\alpha = 0.01$
+that rule skips \nGateRollSkipped{} of \nSeqPairs{} pairs and avoids
+\nGateRollAvoided{} of the \nDegradedRoll{} degradations the rolling estimator
+would otherwise cause, at a cost of \nGateRollUpgradesLostNet{} pairs on the
+quantile score. The operative criterion is the estimation constraint rather than
+the model class --- with adequate per-asset history the GJR-GARCH family with
+conformal correction attains the best corrected quantile score here, and its two
+variants are not distinguishable, their mean corrected scores differing by
+\nPairQSGapPct\% with the ordering reversing between per-asset and pooled
+aggregation. And the signed shift carries the diagnosis while the ratio
+$\bar R$ does not.
+
 
 A Value-at-Risk forecast is produced by code, and the step in which a predictive
 distribution becomes a threshold determines what the resulting series is. In this

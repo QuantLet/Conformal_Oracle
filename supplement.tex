@@ -2320,9 +2320,19 @@ Value-at-Risk understatement it permits.
 		an indistinguishable alternative under a unimodal return law; the last
 		column is the Value-at-Risk understatement it permits, against a true 1\%
 		quantile of $\nGapQTrueStd$ in units of conditional scale. Each figure is
-		attained by an explicit pair, not merely bounded. The discretisation
-		converges from above, so every entry is an upper bound and the bias runs
-		toward overstating the blind spot.}
+		attained by an explicit pair, not merely bounded, and the discretisation
+		converges from above, so every entry is an upper bound.
+		\emph{The last row is a property of the linear programme, not a
+		measurement of these ten checks.} What reduces the blind spot is the
+		presence of a scale restriction, not its provenance: any restriction of
+		that form does it, and the size of the reduction is a smooth function of
+		where the edge is placed --- \nUndBandLoose\% at an edge of
+		$\nBandLoose$, \nGapUndGateNow\% at the $\nGapBandNow$ used here, and
+		\nUndBandStrict\% at $\nBandStrict$, against \nGapUndUni\% with no scale
+		restriction at all. The row should be read as showing that a scale
+		reading removes about a third of what the exceedance path cannot
+		identify, and not as evidence for the particular edge, which is chosen
+		by hand.}
 	\label{tab:gate_residual}
 	\footnotesize
 	\setlength{\tabcolsep}{5pt}
@@ -2544,6 +2554,55 @@ represented here. The argument for them does not rest on that performance. It
 rests on Table~\ref{tab:gate_residual}: the checks reduce a gap that the
 coverage-based tests of Section~7 of the manuscript cannot reduce at all, and both
 the reduction and the remainder are computed.
+
+\section{The Monte Carlo Harness, and What Its Gate Cannot See}
+\label{app:mc_harness}
+
+A simulation study is an instrument, and this paper's subject is what instruments
+miss. The design above was therefore gated on reproducing an existing
+two-sample-size study before any new sample size was reported, and the gate is
+stated here with what it can and cannot see.
+
+The published study reproduces from its 5{,}000 per-replication rows on every
+printed value. A fresh implementation of the recursions and the estimator
+reproduces all ten of its cells on all six reported quantities, at a tolerance of
+three standard errors of the \emph{difference} between two independent Monte Carlo
+estimates, with the new run at 2{,}000 replications so that the published run's
+$500$-replication error dominates the comparison. A systematic bias survives the
+gate only if it is inside the band in every one of the \nSupReproCells{} cells,
+so the smallest discrepancy the tolerance admits is $\nSupReproTol$ on mean
+$\qVstat$: the gate establishes agreement to Monte Carlo resolution, and not
+exact agreement.
+
+Two defects surfaced, both in the harness rather than in what it was measuring,
+and neither in a direction the results would have revealed.
+
+The first was a tolerance. The standard error of a standard deviation was taken as
+$\mathrm{sd}/\sqrt{2N}$, which assumes a normal replication distribution;
+$\qVstat$ is a $1\%$ order statistic of heavy-tailed scores and its replication
+distribution has skewness up to $+\nMCSkewMax$, so the declared tolerance understated the
+true sampling variability by up to $1.76$ times, worst in exactly the cell where
+the skew is largest. The second was a seed. Replications were keyed on Python's
+string \texttt{hash}, which is salted per interpreter process, so two runs of the
+same script drew different samples and the set of cells the gate flagged changed
+between them --- non-reproducibility introduced by the code written to check for
+it. Both were found because the gate failed, not because the results looked
+wrong; under a correctly specified tolerance and a deterministic seed all ten
+cells reproduce.
+
+Neither defect is in a forecasting model, and that is the reason for reporting
+them. This paper's argument is that the code converting a model output into a
+number is an object of study, and the same argument applies to the code that
+checks it. Section~10 of the manuscript returns to the point with the second
+instance, which is in the estimator this paper offers as a remedy.
+
+One control is reported rather than repaired. Run on a forecaster given the
+correct innovation law, so that the population shift is zero, the harness returns
+zero at every calibration sample of 700 or more and a small negative value at 350
+--- the interpolated quantile's own downward bias in a right-skewed tail, running
+opposite to the conformal convention's upward one. At $\alpha = 0.01$ and
+$n = 350$ neither convention is unbiased. The $T = 500$ column of
+Table~1 of the manuscript carries that and is reported with it.
 
 \sloppy\emergencystretch=3em
 \bibliographystyle{elsarticle-harv}

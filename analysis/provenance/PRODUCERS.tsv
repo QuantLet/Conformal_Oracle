@@ -42,3 +42,4 @@ sections/sec4_theory	authored	-
 sections/sec5_montecarlo	authored	-
 analysis/ml/tab_ml_dose	generated	analysis/ml/emit_dose_tables.py
 analysis/ml/tab_ml_knobs	generated	analysis/ml/emit_dose_tables.py
+analysis/k2_sim/tab_mc_grid	generated	analysis/k2_sim/emit_mc_table.py
