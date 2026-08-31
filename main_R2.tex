@@ -1519,6 +1519,18 @@ checks exercised and one that was not. A wrong threshold announces itself the
 first time it fires. A wrong scope never fires, and its silence cannot be told
 from a pass.
 
+Three instances of that shape appeared in this project within two days, and
+their mechanisms are unrelated, which is what makes it a class and not a
+statistic on a small sample. The literal check omitted two of the four files
+from its own list. A registry parser was told to treat a character as a comment
+mark, and a row containing it lost a field without losing the row. And the guard
+set read the built documents without anything having established that they came
+from the source it was checking, so it could report green on a manuscript that
+did not compile --- which it did. A file list, a parser flag, and an unexamined
+provenance: no shared implementation, no shared author error, and the same
+failure. Each check was correct on what it looked at, and what it looked at was
+smaller than what it was believed to cover.
+
 Two later instances belong here, and the criterion separates them. The first is
 an inventory. Before the convention audit of Section~\ref{sec:cqr_var} existed, the
 sites taking a chronological split were counted by hand and recorded as
@@ -1527,7 +1539,10 @@ The hedge is part of the finding, because a hand count cannot enumerate what the
 person counting did not think to look at, and the shortfall here was near one
 site in five. That is the defect this paper names elsewhere --- a quantity
 counted outside the code that owns it --- turned on the code itself. It reached
-a stored artefact before the audit existed, so it enters the count above.
+a stored artefact before the audit existed, so it enters the count above, and it
+did more damage than a wrong figure in a table would have: it was carried into
+the reasoning about how many sites a migration would touch, and a table is
+checked again later while a decision taken on a number is not.
 
 The second does not, and is recorded because it is the clearest case in the project of a check that examines the
 right object and cannot see part of it. The registries are tab-separated files,

@@ -53,6 +53,43 @@ OUT_MD = BASE / "analysis" / "provenance" / "PAPER_NUMBERS.md"
 RATE_N: dict[str, int] = {}
 
 
+
+# A partition can sum correctly and still be wrong, because summing does not
+# check that the parts and the total count the same object. The split audit
+# reported 41 CONTIGUOUS over deduplicated registry keys while the supplement
+# partitioned 46 over source sites: both correct, both in "sites"-shaped
+# integers, neither comparable. This is the same defect as a derived quantity
+# computed outside the code that owns the object, one level over: two producers,
+# two objects, one unit of report. So a counted quantity records its unit, and a
+# partition is only accepted when every part and the total declare the same one.
+COUNT_UNIT: dict[str, str] = {}
+
+
+def counted(n: dict, key: str, value, unit: str):
+    """Record an integer count together with the object it counts."""
+    n[key] = int(value)
+    COUNT_UNIT[key] = unit
+    return n[key]
+
+
+def partition(n: dict, total_key: str, part_keys: list[str]) -> None:
+    """A total and its parts must agree in sum AND in what they count."""
+    units = {k: COUNT_UNIT.get(k) for k in [total_key] + part_keys}
+    missing = [k for k, u in units.items() if not u]
+    if missing:
+        raise SystemExit(f"partition {total_key}: no unit declared for "
+                         f"{', '.join(missing)}; a count with no object is not "
+                         "a part of anything")
+    if len(set(units.values())) != 1:
+        raise SystemExit(
+            f"partition {total_key}: parts do not count the same object -- "
+            + "; ".join(f"{k} in {u}" for k, u in units.items()))
+    got = sum(n[k] for k in part_keys)
+    if got != n[total_key]:
+        raise SystemExit(f"partition {total_key}: parts sum to {got}, total is "
+                         f"{n[total_key]}")
+
+
 def rate(n: dict, key: str, value, n_obs: int):
     """Record a rate together with the sample size that sets its resolution."""
     n[key] = value
@@ -883,6 +920,17 @@ def collect() -> dict:
     n["MLPanelRun"] = _first_commit_date("analysis/ml/dose_response_raw.csv")
     assert n["MLBandDeclared"] and n["MLPanelRun"], \
         "the out-of-sample claim rests on two git dates and one is missing"
+
+    # The Chronos sampling readings carry the same kind of evidence and must
+    # show it, because a third claim of the same form -- the rho-hat census --
+    # does not, and undated prose makes the three look alike.
+    n["ChronosDeclared"] = _first_commit_date(
+        "analysis/chronos_sampling/PREREGISTRATION.md")
+    n["ChronosRun"] = _first_commit_date(
+        "analysis/chronos_sampling/dose_response.csv")
+    assert n["ChronosDeclared"] and n["ChronosRun"] \
+        and n["ChronosDeclared"] < n["ChronosRun"], \
+        "the Chronos readings claim precedence and the git dates do not show it"
     # The knob threshold, read from the emitter that applies it rather than
     # typed twice. Declared in drafts/prereg_ml.md before the knob arm ran.
     import ast as _ast
@@ -1233,27 +1281,25 @@ def collect() -> dict:
         return d, d[col].value_counts().to_dict()
 
     _qv, _qvc = _registry("QV_CONVENTION_SITES.tsv")
-    n["QVSites"] = int(len(_qv))
-    n["QVOrderStat"] = int(_qvc.get("ORDER_STATISTIC", 0))
-    n["QVLevelKN"] = int(_qvc.get("LEVEL_K_OVER_N", 0))
-    n["QVCanonical"] = int(_qvc.get("CANONICAL", 0))
-    n["QVPlain"] = int(_qvc.get("PLAIN_QUANTILE", 0))
-    n["QVNotShift"] = int(_qvc.get("NOT_THE_SHIFT", 0))
+    counted(n, "QVSites", len(_qv), "source sites")
+    counted(n, "QVOrderStat", _qvc.get("ORDER_STATISTIC", 0), "source sites")
+    counted(n, "QVLevelKN", _qvc.get("LEVEL_K_OVER_N", 0), "source sites")
+    counted(n, "QVCanonical", _qvc.get("CANONICAL", 0), "source sites")
+    counted(n, "QVPlain", _qvc.get("PLAIN_QUANTILE", 0), "source sites")
+    counted(n, "QVNotShift", _qvc.get("NOT_THE_SHIFT", 0), "source sites")
     _sp, _spc = _registry("SPLIT_SITES.tsv")
-    n["SplitSites"] = int(len(_sp))
-    n["SplitContiguous"] = int(_spc.get("CONTIGUOUS", 0))
-    n["SplitGapped"] = int(_spc.get("GAPPED", 0))
-    n["SplitKeys"] = int(len(_sp.drop_duplicates(subset=["file", "code"])))
-    n["SplitMeasurement"] = int(_spc.get("MEASUREMENT", 0))
-    n["SplitNotPanel"] = int(_spc.get("NOT_A_PANEL", 0))
-    for _fam, _tot, _parts in (
-            ("QV", n["QVSites"], ["QVOrderStat", "QVLevelKN", "QVCanonical",
-                                 "QVPlain", "QVNotShift"]),
-            ("Split", n["SplitSites"], ["SplitContiguous", "SplitGapped",
-                                        "SplitMeasurement", "SplitNotPanel"])):
-        if sum(n[k] for k in _parts) != _tot:
-            raise SystemExit(f"{_fam} registry parts do not sum to {_tot}; "
-                             "the supplement partitions them and would be wrong")
+    counted(n, "SplitSites", len(_sp), "source sites")
+    counted(n, "SplitContiguous", _spc.get("CONTIGUOUS", 0), "source sites")
+    counted(n, "SplitGapped", _spc.get("GAPPED", 0), "source sites")
+    counted(n, "SplitMeasurement", _spc.get("MEASUREMENT", 0), "source sites")
+    counted(n, "SplitNotPanel", _spc.get("NOT_A_PANEL", 0), "source sites")
+    # A different object in the same shape of integer, and named for it.
+    counted(n, "SplitKeys", len(_sp.drop_duplicates(subset=["file", "code"])),
+            "registry declarations")
+    partition(n, "QVSites", ["QVOrderStat", "QVLevelKN", "QVCanonical",
+                             "QVPlain", "QVNotShift"])
+    partition(n, "SplitSites", ["SplitContiguous", "SplitGapped",
+                                "SplitMeasurement", "SplitNotPanel"])
 
     # Where Corollary 4.6's constant is undefined, and on which series.
     # Pre-registered in analysis/convention/PREREG_RHO_CENSUS.md.

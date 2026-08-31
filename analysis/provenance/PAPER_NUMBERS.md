@@ -539,6 +539,8 @@ not possible without editing this file's producer.
 | `\nMLGbmLeafDefault` | 20 | -- |
 | `\nMLBandDeclared` | 22 August 2026 | -- |
 | `\nMLPanelRun` | 23 August 2026 | -- |
+| `\nChronosDeclared` | 17 August 2026 | -- |
+| `\nChronosRun` | 20 August 2026 | -- |
 | `\nMLKnobThreshold` | 1.5 | -- |
 | `\nMLPooledObs` | 800 | -- |
 | `\nMLPooledGrid` | 0.125 | -- |
@@ -676,9 +678,9 @@ not possible without editing this file's producer.
 | `\nSplitSites` | 56 | -- |
 | `\nSplitContiguous` | 46 | -- |
 | `\nSplitGapped` | 2 | -- |
-| `\nSplitKeys` | 51 | -- |
 | `\nSplitMeasurement` | 5 | -- |
 | `\nSplitNotPanel` | 3 | -- |
+| `\nSplitKeys` | 51 | -- |
 | `\nRhoCells` | 312 | -- |
 | `\nRhoFallback` | 45 | -- |
 | `\nRhoFallbackTrunc` | 40 | -- |

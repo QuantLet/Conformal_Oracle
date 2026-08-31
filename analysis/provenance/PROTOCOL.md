@@ -444,6 +444,13 @@ the repository instead of by enumerating it. Both are the failure of a
 hand-carried quantity, which is what the registries exist to prevent, and the
 second is that failure applied to the registries themselves.
 
+The inventory has a property the variance ratio does not, and it is worth a
+sentence even though it does not earn a category. "About 45" did not sit in a
+table waiting to be re-checked; it was carried into the reasoning about the
+scope of a migration and repeated in discussion before the audit contradicted
+it. A hand-carried number that reaches a decision is worse placed than one that
+reaches a table, because the table is read again and the decision is not.
+
 The first is the clearest of them and it is the one worth generalising. Guard 2
 had no defective logic: its pattern was right, its tolerance was right, its
 negative control fired. It read two files and the manuscript is four, so
@@ -460,6 +467,15 @@ block count is nine checks exercised and one that was not --- an instrument
 whose verdict is silent about the part of the object it never reached. A wrong
 threshold announces itself the first time it fires; a wrong scope never fires at
 all, and its silence is indistinguishable from a pass.
+
+**It is now a class with unrelated exemplars, not a ratio on eight cases.**
+Three instances appeared within two days and share no implementation: a file
+list that omitted two of the four documents; a parser flag that dropped a field
+without dropping the record; and a guard set that read built PDFs without ever
+establishing they came from the source under test. Different code, different
+authors of the mistake, different failure surface, one shape. A count of four in
+five invites the question of whether the sample is too small to carry it. Three
+mechanisms converging does not.
 
 This is why the coverage rule above is stated in the units of the thing read:
 pages, cells, rows, files. A check that prints how much of the object it read
@@ -563,4 +579,20 @@ that no longer holds. Guard 7 compiles both documents from the working tree and
 compares the rebuilt typeset text against the shipped PDF character by
 character; a compile failure and a stale PDF are both build failures. It found
 one of each on its first run.
+
+## A partition declares its unit, not only its sum
+
+The split audit printed 41 CONTIGUOUS while the supplement partitioned 46. Both
+were right. The audit counted deduplicated registry keys, the supplement counted
+source sites, and the two arrived as integers of the same magnitude in the same
+sentence shape. Nothing summed wrong, so a sum check would have passed. It is
+`run_gap_panel.py` reporting 297 green against the pipeline's 278 a second time:
+a quantity computed correctly on a different object from the one the claim is
+about.
+
+**The rule.** A counted quantity records the object it counts, and a partition
+is accepted only when the total and every part declare the same one. Summing is
+not enough --- two producers can hold two objects and report in the same unit of
+appearance. `counted()` and `partition()` in `paper_numbers.py` enforce it; both
+controls were seen firing, one on the 46-against-51 case itself.
 
