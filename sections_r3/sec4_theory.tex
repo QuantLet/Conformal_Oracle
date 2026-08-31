@@ -12,18 +12,16 @@ inherits both. This section replaces the exchangeability assumption with a weak
 dependence condition and states what survives.
 
 The coverage statement this requires is not new, and the section is organised
-around that fact. \citet{oliveira2024split} prove marginal coverage for split
+around that. \citet{oliveira2024split} prove marginal coverage for split
 conformal prediction on stationary $\beta$-mixing data with an explicit
 remainder, and name GARCH processes as inside the class their result covers;
 \citet{barber2026predictive} sharpen the sample-size term from
 $\mathcal O(\sqrt{\tau/n})$ to $\mathcal O(\tau/n)$. What this section
-contributes is not the bound but its calibration and its price: the mixing rate
-of a GARCH score process is made explicit, which turns an abstract separation
-requirement into a number of trading days, and
-Section~\ref{sec:theory_gap} then measures what imposing that number costs on
-the panel this paper reports. That measurement is the part no prior result
-supplies, and Section~\ref{sec:blindspot_identification} carries the theoretical claim
-this paper does originate.
+contributes is the calibration and the price: the mixing rate of a GARCH score
+process is made explicit, which turns an abstract separation requirement into a
+number of trading days, and Section~\ref{sec:theory_gap} measures what imposing
+that number costs on the panel. Section~\ref{sec:blindspot_identification}
+carries the theoretical claim this paper does originate.
 
 Three results are stated. The first is asymptotic coverage for the single-split
 estimator under geometric $\beta$-mixing, with an explicit remainder and a
@@ -170,22 +168,17 @@ correctly specified forecaster.
 \end{theorem}
 
 \paragraph{Attribution.} Theorem~\ref{thm:dependent_conformal_var} is a
-one-sided specialization of a published result and is stated here because the
-paper's estimator needs it, not because it is new. \citet[Theorem~4]{oliveira2024split}
-give marginal coverage for split conformal prediction under stationary
-$\beta$-mixing with remainder $\varepsilon_{\mathrm{cal}} +
-\varepsilon_{\mathrm{train}} + \delta_{\mathrm{cal}}$, in which
-$\varepsilon_{\mathrm{cal}}$ carries a $\sqrt{\log(\cdot)/n_{\mathrm{cal}}}$
-term and $\varepsilon_{\mathrm{train}}$ is a $\beta$-coefficient evaluated at a
-separation; their statement is for a generic score, so a signed score is admitted
-without modification. \citet{barber2026predictive} then improve the sample-size
-term to scale linearly in $\tau/n$ rather than as $\sqrt{\tau/n}$, which under
-geometric mixing with $\tau = c\log n$ is $\mathcal O((\log n)/n)$ against the
-$\mathcal O(\sqrt{(\log n)/n})$ of equation~\eqref{eq:coverage_bound}. A reader
-who wants the sharpest available constant should take theirs. Equation~\eqref{eq:coverage_bound}
-is retained in the form above because it is the form the panel is measured
-against in Section~\ref{sec:theory_gap}, and because its two terms separate the
-two things a practitioner controls.
+one-sided specialization of \citet[Theorem~4]{oliveira2024split}, whose
+remainder $\varepsilon_{\mathrm{cal}} + \varepsilon_{\mathrm{train}} +
+\delta_{\mathrm{cal}}$ carries a $\sqrt{\log(\cdot)/n_{\mathrm{cal}}}$ term and a
+$\beta$-coefficient at a separation; their statement is for a generic score, so
+a signed score is admitted without modification. A reader who wants the sharpest
+available constant should take \citet{barber2026predictive}, whose bound is
+$\mathcal O((\log n)/n)$ under geometric mixing against the
+$\mathcal O(\sqrt{(\log n)/n})$ of equation~\eqref{eq:coverage_bound}. The form
+above is retained because it is what the panel is measured against in
+Section~\ref{sec:theory_gap} and because its two terms separate the two things a
+practitioner controls.
 
 The proof, in \texttt{PROOFS.tex}, has three steps: the coverage event is rewritten
 as a score event, $\qVstat$ is placed near $q_{1-\alpha}$ by
@@ -226,24 +219,17 @@ correction under dependence; it does not certify it.
 
 The corollary is the reason the theorem is usable rather than merely true. Its
 hypotheses are the standard conditions for strict stationarity and geometric
-ergodicity of GARCH$(1,1)$ \citep[Theorem~2.10]{francq2019garch,lindner2009stationarity},
-and they are satisfied by every parametric benchmark in this study. The
-logarithmic rate and its constant are not new either: for geometrically ergodic
-Markov chains with rate $\rho$, \citet[Theorem~5.1]{zheng2024conformal} obtain
-a separation of order $\log n/\lvert\log\rho\rvert$, which is
-equation~\eqref{eq:garch_gap_rate}. Their construction is a thinning stride --- a
-$K$-split scheme retaining every $K$th calibration score --- rather than a single
-block separated from the evaluated point, so the two are the same rate applied to
-different objects. What the corollary adds is the passage from a GARCH
-specification to that rate, which rests on the exponential $\beta$-mixing of
-GARCH$(1,1)$ established by \citet{carrasco2002mixing} and is a citation rather
-than a result. Its value is operational: it converts a mixing condition into a
-number of trading days, and the number turns out to be small. Under it the
-required separation is logarithmic in the calibration sample: across the
-\nGapPanelCells{} cells of the panel $g_n$ runs from \nGapPanelGapLo{} to
-\nGapPanelGapHi{} observations with a median of \nGapPanelGapMed, so the
-condition is cheap where it can be met at all. The proof
-is in \texttt{PROOFS.tex}.
+ergodicity of GARCH$(1,1)$
+\citep[Theorem~2.10]{francq2019garch,lindner2009stationarity} and hold for every
+parametric benchmark here. The logarithmic rate and its constant are not new:
+for geometrically ergodic chains with rate $\rho$,
+\citet[Theorem~5.1]{zheng2024conformal} obtain a separation of order
+$\log n/\lvert\log\rho\rvert$, though through a thinning stride rather than a
+single separated block, so the same rate applies to different objects. What the
+corollary adds is the passage from a GARCH specification to that rate, which
+rests on \citet{carrasco2002mixing} and is a citation rather than a result. Its
+value is operational: it converts a mixing condition into a number of trading
+days, and the number is small.
 
 \subsection{The separation condition, and what the protocol does instead}
 \label{sec:theory_gap}
@@ -267,23 +253,17 @@ estimator the tables report.
 The constant is undefined where $\hat\rho \le 0$, and a floor of five
 observations is imposed there. That occurs on \nRhoFallback{} of the
 \nRhoCells{} cells, and \nRhoFallbackTrunc{} of those are the two truncated
-Chronos series: the median $\hat\rho$ is $\nRhoMedTrunc$ across their
+Chronos series: median $\hat\rho$ is $\nRhoMedTrunc$ across their
 \nRhoTruncCells{} cells against $\nRhoMedOther$ across the remaining
-\nRhoOtherCells. The concentration follows from what the truncation does.
-Restricting the predictive law to its most probable atoms leaves a lower
-quantile that moves little between adjacent days while the return does not, so
-the score $\hat q^{lo}_t - r_t$ is dominated by $-r_t$ and inherits the return's
-lack of persistence. A degenerate constant is therefore the corollary reporting
-that those scores carry no dependence to separate, and the floor supplies more
-separation than the condition requires; the fallback is not concentrated where
-the gap would bind hardest but where it would bind least. Both readings of
-the census --- concentration on the truncated series, and no forecaster pattern
-at all --- were written down before it ran, together with the rule that decides
-between them, and the second would have been reported. That ordering is not
-evidenced the way the two dated declarations elsewhere in this paper are: the
-declaration and the output are minutes apart in one commit, so what a reader can
-verify is the alternative on the page and not the sequence in which it was
-written.
+\nRhoOtherCells. Restricting a predictive law to its most probable atoms leaves
+a lower quantile that moves little between adjacent days while the return does,
+so the score inherits the return's lack of persistence. A degenerate constant is
+therefore the corollary reporting that those scores carry no dependence to
+separate, and the floor supplies more separation than the condition requires.
+Both readings of the census were written down before it ran, together with the
+rule that decides between them; the declaration and the output are minutes apart
+in one commit, so what a reader can verify is the alternative on the page rather
+than the sequence in which it was written.
 
 One property of the construction makes the comparison sharper than an ablation
 can be. Because the gap is removed from the front of the test block, the
@@ -306,17 +286,15 @@ cells, with the rate moving by a median of $\nGapPanelDPiMed$ and at most
 $\nGapPanelDPiMax$. Those flips are what a threshold does to a statistic that
 moved by less than a thousandth, not instability in the estimator.
 
-The rate $g_n = \lceil c\log n\rceil$ has a regime in which it cannot be
-imposed at all: as $\hat\rho$ approaches one the constant diverges, and the
-required separation exceeds the test block. At the sample sizes here that
-happens only above $\hat\rho = \nGapRhoRaiseAt$, and the largest value on the
-panel is \nGapMaxRho, so the condition is unmet on \nGapCellsUnmet{} cells and
-the widest gap consumes \nGapWidestPct\% of its evaluation window. The
+The rate has a regime in which it cannot be imposed: as $\hat\rho$ approaches
+one the constant diverges and the required separation exceeds the test block. At
+these sample sizes that needs $\hat\rho$ above $\nGapRhoRaiseAt$, the largest on
+the panel is \nGapMaxRho, and the condition is unmet on \nGapCellsUnmet{} cells,
+the widest gap consuming \nGapWidestPct\% of its evaluation window. The
 implementation raises on such a cell rather than truncating the gap, because a
-coverage figure computed on whatever observations survived a silent truncation
-is not a coverage figure. Should a series ever reach that regime, it is reported
-as a cell on which \ref{ass:weak_dep} cannot be met at this sample size, not
-excluded and not covered.
+coverage figure computed on whatever observations survived a silent truncation is
+not one; a series reaching that regime would be reported as one on which
+\ref{ass:weak_dep} cannot be met at the available sample size.
 
 So Theorem~\ref{thm:dependent_conformal_var} covers an estimator that differs
 from the one the tables report by at most $\nGapAllDPiMax$ in violation rate,
