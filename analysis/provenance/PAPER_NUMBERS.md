@@ -675,12 +675,13 @@ not possible without editing this file's producer.
 | `\nQVCanonical` | 3 | -- |
 | `\nQVPlain` | 1 | -- |
 | `\nQVNotShift` | 15 | -- |
-| `\nSplitSites` | 56 | -- |
+| `\nSplitSites` | 59 | -- |
 | `\nSplitContiguous` | 46 | -- |
-| `\nSplitGapped` | 2 | -- |
-| `\nSplitMeasurement` | 5 | -- |
+| `\nSplitGapped` | 0 | -- |
+| `\nSplitMeasurement` | 8 | -- |
 | `\nSplitNotPanel` | 3 | -- |
-| `\nSplitKeys` | 51 | -- |
+| `\nSplitMigrated` | 2 | -- |
+| `\nSplitKeys` | 54 | -- |
 | `\nRhoCells` | 312 | -- |
 | `\nRhoFallback` | 45 | -- |
 | `\nRhoFallbackTrunc` | 40 | -- |

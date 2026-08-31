@@ -1293,13 +1293,15 @@ def collect() -> dict:
     counted(n, "SplitGapped", _spc.get("GAPPED", 0), "source sites")
     counted(n, "SplitMeasurement", _spc.get("MEASUREMENT", 0), "source sites")
     counted(n, "SplitNotPanel", _spc.get("NOT_A_PANEL", 0), "source sites")
+    counted(n, "SplitMigrated", _spc.get("MIGRATED", 0), "source sites")
     # A different object in the same shape of integer, and named for it.
     counted(n, "SplitKeys", len(_sp.drop_duplicates(subset=["file", "code"])),
             "registry declarations")
     partition(n, "QVSites", ["QVOrderStat", "QVLevelKN", "QVCanonical",
                              "QVPlain", "QVNotShift"])
     partition(n, "SplitSites", ["SplitContiguous", "SplitGapped",
-                                "SplitMeasurement", "SplitNotPanel"])
+                                "SplitMeasurement", "SplitNotPanel",
+                                "SplitMigrated"])
 
     # Where Corollary 4.6's constant is undefined, and on which series.
     # Pre-registered in analysis/convention/PREREG_RHO_CENSUS.md.

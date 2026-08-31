@@ -28,8 +28,6 @@ Quantlets/CO_baseline_comparison_tuned/run_tuned_gbm_qr.py	n_cal = int(T * F_CAL
 Quantlets/CO_baselines_evt_fhs/run_baselines_evt_fhs.py	n_cal = int(N * F_CAL)	CONTIGUOUS	91	the protocol as reported; migrates if the panel switches
 Quantlets/CO_bound_validation/run_bound_validation.py	n_cal = int(n * F_CAL)	CONTIGUOUS	67	the protocol as reported; migrates if the panel switches
 Quantlets/CO_diagnostic_scale/run_diagnostic_scale.py	n_cal = int(len(r) * F_CAL)	CONTIGUOUS	121	the protocol as reported; migrates if the panel switches
-Quantlets/CO_full_evaluation/run_full_evaluation.py	n_cal = int(n * f_cal)	GAPPED	122	imposes separation_gap on the pair's own rho-hat
-Quantlets/CO_full_evaluation/run_full_evaluation.py	n_cal = int(len(r) * f_cal)	GAPPED	179	imposes separation_gap on the pair's own rho-hat
 Quantlets/CO_fz_scores/run_fz_scores.py	n_cal = int(T * F_CAL)	CONTIGUOUS	74	the protocol as reported; migrates if the panel switches
 Quantlets/CO_fz_scores/run_fz_scores.py	n_cal = int(T * F_CAL)	CONTIGUOUS	114	the protocol as reported; migrates if the panel switches
 Quantlets/CO_gamlss/baseline_gamlss.py	n_cal = int(T * F_CAL)	CONTIGUOUS	158	the protocol as reported; migrates if the panel switches
@@ -60,3 +58,8 @@ analysis/phase3_windows/run_window_sensitivity.py	n_cal = int(n * F_CAL)	CONTIGU
 analysis/umcb/run_umcb.py	n_cal = int(n * F_CAL)	CONTIGUOUS	176	the protocol as reported; migrates if the panel switches
 conformal-oracle/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	137	the protocol as reported; migrates if the panel switches
 analysis/convention/measure_rho_census.py	n_cal = int(len(r) * rfe.F_CAL)	MEASUREMENT	56	census of rho-hat on the calibration block; computes no backtest and reports no coverage
+Quantlets/CO_full_evaluation/run_full_evaluation.py	cal, test, g = split_indices(n, v - r, f_cal=f_cal, gap=gap)	MIGRATED	133	the panel driver; takes the split and the gap from cfp_config
+Quantlets/cfp_config.py	def split_indices(n: int, scores=None, f_cal: float = F_CAL,	MIGRATED	290	the single definition itself
+Quantlets/cfp_config.py	cal, test, g = split_indices(1000, ar, gap=True)	MEASUREMENT	330	negative control of the definition
+Quantlets/cfp_config.py	cal0, test0, g0 = split_indices(1000, ar, gap=False)	MEASUREMENT	332	negative control of the definition
+Quantlets/cfp_config.py	split_indices(1000, walk, gap=True)	MEASUREMENT	337	negative control: a gap wider than the test block must raise

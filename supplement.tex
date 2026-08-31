@@ -814,11 +814,15 @@ interpolates above that order statistic --- \nQVPlain{} took $Q_{1-\alpha}$,
 and the remaining \nQVNotShift{} compute a quantile that is not the conformal
 shift at all, the adaptive and bootstrap baselines among them. The split convention is
 the chronological division of Section~3.2. \nSplitSites{} sites take such a
-split: \nSplitContiguous{} leave no separation between the calibration and test
-blocks, \nSplitGapped{} impose the gap of Corollary~4.6,
+split: \nSplitMigrated{} take it from the single definition in
+\texttt{cfp\_config}, \nSplitContiguous{} still implement it themselves and
+leave no separation between the calibration and test blocks,
 \nSplitMeasurement{} compute both arms in order to compare them, and
 \nSplitNotPanel{} split simulated or resampled data rather than a forecast
-series, where the separation condition does not apply.
+series, where the separation condition does not apply. The migration of the
+remaining \nSplitContiguous{} is what stands between the panel and the
+estimator Theorem~4.5 covers, and its progress is the registry's own arithmetic
+rather than a claim about it.
 
 Each registry is a tab-separated file --- \texttt{QV\_CONVENTION\_SITES.tsv} and
 \texttt{SPLIT\_SITES.tsv} under \texttt{analysis/provenance/} --- in which every

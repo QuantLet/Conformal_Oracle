@@ -9,7 +9,7 @@ for months with no producer at all.
 
 Every definition below is transcribed from that notebook, not reinvented:
 
-    calibration split   n_cal = int(n * F_CAL), floor, chronological
+    calibration split   cfp_config.split_indices, floor, chronological
     nonconformity       s_i = v_i - r_i  (one-sided, lower tail)
     conformal quantile  the ORDER STATISTIC s_(k), k = ceil((n_cal+1)(1-alpha)),
                         never np.quantile -- interpolation carries no
@@ -51,7 +51,8 @@ TARGETS = [DATA / "paper_outputs" / "tables" / "all_results.csv",
            HERE / "results" / "all_results.csv"]
 
 sys.path.insert(0, str(BASE / "Quantlets"))
-from cfp_config import MODELS, SYMBOLS, ALPHAS, F_CAL  # noqa: E402
+from cfp_config import (MODELS, SYMBOLS, ALPHAS, F_CAL,  # noqa: E402
+                        split_indices)
 
 ASSETS = sorted(SYMBOLS)
 
@@ -117,12 +118,22 @@ def quantile_score(r, v, a):
     return float(np.mean((a - (r < v).astype(float)) * (r - v)))
 
 
-def conformal_backtest(returns, var_raw, alpha, f_cal=F_CAL):
-    n = len(returns)
-    n_cal = int(n * f_cal)
-    n_test = n - n_cal
-    r_cal, v_cal = returns[:n_cal], var_raw[:n_cal]
-    r_test, v_test = returns[n_cal:], var_raw[n_cal:]
+def conformal_backtest(returns, var_raw, alpha, f_cal=F_CAL, gap=None):
+    """One split-conformal backtest on one (forecaster, asset, level) cell.
+
+    The split comes from cfp_config.split_indices, which owns both the
+    calibration fraction and the separation of Assumption (A3). gap=None takes
+    the house setting; the measurement scripts pass it explicitly to compute
+    both arms. The gap is taken from the FRONT of the test block, so the
+    calibration sample and the shift are unchanged by it and only the evaluated
+    window moves.
+    """
+    r, v = np.asarray(returns, dtype=float), np.asarray(var_raw, dtype=float)
+    n = len(r)
+    cal, test, g = split_indices(n, v - r, f_cal=f_cal, gap=gap)
+    n_cal, n_test = len(cal), len(test)
+    r_cal, v_cal = r[cal], v[cal]
+    r_test, v_test = r[test], v[test]
 
     scores = np.sort(v_cal - r_cal)
     k = min(int(np.ceil((n_cal + 1) * (1 - alpha))) - 1, n_cal - 1)
@@ -132,7 +143,7 @@ def conformal_backtest(returns, var_raw, alpha, f_cal=F_CAL):
     viol_raw = int(np.sum(r_test < v_test))
     viol_cp = int(np.sum(r_test < var_cp))
     return {
-        "n_cal": n_cal, "n_test": n_test, "qV": qV,
+        "n_cal": n_cal, "n_test": n_test, "gap": g, "qV": qV,
         "pihat_raw": viol_raw / n_test, "pihat_cp": viol_cp / n_test,
         "viol_raw": viol_raw, "viol_cp": viol_cp,
         "p_kup_raw": kupiec_pval(n_test, viol_raw, alpha),
@@ -147,53 +158,14 @@ def conformal_backtest(returns, var_raw, alpha, f_cal=F_CAL):
     }
 
 
-def separation_gap(scores, n_cal: int) -> int:
-    """g_n = ceil(c log n_cal) with c = 1/|log rho-hat|, rho-hat per pair.
-
-    Corollary 4.6 fixes the mixing rate for GARCH data-generating processes and
-    the gap it requires is a function of the pair's own score autocorrelation,
-    not of a constant chosen once for the panel. c falls as rho-hat falls, so a
-    pair with little persistence needs little separation.
-
-    Where rho-hat <= 0 the expression is undefined and the gap it would ask for
-    is degenerate -- c -> 0 as rho-hat -> 0+, so the corollary requires nothing.
-    A floor of five observations is imposed there instead, which is more
-    separation than the corollary asks for and not less. 45 of the 312 cells at
-    alpha = 0.01 take that branch, 41 of them the two Chronos series sampled at
-    the checkpoint default, whose scores carry no positive persistence.
-    """
-    rho = pd.Series(np.asarray(scores)).autocorr(lag=1)
-    if rho and 0.0 < rho < 0.999:
-        return max(5, int(np.ceil((1.0 / abs(np.log(rho))) * np.log(n_cal))))
-    return max(5, int(np.ceil(np.log(n_cal))))
-
-
-def conformal_backtest_gapped(returns, var_raw, alpha, f_cal=F_CAL):
-    """The same backtest with the theorem's separation between the blocks.
-
-    The gap comes out of the FRONT of the test block, so the calibration sample
-    and therefore the shift are identical to the contiguous split and only the
-    evaluation window moves.
-    """
-    r, v = np.asarray(returns), np.asarray(var_raw)
-    n_cal = int(len(r) * f_cal)
-    g = separation_gap(v[:n_cal] - r[:n_cal], n_cal)
-    r2 = np.concatenate([r[:n_cal], r[n_cal + g:]])
-    v2 = np.concatenate([v[:n_cal], v[n_cal + g:]])
-    out = conformal_backtest(r2, v2, alpha, f_cal=n_cal / len(r2))
-    out["gap"] = g
-    return out
-
-
-def compute(models, gap: bool = True) -> pd.DataFrame:
+def compute(models, gap: bool | None = None) -> pd.DataFrame:
     rows, errors = [], []
     for model in models:
         for asset in ASSETS:
             for alpha in ALPHAS:
                 try:
                     r, v = load_pair(model, asset, alpha)
-                    res = (conformal_backtest_gapped(r, v, alpha) if gap
-                           else conformal_backtest(r, v, alpha))
+                    res = conformal_backtest(r, v, alpha, gap=gap)
                     res.update({"model": model, "symbol": asset, "alpha": alpha})
                     rows.append(res)
                 except Exception as e:                       # noqa: BLE001
@@ -243,11 +215,14 @@ def main() -> int:
     ap.add_argument("--verify", action="store_true")
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--models", nargs="*", default=None)
-    ap.add_argument("--gap", action="store_true",
-                    help="impose the separation of Corollary 4.6. NOT the default: "
-                         "every other site that takes a calibration/test split "
-                         "must impose it too, or the panel mixes two estimators. "
+    ap.add_argument("--gap", dest="gap", action="store_true", default=None,
+                    help="impose the separation of Corollary 4.6 for this run. "
+                         "The default is cfp_config.SEPARATION, which governs "
+                         "every site at once -- the panel must move as a unit "
+                         "or it mixes two estimators. "
                          "See analysis/convention/GAP_SWITCH_SCOPE.md.")
+    ap.add_argument("--no-gap", dest="gap", action="store_false",
+                    help="force the contiguous split for this run.")
     a = ap.parse_args()
 
     models = a.models or list(MODELS)
