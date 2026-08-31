@@ -26,7 +26,7 @@ drift again:
 from __future__ import annotations
 
 import hashlib
-from math import ceil
+from math import ceil, log
 
 import numpy as np
 
@@ -242,6 +242,103 @@ GRID_INTERFACE = {"TimesFM-2.5", "Moirai-2.0"}
 def n_cal_for(n: int, f_cal: float = F_CAL) -> int:
     """House calibration size: floor, never ceil."""
     return int(n * f_cal)
+
+
+# --------------------------------------------------------------------------- #
+# The separation between calibration and test, as one definition.
+#
+# Assumption (A3) of Theorem 4.5 requires a gap g_n between the calibration
+# block and the evaluated point; Corollary 4.6 gives g_n = ceil(c log n) with
+# c = 1/|log rho| for GARCH scores. Before this function existed the split was
+# specified in one sentence of the manuscript and implemented independently at
+# 56 sites, 46 of which left no gap at all. A convention stated in prose is not
+# a convention the code can be held to, so it is stated here instead and the
+# sites are audited against it by scripts/audit_split_convention.py.
+#
+# SEPARATION is the switch. With it False the split is contiguous and every
+# number reproduces as published; with it True the panel is the estimator
+# Theorem 4.5 covers. It is one flag because the panel must move as a unit --
+# a driver that gaps while the deterioration counts do not is two estimators
+# reported as one.
+SEPARATION = False
+GAP_FLOOR = 5
+
+
+def separation_gap(scores, n_cal: int) -> int:
+    """Corollary 4.6's gap, floored where its constant is undefined.
+
+    rho <= 0 leaves c = 1/|log rho| undefined. That is not a failure of the
+    estimator: it reports that the scores carry no dependence to separate, and
+    it concentrates on the truncated series, whose predictive law is too narrow
+    to give the threshold day-to-day movement. The floor supplies more
+    separation than the corollary asks for there.
+    """
+    s = np.asarray(scores, dtype=float)
+    if len(s) < 3:
+        return GAP_FLOOR
+    a, b = s[:-1], s[1:]
+    if a.std() == 0 or b.std() == 0:
+        return GAP_FLOOR
+    rho = float(np.corrcoef(a, b)[0, 1])
+    if 0.0 < rho < 0.999:
+        return max(GAP_FLOOR, int(ceil((1.0 / abs(log(rho))) * log(n_cal))))
+    return max(GAP_FLOOR, int(ceil(log(n_cal))))
+
+
+def split_indices(n: int, scores=None, f_cal: float = F_CAL,
+                  gap: bool | None = None):
+    """Calibration and test index arrays for a chronological split.
+
+    Every site that divides a forecast series into a calibration block and an
+    evaluated block calls this. gap=None takes the house setting; passing it
+    explicitly is for the measurement scripts that compute both arms.
+    """
+    n_cal = n_cal_for(n, f_cal)
+    use = SEPARATION if gap is None else bool(gap)
+    g = separation_gap(scores[:n_cal], n_cal) if (use and scores is not None) else 0
+    # A near-unit-root score sequence returns a gap larger than the test block.
+    # Capping it silently would report a coverage figure computed on whatever
+    # observations happened to survive, which is the defect this module exists
+    # against: an absence returned in the shape of a result.
+    if g >= n - n_cal:
+        raise ValueError(
+            f"separation gap {g} leaves no test block: n {n}, n_cal {n_cal}. "
+            "The scores are too persistent for the corollary's rate at this "
+            "sample size; the cell cannot be evaluated under (A3).")
+    return np.arange(n_cal), np.arange(n_cal + g, n), g
+
+
+def _control_separation_gap() -> None:
+    """The definition must tell a persistent score sequence from an i.i.d. one.
+
+    Run on import of this module's self-test, not in production. A gap function
+    that returns the floor on everything would silently satisfy every call site
+    and cover nothing, which is the failure this whole registry exists against.
+    """
+    rng = np.random.default_rng(0)
+    e = rng.standard_normal(4000)
+    ar = np.empty(4000); ar[0] = e[0]
+    for i in range(1, 4000):
+        ar[i] = 0.7 * ar[i - 1] + e[i]
+    g_ar = separation_gap(ar, 4000)
+    g_iid = separation_gap(rng.standard_normal(4000), 4000)
+    assert g_ar > GAP_FLOOR, f"persistent scores must exceed the floor, got {g_ar}"
+    assert g_iid == max(GAP_FLOOR, int(ceil(log(4000)))), \
+        f"i.i.d. scores must fall back to the floor rule, got {g_iid}"
+    # And the split must actually remove the gap from the front of the test set.
+    cal, test, g = split_indices(1000, ar, gap=True)
+    assert len(cal) == 700 and test[0] == 700 + g and g > 0, \
+        f"split_indices did not open a gap: cal {len(cal)}, test0 {test[0]}, g {g}"
+    cal0, test0, g0 = split_indices(1000, ar, gap=False)
+    assert g0 == 0 and test0[0] == 700, "gap=False must reproduce the contiguous split"
+    # A gap that would empty the test block must raise, not truncate.
+    walk = np.cumsum(rng.standard_normal(1000)) * 0.01
+    try:
+        split_indices(1000, walk, gap=True)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("a gap wider than the test block was accepted")
 
 
 def qhat_ceil(scores, alpha: float = ALPHA) -> float:
