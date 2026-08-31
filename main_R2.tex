@@ -408,6 +408,27 @@ process $\{u_t\}$ --- so a consistent weighted backtest and a non-identification
 result coexist, and the second says where the class ends rather than that the
 first is wrong.
 
+Two 2026 papers apply conformal calibration to one-sided Value-at-Risk
+directly, and both bear on choices made here. \citet{zhong2026proxy} introduces
+a proxy-reliance parameter interpolating between an approximately constant shift
+and one scaled by a volatility proxy, and reports on a six-ETF panel that lower
+and intermediate settings can outperform full proxy scaling in stressed
+left-tail control. The correction used here sits at the constant end of that
+interpolation, adopted for the variance reason of
+Remark~\ref{rem:tail_sparsity} rather than from a comparison across the family;
+Zhong's result is the direct evidence on what that choice gives up and what it
+buys. \citet{cuonzo2026tail} construct one-sided split-conformal intervals whose
+two tails are calibrated separately, with finite-sample validity under
+exchangeability and time-averaged validity under adaptive conformal inference,
+and find that two-sided intervals systematically undercover the left tail of the
+equities they study --- the asymmetry that Section~\ref{sec:cqr_var} derives
+from the regulatory loss function rather than from calibration evidence.
+\citet{aich2025temporal} benchmark a rolling split-conformal layer against
+GARCH, historical simulation, quantile regression and adaptive conformal
+inference on three series. None of the three states marginal coverage at a
+designated evaluation date under a dependence condition on the score process,
+and none asks what the regulatory backtest identifies.
+
 What differs is where the paper looks. \citet{goel2024tsfmvar} and
 \citet{goel2025volatility} reduce TSFM tail miscalibration by fine-tuning;
 \citet{gibbs2021adaptive} deliver adaptive coverage under nonstationarity by
