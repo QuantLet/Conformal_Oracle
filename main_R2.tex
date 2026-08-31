@@ -1409,6 +1409,21 @@ and only a bounded law as light as the uniform, at $\nMLQuantUniform$, is caught
 For daily returns that region is empty in practice, so the band's false-positive
 exposure is bounded rather than unknown.
 
+The edge is a tuning parameter, and what it tunes is worth stating because the
+paper chose a value for it. Moving it tightens the analytic blind spot and
+loosens nothing: the residual unidentifiable understatement falls from
+\nUndBandLoose\% at $\nBandLoose$ to \nGapUndGateNow\% at the $\nGapBandNow$ used
+here and \nUndBandVeryStrict\% at $\nBandVeryStrict$, while the false-positive
+count over the \nBandGoodCells{} well-specified cells stays at
+\nBandFPAtNow{} until the edge passes the worst of them at
+$\nBandGoodWorstRatio$, then reaches \nBandFPAtStrict{} at $\nBandStrict$ and
+\nBandFPAtVeryStrict{} at $\nBandVeryStrict$. What it does \emph{not} buy is
+detection: all \nBandTruncCells{} truncated cells are caught at every edge in
+that range. So tightening trades an analytic quantity against real false
+positives for no gain in what the check finds, on this panel, and
+$\nGapBandNow$ is a choice made at the flat end of that trade rather than an
+optimum.
+
 What that bound does not cover is the range between the two populations of this
 panel, and there the evidence is one estimator family and \nMLAssets{} assets:
 of the \nMLGbmCells{} gradient-boosted cells, the gate blocks \nMLGbmBlocked, of
@@ -1449,7 +1464,9 @@ It was found by rebuilding the estimator from its own description rather than by
 re-running it, and the corrected figures are throughout.
 
 Further defects sat in the verification apparatus itself, and were found the
-same way. Of the defects this project's computation protocol records,
+same way. Of the defects this project's computation protocol records --- counting those
+that reached a stored artefact or a claim in this manuscript, and not mistakes
+caught while writing ---
 \nHarnessDefectsInstrument{} of \nHarnessDefectsTotal{} were in a check and
 \nHarnessDefectsObject{} in the quantity being checked. That ratio is not an
 aside. A validation instrument is an estimator like any other, it fails in the

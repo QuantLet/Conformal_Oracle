@@ -16,6 +16,7 @@ role.
 | 0.70 | calibration fraction `f_c` | design choice |
 | 0.50, 0.80 | endpoints of the `f_c` robustness range | design choice |
 | 0.94 | RiskMetrics EWMA decay | the convention |
+| 0.85 | GARCH persistence $\beta_1$ of the Monte Carlo data-generating processes | design of the simulation, fixed across every cell so the progression from (i) to (v) varies the innovation law and nothing else |
 | 0.9, 0.99 | nucleus-sampling settings in the dose-response | the swept grid |
 | 0.5, 2.0 | temperature settings in the dose-response | the swept grid |
 | 1.0 | dispersion target (predictive sd equal to realised) | a definition |

@@ -302,6 +302,25 @@ def collect() -> dict:
     # reduction from the unrestricted-shape figure is a property of imposing a
     # scale restriction at all; its size is a smooth function of where the edge
     # sits, so Table 2's row is not a measurement of these particular checks.
+    # The trade-off the edge actually buys, measured on the 312 cells. Tightening
+    # lowers the analytic residual and raises the false-positive count, and on
+    # this panel it buys no additional detection at all: every truncated cell is
+    # caught at every edge in the range.
+    _sc = pd.read_csv(BASE / "analysis" / "phase2" / "panel_scale_ratios_by_asset.csv")
+    _tr = _sc["series"].str.contains("default")
+    _good, _bad = _sc[~_tr], _sc[_tr]
+    n["BandGoodCells"] = int(len(_good))
+    n["BandTruncCells"] = int(len(_bad))
+    n["BandGoodWorstRatio"] = float(_good["ratio"].max())
+    n["BandFPAtNow"] = int((_good["ratio"] > -1.80).sum())
+    n["BandFPAtStrict"] = int((_good["ratio"] > -2.00).sum())
+    n["BandFPAtVeryStrict"] = int((_good["ratio"] > -2.20).sum())
+    n["BandTruncCaughtNow"] = int((_bad["ratio"] > -1.80).sum())
+    n["BandTruncCaughtVeryStrict"] = int((_bad["ratio"] > -2.20).sum())
+    n["BandVeryStrict"] = -2.20
+    n["UndBandVeryStrict"] = float(_und(-2.20))
+    assert n["BandTruncCaughtNow"] == n["BandTruncCaughtVeryStrict"] == len(_bad), \
+        "tightening the edge now changes what it detects; the sentence must be rewritten"
     n["UndBandLoose"] = float(_und(-1.70))
     n["UndBandStrict"] = float(_und(-2.00))
     n["BandLoose"] = -1.70
@@ -665,6 +684,60 @@ def collect() -> dict:
     n["GapPanelZoneChanges"] = int((gp["g0_TL"] != gp["gn_TL"]).sum())
     n["GapPanelKupFlips"] = int(((gp["g0_p_kupiec"] > 0.05)
                                  != (gp["gn_p_kupiec"] > 0.05)).sum())
+
+    # ---- Monte Carlo grid cells quoted in Section 5's prose ---------------- #
+    # Section 5 lived in an \input file guard 2 never read, so its prose carried
+    # 46 typed figures. Every one is a cell of grid.csv. The five sample sizes
+    # are tagged One..Five in the order 500, 1,000, 2,000, 5,000, 10,000.
+    _mg = pd.read_csv(BASE / "analysis" / "k2_sim" / "grid.csv").set_index(["dgp", "T"])
+    _TT = [(500, "One"), (1000, "Two"), (2000, "Three"), (5000, "Four"), (10000, "Five")]
+    _DD = [("normal", "Normal"), ("t5", "TFive"), ("t3", "TThree"),
+           ("skewt3", "Skew"), ("mixnormal", "Mix")]
+    for _d, _dt in _DD:
+        for _t, _tt in _TT:
+            _row = _mg.loc[(_d, _t)]
+            rate(n, f"MCPi{_dt}{_tt}", float(_row["Corr_pi"]), int(_row["n_test"]) * 500)
+            n[f"MCGrn{_dt}{_tt}"] = float(_row["RawGreen"])
+            n[f"MCQv{_dt}{_tt}"] = float(_row["Mean_qV"])
+            n[f"MCSd{_dt}{_tt}"] = float(_row["Std_qV"])
+        rate(n, f"MCRaw{_dt}", float(_mg.loc[(_d, 10000), "Raw_pi"]),
+             int(_mg.loc[(_d, 10000), "n_test"]) * 500)
+    # Derived statements the prose makes about the grid.
+    # "From T = 1,000 onward" -- the T = 500 row is excluded by the sentence,
+    # and it is the row the small-sample qualification applies to.
+    _cp = _mg[_mg.index.get_level_values("T") >= 1000]["Corr_pi"]
+    _n_ge = int((_mg[_mg.index.get_level_values("T") >= 1000]["n_test"] * 500).min())
+    rate(n, "MCCorPiMaxDev", float((_cp - 0.01).abs().max()), _n_ge)
+    _small = _mg.xs(500, level="T")
+    _n_sm = int((_small["n_test"] * 500).min())
+    rate(n, "MCCorPiSmallLo", float(_small["Corr_pi"].min()), _n_sm)
+    rate(n, "MCCorPiSmallHi", float(_small["Corr_pi"].max()), _n_sm)
+    n["MCSdRatioNormal"] = float(_mg.loc[("normal", 500), "Std_qV"]
+                                 / _mg.loc[("normal", 10000), "Std_qV"])
+    n["MCSqrtTwenty"] = float(np.sqrt(20))
+    for _t, _tt in _TT:
+        _ncal = int(0.70 * _t)
+        n[f"MCOver{_tt}"] = int(np.ceil((_ncal + 1) * 0.99)) / _ncal - 0.99
+    # The traffic light's two boundaries in units of alpha.
+    # The zone boundaries as Proposition 5.1 states them: green at most 4
+    # exceedances per 250 days, yellow up to 9. TLTauOverAlpha uses 4/250, so
+    # the yellow edge is 9/250 and not 9.5/250.
+    n["TLTauYellowOverAlpha"] = (9.0 / 250) / 0.01
+    # Population violation rates of the five DGPs under a Normal-innovation
+    # forecaster: a property of the design, taken from the table's own emitter
+    # so prose and table cannot diverge.
+    import ast as _ast5
+    _et5 = _ast5.parse((BASE / "analysis" / "k2_sim" / "emit_mc_table.py")
+                       .read_text(encoding="utf-8"))
+    _pop = next(_ast5.literal_eval(t.value) for t in _et5.body
+                if isinstance(t, _ast5.Assign) and getattr(t.targets[0], "id", "") == "POP")
+    for _d, _dt in _DD:
+        n[f"MCPop{_dt}"] = float(_pop[_d])
+    # How far the normal approximation to the green-zone probability sits from
+    # the exact binomial, averaged over the 25 cells.
+    n["MCNormalApproxPP"] = float(json.loads(
+        (BASE / "analysis" / "k2_sim" / "prop_tl_check.json").read_text()
+    )["mean_abs_gap_vs_normal_approx"])
 
     # ---- the effective level of the conformal shift ------------------------ #
     # Equation (8) returns the k-th smallest of n scores with
@@ -1240,7 +1313,25 @@ def fmt(key: str, v) -> str:
         return f"{v:.2f}"
     if key.startswith("UndBand"):
         return f"{v:.1f}"
+    if key in ("BandGoodWorstRatio", "BandVeryStrict"):
+        return f"{v:.2f}" if key == "BandVeryStrict" else f"{v:.3f}"
     if key.startswith("BandLoose") or key.startswith("BandStrict"):
+        return f"{v:.2f}"
+    if key == "MCNormalApproxPP":
+        return f"{v:.1f}"
+    if key.startswith("MCPop"):
+        return f"{v:.4f}"
+    if key.startswith("MCPi") or key.startswith("MCRaw"):
+        return f"{v:.4f}"
+    if key.startswith("MCGrn"):
+        return f"{v:.1f}"
+    if key.startswith(("MCQv", "MCSd")) and not key.startswith("MCSdRatio"):
+        return f"{v:.5f}"
+    if key.startswith("MCOver"):
+        return f"{v:.4f}"
+    if key in ("MCCorPiMaxDev", "MCCorPiSmallLo", "MCCorPiSmallHi"):
+        return f"{v:.4f}"
+    if key in ("MCSdRatioNormal", "MCSqrtTwenty", "TLTauYellowOverAlpha"):
         return f"{v:.2f}"
     if key == "LevelMaxOvershoot":
         return f"{v:.2f}"

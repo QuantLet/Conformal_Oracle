@@ -2581,7 +2581,7 @@ The first was a tolerance. The standard error of a standard deviation was taken 
 $\mathrm{sd}/\sqrt{2N}$, which assumes a normal replication distribution;
 $\qVstat$ is a $1\%$ order statistic of heavy-tailed scores and its replication
 distribution has skewness up to $+\nMCSkewMax$, so the declared tolerance understated the
-true sampling variability by up to $1.76$ times, worst in exactly the cell where
+true sampling variability by up to $\nMCSEUnderstate$ times, worst in exactly the cell where
 the skew is largest. The second was a seed. Replications were keyed on Python's
 string \texttt{hash}, which is salted per interpreter process, so two runs of the
 same script drew different samples and the set of cells the gate flagged changed

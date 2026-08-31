@@ -66,36 +66,32 @@ plots it.
 Three readings follow from the upper panel of Table~\ref{tab:mc_grid}.
 
 \emph{Coverage is restored across every process.} From $T = 1{,}000$ onward the
-corrected violation rate lies within $0.0006$ of nominal for all five processes,
-including the skewed-$t$, whose raw rate is $0.0233$ --- more than twice the level
+corrected violation rate lies within $\nMCCorPiMaxDev$ of nominal for all five processes,
+including the skewed-$t$, whose population rate is $\nMCPopSkew$ --- more than twice the level
 it reports. The residual falls with $T$ and there is no ordering of it by the
 severity of the misspecification: a one-parameter shift removes as much of a
 severe unconditional error as of a mild one.
 
 \emph{$\qVstat$ converges to the population miscalibration, which does not vanish
-with data.} Under correct specification it tends to zero, from $0.00165$ at
-$T = 500$ to $0.00003$ at $T = 10{,}000$. Under each misspecification it converges
+with data.} Under correct specification it tends to zero, from $\nMCQvNormalOne$ at $T = 500$ to $\nMCQvNormalFive$ at $T = 10{,}000$. Under each misspecification it converges
 instead to a non-zero limit, ordered by the severity of the tail departure:
-$0.0037$ for Student-$t(5)$, $0.0036$ for Student-$t(3)$, $0.0060$ for the
-mixture, $0.0121$ for the skewed-$t$. The quantity being estimated is a property
+$\nMCQvTFiveFive$ for Student-$t(5)$, $\nMCQvTThreeFive$ for Student-$t(3)$, $\nMCQvMixFive$ for the mixture, $\nMCQvSkewFive$ for the skewed-$t$. The quantity being estimated is a property
 of the pair of laws, not an artefact of the sample.
 
 \emph{Its variance falls at the parametric rate.} The replication standard
-deviation of $\qVstat$ under correct specification falls from $0.00307$ to
-$0.00064$ across a twentyfold increase in $T$, a factor of $4.80$ against
-$\sqrt{20} = 4.47$. Lemma~\ref{lem:quantile_mixing} carries an additional
+deviation of $\qVstat$ under correct specification falls from $\nMCSdNormalOne$ to $\nMCSdNormalFive$ across a twentyfold increase in $T$, a factor of $\nMCSdRatioNormal$ against $\sqrt{20} = \nMCSqrtTwenty$. Lemma~\ref{lem:quantile_mixing} carries an additional
 $\sqrt{\log n}$; over this range of $T$ the two rates are not separable, and no
 attempt is made to separate them.
 
 \paragraph{The small-sample cost of the finite-sample convention} At $T = 500$
-the corrected rate is $0.0076$ to $0.0085$ across all five processes, including
+the corrected rate is $\nMCCorPiSmallLo$ to $\nMCCorPiSmallHi$ across all five processes, including
 the correctly specified one --- systematically conservative rather than nominal.
 The mechanism is the conformal index of Section~\ref{sec:theory_lemmas}: at
 $n = 350$ the level $\lceil (n+1)(1-\alpha)\rceil/n$ is $\nSupConfIndex$ rather than
 $0.99$, an overshoot of $\nSupConfOvershoot$, and $\qVstat$ inherits it. Under correct
 specification, where the population shift is zero, the overshoot is the entire
-signal: mean $\qVstat$ runs $0.00165,\,0.00030,\,0.00015,\,0.00008,\,0.00003$
-across the grid, against overshoots of $\nSupConfOvershoot,\,0.0014,\,0.0007,\,0.0003,\,0.0001$.
+signal: mean $\qVstat$ runs $\nMCQvNormalOne,\,\nMCQvNormalTwo,\,\nMCQvNormalThree,\,\nMCQvNormalFour,\,\nMCQvNormalFive$
+across the grid, against overshoots of $\nSupConfOvershoot,\,\nMCOverTwo,\,\nMCOverThree,\,\nMCOverFour,\,\nMCOverFive$.
 The correction is upward-biased on a forecaster that needs no correction, by
 construction rather than by misspecification, and the bias is $\mathcal O(1/n)$.
 Section~\ref{sec:recal} reports the panel consequence.
@@ -139,14 +135,13 @@ The behaviour has a limit, and it can be stated.
 
 \begin{corollary}[The interval the classification cannot resolve]
 	\label{cor:traffic_interval}
-	At $\alpha = 0.01$ the threshold is $\tau = 1.6\,\alpha$. Every forecast series
+	At $\alpha = 0.01$ the threshold is $\tau = \nTLTauOverAlpha\,\alpha$. Every forecast series
 	whose reported threshold cuts off a long-run tail probability in
-	$(0,\,1.6\,\alpha)$ is classified green with probability tending to one.
+	$(0,\,\nTLTauOverAlpha\,\alpha)$ is classified green with probability tending to one.
 	Under standardised Student-$t_5$ innovations, whose $1\%$ quantile is
 	$\nGapQTrueStd$ in units of conditional scale, a series at the upper end of
-	that interval reports a Value-at-Risk understated by $12.4$\%; under
-	standardised $t_3$ the figure is $16.3$\% and under Normal innovations
-	$7.8$\%.
+	that interval reports a Value-at-Risk understated by $\nTLUndTFive$\%; under
+	standardised $t_3$ the figure is $\nTLUndTThree$\% and under Normal innovations $\nTLUndNormal$\%.
 \end{corollary}
 
 \begin{proposition}[Zone improvement is a sub-event of coverage improvement]
@@ -154,7 +149,7 @@ The behaviour has a limit, and it can be stated.
 	Let $\hat\pi$ and $\hat\pi'$ be the realised exceedance rates of a forecast
 	series before and after a correction, and let $Z(\cdot)$ be the traffic-light
 	classification, a non-decreasing step function of the exceedance count whose
-	boundaries lie at $\tau = 1.6\,\alpha$ and $3.6\,\alpha$, both strictly above
+	boundaries lie at $\tau = \nTLTauOverAlpha\,\alpha$ and $\nTLTauYellowOverAlpha\,\alpha$, both strictly above
 	nominal. If $Z(\hat\pi') < Z(\hat\pi)$ --- a zone upgrade --- and the
 	correction does not carry the rate below $\alpha$ by more than its initial
 	excess, then $|\hat\pi' - \alpha| < |\hat\pi - \alpha|$. The converse fails:
@@ -199,18 +194,15 @@ path can distinguish.
 Table~\ref{tab:mc_grid} is the finite-sample version. The green share equals the
 share of replications with $\hat\pi\le\tau$ in all 25 cells exactly, and tracks
 the normal approximation
-$\Phi\!\left((\tau-\pi)/\mathrm{sd}(\hat\pi_T)\right)$ to within 2.5 percentage
-points on average. The boundary case behaves as the proposition says it must: a
+$\Phi\!\left((\tau-\pi)/\mathrm{sd}(\hat\pi_T)\right)$ to within \nMCNormalApproxPP{} percentage points on average. The boundary case behaves as the proposition says it must: a
 process with $\pi = \tau$ exactly gives a green share of $48$ to $55$\% at every
 sample size from $T = 1{,}000$ to $T = 10{,}000$, converging to nothing.
 
-The skewed-$t$ process, whose population rate of $0.0233$ clears the boundary, is
-driven out: $36.4$\% green at $T = 500$ falls to $0.4$\% at $T = 10{,}000$. The
-Student-$t(5)$ process is not. Its population rate is $0.0150$ --- a forecaster
+The skewed-$t$ process, whose population rate of $\nMCPopSkew$ clears the boundary, is
+driven out: $\nMCGrnSkewOne$\% green at $T = 500$ falls to $\nMCGrnSkewFive$\% at $T = 10{,}000$. The
+Student-$t(5)$ process is not. Its population rate is $\nMCPopTFive$ --- a forecaster
 understating its exceedance probability by half --- and it sits inside the
-boundary, so the same concentration works the other way: $61.6$\% green at
-$T = 500$ rises to $74.2$\% at $T = 10{,}000$. Student-$t(3)$ at $0.0136$ rises
-from $69.6$\% to $85.6$\%, and the mixture at $0.0125$ from $68.4$\% to $96.4$\%.
+boundary, so the same concentration works the other way: $\nMCGrnTFiveOne$\% green at $T = 500$ rises to $\nMCGrnTFiveFive$\% at $T = 10{,}000$. Student-$t(3)$ at $\nMCPopTThree$ rises from $\nMCGrnTThreeOne$\% to $\nMCGrnTThreeFive$\%, and the mixture at $\nMCPopMix$ from $\nMCGrnMixOne$\% to $\nMCGrnMixFive$\%.
 
 More data makes the traffic light more confident, and for three of the four
 misspecified processes here it makes it more confidently green. What converges to
@@ -218,8 +210,7 @@ the miscoverage is $\qVstat$.
 
 This is the identification constraint of Section~\ref{sec:blindspot} in a setting
 where the truth is known by construction, and it is worth separating from a claim
-the design does not support. The zone boundary is not miscalibrated: a forecaster
-at $\hat\pi = 0.0150$ genuinely produces fewer than four exceedances per
+the design does not support. The zone boundary is not miscalibrated: a forecaster at $\hat\pi = \nMCPopTFive$ genuinely produces fewer than four exceedances per
 250 days more often than not, which is what the zone is defined to detect. The
 point is narrower and is about what a practitioner may infer. A green zone
 sustained over a longer record is evidence that the exceedance count is below the

@@ -324,8 +324,15 @@ as a guarantee.
 
 ### The defect is in the instrument more often than in the object
 
-Counted, not asserted. Seven defects found; **five were in the checking
-apparatus and two in the thing being checked.**
+Counted, not asserted, and against a stated criterion: **the census counts a
+defect that reached a stored artefact or a claim in the manuscript.** A mistake
+caught while writing --- a wrong column read from a table, a pattern that matched
+the wrong thing on the first attempt --- is not a defect of the project; it is
+the work. Without that line the count is unfalsifiable, which is the wrong
+property for a number in a section about honest accounting.
+
+Seven defects found; **five were in the checking apparatus and two in the thing
+being checked.**
 
 | where | what | how it failed |
 |---|---|---|
