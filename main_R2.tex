@@ -105,30 +105,23 @@
 		%─── PART 2: Abstract ───────────────────────────────────────────────────────
 \begin{abstract}
 
-Post-hoc conformal recalibration restores the coverage of a tail quantile
-forecast, but the standard guarantee assumes exchangeability, which financial
-return series violate. Coverage for split conformal prediction under
-$\beta$-mixing is established; what it costs to satisfy is not. We fix the
-mixing rate for GARCH processes, which turns the separation the theorem requires
-into a number of trading days --- a median of \nGapPanelGapMed{} --- and
-measure it. Taking the separation from the evaluation window leaves the
-conformal shift unchanged on all \nGapAllCells{} cells, so every difference is
-residual dependence rather than estimation noise: no regulatory classification
-moves, and the corrected violation rate moves by at most $\nGapAllDPiMax$.
+Conformal recalibration restores the coverage of a tail quantile forecast, and
+its guarantee rests on exchangeability while financial returns are dependent.
+Coverage for split conformal prediction under $\beta$-mixing is established;
+this paper asks what satisfying it costs. Fixing the mixing rate for GARCH
+processes turns the required separation into a number of trading days. Taken
+from the evaluation window, it leaves the conformal shift identical, so the
+comparison isolates residual dependence; the regulatory classifications hold
+throughout.
 
 On a panel of equity, bond, commodity, cryptocurrency and foreign-exchange
-series, the shift brings every forecaster it is applied to --- from
-GARCH-family benchmarks to zero-shot time series foundation models --- into a
-corrected violation rate between $\nMainCorPiLo$ and $\nMainCorPiHi$ against a
-nominal $0.01$. That indifference has a cost: a corrected coverage column no
-longer ranks the forecasters that produced it, so the correction cannot be
-evaluated by the instrument that triggers it.
-
-We therefore treat recalibration as conditional rather than default. Under the
-trailing-window variant it degrades \nWellCalRollWorse{} of the
-\nWellCalRollN{} forecasts that already pass their coverage backtest, and we
-give a rule, keyed only on information available at the decision date, for when
-to apply it.
+series, the shift brings every forecaster it touches --- GARCH-family benchmarks
+and zero-shot time series foundation models alike --- to nominal violation
+rates. That uniformity has a consequence: a corrected coverage column describes
+the correction rather than the forecaster behind it, so the instrument that
+triggers recalibration is also the one that would evaluate it. Recalibration is
+accordingly an intervention with an indication, and the paper gives a rule for
+when it applies, keyed to information available at the decision date.
 
 	\bigskip\noindent
 	\textbf{Keywords:} Value-at-Risk; Conformal prediction; Temporal dependence; Time series
