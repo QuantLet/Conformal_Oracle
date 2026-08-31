@@ -1,0 +1,36 @@
+# R3 drops the supplement. Every "Supplement S.x" reference in R2 becomes one of
+# these: a tracked path in the replication repository, or ABSORB, meaning the
+# claim stands without the pointer and the reference is deleted.
+#
+# A path here must be tracked by git or guard 4 fails the build, which is how
+# this file is kept honest.
+section	target	note
+S.1	scripts/table_c1_es_correction.py	ES computation and the heuristic correction
+S.2	scripts/baselines_evt_fhs.py	benchmark and recalibration baselines
+S.3	Quantlets/CO_full_evaluation/run_full_evaluation.py	backtesting implementation
+S.4	Quantlets/CO_robustness/run_robustness_summary.py	robustness details
+S.4.1	Quantlets/CO_robustness/run_robustness_mc.py	Monte Carlo design
+S.4.3	analysis/provenance/SPLIT_SITES.tsv	the two convention registries
+S.5.1	scripts/build_dq_panel.py	cross-sectional correlations
+S.6	Quantlets/CO_multi_quantile_panel/compute_panel_pooled.py	multi-quantile and panel-pooled
+S.7	ABSORB	the asset list is Table 1's own column
+S.8	ABSORB	the model list is Table 1's own column
+S.9.1	PROOFS.tex	proof of Lemma 4.2
+S.9.3	PROOFS.tex	proof of Theorem 4.5
+S.9.4	PROOFS.tex	proof of Corollary 4.6
+S.9.5	PROOFS.tex	proof of Proposition 4.7
+S.9.6	PROOFS.tex	proof of Proposition 4.8
+S.9.7	APPENDIX	the identification result is this paper's own and its proof stays in the paper
+S.9.8	APPENDIX	as above, the blind-spot depth construction
+S.10	scripts/tail_completion_robustness.py	tail completion determines the tail
+S.11	scripts/promotion_gate.py	the series validation gate
+S.12	ABSORB	secondary tables; the claims they support are in the body
+S.12.1	scripts/regenerate_rolling_vs_static.py	static versus rolling, in detail
+S.13	analysis/ml/emit_dose_tables.py	leaf resolution dose-response
+S.14	analysis/chronos_sampling/RESULTS.md	the support-truncation experiment
+S.14.4	analysis/chronos_sampling/analytic_quantiles.py	reading the distribution instead of sampling
+S.15	analysis/provenance/PROTOCOL.md	the five implementation failure modes
+S.16	analysis/provenance/PROTOCOL.md	how large the blind spot is
+S.17	scripts/promotion_gate.py	structural validation and what it removes
+S.17.1	scripts/promotion_gate.py	how much of the blind spot the gate removes
+S.18	Quantlets/CO_simulation_study/run_simulation_study.py	the Monte Carlo harness

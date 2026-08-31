@@ -1,0 +1,629 @@
+\documentclass[preprint,11pt,authoryear]{elsarticle}
+
+%─── Packages ────────────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,bm,bbm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{booktabs,colortbl,array,multirow,threeparttable}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usepackage{graphicx,float,caption,subcaption}
+\graphicspath{{figures/}}
+\usepackage{algorithm,algpseudocode}
+\usepackage{natbib}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{colorlinks=false, allbordercolors={1 1 1}, pdfborder={0 0 0},
+  pdftitle={Online Supplement to: Conformal Recalibration of Tail Quantile Forecasts under Temporal Dependence}}
+\usepackage{placeins}
+\usepackage{setspace,microtype,enumitem}
+\onehalfspacing
+
+%─── Colours ─────────────────────────────────────────────────────────────────
+\definecolor{pastelgreen}{rgb}{0.0,0.6,0.0}
+
+%─── Revision markup ─────────────────────────────────────────────────────────
+% Retained as a no-op so that generated fragments emitting \revised still build.
+\newcommand{\revised}[1]{#1}
+
+%─── Generated figures ───────────────────────────────────────────────────────
+% The same macro file the manuscript uses, so a number quoted in the supplement
+% cannot drift from the same number in the main text.
+\input{numbers}
+
+%─── Theorem environments ────────────────────────────────────────────────────
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+
+%─── Notation ────────────────────────────────────────────────────────────────
+\newcommand{\VaR}{\mathrm{VaR}}
+\newcommand{\ES}{\mathrm{ES}}
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathsf{P}}
+\newcommand{\1}{\boldsymbol{1}}
+\newcommand{\qVstat}{\hat{q}_{\scriptscriptstyle\mathrm{V}}^{\,\mathrm{stat}}}
+% Backward-compatible alias: three robustness fragments predate the
+% \qV -> \qVstat rename and still emit \qV. Aliasing here avoids editing
+% generated files, which would be overwritten on the next pipeline run.
+\providecommand{\qV}{\qVstat}
+\newcommand{\qVroll}{\hat{q}_{{\scriptscriptstyle\mathrm{V}},t}^{\,\mathrm{roll}}}
+\newcommand{\qE}{\hat{q}_{\scriptscriptstyle\mathrm{E}}}
+\newcommand{\EScqr}{\widehat{\ES}^{\,\mathrm{cqr}}}
+\newcommand{\CI}{\hat{C}}
+\newcommand{\Fhat}{\hat{\mathcal{F}}}
+\newcommand{\quantlet}[1]{\href{#1}{\raisebox{-0.15em}{\includegraphics[height=0.9em]{ql_logo.png}}}}
+\newcommand{\quantinar}[1]{\href{#1}{\raisebox{-0.15em}{\includegraphics[height=0.9em]{qr_logo.png}}}}
+
+%══════════════════════════════════════════════════════════════════════════════
+
+%══════════════════════════════════════════════════════════════════════════════
+%  ONLINE SUPPLEMENT to
+%  "What Backtests Cannot Diagnose: Structural Validation of Tail-Risk
+%  Forecasting Pipelines"
+%
+%  Sections moved out of the manuscript's appendices on 2026-08-20 to keep the
+%  submitted paper to a readable length. Numbering is S.1-S.4; the manuscript
+%  refers to them by those numbers rather than by \ref, so neither document
+%  needs the other to compile.
+%══════════════════════════════════════════════════════════════════════════════
+
+
+\begin{document}
+
+\title{Proofs for \emph{Recalibrating Tail-Event Forecasts under Temporal Dependence}}
+\date{}
+\maketitle
+
+\noindent This document carries the proofs of the results stated in the
+manuscript. It is part of the replication material rather than of the
+submitted article, and it is referenced from the text by name.
+Theorem~4.5 is a one-sided specialization of a published result and its
+proof is included for completeness; the attribution is in the manuscript.
+
+\section{Proofs}
+\label{app:proofs}
+%============================================================
+
+Section~4 of the manuscript states the assumption, the two lemmas, the coverage
+theorem, the GARCH corollary and the two rolling-estimator bounds, together with
+their scope. This appendix carries the proofs, and each is labelled by the
+numbering of the statement it proves. No statement is repeated here in a second
+form.
+
+For reference while reading them, Assumption~4.1 of the manuscript requires
+(A1) that the score process $S_t = \hat q_t^{lo} - r_t$ be strictly stationary
+and geometrically $\beta$-mixing, $\beta(k)\le C\rho^k$; (A2) that the marginal
+law $F_S$ have a continuous density bounded away from zero near
+$q_{1-\alpha}$; and (A3) that the evaluated score be separated from the
+calibration block by a gap $g_n\to\infty$ with $g_n/n\to0$.
+
+\subsection{Proof of Lemma~4.2 (inheritance of weak dependence)}
+\label{app:lem_score_mixing}
+
+\begin{remark}[Why the context must be finite]
+	\label{rem:finite_context}
+	The finiteness of $m$ is not a convenience. Allowing
+	$\hat q_t^{lo}=g(r_{t-1},r_{t-2},\ldots)$ with an infinite context does not
+	yield $\beta_S(k)\le\beta_r(k-1)$: the proof requires
+	$\sigma(S_s : s\ge t+k)\subseteq\sigma(r_u : u\ge t+k-1)$, and with an
+	infinite context $S_s$ depends on returns arbitrarily far before $t+k-1$,
+	so the inclusion fails and no separation of the two $\sigma$-fields is
+	obtained. Restricting $g$ to a window of length $m$ is what makes the
+	blocking argument available, and for all but one forecaster here the
+	restriction holds by construction: $m = 512$ for the foundation models and
+	$m = 250$ for the GARCH-family and historical-simulation benchmarks
+	(Section~3.3.3 of the manuscript).
+
+	EWMA is the exception, and it is stated rather than rounded off. Its
+	conditional variance is the RiskMetrics recursion, whose memory is infinite,
+	so the lemma does not apply to it as literally implemented; the manuscript
+	reconciles this wherever the 250-observation convention is quoted. What can be
+	said is quantitative: at $\lambda = 0.94$ the weight beyond lag $k$ is
+	$\lambda^k$, which is $1.9\times10^{-7}$ at $k = 250$ and falls below
+	double-precision machine epsilon at $k = 583$. The lemma applies to the filter
+	truncated at $m = 600$, which is indistinguishable from the recursion in the
+	arithmetic that produced the series. That is an approximation argument rather
+	than an exemption, and it is the only one in the paper.
+\end{remark}
+
+\begin{proof}
+	By assumption, $\{r_t\}$ is strictly stationary. Since $\hat q_t^{lo}$ is
+	a time-invariant measurable functional of the past, the joint process
+	$(\hat q_t^{lo},r_t)$ is also strictly stationary. Therefore,
+	$S_t=\hat q_t^{lo}-r_t$ inherits strict stationarity.
+	
+	Let $\mathcal S_{-\infty}^t=\sigma(S_s:s\le t)$ and
+	$\mathcal S_{t+k}^{\infty}=\sigma(S_s:s\ge t+k)$. By
+	equation~(10) of the manuscript, $S_t$ is a measurable function of
+	$(r_t,r_{t-1},\ldots,r_{t-m})$, so
+	\[
+	\mathcal S_{-\infty}^t
+	\subseteq
+	\mathcal R_{-\infty}^t:=\sigma(r_s:s\le t),
+	\]
+	and, crucially, the forward field reaches back only $m$ steps:
+	\[
+	\mathcal S_{t+k}^{\infty}
+	\subseteq
+	\mathcal R_{t+k-m}^{\infty}:=\sigma(r_s:s\ge t+k-m).
+	\]
+	It is this second inclusion that fails without a finite context
+	(Remark~S.9.1).
+	By monotonicity of $\beta$-mixing coefficients under measurable
+	transformations,
+	\[
+	\beta_S(k)
+	\le
+	\beta(\mathcal R_{-\infty}^t,\mathcal R_{t+k-m}^{\infty})
+	=
+	\beta_r(k-m),
+	\qquad k>m,
+	\]
+	which is equation~(11) of the manuscript.
+\end{proof}
+
+\subsection{Proof of Lemma~4.4 (empirical quantile deviation)}
+\label{app:lem_quantile}
+
+\begin{proof}
+	Under geometric $\beta$-mixing as in Assumption~4.1(A1) of the manuscript,
+	the empirical CDF satisfies the uniform concentration bound
+	\begin{equation}
+		\label{eq:app_ecdf_bound}
+		\sup_{s\in\mathbb R}|\hat F_n(s)-F_S(s)|
+		=
+		\mathcal O_p\!\left(\sqrt{\frac{\log n}{n}}\right);
+	\end{equation}
+	see \citet[Theorem 2.1]{yu1994rates} and
+	\citet[Theorem 7.2]{rio2017asymptotic}.
+	 Since $\qVstat$ is the
+	empirical $(1-\alpha)$-quantile,
+	\[
+	\hat F_n(\qVstat)=1-\alpha+\mathcal O(1/n).
+	\]
+	Thus,
+	\[
+	|F_S(\qVstat)-(1-\alpha)|
+	\le
+	\sup_s|\hat F_n(s)-F_S(s)|+\mathcal O(1/n).
+	\]
+	By the density condition in Assumption~4.1 of the manuscript,
+	$f_S(q_{1-\alpha})$ is bounded away from zero in a neighbourhood of
+	$q_{1-\alpha}$. A first-order expansion around $q_{1-\alpha}$ gives
+	\[
+	|\qVstat-q_{1-\alpha}|
+	\le
+	\frac{1}{f_S(q_{1-\alpha})}
+	\left[
+	\sup_s|\hat F_n(s)-F_S(s)|+\mathcal O(1/n)
+	\right],
+	\]
+	which yields the stated rate.
+\end{proof}
+
+\subsection{Proof of Theorem~4.5 (coverage under $\beta$-mixing)}
+\label{app:thm_coverage}
+
+\begin{proof}
+	The proof proceeds in three steps.
+	
+	\textit{Step 1: Reduction to score control.}
+	By definition of the nonconformity score
+	$S_t=\hat q_t^{lo}-r_t$,
+	\begin{equation}
+		\label{eq:proof_score_event}
+		S_{n+g_n+1}\le\qVstat
+		\Longleftrightarrow
+		r_{n+g_n+1}\ge \hat q_{n+g_n+1}^{lo}-\qVstat.
+	\end{equation}
+	It therefore suffices to show
+	\begin{equation}
+		\label{eq:proof_target_coverage}
+		\mathbb P(S_{n+g_n+1}\le\qVstat)
+		\ge
+		1-\alpha-\Delta_n.
+	\end{equation}
+	
+\textit{Step 2: Quantile approximation.}
+Let $q_{1-\alpha}=F_S^{-1}(1-\alpha)$. By
+Lemma~4.4 of the manuscript,
+\begin{equation}
+	\label{eq:proof_qv_rate}
+	|\qVstat-q_{1-\alpha}|
+	=
+	\mathcal O_p\!\left(\sqrt{\frac{\log n}{n}}\right).
+\end{equation}
+By the density condition,
+\begin{equation}
+	\label{eq:proof_fs_qv_bound}
+	F_S(\qVstat)
+	\ge
+	1-\alpha
+	-
+	C\sqrt{\frac{\log n}{n}}
+\end{equation}
+for a finite constant $C>0$.
+
+\textit{Step 3: Gap-separated dependence control.}
+By $\beta$-mixing, conditional on the calibration sample
+$\mathcal D_n=(S_1,\ldots,S_n)$,
+\begin{equation}
+	\label{eq:proof_conditional_gap}
+	\bigl|
+	\mathbb P(S_{n+g_n+1}\le\qVstat\mid\mathcal D_n)
+	-
+	F_S(\qVstat)
+	\bigr|
+	\le
+	\beta(g_n).
+\end{equation}
+Taking expectations over $\mathcal D_n$ and combining with
+\eqref{eq:proof_fs_qv_bound} gives
+\[
+\mathbb P(S_{n+g_n+1}\le\qVstat)
+\ge
+\mathbb E\!\left[F_S(\qVstat)\right]-\beta(g_n)
+\ge
+1-\alpha
+-
+C\sqrt{\frac{\log n}{n}}
+-\beta(g_n).
+\]
+Setting
+\begin{equation}
+	\label{eq:proof_delta_n}
+	\Delta_n
+	=
+	C\sqrt{\frac{\log n}{n}}+\beta(g_n)
+\end{equation}
+completes the proof.
+\end{proof}
+
+\subsection{Proof of Corollary~4.6 (GARCH data-generating processes)}
+\label{app:cor_garch}
+
+\begin{proof}
+	Under $\omega>0$, $\alpha_1,\beta_1\ge0$, and
+	$\mathbb E[\log(\alpha_1\varepsilon_t^2+\beta_1)]<0$, the GARCH(1,1)
+	process admits a unique strictly stationary solution
+	\citep[Theorem~2.10]{francq2019garch}. Under standard regularity
+	conditions, it is geometrically $\beta$-mixing
+	\citep{francq2019garch,lindner2009stationarity}:
+	\[
+	\beta_r(k)\le a\rho^k,
+	\qquad \rho\in(0,1).
+	\]
+	By Lemma~4.2 of the manuscript, the score process is also strictly
+	stationary and geometrically $\beta$-mixing. The density condition holds
+	under the assumed continuous innovation density near the target quantile.
+	
+	Choosing $g_n=c\log n$ with $c>1/|\log\rho|$ gives
+	\begin{equation}
+		\label{eq:app_garch_gap_rate}
+		\beta(g_n)\le a\rho^{c\log n}
+		=
+		\mathcal O(n^{-c|\log\rho|})
+		=
+		o\!\left(\sqrt{\frac{\log n}{n}}\right).
+	\end{equation}
+	Theorem~4.5 of the manuscript therefore applies with
+	\[
+	\Delta_n
+	=
+	\mathcal O\!\left(\sqrt{\frac{\log n}{n}}\right).
+	\]
+\end{proof}
+
+\subsection{Proof of Proposition~4.7 (online quantile tracking)}
+\label{app:ogd_regret}
+
+Proposition~4.7 of the manuscript is deterministic: it holds for every score
+sequence, with no probabilistic assumption whatsoever. Its scope relative to the
+estimator actually used in the empirical sections is stated after the proof.
+
+
+\begin{proof}[Proof of Proposition~4.7 of the manuscript]
+	\emph{Step 1: the iterates stay bounded, without projection.} We claim
+	$q_t\in[-R-\eta\alpha,\;R+\eta(1-\alpha)]$ for every $t\ge1$. The claim
+	holds at $t=1$ by assumption. Suppose it holds at $t$. For the upper end,
+	either $q_t\le R$, in which case
+	$q_{t+1}\le q_t+\eta(1-\alpha)\le R+\eta(1-\alpha)$; or $q_t>R\ge s_t$, in
+	which case $\mathbf 1\{s_t>q_t\}=0$, the update is $-\eta\alpha<0$, and
+	$q_{t+1}<q_t$. For the lower end, either $q_t\ge -R$, so
+	$q_{t+1}\ge q_t-\eta\alpha\ge -R-\eta\alpha$; or $q_t<-R\le s_t$, so
+	$\mathbf 1\{s_t>q_t\}=1$, the update is $+\eta(1-\alpha)>0$, and
+	$q_{t+1}>q_t$. In both directions the iterate is pulled back as soon as it
+	leaves $[-R,R]$, so no projection step is needed and the range has width at
+	most $2R+\eta$.
+
+	\emph{Step 2: telescoping.} Summing the second form of
+	equation~(15) of the manuscript over $t=1,\ldots,T$,
+	\[
+	\eta\sum_{t=1}^{T}\left[\mathbf 1\{s_t>q_t\}-\alpha\right]
+	=\sum_{t=1}^{T}\left(q_{t+1}-q_t\right)
+	=q_{T+1}-q_1 .
+	\]
+	Dividing by $\eta T$ and applying Step 1,
+	\[
+	\left|\frac1T\sum_{t=1}^{T}\mathbf 1\{s_t>q_t\}-\alpha\right|
+	=\frac{|q_{T+1}-q_1|}{\eta T}
+	\le\frac{2R+\eta}{\eta T},
+	\]
+	which is equation~(16) of the manuscript. Substituting $\eta=R/\sqrt T$ gives
+	$\eta T=R\sqrt T$ and the stated rate.
+\end{proof}
+
+\begin{remark}[What this argument replaces, and what it does not deliver]
+	\label{rem:ogd_scope}
+	A bound of this form is often obtained by invoking the
+	online-convex-optimisation regret guarantee of \citet{zinkevich2003online}
+	and converting average regret on the pinball loss into average miscoverage.
+	That conversion requires a local Lipschitz argument in the indicator
+	parametrisation and does not follow from the regret bound alone. The proof
+	above needs none of it: the update telescopes exactly, and the only work is
+	showing the iterates cannot escape a bounded interval. The constant is
+	explicit and the statement is pathwise.
+
+	Three limitations should be read alongside it. It controls the
+	\emph{time-average} of the coverage indicator, not conditional coverage and
+	not coverage over any subwindow: a sequence can satisfy
+	equation~(16) of the manuscript while violating badly in one regime and
+	over-covering in another, which is exactly the behaviour
+	Section~6 of the manuscript warns about. It requires bounded scores, which
+	rules out nothing empirically but is an assumption. And, most importantly
+	for this paper, it is a statement about the \emph{online update}
+	equation~(15) of the manuscript, whereas the rolling estimator used throughout the
+	empirical sections is a trailing-window empirical quantile, which is not
+	literal online gradient descent. In stationary regimes the two target the
+	same population quantile; under drift the window trades bias for variance
+	near transitions. We therefore cite this bound for what it is --- a
+	dependence-free guarantee for one estimator in the family --- and not as
+	cover for the estimator we run.
+\end{remark}
+
+\subsection{Proof of Proposition~4.8 (finite-window coverage under drift)}
+\label{app:rolling_drift}
+
+Proposition~4.8 of the manuscript is a supporting bound. Its conclusion holds
+under the total-variation drift measure $\delta_w(t)$ of equation~(17) of the
+manuscript, which is not estimable from a single path without further
+assumptions, and the constant it produces is too loose to be informative at
+$\alpha = 0.01$. It is retained because it makes precise which quantity has to be
+small for a trailing window to work; $\hat\delta_w(t)$ below is the operational
+monitoring diagnostic that replaces it in practice.
+
+
+\begin{proof}[Proof of Proposition~4.8 of the manuscript]
+	Let $S_t=\hat q_t^{lo}-r_t$ and let $\qVroll$ be the trailing-window
+	conformal shift of equation~(9) of the manuscript, the
+	$\lceil (w+1)(1-\alpha)\rceil$-th order statistic of
+	$\{S_\tau\}_{\tau=t-w}^{t-1}$. It differs from the plain empirical quantile
+	$Q_{1-\alpha}$ of the same window by one order statistic, an
+	$\mathcal O(1/w)$ gap that is absorbed into $\Delta_w$ below without changing
+	its rate.
+	The coverage event satisfies
+	\begin{equation}
+		\label{eq:app_rolling_score_event}
+		r_t\ge \hat q_t^{lo}-\qVroll
+		\Longleftrightarrow
+		S_t\le \qVroll.
+	\end{equation}
+	
+	Following the weighted conformal framework of
+	\citet{barber2023conformal}, the coverage deviation under
+	non-exchangeability is bounded by the average total variation distance
+	between calibration-window score distributions and the test distribution:
+	\begin{equation}
+		\label{eq:app_tv_bound}
+		\left|
+		\mathbb P(S_t\le\qVroll)-(1-\alpha)
+		\right|
+		\le
+		\frac{1}{w}
+		\sum_{\tau=t-w}^{t-1}
+		d_{\mathrm{TV}}\!\left(\mathcal L(S_\tau),\mathcal L(S_t)\right).
+	\end{equation}
+	By definition,
+	\[
+	\frac{1}{w}
+	\sum_{\tau=t-w}^{t-1}
+	d_{\mathrm{TV}}\!\left(\mathcal L(S_\tau),\mathcal L(S_t)\right)
+	\le
+	\delta_w(t).
+	\]
+	The empirical quantile estimated from a dependent window of size $w$
+	adds the finite-sample remainder
+	\begin{equation}
+		\label{eq:app_delta_w}
+		\Delta_w\le C\sqrt{\frac{\log w}{w}}.
+	\end{equation}
+	Combining the drift and estimation terms yields
+	\begin{equation}
+		\label{eq:app_rolling_score_bound}
+		\mathbb P(S_t\le\qVroll)
+		\ge
+		1-\alpha-\delta_w(t)-\Delta_w.
+	\end{equation}
+	Returning to the score representation gives
+	\begin{equation}
+		\label{eq:app_rolling_bound}
+		\mathbb P\!\left(
+		r_t\ge \hat q_t^{lo}-\qVroll
+		\right)
+		\ge
+		1-\alpha-\delta_w(t)-\Delta_w.
+	\end{equation}
+\end{proof}
+
+The bound separates distributional drift, captured by $\delta_w(t)$, from
+finite-sample estimation error under dependence, captured by $\Delta_w$.
+In the empirical implementation, $\delta_w(t)$ is proxied by the empirical
+total variation distance between the first and second halves of the rolling
+window. Using $\sqrt w$ histogram bins, define
+\begin{equation}
+	\label{eq:app_delta_hat}
+	\hat\delta_w(t)
+	=
+	\frac{1}{2}\sum_b |\hat p_{1,b}-\hat p_{2,b}|,
+\end{equation}
+where $\hat p_{1,b}$ and $\hat p_{2,b}$ are empirical bin frequencies over
+the first and second halves of the window. When $\hat\delta_w(t)$ exceeds a
+practitioner-chosen threshold, the bound weakens and a shorter window or
+temporary deployment pause may be warranted.
+
+%============================================================
+
+\subsection{Proof of Proposition~7.1 of the manuscript}
+\label{app:identification}
+
+Recall $u_t = F_t(\hat q^{lo}_t)$ and $V_t = \mathbf 1\{r_t < \hat q^{lo}_t\}$,
+with $\hat q^{lo}_t$ measurable with respect to $\mathcal G_{t-1}$.
+
+\begin{proof}
+	Since $\hat q^{lo}_t$ is $\mathcal G_{t-1}$-measurable and $F_t$ is the
+	conditional law of $r_t$ given $\mathcal G_{t-1}$,
+	\[
+	\P\!\left(V_t = 1 \mid \mathcal G_{t-1}\right)
+	= \P\!\left(r_t < \hat q^{lo}_t \mid \mathcal G_{t-1}\right) = u_t ,
+	\]
+	and $u_t$ is $\mathcal G_{t-1}$-measurable. For $s \le t-1$ the indicator
+	$V_s$ is a measurable function of $(r_s, \hat q^{lo}_s)$ and hence
+	$\mathcal G_{t-1}$-measurable. Conditioning on $\mathcal G_{T-1}$,
+	\[
+	\P\!\left(V_{1:T}=v_{1:T}\right)
+	= \E\!\left[\mathbf 1\{V_{1:T-1}=v_{1:T-1}\}\,
+	u_T^{\,v_T}(1-u_T)^{1-v_T}\right],
+	\]
+	because the first factor is $\mathcal G_{T-1}$-measurable and the conditional
+	law of $V_T$ is Bernoulli$(u_T)$. Iterating the same step down to $t=1$ gives
+	the path likelihood stated as equation (12) of the manuscript.
+
+	The right-hand side is a functional of the joint law of $(u_1,\dots,u_T)$
+	alone. Hence if $P$ and $Q$ induce the same law for $\{u_t\}$ they induce the
+	same law for $V_{1:T}$, so $\E_P[\phi(V)] = \E_Q[\phi(V)]$ for every
+	measurable $\phi$, and in particular the rejection probability of any test in
+	that class is the same under both: its power equals its size.
+
+	For the moment-restriction case, $\E[V_t \mid \mathcal G_{t-1}] = u_t$, so
+	$u_t \equiv \alpha$ implies $\E[(V_t-\alpha)Z_{t-1}] = 0$ for every
+	predictable $Z_{t-1}$ with finite second moment. Two models both satisfying
+	$u_t\equiv\alpha$ therefore satisfy every such restriction exactly, and a test
+	of one of them rejects each with probability equal to its nominal size. The
+	dynamic quantile regression of \citet{engle2004caviar} is of this form, with
+	$Z_{t-1}$ collecting lagged exceedance indicators and the reported quantile
+	itself.
+\end{proof}
+
+\begin{remark}[What the proposition does not cover]
+	\label{rem:identification_scope}
+	Two exclusions are worth stating. First, $\sigma(V_t, \hat q^{lo}_t)$ is
+	strictly larger than $\sigma(V_t)$, and the two models constructed below do
+	\emph{not} have the same marginal law for $\hat q^{lo}_t$. A diagnostic that
+	compared the level of the reported quantile against a scale reference would
+	separate them --- but that reference is not in $\sigma(V,\hat q^{lo})$, and no
+	test in standard use within that class exploits the difference. This is why
+	the proposition is stated for the moment-restriction family rather than for
+	$\sigma(V,\hat q^{lo})$ in full. Second, statistics reading the
+	\emph{magnitude} of an exceedance rather than its occurrence lie outside the
+	class entirely; Supplement~\ref{app:es} treats them.
+\end{remark}
+
+\subsection{Proposition~\ref{prop:blindspot_depth}: the construction, and the depth of the blind spot}
+\label{app:blindspot_depth}
+
+Let $G$ be the standardised Student-$t_5$ law of the correctly specified model,
+with $\alpha$-quantile $q_{\mathrm{true}} = \nGapQTrueStd$ in units of
+conditional scale. A forecaster that truncates its predictive support, discarding
+mass $\delta$ from each tail and renormalising, reports
+\[
+q_\delta \;=\; G^{-1}\!\left(\delta + \alpha(1-2\delta)\right),
+\]
+which is closer to zero than $q_{\mathrm{true}}$ and is what
+$\texttt{top\_k}$ truncation does to a categorical predictive law.
+
+For the two models to induce the same $u$-process it suffices that the
+alternative return law $H$ place exactly $\alpha$ mass strictly below $q_\delta$,
+since then $u_t \equiv \alpha$ under both. Requiring in addition that $H$ be
+symmetric with unit variance and the same mean absolute deviation as $G$, and
+that its density be non-increasing in $|x|$, gives a feasibility problem that is
+\emph{linear} in the atoms of a discrete symmetric law on a fixed grid:
+\begin{align*}
+	\textstyle\sum_i p_i = 1, \qquad
+	\textstyle\sum_i p_i x_i^2 = 1, \qquad
+	\textstyle\sum_i p_i |x_i| = \E_G|X|, \\
+	\textstyle\sum_{i:\,x_i < q_\delta} p_i = \alpha, \qquad
+	p_{i+1} \le p_i \ \text{ for } x_i > 0, \qquad p_i \ge 0 .
+\end{align*}
+Feasibility is therefore decided by a linear programme rather than argued.
+Bisection on $\delta$ gives the largest feasible truncation depth
+$\delta^\star = \nGapDeltaUni$, at which the reported quantile is
+$\nSupQClassUni$ and the Value-at-Risk is understated by \nGapUndUni\%.
+
+\begin{table}[H]
+	\centering
+	\caption{$\delta^\star$ as a functional of the restriction placed on the
+		alternative return law, at $\alpha = 0.01$ against a standardised
+		Student-$t_5$ honest model. Grid spacing $\nSupDeltaGrid$, ceiling
+		$\nSupDeltaCeiling$;
+		$\delta^\star$ converges from above as the grid is refined, so each entry
+		is an upper bound and the bias overstates the blind spot.}
+	\label{tab:delta_by_class}
+	\footnotesize
+	\begin{tabular}{@{}lrrr@{}}
+		\hline\hline
+		Restriction on the return law & $\delta^\star$ & reported $q$ & understated \\
+		\hline
+		none & \nGapDeltaFree & $\nSupQClassFree$ & \nGapUndFree\% \\
+		unimodal & \nGapDeltaUni & $\nSupQClassUni$ & \nGapUndUni\% \\
+		unimodal, fourth moment $\le$ honest model's & \nSupDeltaClassMoment & $\nSupQClassMoment$ & \nSupUndClassMoment\% \\
+		unimodal, Pareto tail index 5 beyond $3\sigma$ & \nSupDeltaClassPareto & $\nSupQClassPareto$ & \nSupUndClassPareto\% \\
+		GARCH class, standardised Student-$t$ innovations & --- & $\nSupQClassGarchT$ & \nSupUndClassGarchT\% \\
+		\hline\hline
+	\end{tabular}
+	\begin{minipage}{\linewidth}\scriptsize
+		\smallskip
+		The GARCH row carries no $\delta^\star$: that class fixes the innovation
+		family to a one-parameter standardised Student-$t$, so truncation depth
+		does not index it. The entry is the lightest $\alpha$-quantile the family
+		can reach, the Gaussian limit.
+	\end{minipage}
+\end{table}
+
+The resulting pair is matched to machine precision on coverage
+($u \equiv 0.01$), variance, mean absolute deviation, median and predictive
+standard deviation, and to three decimals on point-forecast mean absolute error
+and root mean squared error. Both laws place exactly $\alpha$ mass strictly below
+their own reported threshold, so the exceedance indicator is Bernoulli($\alpha$)
+and serially independent under each, and every test of the exceedance path has
+the same null distribution on the two. Simulated at $T = \nSupPairT$ the realised
+rates are $\nSupPairPiHonest$ and $\nSupPairPiAlt$, both paths are Basel Green,
+and neither rejects at any conventional level on Kupiec
+($p = \nSupPairKupHonest$ and $\nSupPairKupAlt$), on Christoffersen independence
+($\nSupPairCCHonest$ and $\nSupPairCCAlt$), or on a dynamic quantile test with
+\nSupPairDQLags{} lagged exceedance indicators and the reported quantile as
+instruments ($\nSupPairDQHonest$ and $\nSupPairDQAlt$). The simulation checks
+that the sampled law reproduces the constraints the linear programme imposed;
+the indistinguishability itself is the equality above. The reported thresholds
+are $\nPairVaRHonest$ and $\nPairVaRAlt$ in units of conditional scale.
+
+Two further properties are worth recording. Truncation is not repairable by the
+sampling parameters an analyst would vary: restricting the support to its $k$
+most probable atoms bounds every quantile read from any reweighting of that
+support below by $\min S_k$, so no temperature and no nucleus threshold recovers
+a quantile the truncation has removed. And matching \emph{mean} expected
+shortfall as a fifth linear constraint is also feasible, but it does not make
+magnitude-reading statistics blind: the law of $Z_2$ is not pinned by its mean,
+and at $T = \nSupPowerT$ a size-$5\%$ one-sided test calibrated on the honest
+model still rejects the alternative with probability $\nSupPowerRej$ over
+\nSupPowerReps{} replications, a $95\%$ interval of $[\nSupPowerLo,
+\nSupPowerHi]$ that excludes the nominal size. Necessary, not
+sufficient.
+
+
+\bibliographystyle{elsarticle-harv}
+\bibliography{calibrating_the_oracle}
+\end{document}

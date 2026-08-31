@@ -1,0 +1,232 @@
+%══════════════════════════════════════════════════════════════════════════════
+%─── Section 5: Monte Carlo ──────────────────────────────────────────────────
+%══════════════════════════════════════════════════════════════════════════════
+\section{Monte Carlo Evidence}
+\label{sec:mc}
+
+Theorem~\ref{thm:dependent_conformal_var} is asymptotic and its remainder is
+conservative. This section measures what the correction delivers at sample sizes
+a practitioner has, under misspecification of a known kind and severity, and
+records one thing that does not converge.
+
+\paragraph{Design} Returns follow $r_t = \sigma_t\varepsilon_t$ with a
+GARCH$(1,1)$ recursion at $\omega = 10^{-5}$, $\alpha_1 = 0.10$,
+$\beta_1 = 0.85$, so Corollary~\ref{cor:garch} applies to every cell. Five
+innovation laws are used, in increasing order of tail departure: Normal, which is
+correct specification; Student-$t(5)$; Student-$t(3)$; the skewed-$t(3,-0.5)$ of
+\citet{hansen1994autoregressive}; and the mixture
+$0.95\,\mathcal N(0,1)+0.05\,\mathcal N(0,25)$. All are standardised to unit
+variance. The forecaster is given the \emph{true} GARCH parameters and assumes
+Normal innovations, so the only quantity varying across the five processes is the
+innovation law and the only defect is distributional.
+
+Sample sizes are $T\in\{500,\,1000,\,2000,\,5000,\,10000\}$ with $f_c = 0.70$ and
+$\alpha = 0.01$, giving calibration samples from 350 to 7{,}000 observations, and
+each cell is replicated 500 times: 12{,}500 replications in total. The shift is
+equation~\eqref{eq:qV} throughout.
+
+\subsection{What converges}
+\label{sec:mc_converges}
+
+Table~\ref{tab:mc_grid} reports the grid and Figure~\ref{fig:mc_convergence}
+plots it.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Monte Carlo across five data-generating processes and five sample
+		sizes, 500 replications per cell, $\alpha = 0.01$, $f_c = 0.70$. All
+		processes are GARCH$(1,1)$ with $\omega = 10^{-5}$, $\alpha_1 = 0.10$,
+		$\beta_1 = 0.85$; the forecaster uses the true GARCH parameters and
+		assumes Normal innovations. Corrected $\hat\pi$ is the post-correction
+		violation rate on the test block, averaged across replications; Green is
+		the share of replications whose \emph{raw} forecasts fall in the Basel
+		green zone. The green zone is $\hat\pi\le 4/250$, and the
+		population violation rate of each process is given in the first column
+		for comparison against it. The $T = 500$ row of each panel carries a
+		small-sample bias in $\qVstat$ of both signs and is reported with that
+		qualification (\texttt{Quantlets/CO\_robustness/run\_robustness\_mc.py}).}
+	\label{tab:mc_grid}
+	\footnotesize
+	\setlength{\tabcolsep}{4.5pt}
+	\input{analysis/k2_sim/tab_mc_grid}
+\end{table}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{fig_mc_convergence}
+	\caption{Monte Carlo across five data-generating processes and five sample
+		sizes, 500 replications per cell. Panel (a): the post-correction
+		violation rate against the nominal $\alpha = 0.01$. Panel (b): the share
+		of replications whose raw forecasts fall in the Basel green zone. Panel
+		(c): the standard deviation of $\qVstat$ across replications, on
+		logarithmic axes, against a $T^{-1/2}$ reference.}
+	\label{fig:mc_convergence}
+\end{figure}
+
+Three readings follow from the upper panel of Table~\ref{tab:mc_grid}.
+
+\emph{Coverage is restored across every process.} From $T = 1{,}000$ onward the
+corrected violation rate lies within $\nMCCorPiMaxDev$ of nominal for all five processes,
+including the skewed-$t$, whose population rate is $\nMCPopSkew$ --- more than twice the level
+it reports. The residual falls with $T$ and there is no ordering of it by the
+severity of the misspecification: a one-parameter shift removes as much of a
+severe unconditional error as of a mild one.
+
+\emph{$\qVstat$ converges to the population miscalibration, which does not vanish
+with data.} Under correct specification it tends to zero, from $\nMCQvNormalOne$ at $T = 500$ to $\nMCQvNormalFive$ at $T = 10{,}000$. Under each misspecification it converges
+instead to a non-zero limit, ordered by the severity of the tail departure:
+$\nMCQvTFiveFive$ for Student-$t(5)$, $\nMCQvTThreeFive$ for Student-$t(3)$, $\nMCQvMixFive$ for the mixture, $\nMCQvSkewFive$ for the skewed-$t$. The quantity being estimated is a property
+of the pair of laws, not an artefact of the sample.
+
+\emph{Its variance falls at the parametric rate.} The replication standard
+deviation of $\qVstat$ under correct specification falls from $\nMCSdNormalOne$ to $\nMCSdNormalFive$ across a twentyfold increase in $T$, a factor of $\nMCSdRatioNormal$ against $\sqrt{20} = \nMCSqrtTwenty$ (the ratio is computed from the unrounded replication standard deviations; dividing the two figures as printed gives $\nMCSdRatioNaive$). Lemma~\ref{lem:quantile_mixing} carries an additional
+$\sqrt{\log n}$; over this range of $T$ the two rates are not separable, and no
+attempt is made to separate them.
+
+\paragraph{The small-sample cost of the finite-sample convention} At $T = 500$
+the corrected rate is $\nMCCorPiSmallLo$ to $\nMCCorPiSmallHi$ across all five processes, including
+the correctly specified one --- systematically conservative rather than nominal.
+The mechanism is the conformal index of Section~\ref{sec:theory_lemmas}: at
+$n = 350$ the level $\lceil (n+1)(1-\alpha)\rceil/n$ is $\nSupConfIndex$ rather than
+$0.99$, an overshoot of $\nSupConfOvershoot$, and $\qVstat$ inherits it. Under correct
+specification, where the population shift is zero, the overshoot is the entire
+signal: mean $\qVstat$ runs $\nMCQvNormalOne,\,\nMCQvNormalTwo,\,\nMCQvNormalThree,\,\nMCQvNormalFour,\,\nMCQvNormalFive$
+across the grid, against overshoots of $\nSupConfOvershoot,\,\nMCOverTwo,\,\nMCOverThree,\,\nMCOverFour,\,\nMCOverFive$.
+The correction is upward-biased on a forecaster that needs no correction, by
+construction rather than by misspecification, and the bias is $\mathcal O(1/n)$.
+Section~\ref{sec:recal} reports the panel consequence.
+
+\subsection{What does not converge}
+\label{sec:mc_diverges}
+
+The right-hand panel of Table~\ref{tab:mc_grid} reports the share of replications
+whose \emph{raw} forecasts are classified green, and it does not behave like the
+left-hand panel.
+
+The behaviour has a limit, and it can be stated.
+
+\begin{proposition}[Asymptotic content of the traffic-light classification]
+	\label{prop:traffic_limit}
+	Let a forecast series have long-run violation probability
+	$\pi = \lim_{T}\E[\hat\pi_T]$, let $\hat\pi_T$ be the realised violation rate
+	over a test block of length $n_T\to\infty$ with $\hat\pi_T\to\pi$ in
+	probability, and let $\tau = 4/250$ be the Basel green-zone threshold on the
+	scaled exceedance count \citep{basel1996}. If $\pi\neq\tau$, then
+	\begin{equation}
+		\label{eq:traffic_limit}
+		\P(\text{green})
+		\;=\;
+		\P\!\left(\hat\pi_T\le\tau\right)
+		\;\longrightarrow\;
+		\mathbf 1\{\pi<\tau\}.
+	\end{equation}
+	The classification therefore identifies $\operatorname{sign}(\pi-\tau)$ in the
+	limit and nothing else: two forecasters whose long-run violation rates lie on
+	the same side of $\tau$ receive the same verdict with probability tending to
+	one, however far apart those rates are and however far either is from the
+	nominal $\alpha$.
+\end{proposition}
+
+\begin{proof}
+	$\P(\hat\pi_T\le\tau)=\P(\hat\pi_T-\pi\le\tau-\pi)$, which tends to $1$ when
+	$\tau-\pi>0$ and to $0$ when $\tau-\pi<0$ by convergence in probability. The
+	excluded case $\pi=\tau$ is the one in which the limit is not degenerate.
+\end{proof}
+
+\begin{corollary}[The interval the classification cannot resolve]
+	\label{cor:traffic_interval}
+	At $\alpha = 0.01$ the threshold is $\tau = \nTLTauOverAlpha\,\alpha$. Every forecast series
+	whose reported threshold cuts off a long-run tail probability in
+	$(0,\,\nTLTauOverAlpha\,\alpha)$ is classified green with probability tending to one.
+	Under standardised Student-$t_5$ innovations, whose $1\%$ quantile is
+	$\nGapQTrueStd$ in units of conditional scale, a series at the upper end of
+	that interval reports a Value-at-Risk understated by $\nTLUndTFive$\%; under
+	standardised $t_3$ the figure is $\nTLUndTThree$\% and under Normal innovations $\nTLUndNormal$\%.
+\end{corollary}
+
+\begin{proposition}[Zone improvement is a sub-event of coverage improvement]
+	\label{prop:zone_inclusion}
+	Let $\hat\pi$ and $\hat\pi'$ be the realised exceedance rates of a forecast
+	series before and after a correction, and let $Z(\cdot)$ be the traffic-light
+	classification, a non-decreasing step function of the exceedance count whose
+	boundaries lie at $\tau = \nTLTauOverAlpha\,\alpha$ and $\nTLTauYellowOverAlpha\,\alpha$, both strictly above
+	nominal. If $Z(\hat\pi') < Z(\hat\pi)$ --- a zone upgrade --- and the
+	correction does not carry the rate below $\alpha$ by more than its initial
+	excess, then $|\hat\pi' - \alpha| < |\hat\pi - \alpha|$. The converse fails:
+	$|\hat\pi' - \alpha| < |\hat\pi - \alpha|$ is compatible with
+	$Z(\hat\pi') = Z(\hat\pi)$ for any movement that does not cross a boundary.
+\end{proposition}
+
+The proof is immediate. Every boundary of $Z$ sits above $\alpha$, so a downward
+crossing begins strictly above nominal and ends nearer to it; and $Z$ is constant
+between boundaries, so any movement interior to a zone is invisible to it. The
+content is not the implication but its asymmetry, and that asymmetry is what
+Proposition~\ref{prop:traffic_limit} predicts: an instrument that resolves
+$\mathrm{sign}(\pi - \tau)$ can register a change of sign and nothing finer, so it
+must undercount improvement and can never overcount it.
+
+The panel is the measurement rather than an illustration. Across the
+\nZoneCells{} model--asset pairs at $\alpha = 0.01$, the rolling correction
+produces \nZoneUpgrades{} zone upgrades and moves \nZoneCloser{} pairs closer to
+nominal. Every upgrade is among the latter: the count of pairs upgraded without
+moving closer is \nZoneUpNotCloser{}. In the other direction \nZoneCloserNotUp{}
+pairs move closer with no zone change at all --- a quarter of the improvement the
+classification does not see. Zero counterexamples in \nZoneUpgrades{} trials is
+not a strong correlation; it is the inclusion the proposition forces, visible in
+the data without any further assumption.
+
+This is the bridge between the limit statement above and the cost accounting of
+Section~\ref{sec:recal}. A benefit measured in zone upgrades is a benefit
+measured through a sign, and Section~\ref{sec:recal} therefore prices the
+indication rule in the quantile score and keeps the zone count as the
+administrative figure a supervisor reads.
+
+Three features of Proposition~\ref{prop:traffic_limit} distinguish it from the
+identification result of Section~\ref{sec:blindspot}. It requires no construction,
+no restriction on the return law and no matched alternative --- only consistency
+of a sample frequency. It does not shrink with evidence: the interval in
+Corollary~\ref{cor:traffic_interval} is the same at every sample size, and what
+grows with $T$ is the confidence with which a series inside it is passed. And it
+applies even where the identification constraint does not bind, since it concerns
+what the classification retains from the exceedance path rather than what that
+path can distinguish.
+
+Table~\ref{tab:mc_grid} is the finite-sample version. The green share equals the
+share of replications with $\hat\pi\le\tau$ in all 25 cells exactly, and tracks
+the normal approximation
+$\Phi\!\left((\tau-\pi)/\mathrm{sd}(\hat\pi_T)\right)$ to within \nMCNormalApproxPP{} percentage points on average. The boundary case behaves as the proposition says it must: a
+process with $\pi = \tau$ exactly gives a green share of $48$ to $55$\% at every
+sample size from $T = 1{,}000$ to $T = 10{,}000$, converging to nothing.
+
+The skewed-$t$ process, whose population rate of $\nMCPopSkew$ clears the boundary, is
+driven out: $\nMCGrnSkewOne$\% green at $T = 500$ falls to $\nMCGrnSkewFive$\% at $T = 10{,}000$. The
+Student-$t(5)$ process is not. Its population rate is $\nMCPopTFive$ --- a forecaster
+understating its exceedance probability by half --- and it sits inside the
+boundary, so the same concentration works the other way: $\nMCGrnTFiveOne$\% green at $T = 500$ rises to $\nMCGrnTFiveFive$\% at $T = 10{,}000$. Student-$t(3)$ at $\nMCPopTThree$ rises from $\nMCGrnTThreeOne$\% to $\nMCGrnTThreeFive$\%, and the mixture at $\nMCPopMix$ from $\nMCGrnMixOne$\% to $\nMCGrnMixFive$\%.
+
+More data makes the traffic light more confident, and for three of the four
+misspecified processes here it makes it more confidently green. What converges to
+the miscoverage is $\qVstat$.
+
+This is the identification constraint of Section~\ref{sec:blindspot} in a setting
+where the truth is known by construction, and it is worth separating from a claim
+the design does not support. The zone boundary is not miscalibrated: a forecaster at $\hat\pi = \nMCPopTFive$ genuinely produces fewer than four exceedances per
+250 days more often than not, which is what the zone is defined to detect. The
+point is narrower and is about what a practitioner may infer. A green zone
+sustained over a longer record is evidence that the exceedance count is below the
+boundary, and it is not evidence that the reported quantile is the quantile it
+claims to be --- the two coincide only when the miscoverage is large enough to
+cross the boundary. Waiting for more data does not close that gap; it widens the
+share of replications in which the gap is invisible.
+
+\subsection{What the harness can and cannot see}
+\label{sec:mc_harness}
+
+The design was gated on reproducing an existing two-sample-size study before any
+new sample size was reported. It does, on all ten cells and all six reported
+quantities, at a tolerance of three standard errors of the difference between two
+independent Monte Carlo estimates. Two defects surfaced in the course of that
+gate, both in the harness rather than in what it was measuring: a tolerance
+computed as if the replication distribution of a $1\%$ order statistic were
+normal, and a seed reused across processes. Both are stated in full, with what
+the corrected gate still cannot see, in \texttt{Quantlets/CO\_simulation\_study/run\_simulation\_study.py}.
