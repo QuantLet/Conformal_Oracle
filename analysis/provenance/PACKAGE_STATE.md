@@ -37,3 +37,27 @@ outward-facing action and is left to the author.
 0.3.3; they have diverged. The paper describes 0.3.1 as the version carrying a
 defect, and a copy of exactly that version sits in the replication material
 beside the corrected one. Deleting a tree is not a decision this note takes.
+
+## 0.3.4, prepared 2026-08-31
+
+The version bump the changelog implied was missing: `pyproject.toml` and
+`__version__` said 0.3.3 while the newest changelog entry was 0.3.4. Both now
+say 0.3.4.
+
+- test suite: `PYTHONPATH=src pytest` exits 0
+- `python -m build`: `conformal_oracle-0.3.4.tar.gz` and the wheel
+- `twine check dist/*`: PASSED on both
+- the shipped sdist carries the fix, verified by unpacking it rather than by
+  reading the working tree: `src/conformal_oracle/conformal/bootstrap.py:36` is
+  `qv_boots[b] = conformal_quantile(boot_sample, alpha)`
+
+**Not uploaded.** No PyPI token is present on this machine, and a release is an
+irreversible outward action: a version number on PyPI can never be reused. The
+upload is the author's to run:
+
+    cd python && python -m twine upload dist/*
+
+Until it runs, PyPI still serves 0.3.2 and Section 12's sentence — which says
+the correction is unpublished — is correct as printed. When it runs, that
+sentence should be revised to say the correction shipped in 0.3.4.
+

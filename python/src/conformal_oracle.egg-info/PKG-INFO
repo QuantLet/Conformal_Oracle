@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: conformal-oracle
-Version: 0.3.2
+Version: 0.3.4
 Summary: Conformal recalibration audit for tail quantile forecasters
 Author-email: Daniel Traian Pele <danpele@ase.ro>
 License-Expression: MIT
