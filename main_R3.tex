@@ -192,29 +192,17 @@ and correctly reports the model as robust. Third --- and this is the part that
 concerns the tail-risk literature specifically --- they are invisible to the
 backtests that regulate this domain.
 
-That third claim was measured. At $\alpha = 0.01$ the
-independence test of \citet{christoffersen1998} is \emph{degenerate} on
-\nSeqCCUndefRawOne\% of the \nSeqPairs{} model--asset pairs with stored series,
-and on \nSeqCCUndefCorOne\% of them once the forecasts have been recalibrated.
-The mechanism is narrower than a sparse tail. The transition table is populated
-in every one of those cases --- \nSeqCCBothZeroRaw{} of them have no exceedance
-transitions at all --- and what is empty is a single cell of it: the
-\nSeqCCNoConsecRaw{} degenerate pairs raw, and \nSeqCCNoConsecCor{} corrected,
-are exactly those with no two exceedances on consecutive days, so $n_{11} = 0$
-while $n_{10} > 0$. A correction that spaces exceedances out empties that cell
-more often, which is why the share rises rather than falls. In that
-state the transition probability is estimated at the boundary of the parameter
-space and the $\chi^2_1$ calibration of the likelihood ratio does not hold; the
-share falls monotonically to \nSeqCCUndefRawTen\% at $\alpha = 0.10$ under both
-readings. A degenerate table is an absence of evidence, but the natural
-implementation returns ``no rejection'', which reads as a pass. Unconditional
-coverage \citep{kupiec1995} is always defined and rejects \nSeqKupiecRejRawOne\%
-of pairs at $\alpha = 0.01$ against \nSeqKupiecRejRawTen\% at $\alpha = 0.10$;
-when a test rejects the majority of defensible models, its rejection of any one
-of them carries little information, and it does not separate a series carrying an
-implementation failure from one that is merely imperfect. Both instruments are
-weakest exactly at the level at which the Basel traffic-light system operates
-\citep{basel1996}.
+That third claim was measured. At $\alpha = 0.01$ the independence test of
+\citet{christoffersen1998} is \emph{degenerate} on \nSeqCCUndefRawOne\% of the
+\nSeqPairs{} model--asset pairs with stored series, and on \nSeqCCUndefCorOne\%
+once they are recalibrated, because a correction that spaces exceedances out
+empties the consecutive-exceedance cell more often. A degenerate table is an
+absence of evidence, and the natural implementation returns ``no rejection'',
+which reads as a pass. Unconditional coverage \citep{kupiec1995} is always
+defined and rejects \nSeqKupiecRejRawOne\% of pairs at that level, so its
+rejection of any one model carries little information. Both instruments are
+weakest exactly where the Basel traffic-light system operates
+\citep{basel1996}; Section~\ref{sec:blindspot} gives the mechanism.
 
 Post-hoc recalibration does not resolve the situation; it conceals it. A
 split-conformal shift restores marginal coverage regardless of the forecaster it
@@ -929,10 +917,7 @@ transition counts of the exceedance indicator. When no two violations fall on
 consecutive days the table is degenerate: $\hat\pi_{11}$ is estimated at the
 boundary of the parameter space, the likelihood ratio can be defined by
 continuity but its $\chi^2_1$ calibration is not valid there, and the test has
-essentially no power against the alternative it is meant to detect. Standard
-implementations differ in what they do about this --- ours returns a missing
-value, others return a $p$-value computed from a statistic whose asymptotics do
-not hold. Implementations differ in what they return in that state --- a missing
+essentially no power against the alternative it is meant to detect. Implementations differ in what they return in that state --- a missing
 value here, a $p$-value computed from a statistic whose asymptotics fail
 elsewhere --- and the substantive point does not depend on the choice: a
 degenerate table carries no evidence either way. At $\alpha = 0.01$ this is not a
@@ -1413,93 +1398,49 @@ each defect are recorded in \texttt{analysis/provenance/PROTOCOL.md}.
 \label{sec:conclude}
 \label{sec:practitioner}
 
-Four things follow for a practitioner, and they are the paper's argument read
-backwards. A recalibration decision taken on a series that has not been
-structurally checked is a decision about an artefact, and the correction will
-make it look correct. The shift is warranted when the raw forecast fails a
-backtest \emph{on the calibration window} and not otherwise: at $\alpha = 0.01$
-that rule skips \nGateRollSkipped{} of \nSeqPairs{} pairs and avoids
-\nGateRollAvoided{} of the \nDegradedRoll{} degradations the rolling estimator
-would otherwise cause, at a cost of \nGateRollUpgradesLostNet{} pairs on the
-quantile score. The operative criterion is the estimation constraint rather than
-the model class --- with adequate per-asset history the GJR-GARCH family with
-conformal correction attains the best corrected quantile score here, and its two
-variants are not distinguishable, their mean corrected scores differing by
-\nPairQSGapPct\% with the ordering reversing between per-asset and pooled
-aggregation. And the signed shift carries the diagnosis while the ratio
-$\bar R$ does not.
-
-
 A Value-at-Risk forecast is produced by code, and the step in which a predictive
 distribution becomes a threshold determines what the resulting series is. In this
-panel that step --- not the architecture of the model, nor the format in which it
-exposes its distribution --- is what separates a forecaster that is roughly
-usable at the 1\% level from one that violates on four days in ten. The clearest
-instance is a documented sampling default in a public checkpoint, correct for the
-task it was written for and silently wrong for this one, and the mechanism is
-established by controlled experiment rather than inferred: dispersion recovers
-monotonically as the truncation is relaxed, one thousand draws under the default
-contain exactly fifty distinct values, and the parameters a careful analyst would
-vary move nothing.
+panel that step --- rather than the architecture of the model or the format in
+which it exposes its distribution --- separates a forecaster that is roughly
+usable at the $1\%$ level from one that violates on four days in ten.
 
-The result that generalises beyond this panel is an identification result. A
+The result that generalises beyond the panel is an identification result. A
 coverage backtest reports that a series miscovers and cannot report why, and the
 sources it cannot distinguish --- a poor tail model, a truncated predictive
 support, an inverted sign convention, a misalignment, a stale vintage --- call
 for different remedies. At $\alpha = 0.01$ the instruments are additionally at
-their weakest: the independence test is degenerate on a third of raw pairs and on
-more than half of recalibrated ones, where its asymptotics do not hold, while
-unconditional coverage rejects seven pairs in ten and so carries little
-information about any one of them. Post-hoc recalibration does not repair this
-and makes it harder to see, because a guarantee that holds regardless of the
-forecaster cannot diagnose the forecaster: applied to a truncated series it
-returns $\hat\pi = \nTruncCorPi$ and \nTruncCorGreen{} of \nMainAssets{} Basel
-green zones. Validation that runs after a correction is not validation of the
-model.
-
+their weakest, and post-hoc recalibration makes the situation harder to read
+rather than repairing it: a guarantee that holds regardless of the forecaster
+cannot diagnose the forecaster, and applied to a truncated series it returns
+$\hat\pi = \nTruncCorPi$ and \nTruncCorGreen{} of \nMainAssets{} Basel green
+zones. Validation that runs after a correction is not validation of the model.
 We therefore propose checking forecast series structurally, against properties
 they must have to be Value-at-Risk series at all, before they are calibrated or
-evaluated. Ten such checks are cheap, and seven of them need nothing but the
-forecast series and the returns: tail reach needs the model's sampled paths, and
-$\alpha$-responsiveness and coverage plausibility need an evaluation window, so
-the gate is not entirely upstream of the data a backtest consumes. Together they
-block \nGateBlocked{} of the \nGateSeries{} series here. Two are invariants, one is an invariant tested through a proxy, and seven
-are plausibility bands with stated rather than derived thresholds; all ten were
-specified after the failure modes they address had been identified, so their
-performance on those failure modes is in-sample by construction. The argument for
-them is not their measured sensitivity but that the alternative provably cannot
-do this job.
+evaluated; the ten checks used here block \nGateBlocked{} of \nGateSeries{}
+series, and the argument for them is that the alternative provably cannot do this
+job.
 
 On recalibration itself the claims are narrow. The conformal shift restores
-marginal coverage under $\beta$-mixing dependence --- asymptotically, with an
-explicit remainder, and under a gap-separation condition that the contiguous
-split used here does not satisfy (Section~\ref{sec:theory_gap}) --- and that
-is all it does. It is an intervention with an indication rather than a default
-step: under the rolling estimator, \nWellCalRollWorse{} of the \nWellCalRollN{}
-pairs that pass Kupiec on the test window are degraded by correcting them, and
-gating the correction on a calibration-window backtest avoids
-\nGateRollAvoided{} of the \nDegradedRoll{} deteriorations at a cost of
-\nGateRollUpgradesLostNet{} pairs on the quantile score, which the traffic light
-records as \nGateRollUpgradesLost{} of \nGateRollUpgrades{} zone upgrades
-foregone --- half the benefit the same rule appears to deliver when it is allowed
-to read the window it is scored on. The shift reaches only part of the problem: in the
-decomposition of \citet{gneiting2023regression} a constant correction addresses a
-median of \nuMCBSharePct\% of total miscalibration on well-specified series, the
-remainder being conditional, and it does not restore violation independence. The
-magnitude $\bar R$ is retained as a scale-interpretable statement of how much of
-a forecast survives correction, not as an independent diagnostic; among
-well-specified forecasters it is a rank-preserving transform of the violation
-rate.
+marginal coverage under $\beta$-mixing dependence, asymptotically and with an
+explicit remainder, and that is all it does. It is an intervention with an
+indication rather than a default step: under the rolling estimator
+\nWellCalRollWorse{} of the \nWellCalRollN{} pairs that pass Kupiec on the test
+window are degraded by correcting them, and gating the correction on a
+calibration-window backtest avoids \nGateRollAvoided{} of the \nDegradedRoll{}
+deteriorations at a cost of \nGateRollUpgradesLostNet{} pairs on the quantile
+score. The shift also reaches only part of the problem: in the decomposition of
+\citet{gneiting2023regression} a constant correction addresses a median of
+\nuMCBSharePct\% of total miscalibration on well-specified series, the remainder
+being conditional.
 
 What the panel says about foundation models is deflationary. Configured
 correctly, the zero-shot series here are neither catastrophically miscalibrated
-nor superior: they sit alongside the GARCH-family benchmarks at the 1\% level, a
-per-asset CAViaR fitted the ordinary way outperforms all of them, and the
+nor superior: they sit alongside the GARCH-family benchmarks at the $1\%$ level,
+a per-asset CAViaR fitted the ordinary way outperforms all of them, and the
 residual miscalibration of the best of them is concentrated in the tail and
 largely gone by $\alpha = 0.10$. Whether fine-tuning closes that tail gap remains
-open. What this paper does close, in our view, is the question of whether a
-tail-risk evaluation can be trusted without a structural check of the series it
-evaluates.
+open. What this paper closes is the question of whether a tail-risk evaluation
+can be trusted without a structural check of the series it evaluates.
 
 \section*{Data and Code Availability}
 
