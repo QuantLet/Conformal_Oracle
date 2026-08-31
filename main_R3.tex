@@ -566,7 +566,12 @@ the constraint $\qVstat \geq 0$, in Section~\ref{sec:failure}.
 	\label{rem:tail_sparsity}
 	Tail calibration relies on events $\{r_t \leq \hat q_t^{lo}\}$, whose expected number is $\E[N_\alpha] = \alpha T$. The constraint binds twice, and the two layers are worth separating. An \emph{estimator} fitted to that tail subset inherits variance of order $k/N_\alpha$ for $k$ parameters, whatever it is estimating; a \emph{correction} estimated from the same subset inherits it again. By contrast, $\qVstat$ is a single order statistic of the full calibration sample --- the $\lceil (n+1)(1-\alpha)\rceil$-th, by equation~\eqref{eq:qV}, and not a quantity estimated from the $N_\alpha$ tail observations alone. A one-parameter correction therefore enjoys a favourable bias--variance trade-off under tail sparsity, and the correction magnitude is interpretable as a diagnostic precisely because the construction adds no further parameters. Values of $\qVstat$ that dominate the scale of $\hat q_t^{lo}$ signal the high-$\bar R$ range.
 
-	The forecaster layer is visible directly. Gradient-boosted quantile regression on \nMLAssets{} assets and \nMLDates{} dates moves its realised exceedance rate by a factor of \nMLGbmTailSpan{} across the leaf-size grid, from the second grid point upward, while the centre of the same predictive law moves by \nMLGbmCentreSpread{} estimated standard deviations; at the library default of $\texttt{min\_data\_in\_leaf} = \nMLGbmLeafDefault$ the rate is $\nMLGbmPiDefault$. A quantile random forest on the same assets and dates spans a factor of \nMLQrfTailSpan. The parameter that resolves the leaf is a tail-sample-size parameter, so this is the remark's own mechanism and not a configuration accident: three documented control knobs each move the tail past the same threshold, and a second granularity parameter does not move it at all (\texttt{analysis/ml/emit\_dose\_tables.py}).
+	The forecaster layer is visible directly: gradient-boosted quantile regression
+and a quantile random forest both move their realised exceedance rate by an
+order of magnitude across a leaf-size grid while the centre of the same
+predictive law barely moves, and the parameter that resolves the leaf is a
+tail-sample-size parameter, so this is the remark's own mechanism rather than a
+configuration accident (\texttt{analysis/ml/emit\_dose\_tables.py}).
 \end{remark}
 
 \subsubsection{Validity under Temporal Dependence}
@@ -631,9 +636,9 @@ The classical benchmarks --- GJR-GARCH \citep{glosten1993relation}, GARCH-Normal
 \subsubsection{Experimental Design}
 \label{sec:exp_design}
 
-\textbf{Two panels, named once.} The paper reports two, and mixing them is the
-easiest way to produce a number nobody can reconcile, so they are defined here
-and tagged wherever they appear.
+\textbf{Two panels, named once.} Mixing them is the easiest way to produce a
+number nobody can reconcile, so both are defined here and tagged wherever they
+appear.
 
 \emph{The main panel} is \nMainForecasters{} forecasters $\times$ \nMainAssets{}
 assets $=$ \nMainPairs{} pairs at $\alpha = 0.01$. This is Table~\ref{tab:master}.
@@ -653,7 +658,15 @@ figure in the text is generated from the artefacts by
 \texttt{scripts/paper\_numbers.py}, which fails the build if a value in the
 manuscript drifts from the value in the data.
 
-\textbf{The comparison is deliberately asymmetric, and we state that here rather than as a qualification later.} The classical and dynamic benchmarks are estimated per asset and re-estimated at every step; the foundation models are deployed strictly zero-shot, with no fine-tuning and no per-asset adaptation. These are not equivalent adaptation regimes, and any Quantile Score comparison between the two groups reflects that difference as well as any difference in model quality. We retain the asymmetry because it is the operationally relevant contrast --- a zero-shot model is what a practitioner can deploy without an estimation pipeline per instrument --- but no conclusion in this paper rests on a TSFM-versus-GARCH score ranking. The audit's findings are within-group: the interface contrast is between two releases of the same family under identical deployment, and the recalibration results are computed separately for every forecaster.
+\textbf{The comparison is deliberately asymmetric.} The classical and dynamic
+benchmarks are estimated per asset and re-estimated at every step; the foundation
+models are deployed strictly zero-shot. These are not equivalent adaptation
+regimes, and any Quantile Score comparison across the two groups reflects that
+as well as model quality. We retain the asymmetry because it is the
+operationally relevant contrast, and no conclusion here rests on a
+TSFM-versus-GARCH ranking: the interface contrast is between two releases of one
+family under identical deployment, and the recalibration results are computed
+separately for every forecaster.
 
 All forecasts are one-step-ahead. TSFMs use a fixed context length of 512 observations, the default for all six pretrained checkpoints. The GARCH-family benchmarks and Historical Simulation are estimated on rolling windows of 250 observations, following the Basel convention \citep{basel1996}, with parameters re-estimated at each step. EWMA carries no estimation window: its variance is the RiskMetrics recursion at the conventional $\lambda = 0.94$, so its memory is geometrically decaying rather than truncated. That distinction is immaterial numerically --- the weight beyond lag $k$ is $\lambda^k$, which is $\nLitLambdaTail$ at $k = 250$ --- but it is material for the finite-context condition of Lemma~\ref{lem:score_mixing}, and Remark~\ref{rem:finite_context} treats it explicitly rather than folding EWMA into the 250-observation convention.
 
@@ -1448,7 +1461,19 @@ The full replication pipeline --- data retrieval, foundation-model inference, co
 
 Return data are retrieved from Yahoo Finance. All foundation model checkpoints are open-weight and hosted on HuggingFace; no proprietary API access is required.
 
-A Python package implementing the framework, \texttt{conformal-oracle}, is available on PyPI (\url{https://pypi.org/project/conformal-oracle/}) and installable via \texttt{pip install conformal-oracle}. Every rolling-mode result reported here was produced by the Quantlet replication pipeline, which computes the conformal correction as the finite-sample split-conformal quantile, the $\lceil(w+1)(1-\alpha)\rceil$-th order statistic of the trailing-window scores. The shift is defined once, in \texttt{cfp\_config.conformal\_quantile}, and \texttt{scripts/audit\_qv\_convention.py} enumerates every site in the repository that takes a quantile of nonconformity scores, records the convention each uses, and fails the build when an undeclared one appears. The block-bootstrap confidence interval for $\qVstat$ in that package computes its replicates with the plain empirical quantile while the point estimate uses the order statistic, so the interval is centred on a quantity the caller is not estimating. This affects every released version up to and including \texttt{0.3.2}, which is the current release; the correction is in the repository and is not yet published. No result in this paper depends on it --- the manuscript's intervals come from \texttt{scripts/qV\_block\_bootstrap.py}, which takes the order statistic in both places --- and it is stated here because the package is offered to readers.
+A Python package implementing the framework, \texttt{conformal-oracle}, is
+available on PyPI (\url{https://pypi.org/project/conformal-oracle/}). The shift
+is defined once, in \texttt{cfp\_config.conformal\_quantile}, and
+\texttt{scripts/audit\_qv\_convention.py} enumerates every site in the
+repository that takes a quantile of nonconformity scores and fails the build
+when an undeclared convention appears. One disclosure: in every released version
+of that package up to and including \texttt{0.3.2}, the current release, the
+block-bootstrap interval for $\qVstat$ computes its replicates with the plain
+empirical quantile while the point estimate uses the order statistic, so the
+interval is centred on a quantity the caller is not estimating. The correction is
+in the repository and unpublished. No result here depends on it: the
+manuscript's intervals come from \texttt{scripts/qV\_block\_bootstrap.py}, which
+takes the order statistic in both places.
 
 Each series admitted to the analysis carries a manifest entry recording its model, asset, path, vintage and estimator class, and each passes --- or is recorded as blocked by --- the structural gate of Section~\ref{sec:gate} before entering any table. The numbers asserted in the text are emitted as macros by \texttt{scripts/paper\_numbers.py}, which recomputes each of them from the artefacts and fails the build when a value in the manuscript differs from the value in the data.
 
