@@ -131,6 +131,67 @@ defect, and no choice of tolerance repairs it. If (ii) exceeds the scale of a
 plausible failure mode, or (iii) fails, the check is recorded as non-informative
 and reported as such, exactly as the −3.500 edge is.
 
+### One registry is the cross-document guard
+
+A quantity reported in both documents must not resolve to two values. The
+manuscript's Section 5.3 and the supplement's S.4.1 both gave the resolution of
+the same reproduction gate, in the same sentence construction, and disagreed ---
+2.1e-4 against 1.3e-4. It survived a deliberate comparison of about twenty
+numeric chains between the two documents, because two identical sentences
+carrying different digits read as a restatement rather than a contradiction. The
+$Z_2$ contradiction found in the same pass differed in wording as well as value,
+which is why that one was visible.
+
+The obvious remedy is a guard that compares, for every quantity used in both
+documents, the values they carry. It was written and then removed, for two
+reasons worth recording.
+
+**It fires on the convention it is supposed to respect.** `\nMainForecasters`
+is 16 and `\nSeqForecasters` is 13 because they are different panels, which is
+what the panel prefix of Rule 1 exists to say. Any rule that strips the prefix to
+compare stems deletes the distinction that makes the two correct, and reports
+`MainPairs` against `SeqPairs` as a contradiction.
+
+**It would not have caught the case that motivated it.** The supplement carried a
+macro; the manuscript carried a *typed literal*. A comparison over the registry
+sees one value and no disagreement, because the second value was never in the
+registry to compare.
+
+What prevents the class is the invariant, not a comparison: **every figure in
+either document is a macro from one registry.** Two documents cannot then
+disagree about a quantity, because there is one definition of it. The defect was
+possible only because guard 2 read two of the four files the manuscript is
+assembled from, and the figure sat in one of the two it did not read. Extending
+that guard closed it; a value-comparison guard on top would add nothing and would
+fail on correct work.
+
+### Round once, at emission
+
+Three instances, so it is a class and not an accident:
+
+| where | printed | from the unrounded values |
+|---|---|---|
+| a Monte Carlo control mean, S.4.1 | 0.00071 | **0.00070** |
+| a rule failure rate quoted from a display | 0.000705 read as 0.00071 | the same figure rounded twice |
+| a variance ratio, Section 5.1 | 4.80, from 0.00307 / 0.00064 | **4.83** |
+
+Each was produced the same way: a quantity was computed from figures that had
+already been rounded for display, rather than from the values behind them. The
+error is small every time and it is not random --- it inherits the direction of
+the first rounding, so it does not average away across a table.
+
+**A derived quantity is computed from unrounded values and rounded once, at the
+point of emission.** A ratio, a difference or a percentage that a reader could
+reconstruct from two printed numbers is emitted by the same script that prints
+them, not left for the prose to assemble. Where the reconstruction and the
+emitted value differ, the emitted one is right and the difference is the
+measure of how much rounding the printed figures carry.
+
+`scripts/paper_numbers.py` asserts this for the ratios it emits: a ratio whose
+operands are also emitted is checked against the quotient of their *rounded*
+displays, and a disagreement beyond the last printed place is reported, because
+that is exactly the gap a reader dividing the table would fall into.
+
 ### A rate carries the grid it lives on
 
 Three instances of one shape, which is the count at which this project turns a
@@ -331,8 +392,8 @@ the wrong thing on the first attempt --- is not a defect of the project; it is
 the work. Without that line the count is unfalsifiable, which is the wrong
 property for a number in a section about honest accounting.
 
-Seven defects found; **five were in the checking apparatus and two in the thing
-being checked.**
+Eight defects found; **five were in the checking apparatus and three in the
+thing being checked.**
 
 | where | what | how it failed |
 |---|---|---|
@@ -343,6 +404,22 @@ being checked.**
 | instrument | `paper_numbers.py --check` regenerated the artefact it checks against | circularity |
 | object | thirteen supplement literals that did not reproduce | --- |
 | object | two half-macro claims that did not reproduce | --- |
+| object | a variance ratio printed as 4.80, obtained by dividing two already-rounded figures | double rounding |
+
+**Two candidates rejected by the criterion, and they are worth naming so the
+count can be reproduced.** While clearing the section literals, a macro for the
+corrected-rate deviation was written over all cells when the sentence says "from
+$T = 1{,}000$ onward", and a macro for the yellow-zone boundary used $9.5/250$
+where Proposition 5.1 uses $9/250$. In both the prose was right and the new macro
+wrong, and both were caught before the macro reached the document. They are the
+work, not defects of it. The variance ratio is different: 4.80 was printed in
+Section 5.1, so it reached a claim, and it counts.
+
+It is classified as an **object** defect rather than an instrument one. Nothing
+checked it wrongly; there was no check, because the ratio was computed by hand
+from two printed figures instead of by the emitter from the values behind them.
+That is the same failure as a hand-carried literal, which is what the registry
+exists to prevent.
 
 The first is the clearest of them and it is the one worth generalising. Guard 2
 had no defective logic: its pattern was right, its tolerance was right, its

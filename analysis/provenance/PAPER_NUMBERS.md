@@ -463,6 +463,7 @@ not possible without editing this file's producer.
 | `\nMCCorPiSmallHi` | 0.0085 | -- |
 | `\nMCSdRatioNormal` | 4.83 | -- |
 | `\nMCSqrtTwenty` | 4.47 | -- |
+| `\nMCSdRatioNaive` | 4.80 | -- |
 | `\nMCOverOne` | 0.0043 | -- |
 | `\nMCOverTwo` | 0.0014 | -- |
 | `\nMCOverThree` | 0.0007 | -- |
@@ -512,8 +513,8 @@ not possible without editing this file's producer.
 | `\nWSweepShiftLargerShort` | 281 | -- |
 | `\nWSweepBound` | 198 | -- |
 | `\nHarnessDefectsInstrument` | 5 | -- |
-| `\nHarnessDefectsObject` | 2 | -- |
-| `\nHarnessDefectsTotal` | 7 | -- |
+| `\nHarnessDefectsObject` | 3 | -- |
+| `\nHarnessDefectsTotal` | 8 | -- |
 | `\nMLCells` | 40 | -- |
 | `\nMLDates` | 200 | -- |
 | `\nMLAssets` | 4 | -- |

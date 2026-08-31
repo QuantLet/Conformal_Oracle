@@ -212,13 +212,14 @@ protocol as originally run was a contiguous $70/30$ split with $g_n = 0$, under
 which Theorem~\ref{thm:dependent_conformal_var} does not apply to the estimator
 at all.
 
-This is the standard operational choice in conformal prediction, and rather than
-leave the theorem uncovered the gap is inserted and the panel re-run with it.
-The estimator becomes $g_n = \lceil c\log n\rceil$ with
+This is the standard operational choice in conformal prediction, and the
+distance between it and the theorem is measured rather than argued about. The
+gapped estimator sets $g_n = \lceil c\log n\rceil$ with
 $c = 1/\lvert\log\hat\rho\rvert$, the minimal gap
 satisfying~\eqref{eq:garch_gap_rate}, taken out of the front of the test block so
-that the shift is computed on the same calibration sample as before and only the
-evaluation window moves.
+that the shift is computed on the same calibration sample and only the evaluation
+window moves. It is computed on every cell of the panel and compared against the
+estimator the tables report.
 
 Across all \nGapPanelCells{} cells the gap runs from \nGapPanelGapLo{} to
 \nGapPanelGapHi{} observations, a median of \nGapPanelGapMed{} and
@@ -229,10 +230,15 @@ median of $\nGapPanelDPiMed$ and at most $\nGapPanelDPiMax$; it changes
 threshold does to a statistic that moved by less than a thousandth, not
 instability in the estimator.
 
-\emph{Theorem~\ref{thm:dependent_conformal_var} therefore covers the estimator as
-run.} The price is \nGapPanelGapPct\% of each test window and one Kupiec pass in
-the panel, and it is paid rather than argued around. What the theorem still does
-not cover is the rolling variant, for the separate reason given in
+So Theorem~\ref{thm:dependent_conformal_var} covers an estimator that differs
+from the one the tables report by at most $\nGapPanelDPiMax$ in violation rate,
+with \nGapPanelZoneChanges{} regulatory classifications and
+\nGapPanelKupFlips{} Kupiec verdict changed across \nGapPanelCells{} cells. That
+is a measured distance and not a proof that the theorem applies to the
+contiguous split, which it does not. The results below are reported on the
+contiguous split, as they were computed; a reader who requires the covered
+estimator can read the difference off the figures above. What the theorem does
+not cover at all is the rolling variant, for the separate reason given in
 Section~\ref{sec:theory_rolling}.
 
 \subsection{The rolling estimator: two bounds, and what they cover}

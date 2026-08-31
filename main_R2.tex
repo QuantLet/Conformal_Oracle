@@ -113,8 +113,11 @@ that separates estimation error in the calibration quantile from residual
 dependence, and a corollary fixing the mixing rate for GARCH data-generating
 processes. The required separation between calibration and evaluation is
 logarithmic in the calibration sample --- a median of \nGapPanelGapMed{}
-observations, \nGapPanelGapPct\% of the evaluation window --- and is imposed in
-the empirical protocol.
+observations, \nGapPanelGapPct\% of the evaluation window --- and imposing it on
+all \nGapPanelCells{} panel cells moves the corrected violation rate by at most
+$\nGapPanelDPiMax$ and changes \nGapPanelZoneChanges{} regulatory
+classifications. The reported panel runs the contiguous split, so the theorem
+covers an estimator that differs from it by that much.
 
 On a panel of equity, bond, commodity, cryptocurrency and foreign-exchange
 series, the shift brings every forecaster it is applied to --- from
@@ -1419,10 +1422,19 @@ count over the \nBandGoodCells{} well-specified cells stays at
 $\nBandGoodWorstRatio$, then reaches \nBandFPAtStrict{} at $\nBandStrict$ and
 \nBandFPAtVeryStrict{} at $\nBandVeryStrict$. What it does \emph{not} buy is
 detection: all \nBandTruncCells{} truncated cells are caught at every edge in
-that range. So tightening trades an analytic quantity against real false
-positives for no gain in what the check finds, on this panel, and
-$\nGapBandNow$ is a choice made at the flat end of that trade rather than an
-optimum.
+that range.
+
+That is a finding about the metric, not a caveat on it. The residual
+understatement of Supplement~S.17.1 rewards a tightening that catches nothing
+additional and blocks \nBandFPAtVeryStrict{} correctly specified cells: moving
+from $\nGapBandNow$ to $\nBandVeryStrict$ halves the reported residual while the
+set of series the check actually stops is unchanged. The analytic quantity and
+the empirical behaviour of the gate therefore point in different directions
+over this range, and the table must not be read as \emph{tighter is better}. It
+reports what a scale reading leaves unidentifiable in principle, which is not
+the same as what this gate finds in practice, and $\nGapBandNow$ is a choice
+made at the flat end of the false-positive curve rather than an optimum on
+either axis.
 
 What that bound does not cover is the range between the two populations of this
 panel, and there the evidence is one estimator family and \nMLAssets{} assets:
