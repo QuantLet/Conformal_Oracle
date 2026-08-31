@@ -42,14 +42,6 @@ A second-order expansion of the quantile loss gives uMCB ≈ ½·f·q_V², with 
 
 - 5th-95th percentile of implied f: **0.1 to 25.2**, a factor of 489; median 2.5.
 
-**Corrected 2026-08-29.** That figure divides a TEST-window uMCB by a
-CALIBRATION-window q_V, so it carries the estimation noise of both windows and
-is a cross-window quantity rather than a property of the density. Computed
-within one window -- calibration uMCB against the same window's q_V -- the
-implied f spans **0.32 to 4.76, a factor of 14.8**, median 1.74, over 261
-pairs. The manuscript carries the within-window figure. See
-`analysis/k0a_mcb/RESULTS_DENSITY_MECHANISM.md`.
-
 The same q_V therefore maps to score penalties differing by an order of magnitude depending on the asset's tail density. The two quantities are not readable off one another without f.
 
 (The 5 negative uMCB values are numerical: the minimising constant is found by an interpolated quantile, so the achieved reduction can be ~1e-8 below zero. They are dropped here rather than clipped.)

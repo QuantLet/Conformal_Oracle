@@ -54,7 +54,7 @@ ALPHA = 0.01
 F_CAL = 0.70
 
 sys.path.insert(0, str(BASE / "Quantlets"))
-from cfp_config import SYMBOLS  # noqa: E402
+from cfp_config import SYMBOLS, split_indices  # noqa: E402
 
 # Okabe--Ito: vermillion and blue, the canonical CVD-safe opposition.
 C_FLIP, C_OK = "#D55E00", "#0072B2"
@@ -72,11 +72,12 @@ mpl.rcParams.update({
 def recalibrate(r, v, alpha=ALPHA, f_cal=F_CAL):
     """Split conformal, exactly as the evaluation pipeline does it."""
     n = len(r)
-    n_cal = int(n * f_cal)
+    _cal, _test, _g = split_indices(n, v - r, f_cal=f_cal)
+    n_cal, t0 = len(_cal), int(_test[0])
     s = np.sort(v[:n_cal] - r[:n_cal])
     k = min(int(np.ceil((n_cal + 1) * (1 - alpha))) - 1, n_cal - 1)
     qV = float(s[k])
-    return v[n_cal:] - qV, n_cal, qV
+    return v[t0:] - qV, n_cal, qV
 
 
 def main() -> int:

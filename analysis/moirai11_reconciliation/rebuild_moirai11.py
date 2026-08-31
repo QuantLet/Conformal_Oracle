@@ -57,8 +57,13 @@ F_CAL = 0.70
 
 sys.path.insert(0, str(BASE / "analysis" / "ae_point4"))
 from run_ae_point4 import (  # noqa: E402
+
     kupiec_p, qhat_ceil, quantile_score, traffic_light,
 )
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 
 
 def cc_pval(v_bool: np.ndarray) -> float:
@@ -96,9 +101,10 @@ def build(symbols: list[str]) -> pd.DataFrame:
             r = ret["r"].values[mask]
             q = fc[col].values[mask]
             n = len(r)
-            n_cal = int(n * F_CAL)          # house convention: floor
-            r_cal, r_test = r[:n_cal], r[n_cal:]
-            q_cal, q_test = q[:n_cal], q[n_cal:]
+            _cal, _test, _g = split_indices(n, q - r, f_cal=F_CAL)
+            n_cal, t0 = len(_cal), int(_test[0])
+            r_cal, r_test = r[:n_cal], r[t0:]
+            q_cal, q_test = q[:n_cal], q[t0:]
             n_test = len(r_test)
 
             qV = qhat_ceil(q_cal - r_cal, alpha)

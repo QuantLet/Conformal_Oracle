@@ -42,7 +42,7 @@ _here = Path(__file__).resolve()
 sys.path.insert(0, str(_here.parent.parent if _here.parent.name != 'scripts'
                        else _here.parent.parent / 'Quantlets'))
 try:
-    from cfp_config import MODELS  # noqa: E402
+    from cfp_config import MODELS, split_indices  # noqa: E402
 except ModuleNotFoundError:
     sys.path.insert(0, str(_here.parent.parent.parent / 'Quantlets'))
     from cfp_config import MODELS  # noqa: E402
@@ -204,12 +204,13 @@ for model_name in MODELS:
             continue
 
         N = len(r_t)
-        n_cal = int(N * F_CAL)
+        _cal, _test, _g = split_indices(N, var_t - r_t, f_cal=F_CAL)
+        n_cal, t0 = len(_cal), int(_test[0])
 
         # Split
-        r_cal, r_test = r_t[:n_cal], r_t[n_cal:]
-        var_cal, var_test = var_t[:n_cal], var_t[n_cal:]
-        es_cal, es_test = es_t[:n_cal], es_t[n_cal:]
+        r_cal, r_test = r_t[:n_cal], r_t[t0:]
+        var_cal, var_test = var_t[:n_cal], var_t[t0:]
+        es_cal, es_test = es_t[:n_cal], es_t[t0:]
 
         # Conformal VaR correction (to get corrected violations for corrected Z2)
         s_V = var_cal - r_cal  # = q_hat_lo - r_t (one-sided score)

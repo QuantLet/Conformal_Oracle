@@ -31,7 +31,7 @@ SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
 
 import sys
 sys.path.insert(0, str(BASE / 'Quantlets'))
-from cfp_config import MODELS  # noqa: E402
+from cfp_config import MODELS, split_indices  # noqa: E402
 
 MODEL_ORDER = list(MODELS.keys())
 
@@ -71,10 +71,11 @@ def load_data(model_key, symbol):
 # ── Conformal correction ────────────────────────────────────────
 def conformal_correction(r, var_t, es_t):
     T     = len(r)
-    n_cal = int(T * F_CAL)
-    r_cal, r_test = r[:n_cal], r[n_cal:]
-    v_cal, v_test = var_t[:n_cal], var_t[n_cal:]
-    e_cal, e_test = es_t[:n_cal], es_t[n_cal:]
+    _cal, _test, _g = split_indices(T, var_t - r, f_cal=F_CAL)
+    n_cal, t0 = len(_cal), int(_test[0])
+    r_cal, r_test = r[:n_cal], r[t0:]
+    v_cal, v_test = var_t[:n_cal], var_t[t0:]
+    e_cal, e_test = es_t[:n_cal], es_t[t0:]
 
     s_V       = v_cal - r_cal
     q_hat_V   = np.quantile(s_V,
@@ -111,8 +112,9 @@ for model in MODEL_ORDER:
         except Exception:
             continue
         T = len(r)
-        n_cal = int(T * F_CAL)
-        if n_cal < 100 or T - n_cal < 50:
+        _c2, _t2, _g2 = split_indices(T, var_t - r, f_cal=F_CAL)
+        n_cal, t0 = len(_c2), int(_t2[0])
+        if n_cal < 100 or T - t0 < 50:
             continue
         r_test, v_raw, e_raw, v_corr, e_corr = \
             conformal_correction(r, var_t, es_t)

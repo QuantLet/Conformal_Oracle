@@ -14,6 +14,12 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import warnings
+
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[1] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
+
 warnings.filterwarnings('ignore')
 
 
@@ -108,11 +114,12 @@ def rolling_conformal(r, q_lo, w, alpha=ALPHA):
     Returns test-set arrays for realised returns, corrected VaR (neg).
     """
     T = len(r)
-    n_cal = int(T * F_CAL)
-    if n_cal < w or T - n_cal < 50:
+    _cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)
+    n_cal, t0 = len(_cal), int(_test[0])
+    if n_cal < w or T - t0 < 50:
         return None
-    r_cal, r_test = r[:n_cal], r[n_cal:]
-    q_cal, q_test = q_lo[:n_cal], q_lo[n_cal:]
+    r_cal, r_test = r[:n_cal], r[t0:]
+    q_cal, q_test = q_lo[:n_cal], q_lo[t0:]
 
     scores_cal = q_cal - r_cal  # tail-score: positive when r << q_lo
     history = list(scores_cal[-w:])

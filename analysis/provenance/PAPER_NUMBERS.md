@@ -689,12 +689,12 @@ not possible without editing this file's producer.
 | `\nQVPlain` | 1 | -- |
 | `\nQVNotShift` | 15 | -- |
 | `\nSplitSites` | 58 | -- |
-| `\nSplitContiguous` | 41 | -- |
+| `\nSplitContiguous` | 20 | -- |
 | `\nSplitGapped` | 0 | -- |
 | `\nSplitMeasurement` | 8 | -- |
-| `\nSplitNotPanel` | 3 | -- |
-| `\nSplitMigrated` | 6 | -- |
-| `\nSplitKeys` | 54 | -- |
+| `\nSplitNotPanel` | 4 | -- |
+| `\nSplitMigrated` | 26 | -- |
+| `\nSplitKeys` | 57 | -- |
 | `\nRhoCells` | 312 | -- |
 | `\nRhoFallback` | 45 | -- |
 | `\nRhoFallbackTrunc` | 40 | -- |

@@ -47,6 +47,7 @@ F_CAL = 0.70
 
 sys.path.insert(0, str(BASE / "analysis" / "ae_point4"))
 from run_ae_point4 import (  # noqa: E402
+
     SYMBOLS, kupiec_p, qhat_ceil, quantile_score, traffic_light,
 )
 
@@ -193,6 +194,12 @@ def main() -> int:
                           parse_dates=True)
         y = ret.iloc[:, 0].values.astype(float)
         n = len(y)
+        # NOT migrated to split_indices, and the reason is the estimator.
+        # Corollary 4.6's gap is set by the autocorrelation of the nonconformity
+        # scores, and here the scores do not exist until CAViaR has been fitted
+        # on the calibration block. Passing the returns instead would be a
+        # different quantity wearing the same name. This split stays contiguous
+        # and is declared CONTIGUOUS in SPLIT_SITES.tsv with this reason.
         n_cal = int(n * F_CAL)
         y_cal, y_test = y[:n_cal], y[n_cal:]
 

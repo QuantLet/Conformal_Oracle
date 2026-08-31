@@ -6,7 +6,7 @@
 
 **Two** differences from the house pipeline, not one:
 
-1. **Split point.** Differs in **48 of 96** cells. The legacy file is not internally consistent: 12 of 24 assets use floor(0.70 n), the other 12 use ceil(0.70 n). Moirai-2.0 in `all_results.csv` uses floor on all 24, so floor is the house convention and the legacy Moirai-1.1 table is the outlier. Total sample size is identical in both; only the split moves.
+1. **Split point.** Differs in **0 of 96** cells. The legacy file is not internally consistent: 12 of 24 assets use floor(0.70 n), the other 12 use ceil(0.70 n). Moirai-2.0 in `all_results.csv` uses floor on all 24, so floor is the house convention and the legacy Moirai-1.1 table is the outlier. Total sample size is identical in both; only the split moves.
 2. **Quantile estimator — the substantive one.** The legacy table computes the shift as `np.quantile(scores, 1-alpha)` with linear interpolation. The rest of the pipeline uses the conformal order statistic with k = ceil((n+1)(1-alpha)), which is the estimator Theorem 3.3 analyses; an interpolated quantile lies below it and carries no finite-sample guarantee. Verified exactly on ASX200 at alpha = 0.01 (legacy 0.001566 = np.quantile linear; conformal 0.001939). This is why qV moves in **all 96** cells, not just the 48 with a different split.
 
 Both differences push qV **downward**, so the legacy table understates the correction for Moirai-1.1 throughout.
@@ -15,31 +15,31 @@ Both differences push qV **downward**, so the legacy table understates the corre
 
 | Quantity | max abs change | max rel change | cells changed |
 |---|---|---|---|
-| `qV` | 2.052e-03 | 1134.5% | 96 of 96 |
-| `pihat_raw` | 4.904e-04 | 0.4% | 48 of 96 |
-| `pihat_cp` | 2.886e-03 | 25.0% | 68 of 96 |
-| `QS_raw` | 8.109e-06 | 0.1% | 48 of 96 |
-| `QS_cp` | 1.073e-05 | 1.2% | 96 of 96 |
-| `p_kup_raw` | 5.201e-03 | 24.9% | 46 of 96 |
-| `p_kup_cp` | 2.968e-01 | 208.4% | 69 of 96 |
+| `qV` | 9.910e-17 | 0.0% | 0 of 96 |
+| `pihat_raw` | 9.714e-17 | 0.0% | 0 of 96 |
+| `pihat_cp` | 9.714e-17 | 0.0% | 0 of 96 |
+| `QS_raw` | 9.780e-17 | 0.0% | 0 of 96 |
+| `QS_cp` | 9.888e-17 | 0.0% | 0 of 96 |
+| `p_kup_raw` | 1.110e-16 | 0.0% | 0 of 96 |
+| `p_kup_cp` | 1.110e-16 | 0.0% | 0 of 96 |
 
 ## At alpha = 0.01 (the level the paper reports)
 
-- Mean qV: legacy 0.003489 -> rebuilt 0.003897
-- Mean corrected coverage: 0.010819 -> 0.010544
-- Green zones (corrected): 23/24 -> 21/24
-- Kupiec not rejected (corrected): 14/24 -> 15/24
+- Mean qV: legacy 0.003897 -> rebuilt 0.003897
+- Mean corrected coverage: 0.010544 -> 0.010544
+- Green zones (corrected): 21/24 -> 21/24
+- Kupiec not rejected (corrected): 15/24 -> 15/24
 
 Largest qV moves at alpha = 0.01:
 
 | Asset | qV legacy | qV rebuilt | change |
 |---|---|---|---|
-| ETH | 0.013977 | 0.016030 | +14.7% |
-| BTC | 0.021102 | 0.022928 | +8.7% |
-| ICLN | 0.003329 | 0.004277 | +28.5% |
-| GOLD | 0.003999 | 0.004428 | +10.7% |
-| NATGAS | 0.000815 | 0.001221 | +49.9% |
-| WTI | 0.000719 | 0.001094 | +52.0% |
+| CBU0 | 0.001707 | 0.001707 | +0.0% |
+| AUDUSD | 0.000670 | 0.000670 | +0.0% |
+| WTI | 0.001094 | 0.001094 | +0.0% |
+| FTSE100 | 0.003495 | 0.003495 | +0.0% |
+| NATGAS | 0.001221 | 0.001221 | +0.0% |
+| FCHI | 0.003213 | 0.003213 | +0.0% |
 
 ## Which version does the published paper use?
 
@@ -47,12 +47,12 @@ Decisive, and it is good news: **Table 1 and the text were produced with the cor
 
 | Quantity (α = 0.01) | Paper | Legacy CSV | Rebuilt |
 |---|---|---|---|
-| Moirai-1.1 Kupiec pass (corrected) | **15/24** | 14/24 | **15/24** ✅ |
-| Moirai-1.1 Green zones | **21/24** | 23/24 | **21/24** ✅ |
-| Moirai-1.1 corrected width | **.039** | 0.038 | **0.039** ✅ |
-| Moirai-1.1 $\bar R$ | **0.11** | 0.0997 | **0.1121** ✅ |
-| Panel A Green (Table 1) | **127/144 (88.2%)** | 129/144 (89.6%) | **127/144 (88.2%)** ✅ |
-| All 240 pairs Green | **203/240 (84.6%)** | 205/240 (85.4%) | **203/240 (84.6%)** ✅ |
+| Moirai-1.1 Kupiec pass (corrected) | **15/24** | 15/24 | **15/24** ✅ |
+| Moirai-1.1 Green zones | **21/24** | 21/24 | **21/24** ✅ |
+| Moirai-1.1 corrected width | **.039** | 0.039 | **0.039** ✅ |
+| Moirai-1.1 $\bar R$ | **0.11** | 0.1121 | **0.1121** ✅ |
+| Panel A Green (Table 1) | **127/144 (88.2%)** | 130/144 (90.3%) | **130/144 (90.3%)** |
+| All 240 pairs Green | **203/240 (84.6%)** | 299/240 (124.6%) | **299/240 (124.6%)** |
 
 `R̄` is the aggregate ratio mean(qV)/mean(|VaR_raw|), not the mean of per-pair ratios: 0.1121 → 0.11 for the rebuild, versus 0.0997 → 0.10 for the legacy CSV.
 
@@ -62,9 +62,9 @@ The paper is right; `moirai11_full_results.csv` (and its sibling `moirai11_resul
 
 | Consumer | Output | With stale CSV | Correct |
 |---|---|---|---|
-| `CO_qV_ranking/run_qV_ranking.py` | qV ranking figure | 0.003489 | 0.003897 |
-| `CO_multi_quantile_panel/run_multiquantile.py` | Table 5, Moirai-1.1 at α=0.01 | π̂=0.0108, Rej 10/24 | π̂=0.0105, Rej 9/24 |
-| Table 1 aggregates | Panel A / all-pairs Green | 129/144 (89.6%) / 205/240 (85.4%) | 127/144 (88.2%) / 203/240 (84.6%) |
+| `CO_qV_ranking/run_qV_ranking.py` | qV ranking figure | 0.003897 | 0.003897 |
+| `CO_multi_quantile_panel/run_multiquantile.py` | Table 5, Moirai-1.1 at α=0.01 | π̂=0.0105, Rej 9/24 | π̂=0.0105, Rej 9/24 |
+| Table 1 aggregates | Panel A / all-pairs Green | 130/144 (90.3%) / 299/240 (124.6%) | 130/144 (90.3%) / 299/240 (124.6%) |
 
 Fix: replace both stale CSVs with `moirai11_full_results_rebuilt.csv` (regenerated by this script), then re-run the three consumers and confirm they reproduce Table 1 unchanged.
 

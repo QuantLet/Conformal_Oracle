@@ -32,6 +32,12 @@ from conformal_oracle.diagnostics.christoffersen import christoffersen_pvalue
 from conformal_oracle.diagnostics.kupiec import kupiec_pof_pvalue
 from conformal_oracle.recalibration import ACICalibrator, ConformalShift
 
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
+
+
 ALPHA = 0.01
 F_CAL = 0.70
 WINDOW = 250
@@ -125,9 +131,10 @@ def _metrics(r_test, var_corr):
 def _corrected_paths(r, raw):
     """Return dict of method -> corrected test-set VaR path (+ selected gamma)."""
     n = len(r)
-    n_cal = int(n * F_CAL)
+    _cal, _test, _g = split_indices(n, raw - r, f_cal=F_CAL)
+    n_cal, t0 = len(_cal), int(_test[0])
     r_cal, raw_cal = r[:n_cal], raw[:n_cal]
-    r_test, raw_test = r[n_cal:], raw[n_cal:]
+    r_test, raw_test = r[t0:], raw[t0:]
 
     # Static conformal (constant shift).
     cs = ConformalShift()
@@ -325,9 +332,10 @@ def run_gamma_sensitivity():
             try:
                 r, raw = load_pair(model, asset)
                 n = len(r)
-                n_cal = int(n * F_CAL)
+                _cal, _test, _g = split_indices(n, raw - r, f_cal=F_CAL)
+                n_cal, t0 = len(_cal), int(_test[0])
                 r_cal, raw_cal = r[:n_cal], raw[:n_cal]
-                r_test, raw_test = r[n_cal:], raw[n_cal:]
+                r_test, raw_test = r[t0:], raw[t0:]
                 for g in GAMMA_GRID:
                     aci = ACICalibrator(gamma=g)
                     aci.fit(raw_cal, r_cal, ALPHA)

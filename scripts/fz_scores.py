@@ -21,6 +21,12 @@ from pathlib import Path
 from scipy.stats import norm
 from math import ceil
 import warnings
+
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[1] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
+
 warnings.filterwarnings('ignore')
 
 # ── Configuration ─────────────────────────────────────────────────────────
@@ -82,10 +88,11 @@ def load_data(model_key, symbol):
 def conformal_correction(r, var_t, es_t, f_cal, alpha):
     """Apply conformal correction, return corrected VaR/ES on test set."""
     T = len(r)
-    n_cal = int(T * f_cal)
-    r_cal, r_test = r[:n_cal], r[n_cal:]
-    v_cal, v_test = var_t[:n_cal], var_t[n_cal:]
-    e_cal, e_test = es_t[:n_cal], es_t[n_cal:]
+    _cal, _test, _g = split_indices(T, var_t - r, f_cal=f_cal)
+    n_cal, t0 = len(_cal), int(_test[0])
+    r_cal, r_test = r[:n_cal], r[t0:]
+    v_cal, v_test = var_t[:n_cal], var_t[t0:]
+    e_cal, e_test = es_t[:n_cal], es_t[t0:]
 
     # VaR correction
     s_V = v_cal - r_cal
@@ -154,8 +161,9 @@ def main():
                 continue
 
             T = len(r)
-            n_cal = int(T * F_CAL)
-            if n_cal < 100 or T - n_cal < 50:
+            _c2, _t2, _g2 = split_indices(T, var_t - r, f_cal=F_CAL)
+            n_cal, t0 = len(_c2), int(_t2[0])
+            if n_cal < 100 or T - t0 < 50:
                 continue
 
             # Get test-set raw and corrected forecasts

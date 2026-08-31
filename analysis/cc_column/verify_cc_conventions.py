@@ -39,8 +39,13 @@ OUT = Path(__file__).resolve().parent
 
 sys.path.insert(0, str(BASE / "analysis" / "ae_point4"))
 from run_ae_point4 import (  # noqa: E402
+
     ALPHAS, F_CAL, MODELS, SYMBOLS, W_ROLL, load_pair, qhat_ceil,
 )
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 
 # Table 2 as printed (tab_rolling_vs_static.tex): CC pass, static and rolling.
 TABLE2 = {
@@ -106,11 +111,12 @@ def score_all(alpha: float) -> pd.DataFrame:
             except Exception:
                 continue
             n = len(r)
-            n_cal = int(n * F_CAL)
-            if n_cal < W_ROLL or n - n_cal < 50:
+            _cal, _test, _g = split_indices(n, q - r, f_cal=F_CAL)
+            n_cal, t0 = len(_cal), int(_test[0])
+            if n_cal < W_ROLL or n - t0 < 50:
                 continue
-            r_cal, r_test = r[:n_cal], r[n_cal:]
-            q_cal, q_test = q[:n_cal], q[n_cal:]
+            r_cal, r_test = r[:n_cal], r[t0:]
+            q_cal, q_test = q[:n_cal], q[t0:]
 
             qV = qhat_ceil(q_cal - r_cal, alpha)
             v_static = (r_test < q_test - qV)

@@ -30,6 +30,12 @@ import pandas as pd
 from pathlib import Path
 from decimal import Decimal, ROUND_HALF_UP
 
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
+
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 BASE = SCRIPT_DIR.parent.parent
 DATA_DIR = BASE / 'cfp_ijf_data'
@@ -108,8 +114,9 @@ for lam in LAMBDAS:
     for asset in ASSETS:
         r, v = load_pair(asset)
         n = len(r)
-        n_cal = int(n * 0.70)
-        r_test, v_test = r[n_cal:], v[n_cal:]
+        _cal, _test, _g = split_indices(n, v - r, f_cal=0.70)
+        n_cal, t0 = len(_cal), int(_test[0])
+        r_test, v_test = r[t0:], v[t0:]
         n_test = len(r_test)
 
         scores = v[:n_cal] - r[:n_cal]
@@ -159,8 +166,9 @@ for fc in FC_VALUES:
     for asset in ASSETS:
         r, v = load_pair(asset)
         n = len(r)
-        n_cal = int(n * fc)
-        r_test, v_test = r[n_cal:], v[n_cal:]
+        _cal, _test, _g = split_indices(n, v - r, f_cal=fc)
+        n_cal, t0 = len(_cal), int(_test[0])
+        r_test, v_test = r[t0:], v[t0:]
         n_test = len(r_test)
 
         scores = v[:n_cal] - r[:n_cal]
@@ -199,8 +207,9 @@ rolling_qvs, rolling_pihats = [], []
 for asset in ASSETS:
     r, v = load_pair(asset)
     n = len(r)
-    n_cal = int(n * 0.70)
-    test_start = max(n_cal, WINDOW)
+    _c3, _t3, _g3 = split_indices(n, v - r, f_cal=0.70)
+    n_cal, t0 = len(_c3), int(_t3[0])
+    test_start = max(t0, WINDOW)
     n_test = n - test_start
 
     if n_test < 50:

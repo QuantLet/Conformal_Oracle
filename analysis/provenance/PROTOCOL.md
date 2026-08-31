@@ -626,3 +626,29 @@ verified by reading the producing directory for any reference to the data tree,
 and FROZEN must carry a date. An exemption the build cannot check is a
 hand-carried claim, which is what these registries exist to remove.
 
+## A mechanical migration needs a mechanical check, and not the obvious one
+
+The split migration replaced test-block slices `[n_cal:]` with `[t0:]` by
+regular expression across 35 files. At module scope that is unsound. A `t0`
+bound inside one loop stays bound after it, so a later section that was never
+migrated reads whatever the last iteration left. It happened once, in
+`run_robustness_summary.py`, where a third split site the specification did not
+cover had `test_start = max(n_cal, WINDOW)` rewritten to `max(t0, WINDOW)`. The
+script ran. The table it wrote moved one row in the third decimal.
+
+The first check written for this passed it. "Is `t0` bound somewhere in this
+scope?" is true in the leaking case, because Python leaves it bound; that is the
+whole defect. `scripts/audit_migration_scope.py` asks the question that
+separates them: assignments propagate inward, into nested blocks, and not
+outward past the end of a compound statement. Its control is the two shapes side
+by side --- a nested read, which is fine, and a sibling read after the loop,
+which is not --- and it must flag the second and pass the first.
+
+**The rule.** A mechanical edit gets a mechanical check, and the check has to be
+tested against the failure the edit can actually produce rather than the one it
+obviously produces. Three sites were also found to need a decision rather than a
+rewrite: `run_dynamic_var.py` fits CAViaR on the calibration block, so no score
+sequence exists when the split is taken, and passing the returns instead would
+be a different quantity under the same name. It stays contiguous and the
+registry says why.
+

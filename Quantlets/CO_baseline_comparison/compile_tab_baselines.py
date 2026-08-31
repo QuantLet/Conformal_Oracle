@@ -30,6 +30,12 @@ from sklearn.isotonic import IsotonicRegression
 import warnings
 import re
 
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
+
+
 warnings.filterwarnings("ignore")
 
 # ── Paths ──────────────────────────────────────────────────────────
@@ -215,9 +221,10 @@ def compute_inline_methods():
             try:
                 r, v = load_pair(model, asset, ALPHA)
                 n = len(r)
-                n_cal = int(n * F_CAL)
+                _cal, _test, _g = split_indices(n, v - r, f_cal=F_CAL)
+                n_cal, t0 = len(_cal), int(_test[0])
                 r_cal, v_cal = r[:n_cal], v[:n_cal]
-                r_test, v_test = r[n_cal:], v[n_cal:]
+                r_test, v_test = r[t0:], v[t0:]
                 n_test = len(r_test)
 
                 methods = {}

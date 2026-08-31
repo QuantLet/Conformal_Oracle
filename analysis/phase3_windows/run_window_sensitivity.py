@@ -42,8 +42,13 @@ EWMA_LAMBDA = 0.94
 
 sys.path.insert(0, str(BASE / "analysis" / "ae_point4"))
 from run_ae_point4 import (  # noqa: E402
+
     SYMBOLS, kupiec_p, qhat_ceil, quantile_score, traffic_light,
 )
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 
 
 def fit_garch_var(window: np.ndarray, alpha: float, kind: str):
@@ -106,11 +111,12 @@ def evaluate(r: np.ndarray, var: np.ndarray, alpha: float) -> dict:
     m = np.isfinite(var)
     r_v, q_v = r[m], var[m]
     n = len(r_v)
-    n_cal = int(n * F_CAL)
-    if n_cal < 100 or n - n_cal < 50:
+    _cal, _test, _g = split_indices(n, q_v - r_v, f_cal=F_CAL)
+    n_cal, t0 = len(_cal), int(_test[0])
+    if n_cal < 100 or n - t0 < 50:
         return {}
-    r_cal, r_test = r_v[:n_cal], r_v[n_cal:]
-    q_cal, q_test = q_v[:n_cal], q_v[n_cal:]
+    r_cal, r_test = r_v[:n_cal], r_v[t0:]
+    q_cal, q_test = q_v[:n_cal], q_v[t0:]
     qV = qhat_ceil(q_cal - r_cal, alpha)
     cp = q_test - qV
     v_raw = int(np.sum(r_test < q_test))
