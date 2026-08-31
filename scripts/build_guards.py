@@ -431,7 +431,8 @@ def guard_producers() -> bool:
 
 # "pdftext" is a capability, not a binary: pdftotext when poppler is installed,
 # pypdf otherwise. Naming the binary here was what made three guards unrunnable.
-NEEDS = {"undefined references": ("pdflatex", "pdftext"),
+NEEDS = {"documents compile from source": ("pdflatex", "pdftext"),
+         "undefined references": ("pdflatex", "pdftext"),
          "prose numeric literals": ("pdflatex", "pdftext"),
          "retired substring screen": ("pdflatex", "pdftext")}
 
@@ -576,7 +577,90 @@ def guard_rate_resolution() -> bool:
     return good
 
 
-GUARDS = [("undefined references", control_undefined, guard_undefined),
+# ---------------------------------------------------------------- guard 7 ----
+# The documents compile from the current source, and the PDFs the guards above
+# read were built from it.
+#
+# Guards 1-3 read main_R2.pdf and supplement.pdf. Nothing established that those
+# PDFs came from the tex in the working tree, so the whole set could report
+# green while the manuscript did not compile at all: \qVstat^2 put a second
+# superscript on a macro that already carried one, pdflatex produced no PDF, and
+# six guards passed on the previous build. A guard set that reads an artefact it
+# never checked the provenance of is the "verdict outlives its state" mode of
+# PROTOCOL.md's table, in the harness that table is enforced by.
+LATEX_ERR = re.compile(r"^! (.*)$", re.M)
+
+
+def _compile(doc: str, outdir: Path) -> tuple[bool, str]:
+    """One pdflatex pass into outdir, seeded with the existing .aux for refs."""
+    aux = BASE / f"{doc}.aux"
+    if aux.exists():
+        shutil.copy(aux, outdir / f"{Path(doc).name}.aux")
+    r = subprocess.run(
+        ["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
+         "-output-directory", str(outdir), f"{doc}.tex"],
+        cwd=BASE, capture_output=True, text=True)
+    if r.returncode != 0 or not (outdir / f"{Path(doc).name}.pdf").exists():
+        m = LATEX_ERR.search(r.stdout)
+        return False, (m.group(1) if m else "pdflatex returned "
+                       f"{r.returncode} and produced no PDF")
+    return True, ""
+
+
+def control_compiles() -> bool:
+    """A document with a double superscript must be reported as not compiling."""
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        src = td / "ctrl.tex"
+        src.write_text(r"\documentclass{article}\begin{document}"
+                       r"$x^2^3$\end{document}")
+        r = subprocess.run(
+            ["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
+             "-output-directory", str(td), "ctrl.tex"],
+            cwd=td, capture_output=True, text=True)
+        return r.returncode != 0 or not (td / "ctrl.pdf").exists()
+
+
+def guard_compiles() -> bool:
+    good = True
+    for doc in DOCS:
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            built, err = _compile(doc, td)
+            if not built:
+                _bad(f"{doc}: does not compile from the current source -- {err}")
+                good = False
+                continue
+            shipped = BASE / f"{doc}.pdf"
+            if not shipped.exists():
+                _bad(f"{doc}.pdf does not exist; guards 1-3 have nothing to read")
+                good = False
+                continue
+            fresh_t = _pdf_text(td / f"{Path(doc).name}.pdf")
+            ship_t = _pdf_text(shipped)
+            if not fresh_t or not ship_t:
+                _bad(f"{doc}: no text extracted; the comparison cannot fire")
+                good = False
+                continue
+            # Normalise whitespace only. A rebuild differs in PDF metadata but
+            # not in a character of typeset text.
+            f_n, s_n = " ".join(fresh_t.split()), " ".join(ship_t.split())
+            if f_n != s_n:
+                d = next((i for i, (a, b) in enumerate(zip(f_n, s_n)) if a != b),
+                         min(len(f_n), len(s_n)))
+                _bad(f"{doc}.pdf is STALE -- rebuilt text differs from the shipped "
+                     f"PDF at character {d:,} of {len(s_n):,}")
+                print(f"           shipped: ...{s_n[max(0, d-60):d+40]}")
+                print(f"           rebuilt: ...{f_n[max(0, d-60):d+40]}")
+                good = False
+            else:
+                _ok(f"{doc}: compiles from the current source and the shipped PDF "
+                    f"matches it ({len(s_n):,} characters)")
+    return good
+
+
+GUARDS = [("documents compile from source", control_compiles, guard_compiles),
+          ("undefined references", control_undefined, guard_undefined),
           ("prose numeric literals", control_literals, guard_literals),
           ("retired substring screen", control_substring_screen, guard_substring_screen),
           ("referenced files are tracked", control_referenced_tracked, guard_referenced_tracked),

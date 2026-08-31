@@ -1519,6 +1519,31 @@ checks exercised and one that was not. A wrong threshold announces itself the
 first time it fires. A wrong scope never fires, and its silence cannot be told
 from a pass.
 
+Two later instances belong here, and the criterion separates them. The first is
+an inventory. Before the convention audit of Section~\ref{sec:cqr_var} existed, the
+sites taking a chronological split were counted by hand and recorded as
+\emph{about} forty-five; the audit enumerates \nSplitSites{} in the same scope.
+The hedge is part of the finding, because a hand count cannot enumerate what the
+person counting did not think to look at, and the shortfall here was near one
+site in five. That is the defect this paper names elsewhere --- a quantity
+counted outside the code that owns it --- turned on the code itself. It reached
+a stored artefact before the audit existed, so it enters the count above.
+
+The second does not, and is recorded because it is the clearest case in the project of a check that examines the
+right object and cannot see part of it. The registries are tab-separated files,
+and the parser reading them treated \texttt{\#} as a comment mark. A row whose
+code contained one lost its trailing fields, and with them its convention; it
+did not lose the row. The record count, the file count and the header were
+exactly what a correct parse would have produced, so every dimension a reader
+would think to verify agreed, while one site's convention had become absent.
+What caught it was an assertion that the declared conventions sum to the total,
+which fails on an absence and cannot be satisfied by a plausible shape. The
+mechanism does not depend on the parser: any reader that can drop a field
+without dropping a record returns an absence in the format of a result, and a
+check on the shape of the output will confirm it. It was caught before any
+artefact carried it, so by the criterion stated above it is not counted; a
+defect worth describing is not thereby a defect that counts.
+
 One finding ran the other way, and it is the reason verification is worth the
 cost rather than a tax on it. The effective-level overshoot of
 Remark~\ref{rem:effective_level} was not derived and then confirmed. It appeared

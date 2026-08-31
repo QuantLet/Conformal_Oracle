@@ -400,7 +400,7 @@ the wrong thing on the first attempt --- is not a defect of the project; it is
 the work. Without that line the count is unfalsifiable, which is the wrong
 property for a number in a section about honest accounting.
 
-Eight defects found; **five were in the checking apparatus and three in the
+Nine defects found; **five were in the checking apparatus and four in the
 thing being checked.**
 
 | where | what | how it failed |
@@ -413,21 +413,36 @@ thing being checked.**
 | object | thirteen supplement literals that did not reproduce | --- |
 | object | two half-macro claims that did not reproduce | --- |
 | object | a variance ratio printed as 4.80, obtained by dividing two already-rounded figures | double rounding |
+| object | the split-site inventory counted by hand and recorded as "about 45" against an enumerated 56 | hand inventory |
 
-**Two candidates rejected by the criterion, and they are worth naming so the
+**Three candidates rejected by the criterion, and they are worth naming so the
 count can be reproduced.** While clearing the section literals, a macro for the
 corrected-rate deviation was written over all cells when the sentence says "from
 $T = 1{,}000$ onward", and a macro for the yellow-zone boundary used $9.5/250$
 where Proposition 5.1 uses $9/250$. In both the prose was right and the new macro
 wrong, and both were caught before the macro reached the document. They are the
-work, not defects of it. The variance ratio is different: 4.80 was printed in
-Section 5.1, so it reached a claim, and it counts.
+work, not defects of it. The third is the parser that read the convention
+registries with `#` as a comment mark: a row whose code contained one lost its
+convention without losing the row, and the contiguous-site count printed one
+short. It was caught by the partition assertion before `numbers.tex` was
+written, so no artefact and no claim carried it, and by the criterion it does
+not count. It is described in Section 11.4 of the manuscript for a different
+reason --- it is the clearest instance of an absence returned in the shape of a
+result --- and a defect worth describing is not thereby a defect that counts.
 
-It is classified as an **object** defect rather than an instrument one. Nothing
-checked it wrongly; there was no check, because the ratio was computed by hand
-from two printed figures instead of by the emitter from the values behind them.
-That is the same failure as a hand-carried literal, which is what the registry
-exists to prevent.
+The variance ratio is different: 4.80 was printed in Section 5.1, so it reached
+a claim, and it counts. So does the hand inventory. "About 45" was written into
+`analysis/convention/GAP_SWITCH_SCOPE.md` and committed before the audit
+existed, which is a stored artefact by the criterion, and the enumeration
+returned 56 in the same scope.
+
+Both are classified as **object** defects rather than instrument ones, and for
+the same reason: nothing checked either one wrongly, because there was no check.
+The ratio was computed by hand from two printed figures instead of by the
+emitter from the values behind them, and the site count was compiled by reading
+the repository instead of by enumerating it. Both are the failure of a
+hand-carried quantity, which is what the registries exist to prevent, and the
+second is that failure applied to the registries themselves.
 
 The first is the clearest of them and it is the one worth generalising. Guard 2
 had no defective logic: its pattern was right, its tolerance was right, its
@@ -532,3 +547,20 @@ Two registries and two audits are in place --- `QV_CONVENTION_SITES.tsv` with
 `audit_qv_convention.py`, `SPLIT_SITES.tsv` with `audit_split_convention.py`.
 The split audit found 56 sites where the hand count had found 45, and caught
 `measure_rho_census.py` the same day it was written.
+
+## A green harness on a stale artefact
+
+Six guards reported green on a manuscript that did not compile. `\qVstat^2` put
+a second superscript on a macro that already carried one, pdflatex produced no
+PDF, and guards 1 to 3 read the previous build without anything having
+established where it came from. The guard set had checked the manuscript's
+numbers, its references, its literals and its producers, and never that the
+document existed in the form it was checking.
+
+**The rule.** A check that reads a built artefact must also establish that the
+artefact was built from the current source, or it is a verdict about a state
+that no longer holds. Guard 7 compiles both documents from the working tree and
+compares the rebuilt typeset text against the shipped PDF character by
+character; a compile failure and a stale PDF are both build failures. It found
+one of each on its first run.
+

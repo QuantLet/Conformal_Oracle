@@ -513,8 +513,8 @@ not possible without editing this file's producer.
 | `\nWSweepShiftLargerShort` | 281 | -- |
 | `\nWSweepBound` | 198 | -- |
 | `\nHarnessDefectsInstrument` | 5 | -- |
-| `\nHarnessDefectsObject` | 3 | -- |
-| `\nHarnessDefectsTotal` | 8 | -- |
+| `\nHarnessDefectsObject` | 4 | -- |
+| `\nHarnessDefectsTotal` | 9 | -- |
 | `\nMLCells` | 40 | -- |
 | `\nMLDates` | 200 | -- |
 | `\nMLAssets` | 4 | -- |
@@ -673,11 +673,11 @@ not possible without editing this file's producer.
 | `\nQVCanonical` | 3 | -- |
 | `\nQVPlain` | 1 | -- |
 | `\nQVNotShift` | 15 | -- |
-| `\nSplitSites` | 55 | -- |
+| `\nSplitSites` | 56 | -- |
 | `\nSplitContiguous` | 46 | -- |
 | `\nSplitGapped` | 2 | -- |
-| `\nSplitKeys` | 50 | -- |
-| `\nSplitMeasurement` | 4 | -- |
+| `\nSplitKeys` | 51 | -- |
+| `\nSplitMeasurement` | 5 | -- |
 | `\nSplitNotPanel` | 3 | -- |
 | `\nRhoCells` | 312 | -- |
 | `\nRhoFallback` | 45 | -- |

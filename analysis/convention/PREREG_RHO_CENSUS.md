@@ -1,4 +1,20 @@
-# Pre-registration --- where the separation gap is unconstrained
+# The reading, fixed before the census runs
+
+## What this document's timestamp is worth
+
+It is worth less than the one behind the scale bands. There the declaration is
+dated 22 August and the estimator family it was tested on ran on 23 August, so
+the ordering survives without trusting the author. Here the declaration, the
+script and the output are 21 seconds apart inside one commit. That establishes
+the order in which three files were written in one working session and nothing
+stronger; a reader who does not take the author's word has no independent
+evidence, and the paper accordingly says the readings were fixed before the run
+and does not call them pre-registered, which is a term with a technical meaning
+a referee is entitled to test.
+
+What the document does carry is the second reading, written out in full below.
+The claim is not that a rule existed, but that the rule had a branch on which
+nothing would have been written, and that branch is on the page.
 
 Written before the census runs. Corollary 4.6 sets $g_n = \lceil c\log n\rceil$
 with $c = 1/\lvert\log\hat\rho\rvert$, $\hat\rho$ the lag-1 autocorrelation of
