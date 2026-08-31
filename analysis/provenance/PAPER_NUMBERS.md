@@ -344,6 +344,19 @@ not possible without editing this file's producer.
 | `\nMainCorPiHi` | 0.0117 | MAIN (384) |
 | `\nMainCorKupLo` | 11 | MAIN (384) |
 | `\nMainCorKupHi` | 22 | MAIN (384) |
+| `\nGapAllCells` | 1248 | -- |
+| `\nGapAllZoneChanges` | 0 | -- |
+| `\nGapAllKupFlips` | 11 | -- |
+| `\nGapAllDPiMax` | 0.002789 | -- |
+| `\nGapAllGapLo` | 5 | -- |
+| `\nGapAllGapHi` | 30 | -- |
+| `\nGapAllGapMed` | 7 | -- |
+| `\nGapAllQVIdentical` | 1248 | -- |
+| `\nGapAllLevels` | 4 | -- |
+| `\nGapWidestPct` | 2.4 | -- |
+| `\nGapMaxRho` | 0.760 | -- |
+| `\nGapRhoRaiseAt` | 0.996 | -- |
+| `\nGapCellsUnmet` | 0 | -- |
 | `\nGapPanelCells` | 312 | -- |
 | `\nGapPanelGapLo` | 5 | -- |
 | `\nGapPanelGapHi` | 30 | -- |

@@ -710,7 +710,35 @@ def collect() -> dict:
     # DIFFERENCES enter the manuscript: the levels come from a standalone
     # recomputation in run_gap_panel.py and are not the pipeline's headline
     # counts, which are produced elsewhere and differ in window construction.
-    gp = pd.read_csv(BASE / "analysis" / "convention" / "gap_panel.csv")
+    _gpall = pd.read_csv(BASE / "analysis" / "convention" / "gap_panel.csv")
+    # The panel covers four levels. Section 4.4 quotes both the full comparison
+    # and the alpha = 0.01 slice, and the macro names say which is which,
+    # because "all cells" was previously printed beside a count of 312.
+    counted(n, "GapAllCells", len(_gpall), "panel cells")
+    counted(n, "GapAllZoneChanges", int((_gpall["g0_TL"] != _gpall["gn_TL"]).sum()),
+            "panel cells")
+    counted(n, "GapAllKupFlips",
+            int(((_gpall["g0_p_kupiec"] > 0.05) != (_gpall["gn_p_kupiec"] > 0.05)).sum()),
+            "panel cells")
+    n["GapAllDPiMax"] = float(_gpall["dpi"].max())
+    n["GapAllGapLo"] = int(_gpall["gap"].min())
+    n["GapAllGapHi"] = int(_gpall["gap"].max())
+    n["GapAllGapMed"] = int(_gpall["gap"].median())
+    n["GapAllQVIdentical"] = int((_gpall["g0_qV"] == _gpall["gn_qV"]).sum())
+    assert n["GapAllQVIdentical"] == n["GapAllCells"], \
+        "the shift moved between the arms; the gap is not coming out of the test block"
+    n["GapAllLevels"] = int(_gpall["alpha"].nunique())
+    n["GapWidestPct"] = 100 * float((_gpall["gap"] / _gpall["gn_n_test"]).max())
+    n["GapMaxRho"] = float(_gpall["rho"].max())
+    # The gap can only exceed the test block if rho is close enough to one
+    # that c = 1/|log rho| explodes. Reported so the sentence saying no cell
+    # is affected carries the distance rather than the assertion.
+    import math as _m
+    n["GapRhoRaiseAt"] = float(_m.exp(-_m.log(float(_gpall["gn_n_test"].median()))
+                                      / float(_gpall["gn_n_test"].median())))
+    counted(n, "GapCellsUnmet", int((_gpall["gap"] >= _gpall["gn_n_test"]).sum()),
+            "panel cells")
+    gp = _gpall[_gpall["alpha"] == 0.01].copy()
     n["GapPanelCells"] = int(len(gp))
     n["GapPanelGapLo"] = int(gp["gap"].min())
     n["GapPanelGapHi"] = int(gp["gap"].max())
@@ -1409,7 +1437,7 @@ def fmt(key: str, v) -> str:
         return f"{v:.2f}"
     if key.startswith("MainCorPi"):
         return f"{v:.4f}"
-    if key.startswith("GapPanelDPi"):
+    if key.startswith("GapPanelDPi") or key.startswith("GapAllDPi"):
         return f"{v:.6f}"
     if key == "GapPanelGapPct":
         return f"{v:.2f}"

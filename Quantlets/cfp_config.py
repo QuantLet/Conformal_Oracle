@@ -264,6 +264,22 @@ SEPARATION = False
 GAP_FLOOR = 5
 
 
+def score_rho(scores):
+    """Lag-1 autocorrelation of the calibration scores, or None if undefined.
+
+    Separated from separation_gap so the panel can report the quantity that
+    governs the gap alongside the gap itself; a reader asking why a cell got
+    the floor should not have to recompute rho to find out.
+    """
+    s = np.asarray(scores, dtype=float)
+    if len(s) < 3:
+        return None
+    a, b = s[:-1], s[1:]
+    if a.std() == 0 or b.std() == 0:
+        return None
+    return float(np.corrcoef(a, b)[0, 1])
+
+
 def separation_gap(scores, n_cal: int) -> int:
     """Corollary 4.6's gap, floored where its constant is undefined.
 
@@ -273,13 +289,9 @@ def separation_gap(scores, n_cal: int) -> int:
     to give the threshold day-to-day movement. The floor supplies more
     separation than the corollary asks for there.
     """
-    s = np.asarray(scores, dtype=float)
-    if len(s) < 3:
+    rho = score_rho(scores)
+    if rho is None:
         return GAP_FLOOR
-    a, b = s[:-1], s[1:]
-    if a.std() == 0 or b.std() == 0:
-        return GAP_FLOOR
-    rho = float(np.corrcoef(a, b)[0, 1])
     if 0.0 < rho < 0.999:
         return max(GAP_FLOOR, int(ceil((1.0 / abs(log(rho))) * log(n_cal))))
     return max(GAP_FLOOR, int(ceil(log(n_cal))))

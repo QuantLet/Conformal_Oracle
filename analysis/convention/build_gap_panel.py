@@ -22,7 +22,7 @@ rfe = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(rfe)
 
 KEY = ["model", "symbol", "alpha"]
-CARRY = ["qV", "n_test", "viol_cp", "pihat_cp", "p_kup_cp", "TL_cp"]
+CARRY = ["qV", "n_test", "viol_cp", "pihat_cp", "p_kup_cp", "TL_cp", "rho"]
 
 
 def control(a0: pd.DataFrame, a1: pd.DataFrame) -> None:
@@ -52,7 +52,8 @@ def main() -> int:
     control(a0, a1)
     j = a0[KEY + ["gap"] + CARRY].merge(
         a1[KEY + ["gap"] + CARRY], on=KEY, suffixes=("_0", "_g"))
-    j = j.rename(columns={"gap_g": "gap"}).drop(columns=["gap_0"])
+    j = j.rename(columns={"gap_g": "gap", "rho_0": "rho"}).drop(
+        columns=["gap_0", "rho_g"])
     j = j.rename(columns={f"{c}_0": f"g0_{c}" for c in CARRY})
     j = j.rename(columns={f"{c}_g": f"gn_{c}" for c in CARRY})
     j = j.rename(columns={"g0_p_kup_cp": "g0_p_kupiec",
@@ -62,14 +63,19 @@ def main() -> int:
                           "g0_qV": "g0_qV", "gn_qV": "gn_qV",
                           "g0_viol_cp": "g0_viol", "gn_viol_cp": "gn_viol"})
     j["dpi"] = (j["gn_pi_hat"] - j["g0_pi_hat"]).abs()
-    one = j[j["alpha"] == 0.01].drop(columns=["alpha"])
-    print(f"  {len(one)} cells at alpha = 0.01; gap {int(one['gap'].min())}-"
-          f"{int(one['gap'].max())}, median {int(one['gap'].median())}")
-    print(f"  zone changes {int((one['g0_TL'] != one['gn_TL']).sum())}, "
-          f"Kupiec flips {int(((one['g0_p_kupiec'] > 0.05) != (one['gn_p_kupiec'] > 0.05)).sum())}, "
-          f"max |dpi| {one['dpi'].max():.6f}")
+    # All four levels are kept. The panel previously held alpha = 0.01 only
+    # while Section 4.4 said "across all cells", which is a claim about 1,248
+    # cells resting on a file holding 312.
+    def report(d, label):
+        print(f"  {len(d)} cells, {label}: gap {int(d['gap'].min())}-"
+              f"{int(d['gap'].max())}, median {int(d['gap'].median())}; "
+              f"zones {int((d['g0_TL'] != d['gn_TL']).sum())}, "
+              f"Kupiec {int(((d['g0_p_kupiec'] > 0.05) != (d['gn_p_kupiec'] > 0.05)).sum())}, "
+              f"max |dpi| {d['dpi'].max():.6f}")
+    report(j, "all levels")
+    report(j[j["alpha"] == 0.01], "alpha = 0.01")
     if a.write:
-        one.to_csv(OUT, index=False)
+        j.to_csv(OUT, index=False)
         print(f"  wrote {OUT.relative_to(BASE)}")
     return 0
 

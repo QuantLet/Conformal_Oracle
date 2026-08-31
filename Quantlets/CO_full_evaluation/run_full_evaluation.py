@@ -52,7 +52,7 @@ TARGETS = [DATA / "paper_outputs" / "tables" / "all_results.csv",
 
 sys.path.insert(0, str(BASE / "Quantlets"))
 from cfp_config import (MODELS, SYMBOLS, ALPHAS, F_CAL,  # noqa: E402
-                        split_indices)
+                        split_indices, score_rho)
 
 ASSETS = sorted(SYMBOLS)
 
@@ -144,6 +144,7 @@ def conformal_backtest(returns, var_raw, alpha, f_cal=F_CAL, gap=None):
     viol_cp = int(np.sum(r_test < var_cp))
     return {
         "n_cal": n_cal, "n_test": n_test, "gap": g, "qV": qV,
+        "rho": score_rho(v[cal] - r[cal]),
         "pihat_raw": viol_raw / n_test, "pihat_cp": viol_cp / n_test,
         "viol_raw": viol_raw, "viol_cp": viol_cp,
         "p_kup_raw": kupiec_pval(n_test, viol_raw, alpha),

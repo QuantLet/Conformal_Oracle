@@ -242,19 +242,43 @@ declaration and the output are minutes apart in one commit, so what a reader can
 verify is the alternative on the page and not the sequence in which it was
 written.
 
-Across all \nGapPanelCells{} cells the gap runs from \nGapPanelGapLo{} to
-\nGapPanelGapHi{} observations, a median of \nGapPanelGapMed{} and
-\nGapPanelGapPct\% of the test window. It moves the corrected violation rate by a
-median of $\nGapPanelDPiMed$ and at most $\nGapPanelDPiMax$; it changes
-\nGapPanelZoneChanges{} Basel zone classifications, and flips
-\nGapPanelKupFlips{} Kupiec verdict at the $5\%$ level. That single flip is what a
-threshold does to a statistic that moved by less than a thousandth, not
-instability in the estimator.
+One property of the construction makes the comparison sharper than an ablation
+can be. Because the gap is removed from the front of the test block, the
+calibration sample is untouched, and the shift is therefore not re-estimated:
+across all \nGapAllCells{} cells of the panel the two arms return
+\emph{identical} values of $\qVstat$, to the last bit. The two arms are the same
+threshold evaluated on different days. Every difference reported below is
+residual dependence between the calibration block and the evaluated point and
+cannot be estimation noise, because there is no second estimate.
+
+Across all \nGapAllCells{} cells, at \nGapAllLevels{} levels, the gap runs from
+\nGapAllGapLo{} to \nGapAllGapHi{} observations, a median of
+\nGapAllGapMed{} and at widest \nGapWidestPct\% of the test window. It moves
+the corrected violation rate by at most $\nGapAllDPiMax$; it changes
+\nGapAllZoneChanges{} Basel zone classifications and flips
+\nGapAllKupFlips{} Kupiec verdicts at the $5\%$ level. At $\alpha = 0.01$, the
+level every headline table reports, the corresponding counts are
+\nGapPanelZoneChanges{} and \nGapPanelKupFlips{} across \nGapPanelCells{}
+cells, with the rate moving by a median of $\nGapPanelDPiMed$ and at most
+$\nGapPanelDPiMax$. Those flips are what a threshold does to a statistic that
+moved by less than a thousandth, not instability in the estimator.
+
+The rate $g_n = \lceil c\log n\rceil$ has a regime in which it cannot be
+imposed at all: as $\hat\rho$ approaches one the constant diverges, and the
+required separation exceeds the test block. At the sample sizes here that
+happens only above $\hat\rho = \nGapRhoRaiseAt$, and the largest value on the
+panel is \nGapMaxRho, so the condition is unmet on \nGapCellsUnmet{} cells and
+the widest gap consumes \nGapWidestPct\% of its evaluation window. The
+implementation raises on such a cell rather than truncating the gap, because a
+coverage figure computed on whatever observations survived a silent truncation
+is not a coverage figure. Should a series ever reach that regime, it is reported
+as a cell on which \ref{ass:weak_dep} cannot be met at this sample size, not
+excluded and not covered.
 
 So Theorem~\ref{thm:dependent_conformal_var} covers an estimator that differs
-from the one the tables report by at most $\nGapPanelDPiMax$ in violation rate,
-with \nGapPanelZoneChanges{} regulatory classifications and
-\nGapPanelKupFlips{} Kupiec verdict changed across \nGapPanelCells{} cells. That
+from the one the tables report by at most $\nGapAllDPiMax$ in violation rate,
+with \nGapAllZoneChanges{} regulatory classifications and
+\nGapAllKupFlips{} Kupiec verdicts changed across \nGapAllCells{} cells. That
 is a measured distance and not a proof that the theorem applies to the
 contiguous split, which it does not. The results below are reported on the
 contiguous split, as they were computed; a reader who requires the covered

@@ -507,6 +507,7 @@ NOT_A_RATE = {
                       "denominators, n and n - g_n, so it is not confined to "
                       "either one's 1/N grid and can take values finer than both",
     "GapPanelDPiMax": "as above",
+    "GapAllDPiMax": "as above, over all four levels",
 }
 
 

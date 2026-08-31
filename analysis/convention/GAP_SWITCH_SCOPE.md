@@ -105,3 +105,24 @@ would have been the right decision reached from a quantity computed outside the
 emitter that owns it --- the same mechanism as the 4.80 variance ratio, twice in
 one day. The rule is in `PROTOCOL.md`: a derived quantity is computed by the code
 that owns the object, not reconstructed beside it.
+
+## The regime where the gap cannot be imposed, and what happens there
+
+Corollary 4.6's rate diverges as rho approaches one: the required separation is
+ceil(log n / |log rho|), and past some rho it exceeds the test block. The
+implementation raises rather than capping, because a coverage figure computed on
+whatever observations survived a silent truncation is not a coverage figure.
+
+**No cell on this panel is in that regime, and the distance is large.** At these
+sample sizes the gap reaches the test block only for rho above 0.9957. The
+largest rho over 1,248 cells is 0.760, and the widest gap consumes 2.4% of its
+evaluation window. The figure of 5,025 observations quoted while the definition
+was being written came from the negative control -- a synthetic random walk built
+to trigger the raise -- and not from any series in this study.
+
+**The disposition, fixed now rather than when it first bites.** A cell in that
+regime is reported as one on which Assumption (A3) cannot be met at the
+available sample size. It is not excluded from the panel, because excluding on a
+post-hoc criterion is the selection this paper argues against, and it is not
+covered by the theorem, because it is not. Section 4.4 states the rule.
+
