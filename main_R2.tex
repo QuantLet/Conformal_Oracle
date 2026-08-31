@@ -1108,11 +1108,19 @@ precisely the displacement itself can be estimated. Across the \nMCBDensityPairs
 pairs on which $f$ is defined it spans a factor of \nMCBDensitySpan{} between its
 5th and 95th percentiles, \nMCBDensityLo{} to \nMCBDensityHi, and the estimation
 error tracks it: regressing $\log\lvert\qVstat - \delta^\star\rvert$ on $\log f$
-gives a slope of $\nMCBGapSlope$ with standard error \nMCBGapSlopeSE, which is
-\nMCBGapSlopeSigma{} standard errors from the theoretical $-1$, and the median
-gap is \nMCBGapMagRatio{} times the predicted standard deviation with no fitted
-constant. The collapse from \nMCBRhoCal{} to \nMCBRhoTest{} is sampling noise of
-the size a sparse residual tail implies.
+gives a slope of $\nMCBGapSlope$ with standard error \nMCBGapSlopeSE. That is
+\nMCBGapSlopeSigma{} standard errors from the theoretical $-1$: the dependence
+on $f$ is present and its direction is right, but it is flatter than the
+asymptotic expression implies. The level, which the same expression fixes,
+matches without adjustment --- the median gap is \nMCBGapMagRatio{} times the
+predicted standard deviation with no fitted constant. So the formula predicts
+how large the estimation error is and understates how fast it falls with the
+density. One candidate is that $f$ is itself estimated and error in a regressor
+attenuates a slope towards zero, which is the observed direction; this
+measurement does not separate that from the alternatives and the paper does not
+claim it. The collapse from \nMCBRhoCal{} to \nMCBRhoTest{} is sampling noise
+of the size a sparse residual tail implies, and it is the magnitude that carries
+that conclusion rather than the slope.
 
 It does not follow, and is not true, that the density explains why $\qVstat$ and
 the score reduction order the panel differently. Supplying each pair's own $f$

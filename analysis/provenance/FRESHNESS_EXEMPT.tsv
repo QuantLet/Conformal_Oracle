@@ -1,0 +1,19 @@
+# Artefacts the freshness screen (guard 8) may skip, with the basis for the
+# exemption and the reason. SELF_CONTAINED is VERIFIED by the guard: it reads
+# the producing directory and fails if any script there names cfp_ijf_data. An
+# exemption is therefore a claim the build checks, not one it accepts.
+#
+# Written 2026-08-31, after rolling_vs_static.csv was found to predate by seven
+# days the analytic series it reads.
+artefact	basis	reason
+analysis/k2_sim/grid.csv	SELF_CONTAINED	generates its own GARCH paths; reads no series from the data tree
+analysis/k2_sim/gates.json	SELF_CONTAINED	as above, same producer
+analysis/k2_sim/prop_tl_check.json	SELF_CONTAINED	as above, same producer
+analysis/phase2/panel_scale_ratios_by_asset.csv	SELF_CONTAINED	derived from committed panel summaries, not from the series
+analysis/phase2/phase2_numbers.json	SELF_CONTAINED	as above, same producer
+Quantlets/CO_chronos_sampling/tab_dose_response.csv	SELF_CONTAINED	a table transcribed from analysis/chronos_sampling, which the screen checks directly
+analysis/recompute/sign_verification.csv	FROZEN	a census of the archive as it stood on 2026-08-17, before the sign correction; the manuscript states it in the past tense and re-deriving it would destroy what it records
+analysis/chronos_sampling/dose_response.csv	FROZEN	the sampling experiment of 2026-08-17 that the analytic series were built FROM; it is upstream of the 2026-08-27 rebuild, not downstream, and the screen orders them wrongly here
+analysis/gjr_quantile/promotion_before_after.csv	FROZEN	a before-and-after record of the GJR promotion on 2026-08-17; it exists to preserve the earlier state and re-deriving it would erase what it documents
+analysis/ml/dose_response_raw.csv	FROZEN	the estimator family run on 2026-08-23 against band edges declared 2026-08-22; the out-of-sample claim rests on that separation and re-running the panel would destroy it
+analysis/k1_verify/k1b3_result.json	FROZEN	re-derived 2026-08-31 and unchanged; kept as a dated record of that check

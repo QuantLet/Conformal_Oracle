@@ -21,6 +21,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import warnings
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 warnings.filterwarnings('ignore')
 
 # ── Configuration ─────────────────────────────────────────────────────────
@@ -61,10 +64,12 @@ def load_and_split(subdir, suffix=None):
     fc = fc.loc[common]
 
     N = len(common)
-    n_cal = int(N * F_CAL)
+    scores = fc[f'VaR_{ALPHA}'].values - ret['r'].values
+    cal, test, _g = split_indices(N, scores, f_cal=F_CAL)
+    n_cal, t0 = len(cal), int(test[0])
 
-    return (ret.iloc[:n_cal], ret.iloc[n_cal:],
-            fc.iloc[:n_cal], fc.iloc[n_cal:])
+    return (ret.iloc[:n_cal], ret.iloc[t0:],
+            fc.iloc[:n_cal], fc.iloc[t0:])
 
 
 def conformal_correct_var(r_cal, fc_cal, fc_test):

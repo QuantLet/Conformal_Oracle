@@ -22,7 +22,8 @@ W_ROLL = 250
 # series entered the panel.
 import sys
 sys.path.insert(0, str(BASE / 'Quantlets'))
-from cfp_config import MODELS, SYMBOLS as _SYMBOLS  # noqa: E402
+from cfp_config import (MODELS, SYMBOLS as _SYMBOLS,  # noqa: E402
+                        split_indices)
 
 SYMBOLS = sorted(_SYMBOLS)
 
@@ -84,9 +85,10 @@ def cc_pval(violations_bool):
 
 def static_conformal(r, q, alpha=ALPHA, f_cal=F_CAL):
     n = len(r)
-    n_cal = int(n * f_cal)
-    r_cal, r_test = r[:n_cal], r[n_cal:]
-    q_cal, q_test = q[:n_cal], q[n_cal:]
+    cal, test, _g = split_indices(n, q - r, f_cal=f_cal)
+    n_cal, t0 = len(cal), int(test[0])
+    r_cal, r_test = r[:n_cal], r[t0:]
+    q_cal, q_test = q[:n_cal], q[t0:]
 
     scores = q_cal - r_cal
     sorted_s = np.sort(scores)
@@ -126,11 +128,12 @@ def quantile_score(r, v, alpha=ALPHA):
 
 def rolling_conformal(r, q, w=W_ROLL, alpha=ALPHA, f_cal=F_CAL):
     n = len(r)
-    n_cal = int(n * f_cal)
-    if n_cal < w or n - n_cal < 50:
+    cal, test, _g = split_indices(n, q - r, f_cal=f_cal)
+    n_cal, t0 = len(cal), int(test[0])
+    if n_cal < w or n - t0 < 50:
         return None
-    r_cal, r_test = r[:n_cal], r[n_cal:]
-    q_cal, q_test = q[:n_cal], q[n_cal:]
+    r_cal, r_test = r[:n_cal], r[t0:]
+    q_cal, q_test = q[:n_cal], q[t0:]
 
     scores_cal = q_cal - r_cal
     history = list(scores_cal[-w:])

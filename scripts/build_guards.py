@@ -660,6 +660,128 @@ def guard_compiles() -> bool:
     return good
 
 
+# ---------------------------------------------------------------- guard 8 ----
+# An artefact that feeds the manuscript is not older than what produced it.
+#
+# rolling_vs_static.csv was written on 20 August and the analytic Chronos series
+# it reads were rebuilt on 27 August, when the one-bin offset was corrected. The
+# correction round recorded that "every downstream artefact has been rebuilt";
+# this one had not, and re-running its producer today moves three of its 312
+# rows. No verdict changed and no manuscript number was wrong, which is exactly
+# why nothing surfaced it: a stale artefact whose classifications happen to be
+# stable is indistinguishable from a current one until someone re-derives it.
+#
+# WHAT THIS GUARD IS. A screen on modification times, not a re-derivation. It
+# can report an artefact that does not in fact depend on the input that moved --
+# a false alarm costing one re-run. It cannot report an artefact as current when
+# its input is newer, which is the direction that matters; the retired substring
+# screen of guard 3 failed the other way. The cost of a false alarm here is a
+# command; the cost of a false pass is a number in a paper.
+def _live_artefacts() -> list[Path]:
+    r"""Artefacts the manuscript reads: \input targets and paper_numbers inputs."""
+    out = set()
+    for doc in LITERAL_DOCS:
+        for m in INPUT_RE.finditer((BASE / f"{doc}.tex").read_text(encoding="utf-8")):
+            t = m.group(1)
+            for ext in (".tex", ".csv", ""):
+                q = BASE / (t + ext)
+                if q.is_file():
+                    out.add(q)
+                    break
+    pn = (BASE / "scripts" / "paper_numbers.py").read_text(encoding="utf-8")
+    for m in re.finditer(r'"([\w./-]+\.(?:csv|tsv|json|parquet))"', pn):
+        for cand in BASE.rglob(m.group(1)):
+            t = str(cand)
+            if any(x in t for x in (".git", "submission_IJF", "superseded",
+                                    "cfp_ijf_data/returns",
+                                    "quarantine", "legacy")):
+                continue
+            out.add(cand)
+    return sorted(out)
+
+
+def _newest_input() -> tuple[Path, float]:
+    """The most recently modified primary series in the data directory."""
+    ins = [q for q in (BASE / "cfp_ijf_data").rglob("*.parquet")
+           if "paper_outputs" not in str(q)]
+    if not ins:
+        return None, 0.0
+    newest = max(ins, key=lambda q: q.stat().st_mtime)
+    return newest, newest.stat().st_mtime
+
+
+def control_artefact_freshness() -> bool:
+    """An artefact older than its input must be reported."""
+    import tempfile as _tf, os as _os, time as _tm
+    with _tf.TemporaryDirectory() as td:
+        old, new = Path(td) / "old.csv", Path(td) / "new.parquet"
+        old.write_text("a,b\n1,2\n")
+        new.write_text("x")
+        _os.utime(old, (0, 0))
+        return old.stat().st_mtime < new.stat().st_mtime
+
+
+def guard_artefact_freshness() -> bool:
+    newest, t_in = _newest_input()
+    if newest is None:
+        _bad("no primary series found; the freshness screen cannot run")
+        return False
+    # Exemptions are CHECKED, not granted. A row may claim SELF_CONTAINED, and
+    # the guard confirms the claim by reading the producing directory: a script
+    # that never names cfp_ijf_data cannot depend on a series in it. An
+    # exemption whose stated basis does not hold is reported as a failure, not
+    # quietly honoured -- an unverified exemption is a hand-carried claim, which
+    # is the thing these registries exist to remove.
+    exempt, bad_basis = {}, []
+    reg = BASE / "analysis" / "provenance" / "FRESHNESS_EXEMPT.tsv"
+    if reg.is_file():
+        for line in reg.read_text().splitlines():
+            if line.startswith("#") or not line.strip() or line.startswith("artefact\t"):
+                continue
+            parts = line.split("\t")
+            if len(parts) < 3:
+                continue
+            art, basis, reason = parts[0], parts[1], parts[2]
+            if basis == "FROZEN":
+                if not re.search(r"\d{4}-\d{2}-\d{2}", reason):
+                    bad_basis.append((art, "FROZEN with no date in its reason"))
+                    continue
+            elif basis == "SELF_CONTAINED":
+                d = (BASE / art).parent
+                reads = [f for f in d.glob("*.py")
+                         if "cfp_ijf_data" in f.read_text(encoding="utf-8", errors="ignore")]
+                if reads:
+                    bad_basis.append((art, reads[0].name))
+                    continue
+            exempt[art] = reason
+    arts = _live_artefacts()
+    stale = []
+    for q in arts:
+        if q.suffix not in (".csv", ".tsv", ".json"):
+            continue
+        rel = str(q.relative_to(BASE))
+        if q.stat().st_mtime < t_in and rel not in exempt:
+            stale.append(q)
+    if bad_basis:
+        _bad(f"{len(bad_basis)} exemption(s) whose stated basis does not hold")
+        for art, f in bad_basis:
+            print(f"           {art}: {f}")
+        return False
+    import datetime as _dt
+    when = _dt.datetime.fromtimestamp(t_in).strftime("%Y-%m-%d %H:%M")
+    if stale:
+        _bad(f"{len(stale)} artefact(s) the manuscript reads predate the newest "
+             f"input ({newest.relative_to(BASE)}, {when}); re-derive or declare")
+        for q in stale[:10]:
+            ts = _dt.datetime.fromtimestamp(q.stat().st_mtime).strftime("%Y-%m-%d")
+            print(f"           {ts}  {q.relative_to(BASE)}")
+        return False
+    _ok(f"{len(arts)} artefact(s) read by the manuscript, none older than the "
+        f"newest primary series ({when}); {len(exempt)} declared "
+        "exemption(s), each with a checked basis")
+    return True
+
+
 GUARDS = [("documents compile from source", control_compiles, guard_compiles),
           ("undefined references", control_undefined, guard_undefined),
           ("prose numeric literals", control_literals, guard_literals),
@@ -667,7 +789,9 @@ GUARDS = [("documents compile from source", control_compiles, guard_compiles),
           ("referenced files are tracked", control_referenced_tracked, guard_referenced_tracked),
           ("inputs have declared producers", control_producers, guard_producers),
           ("rates declare their resolution", control_rate_resolution,
-           guard_rate_resolution)]
+           guard_rate_resolution),
+          ("artefacts are not older than their inputs",
+           control_artefact_freshness, guard_artefact_freshness)]
 
 
 def main() -> int:

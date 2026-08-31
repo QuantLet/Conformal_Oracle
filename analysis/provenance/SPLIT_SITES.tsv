@@ -7,16 +7,11 @@ file	code	convention	line	note
 scripts/baseline_aci.py	n_cal = int(T * F_CAL)	CONTIGUOUS	165	the protocol as reported; migrates if the panel switches
 scripts/baseline_gbm_qr.py	n_cal = int(T * F_CAL)	CONTIGUOUS	148	the protocol as reported; migrates if the panel switches
 scripts/baselines_evt_fhs.py	n_cal = int(N * F_CAL)	CONTIGUOUS	90	the protocol as reported; migrates if the panel switches
-scripts/build_dq_panel.py	n_cal = int(n * F_CAL)	CONTIGUOUS	74	the protocol as reported; migrates if the panel switches
-scripts/build_qs_sequences.py	n_cal = int(n * F_CAL)	CONTIGUOUS	93	the protocol as reported; migrates if the panel switches
-scripts/capital_charge_comparison.py	n_cal = int(N * F_CAL)	CONTIGUOUS	64	the protocol as reported; migrates if the panel switches
 scripts/fz_scores.py	n_cal = int(T * f_cal)	CONTIGUOUS	85	the protocol as reported; migrates if the panel switches
 scripts/fz_scores.py	n_cal = int(T * F_CAL)	CONTIGUOUS	157	the protocol as reported; migrates if the panel switches
 scripts/gap_ablation.py	n_cal = int(fc * n)	MEASUREMENT	63	computes the contiguous and gapped arms on purpose, to compare them
 scripts/qV_block_bootstrap.py	n_cal = int(F_C * n)	NOT_A_PANEL	76	splits simulated or resampled data, not a forecast series; the theorem's separation does not apply
 scripts/r4_rolling_and_frontier.py	n_cal = int(T * F_CAL)	CONTIGUOUS	111	the protocol as reported; migrates if the panel switches
-scripts/regenerate_rolling_vs_static.py	n_cal = int(n * f_cal)	CONTIGUOUS	87	the protocol as reported; migrates if the panel switches
-scripts/regenerate_rolling_vs_static.py	n_cal = int(n * f_cal)	CONTIGUOUS	129	the protocol as reported; migrates if the panel switches
 scripts/table_c1_es_correction.py	n_cal = int(N * F_CAL)	CONTIGUOUS	199	the protocol as reported; migrates if the panel switches
 scripts/tail_completion_robustness.py	n_cal = int(F_C * n)	CONTIGUOUS	81	the protocol as reported; migrates if the panel switches
 Quantlets/CFP_Capital_Charge/CFP_Capital_Charge.py	n_cal = int(N * F_CAL)	CONTIGUOUS	64	the protocol as reported; migrates if the panel switches
@@ -63,3 +58,7 @@ Quantlets/cfp_config.py	def split_indices(n: int, scores=None, f_cal: float = F_
 Quantlets/cfp_config.py	cal, test, g = split_indices(1000, ar, gap=True)	MEASUREMENT	330	negative control of the definition
 Quantlets/cfp_config.py	cal0, test0, g0 = split_indices(1000, ar, gap=False)	MEASUREMENT	332	negative control of the definition
 Quantlets/cfp_config.py	split_indices(1000, walk, gap=True)	MEASUREMENT	337	negative control: a gap wider than the test block must raise
+scripts/build_dq_panel.py	cal, test, _g = split_indices(n, v - r, f_cal=F_CAL)	MIGRATED	76	DQ panel; --verify reproduces the committed cells
+scripts/build_qs_sequences.py	cal, test, _g = split_indices(n, v - r, f_cal=F_CAL)	MIGRATED	94	QS and violation sequences; --verify reproduces all_results.csv
+scripts/capital_charge_comparison.py	cal, test, _g = split_indices(N, scores, f_cal=F_CAL)	MIGRATED	68	capital charge figure; output identical after migration
+scripts/regenerate_rolling_vs_static.py	cal, test, _g = split_indices(n, q - r, f_cal=f_cal)	MIGRATED	88	rolling vs static; output identical after migration

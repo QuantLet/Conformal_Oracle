@@ -37,7 +37,8 @@ OUT = BASE / "analysis" / "phase3" / "dq_panel.csv"
 
 sys.path.insert(0, str(BASE / "Quantlets"))
 sys.path.insert(0, str(BASE / "scripts"))
-from cfp_config import MODELS, SYMBOLS, F_CAL, conformal_quantile  # noqa: E402
+from cfp_config import (MODELS, SYMBOLS, F_CAL,  # noqa: E402
+                        conformal_quantile, split_indices)
 from build_qs_sequences import load_pair_dated  # noqa: E402
 
 ALPHA, LAGS = 0.01, 4
@@ -71,13 +72,14 @@ def build() -> pd.DataFrame:
         for asset in ASSETS:
             df = load_pair_dated(model, asset, ALPHA)
             n = len(df)
-            n_cal = int(n * F_CAL)
             r, v = df["r"].to_numpy(), df["v"].to_numpy()
+            cal, test, _g = split_indices(n, v - r, f_cal=F_CAL)
+            n_cal, t0 = len(cal), int(test[0])
             # The shift comes from cfp_config, not from a local order statistic:
             # the convention lived in a docstring and was reimplemented by every
             # producer, which is what QV_CONVENTION.md was written about.
             qv = conformal_quantile(v[:n_cal] - r[:n_cal], ALPHA)
-            r_t, v_t = r[n_cal:], v[n_cal:]
+            r_t, v_t = r[t0:], v[t0:]
             rows.append({"model": model, "symbol": asset,
                          "p_dq_raw": dq_pvalue(r_t, v_t, ALPHA),
                          "p_dq_cp": dq_pvalue(r_t, v_t - qv, ALPHA)})

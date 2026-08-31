@@ -596,3 +596,33 @@ not enough --- two producers can hold two objects and report in the same unit of
 appearance. `counted()` and `partition()` in `paper_numbers.py` enforce it; both
 controls were seen firing, one on the 46-against-51 case itself.
 
+## An artefact is not current because nothing said it was stale
+
+`rolling_vs_static.csv` was written on 20 August. The analytic Chronos series it
+reads were rebuilt on 27 August, when the one-bin offset was corrected. The
+correction round recorded that every downstream artefact had been rebuilt; this
+one had not, and re-running its producer moves three of its 312 rows. No
+classification changed, no manuscript number was wrong, and that is precisely
+why nothing surfaced it: a stale artefact whose verdicts happen to be stable
+cannot be told from a current one without re-deriving it.
+
+Re-deriving found a second and larger instance. `k0a_result.json` was computed
+on 24 August, three days before the same correction, and re-running it moves ten
+macros. Nine move in the third decimal. One does not: the slope of
+log|q_V - delta*| on log f goes from 0.6 standard errors off the theoretical -1
+to 4.3, which turns "consistent with the asymptotic prediction" into "flatter
+than it". The claim in Section 6 has been rewritten to what the new numbers
+support --- the formula gets the level right, at 1.12 times the predicted
+standard deviation with no fitted constant, and understates how fast the error
+falls with the density.
+
+**The rule.** An artefact that feeds the manuscript is re-derived when its
+inputs move, and the build screens for it. Guard 8 compares modification times
+against the newest primary series. It is a screen and says so: it can flag an
+artefact that does not depend on the input that moved, at the cost of one
+re-run, and it cannot pass one that does. Exemptions are declared in
+`FRESHNESS_EXEMPT.tsv` with a basis the guard checks --- SELF_CONTAINED is
+verified by reading the producing directory for any reference to the data tree,
+and FROZEN must carry a date. An exemption the build cannot check is a
+hand-carried claim, which is what these registries exist to remove.
+

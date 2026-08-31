@@ -52,7 +52,7 @@ VIOL_DIR = DATA / "paper_outputs" / "violation_sequences"
 
 sys.path.insert(0, str(BASE / "Quantlets"))
 sys.path.insert(0, str(BASE / "Quantlets" / "CO_full_evaluation"))
-from cfp_config import MODELS, SYMBOLS, F_CAL  # noqa: E402
+from cfp_config import MODELS, SYMBOLS, F_CAL, split_indices  # noqa: E402
 from run_full_evaluation import quantile_score  # noqa: E402
 
 ALPHA = 0.01
@@ -90,10 +90,11 @@ def load_pair_dated(model: str, asset: str, alpha: float) -> pd.DataFrame:
 def sequences_for_pair(df: pd.DataFrame, alpha: float) -> tuple[pd.DataFrame, dict]:
     """Per-date loss and violation series on the test window, plus the summary."""
     n = len(df)
-    n_cal = int(n * F_CAL)
     r, v = df["r"].values, df["v"].values
+    cal, test, _g = split_indices(n, v - r, f_cal=F_CAL)
+    n_cal, t0 = len(cal), int(test[0])
     r_cal, v_cal = r[:n_cal], v[:n_cal]
-    r_test, v_test = r[n_cal:], v[n_cal:]
+    r_test, v_test = r[t0:], v[t0:]
 
     scores = np.sort(v_cal - r_cal)
     k = min(int(np.ceil((n_cal + 1) * (1 - alpha))) - 1, n_cal - 1)
@@ -108,7 +109,7 @@ def sequences_for_pair(df: pd.DataFrame, alpha: float) -> tuple[pd.DataFrame, di
     out["qs_raw"] = np.nan
     out["viol_cp"] = np.nan
     out["viol_raw"] = np.nan
-    test_idx = df.index[n_cal:]
+    test_idx = df.index[t0:]
     out.loc[test_idx, "qs_cp"] = loss(r_test, var_cp)
     out.loc[test_idx, "qs_raw"] = loss(r_test, v_test)
     out.loc[test_idx, "viol_cp"] = (r_test < var_cp).astype(float)
