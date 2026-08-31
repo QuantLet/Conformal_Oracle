@@ -24,6 +24,10 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 import warnings
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 warnings.filterwarnings('ignore')
 
 # ── Paths ──────────────────────────────────────────────────────────
@@ -208,7 +212,8 @@ def main():
                 # after the first F_CAL fraction (matching the paper's
                 # calibration/test split)
                 n = len(r)
-                n_cal = int(n * F_CAL)
+                _cal, _test, _g = split_indices(n, q_lo - r, f_cal=F_CAL)
+                n_cal, t0 = len(_cal), int(_test[0])
                 start_idx = max(W_ROLL, n_cal)
 
                 R_t = compute_rolling_R(r, q_lo, w=W_ROLL, alpha=ALPHA)

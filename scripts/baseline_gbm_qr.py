@@ -43,6 +43,10 @@ SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
 import sys as _sys, pathlib as _pl
 _sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "Quantlets"))
 from cfp_config import MODELS  # noqa: E402
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[1] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 
 
 def load_pair(model_key, symbol):
@@ -145,13 +149,14 @@ def eval_pair(model_key, symbol):
     except Exception as e:
         return None
     T = len(r)
-    n_cal = int(T * F_CAL)
-    if n_cal < 200 or T - n_cal < 50:
+    _cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)
+    n_cal, t0 = len(_cal), int(_test[0])
+    if n_cal < 200 or T - t0 < 50:
         return None
 
     X = make_features(r, q_lo)
-    X_cal, X_test = X[:n_cal], X[n_cal:]
-    y_cal, y_test = r[:n_cal], r[n_cal:]
+    X_cal, X_test = X[:n_cal], X[t0:]
+    y_cal, y_test = r[:n_cal], r[t0:]
 
     # Train / validation split within calibration
     n_val = max(int(n_cal * VAL_FRAC), 30)

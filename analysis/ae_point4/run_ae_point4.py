@@ -57,6 +57,10 @@ SYMBOLS = ['SP500', 'STOXX', 'GDAXI', 'FCHI', 'FTSE100', 'ICLN',
 # corrected in between.
 sys.path.insert(0, str(BASE / "Quantlets"))
 from cfp_config import MODELS  # noqa: E402
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 
 # Series carrying a traced defect, which dominate any pooled regression and are
 # therefore reported separately rather than averaged in.
@@ -142,13 +146,14 @@ def score_pair(model: str, symbol: str, alpha: float) -> dict | None:
         return None
 
     n = len(r)
-    n_cal = int(n * F_CAL)
-    if n_cal < W_ROLL or n - n_cal < 50:
+    _cal, _test, _g = split_indices(n, q - r, f_cal=F_CAL)
+    n_cal, t0 = len(_cal), int(_test[0])
+    if n_cal < W_ROLL or n - t0 < 50:
         print(f"  SKIP {model}/{symbol}/{alpha}: series too short", file=sys.stderr)
         return None
 
-    r_cal, r_test = r[:n_cal], r[n_cal:]
-    q_cal, q_test = q[:n_cal], q[n_cal:]
+    r_cal, r_test = r[:n_cal], r[t0:]
+    q_cal, q_test = q[:n_cal], q[t0:]
     n_test = len(r_test)
 
     # --- raw --------------------------------------------------------------- #

@@ -87,6 +87,9 @@ def compute_baselines(symbol):
     ret = pd.read_csv(DATA / f'{symbol}.csv', index_col=0, parse_dates=True)
     r = ret.iloc[:, 0].values
     N = len(r)
+    # NOT migrated: EVT-POT and FHS build the VaR path from the returns
+    # AFTER this split, so no nonconformity score sequence exists here to
+    # set Corollary 4.6's gap. Declared CONTIGUOUS with this reason.
     n_cal = int(N * F_CAL)
 
     # Test set indices

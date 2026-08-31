@@ -37,6 +37,10 @@ GAMMAS = [0.001, 0.005, 0.01]  # candidate learning rates
 import sys as _sys
 _sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "Quantlets"))
 from cfp_config import MODELS, SYMBOLS  # noqa: E402
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[1] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 
 
 def load_data(model_key, symbol):
@@ -162,12 +166,13 @@ def main():
                 continue
 
             T = len(r)
-            n_cal = int(T * F_CAL)
-            if n_cal < W or T - n_cal < 50:
+            _cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)
+            n_cal, t0 = len(_cal), int(_test[0])
+            if n_cal < W or T - t0 < 50:
                 continue
 
-            r_cal, r_test = r[:n_cal], r[n_cal:]
-            q_cal, q_test = q_lo[:n_cal], q_lo[n_cal:]
+            r_cal, r_test = r[:n_cal], r[t0:]
+            q_cal, q_test = q_lo[:n_cal], q_lo[t0:]
 
             # Select gamma on calibration data
             gamma = select_gamma_on_cal(r_cal, q_cal, ALPHA, GAMMAS, W)

@@ -22,15 +22,15 @@ Quantlets/CO_regime_sensitivity/run_regime_sensitivity.py	n_cal = int(n * F_CAL)
 Quantlets/CO_robustness/run_robustness_mc.py	n_cal = int(len(valid) * fc)	NOT_A_PANEL	119	splits simulated or resampled data, not a forecast series; the theorem's separation does not apply
 Quantlets/CO_robustness_inner7/run_inner7_tail_closure.py	n_cal = int(F_C * n)	CONTIGUOUS	88	the protocol as reported; migrates if the panel switches
 Quantlets/CO_simulation_study/run_simulation_study.py	n_cal = int(T * f_cal)	NOT_A_PANEL	145	splits simulated or resampled data, not a forecast series; the theorem's separation does not apply
-python/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	142	the protocol as reported; migrates if the panel switches
-python/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	227	the protocol as reported; migrates if the panel switches
+python/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	142	the published library must not import the paper's cfp_config; it would break for anyone who pip-installs it. The split stays contiguous here and the open question -- whether the shipped package should implement the separation of Corollary 4.6 -- is recorded in PACKAGE_STATE.md
+python/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	227	the published library must not import the paper's cfp_config; it would break for anyone who pip-installs it. The split stays contiguous here and the open question -- whether the shipped package should implement the separation of Corollary 4.6 -- is recorded in PACKAGE_STATE.md
 analysis/ae_point4/run_ae_point4.py	n_cal = int(n * F_CAL)	CONTIGUOUS	145	the protocol as reported; migrates if the panel switches
 analysis/convention/measure_gap_ablation.py	n = len(s); n_cal = int(FC*n)	MEASUREMENT	42	computes the contiguous and gapped arms on purpose, to compare them
 analysis/convention/measure_gap_on_pipeline.py	n_cal = int(len(r) * rfe.F_CAL)	MEASUREMENT	24	computes the contiguous and gapped arms on purpose, to compare them
 analysis/convention/run_gap_panel.py	n_cal = int(FC * n)	MEASUREMENT	49	computes the contiguous and gapped arms on purpose, to compare them
 analysis/phase3_dynamic/run_dynamic_var.py	n_cal = int(n * F_CAL)	CONTIGUOUS	196	not migrated: the nonconformity scores do not exist until CAViaR is fitted on the calibration block, so no score sequence is available to set the gap
 analysis/phase3_dynamic/verify_caviar.py	n_cal = int(n * F_CAL)	CONTIGUOUS	135	the protocol as reported; migrates if the panel switches
-conformal-oracle/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	137	the protocol as reported; migrates if the panel switches
+conformal-oracle/src/conformal_oracle/audit/single_static.py	n_cal = int(n * calibration_split)	CONTIGUOUS	137	stale duplicate tree at version 0.3.1; see PACKAGE_STATE.md
 analysis/convention/measure_rho_census.py	n_cal = int(len(r) * rfe.F_CAL)	MEASUREMENT	56	census of rho-hat on the calibration block; computes no backtest and reports no coverage
 Quantlets/CO_full_evaluation/run_full_evaluation.py	cal, test, g = split_indices(n, v - r, f_cal=f_cal, gap=gap)	MIGRATED	133	the panel driver; takes the split and the gap from cfp_config
 Quantlets/cfp_config.py	def split_indices(n: int, scores=None, f_cal: float = F_CAL,	MIGRATED	290	the single definition itself
@@ -61,4 +61,4 @@ scripts/fz_scores.py	_cal, _test, _g = split_indices(T, var_t - r, f_cal=f_cal)	
 scripts/fz_scores.py	_c2, _t2, _g2 = split_indices(T, var_t - r, f_cal=F_CAL)	MIGRATED	164	ran; table unchanged
 scripts/r4_rolling_and_frontier.py	_cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)	MIGRATED	117	migrated; not re-run to completion here
 scripts/table_c1_es_correction.py	_cal, _test, _g = split_indices(N, var_t - r_t, f_cal=F_CAL)	MIGRATED	199	ran; the Quantlets copy the paper reads is unchanged
-scripts/audit_migration_scope.py	and "split_indices(" in p.read_text(encoding="utf-8", errors="ignore")]	NOT_A_PANEL	89	the audit that scopes itself to the migrated population; it matches the call, it does not make one
+scripts/audit_migration_scope.py	"and ""split_indices("" in p.read_text(encoding=""utf-8"", errors=""ignore"")]"	NOT_A_PANEL	89	the audit that scopes itself to the migrated population; it matches the call, it does not make one

@@ -31,6 +31,10 @@ import numpy as np
 import pandas as pd
 
 from conformal_oracle.recalibration import diagnose_scale
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 
 ALPHA = 0.01
 F_CAL = 0.70
@@ -118,7 +122,8 @@ def run():
         for asset in ASSETS:
             try:
                 r, raw = load_pair(model, asset)
-                n_cal = int(len(r) * F_CAL)
+                _cal, _test, _g = split_indices(len(r), raw - r, f_cal=F_CAL)
+                n_cal, t0 = len(_cal), int(_test[0])
                 d = diagnose_scale(raw[:n_cal], r[:n_cal], ALPHA)
                 # Regime R = |q_v_stat| / mean(|VaR_raw|) on the same
                 # calibration split (Section 4; R > 1 => replacement).

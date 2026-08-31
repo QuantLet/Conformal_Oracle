@@ -22,6 +22,10 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy import stats
 import warnings
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 warnings.filterwarnings('ignore')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -137,7 +141,8 @@ def apply_conformal(dates, q_lo, raw_var, raw_es, realized, alpha_var=0.01, alph
         realized: array of realized returns (negative = loss)
     """
     T = len(q_lo)
-    n_cal = int(T * f_cal)
+    _cal, _test, _g = split_indices(T, np.asarray(q_lo) - np.asarray(realized), f_cal=f_cal)
+    n_cal, t0 = len(_cal), int(_test[0])
 
     # Step 1: One-sided VaR nonconformity scores (Definition 3.2)
     # s_t^V = q_lo_t - r_t

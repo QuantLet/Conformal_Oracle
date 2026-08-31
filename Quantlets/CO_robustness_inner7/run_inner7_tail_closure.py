@@ -17,6 +17,10 @@ import pandas as pd
 from scipy.stats import t as t_dist, norm
 from scipy.optimize import minimize
 from pathlib import Path
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 
 BASE = Path(__file__).resolve().parent.parent.parent
 DATA = BASE / 'cfp_ijf_data'
@@ -85,12 +89,13 @@ def conformal_pipeline(var_raw, returns):
     ret = returns.loc[common, 'log_return']
 
     n = len(common)
-    n_cal = int(F_C * n)
+    _cal, _test, _g = split_indices(n, (var_raw - ret).values, f_cal=F_C)
+    n_cal, t0 = len(_cal), int(_test[0])
 
     scores = var_raw - ret
     cal_scores = scores.iloc[:n_cal].values
-    test_ret = ret.iloc[n_cal:].values
-    test_var = var_raw.iloc[n_cal:].values
+    test_ret = ret.iloc[t0:].values
+    test_var = var_raw.iloc[t0:].values
 
     ss = np.sort(cal_scores)
     n_c = len(cal_scores)

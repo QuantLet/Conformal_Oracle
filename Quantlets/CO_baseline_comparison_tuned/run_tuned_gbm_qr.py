@@ -40,6 +40,10 @@ SYMBOL = 'SP500'
 # thirteen -- the same drift that had to be fixed independently in five other
 # scripts.
 import sys
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 _here = Path(__file__).resolve()
 sys.path.insert(0, str(_here.parent.parent if _here.parent.name != 'scripts'
                        else _here.parent.parent / 'Quantlets'))
@@ -117,13 +121,14 @@ def eval_config(model_key, n_est, max_depth, lr):
     except Exception:
         return None
     T = len(r)
-    n_cal = int(T * F_CAL)
-    if n_cal < 200 or T - n_cal < 50:
+    _cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)
+    n_cal, t0 = len(_cal), int(_test[0])
+    if n_cal < 200 or T - t0 < 50:
         return None
 
     X = make_features(r, q_lo)
-    X_cal, X_test = X[:n_cal], X[n_cal:]
-    y_cal, y_test = r[:n_cal], r[n_cal:]
+    X_cal, X_test = X[:n_cal], X[t0:]
+    y_cal, y_test = r[:n_cal], r[t0:]
 
     n_val = max(int(n_cal * VAL_FRAC), 30)
     X_tr, y_tr = X_cal[:-n_val], y_cal[:-n_val]

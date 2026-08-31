@@ -35,6 +35,10 @@ F_CAL = 0.70
 import sys
 sys.path.insert(0, str(BASE / 'Quantlets'))
 from cfp_config import MODELS, SYMBOLS as _SYMBOLS  # noqa: E402
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 
 SYMBOLS = sorted(_SYMBOLS)
 
@@ -155,17 +159,18 @@ def eval_pair(model_key, symbol):
     except Exception:
         return None
     T = len(r)
-    n_cal = int(T * F_CAL)
-    if n_cal < 200 or T - n_cal < 50:
+    _cal, _test, _g = split_indices(T, q_lo - r, f_cal=F_CAL)
+    n_cal, t0 = len(_cal), int(_test[0])
+    if n_cal < 200 or T - t0 < 50:
         return None
 
     q_feat, v5_lag, v20_lag = make_features(r, q_lo)
 
     # Calibration / test split
-    y_cal, y_test = r[:n_cal], r[n_cal:]
-    q_cal, q_test = q_feat[:n_cal], q_feat[n_cal:]
-    v5_cal, v5_test = v5_lag[:n_cal], v5_lag[n_cal:]
-    v20_cal, v20_test = v20_lag[:n_cal], v20_lag[n_cal:]
+    y_cal, y_test = r[:n_cal], r[t0:]
+    q_cal, q_test = q_feat[:n_cal], q_feat[t0:]
+    v5_cal, v5_test = v5_lag[:n_cal], v5_lag[t0:]
+    v20_cal, v20_test = v20_lag[:n_cal], v20_lag[t0:]
 
     params = fit_gamlss(y_cal, q_cal, v5_cal, v20_cal)
     converged = params is not None

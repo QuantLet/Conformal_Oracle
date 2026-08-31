@@ -49,6 +49,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.stats import norm
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parents[2] / "Quantlets"))
+from cfp_config import split_indices  # noqa: E402
 
 warnings.filterwarnings("ignore")
 
@@ -156,7 +160,8 @@ def conformal_stats(returns, var_raw, alpha=ALPHA, f_cal=FC):
     var_raw is the (contaminated) VaR in positive-loss convention.
     """
     T = returns.shape[-1]
-    n_cal = int(T * f_cal)
+    _cal, _test, _g = split_indices(T, -var_raw - returns, f_cal=f_cal)
+    n_cal, t0 = len(_cal), int(_test[0])
 
     q_lo = -var_raw
     s_v = q_lo[:n_cal] - returns[:n_cal]
@@ -165,9 +170,9 @@ def conformal_stats(returns, var_raw, alpha=ALPHA, f_cal=FC):
     q_hat_v = np.quantile(s_v, q_level)
 
     corrected_var = var_raw + q_hat_v
-    test_r = returns[n_cal:]
-    raw_pi = float((test_r < -var_raw[n_cal:]).mean())
-    corr_pi = float((test_r < -corrected_var[n_cal:]).mean())
+    test_r = returns[t0:]
+    raw_pi = float((test_r < -var_raw[t0:]).mean())
+    corr_pi = float((test_r < -corrected_var[t0:]).mean())
     r_ratio = abs(q_hat_v) / abs(np.mean(var_raw))
     return q_hat_v, r_ratio, raw_pi, corr_pi
 
