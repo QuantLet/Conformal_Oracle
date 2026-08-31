@@ -107,14 +107,14 @@
 
 Post-hoc conformal recalibration restores the coverage of a tail quantile
 forecast, but the standard guarantee assumes exchangeability, which financial
-return series violate. We prove asymptotic coverage for the one-sided
-split-conformal shift under geometric $\beta$-mixing, with an explicit remainder
-that separates estimation error in the calibration quantile from residual
-dependence, and a corollary fixing the mixing rate for GARCH data-generating
-processes. The separation the theorem requires is logarithmic in the calibration sample, a
-median of \nGapPanelGapMed{} observations; imposing it on the panel moves no
-regulatory classification and the corrected violation rate by at most
-$\nGapPanelDPiMax$.
+return series violate. Coverage for split conformal prediction under
+$\beta$-mixing is established; what it costs to satisfy is not. We fix the
+mixing rate for GARCH processes, which turns the separation the theorem requires
+into a number of trading days --- a median of \nGapPanelGapMed{} --- and
+measure it. Taking the separation from the evaluation window leaves the
+conformal shift unchanged on all \nGapAllCells{} cells, so every difference is
+residual dependence rather than estimation noise: no regulatory classification
+moves, and the corrected violation rate moves by at most $\nGapAllDPiMax$.
 
 On a panel of equity, bond, commodity, cryptocurrency and foreign-exchange
 series, the shift brings every forecaster it is applied to --- from

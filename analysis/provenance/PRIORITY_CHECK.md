@@ -62,7 +62,32 @@ touched by this prior art.
 Pananjady (2026). Those three are the nearest prior art to Section 4 and their
 absence is the finding.
 
+## The four "unfound" identifiers are all real, and two of them matter
+
+The research pass reported four arXiv identifiers it could not retrieve, and was
+right to refuse to cite them. Resolving them directly: all four return HTTP 200
+with exactly the reported titles. The agents had exhausted their fetch budget,
+not invented the papers.
+
+| id | author, date | why it matters |
+|---|---|---|
+| 2603.22569 | Zhong, Tenghan, 2026-03-23 | *Proxy-Reliance Control in Conformal Recalibration of One-Sided Value-at-Risk.* The closest published work to this manuscript's own framing. Already in `analysis/litsurvey/SURVEY.md`; not cited in the manuscript. |
+| 2606.18199 | Cuonzo & Deliu, 2026-06-16 | *Conformal Prediction Intervals with Tail-Specific Guarantees.* One-sided split conformal with marginal validity, exchangeable (finite-sample) and **non-exchangeable (asymptotic)**, demonstrated on a financial left-tail application. |
+| 2602.03903 | Schmitt, 2026-02-03 | Already cited as `tamingtailrisk2026`. Sequential one-sided VaR calibration; coverage bounds for data-driven weights under regime drift. |
+| 2507.05470 | Aich, Aich & Jain, 2025-07-07 | *Temporal Conformal Prediction.* Rolling split-conformal calibration benchmarked against GARCH, Historical Simulation, QR and ACI on S&P 500, Bitcoin and Gold. |
+
+**This narrows the one-sided wedge further than stated above.** The section
+"What none of them do" was written against the four papers the research pass
+verified, and it holds for those four. It does not hold against Cuonzo & Deliu,
+who construct one-sided split-conformal intervals with tail-specific coverage and
+carry the non-exchangeable case explicitly. Read from the abstract only; the
+overlap with Theorem 4.5 needs reading the paper before anything is written on
+it.
+
 ## Not citable
+
+(Superseded: the four identifiers below were resolved and are recorded above.
+Kept for the record of how they were handled.)
 
 Four arXiv identifiers surfaced in search metadata and could not be retrieved at
 a real URL by any verifier: 2507.05470, 2602.03903, 2603.22569, 2606.18199. The

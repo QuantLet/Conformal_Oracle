@@ -11,7 +11,21 @@ exchangeable: volatility clusters, tails arrive together, and the score process
 inherits both. This section replaces the exchangeability assumption with a weak
 dependence condition and states what survives.
 
-Three results follow. The first is asymptotic coverage for the single-split
+The coverage statement this requires is not new, and the section is organised
+around that fact. \citet{oliveira2024split} prove marginal coverage for split
+conformal prediction on stationary $\beta$-mixing data with an explicit
+remainder, and name GARCH processes as inside the class their result covers;
+\citet{barber2026predictive} sharpen the sample-size term from
+$\mathcal O(\sqrt{\tau/n})$ to $\mathcal O(\tau/n)$. What this section
+contributes is not the bound but its calibration and its price: the mixing rate
+of a GARCH score process is made explicit, which turns an abstract separation
+requirement into a number of trading days, and
+Section~\ref{sec:theory_gap} then measures what imposing that number costs on
+the panel this paper reports. That measurement is the part no prior result
+supplies, and Section~\ref{sec:blindspot_identification} carries the theoretical claim
+this paper does originate.
+
+Three results are stated. The first is asymptotic coverage for the single-split
 estimator under geometric $\beta$-mixing, with an explicit remainder and a
 corollary that makes the mixing rate concrete for a GARCH data-generating
 process. The second is a deterministic bound for an online quantile update, which
@@ -155,6 +169,24 @@ correctly specified forecaster.
 	mixing rate.
 \end{theorem}
 
+\paragraph{Attribution.} Theorem~\ref{thm:dependent_conformal_var} is a
+one-sided specialization of a published result and is stated here because the
+paper's estimator needs it, not because it is new. \citet[Theorem~4]{oliveira2024split}
+give marginal coverage for split conformal prediction under stationary
+$\beta$-mixing with remainder $\varepsilon_{\mathrm{cal}} +
+\varepsilon_{\mathrm{train}} + \delta_{\mathrm{cal}}$, in which
+$\varepsilon_{\mathrm{cal}}$ carries a $\sqrt{\log(\cdot)/n_{\mathrm{cal}}}$
+term and $\varepsilon_{\mathrm{train}}$ is a $\beta$-coefficient evaluated at a
+separation; their statement is for a generic score, so a signed score is admitted
+without modification. \citet{barber2026predictive} then improve the sample-size
+term to scale linearly in $\tau/n$ rather than as $\sqrt{\tau/n}$, which under
+geometric mixing with $\tau = c\log n$ is $\mathcal O((\log n)/n)$ against the
+$\mathcal O(\sqrt{(\log n)/n})$ of equation~\eqref{eq:coverage_bound}. A reader
+who wants the sharpest available constant should take theirs. Equation~\eqref{eq:coverage_bound}
+is retained in the form above because it is the form the panel is measured
+against in Section~\ref{sec:theory_gap}, and because its two terms separate the
+two things a practitioner controls.
+
 The proof, in Supplement~S.9.3, has three steps: the coverage event is rewritten
 as a score event, $\qVstat$ is placed near $q_{1-\alpha}$ by
 Lemma~\ref{lem:quantile_mixing}, and the dependence between the calibration block
@@ -195,7 +227,18 @@ correction under dependence; it does not certify it.
 The corollary is the reason the theorem is usable rather than merely true. Its
 hypotheses are the standard conditions for strict stationarity and geometric
 ergodicity of GARCH$(1,1)$ \citep[Theorem~2.10]{francq2019garch,lindner2009stationarity},
-and they are satisfied by every parametric benchmark in this study. Under it the
+and they are satisfied by every parametric benchmark in this study. The
+logarithmic rate and its constant are not new either: for geometrically ergodic
+Markov chains with rate $\rho$, \citet[Theorem~5.1]{zheng2024conformal} obtain
+a separation of order $\log n/\lvert\log\rho\rvert$, which is
+equation~\eqref{eq:garch_gap_rate}. Their construction is a thinning stride --- a
+$K$-split scheme retaining every $K$th calibration score --- rather than a single
+block separated from the evaluated point, so the two are the same rate applied to
+different objects. What the corollary adds is the passage from a GARCH
+specification to that rate, which rests on the exponential $\beta$-mixing of
+GARCH$(1,1)$ established by \citet{carrasco2002mixing} and is a citation rather
+than a result. Its value is operational: it converts a mixing condition into a
+number of trading days, and the number turns out to be small. Under it the
 required separation is logarithmic in the calibration sample: across the
 \nGapPanelCells{} cells of the panel $g_n$ runs from \nGapPanelGapLo{} to
 \nGapPanelGapHi{} observations with a median of \nGapPanelGapMed, so the
