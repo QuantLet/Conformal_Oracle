@@ -179,8 +179,17 @@ already been rounded for display, rather than from the values behind them. The
 error is small every time and it is not random --- it inherits the direction of
 the first rounding, so it does not average away across a table.
 
-**A derived quantity is computed from unrounded values and rounded once, at the
-point of emission.** A ratio, a difference or a percentage that a reader could
+The same mechanism appeared a second time on the same day, and not as a rounding
+error. The evidence first offered for switching the reported panel to the gapped
+estimator came from a script that re-split the stored scores itself; its paired
+differences were right and its levels were its own, 297 green against the
+pipeline's 278. A decision taken on it would have been the right decision reached
+from a quantity computed outside the code that owns the object. Re-measuring
+through the pipeline's own backtest gave the same differences and the right
+levels, and it is what the decision now rests on.
+
+**A derived quantity is computed by the code that owns the object, from unrounded
+values, and rounded once at the point of emission.** A ratio, a difference or a percentage that a reader could
 reconstruct from two printed numbers is emitted by the same script that prints
 them, not left for the prose to assemble. Where the reconstruction and the
 emitted value differ, the emitted one is right and the difference is the
