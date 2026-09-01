@@ -451,7 +451,7 @@ and set
 \end{equation}
 The Student-$t$ closure is a parsimonious heavy-tailed default in financial VaR modelling \citep{bollerslev1987,hansen1994autoregressive,mcneil2000estimation}. It is not, however, an innocuous choice: \texttt{scripts/tail\_completion\_robustness.py} shows that the closure rule governs the tail behaviour of a grid model far more than the model does, so this decision is reported as part of the forecaster rather than as an implementation detail.
 
-For classical benchmarks (GJR-GARCH, GARCH-Normal, EWMA, Historical Simulation), VaR is computed from the model-implied conditional distribution or, for Historical Simulation, the empirical 250-day rolling distribution. EWMA is the exception to the rolling-window convention and is stated as such wherever it appears: its conditional variance is the RiskMetrics recursion at $\lambda = 0.94$ \citep{riskmetrics1996}, which is not truncated at 250 observations (, \texttt{Quantlets/CO\_robustness/run\_robustness\_summary.py}).
+For classical benchmarks (GJR-GARCH, GARCH-Normal, EWMA, Historical Simulation), VaR is computed from the model-implied conditional distribution or, for Historical Simulation, the empirical 250-day rolling distribution. EWMA is the exception to the rolling-window convention and is stated as such wherever it appears: its conditional variance is the RiskMetrics recursion at $\lambda = 0.94$ \citep{riskmetrics1996}, which is not truncated at 250 observations (\texttt{Quantlets/CO\_robustness/run\_robustness\_summary.py}).
 
 Expected Shortfall is reported separately at $\alpha = 0.025$ following the Basel III/FRTB convention \citep{bcbs2019frtb} and is computed from the same predictive object as VaR. Because ES is not elicitable as a standalone functional \citep{gneiting2011making}, the conformal construction is developed for VaR only; ES computation details and the heuristic ES shift are in \texttt{scripts/table\_c1\_es\_correction.py}.
 
@@ -607,7 +607,7 @@ The rolling variant is an operational heuristic, not a construction with finite-
 \subsubsection{Alternative Recalibration Baselines}
 \label{sec:alternatives}
 
-We compare the one-parameter conformal shift against alternatives that vary on three axes: parameter count, correction structure (location only, location--scale, monotone, fully nonparametric), and target object (correction, conditional distribution, or tail). We compare against ten baselines: five single-shot post-hoc corrections, adaptive conformal inference, two distributional or nonlinear methods (GAMLSS-SST and gradient-boosted quantile regression), and two dedicated VaR models (EVT-POT and filtered historical simulation). Full specifications are in \texttt{scripts/baselines\_evt\_fhs.py}; \texttt{Quantlets/CO\_full\_evaluation/run\_full\_evaluation.py} of the supplement provides a compact reference. The comparison tests Remark~\ref{rem:tail_sparsity} on the correction layer: at $\alpha = 0.01$, additional parameters in the \emph{correction} increase variance faster than they reduce bias. The remark's forecaster layer is tested separately, by the leaf-resolution response recorded there. Empirical results are in Section~\ref{sec:baselines}.
+We compare the one-parameter conformal shift against alternatives that vary on three axes: parameter count, correction structure (location only, location--scale, monotone, fully nonparametric), and target object (correction, conditional distribution, or tail). We compare against ten baselines: five single-shot post-hoc corrections, adaptive conformal inference, two distributional or nonlinear methods (GAMLSS-SST and gradient-boosted quantile regression), and two dedicated VaR models (EVT-POT and filtered historical simulation). Full specifications are in \texttt{scripts/baselines\_evt\_fhs.py}; the evaluation driver provides a compact reference. The comparison tests Remark~\ref{rem:tail_sparsity} on the correction layer: at $\alpha = 0.01$, additional parameters in the \emph{correction} increase variance faster than they reduce bias. The remark's forecaster layer is tested separately, by the leaf-resolution response recorded there. Empirical results are in Section~\ref{sec:baselines}.
 	%══════════════════════════════════════════════════════════════════════════════
 	%─── PART 7: Data and Experimental Setup ────────────────────────────────────
 	%══════════════════════════════════════════════════════════════════════════════
@@ -686,8 +686,7 @@ passes a set of structural checks: conditions a reported lower quantile must
 satisfy to be one at all --- a sign convention, monotonicity across $\alpha$, a
 scale commensurate with realised volatility, responsiveness to the level
 requested --- stated on the series and the returns, with no $p$-value and no
-benchmark. Ten such checks are used here, listed in full in \texttt{scripts/promotion\_gate.py} and
-motivated in \texttt{scripts/promotion\_gate.py}.
+benchmark. Ten such checks are used here, listed and motivated in \texttt{scripts/promotion\_gate.py}.
 
 They are an admission criterion and not a contribution. Three are invariants that
 a correct series cannot violate; the remaining seven are plausibility bands whose
@@ -886,8 +885,7 @@ Acerbi--Sz\'ekely $Z_2$ statistic of Section~\ref{sec:diag} passes \nMainZTwoPas
 \nMainZTwoPassAnalytic{} of
 \nMainAssets{} for each analytic counterpart, the sharpest separation any
 diagnostic in this paper achieves (\texttt{scripts/table\_c1\_es\_correction.py}). That is the boundary of
-Proposition~\ref{prop:identification}. Matching the construction of
-\texttt{analysis/provenance/PROTOCOL.md} on mean expected shortfall as well does not
+Proposition~\ref{prop:identification}. Matching the blind-spot construction on mean expected shortfall as well does not
 close it: a size-$5\%$ one-sided $Z_2$ test still rejects the matched
 alternative with probability \nSupPowerRej{} over \nSupPowerReps{} replications,
 a $95\%$ interval of $[\nSupPowerLo, \nSupPowerHi]$ that excludes the nominal
@@ -1244,21 +1242,17 @@ that gains from one that pays for the gain elsewhere. Under the single split the
 \nGateStaticUpgradesLost{} of \nGateStaticUpgrades{} upgrades.
 
 The deployable summary is therefore weaker than an in-sample evaluation of the
-same rule would support, and still useful: a calibration-window backtest carries enough
-signal to avoid about a quarter of the damage at a cost of about a tenth of the
-zone upgrades, and the gap between that and the oracle is a measure of how
-poorly the calibration window predicts the test window at $\alpha = 0.01$ ---
-which is the tail-sparsity constraint of Remark~\ref{rem:tail_sparsity} showing
-up in a decision problem rather than in an estimator. The raw rejection rate
-falls steadily with the level --- \nSeqKupiecRejRawOne\%,
-\nSeqKupiecRejRawTwoFive\%, \nSeqKupiecRejRawFive\% and
-\nSeqKupiecRejRawTen\% at the four levels --- so at $\alpha = 0.10$ a clear
-majority of raw forecasts \emph{pass} and the rule skips most of the panel. It
-binds at every level, on a growing share of pairs as $\alpha$ falls; what is
-specific to $\alpha = 0.01$ is not how often it fires but the size of the damage
-it avoids when it does. The decision problem is therefore sharpest in the extreme
-tail, which is where the identification constraint of
-Remark~\ref{rem:tail_sparsity} operates.
+same rule would support, and still useful: a calibration-window backtest carries
+enough signal to avoid about a quarter of the damage at a cost of about a tenth
+of the zone upgrades. The gap between that and the oracle measures how poorly the
+calibration window predicts the test window at $\alpha = 0.01$, which is the
+tail-sparsity constraint of Remark~\ref{rem:tail_sparsity} appearing in a
+decision problem rather than in an estimator. The raw rejection rate falls
+steadily with the level --- \nSeqKupiecRejRawOne\%,
+\nSeqKupiecRejRawTwoFive\%, \nSeqKupiecRejRawFive\% and \nSeqKupiecRejRawTen\%
+--- so at $\alpha = 0.10$ most raw forecasts pass and the rule skips most of the
+panel. What is specific to $\alpha = 0.01$ is not how often the rule fires but
+the size of the damage it avoids when it does.
 
 \subsection{The trailing window}
 \label{sec:window}
@@ -1274,7 +1268,8 @@ The rolling variant reaches a higher green count than the static one and degrade
 \label{sec:baselines}
 
 Ten alternatives, a five-process Monte Carlo study and five robustness checks are
-in \texttt{scripts/baselines\_evt\_fhs.py}, S.4 and S.12. One result from them bears on the argument here:
+in \texttt{scripts/baselines\_evt\_fhs.py} and
+\texttt{Quantlets/CO\_robustness/run\_robustness\_summary.py}. One result from them bears on the argument here:
 performance across the alternatives is governed less by flexibility than by
 whether the recalibration layer respects the tail-sparsity constraint of
 Remark~\ref{rem:tail_sparsity}, and the one-parameter shift has the best quantile
@@ -1300,7 +1295,7 @@ State-dependent recalibration --- one-sided adaptive conformal inference
 \citep{gibbs2021adaptive}, the PID framework of \citet{angelopoulos2024pid} ---
 lies outside the present framework. Identification is limited in a second sense:
 the positive cross-sectional association between $\qVstat$ and asset-level
-volatility (\texttt{scripts/build\_dq\_panel.py}) is consistent with pre-training domain mismatch,
+volatility is consistent with pre-training domain mismatch,
 but the zero-shot design does not permit causal attribution. The audit locates
 \emph{where} tail signal is missing, not \emph{why}.
 
@@ -1466,14 +1461,6 @@ manuscript's intervals come from \texttt{scripts/qV\_block\_bootstrap.py}, which
 takes the order statistic in both places.
 
 Each series admitted to the analysis carries a manifest entry recording its model, asset, path, vintage and estimator class, and each passes --- or is recorded as blocked by --- the structural gate of Section~\ref{sec:gate} before entering any table. The numbers asserted in the text are emitted as macros by \texttt{scripts/paper\_numbers.py}, which recomputes each of them from the artefacts and fails the build when a value in the manuscript differs from the value in the data.
-
-The numbers asserted in the text are emitted as macros by
-\texttt{scripts/paper\_numbers.py}, which recomputes each from the artefacts and
-fails the build when a value in the manuscript differs from the value in the
-data. Every check in the replication material carries a negative control that
-must be seen to fail before the check may report anything; the defect census
-that motivated that rule is in \texttt{analysis/provenance/PROTOCOL.md} and its
-ratio is reported in Section~\ref{sec:harness_limits}.
 
 
 	\section*{Acknowledgements}
