@@ -23,12 +23,17 @@ import argparse, re, subprocess, sys, tempfile, shutil, pathlib
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
-DOCS = ["main_R2", "supplement"]
+# R3 and the proofs document are built artefacts of this project too. They were
+# outside every guard while R3 was being cut, and five references broke
+# unnoticed across several commits -- the same scoping failure the literal
+# check had, one document at a time.
+DOCS = ["main_R2", "supplement", "main_R3", "PROOFS"]
 # Guard 2 reads DOCS only, and the two \input section files were never in it.
 # That left Section 4 and the whole of Section 5 -- 4,504 words, including a
 # hand-authored Monte Carlo table -- outside every literal check the project
 # runs, and it is where a stale 0.67 survived four corrections elsewhere.
-LITERAL_DOCS = DOCS + ["sections/sec4_theory", "sections/sec5_montecarlo"]
+LITERAL_DOCS = DOCS + ["sections/sec4_theory", "sections/sec5_montecarlo",
+                       "sections_r3/sec4_theory", "sections_r3/sec5_montecarlo"]
 RED, GRN, YEL = "\033[31m", "\033[32m", "\033[33m"; OFF = "\033[0m"
 
 
@@ -308,7 +313,10 @@ DISCIPLINE_DOCS = [BASE / "analysis" / "provenance" / "PROTOCOL.md",
                    BASE / "MIGRATION.md",
                    BASE / "main_R2.tex", BASE / "supplement.tex",
                    BASE / "sections" / "sec4_theory.tex",
-                   BASE / "sections" / "sec5_montecarlo.tex"]
+                   BASE / "sections" / "sec5_montecarlo.tex",
+                   BASE / "main_R3.tex",
+                   BASE / "sections_r3" / "sec4_theory.tex",
+                   BASE / "sections_r3" / "sec5_montecarlo.tex"]
 # Backticks are not enough: MIGRATION.md gives the four audits as indented shell
 # commands, and those are exactly the files that did not travel.
 PATHISH = re.compile(r"[\w][\w./-]*\.(?:py|sh|tex|bib|csv|tsv|json|cls|lock)\b")

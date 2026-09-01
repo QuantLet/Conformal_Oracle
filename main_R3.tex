@@ -601,9 +601,8 @@ Financial time series exhibit time-varying volatility and structural change, mot
 \end{equation}
 where $S_{(1)}\le\cdots\le S_{(w)}$ are the order statistics of the trailing-window scores, so the rolling shift uses the same finite-sample conformal convention as equation~\eqref{eq:qV} and not the plain empirical quantile. The recalibrated lower quantile and VaR follow from equation~\eqref{eq:var_cp_roll} with $q_V^{\mathrm{roll}}(t) = \qVroll$.
 
-The rolling variant is an operational heuristic, not a construction with finite-sample conformal validity: Theorem~\ref{thm:dependent_conformal_var} covers the single-split estimator only, and recomputing the threshold from a trailing window violates the single-split assumption.\footnote{Complementary results from the online learning literature \citep{zinkevich2003online} and the weighted conformal framework \citep{barber2023conformal,angelopoulos2024pid} bound time-average miscoverage and finite-window deviation under drift, but cover related objects --- exact OGD updates and exponentially weighted quantiles, respectively --- not the uniform-weight rolling quantile used here. Propositions~\ref{prop:ogd_regret} and~\ref{prop:rolling_drift} state what is available for them.} Empirical support comes from the Monte Carlo study of Section~\ref{sec:mc} and from the drift diagnostic $\hat\delta_w(t)$ (\texttt{PROOFS.tex}), which flags windows where local recalibration departs from the global one.
+The rolling variant is an operational heuristic, not a construction with finite-sample conformal validity: Theorem~\ref{thm:dependent_conformal_var} covers the single-split estimator only, and recomputing the threshold from a trailing window violates the single-split assumption.\footnote{Complementary results from the online learning literature \citep{zinkevich2003online} and the weighted conformal framework \citep{barber2023conformal,angelopoulos2024pid} bound time-average miscoverage and finite-window deviation under drift, but cover related objects --- exact OGD updates and exponentially weighted quantiles, respectively --- not the uniform-weight rolling quantile used here. Both are stated and proved in \texttt{PROOFS.tex}.} Empirical support comes from the Monte Carlo study of Section~\ref{sec:mc} and from the drift diagnostic $\hat\delta_w(t)$ (\texttt{PROOFS.tex}), which flags windows where local recalibration departs from the global one.
 
-Remark~\ref{rem:rolling_status} states what the rolling estimator is entitled to claim.
 
 \subsubsection{Alternative Recalibration Baselines}
 \label{sec:alternatives}
@@ -885,7 +884,7 @@ Section~\ref{sec:diag}.
 	satisfy the restriction exactly.
 \end{proposition}
 
-The proof is one application of iterated conditioning and is in Appendix~\ref{app:proofs}.
+The proof is one application of iterated conditioning and is in \texttt{PROOFS.tex}.
 Statistics that read the \emph{magnitude} of an exceedance rather than its
 occurrence lie outside the class, and on this panel they do separate: the
 Acerbi--Sz\'ekely $Z_2$ statistic of Section~\ref{sec:diag} passes \nMainZTwoPassTrunc{} of
@@ -898,7 +897,7 @@ Proposition~\ref{prop:identification}. Matching the construction of
 close it: a size-$5\%$ one-sided $Z_2$ test still rejects the matched
 alternative with probability \nSupPowerRej{} over \nSupPowerReps{} replications,
 a $95\%$ interval of $[\nSupPowerLo, \nSupPowerHi]$ that excludes the nominal
-size (Appendix~\ref{app:proofs}). Matching the mean of the tail is necessary to hide from
+size (\texttt{PROOFS.tex}). Matching the mean of the tail is necessary to hide from
 a magnitude-reading statistic and it is not sufficient.
 The class named in the proposition contains every instrument this paper uses:
 Kupiec's unconditional coverage test is a function of $\sum_t V_t$; both
@@ -1299,6 +1298,10 @@ records rather than fills in.
 
 A zone upgrade lowers the Basel multiplier, so the corrections that move a series from Yellow to Green reduce the capital charge on that series. The arithmetic, for one forecaster over its test window, is in \texttt{scripts/capital\_charge\_comparison.py}.
 
+\section{Limitations}
+\label{sec:discuss}
+\label{sec:failure}
+
 \subsection{What a scalar shift cannot do}
 
 A scalar shift restores unconditional violation frequency but cannot reshape the
@@ -1477,7 +1480,13 @@ takes the order statistic in both places.
 
 Each series admitted to the analysis carries a manifest entry recording its model, asset, path, vintage and estimator class, and each passes --- or is recorded as blocked by --- the structural gate of Section~\ref{sec:gate} before entering any table. The numbers asserted in the text are emitted as macros by \texttt{scripts/paper\_numbers.py}, which recomputes each of them from the artefacts and fails the build when a value in the manuscript differs from the value in the data.
 
-The verification apparatus was itself the more frequent site of defect. Of the \nHarnessDefectsTotal{} defects the project's computation protocol records, \nHarnessDefectsInstrument{} were in a check and \nHarnessDefectsObject{} in the quantity being checked: a literal screen whose file list held two of the four files the manuscript is assembled from, the same screen stripping every hand-authored table before reading it, a claim audit that read one generated number as evidence for both sides of a ratio, a manifest comparing against the frozen submission rather than the working tree, and a consistency check that regenerated the artefact it was verifying. The ratio is not incidental to the paper's subject. A validation instrument is an estimator like any other and fails in the same way the coverage test does --- by returning a pass that is an absence of evidence --- which is why every check in this repository carries a negative control that must be seen to fail before the check may report anything, and why the controls are planted where each check reads worst rather than where it reads typically.
+The numbers asserted in the text are emitted as macros by
+\texttt{scripts/paper\_numbers.py}, which recomputes each from the artefacts and
+fails the build when a value in the manuscript differs from the value in the
+data. Every check in the replication material carries a negative control that
+must be seen to fail before the check may report anything; the defect census
+that motivated that rule is in \texttt{analysis/provenance/PROTOCOL.md} and its
+ratio is reported in Section~\ref{sec:harness_limits}.
 
 
 	\section*{Acknowledgements}
@@ -1497,7 +1506,7 @@ The verification apparatus was itself the more frequent site of defect. Of the \
 % Long DOIs and URLs in the reference list overrun the measure otherwise.
 \medskip\noindent\textbf{Proofs.} The proofs of all results stated above,
 including those of Proposition~\ref{prop:identification} and
-Proposition~\ref{prop:blindspot_depth}, are in \texttt{PROOFS.tex} in the
+the blind-spot depth construction, are in \texttt{PROOFS.tex} in the
 replication repository.
 
 \sloppy\emergencystretch=3em

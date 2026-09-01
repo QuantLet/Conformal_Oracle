@@ -529,10 +529,10 @@ with $\hat q^{lo}_t$ measurable with respect to $\mathcal G_{t-1}$.
 	the proposition is stated for the moment-restriction family rather than for
 	$\sigma(V,\hat q^{lo})$ in full. Second, statistics reading the
 	\emph{magnitude} of an exceedance rather than its occurrence lie outside the
-	class entirely; Supplement~\ref{app:es} treats them.
+	class entirely; the manuscript's Expected Shortfall discussion treats them.
 \end{remark}
 
-\subsection{Proposition~\ref{prop:blindspot_depth}: the construction, and the depth of the blind spot}
+\subsection{The blind-spot depth construction}
 \label{app:blindspot_depth}
 
 Let $G$ be the standardised Student-$t_5$ law of the correctly specified model,
@@ -622,166 +622,6 @@ model still rejects the alternative with probability $\nSupPowerRej$ over
 \nSupPowerReps{} replications, a $95\%$ interval of $[\nSupPowerLo,
 \nSupPowerHi]$ that excludes the nominal size. Necessary, not
 sufficient.
-
-
-
-% --- moved from the R3 appendix, 2026-08-31 ---
-
-
-
-
-
-
-\noindent The two results below are this paper's own. The remaining proofs, including that of the coverage theorem
-specialized from \citet{oliveira2024split}, are in \texttt{PROOFS.tex} in
-the replication repository.
-
-\section{Proof of Proposition~7.1 of the manuscript}
-\label{app:identification}
-
-Recall $u_t = F_t(\hat q^{lo}_t)$ and $V_t = \mathbf 1\{r_t < \hat q^{lo}_t\}$,
-with $\hat q^{lo}_t$ measurable with respect to $\mathcal G_{t-1}$.
-
-\begin{proof}
-	Since $\hat q^{lo}_t$ is $\mathcal G_{t-1}$-measurable and $F_t$ is the
-	conditional law of $r_t$ given $\mathcal G_{t-1}$,
-	\[
-	\P\!\left(V_t = 1 \mid \mathcal G_{t-1}\right)
-	= \P\!\left(r_t < \hat q^{lo}_t \mid \mathcal G_{t-1}\right) = u_t ,
-	\]
-	and $u_t$ is $\mathcal G_{t-1}$-measurable. For $s \le t-1$ the indicator
-	$V_s$ is a measurable function of $(r_s, \hat q^{lo}_s)$ and hence
-	$\mathcal G_{t-1}$-measurable. Conditioning on $\mathcal G_{T-1}$,
-	\[
-	\P\!\left(V_{1:T}=v_{1:T}\right)
-	= \E\!\left[\mathbf 1\{V_{1:T-1}=v_{1:T-1}\}\,
-	u_T^{\,v_T}(1-u_T)^{1-v_T}\right],
-	\]
-	because the first factor is $\mathcal G_{T-1}$-measurable and the conditional
-	law of $V_T$ is Bernoulli$(u_T)$. Iterating the same step down to $t=1$ gives
-	the path likelihood stated as equation (12) of the manuscript.
-
-	The right-hand side is a functional of the joint law of $(u_1,\dots,u_T)$
-	alone. Hence if $P$ and $Q$ induce the same law for $\{u_t\}$ they induce the
-	same law for $V_{1:T}$, so $\E_P[\phi(V)] = \E_Q[\phi(V)]$ for every
-	measurable $\phi$, and in particular the rejection probability of any test in
-	that class is the same under both: its power equals its size.
-
-	For the moment-restriction case, $\E[V_t \mid \mathcal G_{t-1}] = u_t$, so
-	$u_t \equiv \alpha$ implies $\E[(V_t-\alpha)Z_{t-1}] = 0$ for every
-	predictable $Z_{t-1}$ with finite second moment. Two models both satisfying
-	$u_t\equiv\alpha$ therefore satisfy every such restriction exactly, and a test
-	of one of them rejects each with probability equal to its nominal size. The
-	dynamic quantile regression of \citet{engle2004caviar} is of this form, with
-	$Z_{t-1}$ collecting lagged exceedance indicators and the reported quantile
-	itself.
-\end{proof}
-
-\begin{remark}[What the proposition does not cover]
-	\label{rem:identification_scope}
-	Two exclusions are worth stating. First, $\sigma(V_t, \hat q^{lo}_t)$ is
-	strictly larger than $\sigma(V_t)$, and the two models constructed below do
-	\emph{not} have the same marginal law for $\hat q^{lo}_t$. A diagnostic that
-	compared the level of the reported quantile against a scale reference would
-	separate them --- but that reference is not in $\sigma(V,\hat q^{lo})$, and no
-	test in standard use within that class exploits the difference. This is why
-	the proposition is stated for the moment-restriction family rather than for
-	$\sigma(V,\hat q^{lo})$ in full. Second, statistics reading the
-	\emph{magnitude} of an exceedance rather than its occurrence lie outside the
-	class entirely; Supplement~\ref{app:es} treats them.
-\end{remark}
-
-\section{Proposition~\ref{prop:blindspot_depth}: the construction, and the depth of the blind spot}
-\label{app:blindspot_depth}
-
-Let $G$ be the standardised Student-$t_5$ law of the correctly specified model,
-with $\alpha$-quantile $q_{\mathrm{true}} = \nGapQTrueStd$ in units of
-conditional scale. A forecaster that truncates its predictive support, discarding
-mass $\delta$ from each tail and renormalising, reports
-\[
-q_\delta \;=\; G^{-1}\!\left(\delta + \alpha(1-2\delta)\right),
-\]
-which is closer to zero than $q_{\mathrm{true}}$ and is what
-$\texttt{top\_k}$ truncation does to a categorical predictive law.
-
-For the two models to induce the same $u$-process it suffices that the
-alternative return law $H$ place exactly $\alpha$ mass strictly below $q_\delta$,
-since then $u_t \equiv \alpha$ under both. Requiring in addition that $H$ be
-symmetric with unit variance and the same mean absolute deviation as $G$, and
-that its density be non-increasing in $|x|$, gives a feasibility problem that is
-\emph{linear} in the atoms of a discrete symmetric law on a fixed grid:
-\begin{align*}
-	\textstyle\sum_i p_i = 1, \qquad
-	\textstyle\sum_i p_i x_i^2 = 1, \qquad
-	\textstyle\sum_i p_i |x_i| = \E_G|X|, \\
-	\textstyle\sum_{i:\,x_i < q_\delta} p_i = \alpha, \qquad
-	p_{i+1} \le p_i \ \text{ for } x_i > 0, \qquad p_i \ge 0 .
-\end{align*}
-Feasibility is therefore decided by a linear programme rather than argued.
-Bisection on $\delta$ gives the largest feasible truncation depth
-$\delta^\star = \nGapDeltaUni$, at which the reported quantile is
-$\nSupQClassUni$ and the Value-at-Risk is understated by \nGapUndUni\%.
-
-\begin{table}[H]
-	\centering
-	\caption{$\delta^\star$ as a functional of the restriction placed on the
-		alternative return law, at $\alpha = 0.01$ against a standardised
-		Student-$t_5$ honest model. Grid spacing $\nSupDeltaGrid$, ceiling
-		$\nSupDeltaCeiling$;
-		$\delta^\star$ converges from above as the grid is refined, so each entry
-		is an upper bound and the bias overstates the blind spot.}
-	\label{tab:delta_by_class}
-	\footnotesize
-	\begin{tabular}{@{}lrrr@{}}
-		\hline\hline
-		Restriction on the return law & $\delta^\star$ & reported $q$ & understated \\
-		\hline
-		none & \nGapDeltaFree & $\nSupQClassFree$ & \nGapUndFree\% \\
-		unimodal & \nGapDeltaUni & $\nSupQClassUni$ & \nGapUndUni\% \\
-		unimodal, fourth moment $\le$ honest model's & \nSupDeltaClassMoment & $\nSupQClassMoment$ & \nSupUndClassMoment\% \\
-		unimodal, Pareto tail index 5 beyond $3\sigma$ & \nSupDeltaClassPareto & $\nSupQClassPareto$ & \nSupUndClassPareto\% \\
-		GARCH class, standardised Student-$t$ innovations & --- & $\nSupQClassGarchT$ & \nSupUndClassGarchT\% \\
-		\hline\hline
-	\end{tabular}
-	\begin{minipage}{\linewidth}\scriptsize
-		\smallskip
-		The GARCH row carries no $\delta^\star$: that class fixes the innovation
-		family to a one-parameter standardised Student-$t$, so truncation depth
-		does not index it. The entry is the lightest $\alpha$-quantile the family
-		can reach, the Gaussian limit.
-	\end{minipage}
-\end{table}
-
-The resulting pair is matched to machine precision on coverage
-($u \equiv 0.01$), variance, mean absolute deviation, median and predictive
-standard deviation, and to three decimals on point-forecast mean absolute error
-and root mean squared error. Both laws place exactly $\alpha$ mass strictly below
-their own reported threshold, so the exceedance indicator is Bernoulli($\alpha$)
-and serially independent under each, and every test of the exceedance path has
-the same null distribution on the two. Simulated at $T = \nSupPairT$ the realised
-rates are $\nSupPairPiHonest$ and $\nSupPairPiAlt$, both paths are Basel Green,
-and neither rejects at any conventional level on Kupiec
-($p = \nSupPairKupHonest$ and $\nSupPairKupAlt$), on Christoffersen independence
-($\nSupPairCCHonest$ and $\nSupPairCCAlt$), or on a dynamic quantile test with
-\nSupPairDQLags{} lagged exceedance indicators and the reported quantile as
-instruments ($\nSupPairDQHonest$ and $\nSupPairDQAlt$). The simulation checks
-that the sampled law reproduces the constraints the linear programme imposed;
-the indistinguishability itself is the equality above. The reported thresholds
-are $\nPairVaRHonest$ and $\nPairVaRAlt$ in units of conditional scale.
-
-Two further properties are worth recording. Truncation is not repairable by the
-sampling parameters an analyst would vary: restricting the support to its $k$
-most probable atoms bounds every quantile read from any reweighting of that
-support below by $\min S_k$, so no temperature and no nucleus threshold recovers
-a quantile the truncation has removed. And matching \emph{mean} expected
-shortfall as a fifth linear constraint is also feasible, but it does not make
-magnitude-reading statistics blind: the law of $Z_2$ is not pinned by its mean,
-and at $T = \nSupPowerT$ a size-$5\%$ one-sided test calibrated on the honest
-model still rejects the alternative with probability $\nSupPowerRej$ over
-\nSupPowerReps{} replications, a $95\%$ interval of $[\nSupPowerLo,
-\nSupPowerHi]$ that excludes the nominal size. Necessary, not
-sufficient.
-
 
 
 
