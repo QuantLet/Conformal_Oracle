@@ -805,30 +805,24 @@ the Basel yellow zone to the red one (\texttt{scripts/tail\_completion\_robustne
 model, and is not interpretable without it.
 
 The panel offers no controlled comparison of interfaces, and a shared family
-name does not supply one. The two Moirai
-releases are the natural candidate, and they run at $\nRawPiMoiraiOne$ and
-$\nRawPiMoiraiTwo$, a gap of \nLitMoiraiGapPP{} percentage points. But Moirai~1.1 is a
-masked-encoder model with multi-patch inputs and a mixture output, while
-Moirai~2.0 replaces all three with a decoder-only architecture, a single patch
-and a quantile loss, trained on a different corpus
-\citep{woo2024moirai,liu2025moirai}. Output format, architecture and pretraining
-data change together, so a gap of any size between them would be unattributable.
-What differs between two releases is a primary-source question, and it settles
-before a comparison is drawn. The one genuinely controlled contrast
-available here holds the weights, contexts and dates fixed and varies only the
-code that reads the predictive law --- the two Chronos configurations of
-\texttt{analysis/chronos\_sampling/RESULTS.md}.\footnote{The \nGateSeries{} series with forecast files in the replication
-archive have been through the scripted validation gate of
-Section~\ref{sec:gate} and \texttt{scripts/promotion\_gate.py}. The three dynamic-quantile
-forecasters of Table~\ref{tab:master} --- CAViaR-AS, CAViaR-SAV and GAS-t ---
-are estimated per asset by a separate pipeline that stores no series, so the
-gate has no object to run on and they are ungated rather than passed. \nGateBlocked{} do not pass it: the two Chronos series
-sampled at the checkpoint default, which fail five checks each, and their
-analytic counterparts, which fail the coverage band on one asset apiece, and
-Chronos-Mini-A the $\alpha$-response band on one asset besides. The
+name does not supply one. The two Moirai releases are the natural candidate, and
+they run at $\nRawPiMoiraiOne$ and $\nRawPiMoiraiTwo$, a gap of
+\nLitMoiraiGapPP{} percentage points; but Moirai~2.0 replaces the encoder, the
+patching and the output head of Moirai~1.1 and is trained on a different corpus
+\citep{woo2024moirai,liu2025moirai}, so a gap of any size between them would be
+unattributable. The one genuinely controlled contrast available here holds
+weights, contexts and dates fixed and varies only the code that reads the
+predictive law --- the two Chronos configurations of
+\texttt{analysis/chronos\_sampling/RESULTS.md}.\footnote{The \nGateSeries{}
+series with forecast files in the replication archive have been through the
+scripted validation gate of Section~\ref{sec:gate}. The three dynamic-quantile
+forecasters of Table~\ref{tab:master} store no series, so the gate has no object
+to run on and they are ungated rather than passed. \nGateBlocked{} do not pass
+it: the two Chronos series sampled at the checkpoint default, which fail five
+checks each, and their analytic counterparts, which fail one band apiece. The
 first two are retained in Table~\ref{tab:master} deliberately, as the measured
-consequence of that configuration rather than as candidate forecasters; a blocked series is
-reported with its diagnosis, not silently dropped.}
+consequence of that configuration; a blocked series is reported with its
+diagnosis rather than silently dropped.}
 
 \section{What the Standard Diagnostics Cannot Diagnose}
 \label{sec:blindspot}
@@ -965,24 +959,22 @@ any one of them --- and, decisively for the question of this paper, it does not
 separate a series carrying an implementation failure from one that is merely
 imperfect. Miscoverage is detected; its source is not identified.
 
-The separation was measured. The exercise is run on the
-series as produced with each failure mode present, since that is the state in
-which a diagnostic would have to identify one. Treating the five series affected
-by an identified failure mode as positives and the eight unaffected series as
-negatives, Kupiec's majority-fail rule attains sensitivity 5/5 at
-specificity 2/8, a Fisher exact $p$ of $\nFisherKupiec$: it flags 11 of 13 forecasters,
-which is not discrimination. The independence test attains 0/5. A severe cut on
-the violation rate --- rejecting $\hat\pi > 0.10$ or $\hat\pi < 0.005$ ---
-attains 5/5 at 8/8, $p = \nFisherSevere$. The finding concerns a \emph{threshold} rather
-than a statistic: what separates an implementation failure from ordinary
-miscalibration is severity, while Kupiec's threshold is calibrated to sample
-size. The six Kupiec flags falling on unaffected forecasters were each followed
-to a verdict, as specified in advance; none corresponds to an implementation
-failure, so the 2/8 figure stands as measured rather than as an artefact of
-unexamined positives. Two qualifications belong with it: thirteen forecasters is
-a small sample for a discrimination exercise, and the positives are the failure
-modes this audit found, so the exercise measures separation on identified cases
-and not sensitivity to failures of a kind not represented here.
+The separation was measured on the series as produced with each failure mode
+present, since that is the state in which a diagnostic would have to identify
+one. Treating the five series with an identified failure mode as positives and
+the eight unaffected ones as negatives, Kupiec's majority-fail rule attains
+sensitivity 5/5 at specificity 2/8, Fisher exact $p = \nFisherKupiec$: it flags
+11 of 13 forecasters, which is not discrimination. The independence test attains
+0/5. A severe cut on the violation rate --- rejecting $\hat\pi > 0.10$ or
+$\hat\pi < 0.005$ --- attains 5/5 at 8/8, $p = \nFisherSevere$. The finding
+concerns a \emph{threshold} rather than a statistic: what separates an
+implementation failure from ordinary miscalibration is severity, while Kupiec's
+threshold is calibrated to sample size. The six Kupiec flags on unaffected
+forecasters were each followed to a verdict, as specified in advance, and none
+corresponds to an implementation failure. Two qualifications belong with it:
+thirteen forecasters is a small sample, and the positives are the failure modes
+this audit found, so the exercise measures separation on identified cases rather
+than sensitivity to failures of a kind not represented here.
 
 \subsection{The most elaborate of the three discriminates least}
 \label{sec:blindspot_dq}
@@ -1093,25 +1085,22 @@ correlation of \nMCBRhoCal{}; the residual is one order statistic and an
 interpolation convention. Across the window boundary it is \nMCBRhoTest{} on the
 \nMCBWellSpec{} well-specified pairs.
 
-That gap is a statement about the estimator, not about the quantity it estimates,
-and its size is predicted rather than merely named. The standard deviation of a
-sample $\alpha$-quantile is $\sqrt{\alpha(1-\alpha)/n}\,/\,f$, so the same
-density that converts a displacement into a score reduction also sets how
-precisely the displacement itself can be estimated. Across the \nMCBDensityPairs{}
-pairs on which $f$ is defined it spans a factor of \nMCBDensitySpan{} between its
-5th and 95th percentiles, \nMCBDensityLo{} to \nMCBDensityHi, and the estimation
+That gap is a statement about the estimator, not about the quantity it
+estimates, and its size is predicted rather than merely named. The standard
+deviation of a sample $\alpha$-quantile is $\sqrt{\alpha(1-\alpha)/n}\,/\,f$, so
+the density that converts a displacement into a score reduction also sets how
+precisely the displacement can be estimated. Across the \nMCBDensityPairs{} pairs
+on which $f$ is defined it spans a factor of \nMCBDensitySpan{} between its 5th
+and 95th percentiles, \nMCBDensityLo{} to \nMCBDensityHi, and the estimation
 error tracks it: regressing $\log\lvert\qVstat - \delta^\star\rvert$ on $\log f$
-gives a slope of $\nMCBGapSlope$ with standard error \nMCBGapSlopeSE. That is
-\nMCBGapSlopeSigma{} standard errors from the theoretical $-1$: the dependence
-on $f$ is present and its direction is right, but it is flatter than the
-asymptotic expression implies. The level, which the same expression fixes,
-matches without adjustment --- the median gap is \nMCBGapMagRatio{} times the
-predicted standard deviation with no fitted constant. So the formula predicts
-how large the estimation error is and understates how fast it falls with the
-density. One candidate is that $f$ is itself estimated and error in a regressor
-attenuates a slope towards zero, which is the observed direction; this
-measurement does not separate that from the alternatives and the paper does not
-claim it. The collapse from \nMCBRhoCal{} to \nMCBRhoTest{} is sampling noise
+gives a slope of $\nMCBGapSlope$ with standard error \nMCBGapSlopeSE,
+\nMCBGapSlopeSigma{} standard errors from the theoretical $-1$. The dependence on
+$f$ is present and flatter than the asymptotic expression implies, while the
+level the same expression fixes matches without adjustment: the median gap is
+\nMCBGapMagRatio{} times the predicted standard deviation with no fitted
+constant. Error in an estimated regressor attenuates a slope towards zero, which
+is the observed direction, but this measurement does not separate that from the
+alternatives. The collapse from \nMCBRhoCal{} to \nMCBRhoTest{} is sampling noise
 of the size a sparse residual tail implies, and it is the magnitude that carries
 that conclusion rather than the slope.
 
@@ -1449,12 +1438,10 @@ score. The shift also reaches only part of the problem: in the decomposition of
 \nuMCBSharePct\% of total miscalibration on well-specified series, the remainder
 being conditional.
 
-What the panel says about foundation models is deflationary. Configured
-correctly, the zero-shot series here are neither catastrophically miscalibrated
-nor superior: they sit alongside the GARCH-family benchmarks at the $1\%$ level,
-a per-asset CAViaR fitted the ordinary way outperforms all of them, and the
-residual miscalibration of the best of them is concentrated in the tail and
-largely gone by $\alpha = 0.10$. Whether fine-tuning closes that tail gap remains
+What the panel says about foundation models is deflationary, and
+Section~\ref{sec:intro} states it: configured correctly the zero-shot series sit
+alongside the GARCH-family benchmarks at the $1\%$ level, and a per-asset CAViaR
+outperforms all of them. Whether fine-tuning closes the residual tail gap remains
 open. What this paper closes is the question of whether a tail-risk evaluation
 can be trusted without a structural check of the series it evaluates.
 
