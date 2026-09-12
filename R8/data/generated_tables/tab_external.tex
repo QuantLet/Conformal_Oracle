@@ -1,0 +1,18 @@
+\begin{tabular}{lrrrrr}
+\toprule
+Method & QS & Normalised QS & Viol. (\%) & UC & Worse \\
+\midrule
+Raw & 4.7239 & 0.032831 & 1.620 & 41 & 0 \\
+Shift-CP & 4.6390 & 0.032237 & 1.136 & 11 & 4 \\
+Vol-ERM & 4.5987 & 0.031946 & 1.130 & 15 & 4 \\
+Regularised state & 4.5695 & 0.031749 & 1.196 & 11 & 3 \\
+POT-Shift & 4.6340 & 0.032208 & 1.089 & 9 & 4 \\
+POT-Vol & 4.5907 & 0.031885 & 1.123 & 11 & 1 \\
+Projected DtACI & 4.7020 & 0.032670 & 1.337 & -- & 19 \\
+Rolling 500 & 4.7428 & 0.033011 & 1.098 & 1 & 24 \\
+Selected rolling & 4.7324 & 0.032926 & 1.094 & 3 & 24 \\
+Coverage-gated rolling & 4.7352 & 0.032937 & 1.204 & 11 & 20 \\
+Loss gate & 4.7205 & 0.032806 & 1.606 & 41 & 0 \\
+Past-loss minimum & 4.6341 & 0.032183 & 1.303 & 21 & 2 \\
+\bottomrule
+\end{tabular}

@@ -1,4 +1,24 @@
-# Recalibrating Tail Risk Forecasts under Temporal Dependence
+# Conformal Recalibration of Extreme Tail Quantiles under Temporal Dependence
+
+**Current revision (R8, 12 September 2026): code and data in [`R8/`](R8/).**
+
+| Path | Content |
+|---|---|
+| `R8/code/display_producers/` | Producers of every generated table and macro of the R8 article (`build_paper_outputs.py`), the build guards and the validator (`validate_r8.py`) |
+| `R8/code/research/` | Protocols, producers and validators of the R8 studies: mechanism and dependence controls, shape cost, training optimism, information limit, regime change, external industry test, native-model extension |
+| `R8/code/provenance/` | Declared structural constants and producer registry checked by the build guards |
+| `R8/data/generated_tables/` | Every generated table and numeric macro file used by the article and supplement |
+| `R8/data/figures/` | The article and supplement figures |
+| `R8/data/receipts/` | Validation receipt and source-package record of the deposited revision |
+
+Stored forecasts, fitted paths, bootstrap draws and simulation outputs (about
+16 GB) exceed repository limits and are supplied on request; the producers read
+them from the paths recorded in the receipts. Return series are downloaded with
+`download_data.py`. The deposited revision is tag `R8-2026-09-12`.
+
+---
+
+## Earlier project description
 
 **Recalibrating Tail Risk Forecasts under Temporal Dependence**
 

@@ -1,0 +1,19 @@
+\begin{tabular}{lrrrrrr}
+\toprule
+Forecaster & QS raw & QS static & QS rolling & $\pi$ raw & $\pi$ static & UC raw/static \\
+\midrule
+Chronos-2 & 4.6596 & 4.6381 & 4.9099 & 1.348 & 1.019 & 6/1 \\
+PatchTST-FM & 4.9578 & 4.7562 & 5.0139 & 1.822 & 0.915 & 18/1 \\
+TS-ICL & 4.6919 & 4.7020 & 5.0143 & 1.139 & 0.933 & 1/1 \\
+Moirai-1.1 & 5.1126 & 5.0296 & 5.2240 & 1.381 & 0.914 & 9/5 \\
+Lag-Llama & 5.6563 & 5.0523 & 5.1479 & 2.845 & 0.911 & 24/2 \\
+GJR-N & 4.5987 & 4.4379 & 4.6759 & 1.921 & 0.978 & 17/4 \\
+GJR-t & 4.5027 & 4.4702 & 4.7444 & 1.464 & 0.953 & 11/4 \\
+GARCH-N & 4.7354 & 4.5198 & 4.7405 & 1.978 & 0.943 & 17/5 \\
+Historical simulation & 5.1496 & 5.0885 & 5.5676 & 1.440 & 0.940 & 9/1 \\
+EWMA & 4.8350 & 4.6119 & 4.8623 & 2.006 & 1.070 & 21/5 \\
+\midrule
+\multicolumn{7}{l}{\emph{Additional supervised benchmark, same asset dates}} \\
+Direct-quantile GBM & 5.6334 & 5.1247 & 5.1575 & 2.866 & 0.844 & 22/7 \\
+\bottomrule
+\end{tabular}
