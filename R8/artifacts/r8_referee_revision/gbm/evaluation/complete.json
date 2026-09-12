@@ -1,0 +1,195 @@
+{
+  "status": "complete",
+  "bindings": {
+    "research/r8_referee_revision/evaluate_gbm.py": "b2bbfc8642a455e8aa68afe0724988a478f1ee82d5c9e69845a8a3b7a6f3156e",
+    "artifacts/r8_referee_revision/gbm/run/complete.json": "850956704396507dda9365ee57f9b315d9f864acd7c1005864e7163f633343f3",
+    "research/r8_referee_revision/GBM_PROTOCOL.md": "064c376e93eef3101c53b67d908940a32f4cfba86357100ba517660fe119c37b",
+    "artifacts/r8_model_extension/ten_common_evaluation/complete.json": "4cee26e0d73c7d3c2aa7a30bc9093ea70b624305cf9a60570524bda131880ca7",
+    "artifacts/r8_model_extension/ten_common_evaluation/bootstrap_inputs.npz": "d348e544033f2b7a8424bdfa358fd4c5c1064ac82dc1aca5ebfdc7d5c483426f",
+    "source/scripts/extension_20260831/panel_statistics.py": "2dae2bfe11e24c2441bc55ec40f3a603efc92575443d57845f21b05fc6527b91",
+    "artifacts/r8_referee_revision/gbm/run/ASX200/forecast.parquet": "112213b347f955821fa8703b7e24f5aaf6fa31eab7bdf5012dd1a5fcd98d2978",
+    "artifacts/r8_referee_revision/gbm/run/AUDUSD/forecast.parquet": "0ef06e365f90ec4a3c476979a876ab7516ce027956929b9407c7e6321b9fd219",
+    "artifacts/r8_referee_revision/gbm/run/BOVESPA/forecast.parquet": "a051b68ded840f5025f0f05795ac1e26f8409d83a16d93b22d5a591a648b0cf2",
+    "artifacts/r8_referee_revision/gbm/run/BTC/forecast.parquet": "67b8e5f2b1188e3b7b4f8e3900be263b50a9c43130b8f00843b0a9f095bd067a",
+    "artifacts/r8_referee_revision/gbm/run/CBU0/forecast.parquet": "d3d7087ee7adf8163044d56e9eb7794c65b7f4ce2c96eed02d86720bd7ffda16",
+    "artifacts/r8_referee_revision/gbm/run/DJCI/forecast.parquet": "ea7c483ed653a5c5abb8ebdb1d0bc0576dd07b76fb0237bbaec07418e65f8239",
+    "artifacts/r8_referee_revision/gbm/run/ETH/forecast.parquet": "757ed6531100a909b3c0613013dcad8143f5f253746ca3e90b3923b28473af02",
+    "artifacts/r8_referee_revision/gbm/run/EURUSD/forecast.parquet": "27444760f364536925997837705b27c43e3a50065aae3c010a3e56ef151a1f64",
+    "artifacts/r8_referee_revision/gbm/run/FCHI/forecast.parquet": "e86336127ae4a9afa33b37c9a1aea13ce2991ca7f015b93a76182907959e1449",
+    "artifacts/r8_referee_revision/gbm/run/FTSE100/forecast.parquet": "a23fb171255d645654d144cf6de210413d78a528f274988187fdb28a88c334f2",
+    "artifacts/r8_referee_revision/gbm/run/GBPUSD/forecast.parquet": "08cbc56a5b9c7912a1e798e35348a4d9fd3eb36e309b97150cda7e40715ca9e9",
+    "artifacts/r8_referee_revision/gbm/run/GDAXI/forecast.parquet": "d0479ecce88aeef0bd2eb9c66811eddd44a757be4e67330eee14615be5547b46",
+    "artifacts/r8_referee_revision/gbm/run/GLD/forecast.parquet": "b76a218612599b730c8aa7f273fb4303431fd3af6ae7a3210b107de87d15c633",
+    "artifacts/r8_referee_revision/gbm/run/HSI/forecast.parquet": "92a6f2d8b88048e2d66c6287163ab8278323bc5eda8358b86db33d9c26a29175",
+    "artifacts/r8_referee_revision/gbm/run/IBGL/forecast.parquet": "e821438edc96a313e28db91c109813946d2ccfcb7f5d343937e86c56d191dd3b",
+    "artifacts/r8_referee_revision/gbm/run/ICLN/forecast.parquet": "9c37ea76fdf94ddcd2539bccb02569f6739a32d198ba695c214e59af08bba210",
+    "artifacts/r8_referee_revision/gbm/run/NIFTY/forecast.parquet": "682c333384cbf30040e5f1db8b9ba2a8c01d29397e666d55a7e0b4f6f078adcd",
+    "artifacts/r8_referee_revision/gbm/run/NIKKEI/forecast.parquet": "c7037b1572950c5ee5fcbdab517b649bcc70305bb9600b3ad1ea649b8abca6a3",
+    "artifacts/r8_referee_revision/gbm/run/SP500/forecast.parquet": "b973c0be4cf87514a3bc307465cfc2f7a628fef268592cd77c0ea7b9553e94bb",
+    "artifacts/r8_referee_revision/gbm/run/STOXX/forecast.parquet": "f43e445ef585a2ebb053d38ad69d204eb0e4afd0b8742f847732d33553be79ae",
+    "artifacts/r8_referee_revision/gbm/run/TLT/forecast.parquet": "e8b67643f1586c12f7b4112a1b7f3f935fdf54577c052b979692535f3dfca245",
+    "artifacts/r8_referee_revision/gbm/run/UNG/forecast.parquet": "f73c22eaa6c87c584bb0b3444cd084cca69f0b8751f77b5ec1add43680ba1fd0",
+    "artifacts/r8_referee_revision/gbm/run/USDJPY/forecast.parquet": "038d1b73e8b715720a5bd50cfb22a6acbd3a2ba7d1a5a7799d88a4819ee18c5e",
+    "artifacts/r8_referee_revision/gbm/run/USO/forecast.parquet": "46c94c4b775421f6adf88df14b62f7dd6d99e3ed0f65d1a8802b2fcc4cd438ec",
+    "artifacts/r8_model_extension/ten_common_evaluation/bootstrap_L20.npz": "cc8ee663797702d03a6f174e593293b2304024de6555fcdcd5abf228416ef2d4",
+    "artifacts/r8_model_extension/ten_common_evaluation/bootstrap_L60.npz": "89ef98b98fa1aed954313b29ad68cf40e7c70c3148eb8f2294dcdc856ae42e9f"
+  },
+  "outputs": {
+    "bootstrap_L20.npz": "76bb34faa8cee73dc306b66e91aa63b285f20eb994d34abf10ea47625804c6de",
+    "bootstrap_L60.npz": "2fd65d1384016f4149725aab2e0e218c5e3b21cc2b6d588101061a00a83323e1",
+    "daily/ASX200.parquet": "800c6c445cfd9a927550c3d541bd00c7640941e5b5dadfeced72d61df2d946a9",
+    "daily/AUDUSD.parquet": "4b68db224e357fff84474fe3c8e71081be400f82fe052ccbedaf764f95bdce53",
+    "daily/BOVESPA.parquet": "7e0f442a3ca40ca43ec35d6a3df8ca990b6dc125a07c2e329dc41760a7e430e3",
+    "daily/BTC.parquet": "3f74f09c28ba9be13d19d2dce87d10d9c89044e9b2b78c268d2464c9551ae8f2",
+    "daily/CBU0.parquet": "3888347a1415624b336e600e7bb177302ff14324375c99ddfa26619d6bf4b088",
+    "daily/DJCI.parquet": "f4ee4e040c6199a38664d6cb82cb477d908ea9641e21563adeb9d5f33c41e7ff",
+    "daily/ETH.parquet": "0a133fad06c86bf90c1abdde97b0b8b4b6e9ee2ef5626a9ab96d0384e1d869bc",
+    "daily/EURUSD.parquet": "3d731f8575a15e723b063bc8450e6a45fd456f8f238cd13eb81f7cfbac6f81de",
+    "daily/FCHI.parquet": "a44ff2abed23adbdda516a9b6a1ed4fef466cfdcf8734aa89ba68d933730083b",
+    "daily/FTSE100.parquet": "8802c51e938cc225fae7f7827dbb0b0f91bc0fd6527ae723651ced0ff7d02f34",
+    "daily/GBPUSD.parquet": "a9177de55c16ba6d72d28d9cad6e59b65d3c2a16477371fd2902197a99738a73",
+    "daily/GDAXI.parquet": "717194ad1cf2c56539e7570bef46f512d3daf313cfbc5727d829a8287a0cb9f1",
+    "daily/GLD.parquet": "59bb45df3f83391038c3be42ce85fad696eb72e96fc6082ee178056e8f956542",
+    "daily/HSI.parquet": "5a51ba342455d8a60367fe38bde42e1a92b883105dc667548592fef8e88ea5a9",
+    "daily/IBGL.parquet": "3a1fe2d5f0e53bf0233c396d26ec11c208204304dc7234b8e521113c56d15234",
+    "daily/ICLN.parquet": "78bead3645908c3c6cf555250f85d28543ca00e24f92d56bf492898484004e3b",
+    "daily/NIFTY.parquet": "0b9888e85eadecd2470aa42b3644dbdd2a5ac0acbcff7343367d0c6460767993",
+    "daily/NIKKEI.parquet": "9fd0ec9aa34da31bbb7c204e9587825c5e6926017533c105a053d87ca7df3cd2",
+    "daily/SP500.parquet": "9ebc32af5cbff603172f19cf553260ce13fee9f066b432987faa380ef7664fe2",
+    "daily/STOXX.parquet": "86ab6bbfa67919c44b3a75f5be87fa93fd6135cd49b85e64c95c184af32ff1a5",
+    "daily/TLT.parquet": "12c71b20717ce5a9a9f84c943fc6a457a01d64942254ff581aa38bc0f453aaf1",
+    "daily/UNG.parquet": "cc6dc5f1a64ad584e6b8ff35ad0512b525584959ae0c45439766dc18cb678bdb",
+    "daily/USDJPY.parquet": "c079ffcaec7ee02b8cb8699761ec1ad06feb00a4b27e9802a3e0f797e34ccc5b",
+    "daily/USO.parquet": "b21dc6ab43efadf9e2cfdfa63f61770076690ea6a6030b85c973b634c806cf44",
+    "intervals.csv": "21700a1cdc2d9f4abe65bf2d491301c834ea3922f8fe86bd63a305bb5736c15a",
+    "metrics.csv": "9bb69f61bc424a185da55d8133d55e0d4e29675ca8419a0840af92de36902b36",
+    "summary.csv": "0ab9576eeab1d95acc9ad85291637391af12ac6ec54dd7fb386818b704efeb82"
+  },
+  "columns": [
+    "PatchTST-FM/Raw",
+    "PatchTST-FM/Static",
+    "PatchTST-FM/Rolling250",
+    "Chronos-2/Raw",
+    "Chronos-2/Static",
+    "Chronos-2/Rolling250",
+    "TS-ICL/Raw",
+    "TS-ICL/Static",
+    "TS-ICL/Rolling250",
+    "Moirai-1.1/Raw",
+    "Moirai-1.1/Static",
+    "Moirai-1.1/Rolling250",
+    "Lag-Llama/Raw",
+    "Lag-Llama/Static",
+    "Lag-Llama/Rolling250",
+    "GJR-GARCH/Raw",
+    "GJR-GARCH/Static",
+    "GJR-GARCH/Rolling250",
+    "GJR-GARCH-t/Raw",
+    "GJR-GARCH-t/Static",
+    "GJR-GARCH-t/Rolling250",
+    "GARCH-N/Raw",
+    "GARCH-N/Static",
+    "GARCH-N/Rolling250",
+    "Hist-Sim/Raw",
+    "Hist-Sim/Static",
+    "Hist-Sim/Rolling250",
+    "EWMA/Raw",
+    "EWMA/Static",
+    "EWMA/Rolling250",
+    "GBM/Raw",
+    "GBM/Static",
+    "GBM/Rolling250"
+  ],
+  "family": [
+    [
+      "GBM/Raw",
+      "PatchTST-FM/Raw"
+    ],
+    [
+      "GBM/Raw",
+      "Chronos-2/Raw"
+    ],
+    [
+      "GBM/Raw",
+      "TS-ICL/Raw"
+    ],
+    [
+      "GBM/Raw",
+      "Moirai-1.1/Raw"
+    ],
+    [
+      "GBM/Raw",
+      "Lag-Llama/Raw"
+    ],
+    [
+      "GBM/Raw",
+      "GJR-GARCH/Raw"
+    ],
+    [
+      "GBM/Raw",
+      "GJR-GARCH-t/Raw"
+    ],
+    [
+      "GBM/Raw",
+      "GARCH-N/Raw"
+    ],
+    [
+      "GBM/Raw",
+      "Hist-Sim/Raw"
+    ],
+    [
+      "GBM/Raw",
+      "EWMA/Raw"
+    ],
+    [
+      "GBM/Static",
+      "PatchTST-FM/Static"
+    ],
+    [
+      "GBM/Static",
+      "Chronos-2/Static"
+    ],
+    [
+      "GBM/Static",
+      "TS-ICL/Static"
+    ],
+    [
+      "GBM/Static",
+      "Moirai-1.1/Static"
+    ],
+    [
+      "GBM/Static",
+      "Lag-Llama/Static"
+    ],
+    [
+      "GBM/Static",
+      "GJR-GARCH/Static"
+    ],
+    [
+      "GBM/Static",
+      "GJR-GARCH-t/Static"
+    ],
+    [
+      "GBM/Static",
+      "GARCH-N/Static"
+    ],
+    [
+      "GBM/Static",
+      "Hist-Sim/Static"
+    ],
+    [
+      "GBM/Static",
+      "EWMA/Static"
+    ],
+    [
+      "GBM/Static",
+      "GBM/Raw"
+    ],
+    [
+      "GBM/Rolling250",
+      "GBM/Raw"
+    ]
+  ],
+  "assets": 24,
+  "asset_test_dates": 36252
+}

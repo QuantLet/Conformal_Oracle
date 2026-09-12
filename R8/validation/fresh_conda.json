@@ -1,0 +1,213 @@
+{
+  "status": "passed",
+  "scope": "Regeneration from archived intermediate results; no model fitting",
+  "input_manifest_sha256": "bb843cc837500aa01986c1f40d03c3f1ebc4971ca5068bd75ffdccbd8e01b672",
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]",
+  "interpreter": "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+  "workspace": "/private/tmp/irfa-r8-repaired-fresh-conda-20260912",
+  "environment": {
+    "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "freetype": "2.13.3",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "matplotlib": "3.10.6",
+      "pyarrow": "21.0.0",
+      "pypdf": "6.14.2",
+      "Pillow": "12.0.0",
+      "pytest": "8.4.2"
+    }
+  },
+  "environment_check": {
+    "command": [
+      "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+      "-c",
+      "import json,sys,platform,importlib.metadata as m;import matplotlib.ft2font as ft;assert ft.__freetype_version__=='2.13.3','Exact figures require FreeType 2.13.3; use environment-osx-arm64.explicit.txt and requirements-conda-overlay.txt';print(json.dumps(dict(python=sys.version,platform=platform.platform(),freetype=ft.__freetype_version__,packages={p:m.version(p) for p in ['numpy','pandas','scipy','matplotlib','pyarrow','pypdf','Pillow','pytest']})))"
+    ],
+    "exit_code": 0,
+    "seconds": 4.668,
+    "log": "replay_logs/environment.log"
+  },
+  "copied_input_files": 489,
+  "expected_outputs_not_prepopulated": true,
+  "exact_regenerated_outputs": 61,
+  "output_sha256": {
+    "source/figures/fig_complexity_august.pdf": "8782eea1e9caa6bbfcf6f67d3ba10141cb6c35cab7862f080879af0f7f938fc5",
+    "source/figures/fig_dependence_cost.pdf": "efb26f71cab3a9f08d1c736ffe3018f634410fc9f0ce94d5e30d1c9f9a77d334",
+    "source/figures/fig_dependence_cost.png": "4395f6ec843717dab0ac384fa6e0c437e5571c288be5c9e3cc71a54aa61181a3",
+    "source/figures/fig_dependence_cost.svg": "f68d82a99c098ee63c290c0d9d4dcede159cfd0b48afe7f98071ae93ec8ee342",
+    "source/figures/fig_external.pdf": "5f95dba153778bb9a52b873263355378c9e0b9eb0e94ec4186d32393ee39afe8",
+    "source/figures/fig_external.png": "343c626e15f058496d589d27f0a4867713f9e1010e449e8868f1172ebdb3ae1d",
+    "source/figures/fig_external.svg": "0b35af4ef754baa0034095748024e8eb2befbda86bbd02b3483f946ff720d424",
+    "source/figures/fig_loss_august.pdf": "cd4879dc4418f52ba623621dde15c0dcd8746b5192b9af2a974a694ea51c8eb1",
+    "source/figures/fig_mc_august.pdf": "bb334bab65cf497620eeb76bb309503ec341bd944f868b594a6ed4176c14d6b9",
+    "source/figures/fig_mechanism_five.pdf": "b0d6dd88f3fee76f6328266ab6feb6822529f42e7a4afd7fb0aa2d7a155922da",
+    "source/figures/fig_mechanism_five.png": "b15acf904a889e2e68b3eb4fa7edbbb62b6a7a6136487a94dfc8f56274f1f68b",
+    "source/figures/fig_mechanism_five.svg": "719f88ce35a149a1e333d70e6aa04b324ae78ec692f8f50ec0f1286f76716338",
+    "source/figures/fig_mechanism_one.pdf": "d5f4804e5deabc926df4acb897da3b64b95876ac38787faa89af4a490c59c0ad",
+    "source/figures/fig_mechanism_one.png": "48d292277e0ae67845849fc806f31e9e545bbbcb4065aa3c94aa53e9f2d1b1ec",
+    "source/figures/fig_mechanism_one.svg": "b3b8585d7a3eb0fedf94de7b1043145f4ffa560dc0b3f0019e1d55dca35ba95c",
+    "source/figures/fig_rolling_august.pdf": "e292d8df53c8389d5b988491e49f7429823d0e2860039c47be33cf8803db5c0b",
+    "source/figures/fig_shape_cost.pdf": "039130b1abb93580c6596aee1287bce8bd056edf656c3acaa9c424d0820d41c7",
+    "source/figures/fig_strong_frontier.pdf": "27fabbf0b1904134db269e47e28639b656aa4e33222c79a7dde8ea524e83ee19",
+    "source/figures/fig_strong_frontier.png": "30f889b3573d690a0fff854f936430e22208166731215341bde57d4a6b67be31",
+    "source/figures/fig_strong_frontier.svg": "c78520ebd1bac2bb3fa85c29862a3c82e8afdf0c2ca642c97cfb81a6350ab362",
+    "source/figures/fig_ten_strong.pdf": "7499cfbe76c567ee3bd049a9cc062df2c9bff55951a588a607ff2862e38485fd",
+    "source/figures/fig_ten_strong.png": "043f1ac53fb654fe3df3bf2a94c773816ceaee98db3b5daaa946bee88f3a1a59",
+    "source/figures/fig_ten_strong.svg": "107b26a991e983acb8f2622b87ad1250c763af39f1fce0baff6aa9342f2a0e96",
+    "source/figures/fig_ten_traffic.pdf": "e280637ba13997d3e1cf1ac7de45ca6e5fe454964d2201f21d8cae26cafb768b",
+    "source/figures/fig_ten_traffic.png": "f1ac7d33f12ce83bebee4d32e3ac05971e37941026d9935976feb631bae447ab",
+    "source/figures/fig_ten_traffic.svg": "f10831690528c655c5ae03edce95af924f15a2052e2eb63ca47f0d408a6d9029",
+    "source/figures/fig_traffic_light_august.pdf": "d6c9c5e1bc97720f0aa3fe3646213dc99305ae3ebf5c6b05a64096dd22e0349b",
+    "source/sections_r8/numbers_august.tex": "9f1d77dfe6f265e4f447d2de8906068883b4c34418c3a36b5aeb52bcf745214f",
+    "source/sections_r8/numbers_information.tex": "332f7d9853b15ac63f246bd46273cdffbe94c91c99c4942a7e556d410065b033",
+    "source/sections_r8/numbers_optimism.tex": "738828a3613cad647639002066ee6c949e478ce8e8e9a2d9ed5e878106eef40a",
+    "source/sections_r8/numbers_partial.tex": "bacb650eac4a6a65208d92e04653f4151b4f78d924e9b25735b0445b43b63a4a",
+    "source/sections_r8/numbers_regime.tex": "719ff5e8743096075cef07313dc1de84e4fe5c4c308fe11e4bd5d9184340eafc",
+    "source/sections_r8/numbers_risk.tex": "1ea17f595cc2762d1861c24f8cc28fd700d72546631a48ffe515e5ad40fe4b0e",
+    "source/sections_r8/numbers_shape.tex": "ca3c0ab457a32f97ec6e5958407942b705c513b5f47f8f5d43c76baab2c5da06",
+    "source/sections_r8/numbers_ten_external.tex": "b6a6e11e69fa04ca7020d5b7e67659e22c9f00b50ccc632b42c6cf7a79cfceb9",
+    "source/sections_r8/tab_assets.tex": "6627000157eae23ad8841907430794c70841e350d2d21ac7d07f742e514be549",
+    "source/sections_r8/tab_calendar.tex": "6fc8412b9daabdb2e93b268a5192f4751809588a7ae19bd959636cac1c116eb9",
+    "source/sections_r8/tab_classes.tex": "4c08acc2b8c49748b0f9a0ca27eee107c147c2d0c043145b22426a0faa566cd7",
+    "source/sections_r8/tab_complexity_mc.tex": "f93c26e09417b4f4a4b5fead09d3335b8160bf4c73a655db5eb7bdd500daa88c",
+    "source/sections_r8/tab_controlled_full.tex": "05c53f26333c8b80636882f0dd3005e983ceee5eb6a2cbc6ca658e8a75e3b74c",
+    "source/sections_r8/tab_controlled_states.tex": "81d604906ae7b114c160c0e5d6be8a38bb6eaccd6fb48992c0e0aae4c925fe49",
+    "source/sections_r8/tab_controlled_sweep.tex": "7bd3d304e237e203559009c80449f849dec06c05d9c96cfb2ee6d29cc3ca6f6f",
+    "source/sections_r8/tab_dq.tex": "e75165660fa6aba966120d079456616d99a15f6559e69d6ceed432ca4c448f1d",
+    "source/sections_r8/tab_draws.tex": "72f287caefc5db6b4b7adc0d360a099e5de720f408f8089a69adc3b4398f9cca",
+    "source/sections_r8/tab_external.tex": "518e0b016e8cf2c4b956edaddb7620e97ae8d40f1ec70d49d3c6c3a2b2668476",
+    "source/sections_r8/tab_forecasters.tex": "dd93531c3e1fb774753b64c078d5db7ed6f95a61e69b50b946424f88584b6abc",
+    "source/sections_r8/tab_gaps.tex": "398e6c136fbf6937eeccf4a477a982f454ed2d077fb3c6dc81ed23412993cd70",
+    "source/sections_r8/tab_intervals.tex": "69d585ac9412a5f6279ab1bdbe34aa0da85976733eed9d1cf5ad60d44e3d82e1",
+    "source/sections_r8/tab_mc.tex": "a71fd67a74f39f5b00774026d24c1064f6c0cffe34ee13bbfa68f9cbe3372df0",
+    "source/sections_r8/tab_methods.tex": "6cd2398c505fa4cd0fb02c04bc858b9e67e829392b1ffd1da37d6057d6a7138e",
+    "source/sections_r8/tab_native_forecasters.tex": "b44d8e6e1abba75c0c1fe29f6d5c32ff459ae5b1096ede3f5107cc86ee92a364",
+    "source/sections_r8/tab_optimism.tex": "2d22732c7838fb1071c72ce2d00c21cc573f141cbe052b4edfbd911b4c99359e",
+    "source/sections_r8/tab_partial.tex": "9664ed384cd9793cdb7e3b84b892fc77bdb35ad82c168164e919e9b903f349bd",
+    "source/sections_r8/tab_policy.tex": "8af779cc8e7242807d9bf27a4c1f65c6ba1c7d4e5cdd1947844055e02e7eec6e",
+    "source/sections_r8/tab_policy_origins.tex": "665c9b647d6d46f745b65600484d7bfb7a41dc61d708878df8c2f004d5b8e4da",
+    "source/sections_r8/tab_propagation.tex": "89450ea3ccd9da95de1a1708913a20cbe421729ff51be8248c795c5a143b68e7",
+    "source/sections_r8/tab_quotations.tex": "c255642b268d737c05645d6661fc6d54197cdd9075245f8d0130036931e84414",
+    "source/sections_r8/tab_regime.tex": "d4a746e31dbed4bc48f4e0d7f657e8a67cb4270e3b1dec482b66b5ffd668b75e",
+    "source/sections_r8/tab_strong.tex": "f37332923f230254104702ae3926e05cd23916432cac9850caeee5dff647c617",
+    "source/sections_r8/tab_ten_strong.tex": "f13cec3d9ea975fddb036f56e3ab60524f54dbe608ee153adf9c93387f523900",
+    "source/sections_r8/tab_windows.tex": "a7194dd88321e6f4892ee264066ffa48b38e547f4dcbe8bf3927c6c615e5725f"
+  },
+  "negative_controls": {
+    "missing_output": true,
+    "changed_output": true,
+    "changed_input": true
+  },
+  "producer_runs": [
+    {
+      "command": [
+        "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+        "/private/tmp/irfa-r8-repaired-fresh-conda-20260912/source/scripts/extension_20260831/build_paper_outputs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 59.435,
+      "log": "replay_logs/producer_1.log"
+    },
+    {
+      "command": [
+        "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+        "/private/tmp/irfa-r8-repaired-fresh-conda-20260912/research/r8_integration/build.py"
+      ],
+      "exit_code": 0,
+      "seconds": 2.209,
+      "log": "replay_logs/producer_2.log"
+    },
+    {
+      "command": [
+        "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+        "/private/tmp/irfa-r8-repaired-fresh-conda-20260912/research/r8_regime/build_paper.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.327,
+      "log": "replay_logs/producer_3.log"
+    },
+    {
+      "command": [
+        "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+        "/private/tmp/irfa-r8-repaired-fresh-conda-20260912/research/r8_ten_integration/build.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.224,
+      "log": "replay_logs/producer_4.log"
+    },
+    {
+      "command": [
+        "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+        "/private/tmp/irfa-r8-repaired-fresh-conda-20260912/research/r8_partial_integration/build.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.311,
+      "log": "replay_logs/producer_5.log"
+    },
+    {
+      "command": [
+        "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+        "/private/tmp/irfa-r8-repaired-fresh-conda-20260912/research/r8_information_integration/build.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.31,
+      "log": "replay_logs/producer_6.log"
+    },
+    {
+      "command": [
+        "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+        "/private/tmp/irfa-r8-repaired-fresh-conda-20260912/research/r8_shape_integration/displays.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.672,
+      "log": "replay_logs/producer_7.log"
+    },
+    {
+      "command": [
+        "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+        "/private/tmp/irfa-r8-repaired-fresh-conda-20260912/research/r8_optimism_integration/displays.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.023,
+      "log": "replay_logs/producer_8.log"
+    }
+  ],
+  "statistics_tests": {
+    "command": [
+      "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "source/scripts/extension_20260831/test_statistics.py"
+    ],
+    "exit_code": 0,
+    "seconds": 1.73,
+    "log": "replay_logs/statistics_tests.log"
+  },
+  "exact_witness": {
+    "command": [
+      "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+      "research/r8_count_law/exact_witness.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.116,
+    "log": "replay_logs/exact_witness.log"
+  },
+  "bounded_numerical_checks": {
+    "command": [
+      "/private/tmp/irfa-r8-public-conda-20260912/bin/python",
+      "-c",
+      "import sys,json;sys.path.insert(0,'research/r8_count_law');import validate;error=validate.matrix_cost();sys.path.insert(0,'research/r8_information_limit');import engine;values=[engine.error(250,.01,.2,r) for r in [0.,.5]];assert abs(values[0]-.3550353060461644)<1e-13;assert abs(values[1]-.39493849863088804)<1e-13;print(json.dumps(dict(matrix_error=error,selection_error=values)))"
+    ],
+    "exit_code": 0,
+    "seconds": 0.433,
+    "log": "replay_logs/bounded_numerical_checks.log"
+  },
+  "no_model_fitting": true,
+  "no_research_simulation": true
+}

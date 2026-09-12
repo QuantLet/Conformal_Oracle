@@ -1,0 +1,13 @@
+{
+  "producer_sha256": "fbf6f3d6ba2fbe46eff4b7c334cf2185833eff8e0c8221c45638c4794f8c2e52",
+  "inputs": {
+    "artifacts/r8_regime/validation.json": "33c6fd1884feeb3c5772241690282dbe466dcd85d8df4726c15279b39db1c854",
+    "artifacts/r8_regime/aggregation.json": "76afa1835fac16645782e350d119cea8cb836777ad591045b0bb1d603bb84354",
+    "artifacts/r8_regime/results/summary.csv": "bff3cbb86cd4c365fcfe1ec43c326a912f0e21e52d025a19cbef314a621d4a76",
+    "artifacts/r8_regime/results/decisions.csv": "cbcb8bbb9534dfc78cd421010e9c58c79936be6e4c3142d9eabd28c98ea2a4e3"
+  },
+  "outputs": {
+    "sections_r8/numbers_regime.tex": "719ff5e8743096075cef07313dc1de84e4fe5c4c308fe11e4bd5d9184340eafc",
+    "sections_r8/tab_regime.tex": "d4a746e31dbed4bc48f4e0d7f657e8a67cb4270e3b1dec482b66b5ffd668b75e"
+  }
+}

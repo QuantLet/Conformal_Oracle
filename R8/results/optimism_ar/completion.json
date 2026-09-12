@@ -1,0 +1,51 @@
+{
+  "status": "COMPLETED_ARCHIVED_PATH_CONTROL",
+  "protocol_commit": "e96ee479bb9455d94aeb90a95c3cc86f45d264df",
+  "cells": 6,
+  "derived_rows": 3000,
+  "independent_latent_histories": 500,
+  "bootstrap_replicates": 999,
+  "replay": [
+    {
+      "file": "bands.csv",
+      "sha256": "09f30c5ca029312f96c91fc1ea07b04781d828fee2d9d39bf830ba852e0cb86d",
+      "negative_control_rejected": true,
+      "exact_match": true
+    },
+    {
+      "file": "bootstrap.csv",
+      "sha256": "a7ea913767bdec60f0f82a4148a44ddba964506f80d12009e5ae0d1e3f33c0d3",
+      "negative_control_rejected": true,
+      "exact_match": true
+    },
+    {
+      "file": "dependence.csv",
+      "sha256": "a4de8838b7d366fc2a472d332c60e96dc2b94c409c1a6e7bb434362271d83149",
+      "negative_control_rejected": true,
+      "exact_match": true
+    },
+    {
+      "file": "histories.csv",
+      "sha256": "010e97c36304418b28804e8dc256e264b62ed13415a0e1cf4782f730f0a295b2",
+      "negative_control_rejected": true,
+      "exact_match": true
+    },
+    {
+      "file": "unavailable.csv",
+      "sha256": "cef0b51f1f8cb4c9ddc768c9f3585bf8b9ac4603010df81f89166512a5f83d98",
+      "negative_control_rejected": true,
+      "exact_match": true
+    }
+  ],
+  "independent_verification": "PASS",
+  "new_random_histories": 0,
+  "new_forecaster_fits": 0,
+  "manuscript_changed": false,
+  "financial_panel": "NOT_RUN",
+  "original_admission": "FAIL_UNCHANGED",
+  "conservation": "Verified 37 v3 bindings; original and v2 artifacts preserved; panel NOT_RUN.",
+  "python": "3.13.9",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "pandas": "2.3.3"
+}

@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "producer_sha256": "ca13aa66af9c4d67e67420a119fffaaf567e021b84dce6aa5f386e448237e11f",
+  "full_grid_rows": 120792,
+  "full_grid_native_values": 11958408,
+  "patchtst_crossing_dates": 0,
+  "reconstructed_past_contexts": 362376,
+  "fresh_full_replay_exact": true,
+  "independent_metric_checks": 10521,
+  "evaluated_pairs": 240,
+  "evaluated_pair_methods": 720,
+  "asset_test_dates": 36252,
+  "independently_verified_bootstrap_draws": 1998,
+  "independent_bootstrap_mean_values": 59940,
+  "protected_canonical_files_unchanged": 4,
+  "backtest_roundoff_max": {
+    "p_kup": 8.965161946150602e-12,
+    "p_ind": 7.099387744347041e-11,
+    "p_cc": 2.8055335832277706e-13,
+    "lr_uc": 1.1013412404281553e-12,
+    "lr_ind": 9.094947017729282e-13
+  },
+  "backtest_absolute_tolerance": 1e-10,
+  "backtest_rejection_decisions_exact": true,
+  "complete_sha256": "4cee26e0d73c7d3c2aa7a30bc9093ea70b624305cf9a60570524bda131880ca7",
+  "preparation_sha256": "244b269da7d9c4b560613c15f7db5aa26aba7a1f69985177e17cd1e90226ebda"
+}

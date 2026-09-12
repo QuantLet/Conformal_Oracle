@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "producer_sha256": "63ceb2e137dd162efd609be22f693d77080a2ebe1f3684826dbc95330d7498b3",
+  "result_complete_sha256": "bca8ca29054cb2cbc50ac8a3bdbf025f297a73915d2e7e050695492e169be944",
+  "pairs": 48,
+  "methods": 14,
+  "daily_losses_rebuilt": 1956192,
+  "independent_calendar_draws": 1998,
+  "bootstrap_means_verified": 55944,
+  "period_pair_method_rows": 2016,
+  "simultaneous_interval_rows": 28
+}

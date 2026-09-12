@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "producer_sha256": "d27c250d10c93ff9f592018364212096c06dd6842796698c6fd1af9c9e57aa3c",
+  "complete_sha256": "61d50aa6bbfbedab5146b7d1378f0c374d700e247c2e7394a411c39d0d8357ff",
+  "pairs": 240,
+  "methods": 20,
+  "simultaneous_family_size": 8,
+  "independent_scalar_checks": 5410,
+  "independent_calendar_draws": 1998,
+  "primary_bootstrap_means_verified": 39960,
+  "normalised_and_noncrypto_bands_verified": true
+}

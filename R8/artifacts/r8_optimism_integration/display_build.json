@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "mode": "render",
+  "producer_sha256": "774ada9eeaf6a9f5f11fe1e14eb1931a125f2b94d417f50d4f2fc1eaf75f6ba1",
+  "inputs": {
+    "results/optimism_ar/primary/bands.csv": "09f30c5ca029312f96c91fc1ea07b04781d828fee2d9d39bf830ba852e0cb86d",
+    "results/optimism_ar/primary/dependence.csv": "a4de8838b7d366fc2a472d332c60e96dc2b94c409c1a6e7bb434362271d83149",
+    "results/optimism_ar/completion.json": "ffe235b611ba4f73c42ba8fd51210690c937c275f5efed0c6adf0a8fbf0cff1e",
+    "results/theory_loop/synthetic/validation_summary.csv": "6860136ad0db3db3d5175ac13a5a333153d5dec775946ffea2320a283cbfadf6"
+  },
+  "outputs": {
+    "source/sections_r8/numbers_optimism.tex": "738828a3613cad647639002066ee6c949e478ce8e8e9a2d9ed5e878106eef40a",
+    "source/sections_r8/tab_optimism.tex": "2d22732c7838fb1071c72ce2d00c21cc573f141cbe052b4edfbd911b4c99359e"
+  }
+}
