@@ -25,7 +25,7 @@ installing the dependencies.
 
 ## What is reproduced
 
-Eleven unchanged producers rebuild **67 files**: 34 LaTeX tables/macro files,
+Eleven producers rebuild **67 files**: 40 LaTeX tables/macro files,
 13 PDF figures and seven figures in each of PNG and SVG formats. This includes
 every generated numerical fragment and figure used by the article and supplement,
 plus four supporting PDF figures also emitted by the same producers. Output
@@ -86,6 +86,13 @@ supported entry point for this public package is `R8/reproduce.py`.
 
 
 ## Extensions of 13 September 2026
+
+The statements above about unchanged producers describe the 12 September
+repair; the optimism-estimator study was amended on 13 September (see below).
+Commits on `main` after `R8-2026-09-13-repair1` carry documentation and
+regression-test maintenance only (the estimator's preflight factor check now
+compares the true cross-validated loss with the independently specified 8/9
+and rejects 4/5); every deposited output is hash-identical to the tag.
 
 Three further studies are deposited in the same layout: `research/r8_power_analysis`
 (nine prespecified contrasts on the main-panel loss difference),

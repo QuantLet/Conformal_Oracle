@@ -40,9 +40,9 @@
     "cpu_count": 18
   },
   "timing": {
-    "E2_seconds": 3.493868499994278,
-    "E1_and_evaluation_seconds": 0.43236441700719297,
-    "total_seconds": 4.114765750011429
+    "E2_seconds": 3.7871043749619275,
+    "E1_and_evaluation_seconds": 0.4766922499984503,
+    "total_seconds": 4.463597208028659
   },
   "workers": 16,
   "inputs": [
@@ -118,9 +118,9 @@
     },
     {
       "path": "research/r8_optimism_estimator/engine.py",
-      "sha256": "ccd40a0cf8b76c1f0bd1e04c01f192abb93757ee711baef2c56ead1c957ff472",
-      "size": 26588,
-      "mtime_ns": 1789286439539727623
+      "sha256": "6f4b9882832617e6f0718ee7ac11e48b0e180fbfcda5cff5dbcde35fb34ac9f0",
+      "size": 26775,
+      "mtime_ns": 1789287378920651870
     },
     {
       "path": "research/r8_theory_loop_v3/engine.py",
@@ -212,7 +212,7 @@
       "valid_case_accepted": true
     },
     {
-      "name": "dropped_cv_rescaling_factor",
+      "name": "cv_rescaling_factor_is_8_over_9",
       "negative_control_rejected": true,
       "valid_case_accepted": true
     },

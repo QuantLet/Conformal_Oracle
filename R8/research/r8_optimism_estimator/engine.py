@@ -211,9 +211,11 @@ def preflight(module):
     check(rows, 'empirical_instead_of_conformal_rank', grid[0, int(np.ceil(.99 * 250)) - 1], c[0], lambda z: z == grid[0, 248])
     I = train_loss(module.rho, c, grid)
     check(rows, 'integral_matches_v3_path', -I, I, lambda z: close(z, module.integral(grid, c[:, None])))
-    O_full, _, _ = e1_blocked_cv(module.rho, grid, c, I)
-    L_cv = O_full / ((K_FOLDS - 1) / K_FOLDS) + I
-    check(rows, 'dropped_cv_rescaling_factor', L_cv - I, O_full, lambda z: close(z, .8 * (L_cv - I)))
+    O_full, L_cv, _ = e1_blocked_cv(module.rho, grid, c, I)
+    # Independently specified target 8/9 (amendment of 13 September 2026); the
+    # superseded 4/5 rescaling must be rejected, using the true L_cv returned above.
+    check(rows, 'cv_rescaling_factor_is_8_over_9', (4 / 5) * (L_cv - I), O_full,
+          lambda z: close(z, (8 / 9) * (L_cv - I)) and not close(z, (4 / 5) * (L_cv - I)))
     rng = np.random.default_rng(0)
     idx = bootstrap_indices(rng, 250, 7)
     check(rows, 'circular_block_indices', np.clip(idx + 250, 0, 249), idx,
