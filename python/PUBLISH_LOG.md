@@ -44,7 +44,7 @@ Date: 2026-05-12
 - CHANGELOG: https://github.com/danpele/Conformal_Oracle/blob/main/python/CHANGELOG.md
 
 
-## 0.4.0 build — 2026-09-13 (local, not uploaded)
+## 0.4.0 build — 2026-09-13 (uploaded to PyPI the same day)
 
 R7 workflows plus the R8 analysis tools (one-coefficient corrections,
 nuisance-free optimism estimators, paired calendar bootstrap, past-loss
@@ -60,3 +60,6 @@ test of the wheel in a fresh virtualenv exercises the new API.
 
 Upload requires the maintainer's PyPI token, entered by the maintainer:
 `TWINE_USERNAME=__token__ TWINE_PASSWORD=<token> twine upload dist/*`.
+
+**Published 2026-09-13** by the maintainer's token via `twine upload --non-interactive`;
+PyPI file digests verified against the local artefacts. https://pypi.org/project/conformal-oracle/0.4.0/
