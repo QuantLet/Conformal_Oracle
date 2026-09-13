@@ -1,0 +1,29 @@
+{
+  "binding": {
+    "input_sha256": "516fbcb75215c92d09b5af482d276b5c8d3dd064a8cb8c6d022f76e3e78c5d17",
+    "producer_sha256": "d0957fd54a9e268e51abb70c3800ab03aa556276922c84363d55899ba7edf5cb",
+    "model": "gjr_t",
+    "asset": "BIG_LoBM",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "arch": "8.0.0",
+      "pyarrow": "21.0.0"
+    },
+    "python": "3.13.9",
+    "window": 250,
+    "alphas": [
+      0.01,
+      0.025,
+      0.05,
+      0.1
+    ]
+  },
+  "rows": 7935,
+  "first_date": "1996-03-04",
+  "last_date": "2026-07-31",
+  "forecast_sha256": "16cad5a6ca068d1652d57d3498bdbaee4c9c6e4ff2ce83fb82f2195e54a632ee",
+  "parameters_sha256": "85e420698b96aa36bea2fb26a023e6c001badba09442468aa6743b4659caf984",
+  "elapsed_seconds": 100.32972529192921
+}

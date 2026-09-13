@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "tolerance": {
+    "atol": 1e-12,
+    "rtol": 1e-10
+  },
+  "files": {
+    "histories.csv": {
+      "match": true,
+      "rows": 20000,
+      "max_abs_difference": 1.7763568394002505e-15
+    },
+    "summary.csv": {
+      "match": true,
+      "rows": 40,
+      "max_abs_difference": 2.220446049250313e-16
+    },
+    "simultaneous_bands.csv": {
+      "match": true,
+      "rows": 40,
+      "max_abs_difference": 2.220446049250313e-16
+    },
+    "supplementary_loss_bands.csv": {
+      "match": true,
+      "rows": 60,
+      "max_abs_difference": 4.440892098500626e-16
+    },
+    "bootstrap_maxima.csv": {
+      "match": true,
+      "rows": 999,
+      "max_abs_difference": 4.440892098500626e-16
+    },
+    "e2_bootstrap_diagnostics.csv": {
+      "match": true,
+      "rows": 5000,
+      "max_abs_difference": 9.996344030316351e-17
+    },
+    "admission.json": {
+      "match": true
+    }
+  },
+  "environment": {
+    "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]",
+    "executable": "/private/tmp/irfa-r8-conda-clean/bin/python",
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "cpu_count": 18
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "source": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/Developed_ex_US_25_Portfolios_ME_BE-ME_daily_CSV.zip",
+  "retrieved_utc": "2026-09-13T07:13:21.616566+00:00",
+  "status": 200,
+  "headers": {
+    "content-type": "application/x-zip-compressed",
+    "last-modified": "Tue, 01 Sep 2026 21:48:19 GMT",
+    "accept-ranges": "bytes",
+    "etag": "\"398d579a5b3add1:0\"",
+    "server": "Microsoft-IIS/10.0",
+    "date": "Sun, 13 Sep 2026 07:13:20 GMT",
+    "content-length": "705210",
+    "connection": "close"
+  },
+  "bytes": 705210,
+  "sha256": "a5415042de0491bcfa9406dcdc01446b865a536402b26eb3cfb425d94340097d",
+  "producer_sha256": "0ec63a62cf9bd525fe9cc83afce4dc8fe032dbb5c09e2515056c9c97c38690eb",
+  "protocol_sha256": "1c0d56b4d935a08169398ef68939f1d0676d8fa15d79d73f8ea6bcdf78998bda"
+}

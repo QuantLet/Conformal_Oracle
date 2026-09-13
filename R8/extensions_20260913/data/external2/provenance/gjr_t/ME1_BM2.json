@@ -1,0 +1,29 @@
+{
+  "binding": {
+    "input_sha256": "d7f1ed70e28488388e279c1b6d779bc92d2c3bf34a1fa8958d73d35a0b527cd5",
+    "producer_sha256": "d0957fd54a9e268e51abb70c3800ab03aa556276922c84363d55899ba7edf5cb",
+    "model": "gjr_t",
+    "asset": "ME1_BM2",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "arch": "8.0.0",
+      "pyarrow": "21.0.0"
+    },
+    "python": "3.13.9",
+    "window": 250,
+    "alphas": [
+      0.01,
+      0.025,
+      0.05,
+      0.1
+    ]
+  },
+  "rows": 7935,
+  "first_date": "1996-03-04",
+  "last_date": "2026-07-31",
+  "forecast_sha256": "0c2f9aff95e1fb30c5b67f35aa9ecf22f35460b0ad3bf56ba8191fd3efd119a4",
+  "parameters_sha256": "604e9fe9907a7bc798df2b8bb0db1d7d9bdede65449cfa2e0a3a82d9cf9aa24b",
+  "elapsed_seconds": 97.92119629099034
+}

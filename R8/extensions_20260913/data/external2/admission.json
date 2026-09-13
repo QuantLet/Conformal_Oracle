@@ -1,0 +1,170 @@
+{
+  "status": "passed",
+  "producer_sha256": "ca2e900efee7c418f7168df156850e6a2a042090fa936a8ef2bab0d23d911cd9",
+  "protocol_sha256": "1c0d56b4d935a08169398ef68939f1d0676d8fa15d79d73f8ea6bcdf78998bda",
+  "raw_sha256": "a5415042de0491bcfa9406dcdc01446b865a536402b26eb3cfb425d94340097d",
+  "raw_retrieved_utc": "2026-09-13T07:13:21.616566+00:00",
+  "raw_source": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/Developed_ex_US_25_Portfolios_ME_BE-ME_daily_CSV.zip",
+  "details_page": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/tw_5_ports_developed.html",
+  "details_page_sha256": "1b25b822caf1534e7383a69e3c1cd4d90763f52128c98f9bcd83f27b973faaf2",
+  "protocol_details_page": {
+    "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_25_port_form_sz_bm_daily_dev_ex_us.html",
+    "http_status": 404
+  },
+  "calendar": "file weekday calendar (Monday-Friday, complete between first and last admitted date)",
+  "calendar_sp500_comparison": {
+    "reference": "artifacts/extension_20260831/data/returns/SP500.csv",
+    "reference_sha256": "aeb4b0dac6c6b763e7403dde71d9f65f6fa1aea85ea3b57df3a67085e00e43df",
+    "dates_here": 6935,
+    "dates_sp500": 6683,
+    "here_not_in_sp500": 252,
+    "sp500_not_here": 0
+  },
+  "endpoint": {
+    "rule": "last date in the file",
+    "value": "2026-07-31",
+    "minimum_required": "2025-12-31"
+  },
+  "source": {
+    "zip_member": "Developed_ex_US_25_Portfolios_ME_BE-ME_Daily.csv",
+    "source_header": [
+      "This file was created using the 202607 Bloomberg database. It contains",
+      "value- and equal-weighted returns for the intersections of 5 ME portfolios",
+      "and 5 BE/ME portfolios in Developed_ex_US.",
+      "The portfolios are constructed at the end of June.  ME is market cap at the end",
+      "of June.  BE/ME is book equity at the last fiscal year end of the prior calendar",
+      "year divided by ME as of  6 months before formation.  Firms with negative",
+      "BE are not included in any portfolio.",
+      "The break points include utilities and include financials.",
+      "The portfolios include utilities and include financials.",
+      "Missing data are indicated by -99.99."
+    ],
+    "missing_statement": [
+      "Missing data are indicated by -99.99."
+    ],
+    "sentinel_codes_mapped": [
+      -99.99
+    ],
+    "undocumented_codes_counted": [
+      -999.0
+    ],
+    "sentinel_counts_value_table": {
+      "-99.99": 0,
+      "-999.0": 0
+    },
+    "value_table_title": "Average Value Weighted Returns -- Daily",
+    "value_table_start_line": 19,
+    "value_table_end_line": 9434,
+    "other_tables": [
+      "Average Equal Weighted Returns -- Daily"
+    ],
+    "rows": 9415,
+    "first": "1990-07-02",
+    "last": "2026-07-31"
+  },
+  "portfolios": [
+    "SMALL_LoBM",
+    "ME1_BM2",
+    "ME1_BM3",
+    "ME1_BM4",
+    "SMALL_HiBM",
+    "ME2_BM1",
+    "ME2_BM2",
+    "ME2_BM3",
+    "ME2_BM4",
+    "ME2_BM5",
+    "ME3_BM1",
+    "ME3_BM2",
+    "ME3_BM3",
+    "ME3_BM4",
+    "ME3_BM5",
+    "ME4_BM1",
+    "ME4_BM2",
+    "ME4_BM3",
+    "ME4_BM4",
+    "ME4_BM5",
+    "BIG_LoBM",
+    "ME5_BM2",
+    "ME5_BM3",
+    "ME5_BM4",
+    "BIG_HiBM"
+  ],
+  "source_columns": [
+    "SMALL LoBM",
+    "ME1 BM2",
+    "ME1 BM3",
+    "ME1 BM4",
+    "SMALL HiBM",
+    "ME2 BM1",
+    "ME2 BM2",
+    "ME2 BM3",
+    "ME2 BM4",
+    "ME2 BM5",
+    "ME3 BM1",
+    "ME3 BM2",
+    "ME3 BM3",
+    "ME3 BM4",
+    "ME3 BM5",
+    "ME4 BM1",
+    "ME4 BM2",
+    "ME4 BM3",
+    "ME4 BM4",
+    "ME4 BM5",
+    "BIG LoBM",
+    "ME5 BM2",
+    "ME5 BM3",
+    "ME5 BM4",
+    "BIG HiBM"
+  ],
+  "weighting": "value",
+  "dividends": "included (details page: returns in US dollars, include dividends and capital gains)",
+  "currency": "USD",
+  "transformation": "log1p(percent_simple_return/100)",
+  "sentinel_handling": {
+    "mapped_to_missing": [
+      -99.99
+    ],
+    "counted_only": [
+      -999.0
+    ],
+    "counts": {
+      "-99.99": 0,
+      "-999.0": 0
+    }
+  },
+  "missing_in_admitted_window": 0,
+  "pre_2000_context_rows": 1250,
+  "first_context": "1995-03-20",
+  "first_forecast": "2000-01-03",
+  "last_forecast": "2026-07-31",
+  "first_test": "2015-01-01",
+  "calibration_dates": 3913,
+  "test_dates": 3022,
+  "outputs": {
+    "data/returns/SMALL_LoBM.csv": "2e806bfca7a635b7c13365a24b88f7fe7e17187ea56222a3129a1fa5b95602ab",
+    "data/returns/ME1_BM2.csv": "d7f1ed70e28488388e279c1b6d779bc92d2c3bf34a1fa8958d73d35a0b527cd5",
+    "data/returns/ME1_BM3.csv": "69101cd739b2146bfe9be9133ac6572b4713dfc57f29bc0678c23fa0bc2fd038",
+    "data/returns/ME1_BM4.csv": "2ff29c180b256622ac274624a4f944151786337ac02737ab48a4e18e4bfa4687",
+    "data/returns/SMALL_HiBM.csv": "5ef45c1e2e436af2b3515f5001badcad7791e5c9840c844ac0e5e0c1ac4245ce",
+    "data/returns/ME2_BM1.csv": "279996de8d19bc812c19c763aa64f18c1e49f7a3a0c2b84271ba9fa834a36547",
+    "data/returns/ME2_BM2.csv": "35976512a187719fa21d821008d46296030dc9bcf032cb82ee08dfa8dc17ebd0",
+    "data/returns/ME2_BM3.csv": "30b2c591d0eda6bc1d5ae88ae4643ade7dc58a8c1317defc1ce1939f9e1a9f92",
+    "data/returns/ME2_BM4.csv": "b9a70eead13e8807804f97478860ef6c258f686839720ce13abae9577762813b",
+    "data/returns/ME2_BM5.csv": "de1603938c850e9c2426c85a5f4c5e4a0594c6d9ebdbebc937abc2c8d66a20f0",
+    "data/returns/ME3_BM1.csv": "a5774397a7c74b331c57e5e3579681985401acc5e10ed1f9d0c62058bf27274e",
+    "data/returns/ME3_BM2.csv": "914f962edf175aa863e0e9954592891e96137783a3f6a012782838a84f4beaa3",
+    "data/returns/ME3_BM3.csv": "03200e3f11e7a1460e3b598f22c1bdd9facf141b85b602bbff251e54a656c4d2",
+    "data/returns/ME3_BM4.csv": "e92c78a8070a1fb5d68cd791e34ca9f4017b5b4d8dc9dd19b5dea570089d84fe",
+    "data/returns/ME3_BM5.csv": "40395627ae3c40803f9d9b4f95cc7c07a4e791536c5d9adea70dfdf0d89e794c",
+    "data/returns/ME4_BM1.csv": "00295018bb5fe4ede6bc4373eb0e95baba47d199d4f8132f4a33ccb5e14dadde",
+    "data/returns/ME4_BM2.csv": "324f96979fb49f2174476efc5ee795ac91d86f33c6424c198e470c05cbee8e85",
+    "data/returns/ME4_BM3.csv": "2ad1820ddf6e776c2c93baf2162dc5cdd2f4aad921b6fa8a5aacd213b1731f13",
+    "data/returns/ME4_BM4.csv": "bda59cf21cc5e73d8d22163e8877d4a4d4a0d270d411b876681014fc98d67e06",
+    "data/returns/ME4_BM5.csv": "7f10ed645316a344395d93ef433c999bf8a78bdd1721cccf0bfc4229620afb3a",
+    "data/returns/BIG_LoBM.csv": "516fbcb75215c92d09b5af482d276b5c8d3dd064a8cb8c6d022f76e3e78c5d17",
+    "data/returns/ME5_BM2.csv": "d8362d63110f4a30aeafb5e58c9ba99aeff81ca862747be2dc4b6950c53e00eb",
+    "data/returns/ME5_BM3.csv": "c0300824ca349665e1b2a3f71fcc9006ba6bfd5460c764ad454a46e8627ec36e",
+    "data/returns/ME5_BM4.csv": "e3a434f6ba20dc37472ba4f43137b029f9ca61e4bcb42ab1512a150eebc696c0",
+    "data/returns/BIG_HiBM.csv": "8070628912719d781e514f5a29567688d45fdf35f473a14c3c949087b94b6c40"
+  }
+}

@@ -33,6 +33,15 @@ Older Quantlets and the `data-v1` download belong to earlier revisions. They are
 retained for historical work and are not inputs to the R8 command above. The
 previous project description is archived in `R8/history/`.
 
+## Extensions of 13 September 2026
+
+Tag **`R8-2026-09-13`** adds [`R8/extensions_20260913/`](R8/extensions_20260913/):
+the prespecified power analysis of the main-panel loss contrast, the
+nuisance-free optimism-estimator study, and the second external test on the
+Developed ex-US 25 size/value portfolios, each with protocol, producer,
+`--check` replay, outputs and results. The display replay of
+`R8-2026-09-12-repro1` is unchanged.
+
 ## Authors
 
 Daniel Traian Pele, Vlad Bolovăneanu, Andrei Theodor Ginavar,
