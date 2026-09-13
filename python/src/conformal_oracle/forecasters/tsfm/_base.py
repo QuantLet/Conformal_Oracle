@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from pathlib import Path
+from typing import cast
 
 import numpy as np
 import pandas as pd
@@ -59,7 +60,7 @@ class BaseTSFMForecaster(ABC):
 
     def _get_context(self, returns: pd.Series, t: int) -> np.ndarray:
         start = max(0, t - self.context_length)
-        return returns.iloc[start:t].values.astype(np.float32)
+        return cast(np.ndarray, returns.iloc[start:t].values.astype(np.float32))
 
     def fit(self, returns: pd.Series) -> None:
         pass

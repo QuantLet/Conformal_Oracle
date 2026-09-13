@@ -1,9 +1,11 @@
 # Methodology
 
-This package implements the conformal recalibration framework from:
+This package supplies separated, contiguous and rolling recalibration tools
+and a calibration-only indication rule accompanying:
 
 > Pele, D.T., Bolovăneanu, V., Ginavar, A.T., Lessmann, S., Härdle, W.K.
-> "Recalibrating Tail Event Forecasts under Temporal Dependence" (2026).
+> "Conformal Recalibration of Extreme Tail Quantiles under Temporal Dependence"
+> (2026, manuscript R7).
 
 ## The conformal correction
 
@@ -17,27 +19,40 @@ distribution and `r_t` is the realised return.
 
 ### Static mode
 
-The **static conformal correction** `qV_stat` is the empirical
-`(1-alpha)`-quantile of the calibration scores `{S_1, ..., S_n_cal}`.
+For `n` calibration scores, define `k = ceil((n+1)(1-alpha))`.
+The **static conformal correction** `qV_stat` is the `k`-th smallest score,
+not the interpolated empirical quantile `np.quantile(scores, 1-alpha)`.
+The existing static audit uses one chronological, **contiguous** calibration/test
+split. For the same supplied calibration score block,
+`SeparatedSplitConformalVaR` uses the same conformal order statistic but starts
+evaluation after an explicit unused gap. The shift itself is unchanged;
+no gap or evaluation outcomes enter its estimation. Supply already-aligned
+forecasts after any model warmup when comparing with a forecaster-object audit.
 
 The corrected VaR forecast is:
 
     VaR_corrected(t) = -(F_t^{-1}(alpha) - qV_stat)
 
-Under exchangeability, this guarantees finite-sample coverage at
-level `(1-alpha)`. Under beta-mixing temporal dependence, coverage
-holds approximately with a bound that depends on the mixing rate
-(Theorem 3.5 of the paper).
+For exchangeable calibration and evaluation scores, the conformal rank gives
+finite-sample marginal coverage at least `1-alpha` when `k <= n`.
+When `k > n`, the formal conformal threshold is `+inf`, but this package
+returns the largest observed score as a finite proxy. That fallback does not
+retain the usual finite-sample coverage guarantee. Empty score arrays return
+`0.0` for compatibility; this is not a calibrated estimate.
 
 ### Rolling mode
 
-The **rolling conformal correction** `qV_roll(t)` is the empirical
-`(1-alpha)`-quantile of the most recent `w` nonconformity scores:
+The **rolling conformal correction** `qV_roll(t)` uses the same conformal
+order statistic on the most recent `w` nonconformity scores:
 
-    qV_roll(t) = Quantile_{1-alpha}({S_{t-w}, ..., S_{t-1}})
+    k = ceil((w+1)(1-alpha))
+    qV_roll(t) = k-th smallest of {S_{t-w}, ..., S_{t-1}}
 
-This adapts to non-stationarity. In the paper, rolling correction
-lifts Basel Green-zone compliance from 85% to 98%.
+The same maximum-score fallback applies when `k > w`. Rolling recalibration
+is an operational heuristic under temporal dependence, not an estimator
+covered by the paper's separated single-split theorem. Better coverage can
+come with worse Quantile Score; empirical outcomes depend on the evaluation
+sample and do not supply a general deployment guarantee.
 
 ## Regime classification
 
@@ -46,10 +61,13 @@ relative to the raw forecast:
 
     R = |qV| / mean(|VaR_raw|)
 
-- `R < 1`: **signal-preserving** — the forecaster provides meaningful
-  risk information; conformal calibration fine-tunes it.
-- `R > 1`: **replacement** — the correction dominates; the forecaster's
-  signal is uninformative at this tail level.
+- `R <= 1`: legacy label **signal-preserving**; the correction does not
+  exceed the mean absolute raw VaR in magnitude.
+- `R > 1`: legacy label **replacement**; the correction exceeds that scale.
+
+These labels describe correction magnitude only. They do not establish
+information content, conditional calibration or the benefit of deployment.
+The ratio carries no sign; inspect the signed shift separately.
 
 In rolling mode, a persistence rule requires `R_t > 1` for at least
 `K=20` consecutive days to trigger the replacement classification,
@@ -69,11 +87,58 @@ assumptions may be structurally misspecified.
 
 ## Coverage validity
 
-The conformal correction provides valid finite-sample coverage under
-the exchangeability assumption. Under temporal dependence (beta-mixing),
-coverage holds approximately. The paper proves an explicit bound on
-coverage error as a function of the mixing rate (Theorem 3.5), and
-validates it empirically on 24 assets across 10 forecasting models.
+R7 Theorem 4.5 covers the **separated single-split estimator**, asymptotically
+under the maintained dependence assumptions. It does not cover the contiguous
+static or rolling audits. `SeparatedSplitConformalVaR` implements the separated
+construction; it does not verify the maintained assumptions or certify that
+an arbitrary explicit gap is sufficient.
+
+The paper's operational gap experiment uses a proxy-based implementation of
+the separation rule. Its absolute lag-one score autocorrelation is not a
+validated estimator of the mixing rate, and the proxy does not certify the
+finite-sample guarantee. `proxy_separation_gap` implements this operational rule:
+
+    rho_tilde = abs(Corr(scores[:-1], scores[1:]))
+    log_gap = ceil(safety_factor * log(n_cal) / abs(log(rho_tilde)))
+    gap = context_length + log_gap
+
+The default safety factor is `1.1`. Only at `rho_tilde <= 1e-12` does the
+utility replace the logarithmic term with `minimum_log_gap=5`; five is not a
+floor for all finite persistence estimates. Negative autocorrelations use
+their absolute values. Undefined/constant-series correlations and absolute
+correlations of one are rejected. Metadata always marks the result as
+`proxy_based=True, certified=False`.
+
+## Interpretation and selective deployment
+
+[Gneiting and Resin (2023)](https://doi.org/10.1214/23-EJS2180) provide the
+general calibration hierarchy and score-decomposition framework, including
+the unconditional component obtained through optimal constant translation.
+The displacement minimises the canonical Quantile Score over translations;
+the associated score reduction is the unconditional miscalibration component,
+not the displacement itself. The conformal ceiling rule estimates the target
+displacement but need not be the exact empirical-score minimiser.
+
+The companion study specialises dependent-data coverage results to financial
+score processes, compares scalar and richer recalibration under tail sparsity,
+and evaluates a pre-deployment indication rule. These are not claims of a new
+score decomposition. A scalar correction does not in general repair the full conditional
+predictive distribution, and marginal coverage is not model validation.
+
+`recalibration_indication` implements the paper's pre-deployment policy:
+apply when the calibration Basel zone is not Green or the calibration Kupiec
+p-value is below the configured significance level. It accepts only
+explicitly named calibration arrays, records their fingerprint and returns
+a fixed decision with its diagnostics and reasons. `selectively_recalibrate`
+checks that calibration provenance, applies static or causal rolling shifts
+when indicated and preserves raw forecasts otherwise. Test-window outcomes
+are not inputs to the decision. In a rolling replay they enter only the
+history for subsequent corrections, never the initial policy.
+
+`classify_regime()` remains a descriptive magnitude diagnostic, not this rule.
+The indication rule does not promise a score improvement on every series.
+Avoided deteriorations and lost upgrades are ex-post evaluation summaries,
+not inputs or outputs hard-coded into the decision algorithm.
 
 ## Diagnostics
 

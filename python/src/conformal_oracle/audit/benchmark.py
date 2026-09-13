@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Literal, Union
+from typing import Any, Literal, Union
 
 import pandas as pd
 
@@ -11,6 +11,7 @@ from conformal_oracle._protocols import Forecaster
 from conformal_oracle.audit.single_rolling import RollingAuditResult, audit_rolling
 from conformal_oracle.audit.single_static import StaticAuditResult, audit_static
 from conformal_oracle.diagnostics.diebold_mariano import diebold_mariano_pvalue
+from conformal_oracle.recalibration.base import RecalibrationMethod
 from conformal_oracle.reporting.latex import comparison_to_latex
 
 
@@ -92,11 +93,11 @@ def audit_with_benchmarks(
     returns: pd.Series,
     forecaster: Forecaster,
     benchmarks: list[str] | None = None,
-    recalibrations: list[object] | None = None,
+    recalibrations: list[RecalibrationMethod] | None = None,
     alpha: float = 0.01,
     mode: Literal["static", "rolling"] = "rolling",
     seed: int = 2026,
-    **mode_kwargs: object,
+    **mode_kwargs: Any,
 ) -> BenchmarkComparison:
     """Audit user's forecaster alongside reference benchmarks.
 

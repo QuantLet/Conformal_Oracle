@@ -43,14 +43,13 @@ def comparison_to_latex(
     else:
         header = _ROLLING_HEADER
 
-    sorted_names = sorted(
-        results.keys(),
-        key=lambda n: (
-            results[n].replacement_ratio
-            if isinstance(results[n], StaticAuditResult)
-            else results[n].replacement_ratio.mean()
-        ),
-    )
+    def replacement_ratio(name: str) -> float:
+        result = results[name]
+        if isinstance(result, StaticAuditResult):
+            return result.replacement_ratio
+        return float(result.replacement_ratio.mean())
+
+    sorted_names = sorted(results.keys(), key=replacement_ratio)
 
     rows = []
     for name in sorted_names:

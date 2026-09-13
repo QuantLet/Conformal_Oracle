@@ -1,7 +1,8 @@
 # Conventions
 
 These conventions must be understood before using the package.
-They match the paper's definitions exactly.
+They document the package API. See [Methodology](methodology.md) for the
+distinction between the separated, contiguous and rolling estimators in R7.
 
 ## Returns
 
@@ -37,7 +38,14 @@ The first 70% of the return series is the calibration set (used to
 compute `qV_stat`); the remaining 30% is the test set (used for
 backtesting).
 
-The split is **chronological** — no shuffling.
+The split is **chronological and contiguous** — no shuffling and no separation
+gap. It is not the separated estimator covered by R7 Theorem 4.5.
+
+`SeparatedSplitConformalVaR` instead accepts `calibration_fraction` and an
+explicit `gap`. It preserves the same first calibration block and starts
+evaluation at zero-based position `n_cal + gap`. It returns lower quantiles
+(`raw - shift`), not the positive-loss VaR returned by the audit reporting API.
+The gap does not certify the theorem's assumptions.
 
 ## Rolling window
 
@@ -45,6 +53,11 @@ The split is **chronological** — no shuffling.
 
 `qV_roll(t)` is computed from the most recent `window` nonconformity
 scores ending at `t-1`.
+
+All modes use the `ceil((n+1)(1-alpha))`-th order statistic on their available
+calibration scores, with `n=window` in the rolling helper. The helper clips
+ranks above `n` to the sample maximum, a finite fallback without the usual
+conformal coverage guarantee. An empty score array returns `0.0`.
 
 ## Warmup
 
@@ -67,15 +80,24 @@ Mean block length = 20, B = 999 replications.
 
 ## Regime classification
 
-- **Signal-preserving:** the conformal correction is small relative
-  to the raw VaR forecast. The forecaster's signal is meaningful;
-  conformal calibration fine-tunes it.
-- **Replacement:** the correction dominates the raw forecast.
-  The forecaster's signal is uninformative; the correction is
-  effectively replacing it.
+- **Signal-preserving:** legacy label for a correction that does not exceed
+  the raw VaR scale in magnitude; not evidence that the forecast is informative.
+- **Replacement:** legacy label for a correction exceeding the raw VaR scale;
+  not a test of whether the forecast is uninformative.
 
 Threshold: `R = |qV| / mean(|VaR_raw|) > 1.0` → replacement.
 
 In rolling mode, a **persistence rule** requires `R_t > 1.0` for
 at least 20 consecutive trading days to trigger "replacement",
 avoiding transient classification flips from short volatility spikes.
+
+Neither label implements the paper's pre-deployment indication rule. Quantile
+Score is a loss (lower is better); improved marginal coverage can coexist
+with a worse score and does not validate the base model.
+
+Use `recalibration_indication` for the calibration-only R7 rule. Its Basel
+zone uses the complete calibration count annualized to 250 observations,
+without rounding (Green `<=4`, Yellow `<=9`, otherwise Red); its Kupiec
+trigger is strict `p < kupiec_level`. Existing trailing-window diagnostic
+behavior is unchanged. Evaluation outcomes may update future rolling shifts,
+but cannot change the fixed initial decision.

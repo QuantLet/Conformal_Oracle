@@ -4,9 +4,9 @@ import numpy as np
 from scipy import stats
 
 from conformal_oracle._types import (
-    SampleDistribution,
-    QuantileGridDistribution,
     ParametricDistribution,
+    QuantileGridDistribution,
+    SampleDistribution,
 )
 
 

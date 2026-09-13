@@ -224,16 +224,16 @@ class PanelResult:
             violations: dict[str, np.ndarray] = {}
             for asset in self.asset_names:
                 r = self.results[fc_name][asset]
-                realised = self.returns[asset].values
+                realised = self.returns[asset].to_numpy()
                 if isinstance(r, StaticAuditResult):
                     n_test = r.n_test
-                    var_corr = r.var_corrected.values
+                    var_corr = r.var_corrected.to_numpy()
                     real_test = realised[-n_test:]
                     violations[asset] = (
                         real_test < -var_corr
                     ).astype(int)
                 else:
-                    var_corr = r.var_corrected.values
+                    var_corr = r.var_corrected.to_numpy()
                     n_eval = len(var_corr)
                     real_test = realised[-n_eval:]
                     violations[asset] = (
@@ -272,13 +272,13 @@ class PanelResult:
             violations: dict[str, np.ndarray] = {}
             for asset in self.asset_names:
                 r = self.results[fc_name][asset]
-                realised = self.returns[asset].values
+                realised = self.returns[asset].to_numpy()
                 if isinstance(r, StaticAuditResult):
                     n_test = r.n_test
-                    var_corr = r.var_corrected.values
+                    var_corr = r.var_corrected.to_numpy()
                     real_test = realised[-n_test:]
                 else:
-                    var_corr = r.var_corrected.values
+                    var_corr = r.var_corrected.to_numpy()
                     n_eval = len(var_corr)
                     real_test = realised[-n_eval:]
                 violations[asset] = (

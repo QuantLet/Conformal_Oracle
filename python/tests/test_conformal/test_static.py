@@ -1,7 +1,6 @@
 """Tests for compute_qv_stat."""
 
 import numpy as np
-import pytest
 
 from conformal_oracle._types import SampleDistribution
 from conformal_oracle.conformal.static import compute_qv_stat

@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Literal, Union
+from typing import TYPE_CHECKING, Literal, Union
 
 import numpy as np
 from scipy import stats
+
+if TYPE_CHECKING:
+    from scipy.stats._distn_infrastructure import rv_continuous_frozen
 
 
 @dataclass
@@ -139,9 +142,7 @@ class QuantileGridDistribution:
         res = _minimize(residuals, x0, method="Nelder-Mead",
                         options={"maxiter": 2000, "xatol": 1e-8})
         nu, mu, sigma = res.x
-        nu = max(nu, 2.01)
-        sigma = max(sigma, 1e-8)
-        return (nu, mu, sigma)
+        return (max(nu, 2.01), mu, max(sigma, 1e-8))
 
     def _es_linear(self, alpha: float) -> float:
         q = self.quantile(alpha, completion="linear")
@@ -178,7 +179,7 @@ class ParametricDistribution:
         rv = self._distribution()
         return float(rv.cdf(x))
 
-    def _distribution(self) -> stats.rv_continuous:
+    def _distribution(self) -> rv_continuous_frozen:
         if self.family == "normal":
             return stats.norm(loc=self.location, scale=self.scale)
         elif self.family == "student_t":

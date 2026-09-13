@@ -8,9 +8,29 @@ from conformal_oracle.diagnostics.diebold_mariano import (
     quantile_score_sequence,
 )
 from conformal_oracle.diagnostics.kupiec import kupiec_pof_pvalue
+from conformal_oracle.diagnostics.optimism import (
+    OptimismEstimate,
+    ShrinkageDiagnostic,
+    block_bootstrap_optimism,
+    blocked_cv_optimism,
+    first_order_shrinkage,
+    training_loss_change,
+)
+from conformal_oracle.diagnostics.paired_bootstrap import (
+    calendar_seed,
+    paired_calendar_bootstrap,
+)
 from conformal_oracle.diagnostics.scoring import fissler_ziegel_fz0, quantile_score
 
 __all__ = [
+    "OptimismEstimate",
+    "ShrinkageDiagnostic",
+    "blocked_cv_optimism",
+    "block_bootstrap_optimism",
+    "first_order_shrinkage",
+    "training_loss_change",
+    "calendar_seed",
+    "paired_calendar_bootstrap",
     "kupiec_pof_pvalue",
     "christoffersen_pvalue",
     "basel_traffic_light",

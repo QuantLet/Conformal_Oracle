@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Union
+from typing import Any, Literal, Union
 
 import pandas as pd
 
@@ -21,6 +21,7 @@ from conformal_oracle.audit.single_static import (
     _audit_static_from_quantiles,
     audit_static,
 )
+from conformal_oracle.recalibration.base import RecalibrationMethod
 
 
 def audit(
@@ -30,8 +31,8 @@ def audit(
     forecast: pd.Series | None = None,
     alpha: float = 0.01,
     mode: Literal["static", "rolling"] = "static",
-    recalibration: object | None = None,
-    **kwargs: object,
+    recalibration: RecalibrationMethod | None = None,
+    **kwargs: Any,
 ) -> Union[StaticAuditResult, RollingAuditResult]:
     """Convenience dispatcher for static or rolling audit.
 
@@ -91,6 +92,9 @@ def audit(
             raise ValueError(
                 f"Unknown mode: {mode!r}. Use 'static' or 'rolling'."
             )
+
+    # The mutually exclusive quantile path has already returned above.
+    assert forecaster is not None
 
     # --- forecaster path (original behaviour) ---
     if mode == "static":

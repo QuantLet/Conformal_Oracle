@@ -2,8 +2,13 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, cast
+
 import numpy as np
 import pandas as pd
+
+if TYPE_CHECKING:
+    from lightgbm import Booster
 
 
 class GBMQuantileRegression:
@@ -30,7 +35,7 @@ class GBMQuantileRegression:
         self._learning_rate = learning_rate
         self._early_stopping_rounds = early_stopping_rounds
         self._val_fraction = val_fraction
-        self._model: object | None = None
+        self._model: Booster | None = None
         self._alpha: float = 0.01
 
     @staticmethod
@@ -118,4 +123,4 @@ class GBMQuantileRegression:
         pred = self._model.predict(
             X, num_iteration=self._model.best_iteration,
         )
-        return -pred
+        return cast(np.ndarray, -pred)

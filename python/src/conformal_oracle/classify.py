@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Literal
+from typing import Any, Literal
 
 import pandas as pd
 
 from conformal_oracle._protocols import Forecaster
+from conformal_oracle.audit.single_static import StaticAuditResult
 
 
 @dataclass
@@ -28,7 +29,7 @@ def classify_regime(
     forecaster: Forecaster | None = None,
     alpha: float = 0.01,
     mode: Literal["static", "rolling"] = "rolling",
-    **kwargs: object,
+    **kwargs: Any,
 ) -> RegimeVerdict:
     """Classify a forecaster or quantile path as signal-preserving
     or replacement.
@@ -48,7 +49,7 @@ def classify_regime(
         **kwargs,
     )
 
-    if mode == "static":
+    if isinstance(result, StaticAuditResult):
         R = result.replacement_ratio
         R_ci = result.q_v_stat_ci
         persistence = None

@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from conformal_oracle.diagnostics.scoring import quantile_score, fissler_ziegel_fz0
+from conformal_oracle.diagnostics.scoring import fissler_ziegel_fz0, quantile_score
 
 
 def test_qs_perfect_forecast():

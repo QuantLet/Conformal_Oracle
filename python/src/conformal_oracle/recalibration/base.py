@@ -6,6 +6,8 @@ from typing import Protocol, runtime_checkable
 
 import numpy as np
 
+from conformal_oracle.conformal.quantile import conformal_quantile
+
 
 @runtime_checkable
 class RecalibrationMethod(Protocol):
@@ -65,7 +67,7 @@ class ConformalShift:
         alpha: float,
     ) -> None:
         scores = -raw_var_forecasts - realised
-        self.q_v_stat = float(np.quantile(scores, 1 - alpha))
+        self.q_v_stat = conformal_quantile(scores, alpha)
 
     def apply(
         self,

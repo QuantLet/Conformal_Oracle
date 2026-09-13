@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import warnings
+from typing import Literal, cast
 
 import numpy as np
 import pandas as pd
@@ -10,11 +11,19 @@ from arch import arch_model
 
 from conformal_oracle._types import ParametricDistribution, PredictiveDistribution
 
+InnovationDistribution = Literal[
+    "normal", "gaussian", "t", "studentst", "skewstudent", "skewt",
+    "ged", "generalized error",
+]
+
 
 class GJRGARCHForecaster:
     """GJR-GARCH(1,1) with skewed-t innovations on a rolling window."""
 
-    def __init__(self, window: int = 250, distribution: str = "skewt") -> None:
+    def __init__(
+        self, window: int = 250,
+        distribution: InnovationDistribution = "skewt",
+    ) -> None:
         self.window = window
         self.distribution = distribution
 
@@ -38,7 +47,7 @@ class GJRGARCHForecaster:
             warnings.simplefilter("ignore")
             am = arch_model(
                 train * 100,
-                vol="Garch",
+                vol="GARCH",
                 p=1,
                 o=1,
                 q=1,
@@ -56,8 +65,8 @@ class GJRGARCHForecaster:
                 )
 
         fc = res.forecast(horizon=1)
-        mu = float(fc.mean.iloc[-1, 0]) / 100
-        var = float(fc.variance.iloc[-1, 0]) / (100**2)
+        mu = float(cast(float, fc.mean.iloc[-1, 0])) / 100
+        var = float(cast(float, fc.variance.iloc[-1, 0])) / (100**2)
         sigma = np.sqrt(max(var, 1e-12))
 
         params = res.params

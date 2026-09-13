@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 import numpy as np
 
 
@@ -28,7 +30,7 @@ class FilteredHistoricalSimulation:
         sigma2[0] = np.var(returns[:min(20, n)])
         for t in range(1, n):
             sigma2[t] = lam * sigma2[t - 1] + (1 - lam) * returns[t - 1] ** 2
-        return np.sqrt(np.maximum(sigma2, 1e-20))
+        return cast(np.ndarray, np.sqrt(np.maximum(sigma2, 1e-20)))
 
     def fit(
         self,
@@ -58,4 +60,4 @@ class FilteredHistoricalSimulation:
         self,
         raw_var_forecasts: np.ndarray,
     ) -> np.ndarray:
-        return np.abs(raw_var_forecasts) * self._scale_factor
+        return cast(np.ndarray, np.abs(raw_var_forecasts) * self._scale_factor)

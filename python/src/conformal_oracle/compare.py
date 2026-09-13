@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Literal, Union
+from typing import Any, Literal, Union
 
 import pandas as pd
 
@@ -46,7 +46,7 @@ def compare_forecasters(
     alpha: float = 0.01,
     mode: Literal["static", "rolling"] = "rolling",
     test: Literal["dm_hac"] = "dm_hac",
-    **kwargs: object,
+    **kwargs: Any,
 ) -> ComparisonResult:
     """Compare multiple forecasters or pre-computed quantile paths.
 

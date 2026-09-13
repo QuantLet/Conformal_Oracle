@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
@@ -10,6 +11,10 @@ import pandas as pd
 from conformal_oracle._types import PredictiveDistribution, SampleDistribution
 from conformal_oracle.forecasters.tsfm._base import BaseTSFMForecaster
 from conformal_oracle.forecasters.tsfm._cache import TSFMPredictionCache
+
+if TYPE_CHECKING:
+    from gluonts.model.predictor import Predictor
+
 
 PAPER_MODEL = "time-series-foundation-models/Lag-Llama"
 PAPER_CKPT = "lag-llama.ckpt"
@@ -44,7 +49,7 @@ class LagLlamaForecaster(BaseTSFMForecaster):
             cache_dir=cache_dir,
             device=device,
         )
-        self._predictor: object | None = None
+        self._predictor: Predictor | None = None
         self._cache_obj: TSFMPredictionCache | None = None
 
     def _ensure_model(self) -> None:
@@ -121,6 +126,7 @@ class LagLlamaForecaster(BaseTSFMForecaster):
         self, returns: pd.Series, t: int
     ) -> PredictiveDistribution:
         self._ensure_model()
+        assert self._predictor is not None
 
         import torch
         from gluonts.dataset.common import ListDataset

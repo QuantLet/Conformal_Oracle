@@ -5,6 +5,7 @@ from __future__ import annotations
 import numpy as np
 
 from conformal_oracle._types import PredictiveDistribution
+from conformal_oracle.conformal.quantile import conformal_quantile
 
 
 def compute_qv_roll(
@@ -15,9 +16,14 @@ def compute_qv_roll(
 ) -> np.ndarray:
     """Compute rolling conformal correction qV_roll(t).
 
-    For each t in [window, len(forecasts)), qV_roll(t) is the
-    (1-alpha)-empirical quantile of the most recent `window`
-    nonconformity scores S_{t-window}, ..., S_{t-1}.
+    For each t in [window, len(forecasts)), qV_roll(t) is the finite-sample
+    split-conformal quantile of the most recent `window` nonconformity scores
+    S_{t-window}, ..., S_{t-1}: the ``ceil((window + 1) * (1 - alpha))``-th
+    order statistic, not the plain empirical (1-alpha) quantile. See
+    :func:`conformal_oracle.conformal.quantile.conformal_quantile`.
+
+    This is an operational rolling correction under temporal dependence,
+    not the separated estimator covered by the paper's coverage theorem.
 
     Returns array of length len(forecasts) - window.
     """
@@ -35,7 +41,7 @@ def compute_qv_roll_from_scores(
     out_len = n - window
     qv = np.empty(out_len)
     for t in range(window, n):
-        qv[t - window] = np.quantile(scores[t - window : t], 1 - alpha)
+        qv[t - window] = conformal_quantile(scores[t - window : t], alpha)
     return qv
 
 
