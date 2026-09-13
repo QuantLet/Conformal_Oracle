@@ -15,7 +15,7 @@ These exact binary builds target macOS on Apple Silicon, including FreeType
 2.13.3. Package version pins alone do not fix the graphics renderer; details are
 in the R8 instructions. Choose a new work directory for each replay. The command starts without any
 pre-existing output tables or figures, runs all eight display producers, and
-compares all 61 generated files byte for byte. It also runs the statistical
+compares all 67 generated files byte for byte. It also runs the statistical
 unit tests, the exact rational counterexample, and corruption controls.
 
 - [R8 instructions and scope](R8/README.md)
@@ -23,7 +23,7 @@ unit tests, the exact rational counterexample, and corruption controls.
 - [Input/output manifest](R8/REPLAY_MANIFEST.json)
 - [Python estimator package](python/README.md)
 
-The reproducible display release is tag **`R8-2026-09-12-repro1`**. The original
+The reproducible display release is tag **`R8-2026-09-13-repair1`**, which extends `R8-2026-09-12-repro1` with the three studies of 13 September 2026 (see `R8/README.md`). The original
 `R8-2026-09-12` tag is preserved as a historical deposit. The replay uses archived
 intermediate results; it does not retrain foundation models or rerun the full
 simulation and forecasting pipeline. Full native draws and fitted-path archives

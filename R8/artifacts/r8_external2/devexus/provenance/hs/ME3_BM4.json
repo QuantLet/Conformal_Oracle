@@ -1,0 +1,29 @@
+{
+  "binding": {
+    "input_sha256": "e92c78a8070a1fb5d68cd791e34ca9f4017b5b4d8dc9dd19b5dea570089d84fe",
+    "producer_sha256": "d0957fd54a9e268e51abb70c3800ab03aa556276922c84363d55899ba7edf5cb",
+    "model": "hs",
+    "asset": "ME3_BM4",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "arch": "8.0.0",
+      "pyarrow": "21.0.0"
+    },
+    "python": "3.13.9",
+    "window": 250,
+    "alphas": [
+      0.01,
+      0.025,
+      0.05,
+      0.1
+    ]
+  },
+  "rows": 7935,
+  "first_date": "1996-03-04",
+  "last_date": "2026-07-31",
+  "forecast_sha256": "4f2e85dee65e55e9408a2fb8c668315e2e79c4cc41eaeb6349fad52d7dc21f93",
+  "parameters_sha256": "0ec2a30725fd30d3ad2b0cfb58f790bfbcdd386b0d97613ae6f5bc641d70ebb7",
+  "elapsed_seconds": 0.5767549170413986
+}

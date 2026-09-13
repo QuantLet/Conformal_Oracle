@@ -25,7 +25,7 @@ installing the dependencies.
 
 ## What is reproduced
 
-Eight unchanged producers rebuild **61 files**: 34 LaTeX tables/macro files,
+Eleven unchanged producers rebuild **67 files**: 34 LaTeX tables/macro files,
 13 PDF figures and seven figures in each of PNG and SVG formats. This includes
 every generated numerical fragment and figure used by the article and supplement,
 plus four supporting PDF figures also emitted by the same producers. Output
@@ -83,3 +83,21 @@ operating system or library build is not certified by the macOS run.
 The old research validators also bind historical manuscript snapshots and full
 archives. They remain available for their documented historical scope; the
 supported entry point for this public package is `R8/reproduce.py`.
+
+
+## Extensions of 13 September 2026
+
+Three further studies are deposited in the same layout: `research/r8_power_analysis`
+(nine prespecified contrasts on the main-panel loss difference),
+`research/r8_optimism_estimator` (nuisance-free optimism estimators; the
+amended-factor run in `artifacts/r8_optimism_estimator/` and the original
+4/5 run in `artifacts/r8_optimism_estimator_original_4over5/`, see
+`AMENDMENT.md`), and `research/r8_external2` (Developed ex-US 25 size/value
+portfolios, 100 pairs; raw source response, admission, results and
+provenance under `artifacts/r8_external2/devexus/`). Their `displays.py`
+producers are steps 9–11 of the replay and regenerate the six display files
+`numbers_power`, `tab_power`, `numbers_optest`, `tab_optest`, `numbers_extb`
+and `tab_external2`. The studies' own computations read the stored 240-pair
+daily losses, the synthetic histories and the external forecast paths, which
+exceed this package and are supplied on request; each study folder has a
+`--check` replay for use with the full archive.

@@ -1,0 +1,85 @@
+item,value,definition
+pooled_mean_all_observations_x1e4,-0.15650954474507103,mean of d_it over all 362520 pair-date observations
+pair_weighted_mean_x1e4,-0.1592924324044291,contrast 1: mean over 240 pairs of the pair mean
+n_observations,362520,pair-date observations
+n_pairs,240,
+between_pair_sd_of_pair_means_x1e4,0.2997288400951931,SD (ddof=1) across 240 pair means
+average_within_pair_sd_x1e4,5.263588364884726,mean over pairs of the within-pair SD (ddof=1) of d_it
+median_within_pair_sd_x1e4,3.528237822064868,
+average_lag1_autocorrelation,0.03353382801485661,mean over pairs of the within-pair sample autocorrelation
+average_lag2_autocorrelation,0.025042340630592963,mean over pairs of the within-pair sample autocorrelation
+average_lag3_autocorrelation,0.025058607115146663,mean over pairs of the within-pair sample autocorrelation
+average_lag4_autocorrelation,0.014145720030559436,mean over pairs of the within-pair sample autocorrelation
+average_lag5_autocorrelation,0.016941918360305844,mean over pairs of the within-pair sample autocorrelation
+average_lag6_autocorrelation,0.010634324426877588,mean over pairs of the within-pair sample autocorrelation
+average_lag7_autocorrelation,0.019910778362791433,mean over pairs of the within-pair sample autocorrelation
+average_lag8_autocorrelation,0.0071219789917890824,mean over pairs of the within-pair sample autocorrelation
+average_lag9_autocorrelation,0.007759213266166531,mean over pairs of the within-pair sample autocorrelation
+average_lag10_autocorrelation,0.010855159778722322,mean over pairs of the within-pair sample autocorrelation
+average_lag11_autocorrelation,0.006768281946203004,mean over pairs of the within-pair sample autocorrelation
+average_lag12_autocorrelation,0.007001607650738373,mean over pairs of the within-pair sample autocorrelation
+average_lag13_autocorrelation,0.007281768376299159,mean over pairs of the within-pair sample autocorrelation
+average_lag14_autocorrelation,0.011350491191349869,mean over pairs of the within-pair sample autocorrelation
+average_lag15_autocorrelation,-0.0011375640554528493,mean over pairs of the within-pair sample autocorrelation
+average_lag16_autocorrelation,-0.000672552595566378,mean over pairs of the within-pair sample autocorrelation
+average_lag17_autocorrelation,-0.001790992142304614,mean over pairs of the within-pair sample autocorrelation
+average_lag18_autocorrelation,-0.004942862644174867,mean over pairs of the within-pair sample autocorrelation
+average_lag19_autocorrelation,-0.007606498189421718,mean over pairs of the within-pair sample autocorrelation
+average_lag20_autocorrelation,0.003609337269710347,mean over pairs of the within-pair sample autocorrelation
+average_lag1_to_lag20_autocorrelation,0.00954324428925944,mean over pairs and lags 1..20
+n_distinct_calendar_dates,2264,calendar dates with at least one pair present
+calendar_span_days,2707,2019-04-04 to 2026-08-31 inclusive
+first_test_date,2019-04-04,
+last_test_date,2026-08-31,
+min_pairs_present_on_a_trading_date,10,
+max_pairs_present_on_a_trading_date,240,
+share_pair_weighted_model_PatchTST-FM,0.1265751018943888,sum of pair means in group / sum over all pairs
+share_pair_weighted_model_Chronos-2,0.013477892554858418,sum of pair means in group / sum over all pairs
+share_pair_weighted_model_TS-ICL,-0.006395891801796814,sum of pair means in group / sum over all pairs
+share_pair_weighted_model_Moirai-1.1,0.05208613291007222,sum of pair means in group / sum over all pairs
+share_pair_weighted_model_Lag-Llama,0.37920148281197485,sum of pair means in group / sum over all pairs
+share_pair_weighted_model_GJR-GARCH,0.1009003911949635,sum of pair means in group / sum over all pairs
+share_pair_weighted_model_GJR-GARCH-t,0.0204016494675937,sum of pair means in group / sum over all pairs
+share_pair_weighted_model_GARCH-N,0.1353554445410211,sum of pair means in group / sum over all pairs
+share_pair_weighted_model_Hist-Sim,0.03836098966725243,sum of pair means in group / sum over all pairs
+share_pair_weighted_model_EWMA,0.1400368067596718,sum of pair means in group / sum over all pairs
+share_pair_weighted_class_Equity,0.5041607748204561,sum of pair means in group / sum over all pairs
+share_pair_weighted_class_FX,0.05211166981065625,sum of pair means in group / sum over all pairs
+share_pair_weighted_class_Bond ETF,0.02033798739580279,sum of pair means in group / sum over all pairs
+share_pair_weighted_class_Commodity,0.2508463073805137,sum of pair means in group / sum over all pairs
+share_pair_weighted_class_Crypto,0.17254326059257116,sum of pair means in group / sum over all pairs
+share_observation_pooled_model_PatchTST-FM,0.11024721932067402,sum of d_it in group / sum over all observations
+share_observation_pooled_model_Chronos-2,0.016126810524710943,sum of d_it in group / sum over all observations
+share_observation_pooled_model_TS-ICL,-0.006000348242963509,sum of d_it in group / sum over all observations
+share_observation_pooled_model_Moirai-1.1,0.04343420429919936,sum of d_it in group / sum over all observations
+share_observation_pooled_model_Lag-Llama,0.38195115387774,sum of d_it in group / sum over all observations
+share_observation_pooled_model_GJR-GARCH,0.11002870487788877,sum of d_it in group / sum over all observations
+share_observation_pooled_model_GJR-GARCH-t,0.02785392114488624,sum of d_it in group / sum over all observations
+share_observation_pooled_model_GARCH-N,0.14090252570575543,sum of d_it in group / sum over all observations
+share_observation_pooled_model_Hist-Sim,0.039219299996652204,sum of d_it in group / sum over all observations
+share_observation_pooled_model_EWMA,0.13623650849545665,sum of d_it in group / sum over all observations
+share_observation_pooled_class_Equity,0.6113599323645486,sum of d_it in group / sum over all observations
+share_observation_pooled_class_FX,0.0619447806093366,sum of d_it in group / sum over all observations
+share_observation_pooled_class_Bond ETF,0.01983159397737267,sum of d_it in group / sum over all observations
+share_observation_pooled_class_Commodity,0.21607126837981672,sum of d_it in group / sum over all observations
+share_observation_pooled_class_Crypto,0.09079242466892566,sum of d_it in group / sum over all observations
+top10_dates_abs_date_sum,2025-10-10;2026-02-05;2025-04-04;2021-11-26;2025-04-03;2025-03-03;2024-08-02;2020-03-09;2026-06-05;2025-04-06,"ten calendar dates, descending"
+top10_dates_abs_date_sum_share_of_pooled_sum,0.6042094321898593,sum of d_it on those dates / sum over all observations
+bootstrap_variance_contrast1_block20_x1e8,0.0052506905508674494,variance (ddof=1) of the 999 contrast-1 draws
+bootstrap_variance_contrast1_block20_without_top10_abs_date_sum_x1e8,0.001942030798310116,same draws with those ten dates removed from every pair
+fraction_of_bootstrap_variance_from_top10_abs_date_sum_block20,0.6301380209905383,1 - leave-out variance / full variance
+point_contrast1_block20_without_top10_abs_date_sum_x1e4,-0.03640467765424171,contrast 1 point with those ten dates removed
+bootstrap_variance_contrast1_block60_x1e8,0.005962609016520045,variance (ddof=1) of the 999 contrast-1 draws
+bootstrap_variance_contrast1_block60_without_top10_abs_date_sum_x1e8,0.0023808198391847245,same draws with those ten dates removed from every pair
+fraction_of_bootstrap_variance_from_top10_abs_date_sum_block60,0.6007083757146563,1 - leave-out variance / full variance
+point_contrast1_block60_without_top10_abs_date_sum_x1e4,-0.03640467765424171,contrast 1 point with those ten dates removed
+top10_dates_max_abs_dit,2024-08-27;2025-10-10;2026-02-05;2025-04-06;2025-03-03;2024-03-19;2024-01-12;2023-08-17;2026-06-05;2025-02-24,"ten calendar dates, descending"
+top10_dates_max_abs_dit_share_of_pooled_sum,0.4421327359886061,sum of d_it on those dates / sum over all observations
+bootstrap_variance_contrast1_block20_x1e8,0.0052506905508674494,variance (ddof=1) of the 999 contrast-1 draws
+bootstrap_variance_contrast1_block20_without_top10_max_abs_dit_x1e8,0.003072328109149687,same draws with those ten dates removed from every pair
+fraction_of_bootstrap_variance_from_top10_max_abs_dit_block20,0.41487160986051297,1 - leave-out variance / full variance
+point_contrast1_block20_without_top10_max_abs_dit_x1e4,-0.05202687713989343,contrast 1 point with those ten dates removed
+bootstrap_variance_contrast1_block60_x1e8,0.005962609016520045,variance (ddof=1) of the 999 contrast-1 draws
+bootstrap_variance_contrast1_block60_without_top10_max_abs_dit_x1e8,0.003413271467470682,same draws with those ten dates removed from every pair
+fraction_of_bootstrap_variance_from_top10_max_abs_dit_block60,0.4275540358232699,1 - leave-out variance / full variance
+point_contrast1_block60_without_top10_max_abs_dit_x1e4,-0.05202687713989343,contrast 1 point with those ten dates removed
