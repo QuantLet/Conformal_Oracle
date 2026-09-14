@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "archive": "release/R8_20260910_ten_external.zip",
+  "archive_sha256": "5ca06842854b2668c906830c383e9e258b9d83568f85329d5f7ff842b117cdbf",
+  "files": 25587,
+  "uncompressed_bytes": 15253724413,
+  "archived_bytes_verified": true,
+  "preceding_release_unchanged": true
+}

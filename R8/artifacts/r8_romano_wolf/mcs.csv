@@ -1,0 +1,6 @@
+block_calendar_days,size,T_max,critical_value,p_value,eliminated,members
+20,9,2.7828444684335016,2.3639609647073887,0.021021021021021023,DtACI-projected-expected,Shift-CP;Raw;Vol-ERM;State-L1;POT-Shift;POT-Vol;DtACI-projected-expected;Loss-gate;Past-minimum
+20,8,2.489353551799534,2.3298834282128436,0.036036036036036036,Raw,Shift-CP;Raw;Vol-ERM;State-L1;POT-Shift;POT-Vol;Loss-gate;Past-minimum
+20,7,1.5170383652617805,2.2727707742454046,0.3033033033033033,,Shift-CP;Vol-ERM;State-L1;POT-Shift;POT-Vol;Loss-gate;Past-minimum
+60,9,2.49810013593129,2.396691843498807,0.03903903903903904,DtACI-projected-expected,Shift-CP;Raw;Vol-ERM;State-L1;POT-Shift;POT-Vol;DtACI-projected-expected;Loss-gate;Past-minimum
+60,8,2.2625386274464843,2.3430332060870382,0.05805805805805806,,Shift-CP;Raw;Vol-ERM;State-L1;POT-Shift;POT-Vol;Loss-gate;Past-minimum

@@ -1,0 +1,36 @@
+{
+  "protocol_sha256": "8f60cb3304ebc3726c0c329c66ff4b89cff0ec22ac15db3bfe768ccb141f534c",
+  "producer_sha256": "afd61ce038643d2a875515ae5f55d7dbbb856264c564c53b620d7211cfcdba61",
+  "inputs": {
+    "artifacts/r8_referee_revision/results/bootstrap_20.npz": "0418b4650cb0dfdf22d74317a97b648502b8527a971181639657edf5a3e1cb92",
+    "artifacts/r8_referee_revision/results/bootstrap_60.npz": "46c6a8cea35d8dc73d4d0a1b21758680fa6a6ba40385267beceb167d3c112e91",
+    "artifacts/r8_ten_comparators/results/bootstrap_20.npz": "0418b4650cb0dfdf22d74317a97b648502b8527a971181639657edf5a3e1cb92",
+    "artifacts/r8_ten_comparators/results/bootstrap_60.npz": "46c6a8cea35d8dc73d4d0a1b21758680fa6a6ba40385267beceb167d3c112e91"
+  },
+  "level": 0.05,
+  "elapsed_seconds": 0.014657374999842432,
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]",
+  "numpy": "2.3.5",
+  "pandas": "2.3.3",
+  "mcs_final": {
+    "20": [
+      "Shift-CP",
+      "Vol-ERM",
+      "State-L1",
+      "POT-Shift",
+      "POT-Vol",
+      "Loss-gate",
+      "Past-minimum"
+    ],
+    "60": [
+      "Shift-CP",
+      "Raw",
+      "Vol-ERM",
+      "State-L1",
+      "POT-Shift",
+      "POT-Vol",
+      "Loss-gate",
+      "Past-minimum"
+    ]
+  }
+}

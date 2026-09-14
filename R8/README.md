@@ -126,3 +126,27 @@ binds the integrated article `main_R8` only, since the appendix is part of that
 PDF. `REPLAY_MANIFEST.json` carries the three changed input hashes and the one
 changed output hash under `extension_20260914`. No contrast estimate, table
 value or figure changed; the replay regenerates the same 67 files.
+
+## Extension of 14 September 2026 (v2)
+
+Eight display studies join the replay as steps 12–19, each with a dated
+protocol, an `analysis.py` that carries a `--check` replay against the full
+archive, and a `displays.py` that regenerates its LaTeX fragments from the
+stored outputs deposited here: `research/r8_count_display` (exact count-law
+costs from `artifacts/r8_count_law/exact_witness.json`), `research/r8_coverage_panel`
+(pair-equal violation rates of eight policies with common-calendar bootstrap
+intervals), `research/r8_romano_wolf` (stepdown testing and the model
+confidence set on the stored eight-comparison draws), `research/r8_basel_binomial`
+(traffic-light zones under the scaled and the binomial rule),
+`research/r8_economics` (VaR width, breach severity, yearly widening),
+`research/r8_calendar` (trading calendars, stress-date pair counts, external
+return autocorrelations), `research/r8_common_window` (static-minus-raw
+contrast on the window where all 24 assets are under test; split dates) and
+`research/r8_window_sweep` (display of the March-2026-vintage estimation-window
+sweep in `source/analysis/phase3_windows/`). The power-analysis study adds
+120- and 250-day blocks and a within-pair permutation reference; the ten-panel
+display producer adds pointwise-interval and independence-rejection columns.
+The replay now regenerates 82 files: 55 LaTeX fragments, 13 PDF figures and
+seven figures in each of PNG and SVG. The studies' `analysis.py` producers read
+the 240 daily loss files, which exceed this package and are supplied on request.
+

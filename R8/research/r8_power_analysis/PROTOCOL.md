@@ -49,3 +49,17 @@ binomial test, because pairs share dates.
 means and both band types, sensitivity table, sign statistic, and
 `RESULTS.md` stating plainly which contrasts exclude zero, with the
 exploratory status repeated. No R8 file is modified.
+
+## Amendment of 14 September 2026 (fixed before the added computations)
+
+In response to the statistics referee: (i) block lengths 120 and 250 calendar
+days are added to the sensitivity of contrast 1, reported separately and not
+in the family; a block length under which a common-calendar draw leaves a pair
+with zero retained observations is reported as undefined, with the number of
+such draws, not silently dropped; (ii) a permutation reference for the
+top-ten-date share: 999 within-pair permutations of the dates of $d_{it}$
+(seed `seed_for('date-permutation', 10)`), the share of the pooled sum carried
+by the ten largest $|$date sum$|$ dates recomputed each time, reporting the
+mean, 95th percentile, maximum and the fraction of permutations reaching the
+observed share; (iii) the pointwise columns promised above are printed in the
+manuscript table. No contrast, draw, seed or existing output changes.

@@ -1,0 +1,11 @@
+{
+  "inputs": {
+    "widths.csv": "d04a1dff754550a7992f7b37a2fd86363c29dcd7a9f337c1cd981cd1d9d3455d",
+    "severity.csv": "7dfd4c6006573de031496a896d6be9db94414fd6f5d12e3b79fa22b2fe8dce40",
+    "by_year.csv": "27e3ac58d093bb54b37be266358bf73ce1caff8afe34bf693f0303c493412d9f"
+  },
+  "outputs": {
+    "numbers_econ.tex": "52a032e994792a5bc1981bb0ccdd1b4295e4a5de303e43fb255e65b08227df6f",
+    "tab_econ.tex": "ef7b7cfb581e908c3a1a13f0fb8dba0e687e8a49a1c1df6a6ceb51f39f949932"
+  }
+}

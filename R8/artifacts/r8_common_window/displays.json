@@ -1,0 +1,12 @@
+{
+  "inputs": {
+    "contrast.csv": "04aa6f4b92252bd9027da1b256bbc969125d9065dfca9029cad1001af7bee302",
+    "split_dates.csv": "ce1caaccdd26d400082881c8956a3597c26af656fe32bff5e03db06f695f3019",
+    "run.json": "d2558fbcb2a5329d8c8d4eaed9b6ff5efd829eb259e9cad0cb138214f9776140"
+  },
+  "outputs": {
+    "numbers_common.tex": "377e9c25a6accf6d4f4b8b99336f5bdf5a72ed2dfe98dc90ecf59eb5a8b51022",
+    "tab_common.tex": "bcad0b6b35ce4b668ea6ebabe499a51db1b9ccbef09ef5557729bfab3cd0092c",
+    "tab_split_dates.tex": "9a4c40a83f5133419825a365094c0ed633b0623aefcb744204415f9de7e15397"
+  }
+}

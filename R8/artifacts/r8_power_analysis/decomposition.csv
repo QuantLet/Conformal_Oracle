@@ -83,3 +83,8 @@ bootstrap_variance_contrast1_block60_x1e8,0.005962609016520045,variance (ddof=1)
 bootstrap_variance_contrast1_block60_without_top10_max_abs_dit_x1e8,0.003413271467470682,same draws with those ten dates removed from every pair
 fraction_of_bootstrap_variance_from_top10_max_abs_dit_block60,0.4275540358232699,1 - leave-out variance / full variance
 point_contrast1_block60_without_top10_max_abs_dit_x1e4,-0.05202687713989343,contrast 1 point with those ten dates removed
+permutation_top10_share_draws,999,"within-pair date permutations of d_it, seed_for(""date-permutation"", 10)"
+permutation_top10_share_mean,0.09095604113641849,mean over permutations of the top-ten |date sum| share of the pooled sum
+permutation_top10_share_q95,0.1021897293103336,95th percentile over permutations
+permutation_top10_share_max,0.11541148490276694,maximum over permutations
+permutation_top10_share_p_value,0.0,fraction of permutations with share at least the observed share

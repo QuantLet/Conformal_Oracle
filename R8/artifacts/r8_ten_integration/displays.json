@@ -1,5 +1,5 @@
 {
-  "producer_sha256": "64a688470d13a0f6f9b0d5d4ee0c11be00b682d8cdc30ef2345a505ecaada3a4",
+  "producer_sha256": "65c3fbf0ecb2c7f76e2077554c86d3107851437f6a8a6653d3dd5ea7842a9b66",
   "inputs": {
     "artifacts/r8_ten_comparators/validation.json": "fd64746923daf8405bf8d291d8b4730638dd691ff8d73dd4e3986c09e10074ef",
     "artifacts/r8_ten_comparators/aggregation_validation.json": "88133bb7ff42b2d62e64ae8aa5d0474a11910047b6e9807cf7c6513158c6906a",
@@ -32,9 +32,9 @@
     "artifacts/r8_external/july2026/results/decisions.csv": "baf91f5204079484e3da820c5e5e16436f78fb81bca605252687d7114a89f534"
   },
   "outputs": {
-    "sections_r8/numbers_ten_external.tex": "b6a6e11e69fa04ca7020d5b7e67659e22c9f00b50ccc632b42c6cf7a79cfceb9",
-    "sections_r8/tab_native_forecasters.tex": "b44d8e6e1abba75c0c1fe29f6d5c32ff459ae5b1096ede3f5107cc86ee92a364",
-    "sections_r8/tab_ten_strong.tex": "f13cec3d9ea975fddb036f56e3ab60524f54dbe608ee153adf9c93387f523900",
+    "sections_r8/numbers_ten_external.tex": "8da885b80eb318f0c3aed5f1eae94c6aa52728e61d92879c1acd0e27495cebe1",
+    "sections_r8/tab_native_forecasters.tex": "b8068f28111ef6da8a6821fbc06b4f99ccaf0f15d1b9bba9ae40bc1382fa852d",
+    "sections_r8/tab_ten_strong.tex": "6509b061972a9184d9412fe5182632844b465b12b6799bddc54011512b07cc24",
     "sections_r8/tab_external.tex": "518e0b016e8cf2c4b956edaddb7620e97ae8d40f1ec70d49d3c6c3a2b2668476",
     "figures/fig_ten_traffic.pdf": "e280637ba13997d3e1cf1ac7de45ca6e5fe454964d2201f21d8cae26cafb768b",
     "figures/fig_ten_traffic.png": "f1ac7d33f12ce83bebee4d32e3ac05971e37941026d9935976feb631bae447ab",
@@ -124,9 +124,15 @@
     "nTenPotTwentyDelta": "-0.0131",
     "nTenPotTwentyLo": "-0.0297",
     "nTenPotTwentyHi": "0.0036",
+    "nTenPotPointTwentyLo": "-0.0245",
+    "nTenPotPointTwentyHi": "0.0004",
     "nTenPotSixtyDelta": "-0.0131",
     "nTenPotSixtyLo": "-0.0285",
     "nTenPotSixtyHi": "0.0024",
+    "nTenPotPointSixtyLo": "-0.0242",
+    "nTenPotPointSixtyHi": "-0.0004",
+    "nTenRawInd": "51",
+    "nTenStaticInd": "42",
     "nTenExCryptoDelta": "0.0004",
     "nTenExCryptoLo": "-0.0082",
     "nTenExCryptoHi": "0.0090",

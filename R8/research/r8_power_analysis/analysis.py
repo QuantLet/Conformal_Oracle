@@ -26,7 +26,7 @@ ALPHA = .01
 DRAWS = 999
 CHUNK = 25
 BLOCKS = (20, 60)
-SENSITIVITY_BLOCKS = (5, 10)
+SENSITIVITY_BLOCKS = (5, 10, 120, 250)  # 120 and 250 added 14 September 2026 (PROTOCOL.md amendment)
 MODELS = ['PatchTST-FM', 'Chronos-2', 'TS-ICL', 'Moirai-1.1', 'Lag-Llama',
           'GJR-GARCH', 'GJR-GARCH-t', 'GARCH-N', 'Hist-Sim', 'EWMA']
 FOUNDATION = MODELS[:5]
@@ -42,6 +42,7 @@ STATIC, RAW = 'Shift-CP', 'Raw'
 CONTRASTS = ['1_all_pairs', '2_classical_only', '3_foundation_only', '4_excluding_lag_llama',
              '5_equities_only', '6_fx_bonds_commodities', '7_crypto_only', '8_pair_normalised', '9_date_weighted']
 TOP_DATES = 10
+PERMUTATIONS = 999  # within-pair date permutations for the top-ten-date share reference (amendment of 14 September 2026)
 
 
 def seed_for(key, replicate=0):
@@ -247,6 +248,24 @@ def decomposition(dates, valid, values, meta, frames, masks, counts_by_block):
             rows.append((f'fraction_of_bootstrap_variance_from_top{TOP_DATES}_{label}_block{block}', 1 - v_leave / v_full, '1 - leave-out variance / full variance'))
             rows.append((f'point_contrast1_block{block}_without_top{TOP_DATES}_{label}_x1e4',
                          ((valid_lo * values_lo).sum(axis=0) / valid_lo.sum(axis=0)).mean() * 1e4, 'contrast 1 point with those ten dates removed'))
+    # Reference distribution for the top-ten share: permute dates within each pair (999 draws),
+    # recompute the share of the pooled sum carried by the ten largest |date sum| dates.
+    rng = np.random.default_rng(seed_for('date-permutation', TOP_DATES))
+    obs_index = [np.flatnonzero(valid[:, j]) for j in range(values.shape[1])]
+    shares = np.empty(PERMUTATIONS)
+    for b in range(PERMUTATIONS):
+        perm = np.zeros_like(values)
+        for j, ix in enumerate(obs_index):
+            perm[ix, j] = values[ix, j][rng.permutation(len(ix))]
+        ds = perm.sum(axis=1)
+        top = np.argsort(-np.abs(ds))[:TOP_DATES]
+        shares[b] = ds[top].sum() / total_obs
+    observed = date_sum[rankings['abs_date_sum']].sum() / total_obs
+    rows.append((f'permutation_top{TOP_DATES}_share_draws', PERMUTATIONS, 'within-pair date permutations of d_it, seed_for("date-permutation", 10)'))
+    rows.append((f'permutation_top{TOP_DATES}_share_mean', shares.mean(), 'mean over permutations of the top-ten |date sum| share of the pooled sum'))
+    rows.append((f'permutation_top{TOP_DATES}_share_q95', float(np.quantile(shares, .95)), '95th percentile over permutations'))
+    rows.append((f'permutation_top{TOP_DATES}_share_max', shares.max(), 'maximum over permutations'))
+    rows.append((f'permutation_top{TOP_DATES}_share_p_value', float((shares >= observed).mean()), 'fraction of permutations with share at least the observed share'))
     return pd.DataFrame(rows, columns=['item', 'value', 'definition'])
 
 
@@ -268,7 +287,17 @@ def run(out_dir):
     for block in BLOCKS + SENSITIVITY_BLOCKS:
         seeds[block] = seed_for('panel-calendar', block)
         counts = block_counts(T, block)
-        draws, pm = statistics(counts, valid, values, meta, masks)
+        try:
+            draws, pm = statistics(counts, valid, values, meta, masks)
+        except AssertionError:
+            assert block not in BLOCKS
+            empty = int(((counts @ valid) == 0).any(axis=1).sum())
+            sens_rows.append(pd.DataFrame([{'contrast': '1_all_pairs', 'point': float(point['1_all_pairs']), 'bootstrap_sd': np.nan,
+                                            'pointwise_lower': np.nan, 'pointwise_upper': np.nan, 'simultaneous_lower': np.nan, 'simultaneous_upper': np.nan,
+                                            'block_calendar_days': block, 'draws': DRAWS, 'pairs': 240, 'simultaneous_family_size': 1,
+                                            'note': f'undefined: {empty} of {DRAWS} common-calendar draws leave at least one pair with zero retained observations'}]))
+            seeds[block] = seed_for('panel-calendar', block)
+            continue
         if block in BLOCKS:
             counts_by_block[block] = counts
             table, crit = bands(point, draws, CONTRASTS)

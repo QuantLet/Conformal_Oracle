@@ -1,0 +1,20 @@
+{
+  "protocol_sha256": "1374afc2ecd657e3c5ce929689ce05d3ff46f44861f60dec0417573b76dff505",
+  "producer_sha256": "79e82b38340dcdfc9c259faa63ede4969d9ab7916c2cec6d9905004812e8706a",
+  "power_analysis_sha256": "443d234cb8c2cbb2158f7f5de86904dae178b67a2c5402a8a0d96c3dcbe0def1",
+  "seeds": {
+    "20": 4034980058,
+    "60": 196994084
+  },
+  "draws": 999,
+  "calendar_days": 2707,
+  "elapsed_seconds": 1.0107033339991176,
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]",
+  "numpy": "2.3.5",
+  "pandas": "2.3.3",
+  "inputs": {
+    "pairs_dir": "artifacts/r8_ten_comparators/pairs",
+    "pairs_csv": "artifacts/r8_ten_comparators/results/pairs.csv",
+    "n_pairs": 240
+  }
+}

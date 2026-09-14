@@ -138,3 +138,17 @@ confirmatory test.
 ## Corrections of 13 September 2026 (after the independent review)
 
 The printed seed key had an extra `/0`; the actual key is `20260909/panel-calendar/{block}` and the random streams are unchanged. The binomial reference p-value was removed from `sign.csv` because pairs share dates; the calendar-bootstrap interval is the evidence. The leave-ten-dates-out variance change is an influence sensitivity, not an additive variance attribution.
+
+## Amendment of 14 September 2026 (measured; `sensitivity.csv`, `decomposition.csv`)
+
+Contrast 1 at longer blocks: 120 calendar days gives bootstrap SD 0.0734 and pointwise
+95% band [-0.2964, -0.0213] (max-|z| band of the single contrast [-0.2964, -0.0222]).
+The bootstrap SD is not monotone in block length: 0.0654 (5), 0.0698 (10), 0.0725 (20),
+0.0772 (60), 0.0734 (120); 60 days is the maximum of the grid. At 250 calendar days 3 of
+the 999 common-calendar draws leave at least one pair with zero retained observations, so
+the statistic is undefined for that block length; this is a limit of the design.
+
+Permutation reference for the top-ten-date share (999 within-pair date permutations):
+mean 9.1%, 95th percentile 10.2%, maximum 11.5%; no permutation reaches the observed
+60.4%. Existing rows of contrasts.csv, sign.csv, sensitivity.csv (5 and 10 days) and
+decomposition.csv are unchanged (verified to 1e-10 against the pre-amendment copies).
