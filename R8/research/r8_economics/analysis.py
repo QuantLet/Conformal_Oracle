@@ -18,7 +18,7 @@ def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def run():
     level_rows, ratio_rows, sev_rows, year_rows = [], [], [], []
-    sums = {m: [0., 0] for m in METHODS}
+    sums = {m: [0., 0, 0.] for m in METHODS}
     sev_pool = {m: [0., 0., 0] for m in SEV}
     year_pool = {}
     hashes = {}
@@ -29,10 +29,10 @@ def run():
             r = f.r.to_numpy()
             raw_level = float((-f['Raw']).mean())
             for m in METHODS:
-                q = f[m].to_numpy(); lvl = float((-q).mean())
-                sums[m][0] += float((-q).sum()); sums[m][1] += len(q)
+                q = f[m].to_numpy(); lvl = float((-q).mean()); money = -np.expm1(q)   # loss fraction of a long unlevered position
+                sums[m][0] += float((-q).sum()); sums[m][1] += len(q); sums[m][2] += float(money.sum())
                 level_rows.append({'model': model, 'asset': asset, 'method': m, 'n_test': len(q), 'mean_var_pct': 100 * lvl,
-                                   'ratio_to_raw': lvl / raw_level})
+                                   'mean_loss_fraction_pct': 100 * float(money.mean()), 'ratio_to_raw': lvl / raw_level})
             for m in SEV:
                 q = f[m].to_numpy(); hit = r < q
                 sev_rows.append({'model': model, 'asset': asset, 'method': m, 'breaches': int(hit.sum()),
@@ -48,6 +48,9 @@ def run():
         g = levels[levels.method == m]
         widths.append({'method': m, 'pairs': len(g), 'pair_equal_mean_var_pct': g.mean_var_pct.mean(),
                        'pooled_mean_var_pct': 100 * sums[m][0] / sums[m][1], 'pair_days': sums[m][1],
+                       'pair_equal_mean_loss_fraction_pct': g.mean_loss_fraction_pct.mean(),
+                       'pooled_mean_loss_fraction_pct': 100 * sums[m][2] / sums[m][1],
+                       'pooled_loss_fraction_pct_change_vs_raw': 100 * ((sums[m][2] / sums[m][1]) / (sums['Raw'][2] / sums['Raw'][1]) - 1),
                        'ratio_mean': g.ratio_to_raw.mean(), 'ratio_median': g.ratio_to_raw.median(),
                        'ratio_min': g.ratio_to_raw.min(), 'ratio_max': g.ratio_to_raw.max(),
                        'pairs_wider_than_raw': int((g.ratio_to_raw > 1).sum()),
@@ -89,13 +92,15 @@ def main():
     w = widths.set_index('method'); sv = severity.set_index('method')
     (OUT / 'RESULTS.md').write_text(f"""# Width, severity and yearly widening (measured, 240 pairs)
 
-Pooled mean VaR level (% of notional): Raw {w.loc['Raw','pooled_mean_var_pct']:.4f}, Shift-CP {w.loc['Shift-CP','pooled_mean_var_pct']:.4f}
+Pooled mean VaR threshold (log-return units x 100): Raw {w.loc['Raw','pooled_mean_var_pct']:.4f}, Shift-CP {w.loc['Shift-CP','pooled_mean_var_pct']:.4f}
 ({w.loc['Shift-CP','pooled_pct_change_vs_raw']:+.2f}%), Rolling250 {w.loc['Rolling250','pooled_mean_var_pct']:.4f}.
 Pair-equal: Raw {w.loc['Raw','pair_equal_mean_var_pct']:.4f}, Shift-CP {w.loc['Shift-CP','pair_equal_mean_var_pct']:.4f} ({w.loc['Shift-CP','pair_equal_pct_change_vs_raw']:+.2f}%).
 Shift-CP/Raw ratio: mean {w.loc['Shift-CP','ratio_mean']:.3f}, median {w.loc['Shift-CP','ratio_median']:.3f}, max {w.loc['Shift-CP','ratio_max']:.3f}, min {w.loc['Shift-CP','ratio_min']:.3f}; {int(w.loc['Shift-CP','pairs_wider_than_raw'])} of 240 pairs wider.
 Breach severity (pooled): exceedance Raw {sv.loc['Raw','pooled_mean_exceedance_pct']:.3f}% -> Shift-CP {sv.loc['Shift-CP','pooled_mean_exceedance_pct']:.3f}%;
 loss on breach Raw {sv.loc['Raw','pooled_mean_loss_on_breach_pct']:.3f}% -> Shift-CP {sv.loc['Shift-CP','pooled_mean_loss_on_breach_pct']:.3f}%.
 Yearly pooled widening: {', '.join(f"{int(r.year)}: {r.pct_change:+.1f}%" for r in by_year.itertuples())}.
+Loss fraction of a long unlevered position, 100*(1-exp(q)), pooled: Raw {w.loc['Raw','pooled_mean_loss_fraction_pct']:.4f}%, Shift-CP {w.loc['Shift-CP','pooled_mean_loss_fraction_pct']:.4f}% ({w.loc['Shift-CP','pooled_loss_fraction_pct_change_vs_raw']:+.2f}%).
+Breach severity is in log-return units x 100.
 """)
     print((OUT / 'RESULTS.md').read_text())
 

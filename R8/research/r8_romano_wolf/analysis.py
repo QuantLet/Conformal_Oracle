@@ -56,21 +56,35 @@ def stepdown(theta, sd, tstar):
     return t, rejected_at, crits
 
 
-def mcs(draws, point, methods):
-    """Model confidence set with the T_max statistic and its elimination rule (Hansen, Lunde and Nason, 2011):
-    t_i = (mean_j d_ij)/sd, eliminate argmax t_i while the bootstrap p-value of max_i t_i is below LEVEL."""
+def mcs(draws, point, methods, statistic):
+    """Model confidence set of Hansen, Lunde and Nason (2011) on the stored draws.
+
+    statistic='range': T_R = max_{i,j} |t_ij| with t_ij = d_ij / sd(d_ij), d_ij = mean QS_i - mean QS_j;
+    elimination rule e_R = argmax_i max_j t_ij (the PROTOCOL's primary statistic).
+    statistic='max': T_max = max_i t_i with t_i = d_i. / sd(d_i.), d_i. = mean_j d_ij; rule e_max = argmax_i t_i
+    (sensitivity; the statistic implemented in the first run of 14 September 2026).
+    The bootstrap p-value at each step is the share of centred draws with statistic >= observed; a method's
+    MCS p-value is the maximum of the step p-values up to and including its elimination step."""
     kept = list(methods)
-    trace = []
+    trace, running = [], 0.
     while len(kept) > 1:
-        p = point[kept].to_numpy(); D = draws[kept].to_numpy()
-        dev = p - (p.sum() - p) / (len(kept) - 1)                       # d_i. = mean over j of (p_i - p_j)
-        ddev = D - (D.sum(axis=1, keepdims=True) - D) / (len(kept) - 1)
-        sd = (ddev - dev).std(axis=0, ddof=1)
-        t = dev / sd
-        tstar = ((ddev - dev) / sd).max(axis=1)
-        stat = float(t.max()); crit = float(np.quantile(tstar, 1 - LEVEL)); pval = float((tstar >= stat).mean())
-        worst = int(np.argmax(t))
-        trace.append(dict(size=len(kept), T_max=stat, critical_value=crit, p_value=pval, eliminated=kept[worst] if pval < LEVEL else '', members=';'.join(kept)))
+        p = point[kept].to_numpy(); D = draws[kept].to_numpy(); k = len(kept)
+        if statistic == 'range':
+            theta = p[:, None] - p[None, :]
+            dB = D[:, :, None] - D[:, None, :]
+            sd = dB.std(axis=0, ddof=1); np.fill_diagonal(sd, 1.)
+            t = theta / sd; tB = (dB - theta) / sd
+            stat = float(np.abs(t).max()); boot = np.abs(tB).max(axis=(1, 2))
+            worst = int(np.argmax(t.max(axis=1)))
+        else:
+            dev = p - (p.sum() - p) / (k - 1)
+            ddev = D - (D.sum(axis=1, keepdims=True) - D) / (k - 1)
+            sd = (ddev - dev).std(axis=0, ddof=1)
+            t = dev / sd; boot = ((ddev - dev) / sd).max(axis=1)
+            stat = float(t.max()); worst = int(np.argmax(t))
+        crit = float(np.quantile(boot, 1 - LEVEL)); pval = float((boot >= stat).mean()); running = max(running, pval)
+        trace.append(dict(statistic=statistic, size=k, T=stat, critical_value=crit, p_value=pval, mcs_p_value=running,
+                          eliminated=kept[worst] if pval < LEVEL else '', members=';'.join(kept)))
         if pval < LEVEL:
             kept.pop(worst)
         else:
@@ -108,10 +122,11 @@ def run():
                               raw_band_lower_eight=lo['Raw'], raw_band_upper_eight=hi['Raw'],
                               raw_band_lower_six_critical=raw_lo6, raw_band_upper_six_critical=raw_hi6,
                               stepdown_steps=json.dumps(crits)))
-        kept, trace = mcs(draws, point, [REF] + FAMILY)
-        for tr in trace:
-            mcs_rows.append(dict(block_calendar_days=block, **tr))
-        final[block] = kept
+        for statistic in ['range', 'max']:
+            kept, trace = mcs(draws, point, [REF] + FAMILY, statistic)
+            for tr in trace:
+                mcs_rows.append(dict(block_calendar_days=block, **tr))
+            final[f'{block}_{statistic}'] = kept
     return dict(results=pd.DataFrame(rows), critical=pd.DataFrame(crit_rows), mcs=pd.DataFrame(mcs_rows), final=final, elapsed=time.monotonic() - t0)
 
 
@@ -126,14 +141,14 @@ def write(res):
         level=LEVEL, elapsed_seconds=res['elapsed'], python=sys.version, numpy=np.__version__, pandas=pd.__version__,
         mcs_final={str(k): v for k, v in res['final'].items()}), indent=2) + '\n')
     r = res['results']; c = res['critical']
-    lines = ['# Stepdown and model confidence set: results', '', 'Exploratory; protocol fixed before computation. Level 5%, two-sided, 999 stored draws.', '']
+    lines = ['# Stepdown and model confidence set: results', '', 'Exploratory; protocol fixed before computation. Level 5%, two-sided, 999 stored draws. MCS: range statistic T_R (protocol) and T_max (sensitivity; the first run used T_max only, see the PROTOCOL amendment).', '']
     for block in BLOCKS:
         cc = c[c.block_calendar_days == block].iloc[0]
         lines += [f'## {block}-day blocks', '', f'Single-step critical values: eight-member {cc.eight_member_critical:.6f}, six-member {cc.six_member_critical:.6f}. Stepdown steps: {cc.stepdown_steps}', '',
                   '| method | difference | sd | t | rejected single-step | stepdown step |', '|---|---|---|---|---|---|']
         for _, x in r[r.block_calendar_days == block].iterrows():
             lines.append(f'| {x.method} | {x.difference:.4f} | {x.bootstrap_sd:.4f} | {x.t:.3f} | {x.rejected_single_step} | {x.stepdown_step or "none"} |')
-        lines += ['', f'Model confidence set at 95%: {res["final"][block]}', '']
+        lines += ['', f'Model confidence set at 95% (range statistic, primary): {res["final"][f"{block}_range"]}', f'Model confidence set at 95% (T_max, sensitivity): {res["final"][f"{block}_max"]}', '']
     (OUT / 'RESULTS.md').write_text('\n'.join(lines) + '\n')
 
 

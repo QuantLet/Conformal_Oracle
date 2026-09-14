@@ -48,3 +48,19 @@ that survives at 95%. This uses the stored draws only.
 `artifacts/r8_romano_wolf/{results.csv, mcs.csv, critical_values.csv, run.json, RESULTS.md}`;
 `displays.py` writes `numbers_rw.tex` (prefix `\nRW`) and `tab_rw.tex`; `--check`
 compares regenerated displays with disk.
+
+## Amendment, 14 September 2026 (evening), after the first run
+
+The first run implemented the model confidence set with the $T_{\max}$ statistic
+(average pairwise difference per method, elimination rule $e_{\max}$) although
+the section above specifies the range statistic $T_R=\max_{i,j}|t_{ij}|$ with
+elimination rule $e_R=\arg\max_i\max_j t_{ij}$. An independent audit
+(`docs/r8_codex_audit_20260914/CODEX_REVIEW.md`) found the discrepancy and
+recomputed $T_R$ on the same draws. This amendment makes the range statistic the
+reported (primary) construction, as specified, and keeps the $T_{\max}$ results
+as a labelled sensitivity in `mcs.csv` (column `statistic`). Both are computed
+from the identical stored draws; no draw is regenerated. A method's MCS
+$p$-value is the maximum of the step $p$-values up to its elimination.
+Elimination of raw from the set is a statement about equal mean loss among
+the survivors; it is not a pairwise test of Shift-CP against raw, and the
+manuscript must not read it as one.

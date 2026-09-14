@@ -2,10 +2,10 @@
   "inputs": {
     "results.csv": "fb1d381cc408c586723d5b6acb0cbb0872975347b042ed79ba917832d18f24ae",
     "critical_values.csv": "a10ee44a2f27243dcebf4f14e2699377b2a577df8e3705164281d20ca1071182",
-    "mcs.csv": "3a7041bd23fa96847e7d15831211f8761c0e55af9413a3ee8c6d7999d7882409"
+    "mcs.csv": "93d06635883220799588fb96ea4a65dd54e11c195d78c36b9a8049b29a989216"
   },
   "outputs": {
-    "numbers_rw.tex": "f74aa0e9988b0df4d503dc97d8ec53fbe4984b5bf83d736d2e0cfce976f0d82b",
+    "numbers_rw.tex": "4ac63e56deb0fc61f50d1275751d0a0d70b819c5bfe22d41b244411b8c907223",
     "tab_rw.tex": "1eda149d3192f54a6e40e09af70ea1319115a575e0eaaadf743d07ccb1210851"
   }
 }

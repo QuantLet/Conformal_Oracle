@@ -1,6 +1,6 @@
 # Stepdown and model confidence set: results
 
-Exploratory; protocol fixed before computation. Level 5%, two-sided, 999 stored draws.
+Exploratory; protocol fixed before computation. Level 5%, two-sided, 999 stored draws. MCS: range statistic T_R (protocol) and T_max (sensitivity; the first run used T_max only, see the PROTOCOL amendment).
 
 ## 20-day blocks
 
@@ -17,7 +17,8 @@ Single-step critical values: eight-member 2.590626, six-member 2.553778. Stepdow
 | Loss-gate | 0.0694 | 0.0563 | 1.233 | False | none |
 | Past-minimum | 0.0170 | 0.0343 | 0.496 | False | none |
 
-Model confidence set at 95%: ['Shift-CP', 'Vol-ERM', 'State-L1', 'POT-Shift', 'POT-Vol', 'Loss-gate', 'Past-minimum']
+Model confidence set at 95% (range statistic, primary): ['Shift-CP', 'Vol-ERM', 'State-L1', 'POT-Shift', 'POT-Vol', 'Loss-gate', 'Past-minimum']
+Model confidence set at 95% (T_max, sensitivity): ['Shift-CP', 'Vol-ERM', 'State-L1', 'POT-Shift', 'POT-Vol', 'Loss-gate', 'Past-minimum']
 
 ## 60-day blocks
 
@@ -34,5 +35,6 @@ Single-step critical values: eight-member 2.552901, six-member 2.524171. Stepdow
 | Loss-gate | 0.0694 | 0.0569 | 1.219 | False | none |
 | Past-minimum | 0.0170 | 0.0349 | 0.487 | False | none |
 
-Model confidence set at 95%: ['Shift-CP', 'Raw', 'Vol-ERM', 'State-L1', 'POT-Shift', 'POT-Vol', 'Loss-gate', 'Past-minimum']
+Model confidence set at 95% (range statistic, primary): ['Shift-CP', 'Vol-ERM', 'State-L1', 'POT-Shift', 'POT-Vol', 'Loss-gate', 'Past-minimum']
+Model confidence set at 95% (T_max, sensitivity): ['Shift-CP', 'Raw', 'Vol-ERM', 'State-L1', 'POT-Shift', 'POT-Vol', 'Loss-gate', 'Past-minimum']
 

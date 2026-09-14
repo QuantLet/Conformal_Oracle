@@ -1,6 +1,6 @@
 {
-  "protocol_sha256": "723e8397dcb88f8f1bfcc79ec6274ecf97b416b154066d0811293dd7484319d3",
-  "producer_sha256": "d6bbf193af47999bab252db73919d1499629f5a64956694ba08cf0bd253a267f",
+  "protocol_sha256": "2b4be0aaa3693cd6cea120ab507f321770a12d822417cac5053146156290e456",
+  "producer_sha256": "e322404ff3e42fecaab32e06cdf67e2986d0a1213f556e41382ba490e1d66edf",
   "inputs": {
     "daily_parquet_sha256": {
       "PatchTST-FM__ASX200": "4c8ea2c4ce85b2df423b7e6c317a52496eeec1c06c5f24a6eb484946b90676b8",

@@ -19,6 +19,9 @@ def build():
         m[f'{tag}WidenPct'] = f"{w.loc[meth, 'pooled_pct_change_vs_raw']:.1f}"; m[f'{tag}WidenPctPair'] = f"{w.loc[meth, 'pair_equal_pct_change_vs_raw']:.1f}"
         m[f'{tag}RatioMean'] = f"{w.loc[meth, 'ratio_mean']:.3f}"; m[f'{tag}RatioMedian'] = f"{w.loc[meth, 'ratio_median']:.3f}"
         m[f'{tag}RatioMax'] = f"{w.loc[meth, 'ratio_max']:.3f}"; m[f'{tag}RatioMin'] = f"{w.loc[meth, 'ratio_min']:.3f}"; m[f'{tag}Wider'] = str(int(w.loc[meth, 'pairs_wider_than_raw']))
+    for meth, tag in [('Raw', 'Raw'), ('Shift-CP', 'Static')]:
+        m[f'{tag}VaRMoney'] = f"{w.loc[meth, 'pooled_mean_loss_fraction_pct']:.3f}"; m[f'{tag}VaRMoneyPair'] = f"{w.loc[meth, 'pair_equal_mean_loss_fraction_pct']:.3f}"
+    m['StaticWidenPctMoney'] = f"{w.loc['Shift-CP', 'pooled_loss_fraction_pct_change_vs_raw']:.1f}"
     m['Pairs'] = str(int(w.loc['Raw', 'pairs'])); m['PairDays'] = f"{int(w.loc['Raw', 'pair_days']):,}"
     for meth, tag in [('Raw', 'Raw'), ('Shift-CP', 'Static'), ('Rolling250', 'Rolling')]:
         m[f'{tag}Exceed'] = f"{s.loc[meth, 'pooled_mean_exceedance_pct']:.2f}"; m[f'{tag}BreachLoss'] = f"{s.loc[meth, 'pooled_mean_loss_on_breach_pct']:.2f}"; m[f'{tag}Breaches'] = f"{int(s.loc[meth, 'breaches']):,}"
