@@ -247,7 +247,7 @@
     },
     "source/sections_r8/numbers_power.tex": {
       "reference": "data/generated_tables/numbers_power.tex",
-      "sha256": "43d78d31738b4f1c9e6a09bf1f877725b9caaad24e35e2cfc68e5a8adb638643"
+      "sha256": "f72dd993beacfb9464a87442c8693e5cfd0a0219fac7dd05cd050f57dc6f05ce"
     },
     "source/sections_r8/tab_power.tex": {
       "reference": "data/generated_tables/tab_power.tex",
@@ -763,10 +763,10 @@
     "source/scripts/extension_20260831/run_unfiltered_neural.py": "b05ca83638dfe17915b08ee308a7f7ffb7fe4c0a3a6b02a127c6912bc8c9139b",
     "source/scripts/extension_20260831/stage_primary.py": "ce14efc9825b2e0c50171ebd53574d7b66d78f50a0ad4386f71f8ba0ba6abccc",
     "source/scripts/extension_20260831/test_statistics.py": "cee8cde100e1357f840b970cac2ead56d3915f512a135b84d53a5546a39b2d06",
-    "source/scripts/extension_20260831/validate_r8.py": "fdd6540ae281cd4282ad15e4c079c22bb71a00c1328c08e5dce6a26b82080014",
+    "source/scripts/extension_20260831/validate_r8.py": "392627c2dbe9d9214636a6f85db3053b0522e80ce384a06fcd2d55635d72b330",
     "research/r8_power_analysis/PROTOCOL.md": "58431f4ea4f7bf31be4a9eae1efe416f921cc9bfa3ad72fb0ff011e7f4ce11b6",
     "research/r8_power_analysis/analysis.py": "443d234cb8c2cbb2158f7f5de86904dae178b67a2c5402a8a0d96c3dcbe0def1",
-    "research/r8_power_analysis/displays.py": "e40f52b69f87e6df3b4fe4d90d5bccf53e89cc5b9139600b40457c84c4e4347e",
+    "research/r8_power_analysis/displays.py": "2f6354b11b17c76b4e373dc2815c8da99a9e2c356f541fd87d45aed6b1ab5119",
     "research/r8_optimism_estimator/AMENDMENT.md": "93ad361209cd1da3a3c62c523396d4315129db8815154cbb0483a41e1a58ea75",
     "research/r8_optimism_estimator/PROTOCOL.md": "6465908a688eafaf02b06d243717e636d9bc4c59061fad74fde6c14d0ff18920",
     "research/r8_optimism_estimator/displays.py": "db414174708a4c447a8770319ee839078ab2c88152cfa69362261cc1d23352de",
@@ -792,7 +792,7 @@
     "artifacts/r8_power_analysis/RESULTS.md": "fde3aa4ad3672982f02787b0539c013c620872a55d9ec37e38133abc233817e8",
     "artifacts/r8_power_analysis/contrasts.csv": "1f82b2a8eea98e910b13de3ac93e9645f406687ea2de790d0712878a1a73644e",
     "artifacts/r8_power_analysis/decomposition.csv": "94c7027c7660a68d7a68b9c54be52cec1d145b47cc1f0eedd5220355de33fe6c",
-    "artifacts/r8_power_analysis/displays.json": "858fbee0b1a407c6aeff2dd407f61dad560f1acfaf2c77e25812325400bf02b3",
+    "artifacts/r8_power_analysis/displays.json": "111a672d967baa8e2a81a2036347795a3f6dc33745e52c312258c4aeca6089bd",
     "artifacts/r8_power_analysis/pair_means.csv": "5ceb3b433b528223d1410534fcbf99e3358601aaa0df81498f3cd81c0be5793a",
     "artifacts/r8_power_analysis/run.json": "99212ee70f5a907d5ab3288d68b68301d531cf807e850da7e32e217f93b8fe25",
     "artifacts/r8_power_analysis/sensitivity.csv": "5180343a4ea1f3f403693d679550f6d05b5aa800db6fa16aa1d930956ebef995",
@@ -907,7 +907,7 @@
   "input_files": 621,
   "origin_commit": "a63c8e59421c10645fef9b695992757b7e93d791",
   "schema": 1,
-  "scope": "Regeneration from archived intermediate results; no model fitting; extended 13 September 2026 with the power analysis, optimism-estimator and second external-universe display producers",
+  "scope": "Regeneration from archived intermediate results; no model fitting; extended 13 September 2026 with the power analysis, optimism-estimator and second external-universe display producers; amended 14 September 2026 with four pointwise-interval macros from the power-analysis display producer",
   "steps": [
     "source/scripts/extension_20260831/build_paper_outputs.py",
     "research/r8_integration/build.py",
@@ -932,5 +932,16 @@
       "tab_external2.tex"
     ],
     "note": "Display-level replay of the three studies from their stored outputs; the studies' own producers (analysis.py, engine.py, the r8_external2 pipeline) read inputs that are not in this package and are documented with --check replays in their folders."
+  },
+  "extension_20260914": {
+    "changed_files": [
+      "source/scripts/extension_20260831/validate_r8.py",
+      "research/r8_power_analysis/displays.py",
+      "artifacts/r8_power_analysis/displays.json"
+    ],
+    "changed_outputs": [
+      "source/sections_r8/numbers_power.tex"
+    ],
+    "note": "research/r8_power_analysis/displays.py emits four additional macros (the unadjusted pointwise interval of the all-pair contrast at 20 and 60 days) from the unchanged contrasts.csv; its receipt records the current sign.csv hash; validate_r8.py binds the integrated article only. No contrast estimate, table value or figure changed."
   }
 }

@@ -2,7 +2,9 @@
 
 This package repairs the execution layout of the original 12 September deposit
 and supplies the required intermediate numerical inputs. The scientific producer
-code and the paper's numerical results are unchanged.
+code and numerical results of the 12 September deposit are unchanged; the
+13 September extension adds three studies, including the optimism-estimator
+run amended after its first run, as its dated amendment records.
 
 ## Quick start
 
@@ -25,7 +27,7 @@ installing the dependencies.
 
 ## What is reproduced
 
-Eleven producers rebuild **67 files**: 40 LaTeX tables/macro files,
+Eleven producer steps rebuild **67 files**: 40 LaTeX tables/macro files,
 13 PDF figures and seven figures in each of PNG and SVG formats. This includes
 every generated numerical fragment and figure used by the article and supplement,
 plus four supporting PDF figures also emitted by the same producers. Output
@@ -89,10 +91,10 @@ supported entry point for this public package is `R8/reproduce.py`.
 
 The statements above about unchanged producers describe the 12 September
 repair; the optimism-estimator study was amended on 13 September (see below).
-Commits on `main` after `R8-2026-09-13-repair1` carry documentation and
-regression-test maintenance only (the estimator's preflight factor check now
-compares the true cross-validated loss with the independently specified 8/9
-and rejects 4/5); every deposited output is hash-identical to the tag.
+Commits on `main` between `R8-2026-09-13-repair1` and `R8-2026-09-14` carry
+documentation and regression-test maintenance (the estimator's preflight factor
+check compares the true cross-validated loss with the independently specified
+8/9 and rejects 4/5) and the 14 September amendment described below.
 
 Three further studies are deposited in the same layout: `research/r8_power_analysis`
 (nine prespecified contrasts on the main-panel loss difference),
@@ -108,3 +110,19 @@ and `tab_external2`. The studies' own computations read the stored 240-pair
 daily losses, the synthetic histories and the external forecast paths, which
 exceed this package and are supplied on request; each study folder has a
 `--check` replay for use with the full archive.
+
+## Amendment of 14 September 2026
+
+`research/r8_power_analysis/displays.py` emits four additional macros from the
+unchanged `artifacts/r8_power_analysis/contrasts.csv`: the unadjusted pointwise
+bootstrap interval of the all-pair loss contrast at 20 and 60 calendar days
+(`\nPowerAllPointTwentyLo`, `\nPowerAllPointTwentyHi`, `\nPowerAllPointSixtyLo`,
+`\nPowerAllPointSixtyHi`). The reference output `data/generated_tables/numbers_power.tex`
+gains these four lines; `tab_power.tex` is unchanged. The producer's receipt
+`artifacts/r8_power_analysis/displays.json` records the new output hash and the
+current hash of `sign.csv`, whose binomial column was removed on 13 September
+after the previous receipt was written. `source/scripts/extension_20260831/validate_r8.py`
+binds the integrated article `main_R8` only, since the appendix is part of that
+PDF. `REPLAY_MANIFEST.json` carries the three changed input hashes and the one
+changed output hash under `extension_20260914`. No contrast estimate, table
+value or figure changed; the replay regenerates the same 67 files.

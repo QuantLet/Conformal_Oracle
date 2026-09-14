@@ -89,7 +89,7 @@ def panel():
 def documents(skip_build=False):
     path=SOURCE/'scripts/build_guards.py';spec=importlib.util.spec_from_file_location('r8_guards',path)
     g=importlib.util.module_from_spec(spec);spec.loader.exec_module(g)
-    g.DOCS=['main_R8','supplement_R8']
+    g.DOCS=['main_R8']  # The appendix is included in the canonical article.
     g.LITERAL_DOCS=g.DOCS+[str(p.relative_to(SOURCE).with_suffix('')) for p in sorted((SOURCE/'sections_r8').glob('*.tex')) if not p.name.startswith(('tab_','numbers_'))]
     g.DOCS_TEX=[x+'.tex' for x in g.LITERAL_DOCS]
     g.DECLARED=SOURCE/'analysis/provenance_r8/DECLARED_CONSTANTS.md';g.PRODUCERS=SOURCE/'analysis/provenance_r8/PRODUCERS.tsv'
