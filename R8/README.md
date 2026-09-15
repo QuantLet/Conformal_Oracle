@@ -166,3 +166,20 @@ replay against the full archive, whose forecast files exceed this package.
 files: 57 LaTeX fragments, 13 PDF figures and seven figures in each of PNG
 and SVG. The producers registry `source/analysis/provenance_r8/PRODUCERS.tsv`
 gains the two new displays.
+
+## Extension of 15 September 2026 (v2)
+
+`research/r8_es_fz0` joins the replay as step 21. For the seven main-panel
+forecasters whose stored output defines a predictive law below the 1%
+quantile (Moirai-1.1 and Lag-Llama through their 1,000 native draws per date;
+GARCH-N, GJR-N and EWMA through a Normal law; GJR-t through a unit-variance
+Student-t law; Historical simulation through its 250-day window), `analysis.py`
+derives the 1% Expected Shortfall, checks that each law reproduces the stored
+VaR, applies the calibration shift to VaR and ES, and scores both with the FZ0
+loss of Patton, Ziegel and Chen (2019) on the ten-model panel dates, with the
+common-calendar block bootstrap for the static-minus-raw contrasts; it carries
+a `--check` replay against the full archive, whose draw files exceed this
+package. `displays.py` regenerates `numbers_es.tex` and `tab_es.tex` from the
+deposited `summary.csv`, `contrasts.csv` and `run.json`. The replay now
+regenerates 86 files: 59 LaTeX fragments, 13 PDF figures and seven figures in
+each of PNG and SVG.
