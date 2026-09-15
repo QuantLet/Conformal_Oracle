@@ -150,3 +150,19 @@ The replay now regenerates 82 files: 55 LaTeX fragments, 13 PDF figures and
 seven figures in each of PNG and SVG. The studies' `analysis.py` producers read
 the 240 daily loss files, which exceed this package and are supplied on request.
 
+
+## Extension of 15 September 2026
+
+`research/r8_ten_benchmarks` joins the replay as step 20. Its `analysis.py`
+scores the stored CAViaR-SAV, CAViaR-AS, GAS-t, EVT-POT and FHS forecasts on
+the calibration and test dates of the ten-model panel (forecasts after 512
+observations, the first 70% for calibration) and records, per series, how much
+of that calibration window lies inside the CAViaR/GAS fitting sample and how
+many POT/FHS forecasts precede the first test date; it carries a `--check`
+replay against the full archive, whose forecast files exceed this package.
+`displays.py` regenerates `numbers_ten_benchmarks.tex` and
+`tab_ten_benchmarks.tex` from the deposited `summary.csv`, `metrics.csv`,
+`run.json` and the ten-model `summary.csv`. The replay now regenerates 84
+files: 57 LaTeX fragments, 13 PDF figures and seven figures in each of PNG
+and SVG. The producers registry `source/analysis/provenance_r8/PRODUCERS.tsv`
+gains the two new displays.
