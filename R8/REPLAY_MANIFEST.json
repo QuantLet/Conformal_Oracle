@@ -344,6 +344,14 @@
     "source/sections_r8/tab_es.tex": {
       "reference": "data/generated_tables/tab_es.tex",
       "sha256": "c47f728414519ec4b89e82b046f84d6566985d5bc475cf35f87964816fc2b611"
+    },
+    "source/sections_r8/tab_ten_strong_complete.tex": {
+      "reference": "data/generated_tables/tab_ten_strong_complete.tex",
+      "sha256": "25498e65ce8f05e39a3d8b357660f212e0c2d0a8afb6ed4acabcb48150b24371"
+    },
+    "source/sections_r8/tab_controlled_dimensions.tex": {
+      "reference": "data/generated_tables/tab_controlled_dimensions.tex",
+      "sha256": "e3ac1b094241081c74272fae5a4deae027cacd48167f1a40aefcb54f5bec1e55"
     }
   },
   "files": {
@@ -358,7 +366,11 @@
     "source/analysis/phase3_windows/w_sweep.csv": "7765ec8538717404d74d165564fc6c38d6aeea622fdd5006982cd118bd66fd8d",
     "source/analysis/phase3_windows/window_sensitivity.csv": "0cde781644a981cb471f252487e218a0afb49670a7573a3f9c5f3eb3f6181195",
     "source/analysis/provenance_r8/DECLARED_CONSTANTS.md": "4ef9f1c8519674df56d94fe6dfca52af945d1a96f4c16354073eacf6121de0a4",
-    "source/analysis/provenance_r8/PRODUCERS.tsv": "a94776960b3dd9c4d73a86295f52a64a284c02f2ea32bc84fe7f409ab9e3e6c3",
+    "source/analysis/provenance_r8/PRODUCERS.tsv": "4bf4795cd4822d0145bde5f9b7541093fa7a4da92f9b47479ff36b96b89d8873",
+    "source/editorial/INPUTS.json": "9ff8096d4bb1925272db36c47808e95621266d350aa80e31b5c214028b39a259",
+    "source/editorial/intervals.csv": "575dd31306618c564fa48528bcb250bc659e5cfbdb41481e8a1616342d31d70e",
+    "source/editorial/render_tables.py": "10cab3098c5368d23bcca885251486ea28dfc84a054e6ca4056c52d831970c3b",
+    "source/editorial/summary.csv": "19964cf6749feb2ff7be10ebe7ebf6c84c2570052d7d2a78eafb07904d6ef1bc",
     "source/scripts/extension_20260831/additional_diagnostics.py": "66f6a973ab739c406db4fda737db2f600949c9df48dfdb0f6dc8264d8778cfef",
     "source/scripts/extension_20260831/analyse_panel.py": "6cceeaffdd158a4eb700244db46cc994c953190c2b8d07eb04a75b8fe710ddc2",
     "source/scripts/extension_20260831/analyse_pools.py": "b4007972d4e1a47d8060d82a7a470c9831e2a0e9bfc097e7c5ecb76b36bec506",
@@ -1071,11 +1083,11 @@
     "artifacts/r8_shape_integration/display_validation.json",
     "artifacts/r8_optimism_integration/display_build.json"
   ],
-  "input_bytes": 57575308,
-  "input_files": 713,
+  "input_bytes": 57592274,
+  "input_files": 717,
   "origin_commit": "a63c8e59421c10645fef9b695992757b7e93d791",
   "schema": 1,
-  "scope": "Regeneration from archived intermediate results; no model fitting; extended 13 September 2026 with the power analysis, optimism-estimator and second external-universe display producers; amended 14 September 2026 with four pointwise-interval macros from the power-analysis display producer; extended 14 September 2026 (v2) with eight display studies (count law, panel coverage, stepdown testing, binomial traffic light, VaR width and severity, calendar, common window, estimation-window sweep); amended 14 September 2026 (v3): model confidence set with the range statistic as specified (T_max kept as sensitivity), width study relabelled to log-return units with the loss-fraction transform; extended 15 September 2026 with the ten-support benchmark study (CAViaR-SAV, CAViaR-AS, GAS-t, EVT-POT and FHS scored on the ten-model panel dates); extended 15 September 2026 (v2) with the Expected Shortfall and FZ0 study (seven forecasters with a stored predictive law, scored jointly on the ten-model panel dates)",
+  "scope": "Regeneration from archived intermediate results; no model fitting; extended 13 September 2026 with the power analysis, optimism-estimator and second external-universe display producers; amended 14 September 2026 with four pointwise-interval macros from the power-analysis display producer; extended 14 September 2026 (v2) with eight display studies (count law, panel coverage, stepdown testing, binomial traffic light, VaR width and severity, calendar, common window, estimation-window sweep); amended 14 September 2026 (v3): model confidence set with the range statistic as specified (T_max kept as sensitivity), width study relabelled to log-return units with the loss-fraction transform; extended 15 September 2026 with the ten-support benchmark study (CAViaR-SAV, CAViaR-AS, GAS-t, EVT-POT and FHS scored on the ten-model panel dates); extended 15 September 2026 (v2) with the Expected Shortfall and FZ0 study (seven forecasters with a stored predictive law, scored jointly on the ten-model panel dates); extended 16 September 2026 with the presentation formatter (projected-DtACI row in the stronger-comparison table; coefficient-count symbol d)",
   "steps": [
     "source/scripts/extension_20260831/build_paper_outputs.py",
     "research/r8_integration/build.py",
@@ -1097,7 +1109,8 @@
     "research/r8_common_window/displays.py",
     "research/r8_window_sweep/displays.py",
     "research/r8_ten_benchmarks/displays.py",
-    "research/r8_es_fz0/displays.py"
+    "research/r8_es_fz0/displays.py",
+    "source/editorial/render_tables.py"
   ],
   "extension_20260913": {
     "added_files": 128,
@@ -1256,5 +1269,20 @@
     ],
     "updated_outputs": [],
     "note": "Display-level replay of research/r8_es_fz0 from its stored summary.csv, contrasts.csv and run.json; its analysis.py reads the 1,000 native draws per date of Moirai-1.1 and Lag-Llama, the classical parameter files and the ten-model daily files, which exceed this package, and carries a --check replay for the full archive."
+  },
+  "extension_20260916": {
+    "added_files": 4,
+    "changed_files": [
+      "source/analysis/provenance_r8/PRODUCERS.tsv"
+    ],
+    "new_steps": [
+      "source/editorial/render_tables.py"
+    ],
+    "new_outputs": [
+      "tab_ten_strong_complete.tex",
+      "tab_controlled_dimensions.tex"
+    ],
+    "updated_outputs": [],
+    "note": "Presentation-only derivatives of two regenerated tables: source/editorial/render_tables.py binds its inputs by SHA-256 (two archived aggregate CSV copies and the two base tables) and adds the existing projected-DtACI row and the symbol d. No number changes."
   }
 }

@@ -89,3 +89,6 @@ sections_r8/numbers_ten_benchmarks	generated	../research/r8_ten_benchmarks/displ
 sections_r8/tab_ten_benchmarks	generated	../research/r8_ten_benchmarks/displays.py
 sections_r8/numbers_es	generated	../research/r8_es_fz0/displays.py
 sections_r8/tab_es	generated	../research/r8_es_fz0/displays.py
+sections_r8/coverage	authored	sections_r8/coverage.tex
+sections_r8/tab_ten_strong_complete	generated	editorial/render_tables.py
+sections_r8/tab_controlled_dimensions	generated	editorial/render_tables.py
