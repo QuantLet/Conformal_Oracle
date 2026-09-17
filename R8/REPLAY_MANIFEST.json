@@ -352,6 +352,30 @@
     "source/sections_r8/tab_controlled_dimensions.tex": {
       "reference": "data/generated_tables/tab_controlled_dimensions.tex",
       "sha256": "e3ac1b094241081c74272fae5a4deae027cacd48167f1a40aefcb54f5bec1e55"
+    },
+    "source/sections_r8/numbers_es975.tex": {
+      "reference": "data/generated_tables/numbers_es975.tex",
+      "sha256": "737bda76edc463d72662d3aba72efd69626e97efa3d17864b215248e6a6ec558"
+    },
+    "source/sections_r8/tab_es975.tex": {
+      "reference": "data/generated_tables/tab_es975.tex",
+      "sha256": "9a611c9cc74f0e5544b42bdcd150d195857442951c959bcc0b657fe16729cb76"
+    },
+    "source/sections_r8/numbers_primary.tex": {
+      "reference": "data/generated_tables/numbers_primary.tex",
+      "sha256": "64af2dd18e86b672293840327f2b7dc1e2e295bd0549e1c970c557e5ea06e906"
+    },
+    "source/figures/fig_primary_test.pdf": {
+      "reference": "data/figures/fig_primary_test.pdf",
+      "sha256": "88c748bbeca684662ea08b96209c7c223b753b993e7007b74d1e0a81aefb53e2"
+    },
+    "source/figures/fig_primary_test.png": {
+      "reference": "data/figures/fig_primary_test.png",
+      "sha256": "30ae744a8c23c19829a6a4ee9111231f7faa84f73cb067fe5e04b97f55699c50"
+    },
+    "source/figures/fig_primary_test.svg": {
+      "reference": "data/figures/fig_primary_test.svg",
+      "sha256": "ab2d7438b6a3df0cbd9ef4ba99af73e9b86d3816cf456ef256baa6f402dd3fa5"
     }
   },
   "files": {
@@ -366,7 +390,7 @@
     "source/analysis/phase3_windows/w_sweep.csv": "7765ec8538717404d74d165564fc6c38d6aeea622fdd5006982cd118bd66fd8d",
     "source/analysis/phase3_windows/window_sensitivity.csv": "0cde781644a981cb471f252487e218a0afb49670a7573a3f9c5f3eb3f6181195",
     "source/analysis/provenance_r8/DECLARED_CONSTANTS.md": "4ef9f1c8519674df56d94fe6dfca52af945d1a96f4c16354073eacf6121de0a4",
-    "source/analysis/provenance_r8/PRODUCERS.tsv": "4bf4795cd4822d0145bde5f9b7541093fa7a4da92f9b47479ff36b96b89d8873",
+    "source/analysis/provenance_r8/PRODUCERS.tsv": "e103fd94b3ca2b3f4d66b94945fa2e9ac31152593f2508645e1fdf3e21257673",
     "source/editorial/INPUTS.json": "9ff8096d4bb1925272db36c47808e95621266d350aa80e31b5c214028b39a259",
     "source/editorial/intervals.csv": "575dd31306618c564fa48528bcb250bc659e5cfbdb41481e8a1616342d31d70e",
     "source/editorial/render_tables.py": "10cab3098c5368d23bcca885251486ea28dfc84a054e6ca4056c52d831970c3b",
@@ -749,6 +773,10 @@
     "research/r8_wti_pnl/fetch_sources.py": "4d1db070bafdb672358787c6ce33208de422a665e5cf7178a3831d2ee516ae1b",
     "research/r8_wti_pnl/probe_eodhd_account.py": "411bd44843faeb9bf65d072dccbc91f63ee29a93526f1ca4e8f55b2a4dfa571d",
     "research/r8_wti_pnl/test_contract_pnl.py": "5e92ef61f3fcae1855ee92fa3a8eaa6d99580a822b9cdb59cc7db77e4a514568",
+    "research/r9_es975/PROTOCOL.md": "cdf45488ce0aea0c3d0e5f3d75a49b5e735b79628b42c4c77d1f811f096b7ce6",
+    "research/r9_es975/analysis.py": "7d91406a9064d22db097e1413916d97abd4e3bf03d98e1aa9a913589c119bba6",
+    "research/r9_es975/displays.py": "4e9918d482649713e6a399130db19bd90df56298b3e6d6ee2df2701d69522c41",
+    "research/r9_primary_figure/displays.py": "75d9b0ba0e8941b1bedc2caa218909b28b06839b636ea5a783ecc95485d59926",
     "artifacts/r8_basel_binomial/RESULTS.md": "8cd4e0206c380cac1bbb52ddb57a98b40d6006db7c60a77e107c8120128e0f5b",
     "artifacts/r8_basel_binomial/ceilings.csv": "4c06ad09d3ad00da682bd5ade6cb1423579ed8ee32ec1fa1b19ba4b69aff7141",
     "artifacts/r8_basel_binomial/displays.json": "7ba8f03cf706d344df42c29ab145e8470f5dd98aadb97199f49deedabd4ef3fd",
@@ -1064,6 +1092,13 @@
     "artifacts/r8_ten_integration/source_package.json": "f48fdf5054ec25e2f372a3d7f9cee10033a619cb29992631f531d23052541801",
     "artifacts/r8_window_sweep/run.json": "c007659807d83ab3ce8403bd4be8f0ef565e6c3d0b6b9587b278d8e2e508b441",
     "artifacts/r8_window_sweep/sweep_summary.csv": "1a7d888f0d095b96f656eb77b928d8999b9c4dcf9a481fff945a1444ac475798",
+    "artifacts/r9_es975/RESULTS.md": "8d53e9386faf77ba31d62491d1853cd701a41603271d617cc87424c6f25f1489",
+    "artifacts/r9_es975/displays.json": "a716259490c57b06e83c3d1c538c0a7da4723c9fbacfa8c5606f81522c02a250",
+    "artifacts/r9_es975/metrics.csv": "59a0ead562ceadb609304d787f1aad44e0d1f11cffb672fa2ffdbe66f649e00b",
+    "artifacts/r9_es975/run.json": "1f62c89f7c5313e53935f8070dad7d722e9a4ce721b93b39a64e10de59d8052e",
+    "artifacts/r9_es975/summary.csv": "bb2296f085dff33aca88337f5c60fc97f4434867067b3b33bae06095ef40715d",
+    "artifacts/r9_primary_figure/displays.json": "0f39bdb7dcd619139af5ea1ae4bd28189142e2ceed00223bd9577fd35f13bd64",
+    "artifacts/r9_primary_figure/figure_data.csv": "9acf2388d8c1c8e3a7258cd4796948703618988176b38848acf0e7cfc1c21691",
     "results/optimism_ar/completion.json": "ffe235b611ba4f73c42ba8fd51210690c937c275f5efed0c6adf0a8fbf0cff1e",
     "results/optimism_ar/primary/bands.csv": "09f30c5ca029312f96c91fc1ea07b04781d828fee2d9d39bf830ba852e0cb86d",
     "results/optimism_ar/primary/dependence.csv": "a4de8838b7d366fc2a472d332c60e96dc2b94c409c1a6e7bb434362271d83149",
@@ -1083,11 +1118,11 @@
     "artifacts/r8_shape_integration/display_validation.json",
     "artifacts/r8_optimism_integration/display_build.json"
   ],
-  "input_bytes": 57592274,
-  "input_files": 717,
+  "input_bytes": 57782395,
+  "input_files": 728,
   "origin_commit": "a63c8e59421c10645fef9b695992757b7e93d791",
   "schema": 1,
-  "scope": "Regeneration from archived intermediate results; no model fitting; extended 13 September 2026 with the power analysis, optimism-estimator and second external-universe display producers; amended 14 September 2026 with four pointwise-interval macros from the power-analysis display producer; extended 14 September 2026 (v2) with eight display studies (count law, panel coverage, stepdown testing, binomial traffic light, VaR width and severity, calendar, common window, estimation-window sweep); amended 14 September 2026 (v3): model confidence set with the range statistic as specified (T_max kept as sensitivity), width study relabelled to log-return units with the loss-fraction transform; extended 15 September 2026 with the ten-support benchmark study (CAViaR-SAV, CAViaR-AS, GAS-t, EVT-POT and FHS scored on the ten-model panel dates); extended 15 September 2026 (v2) with the Expected Shortfall and FZ0 study (seven forecasters with a stored predictive law, scored jointly on the ten-model panel dates); extended 16 September 2026 with the presentation formatter (projected-DtACI row in the stronger-comparison table; coefficient-count symbol d)",
+  "scope": "Regeneration from archived intermediate results; no model fitting; extended 13 September 2026 with the power analysis, optimism-estimator and second external-universe display producers; amended 14 September 2026 with four pointwise-interval macros from the power-analysis display producer; extended 14 September 2026 (v2) with eight display studies (count law, panel coverage, stepdown testing, binomial traffic light, VaR width and severity, calendar, common window, estimation-window sweep); amended 14 September 2026 (v3): model confidence set with the range statistic as specified (T_max kept as sensitivity), width study relabelled to log-return units with the loss-fraction transform; extended 15 September 2026 with the ten-support benchmark study (CAViaR-SAV, CAViaR-AS, GAS-t, EVT-POT and FHS scored on the ten-model panel dates); extended 15 September 2026 (v2) with the Expected Shortfall and FZ0 study (seven forecasters with a stored predictive law, scored jointly on the ten-model panel dates); extended 16 September 2026 with the presentation formatter (projected-DtACI row in the stronger-comparison table; coefficient-count symbol d); extended 17 September 2026 (R9) with the 97.5% Expected Shortfall capital-component study and the primary-test figure; extended 17 September 2026 (R9) with the 97.5% Expected Shortfall capital-component study and the primary-test figure; extended 17 September 2026 (R9) with the 97.5% Expected Shortfall capital-component study and the primary-test figure",
   "steps": [
     "source/scripts/extension_20260831/build_paper_outputs.py",
     "research/r8_integration/build.py",
@@ -1110,6 +1145,8 @@
     "research/r8_window_sweep/displays.py",
     "research/r8_ten_benchmarks/displays.py",
     "research/r8_es_fz0/displays.py",
+    "research/r9_es975/displays.py",
+    "research/r9_primary_figure/displays.py",
     "source/editorial/render_tables.py"
   ],
   "extension_20260913": {
@@ -1284,5 +1321,25 @@
     ],
     "updated_outputs": [],
     "note": "Presentation-only derivatives of two regenerated tables: source/editorial/render_tables.py binds its inputs by SHA-256 (two archived aggregate CSV copies and the two base tables) and adds the existing projected-DtACI row and the symbol d. No number changes."
+  },
+  "extension_20260917": {
+    "added_files": 0,
+    "changed_files": [
+      "research/r9_primary_figure/displays.py"
+    ],
+    "new_steps": [
+      "research/r9_es975/displays.py",
+      "research/r9_primary_figure/displays.py"
+    ],
+    "new_outputs": [
+      "numbers_es975.tex",
+      "tab_es975.tex",
+      "numbers_primary.tex",
+      "fig_primary_test.pdf",
+      "fig_primary_test.png",
+      "fig_primary_test.svg"
+    ],
+    "updated_outputs": [],
+    "note": "Display-level replay: r9_es975/displays.py from its stored summary.csv and run.json (its analysis.py reads the native draws, which exceed this package, through research/r8_es_fz0/analysis.py and carries a --check replay); r9_primary_figure/displays.py from the deposited power-analysis and referee-revision summaries."
   }
 }

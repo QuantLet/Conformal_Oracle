@@ -1,0 +1,11 @@
+{
+  "inputs": {
+    "artifacts/r8_power_analysis/contrasts.csv": "1f82b2a8eea98e910b13de3ac93e9645f406687ea2de790d0712878a1a73644e",
+    "artifacts/r8_power_analysis/sensitivity.csv": "92f56358539cae0304a69ead755cf6bbefa52b40776cbc719b2c3823477823f4",
+    "artifacts/r8_referee_revision/results/intervals.csv": "575dd31306618c564fa48528bcb250bc659e5cfbdb41481e8a1616342d31d70e"
+  },
+  "outputs": {
+    "numbers_primary.tex": "64af2dd18e86b672293840327f2b7dc1e2e295bd0549e1c970c557e5ea06e906",
+    "figure_data.csv": "9acf2388d8c1c8e3a7258cd4796948703618988176b38848acf0e7cfc1c21691"
+  }
+}

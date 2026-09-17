@@ -196,3 +196,19 @@ existing projected-DtACI row to the stronger-comparison table, and
 as d. No number changes. The replay now regenerates 88 files: 59 LaTeX
 fragments, two presentation derivatives, 13 PDF figures and seven figures
 in each of PNG and SVG. The producers registry gains the two derivatives.
+
+## Extension of 17 September 2026 (R9)
+
+Two display studies join the replay as steps 22 and 23 (the presentation
+formatter stays last). `research/r9_es975` derives the 97.5% Expected
+Shortfall of the seven forecasters with a stored predictive law from the same
+laws as the 1% study (its `analysis.py` reads the native draws through
+`research/r8_es_fz0/analysis.py` and carries a `--check` replay; the draws
+exceed this package) and multiplies the mean ES by the internal-models
+multiplier of each pair's binomial traffic-light zone; `displays.py`
+regenerates `numbers_es975.tex` and `tab_es975.tex` from the deposited
+`summary.csv` and `run.json`. `research/r9_primary_figure/displays.py` draws
+the primary-test figure (`fig_primary_test.{pdf,png,svg}`) and its macros
+`numbers_primary.tex` from the deposited power-analysis and referee-revision
+summaries. The replay now regenerates 94 files. The producers registry gains
+the three displays.
