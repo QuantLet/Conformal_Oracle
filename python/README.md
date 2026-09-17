@@ -22,7 +22,7 @@ Companion software for:
 
 > Pele, D.T., Bolovaneanu, V., Ginavar, A.T., Lessmann, S., Hardle, W.K.
 > "Conformal Recalibration of Extreme Tail Quantiles under Temporal Dependence"
-> (2026, manuscript R8; replication tag `R9-2026-09-17`).
+> (2026, manuscript R8; replication tag `R9-2026-09-17-v2`).
 
 ## Scope and interpretation
 
