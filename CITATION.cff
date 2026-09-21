@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+title: "When Does Recalibration Improve Value-at-Risk Forecasts? Estimation Cost, Dependence and How Much to Correct"
+message: "If you use this software or the methodology it implements, please cite the underlying paper."
+type: software
+version: 0.5.0
+date-released: "2026-09-21"
+authors:
+  - family-names: Pele
+    given-names: Daniel Traian
+    affiliation: "Bucharest University of Economic Studies, Institute for Digital Assets"
+  - family-names: Bolovaneanu
+    given-names: V.
+    affiliation: "Bucharest University of Economic Studies"
+  - family-names: Ginavar
+    given-names: A.T.
+    affiliation: "Bucharest University of Economic Studies"
+  - family-names: Lessmann
+    given-names: Stefan
+    affiliation: "Humboldt University Berlin"
+  - family-names: "Härdle"
+    given-names: Wolfgang Karl
+    affiliation: "Humboldt University Berlin, Institute for Digital Assets"
+repository-code: "https://github.com/QuantLet/Conformal_Oracle"
+url: "https://github.com/QuantLet/Conformal_Oracle"
+license: MIT
+preferred-citation:
+  type: article
+  title: "When Does Recalibration Improve Value-at-Risk Forecasts? Estimation Cost, Dependence and How Much to Correct"
+  authors:
+    - family-names: Pele
+      given-names: Daniel Traian
+      affiliation: "Bucharest University of Economic Studies, Institute for Digital Assets"
+    - family-names: Bolovaneanu
+      given-names: V.
+      affiliation: "Bucharest University of Economic Studies"
+    - family-names: Ginavar
+      given-names: A.T.
+      affiliation: "Bucharest University of Economic Studies"
+    - family-names: Lessmann
+      given-names: Stefan
+      affiliation: "Humboldt University Berlin"
+    - family-names: "Härdle"
+      given-names: Wolfgang Karl
+      affiliation: "Humboldt University Berlin, Institute for Digital Assets"
+  year: 2026
+  url: "https://github.com/QuantLet/Conformal_Oracle"
+  notes: "The R7 and R8 public APIs accompany the earlier manuscript, Conformal Recalibration of Extreme Tail Quantiles under Temporal Dependence."
