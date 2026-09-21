@@ -100,7 +100,7 @@ lines = [
     r'Model & Raw & Corr. & Raw & Corr.',
     r'& Raw & Corr. & VaR width & Width/GJR & Green \\',
     r'\midrule',
-    r'\multicolumn{10}{@{}l}{\textit{Panel~A: Genuine recalibration}',
+    r'\multicolumn{10}{@{}l}{\textit{Panel~A: Signal-preserving recalibration}',
     r'	($|\qV|/|\VaR_{\mathrm{raw}}| < 1$)} \\[2pt]',
 ]
 

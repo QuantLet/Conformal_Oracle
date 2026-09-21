@@ -1,0 +1,709 @@
+{
+  "seeds": {
+    "E2_block_bootstrap": 20260913,
+    "E2_stream": "numpy default_rng([20260913, law_index, n, history])",
+    "history_bootstrap": "saved results/theory_loop/synthetic/history_bootstrap_indices.npy (999 x 500)"
+  },
+  "constants": {
+    "K": 5,
+    "R": 200,
+    "block_lengths": {
+      "250": 7,
+      "500": 8,
+      "700": 9,
+      "1000": 10,
+      "2000": 13
+    },
+    "p": 0.99,
+    "omega": 0.0099,
+    "biases": [
+      0.0,
+      0.0035355339059327364
+    ],
+    "sizes": [
+      250,
+      500,
+      700,
+      1000,
+      2000
+    ],
+    "histories": 500
+  },
+  "environment": {
+    "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]",
+    "executable": "/private/tmp/irfa-r8-conda-clean/bin/python",
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "cpu_count": 18
+  },
+  "timing": {
+    "E2_seconds": 3.494226999930106,
+    "E1_and_evaluation_seconds": 0.45474700001068413,
+    "total_seconds": 4.1344187499489635
+  },
+  "workers": 16,
+  "inputs": [
+    {
+      "path": "results/theory_loop/synthetic/calibration_normal.npz",
+      "sha256": "d0f34bfa6ae9241e0b646e00e41a240c911d30ca64181b76259e78b5c0ff5e62",
+      "size": 22696479,
+      "mtime_ns": 1789122512969847909,
+      "v3_lock_sha256_match": true,
+      "v3_lock_mtime_match": true
+    },
+    {
+      "path": "results/theory_loop/synthetic/calibration_t5.npz",
+      "sha256": "1466265504fc02bd0d5a68b8bcf3c757040160a15bcb0b5bce33ffa5b29210f0",
+      "size": 22696288,
+      "mtime_ns": 1789122519573375938,
+      "v3_lock_sha256_match": true,
+      "v3_lock_mtime_match": true
+    },
+    {
+      "path": "results/theory_loop/synthetic/truth.csv",
+      "sha256": "5c77531ed0b694fd4dc014e12e914b782efc1858612555bbdb45b55a9fc041be",
+      "size": 416,
+      "mtime_ns": 1789122538647008946,
+      "v3_lock_sha256_match": true,
+      "v3_lock_mtime_match": true
+    },
+    {
+      "path": "results/theory_loop/synthetic/mixture_integration_normal.npz",
+      "sha256": "7151678055384bbfce4a4e40918765d7d179b72047992c1623ed65011d7b3922",
+      "size": 7296,
+      "mtime_ns": 1789122518577295853,
+      "v3_lock_sha256_match": true,
+      "v3_lock_mtime_match": true
+    },
+    {
+      "path": "results/theory_loop/synthetic/mixture_integration_t5.npz",
+      "sha256": "2e528ddc05471c714ace056405f5ff2d1df18eff0a836eca553332dcbd67fb75",
+      "size": 7296,
+      "mtime_ns": 1789122537234254256,
+      "v3_lock_sha256_match": true,
+      "v3_lock_mtime_match": true
+    },
+    {
+      "path": "results/theory_loop/synthetic/history_bootstrap_indices.npy",
+      "sha256": "b86873fac4075ad09655aa38c20849a118ed812dd8b570ad0e82761fd43f10f7",
+      "size": 3996128,
+      "mtime_ns": 1789122512465109612,
+      "v3_lock_sha256_match": true,
+      "v3_lock_mtime_match": true
+    },
+    {
+      "path": "results/theory_loop/synthetic/estimators.csv",
+      "sha256": "166b7ca7a4b0a5aa9c77c2c386b0ba332bf267c588ad1d8da0db53c42637714c",
+      "size": 4347808,
+      "mtime_ns": 1789122538645425967,
+      "v3_lock_sha256_match": true,
+      "v3_lock_mtime_match": true
+    },
+    {
+      "path": "results/theory_loop/synthetic/loss_histories.csv",
+      "sha256": "d8689bea51552f88427d3023013bd0cd4af5097a1394273d04871bfc7c20ed07",
+      "size": 938462,
+      "mtime_ns": 1789122538671729894,
+      "v3_lock_sha256_match": true,
+      "v3_lock_mtime_match": true
+    },
+    {
+      "path": "research/r8_optimism_estimator/PROTOCOL.md",
+      "sha256": "6465908a688eafaf02b06d243717e636d9bc4c59061fad74fde6c14d0ff18920",
+      "size": 4231,
+      "mtime_ns": 1789283328484147593
+    },
+    {
+      "path": "research/r8_optimism_estimator/engine.py",
+      "sha256": "c9ff96c880719f4edd17136293e843e2f4d17d394f251a920da17a6aeaa356bd",
+      "size": 26249,
+      "mtime_ns": 1789283770774060900
+    },
+    {
+      "path": "research/r8_theory_loop_v3/engine.py",
+      "sha256": "6d1db50ba16eb43f10358ef30757926d20486e4fdc4892bb06b857b86545f0f0",
+      "size": 14661,
+      "mtime_ns": 1789147545047645616
+    },
+    {
+      "path": "results/theory_loop_v3/lock.json",
+      "sha256": "3d4f0513adffc16093b35f9476ec98a52a8cc61e185279c680f7c712751bff23",
+      "size": 6204,
+      "mtime_ns": 1789147546417353584
+    }
+  ],
+  "v3_lock_protocol_commit": "973132284a16235c780162406cf393031e96e036",
+  "v3_lock_entries_changed_since_v3": [
+    "source/sections_r8/risk.tex",
+    "source/sections_r8/risk_proofs.tex"
+  ],
+  "checks": [
+    {
+      "name": "wrong_tail_loss",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "rank_rule_matches_v3_250",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "rank_rule_matches_v3_200",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "rank_rule_matches_v3_500",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "rank_rule_matches_v3_400",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "rank_rule_matches_v3_700",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "rank_rule_matches_v3_560",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "rank_rule_matches_v3_1000",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "rank_rule_matches_v3_800",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "rank_rule_matches_v3_2000",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "rank_rule_matches_v3_1600",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "block_length_is_ceil_cube_root",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "empirical_instead_of_conformal_rank",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "integral_matches_v3_path",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "dropped_cv_rescaling_factor",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "circular_block_indices",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shrinkage_clip_and_zero_rule",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "band_rule_centres_on_original_mean",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "history_bootstrap_rows",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "finite_saved_scores_normal",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "mixture_replay_normal_250",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_normal_250_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_normal_250_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_normal_250_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_normal_250_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_normal_250_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_normal_250_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_normal_250_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_normal_250_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "mixture_replay_normal_500",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_normal_500_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_normal_500_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_normal_500_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_normal_500_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_normal_500_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_normal_500_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_normal_500_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_normal_500_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "mixture_replay_normal_700",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_normal_700_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_normal_700_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_normal_700_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_normal_700_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_normal_700_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_normal_700_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_normal_700_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_normal_700_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "mixture_replay_normal_1000",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_normal_1000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_normal_1000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_normal_1000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_normal_1000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_normal_1000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_normal_1000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_normal_1000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_normal_1000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "mixture_replay_normal_2000",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_normal_2000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_normal_2000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_normal_2000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_normal_2000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_normal_2000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_normal_2000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_normal_2000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_normal_2000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "finite_saved_scores_t5",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "mixture_replay_t5_250",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_t5_250_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_t5_250_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_t5_250_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_t5_250_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_t5_250_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_t5_250_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_t5_250_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_t5_250_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "mixture_replay_t5_500",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_t5_500_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_t5_500_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_t5_500_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_t5_500_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_t5_500_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_t5_500_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_t5_500_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_t5_500_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "mixture_replay_t5_700",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_t5_700_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_t5_700_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_t5_700_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_t5_700_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_t5_700_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_t5_700_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_t5_700_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_t5_700_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "mixture_replay_t5_1000",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_t5_1000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_t5_1000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_t5_1000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_t5_1000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_t5_1000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_t5_1000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_t5_1000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_t5_1000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "mixture_replay_t5_2000",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_t5_2000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_t5_2000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_t5_2000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_t5_2000_0",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "shift_replay_t5_2000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "training_loss_replay_t5_2000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "full_correction_loss_replay_t5_2000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    },
+    {
+      "name": "raw_loss_is_zero_t5_2000_1",
+      "negative_control_rejected": true,
+      "valid_case_accepted": true
+    }
+  ],
+  "output_sha256": {
+    "admission.json": "e83c5ae3b185a05cdd77057e2437a0dfbde5ed7f8a80612603edf6c64984f1b0",
+    "bootstrap_maxima.csv": "f3ee3b0d842fd136c266fcf33137276edec897028be6f3e3105f3313c51ff03d",
+    "e2_bootstrap_diagnostics.csv": "ebf7075a6b8b97630447ba9ea30f6e710683703a55d307f791cd5f1e6e8cb41a",
+    "histories.csv": "59df13c6ba1dfbff859da38ff50dda7506198ae2379d1286d84a866b0e53f124",
+    "simultaneous_bands.csv": "51d440eb874aad70af26b82e77fc8e57abc60c15e38ce435a5ab7532250cd29f",
+    "summary.csv": "14a61ee886e864982cd24392ae75d535c1cba5a85ad2577bcad8395a59f7c31c",
+    "supplementary_loss_bands.csv": "ba6895845250dd1c23d369727d61179dcbc664f7c2d2a6bc8878f2931c9a0534"
+  }
+}

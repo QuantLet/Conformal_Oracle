@@ -2,14 +2,15 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 
 import pandas as pd
 
 from conformal_oracle._protocols import Forecaster
-from conformal_oracle.audit.single_rolling import audit_rolling
-from conformal_oracle.audit.single_static import audit_static
+from conformal_oracle.audit.single_rolling import RollingAuditResult, audit_rolling
+from conformal_oracle.audit.single_static import StaticAuditResult, audit_static
 from conformal_oracle.panel.result import PanelResult
+from conformal_oracle.recalibration.base import RecalibrationMethod
 
 
 def audit_panel(
@@ -20,8 +21,8 @@ def audit_panel(
     calibration_split: float = 0.70,
     window: int = 250,
     seed: int = 2026,
-    recalibration: object | None = None,
-    **mode_kwargs: object,
+    recalibration: RecalibrationMethod | None = None,
+    **mode_kwargs: Any,
 ) -> PanelResult:
     """Run a panel-level audit across all (forecaster, asset) pairs.
 
@@ -32,7 +33,7 @@ def audit_panel(
     asset_names = list(returns.columns)
     forecaster_names = list(forecasters.keys())
 
-    results: dict[str, dict[str, object]] = {}
+    results: dict[str, dict[str, StaticAuditResult | RollingAuditResult]] = {}
 
     for fc_name, fc in forecasters.items():
         results[fc_name] = {}
@@ -42,6 +43,7 @@ def audit_panel(
                 seed + hash((fc_name, asset)) % (2**31)
             ) % (2**31)
 
+            r: StaticAuditResult | RollingAuditResult
             if mode == "static":
                 r = audit_static(
                     series,

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 import pandas as pd
@@ -11,6 +11,10 @@ import pandas as pd
 from conformal_oracle._types import PredictiveDistribution, SampleDistribution
 from conformal_oracle.contrib.tsfm._base import BaseTSFMForecaster
 from conformal_oracle.contrib.tsfm._cache import TSFMPredictionCache
+
+if TYPE_CHECKING:
+    from chronos import ChronosPipeline
+
 
 PAPER_MODELS = {
     "small": "amazon/chronos-t5-small",
@@ -28,6 +32,8 @@ class ChronosForecaster(BaseTSFMForecaster):
       - Chronos-Small: amazon/chronos-t5-small
       - Chronos-Mini:  amazon/chronos-t5-mini
     """
+
+    _model: ChronosPipeline | None
 
     def __init__(
         self,
@@ -85,6 +91,7 @@ class ChronosForecaster(BaseTSFMForecaster):
         self, returns: pd.Series, t: int
     ) -> PredictiveDistribution:
         self._ensure_model()
+        assert self._model is not None
 
         import torch
 

@@ -1,0 +1,15 @@
+{
+  "protocol_sha256": "a186a4b8c904155ad7e3066c4d4a99f3cd3d61f50f69aa0125a5201b42e6ab8d",
+  "producer_sha256": "6cbfab95a0a1cb6b8d38ce2d145839923b6f1f5f429117866cb5109de9ba3d76",
+  "inputs": {
+    "pairs.csv": "b869bc0b7faaa48202bc508fad75d9384e08021e793f42ba654aeefc71cc1738"
+  },
+  "anchor_250": [
+    5,
+    10
+  ],
+  "yellow_quantile": 0.95,
+  "red_quantile": 0.9999,
+  "coverage": 0.99,
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]"
+}

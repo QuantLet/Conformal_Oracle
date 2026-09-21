@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "analytic_loss_quadratures": 72,
+  "maximum_loss_quadrature_error": 8.881784197001252e-16,
+  "exact_quantile_objective_fixtures": 24,
+  "direct_matrix_occupancy_cases": 12,
+  "exact_moments": {
+    "A": "3/2",
+    "B": "5/3",
+    "C": "4/3"
+  },
+  "crossings": {
+    "normal": {
+      "density": 0.02665214220345808,
+      "h_star": 5.279593352028777,
+      "leading_differences_n1000": [
+        4.643153974465272e-05,
+        0.0,
+        -0.0001857261589786109
+      ]
+    },
+    "t5": {
+      "density": 0.014086008532201327,
+      "h_star": 9.989520627722685,
+      "leading_differences_n1000": [
+        8.785313434753447e-05,
+        -1.3877787807814457e-20,
+        -0.0003514125373901379
+      ]
+    }
+  },
+  "negative_controls": {
+    "right_endpoint_flat_minimiser": "detected",
+    "wrong_99_percent_rank": "detected",
+    "future_day_zero_inclusion": "detected",
+    "stay_probability_as_eigenvalue": "detected"
+  },
+  "production_engine_fixtures": {
+    "status": "passed",
+    "engine_sha256": "6739e0290f647bf2bf5646192bd4ace8871cfc92ce8ec6b0f8ac9a95442d9e44",
+    "quantile_fixtures": 4,
+    "independent_loss_vectors": 2,
+    "direct_occupancy_comparisons": 10
+  },
+  "validator_sha256": "45c483e52dc12c6d5a85c7948b9bab76aa458d1f60beb12caf2046618adcce0c",
+  "output_replay": {
+    "status": "passed",
+    "execution_receipt_sha256": "5ba2bf488795c665787dd772d03ca79d670f2ef1d4833d4945f1a4f16bbc2199",
+    "findings_receipt_sha256": "af4f7785487e990dfbd0ee36b9a7bd90df8efb93162b3863bb06a71078032072",
+    "protocol_lock_sha256": "b2f0e3270ed38785fd0337c62f15b7370c39787b0980e411ef93115e6e62e722",
+    "production_outputs_verified": 8,
+    "stored_rows": 360000,
+    "saved_histories_reproduced": 5000,
+    "distinct_innovation_histories": 5000,
+    "coefficient_knot_and_leftmost_subgradient_checks": 300000,
+    "raw_coefficients_checked": 60000,
+    "independent_conditional_metric_values": 4320000,
+    "coefficients_kept_fixed_over_contiguous_horizon": true,
+    "evaluation_uses_future_days_1_through_H": true,
+    "families": {
+      "primary": {
+        "contrasts": 12,
+        "whole_history_draws": 9999,
+        "independently_replayed_means": 119988,
+        "critical": 2.653624442955157
+      },
+      "sensitivity": {
+        "contrasts": 36,
+        "whole_history_draws": 9999,
+        "independently_replayed_means": 359964,
+        "critical": 3.002829689939626
+      }
+    },
+    "primary_sign_crossing": "supported",
+    "primary_cells": [
+      {
+        "cell": "normal_n1000_h0.5",
+        "mean_delta": 3.7018815100438375e-05,
+        "simultaneous_lower": 2.617429359660861e-05,
+        "simultaneous_upper": 4.786333660426814e-05
+      },
+      {
+        "cell": "normal_n1000_h2",
+        "mean_delta": -0.0002203933639414,
+        "simultaneous_lower": -0.000232253488307,
+        "simultaneous_upper": -0.0002085332395758
+      }
+    ],
+    "method_summary_statistics_checked": 1296,
+    "inference_unit": "Whole independent calibration history, paired across all cells and methods"
+  }
+}

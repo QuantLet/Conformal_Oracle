@@ -1,0 +1,61 @@
+# Task: close the theory–empirics loop for Manuscript R8
+
+Repository: the conformal recalibration pipeline behind `Manuscript_R8.pdf` ("Conformal Recalibration of Extreme Tail Quantiles under Temporal Dependence"). Work on the 240-pair main panel (10 forecasters × 24 assets, 70/30 contiguous split, α = 0.01) and the 48-pair external panel (12 French industries × HS, GJR-GARCH-t, CAViaR-AS, GAS-t; development 2000–2014, test 2015–Jul 2026). Use the stored forecasts, scores and splits already in the archive. Do not refit any forecaster.
+
+The manuscript derives that the expected loss change from a static shift is −B + Ω/(2nf*) + o(1/n) (Prop 4.1, Cor 4.2), gives a first-order optimal shrinkage λ* = f₀²h²/(Ω + f₀²h²) (eq. 13), and gives a boundary for when a volatility-scaled correction beats a constant one, g²h² > v(B−C)/(A−C) (Prop 4.4). None of these is currently confronted with the panel. Three deliverables do that.
+
+## Before any computation
+
+1. Write `analysis_plan_theory_loop.md` with every estimator, tolerance, comparison family and success criterion below, filled in where I left choices open. Commit it. Nothing in it changes after the first panel run; if something must change, add a dated "Deviation" entry with the reason and keep the original text.
+2. Every check reports a pass only after it has been seen to fail on a case built to make it fail. Build the failing case first, then the check.
+3. Estimators are validated on synthetic data with known truth (below) before touching the panel.
+4. Log every decision in `DECISIONS.md`. Do not ask me; decide, log, continue. A tolerance is never widened to make something pass.
+
+## Per-pair estimators (calibration block only, never test data)
+
+For each pair, with calibration scores S₁..Sₙ, p = 1 − α, conformal shift Cₙ = S₍ₖ₎, k = ⌈(n+1)p⌉:
+
+- **Ω̂** — long-run variance of the hit indicators 1{Sₜ ≤ Cₙ}: Bartlett/Newey–West with bandwidth ⌊4(n/100)^{2/9}⌋; also report Andrews automatic bandwidth as sensitivity. Floor at α(1−α)/10 and flag any pair hitting the floor.
+- **f̂\*** — marginal score density at Cₙ. Primary: Gaussian kernel, Sheather–Jones bandwidth on the full calibration sample. Secondary: Siddiqui–Bloch–Gastwirth spacing estimator with m = ⌊n^{4/5}⌋ spacings. Report both; the primary is the one used downstream, and the plan says so before the run.
+- **ĥ²** — local miscalibration in the h/√n parameterisation. The naive plug-in n·Cₙ² is biased upward by approximately Var(Cₙ) ≈ Ω/(n f\*²). Use the bias-corrected ĥ² = max(0, n·Cₙ² − Ω̂/f̂\*²). Report the fraction of pairs floored at zero.
+- **B̂** — removable error ∫₀^{Cₙ}(F̂_S(u) − p) du from the calibration ECDF. Note in the plan that this is in-sample and optimistic; it enters only the descriptive comparison, not λ̂.
+- **Predicted estimation cost** Âₙ = Ω̂/(2n f̂\*). Report in QS units × 10⁴, same scale as the manuscript.
+- For Prop 4.4: with σ̂ₜ the 20-day trailing return SD already used for Vol-ERM, standardise Zₜ = Sₜ/σ̂ₜ, estimate g = density of Z at its calibration (1−α)-quantile (same kernel rule), and A = mean σ̂ₜ, B = mean σ̂ₜ² / mean σ̂ₜ, C = 1/mean(1/σ̂ₜ). Compute the boundary statistic Δ̂ = g²ĥ_Z² − v(B−C)/(A−C), v = α(1−α), with ĥ_Z² bias-corrected the same way as ĥ².
+
+### Synthetic validation (must pass before the panel)
+
+Use the GARCH(1,1) Monte Carlo already in the pipeline (ω = 1e-5, α₁ = 0.10, β₁ = 0.85; Normal and Student-t(5) innovations; 500 histories; n ∈ {250, 500, 1000, 2000}). Truth for Ω and f\* is available by simulation of the score process at long horizon. Criteria fixed in the plan: median relative error of Ω̂ and f̂\* under 15% at n = 1000; coverage of the implied Var(Cₙ) within [85%, 98%] of the empirical variance across histories. If a criterion fails, report the failure and the sample size at which it starts holding; do not proceed to the panel with an estimator that fails at n ≈ 700.
+
+Also verify the expansion itself: simulated E[static − raw] against −B + Ω/(2nf\*) at each n, with the same relative-discrepancy reporting used for Figure 3.
+
+## Deliverable 1 — predicted vs realised cost
+
+For all 240 pairs and the 48 external pairs:
+
+- Realised: test-block static-minus-raw mean QS (already stored).
+- Predicted: −B̂ + Âₙ, and Âₙ alone.
+- Outputs: (a) scatter realised vs predicted with 45° line, pooled and by forecaster; (b) Spearman and Pearson correlations, slope and intercept of realised on predicted with block-bootstrap intervals (999 circular, 20- and 60-calendar-day blocks, the existing machinery); (c) sign concordance table; (d) aggregation by forecaster and by asset class (equity, bonds, commodity, crypto, FX) in the layout of Table 1.
+- Success criterion in the plan: predicted Âₙ has the same order of magnitude as the realised dispersion of static-minus-raw, and sign concordance exceeds what an intercept-only rule gives. State the criterion before running. If it fails, that is the result.
+
+## Deliverable 2 — plug-in shrinkage λ̂ on the panel
+
+- λ̂ = f̂\*²ĥ²/(Ω̂ + f̂\*²ĥ²), computed from the calibration block only. Corrected forecast uses λ̂·Cₙ on the test block, held fixed throughout (same protocol as Shift-CP).
+- Comparators, all on identical test dates: Raw, Shift-CP (λ = 1), fixed half shift (λ = 0.5), the existing past-loss five-fraction selection rule, Vol-ERM.
+- Report QS ×10⁴, violation rate, Kupiec rejections at 5%, joint-coverage rejections, deteriorations vs Raw and vs Shift-CP, and the distribution of λ̂ (histogram, by forecaster).
+- Uncertainty: λ̂-minus-Shift-CP and λ̂-minus-Raw with simultaneous 95% bands. Family: define in the plan a new prespecified family of four contrasts (λ̂ vs Raw, vs Shift-CP, vs half shift, vs five-fraction selection), both block lengths. Do not add it to the existing eight-contrast family; do not report pointwise bands for these four.
+- Repeat on the external 48-pair panel under the same fixed rule; that is the out-of-sample check. Report normalised and return-unit QS as in Table 5.
+- Sensitivity, all reported: secondary f̂\* estimator; Andrews bandwidth; excluding BTC/ETH; λ̂ clipped to [0.25, 1].
+
+## Deliverable 3 — Prop 4.4 boundary on the panel
+
+- On the 161 pairs with both predefined volatility states (the existing exploratory subset) and on all 240: per-pair Δ̂ and the realised test-block sign of Vol-ERM minus Shift-ERM.
+- Outputs: 2×2 concordance table (predicted side × realised sign), Spearman between Δ̂ and the realised difference, and the same split by high/low volatility state that the manuscript already reports descriptively.
+- Add the analogous comparison Vol-CP minus Shift-CP, where the manuscript says the leading cost is vA/(2ng) instead of vB/(2ng), so the predicted boundary is g²h² > v(A−C)/(A−C) = v. Report whether the two ERM/CP predictions order the pairs the same way.
+- State in the plan that this tests the sign mechanism, not quantitative equivalence, as in §5.2.
+
+## Outputs
+
+- `results/theory_loop/` with CSVs (one row per pair per deliverable), LaTeX tables in the manuscript's conventions (QS ×10⁴, four decimals, band notation `[a, b]`), and PDF figures matching the existing style.
+- `results/theory_loop/RESULTS.md`: every number that would enter the manuscript, with the file it came from and its SHA-256; a section "Synthetic validation"; a section "What this changes in R8" listing, per section of the manuscript, the sentence that becomes stateable or must be withdrawn. Negative findings are stated at the same level of detail as positive ones.
+- Provenance manifest updated with mtime and SHA-256 for every new artefact; no artefact is listed as produced unless the manifest can hash it.
+- Anything that fails is reported as failed, with the built-to-fail check that established the failure was real. Do not repair by changing estimators after the panel has been seen; log it as a deviation and rerun the whole chain if a repair is unavoidable.

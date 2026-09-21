@@ -1,0 +1,20 @@
+{
+  "producer_sha256": "a92e0261cc0b99fbeb0d045ea81bb0ce4726a477eb847fe0f6e5e42914685e24",
+  "source_zip": "release/R8_20260912_editorial_sources.zip",
+  "source_zip_sha256": "b07e480aacdc7e761a528f7a4c5a679310cb6f97f36ee34496e6c2d8b99e88ad",
+  "source_members": 77,
+  "documents": {
+    "main_R8": {
+      "pages": 46,
+      "normalised_text_matches": true,
+      "clean_diagnostics": true,
+      "pdf_sha256": "b0c15f7b9911e303b04530d5e15aa7729ec2be8a5dd0f2bb4c46f8655d61e907"
+    },
+    "supplement_R8": {
+      "pages": 44,
+      "normalised_text_matches": true,
+      "clean_diagnostics": true,
+      "pdf_sha256": "d416af0160f7eb2cba18751c7a64af99708556f8d9d7bb69c3f5545befe67fff"
+    }
+  }
+}

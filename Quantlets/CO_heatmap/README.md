@@ -1,0 +1,30 @@
+<div style="margin: 0; padding: 0; text-align: center; border: none;">
+<a href="https://quantlet.com" target="_blank" style="text-decoration: none; border: none;">
+<img src="https://github.com/StefanGam/test-repo/blob/main/quantlet_design.png?raw=true" alt="Header Image" width="100%" style="margin: 0; padding: 0; display: block; border: none;" />
+</a>
+</div>
+
+```
+Name of Quantlet: CO_heatmap
+
+Published in: Recalibrating Tail Risk Forecasts under Temporal Dependence
+
+Description: Basel Traffic Light heatmap for 9 models across 24 assets after conformal correction at alpha = 0.01 (Figure 2). Cell labels show annual violation counts scaled to 250 trading days. Green, Yellow, and Red zones follow the Basel Committee framework.
+
+Keywords: conformal prediction, VaR, Basel traffic light, heatmap, backtesting
+
+See also: CO_full_evaluation, CO_violation_rates
+
+Author: Daniel Traian Pele
+
+Submitted: 2026-04-25
+
+Datafile: cfp_ijf_data/paper_outputs/tables/all_results.csv
+
+Output: fig_traffic_light.pdf, fig_traffic_light.png
+
+```
+<div align="center">
+<img src="https://raw.githubusercontent.com/QuantLet/Conformal_Oracle/main/Quantlets/CO_heatmap/fig_traffic_light.png" alt="Image" />
+</div>
+

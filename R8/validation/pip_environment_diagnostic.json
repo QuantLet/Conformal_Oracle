@@ -1,0 +1,29 @@
+{
+  "status": "failed",
+  "scope": "Pip-only environment; retained diagnostic, superseded by explicit conda builds",
+  "latex_outputs_exact": 34,
+  "differing_figure_files": [
+    "source/figures/fig_complexity_august.pdf",
+    "source/figures/fig_dependence_cost.pdf",
+    "source/figures/fig_dependence_cost.png",
+    "source/figures/fig_external.pdf",
+    "source/figures/fig_external.png",
+    "source/figures/fig_loss_august.pdf",
+    "source/figures/fig_mc_august.pdf",
+    "source/figures/fig_mechanism_five.pdf",
+    "source/figures/fig_mechanism_five.png",
+    "source/figures/fig_mechanism_one.pdf",
+    "source/figures/fig_mechanism_one.png",
+    "source/figures/fig_strong_frontier.pdf",
+    "source/figures/fig_strong_frontier.png",
+    "source/figures/fig_ten_strong.pdf",
+    "source/figures/fig_ten_strong.png",
+    "source/figures/fig_ten_traffic.pdf",
+    "source/figures/fig_ten_traffic.png",
+    "source/figures/fig_ten_traffic.svg",
+    "source/figures/fig_traffic_light_august.pdf"
+  ],
+  "expected_freetype": "2.13.3",
+  "wheel_freetype": "2.6.1",
+  "checker_weakened": false
+}

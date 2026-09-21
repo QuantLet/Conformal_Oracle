@@ -1,0 +1,51 @@
+[
+  {
+    "family": "correction",
+    "method": "DtACI-projected-expected",
+    "reference": "Shift-CP",
+    "passes_primary_transfer_criterion": false,
+    "higher_loss_both_bands": false
+  },
+  {
+    "family": "correction",
+    "method": "POT-Shift",
+    "reference": "Shift-CP",
+    "passes_primary_transfer_criterion": false,
+    "higher_loss_both_bands": false
+  },
+  {
+    "family": "correction",
+    "method": "POT-Vol",
+    "reference": "Shift-CP",
+    "passes_primary_transfer_criterion": false,
+    "higher_loss_both_bands": false
+  },
+  {
+    "family": "correction",
+    "method": "State-L1",
+    "reference": "Shift-CP",
+    "passes_primary_transfer_criterion": false,
+    "higher_loss_both_bands": false
+  },
+  {
+    "family": "indication",
+    "method": "Gate-selected-rolling",
+    "reference": "Selected-rolling",
+    "passes_primary_transfer_criterion": false,
+    "higher_loss_both_bands": false
+  },
+  {
+    "family": "indication",
+    "method": "Loss-gate",
+    "reference": "Selected-rolling",
+    "passes_primary_transfer_criterion": false,
+    "higher_loss_both_bands": false
+  },
+  {
+    "family": "indication",
+    "method": "Past-minimum",
+    "reference": "Selected-rolling",
+    "passes_primary_transfer_criterion": false,
+    "higher_loss_both_bands": false
+  }
+]

@@ -16,6 +16,9 @@ def master_table_to_latex(
     panel_split: bool = True,
 ) -> str:
     """LaTeX table matching tab:master format."""
+    def green_fraction(zones: pd.Series) -> float:
+        return float((zones == "green").mean())
+
     df = panel_result.master_table()
     agg = (
         df.groupby("forecaster")
@@ -26,7 +29,7 @@ def master_table_to_latex(
             "pi_corrected": "mean",
             "kupiec_p": "mean",
             "christoffersen_p": "mean",
-            "basel_corrected": lambda x: (x == "green").mean(),
+            "basel_corrected": green_fraction,
             "qs_corrected": "mean",
             "fz_corrected": "mean",
         })

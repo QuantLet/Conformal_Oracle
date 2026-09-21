@@ -1,0 +1,21 @@
+{
+  "producer_sha256": "1daf8565c459e54dbc1767bfdf1e780409b27b1c45880d434457188d57478096",
+  "inputs": {
+    "artifacts/r8_partial_shift/run/summary.csv": "c93e4c9f71d866f9249ed4f3dfc63952e0574c20a773e7d9e8cb7584a4fcd3f9",
+    "artifacts/r8_partial_shift/run/decomposition.csv": "2e8ccb427cd6f249af23073c542f8c181172fc61cd3a66df7850b3ade6e640ac"
+  },
+  "outputs": {
+    "sections_r8/numbers_partial.tex": "bacb650eac4a6a65208d92e04653f4151b4f78d924e9b25735b0445b43b63a4a",
+    "sections_r8/tab_partial.tex": "9664ed384cd9793cdb7e3b84b892fc77bdb35ad82c168164e919e9b903f349bd"
+  },
+  "macros": {
+    "nPartialOneBetterRaw": "19",
+    "nPartialOneBetterFull": "64",
+    "nPartialOneBetterHalf": "36",
+    "nPartialOneRegretPct": "26.6",
+    "nPartialFiveBetterRaw": "35",
+    "nPartialFiveBetterFull": "48",
+    "nPartialFiveBetterHalf": "20",
+    "nPartialFiveRegretPct": "44.5"
+  }
+}

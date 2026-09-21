@@ -1,9 +1,9 @@
 cff-version: 1.2.0
-title: "Recalibrating Tail Risk Forecasts under Temporal Dependence"
+title: "When Does Recalibration Improve Value-at-Risk Forecasts? Estimation Cost, Dependence and How Much to Correct"
 message: "If you use this software or the methodology it implements, please cite the underlying paper."
 type: software
-version: 0.3.0
-date-released: "2026-05-12"
+version: 0.5.0
+date-released: "2026-09-21"
 authors:
   - family-names: Pele
     given-names: Daniel Traian
@@ -25,7 +25,7 @@ url: "https://github.com/QuantLet/Conformal_Oracle"
 license: MIT
 preferred-citation:
   type: article
-  title: "Recalibrating Tail Risk Forecasts under Temporal Dependence"
+  title: "When Does Recalibration Improve Value-at-Risk Forecasts? Estimation Cost, Dependence and How Much to Correct"
   authors:
     - family-names: Pele
       given-names: Daniel Traian
@@ -44,4 +44,4 @@ preferred-citation:
       affiliation: "Humboldt University Berlin, Institute for Digital Assets"
   year: 2026
   url: "https://github.com/QuantLet/Conformal_Oracle"
-  notes: "Manuscript under review at International Journal of Forecasting."
+  notes: "The R7 and R8 public APIs accompany the earlier manuscript, Conformal Recalibration of Extreme Tail Quantiles under Temporal Dependence."

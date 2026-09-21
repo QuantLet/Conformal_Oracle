@@ -1,0 +1,119 @@
+{
+  "status": "passed",
+  "stage": "r8_editorial_20260912",
+  "scope": "Prose, structure and display-inclusion revision of canonical R8; no number, equation, table content, figure, data, forecast or simulation changed.",
+  "changed_sources": {
+    "source/main_R8.tex": "95c200be1e98e6c30e58b62a0bf35cb86da33ad93780be48723581f9552c2b64",
+    "source/highlights.tex": "afa515d5717e4d4cc8f390def647b2270bdebcf5b3d85fbbbebb72c2dee2a967",
+    "source/IRFA_cover_letter.md": "19f0680afff1628970d06dbc8f99f536b9910c484cbb2c0254da7d3b3e442d13",
+    "IRFA_cover_letter.md": "19f0680afff1628970d06dbc8f99f536b9910c484cbb2c0254da7d3b3e442d13",
+    "source/sections_r8/introduction.tex": "cce9d79e90a3ff48eaa2e72a7047c38a05579b67f9f615e5f2de57e74e1c8a3f",
+    "source/sections_r8/theory.tex": "b189d62c38516f6b72e22dc3c6dfed3fe6628b0db15ed7b1bdb01ce677a493be",
+    "source/sections_r8/results.tex": "99332b4878a929423d825aa8289cffccaa7b4c7556a261b92246c40fc360b58c",
+    "source/sections_r8/montecarlo.tex": "d3730e77e32fe424aa4ff0e14531deeb74d579775b646d0672f5aebde9c618b1",
+    "source/sections_r8/deployment.tex": "3772979dd0b51ffdb6ba737830e139c58add6987a41f6462788c2f479c9066ff",
+    "source/sections_r8/discussion.tex": "8e710608fb30f77123fc8efef5ca20f06a09d01091ec80f9853c27a44cdcfe06",
+    "source/sections_r8/methodology.tex": "ba1904ebc0d066ffd12dbe44caf409772cf12330a313aeb64b0b1c4e8a3b8034",
+    "source/sections_r8/supp_specs.tex": "2b25a7b3499e4aeb0719990405bea01b7d4ef894faeff42b74eff01989d8ccf9",
+    "source/sections_r8/supp_sensitivities.tex": "9d8acc4895abfaaa5d6c4c8ed00bb89ff02449be441e09582ea0008486854879",
+    "source/sections_r8/shape_design.tex": "c20605c9ea8c8a3b2ef18a671ee01b1ddfc74ef6ae121f8f4577e321cc8a8746",
+    "source/sections_r8/risk.tex": "ef496b8be66b4996e205dd51b245cd100c87ad9b27e8663c9b0e7cacd5729a86",
+    "source/sections_r8/shape_cost.tex": "a5fcf62bd0fb54749b907034f55d6d0d12c64e8a8ef52b14eafd5dd5747b6277",
+    "source/sections_r8/information.tex": "fb8bc4c6c495372942fa1d6e1cdaac96660fd5b0f224bcfdf31dc0a7a448853a",
+    "source/sections_r8/regime.tex": "ed1b0da3c0b77f2375e36a9b7c209479a528dd54772d4665b6460e14fb920f6d",
+    "source/sections_r8/external.tex": "ab54ae1230adf00b2b99e8640b9bc3d248c2b0704da2700f10efc5a0be4f4104",
+    "source/sections_r8/proofs.tex": "276ccb29e00c02d8bf9d9a65f506a7929950af78e98f0ddceacad5b07003d4b9"
+  },
+  "before_sources_zip": "eae911a39669d65dca18b5fe31c6a6aa0072c0d21e0016d6fa970d6fa0851a0a",
+  "outputs": {
+    "source/main_R8.pdf": "26f1336f99db50327c701d0ee64e6fe6687e4452530de3111cb524889a569512",
+    "source/supplement_R8.pdf": "0964b27fc963ab2eef8f2bba44527ff9bd168a450152d14f04a4ea1e26944fdd",
+    "source/highlights.pdf": "8da9c4b98cd317b023479c760337b8e73974e2cd8b1be79b271420b212c3e03b",
+    "Manuscript_R8.pdf": "26f1336f99db50327c701d0ee64e6fe6687e4452530de3111cb524889a569512",
+    "release/R8_20260912_editorial_sources.zip": "e7b3a54dc3a6aaa5bf8cddc615345286579fd0d3db40468638f2f81f52484f66",
+    "release/R8_LaTeX_sources.zip": "e7b3a54dc3a6aaa5bf8cddc615345286579fd0d3db40468638f2f81f52484f66"
+  },
+  "package": {
+    "producer_sha256": "a92e0261cc0b99fbeb0d045ea81bb0ce4726a477eb847fe0f6e5e42914685e24",
+    "source_zip": "release/R8_20260912_editorial_sources.zip",
+    "source_zip_sha256": "e7b3a54dc3a6aaa5bf8cddc615345286579fd0d3db40468638f2f81f52484f66",
+    "source_members": 77,
+    "documents": {
+      "main_R8": {
+        "pages": 46,
+        "normalised_text_matches": true,
+        "clean_diagnostics": true,
+        "pdf_sha256": "26f1336f99db50327c701d0ee64e6fe6687e4452530de3111cb524889a569512"
+      },
+      "supplement_R8": {
+        "pages": 44,
+        "normalised_text_matches": true,
+        "clean_diagnostics": true,
+        "pdf_sha256": "0964b27fc963ab2eef8f2bba44527ff9bd168a450152d14f04a4ea1e26944fdd"
+      }
+    }
+  },
+  "documents": {
+    "main_pages": 46,
+    "supplement_pages": 44,
+    "guards": [
+      "undefined",
+      "literals",
+      "producers"
+    ],
+    "negative_controls": 3,
+    "undefined_references": 0,
+    "overfull_boxes": 0,
+    "near_blank_pages": []
+  },
+  "generated_tables_newly_displayed": [
+    "tab_classes",
+    "tab_complexity_mc",
+    "tab_controlled_sweep",
+    "tab_forecasters",
+    "tab_mc",
+    "tab_methods",
+    "tab_quotations",
+    "tab_strong"
+  ],
+  "generated_tables_still_undisplayed": [
+    "tab_calendar",
+    "tab_closures"
+  ],
+  "repository_path_references_in_documents": [],
+  "archive_checks": {
+    "pot80_shift_below_shift_cp_garch_cells": "48 of 48",
+    "pot80_shift_above_raw_garch_cells": "26 of 48",
+    "source": "artifacts/r8_mechanism/results/summary.csv"
+  },
+  "fpeval_rescalings": {
+    "nAugGapPiChange*100": "0.09 percentage points",
+    "nShapeFinHighDelta*1000": "-2.37",
+    "nShapeFinOtherDelta*1000": "0.04",
+    "nShapeFinAllDelta*1000": "-0.11"
+  },
+  "not_done": [
+    "public deposit of replication package",
+    "fresh external human review",
+    "submission ZIP for IRFA (last built 2026-09-08 from R7)"
+  ],
+  "round3": {
+    "inputs": "four read-only review agents (mathematics, numbers/inference, IRFA referee, prose rules)",
+    "applied": [
+      "introduction rewritten around three questions",
+      "Proposition 7.1 moved to Section 4.3 with the two-law experiment defined in text",
+      "Discussion rewritten as evidence + limitations",
+      "abstract rewritten (14 lines)",
+      "k_n, F_{t-1}, beta_r defined before use; Lemma 4.8 cap stated; label rem:garch",
+      "36-contrast sensitivity: nine bands include zero (verified from artifacts/r8_shape_cost/simulation/contrasts.csv)",
+      "bias condition added to the AR sign-reversal sentence",
+      "Lag-Llama share 38% of pooled gain (computed from tab_native_forecasters)",
+      "prose-rule rewrites: long sentences, negations, rather-than, archive/workflow references, enumerations"
+    ],
+    "not_applied": [
+      "symbol renaming (B, K, g, A overloads) - would change displayed equations and supplement proofs",
+      "numerical value of Theorem 4.9 bound at panel n - requires unknown rho",
+      "DECLARED_CONSTANTS relabeling for 0.9/0.8 row - unverified broad-baseline fractions"
+    ]
+  }
+}

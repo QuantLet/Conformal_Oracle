@@ -1,0 +1,60 @@
+{
+  "bootstrap_denominator_cells_replayed": 965034,
+  "bootstrap_draws_replayed": 1998,
+  "classification": "exploratory",
+  "exact_checks": {
+    "empty_support_negative_control": true,
+    "exact_rational_identity_cases": 125,
+    "identity_covers_positive_negative_zero_thresholds_and_ties": true
+  },
+  "inference_status": [
+    {
+      "block_calendar_days": 20,
+      "draws_with_empty_cells": 342,
+      "empty_cells": 1899,
+      "inference": "aborted_empty_state",
+      "no_draws_redrawn": true,
+      "no_pairs_dropped": true,
+      "pairs_ever_empty": 35,
+      "primary_family_size": 4,
+      "total_draws": 999
+    },
+    {
+      "block_calendar_days": 60,
+      "draws_with_empty_cells": 473,
+      "empty_cells": 3554,
+      "inference": "aborted_empty_state",
+      "no_draws_redrawn": true,
+      "no_pairs_dropped": true,
+      "pairs_ever_empty": 77,
+      "primary_family_size": 4,
+      "total_draws": 999
+    }
+  ],
+  "input_files": 868,
+  "input_hashes_unchanged": true,
+  "matched_pairs": 161,
+  "outputs": {
+    "PROTOCOL.json": "35b0cc2493088d49aebd21d7d29eb4755b881e60c68c11e096bcf5db317ff2d1",
+    "PROTOCOL.md": "86b832600e32bd85cb0b6e8d3b041bd0cf134563525691ba323249d354dac5cf",
+    "bootstrap_20.npz": "9ef34687a905b4ca05d9c942adc0da315c9489b8800f14935cbf4594d154c023",
+    "bootstrap_60.npz": "41f35f09ccb3e5fb60cec6219ef4e00a9cf6fced6a8119b034c7b93d8a46b1e2",
+    "checks.json": "1282d9edbda1df3b944a318661c9e7cf9fe3c8124ff52cda2a66163b2e5d921d",
+    "empty_state_events.csv": "0e9be2cfaf0f32075848c23341e2bba46992563442e4b22bf9ce2659d1f5cfa4",
+    "inference_status.json": "c9e0c3f4c60ac8900b2a887ca30226b7120190bc26a2fcc29716ac4899068951",
+    "intervals.csv": "575a6e9325e90ea38dd07c89465ee9a6c4bba1325cc8ec54a4edb8dd2a8a310f",
+    "pair_state_metrics.csv": "b4478375056ef6bacba705d44b6f20a9789b8efa73561d026a4598ee45a9e487",
+    "receipt.json": "1a8179df9db833e2ebf5dad5676ae8ccd47021dcd1fe3739c7f84728e7604086",
+    "summary.csv": "2f1354f325b7fb66ec12aeb1a1f3363b9870e7c5bdac24708eaf0095cbc21af2",
+    "support.csv": "a4cf38e1573dfa3484c2d081d57c2ffbbae008d2e3b4fc0e4484f50fe1dcaefa"
+  },
+  "pairs": 168,
+  "producer_sha256": "e0f390ab7053dbeff2a7e79c7456b7348ae0ba0bcaea3a10631c5051511a7db5",
+  "receipt_sha256": "1a8179df9db833e2ebf5dad5676ae8ccd47021dcd1fe3739c7f84728e7604086",
+  "report_sha256": "acc3115563db39c45919b5c301ee0834ceb153a329e794822be841285e479e7b",
+  "score_checks": {
+    "daily_identity_rows": 526358,
+    "stored_metric_cells": 994
+  },
+  "status": "passed"
+}

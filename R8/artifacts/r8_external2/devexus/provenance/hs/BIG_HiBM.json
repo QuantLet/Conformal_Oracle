@@ -1,0 +1,29 @@
+{
+  "binding": {
+    "input_sha256": "8070628912719d781e514f5a29567688d45fdf35f473a14c3c949087b94b6c40",
+    "producer_sha256": "d0957fd54a9e268e51abb70c3800ab03aa556276922c84363d55899ba7edf5cb",
+    "model": "hs",
+    "asset": "BIG_HiBM",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.3.3",
+      "scipy": "1.16.3",
+      "arch": "8.0.0",
+      "pyarrow": "21.0.0"
+    },
+    "python": "3.13.9",
+    "window": 250,
+    "alphas": [
+      0.01,
+      0.025,
+      0.05,
+      0.1
+    ]
+  },
+  "rows": 7935,
+  "first_date": "1996-03-04",
+  "last_date": "2026-07-31",
+  "forecast_sha256": "ffe97c61e78a5b8d35d71eec7c078d67b66ae74035047cc671e8a04a8783521a",
+  "parameters_sha256": "393649f88da725b4281d64da533656757570e3edcb3075231a9b5335113a47ce",
+  "elapsed_seconds": 0.593630832969211
+}

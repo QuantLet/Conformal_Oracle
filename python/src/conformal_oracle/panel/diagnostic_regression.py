@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import cast
 
 import numpy as np
 import pandas as pd
@@ -95,7 +96,7 @@ def _cluster_se(
 
     scale = J / (J - 1) * (n - 1) / (n - k)
     V = XtX_inv @ meat @ XtX_inv * scale
-    return np.sqrt(np.diag(V))
+    return cast(np.ndarray, np.sqrt(np.diag(V)))
 
 
 def fit_diagnostic_regression(

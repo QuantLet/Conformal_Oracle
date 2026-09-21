@@ -1,0 +1,11 @@
+{
+  "inputs": {
+    "contrasts.csv": "1f82b2a8eea98e910b13de3ac93e9645f406687ea2de790d0712878a1a73644e",
+    "decomposition.csv": "8991d371d9ba06b7437abf368149e7f7de90c51adfbfaa6ee9c992c268ec7811",
+    "sign.csv": "5c5e0cc090c037f24222d11d16c2c9bf1385c65fb590381012cbb257c486dcb0"
+  },
+  "outputs": {
+    "numbers_power.tex": "f112ccd7cf41df5dc50ea50376f95d87cb0f3637376829b85626d1d53de4c9ed",
+    "tab_power.tex": "e24e5b52fa6316e37e4f9e468e80098fc61046e91e71a2e4d532ade1053ca212"
+  }
+}

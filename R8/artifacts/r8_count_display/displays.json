@@ -1,0 +1,20 @@
+{
+  "producer_sha256": "9bc3f473be772a84ddd989350995d3b7c3b4bc320b5f2e520ef9446729add2a0",
+  "inputs": {
+    "artifacts/r8_count_law/exact_witness.json": "747194dec95b4d914a7c835f775af520bcfa5690d38b1cc1dc5797891331ec7c"
+  },
+  "outputs": {
+    "numbers_count.tex": "743ee4e5e93763de005aa6f83fbb8ea24d07478152bf6245bc0671b0066cf055"
+  },
+  "macros": {
+    "CountIidCost": "3.313",
+    "CountRenewalCost": "3.292",
+    "CountRemovable": "3.305",
+    "CountLeading": "3.960",
+    "CountIidRelPct": "0.24",
+    "CountRenewalRelPct": "0.38",
+    "CountGapPct": "0.62",
+    "CountLeadingOverIid": "1.20",
+    "CountN": "125"
+  }
+}

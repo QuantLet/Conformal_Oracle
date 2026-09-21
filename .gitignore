@@ -16,21 +16,19 @@
 # Python
 __pycache__/
 *.pyc
-*.egg-info/
 .venv*/
 .ipynb_checkpoints/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
 test_env/
 
 # OS
 .DS_Store
 
-# Data (large — parquets excluded, returns tracked)
+# Data: only the small return series are tracked. The ~126 MB of forecast
+# parquets and paper_outputs/ tables are published as a GitHub Release asset and
+# fetched with download_data.py (keeps the code repo lean).
 cfp_ijf_data/*
 !cfp_ijf_data/returns/
+/cfp_ijf_data.zip
 gpt3.5_simulations/
 gpt4_simulations/
 gpt_4o_simulations/
@@ -50,10 +48,13 @@ robustness_output/
 20260*.spl
 20260*.synctex.gz
 calibrating_the_oracle.bib
-tab_h14_small_sample.tex
-tab_h15_fc_sensitivity.tex
-tab_h16_regime_stability.tex
-tab_simulation_extended.tex
+# Root-anchored: these names also exist as required Quantlet outputs that the
+# paper \inputs (Quantlets/CO_robustness/, Quantlets/CO_simulation_study/).
+# Anchoring with a leading slash ignores only the root-level local copies.
+/tab_h14_small_sample.tex
+/tab_h15_fc_sensitivity.tex
+/tab_h16_regime_stability.tex
+/tab_simulation_extended.tex
 preamble.tex
 highlights.txt
 *.docx
@@ -62,16 +63,18 @@ generate_figures.py
 regenerate_r3_figures.py
 run_all_three_tasks.py
 run_conformal_analysis*.py
-run_conformal_garch_ewma.py
+/run_conformal_garch_ewma.py
 run_forecasts.ipynb
-run_simulation_study.py
 run_conformal_analysis.py.local
 robustness_mc.py
+# Root-anchored: Quantlets/CO_simulation_study/ ships its own copies (script,
+# results CSV) that must be tracked; ignore only the root-level local copies.
+/run_simulation_study.py
 conformal_prediction_analysis.ipynb
 conformal_all_methods_summary.csv
 conformal_backtest_results.csv
 garch_conformal_detail.csv
-simulation_study_results.csv
+/simulation_study_results.csv
 
 # Paper-level outputs (Quantlets host their own)
 /figures/
@@ -82,3 +85,6 @@ simulation_study_results.csv
 /ql_logo.png
 /qr_logo.png
 /Sigla_MAAT.png
+python/dist/
+python/build/
+python/src/*.egg-info/

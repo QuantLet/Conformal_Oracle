@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 import pandas as pd
@@ -15,6 +15,10 @@ from conformal_oracle._types import (
 )
 from conformal_oracle.contrib.tsfm._base import BaseTSFMForecaster
 from conformal_oracle.contrib.tsfm._cache import TSFMPredictionCache
+
+if TYPE_CHECKING:
+    from gluonts.model.predictor import Predictor
+
 
 PAPER_MODELS = {
     "1.1": {
@@ -66,7 +70,7 @@ class MoiraiForecaster(BaseTSFMForecaster):
         )
         self.version = version
         self.size = size
-        self._predictor: object | None = None
+        self._predictor: Predictor | None = None
         self._quantile_probs: np.ndarray | None = None
         self._cache_obj: TSFMPredictionCache | None = None
 
@@ -147,6 +151,7 @@ class MoiraiForecaster(BaseTSFMForecaster):
         self, returns: pd.Series, t: int
     ) -> PredictiveDistribution:
         self._ensure_model()
+        assert self._predictor is not None
 
         import torch
         from gluonts.dataset.common import ListDataset

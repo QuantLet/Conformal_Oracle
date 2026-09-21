@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "validator_sha256": "85eda07ef05c54c7ddffb3671fddcb518053e72e3081ce678935ae2f6e3ca495",
+  "independent_metric_code_sha256": "ca13aa66af9c4d67e67420a119fffaaf567e021b84dce6aa5f386e448237e11f",
+  "run_complete_sha256": "850956704396507dda9365ee57f9b315d9f864acd7c1005864e7163f633343f3",
+  "replay_complete_sha256": "850956704396507dda9365ee57f9b315d9f864acd7c1005864e7163f633343f3",
+  "evaluation_complete_sha256": "68d5bcc6d932977d820c7d6aa3085293a83d90b7e4a9d939d3bcbd63a02c99ad",
+  "all_fit_outputs_exact": true,
+  "independent_features_and_tree_forecasts": 120792,
+  "annual_fits": 487,
+  "scalar_metric_and_interval_checks": 961,
+  "independently_rebuilt_bootstrap_draws": 1998,
+  "family_contrasts": 22,
+  "panels": 24,
+  "methods": 3
+}

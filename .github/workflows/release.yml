@@ -1,5 +1,12 @@
 name: release
 
+# Trusted publishing for conformal-oracle. PyPI must list exactly one trusted
+# publisher for this project, matching the repository that carries this file,
+# the file name release.yml and the environment name pypi below. Two
+# repositories hold this workflow, so only one of them may be registered on
+# PyPI at a time; the other's tags will build and then be refused at the
+# publish step, which is the intended behaviour.
+
 on:
   push:
     tags:

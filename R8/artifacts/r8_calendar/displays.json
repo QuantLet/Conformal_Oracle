@@ -1,0 +1,11 @@
+{
+  "inputs": {
+    "calendar.csv": "5091156901d5d1658e5bb4fabeb6e21778e974b8d3119c545e24042c778c5d8e",
+    "stress_dates.csv": "ea7afeecf9e63e5037578cd8286d5facbdcd3ff9434ce253607449bea4c41aa3",
+    "external_acf.csv": "89bcdff13fb167ac82b82f41afa6fdf86b988d66102baa6b84fa382945aa899e",
+    "run.json": "10e9304e9fe59d87dd57ca6e8d9680661c4e73839e639e970f2f92d27a2e00d4"
+  },
+  "outputs": {
+    "numbers_calendar.tex": "7cc5afbdceb347464ab4234d96810e1064daf065efc5a457854948929ebcd2f2"
+  }
+}

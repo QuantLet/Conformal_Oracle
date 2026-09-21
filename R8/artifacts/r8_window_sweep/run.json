@@ -1,0 +1,82 @@
+{
+  "protocol_sha256": "f0022c126bdbfcd159d646fc1bd06e077df3845f5fc62fe131045fa65967062a",
+  "producer_sha256": "f6cabed459733cc50fb3dc55fdbbc8b36521430f14c8968d105629d1d3886b5e",
+  "inputs": {
+    "window_sensitivity.csv": "0cde781644a981cb471f252487e218a0afb49670a7573a3f9c5f3eb3f6181195",
+    "asset_inventory.csv": "7b8821913aa43dff06f7b69cc664eb5b81631713b545053dc8894c1510671b4e"
+  },
+  "provenance": {
+    "old_last_unique": [
+      "2026-03-18"
+    ],
+    "series_unchanged_on_overlap": [
+      "ASX200",
+      "AUDUSD",
+      "BOVESPA",
+      "BTC",
+      "CBU0",
+      "ETH",
+      "EURUSD",
+      "FCHI",
+      "FTSE100",
+      "GBPUSD",
+      "GDAXI",
+      "HSI",
+      "NIFTY",
+      "NIKKEI",
+      "SP500",
+      "STOXX",
+      "USDJPY"
+    ],
+    "series_changed_on_overlap": [
+      "IBGL",
+      "ICLN",
+      "TLT"
+    ],
+    "series_without_old_vintage": [
+      "DJCI",
+      "GLD",
+      "UNG",
+      "USO"
+    ],
+    "sweep_series": [
+      "ASX200",
+      "AUDUSD",
+      "BOVESPA",
+      "BTC",
+      "CBU0",
+      "DJCI",
+      "ETH",
+      "EURUSD",
+      "FCHI",
+      "FTSE100",
+      "GBPUSD",
+      "GDAXI",
+      "GOLD",
+      "HSI",
+      "IBGL",
+      "ICLN",
+      "NATGAS",
+      "NIFTY",
+      "NIKKEI",
+      "SP500",
+      "STOXX",
+      "TLT",
+      "USDJPY",
+      "WTI"
+    ],
+    "series_not_in_current_panel": [
+      "GOLD",
+      "NATGAS",
+      "WTI"
+    ],
+    "series_without_overlap_record": [
+      "DJCI"
+    ]
+  },
+  "outputs": {
+    "numbers_windows.tex": "92a69338e12c3bc1c7d121c86214e7f146f5949357da8a2d077a72adffceb483",
+    "tab_windows_sweep.tex": "8957b2bcde9c5b74eeebd84502e787825b77166baad65174453866fec131375a"
+  },
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]"
+}

@@ -12,12 +12,14 @@ from conformal_oracle._protocols import Forecaster
 from conformal_oracle._types import PredictiveDistribution
 from conformal_oracle.audit.regime import classify_regime_static
 from conformal_oracle.conformal.bootstrap import bootstrap_qv_ci
+from conformal_oracle.conformal.quantile import conformal_quantile
 from conformal_oracle.diagnostics.acerbi_szekely import z2_statistic
 from conformal_oracle.diagnostics.basel import basel_traffic_light
 from conformal_oracle.diagnostics.christoffersen import christoffersen_pvalue
 from conformal_oracle.diagnostics.diebold_mariano import quantile_score_sequence
 from conformal_oracle.diagnostics.kupiec import kupiec_pof_pvalue
 from conformal_oracle.diagnostics.scoring import fissler_ziegel_fz0, quantile_score
+from conformal_oracle.recalibration.base import RecalibrationMethod
 
 
 @dataclass
@@ -87,7 +89,7 @@ class StaticAuditResult:
         return "\n".join(lines)
 
     def to_dict(self) -> dict:
-        d = {}
+        d: dict[str, object] = {}
         for k, v in self.__dict__.items():
             if isinstance(v, (pd.Series, np.ndarray)):
                 continue
@@ -141,14 +143,14 @@ def _audit_static_from_quantiles(
     n_cal = int(n * calibration_split)
     n_test = n - n_cal
 
-    cal_returns = returns.iloc[:n_cal].values
-    cal_q_lo = q_lo.iloc[:n_cal].values
-    test_returns = returns.iloc[n_cal:].values
-    test_q_lo = q_lo.iloc[n_cal:].values
+    cal_returns = returns.iloc[:n_cal].to_numpy()
+    cal_q_lo = q_lo.iloc[:n_cal].to_numpy()
+    test_returns = returns.iloc[n_cal:].to_numpy()
+    test_q_lo = q_lo.iloc[n_cal:].to_numpy()
 
     # Scores: S_t = q_lo_t - r_t  (same sign convention as forecaster path)
     cal_scores = cal_q_lo - cal_returns
-    q_v_stat = float(np.quantile(cal_scores, 1 - alpha))
+    q_v_stat = conformal_quantile(cal_scores, alpha)
 
     ci = bootstrap_qv_ci(cal_scores, alpha, seed=seed)
 
@@ -210,7 +212,7 @@ def audit_static(
     calibration_split: float = 0.70,
     warmup: int = 50,
     seed: int = 2026,
-    recalibration: object | None = None,
+    recalibration: RecalibrationMethod | None = None,
 ) -> StaticAuditResult:
     """Run the static conformal audit pipeline.
 
@@ -236,12 +238,12 @@ def audit_static(
     for t in range(warmup_start, n_cal):
         cal_forecasts.append(forecaster.forecast(returns, t))
 
-    cal_realised = cal_returns.values[warmup_start:]
+    cal_realised = cal_returns.to_numpy()[warmup_start:]
     cal_var_raw = np.array([-f.quantile(alpha) for f in cal_forecasts])
     cal_scores = np.array([
         f.quantile(alpha) - r for f, r in zip(cal_forecasts, cal_realised)
     ])
-    q_v_stat = float(np.quantile(cal_scores, 1 - alpha))
+    q_v_stat = conformal_quantile(cal_scores, alpha)
 
     ci = bootstrap_qv_ci(cal_scores, alpha, seed=seed)
 
@@ -263,7 +265,7 @@ def audit_static(
 
     es_corrected = es_raw + (var_corrected - var_raw)
 
-    test_realised = test_returns.values
+    test_realised = test_returns.to_numpy()
     viol_raw = (test_realised < -var_raw).astype(int)
     viol_corrected = (test_realised < -var_corrected).astype(int)
 

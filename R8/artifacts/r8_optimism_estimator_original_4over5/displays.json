@@ -1,0 +1,11 @@
+{
+  "inputs": {
+    "summary.csv": "14a61ee886e864982cd24392ae75d535c1cba5a85ad2577bcad8395a59f7c31c",
+    "oracle_lambda.csv": "8889de103ecc842c56fec2ce9fe25715c970b4f0bcfcd388cf1b6a26223e48f5",
+    "admission.json": "e83c5ae3b185a05cdd77057e2437a0dfbde5ed7f8a80612603edf6c64984f1b0"
+  },
+  "outputs": {
+    "numbers_optest.tex": "295cfd9b8b8e1d5506ca87a599aa1ef2edf4c27a11aebcd4afff63b269023399",
+    "tab_optest.tex": "a5c6c630475aebff1d210121211408c3ef331daadeab3427edffa215facec033"
+  }
+}

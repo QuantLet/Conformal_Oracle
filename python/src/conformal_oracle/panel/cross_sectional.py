@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 import numpy as np
 import pandas as pd
 
@@ -21,7 +23,7 @@ def compute_asset_characteristics(
         threshold = s.mean() - 3 * s.std()
         tail_freq = float((s < threshold).mean())
         ac1 = float(s.autocorr(lag=1)) if len(s) > 1 else 0.0
-        kurt = float(s.kurtosis())
+        kurt = float(cast(float, s.kurtosis()))
         rows[col] = {
             "annualised_vol": vol,
             "tail_frequency": tail_freq,

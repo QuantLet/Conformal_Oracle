@@ -1,0 +1,13 @@
+{
+  "purpose": "Presentation-only derivatives of unchanged archived numerical results",
+  "inputs": {
+    "editorial/summary.csv": "19964cf6749feb2ff7be10ebe7ebf6c84c2570052d7d2a78eafb07904d6ef1bc",
+    "editorial/intervals.csv": "575dd31306618c564fa48528bcb250bc659e5cfbdb41481e8a1616342d31d70e",
+    "sections_r8/tab_ten_strong.tex": "6509b061972a9184d9412fe5182632844b465b12b6799bddc54011512b07cc24",
+    "sections_r8/tab_controlled_full.tex": "05c53f26333c8b80636882f0dd3005e983ceee5eb6a2cbc6ca658e8a75e3b74c"
+  },
+  "original_sources": {
+    "editorial/summary.csv": "artifacts/r8_ten_comparators/results/summary.csv",
+    "editorial/intervals.csv": "artifacts/r8_referee_revision/results/intervals.csv"
+  }
+}

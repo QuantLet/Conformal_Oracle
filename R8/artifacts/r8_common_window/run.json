@@ -1,0 +1,31 @@
+{
+  "protocol_sha256": "c04108c37eb15cffbac7f4f42f58e2917ff5f42b3bb3cff5b0437fa713c00351",
+  "producer_sha256": "81e620667b43eeefb6d66293bbf4a323df9b11b20fd5fa800ffd5dede76dcf12",
+  "inputs": {
+    "boundaries.csv": "b32192e2452b65ae6e8f35bf378f07830843b2a933d7b6e583cba58a26b13d86",
+    "pairs_dir": "artifacts/r8_ten_comparators/pairs"
+  },
+  "summary": {
+    "common_start": "2024-06-11",
+    "common_end": "2026-08-31",
+    "calendar_days": 812,
+    "trading_dates": 812,
+    "min_pairs_present": 20,
+    "max_pairs_present": 240,
+    "pair_days": 139590,
+    "point_x1e4": -0.17285069174843054,
+    "full_window_point_x1e4": -0.15929243240442914,
+    "raw_QS_x1e4": 4.845850768201418,
+    "static_QS_x1e4": 4.673000076452988,
+    "rolling_QS_x1e4": 4.940750959415765,
+    "raw_pi_pct": 1.8001016079434873,
+    "static_pi_pct": 1.002688218070232,
+    "rolling_pi_pct": 0.9117270963541942,
+    "pairs_improved": 170,
+    "min_n_common": 543,
+    "max_n_common": 812,
+    "elapsed_seconds": 0.331797292000374
+  },
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]",
+  "numpy": "2.3.5"
+}

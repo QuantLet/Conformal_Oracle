@@ -1,0 +1,19 @@
+{
+  "source": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/tw_5_ports_developed.html",
+  "retrieved_utc": "2026-09-13T07:13:20.438624+00:00",
+  "status": 200,
+  "headers": {
+    "content-type": "text/html",
+    "last-modified": "Tue, 01 Sep 2026 21:49:05 GMT",
+    "accept-ranges": "bytes",
+    "etag": "\"85dfe8b55b3add1:0\"",
+    "server": "Microsoft-IIS/10.0",
+    "date": "Sun, 13 Sep 2026 07:13:19 GMT",
+    "content-length": "68872",
+    "connection": "close"
+  },
+  "bytes": 68872,
+  "sha256": "1b25b822caf1534e7383a69e3c1cd4d90763f52128c98f9bcd83f27b973faaf2",
+  "producer_sha256": "0ec63a62cf9bd525fe9cc83afce4dc8fe032dbb5c09e2515056c9c97c38690eb",
+  "protocol_sha256": "1c0d56b4d935a08169398ef68939f1d0676d8fa15d79d73f8ea6bcdf78998bda"
+}

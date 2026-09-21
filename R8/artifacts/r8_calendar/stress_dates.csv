@@ -1,0 +1,11 @@
+date,weekday,pairs_present,crypto_only
+2025-10-10,Fri,240,False
+2026-02-05,Thu,240,False
+2025-04-04,Fri,230,False
+2021-11-26,Fri,200,False
+2025-04-03,Thu,240,False
+2025-03-03,Mon,230,False
+2024-08-02,Fri,240,False
+2020-03-09,Mon,100,False
+2026-06-05,Fri,240,False
+2025-04-06,Sun,20,True

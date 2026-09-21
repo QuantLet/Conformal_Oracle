@@ -6,6 +6,7 @@ import hashlib
 import json
 import pickle
 from pathlib import Path
+from typing import cast
 
 import numpy as np
 
@@ -47,7 +48,7 @@ class TSFMPredictionCache:
             return None
         try:
             with open(path, "rb") as f:
-                return pickle.load(f)  # noqa: S301
+                return cast(PredictiveDistribution, pickle.load(f))  # noqa: S301
         except Exception:
             path.unlink(missing_ok=True)
             return None
