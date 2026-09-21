@@ -1,0 +1,24 @@
+[
+  {
+    "block_calendar_days": 20,
+    "draws_with_empty_cells": 342,
+    "empty_cells": 1899,
+    "inference": "aborted_empty_state",
+    "no_draws_redrawn": true,
+    "no_pairs_dropped": true,
+    "pairs_ever_empty": 35,
+    "primary_family_size": 4,
+    "total_draws": 999
+  },
+  {
+    "block_calendar_days": 60,
+    "draws_with_empty_cells": 473,
+    "empty_cells": 3554,
+    "inference": "aborted_empty_state",
+    "no_draws_redrawn": true,
+    "no_pairs_dropped": true,
+    "pairs_ever_empty": 77,
+    "primary_family_size": 4,
+    "total_draws": 999
+  }
+]

@@ -1,14 +1,12 @@
-# pipeline/ — Evaluation Pipeline Notebooks (documentation only)
+# pipeline/ — Evaluation Pipeline Notebooks
 
-These notebooks document the full evaluation pipeline for the paper
-"Recalibrating Tail Risk Forecasts under Temporal Dependence"
-(Pele, Bolovăneanu, Ginavar, Lessmann, Härdle, 2026).
+These notebooks form the full evaluation pipeline for the paper
+"Distribution-Free Recalibration of Tail Quantile Forecasts under Temporal
+Dependence" (Pele, Lessmann, Härdle, 2026).
 
-They are **not** Quantlets and are **not intended to be re-run**.
-They require GPU access and pinned TSFM model checkpoints (Chronos,
-TimesFM, Moirai, Lag-Llama) that are not distributed with this repo.
-They are retained here to document the methodology and data provenance
-for the intermediate artifacts consumed by the Quantlets.
+They are **not** Quantlets — they are the upstream computation pipeline that
+produces the intermediate data artifacts consumed by the Quantlets in the
+repo root.
 
 ## Execution order
 

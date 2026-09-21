@@ -1,8 +1,8 @@
-# Migration Guide: v0.1.x to v0.2.0
+# Migration Guide: v0.2.x to v0.3
 
 ## Summary of changes
 
-v0.2.0 makes the core `conformal-oracle` install **dependency-agnostic**.
+v0.3.0 makes the core `conformal-oracle` install **dependency-agnostic**.
 The `arch` library is no longer a mandatory dependency. GARCH-based
 benchmark forecasters have moved to `conformal_oracle.contrib.benchmarks`
 and require the `[benchmarks]` extra.
@@ -34,8 +34,8 @@ pip install conformal-oracle[benchmarks]
 | `conformal_oracle.forecasters.tsfm.TimesFM25Forecaster` | `conformal_oracle.contrib.tsfm.TimesFM25Forecaster` |
 | `conformal_oracle.forecasters.tsfm.MoiraiForecaster` | `conformal_oracle.contrib.tsfm.MoiraiForecaster` |
 
-The old import paths still work but emit `DeprecationWarning` and
-will be removed in v0.3.0.
+The old import paths still work in the 0.3.4 source tree but emit
+`DeprecationWarning`. No removal version is specified here.
 
 ### Deprecated functions
 

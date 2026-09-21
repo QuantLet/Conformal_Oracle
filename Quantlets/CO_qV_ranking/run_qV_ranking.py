@@ -101,8 +101,8 @@ legend_elements = [
     Patch(facecolor=MAIN_BLUE, edgecolor='black', linewidth=0.5, label='Moderate/Mild'),
     Patch(facecolor=FOREST, edgecolor='black', linewidth=0.5, label='Near-calibrated'),
 ]
-ax.legend(handles=legend_elements, loc='lower right', fontsize=10,
-          frameon=True, framealpha=0.9)
+ax.legend(handles=legend_elements, loc='upper center',
+          bbox_to_anchor=(0.5, -0.08), ncol=4, fontsize=10, frameon=False)
 
 FIG_DIR.mkdir(exist_ok=True)
 for ext in ['pdf', 'png']:

@@ -1,12 +1,24 @@
 """Recalibration baselines for post-hoc VaR correction."""
 
-from conformal_oracle.recalibration.aci import AdaptiveConformalInference
+from conformal_oracle.recalibration.aci import (
+    ACICalibrator,
+    AdaptiveConformalInference,
+)
 from conformal_oracle.recalibration.base import ConformalShift, RecalibrationMethod
 from conformal_oracle.recalibration.evt_pot import ExtremeValueTheoryPOT
 from conformal_oracle.recalibration.fhs import FilteredHistoricalSimulation
 from conformal_oracle.recalibration.gbm_qr import GBMQuantileRegression
 from conformal_oracle.recalibration.historical_quantile import (
     HistoricalQuantileRecalibration,
+)
+from conformal_oracle.recalibration.one_coefficient import (
+    OneCoefficientCorrections,
+    fit_one_coefficient_corrections,
+    shift_cp,
+    shift_erm,
+    vol_cp,
+    vol_erm,
+    weighted_quantile,
 )
 from conformal_oracle.recalibration.quantile_regression import (
     IsotonicQuantileRegression,
@@ -15,8 +27,19 @@ from conformal_oracle.recalibration.quantile_regression import (
 from conformal_oracle.recalibration.scale_correction import (
     ScaleCorrectionRecalibration,
 )
+from conformal_oracle.recalibration.scale_diagnostic import (
+    ScaleDiagnostic,
+    diagnose_scale,
+)
 
 __all__ = [
+    "OneCoefficientCorrections",
+    "fit_one_coefficient_corrections",
+    "shift_cp",
+    "shift_erm",
+    "vol_cp",
+    "vol_erm",
+    "weighted_quantile",
     "RecalibrationMethod",
     "ConformalShift",
     "HistoricalQuantileRecalibration",
@@ -24,7 +47,10 @@ __all__ = [
     "LinearQuantileRegression",
     "IsotonicQuantileRegression",
     "AdaptiveConformalInference",
+    "ACICalibrator",
     "GBMQuantileRegression",
     "ExtremeValueTheoryPOT",
     "FilteredHistoricalSimulation",
+    "ScaleDiagnostic",
+    "diagnose_scale",
 ]

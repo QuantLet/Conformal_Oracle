@@ -1,0 +1,10 @@
+{
+  "inputs": {
+    "zone_counts.csv": "6a0a350cde39b27ddb05365d6ebbaf5a2346a6e44394f13a33b16a41191b5075",
+    "ceilings.csv": "4c06ad09d3ad00da682bd5ade6cb1423579ed8ee32ec1fa1b19ba4b69aff7141"
+  },
+  "outputs": {
+    "numbers_basel.tex": "1bf6de907c92f1cbb995cb87a7014efdc1e2b2b0ebf6dad33463618c04d3a743",
+    "tab_basel.tex": "d6b4d262b4180868a8f3a06cf7dd6c95388dbb280fb0119a44c331a0aafbe324"
+  }
+}

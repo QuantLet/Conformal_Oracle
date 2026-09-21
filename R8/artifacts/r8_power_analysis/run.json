@@ -1,0 +1,23 @@
+{
+  "protocol_sha256": "58431f4ea4f7bf31be4a9eae1efe416f921cc9bfa3ad72fb0ff011e7f4ce11b6",
+  "producer_sha256": "7636c0f2f8b5a9899e2801fb628651800ff73849b8ea368a7704db0298d05a11",
+  "seeds": {
+    "20": 4034980058,
+    "60": 196994084,
+    "5": 77764878,
+    "10": 3075887739,
+    "120": 293283196,
+    "250": 3824431239
+  },
+  "seed_convention": "int.from_bytes(sha256('20260909/panel-calendar/{block}')[:4], 'little')",
+  "draws": 999,
+  "calendar_days": 2707,
+  "elapsed_seconds": 4.979489084000306,
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]",
+  "numpy": "2.3.5",
+  "pandas": "2.3.3",
+  "inputs": {
+    "pairs_dir": "artifacts/r8_ten_comparators/pairs",
+    "n_pairs": 240
+  }
+}

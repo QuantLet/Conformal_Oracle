@@ -7,7 +7,7 @@ Student-t predictive distribution, and audits it in both modes.
 import numpy as np
 import pandas as pd
 
-from conformal_oracle import audit_static, audit_rolling
+from conformal_oracle import audit_rolling, audit_static
 from conformal_oracle._types import SampleDistribution
 
 

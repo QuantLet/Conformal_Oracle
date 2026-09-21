@@ -1,0 +1,54 @@
+{
+  "protocol_sha256": "4b9d69e5ce3788439b31e5ead254911d9a4bd8c97c8a498ff62e643bb41c0a09",
+  "producer_sha256": "746100bc2f9f3ea41c84de3cab4f78a29b893f726263b69f5ed3b76251dd16ce",
+  "inputs": {
+    "artifacts/r8_referee_revision/results/bootstrap_20.npz": "0418b4650cb0dfdf22d74317a97b648502b8527a971181639657edf5a3e1cb92",
+    "artifacts/r8_referee_revision/results/bootstrap_60.npz": "46c6a8cea35d8dc73d4d0a1b21758680fa6a6ba40385267beceb167d3c112e91",
+    "artifacts/r8_ten_comparators/results/bootstrap_20.npz": "0418b4650cb0dfdf22d74317a97b648502b8527a971181639657edf5a3e1cb92",
+    "artifacts/r8_ten_comparators/results/bootstrap_60.npz": "46c6a8cea35d8dc73d4d0a1b21758680fa6a6ba40385267beceb167d3c112e91"
+  },
+  "level": 0.05,
+  "elapsed_seconds": 0.023691875001532026,
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]",
+  "numpy": "2.3.5",
+  "pandas": "2.3.3",
+  "mcs_final": {
+    "20_range": [
+      "Shift-CP",
+      "Vol-ERM",
+      "State-L1",
+      "POT-Shift",
+      "POT-Vol",
+      "Loss-gate",
+      "Past-minimum"
+    ],
+    "20_max": [
+      "Shift-CP",
+      "Vol-ERM",
+      "State-L1",
+      "POT-Shift",
+      "POT-Vol",
+      "Loss-gate",
+      "Past-minimum"
+    ],
+    "60_range": [
+      "Shift-CP",
+      "Vol-ERM",
+      "State-L1",
+      "POT-Shift",
+      "POT-Vol",
+      "Loss-gate",
+      "Past-minimum"
+    ],
+    "60_max": [
+      "Shift-CP",
+      "Raw",
+      "Vol-ERM",
+      "State-L1",
+      "POT-Shift",
+      "POT-Vol",
+      "Loss-gate",
+      "Past-minimum"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "inputs": {
+    "summary.csv": "2878015ebf46dae12dc0865ac4fac823815db7045dff06b102382a85f557cefd",
+    "metrics.csv": "6a09f3bf22f7bef7ec63558028398a02d83a38115d63f96379abf61d3c702d40",
+    "run.json": "57d4a282d49a374b141a4f47675a662970d08f8702ae27654fba5930aed07f7d",
+    "ten_summary.csv": "452173824ac82dd7bc4710f75a866c377bffcb17366b9faada21b11fc69f690c"
+  },
+  "outputs": {
+    "numbers_ten_benchmarks.tex": "fe6c54e9b23967854e0f44f1dd9e8f144d8c9d84865d54888a2e8b6c48016300",
+    "tab_ten_benchmarks.tex": "880a5ebab32c342d2541927ebd4a004b9bb2a30200cb3174fdd270f29dda80bf"
+  }
+}

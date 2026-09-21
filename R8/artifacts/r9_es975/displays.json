@@ -1,0 +1,10 @@
+{
+  "inputs": {
+    "summary.csv": "bb2296f085dff33aca88337f5c60fc97f4434867067b3b33bae06095ef40715d",
+    "run.json": "1f62c89f7c5313e53935f8070dad7d722e9a4ce721b93b39a64e10de59d8052e"
+  },
+  "outputs": {
+    "numbers_es975.tex": "737bda76edc463d72662d3aba72efd69626e97efa3d17864b215248e6a6ec558",
+    "tab_es975.tex": "9a611c9cc74f0e5544b42bdcd150d195857442951c959bcc0b657fe16729cb76"
+  }
+}

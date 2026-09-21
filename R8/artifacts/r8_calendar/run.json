@@ -1,0 +1,17 @@
+{
+  "protocol_sha256": "f62c241a362c6221b3a2d39b1e9050d19cc814dd76af91da06a088bb900ab940",
+  "producer_sha256": "b772d4743877382dbbb72b7665dc9d40f1be0ffa19f46bf1fd96773892ee58eb",
+  "inputs": {
+    "returns/BTC.csv": "d9d34e5d80d850adf729b2b1c3231d8bdf7d19d628ff61e384616d0022fc6f9f",
+    "returns/ETH.csv": "8ef7c59d2bb90a9a12e0f171e91178950fb0605dad2eccc253636ebae6bf67b3",
+    "returns/SP500.csv": "aeb4b0dac6c6b763e7403dde71d9f65f6fa1aea85ea3b57df3a67085e00e43df",
+    "returns/GDAXI.csv": "e367e15c340e0371003d7b662f137ab984929a7ae2f0b38de74747cf1f7ae9e8",
+    "decomposition.csv": "8991d371d9ba06b7437abf368149e7f7de90c51adfbfaa6ee9c992c268ec7811"
+  },
+  "summary": {
+    "min_pairs_present": 10,
+    "max_pairs_present": 240,
+    "dates_with_pairs": 2264
+  },
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:11:29) [Clang 20.1.8 ]"
+}

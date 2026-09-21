@@ -1,0 +1,20 @@
+{
+  "producer_sha256": "61626cc4adf28e60bac8d16784a1035774a1d5de2e9a1d407e74835ebcf17638",
+  "source_zip": "release/R8_20260910_ten_external_sources.zip",
+  "source_zip_sha256": "b8d26712fb0566d050d80143491a473f525b52b98ed5bd4b044e705a7590a6fa",
+  "source_members": 66,
+  "documents": {
+    "main_R8": {
+      "pages": 41,
+      "normalised_text_matches": true,
+      "clean_diagnostics": true,
+      "pdf_sha256": "a9f71caddf79efacfd7162477999bb8ad9beaff6664bcd5ab8e6509e08262ebf"
+    },
+    "supplement_R8": {
+      "pages": 32,
+      "normalised_text_matches": true,
+      "clean_diagnostics": true,
+      "pdf_sha256": "80e6f7a08919074bf1521600119dae1fb2d291813e1a5653acd4664dd328f326"
+    }
+  }
+}

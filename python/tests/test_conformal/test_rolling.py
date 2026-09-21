@@ -1,13 +1,12 @@
 """Tests for compute_qv_roll and compute_drift_diagnostic."""
 
 import numpy as np
-import pytest
 
 from conformal_oracle._types import SampleDistribution
 from conformal_oracle.conformal.rolling import (
+    compute_drift_diagnostic,
     compute_qv_roll,
     compute_qv_roll_from_scores,
-    compute_drift_diagnostic,
 )
 
 

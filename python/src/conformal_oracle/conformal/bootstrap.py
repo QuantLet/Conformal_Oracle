@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import numpy as np
 
+from conformal_oracle.conformal.quantile import conformal_quantile
+
 
 def bootstrap_qv_ci(
     scores: np.ndarray,
@@ -17,6 +19,13 @@ def bootstrap_qv_ci(
 
     Uses geometric block lengths with mean `block_length`.
     Returns (lower, upper) bounds of the CI.
+
+    Each bootstrap replicate is the same estimator as the point estimate:
+    :func:`conformal_quantile`. The published 0.3.2 release still computed
+    replicates with ``np.quantile(sample, 1 - alpha)`` instead, so the interval
+    was centred on a different estimator from the value it was reported
+    around. The correction is included in the 0.3.4 release candidate.
+    See CHANGELOG; a local candidate is not evidence of publication.
     """
     rng = np.random.default_rng(seed)
     n = len(scores)
@@ -25,7 +34,7 @@ def bootstrap_qv_ci(
 
     for b in range(n_boot):
         boot_sample = _stationary_bootstrap_sample(scores, n, p, rng)
-        qv_boots[b] = np.quantile(boot_sample, 1 - alpha)
+        qv_boots[b] = conformal_quantile(boot_sample, alpha)
 
     tail = (1 - confidence) / 2
     lo = float(np.quantile(qv_boots, tail))

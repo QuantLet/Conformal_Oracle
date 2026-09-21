@@ -107,6 +107,7 @@ def main():
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 8),
                                     gridspec_kw={"height_ratios": [1.2, 1]},
                                     sharex=True)
+    fig.patch.set_alpha(0.0)
 
     # Panel A: empirical TV distance
     ax1.plot(drift_dates, drift_vals, color="#1A3A6E", lw=0.8, alpha=0.9)
@@ -149,12 +150,18 @@ def main():
     plt.tight_layout()
     ax1.tick_params(axis='both', labelsize=14)
     ax2.tick_params(axis='both', labelsize=14)
-    fig.savefig(OUT_DIR / "fig_drift_diagnostic.pdf",
-                bbox_inches="tight", dpi=600)
-    fig.savefig(OUT_DIR / "fig_drift_diagnostic.png",
-                bbox_inches="tight", dpi=600)
+    FIG_DIR = SCRIPT_DIR.parent.parent / "figures"
+    SLIDE_DIR = SCRIPT_DIR.parent.parent / "ICFS 2026"
+    FIG_DIR.mkdir(exist_ok=True)
+    for ext in ["pdf", "png"]:
+        fig.savefig(OUT_DIR / f"fig_drift_diagnostic.{ext}",
+                    bbox_inches="tight", dpi=600, transparent=True)
+        fig.savefig(FIG_DIR / f"fig_drift_diagnostic.{ext}",
+                    bbox_inches="tight", dpi=600, transparent=True)
+        fig.savefig(SLIDE_DIR / f"fig_drift_diagnostic.{ext}",
+                    bbox_inches="tight", dpi=600, transparent=True)
     plt.close(fig)
-    print("\nSaved: fig_drift_diagnostic.pdf, fig_drift_diagnostic.png")
+    print("\nSaved: fig_drift_diagnostic.pdf/.png")
 
     # ── Summary statistics by regime ──
     regimes = {

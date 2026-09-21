@@ -1,0 +1,72 @@
+{
+  "recorded_utc": "2026-09-13T07:30:13.492235+00:00",
+  "python": "3.13.9",
+  "executable": "/private/tmp/irfa-r8-conda-clean/bin/python",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "cores_available": 18,
+  "workers": 12,
+  "libraries": {
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3",
+    "numba": "0.62.1",
+    "arch": "8.0.0",
+    "pyarrow": "21.0.0",
+    "pytest": "8.4.2"
+  },
+  "stages": {
+    "classical": {
+      "start": "2026-09-13T07:17:01Z",
+      "end": "2026-09-13T07:21:28Z",
+      "seconds": 267
+    },
+    "dynamic": {
+      "start": "2026-09-13T07:21:28Z",
+      "end": "2026-09-13T07:21:48Z",
+      "seconds": 20
+    },
+    "classical_replay": {
+      "start": "2026-09-13T07:21:48Z",
+      "end": "2026-09-13T07:26:11Z",
+      "seconds": 263
+    },
+    "dynamic_replay": {
+      "start": "2026-09-13T07:26:11Z",
+      "end": "2026-09-13T07:26:31Z",
+      "seconds": 20
+    },
+    "validate_base": {
+      "start": "2026-09-13T07:26:31Z",
+      "end": "2026-09-13T07:28:47Z",
+      "seconds": 136
+    },
+    "corrections": {
+      "start": "2026-09-13T07:28:59Z",
+      "end": "2026-09-13T07:29:12Z",
+      "seconds": 13
+    },
+    "corrections_replay": {
+      "start": "2026-09-13T07:29:12Z",
+      "end": "2026-09-13T07:29:26Z",
+      "seconds": 14
+    },
+    "validate_corrections": {
+      "start": "2026-09-13T07:29:26Z",
+      "end": "2026-09-13T07:29:50Z",
+      "seconds": 24
+    },
+    "aggregate": {
+      "start": "2026-09-13T07:29:50Z",
+      "end": "2026-09-13T07:29:52Z",
+      "seconds": 2
+    },
+    "validate_aggregate": {
+      "start": "2026-09-13T07:29:52Z",
+      "end": "2026-09-13T07:29:54Z",
+      "seconds": 2
+    }
+  },
+  "total_staged_seconds": 761,
+  "scope": "same-environment fresh replay; no claim of cross-platform bitwise identity"
+}

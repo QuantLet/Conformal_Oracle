@@ -72,7 +72,7 @@ colors_list = [
     '#FF6B6B',
     '#E83030',
     '#C8102E',
-    '#8B0000',
+    '#B22222',
 ]
 cmap = ListedColormap(colors_list)
 norm = BoundaryNorm(boundaries, cmap.N, clip=True)

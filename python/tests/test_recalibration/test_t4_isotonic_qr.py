@@ -80,3 +80,8 @@ def test_isotonic_positive_output():
     test_var = np.array([0.01, 0.02, 0.03])
     corrected = iso.apply(test_var)
     assert np.all(corrected > 0)
+
+
+def test_isotonic_apply_requires_fit():
+    with pytest.raises(RuntimeError, match=r"Must call fit\(\) before apply\(\)"):
+        IsotonicQuantileRegression().apply(np.array([0.01, 0.02]))

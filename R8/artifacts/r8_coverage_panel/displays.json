@@ -1,0 +1,9 @@
+{
+  "inputs": {
+    "coverage.csv": "93499d0131945ba4087fb1d23fee91d7b2731114fa4950202a7665d61fc476c1"
+  },
+  "outputs": {
+    "numbers_coverage.tex": "0c2cd7a7a9d6c47abfa4069323b36faf97d9345033cc6232237fddd3ed79a9e9",
+    "tab_coverage.tex": "69a807138dbf35422d5665d4e47fcaec13fc98c5230a3772cb9ff838f532a115"
+  }
+}

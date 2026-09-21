@@ -2,8 +2,13 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, cast
+
 import numpy as np
 from scipy.optimize import minimize
+
+if TYPE_CHECKING:
+    from sklearn.isotonic import IsotonicRegression
 
 
 class LinearQuantileRegression:
@@ -71,7 +76,7 @@ class IsotonicQuantileRegression:
     """
 
     def __init__(self) -> None:
-        self._iso: object | None = None
+        self._iso: IsotonicRegression | None = None
 
     def fit(
         self,
@@ -92,10 +97,12 @@ class IsotonicQuantileRegression:
         self,
         raw_var_forecasts: np.ndarray,
     ) -> np.ndarray:
+        if self._iso is None:
+            raise RuntimeError("Must call fit() before apply()")
         pred_prob = self._iso.predict(-raw_var_forecasts)
         scale = np.where(
             pred_prob > 1e-6,
             self._alpha / np.clip(pred_prob, 1e-6, 1.0),
             1.0,
         )
-        return raw_var_forecasts * scale
+        return cast(np.ndarray, raw_var_forecasts * scale)

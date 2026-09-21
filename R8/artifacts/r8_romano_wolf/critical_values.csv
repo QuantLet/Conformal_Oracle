@@ -1,0 +1,3 @@
+block_calendar_days,eight_member_critical,six_member_critical,raw_band_lower_eight,raw_band_upper_eight,raw_band_lower_six_critical,raw_band_upper_six_critical,stepdown_steps
+20,2.5906261924435245,2.5537778528308377,-0.028428612996941077,0.34701347780580516,-0.025758521552032926,0.344343386360897,"[{""step"": 1, ""critical_value"": 2.5906261924435245, ""remaining"": 8}, {""step"": 2, ""critical_value"": 2.54133241682074, ""remaining"": 7}]"
+60,2.552900798900319,2.5241707080404976,-0.03783728779131701,0.35642215260018106,-0.0356188095900353,0.3542036743988993,"[{""step"": 1, ""critical_value"": 2.552900798900319, ""remaining"": 8}, {""step"": 2, ""critical_value"": 2.5183121169800287, ""remaining"": 7}]"

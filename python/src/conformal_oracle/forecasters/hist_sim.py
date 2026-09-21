@@ -21,7 +21,7 @@ class HistoricalSimulationForecaster:
         self, returns: pd.Series, t: int
     ) -> PredictiveDistribution:
         start = max(0, t - self.window)
-        samples = returns.iloc[start:t].values.copy()
+        samples = returns.iloc[start:t].to_numpy().copy()
         if len(samples) == 0:
             samples = np.array([0.0])
         return SampleDistribution(samples=samples)

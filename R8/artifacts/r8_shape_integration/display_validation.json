@@ -1,0 +1,194 @@
+{
+  "status": "passed",
+  "producer_sha256": "4ff3c75b7401560af1b58215ccbe08e8697b610a619c513448affafadc23cd74",
+  "inputs": {
+    "artifacts/r8_shape_cost/simulation/contrasts.csv": "1676cf49ce1feb7d8dc4beb72df563323b2f74bfc668deaf9c425bd80214769c",
+    "artifacts/r8_shape_cost/simulation/findings.json": "af4f7785487e990dfbd0ee36b9a7bd90df8efb93162b3863bb06a71078032072",
+    "artifacts/r8_shape_cost/financial/summary.csv": "2f1354f325b7fb66ec12aeb1a1f3363b9870e7c5bdac24708eaf0095cbc21af2",
+    "artifacts/r8_shape_cost/financial/support.csv": "a4cf38e1573dfa3484c2d081d57c2ffbbae008d2e3b4fc0e4484f50fe1dcaefa",
+    "artifacts/r8_shape_cost/financial/inference_status.json": "c9e0c3f4c60ac8900b2a887ca30226b7120190bc26a2fcc29716ac4899068951",
+    "artifacts/r8_shape_cost/financial/receipt.json": "1a8179df9db833e2ebf5dad5676ae8ccd47021dcd1fe3739c7f84728e7604086",
+    "artifacts/r8_shape_cost/financial/validation.json": "09299b7010d6c5c4225fb79c2cc2f11bdcf7c45f19efa185ff9f5806f5528bb4",
+    "artifacts/r8_shape_cost/validation/simulation_validation.json": "0de57b76820493babec7b66bec60382e35e88691f7736d87894ca766f14c6190",
+    "research/r8_shape_cost/plot.py": "f5472670f75f49140c47648687dac18b5bcaa1c2861e35c16af999b6dcc9c920"
+  },
+  "macros": {
+    "nShapeHistories": "5{,}000",
+    "nShapeFamily": "12",
+    "nShapeSensitivityFamily": "36",
+    "nShapeDraws": "9{,}999",
+    "nShapePrimaryN": "1{,}000",
+    "nShapePrimaryH": "428",
+    "nShapeDiscrepancyMin": "6.4",
+    "nShapeDiscrepancyMax": "33.5",
+    "nShapeLowDelta": "0.3702",
+    "nShapeLowLo": "0.2617",
+    "nShapeLowHi": "0.4786",
+    "nShapeHighDelta": "-2.2039",
+    "nShapeHighLo": "-2.3225",
+    "nShapeHighHi": "-2.0853",
+    "nShapeFinMatched": "161",
+    "nShapeFinFull": "168",
+    "nShapeFinUnmatched": "7",
+    "nShapeFinHighDelta": "-0.00236866",
+    "nShapeFinHighShiftPi": "1.460",
+    "nShapeFinHighVolPi": "0.914",
+    "nShapeFinHighRows": "24{,}424",
+    "nShapeFinOtherDelta": "0.00004075",
+    "nShapeFinOtherShiftPi": "0.950",
+    "nShapeFinOtherVolPi": "1.032",
+    "nShapeFinOtherRows": "230{,}266",
+    "nShapeFinAllDelta": "-0.00010887",
+    "nShapeFinAllShiftPi": "0.999",
+    "nShapeFinAllVolPi": "1.025",
+    "nShapeFinAllRows": "254{,}690",
+    "nShapeFinInteraction": "-0.00240941",
+    "nShapeFinAbortTwenty": "342",
+    "nShapeFinAbortSixty": "473",
+    "nShapeFinDraws": "999"
+  },
+  "figure": {
+    "transparent_figure": true,
+    "transparent_axes": true,
+    "legend_outside_bottom": true,
+    "legend_bbox": [
+      0.22992788461538463,
+      0.028204545454545444,
+      0.5401442307692308,
+      0.09602272727272727
+    ],
+    "colors": {
+      "0.5": "#F2384A",
+      "2.0": "#6633FF"
+    },
+    "panels": 2,
+    "points": 12,
+    "confidence_family": 12,
+    "pdf_fonttype": 42,
+    "units": "n times expected loss; Vol-ERM minus Shift-ERM",
+    "series": [
+      {
+        "kind": "normal",
+        "h_factor": 0.5,
+        "n": [
+          250,
+          1000,
+          4000
+        ],
+        "observed": [
+          0.0398769065403668,
+          0.0370188151004383,
+          0.0400310801685111
+        ],
+        "lower": [
+          0.027781373621425,
+          0.02617429359660861,
+          0.03085520236226284
+        ],
+        "upper": [
+          0.051972439459274995,
+          0.04786333660426814,
+          0.049206957974759505
+        ],
+        "prediction": [
+          0.0464315397446527,
+          0.0464315397446527,
+          0.0464315397446527
+        ]
+      },
+      {
+        "kind": "normal",
+        "h_factor": 2.0,
+        "n": [
+          250,
+          1000,
+          4000
+        ],
+        "observed": [
+          -0.2478532452705309,
+          -0.2203933639414461,
+          -0.2012162501536644
+        ],
+        "lower": [
+          -0.261284198129475,
+          -0.23225348830700002,
+          -0.21080244979176727
+        ],
+        "upper": [
+          -0.234422292411575,
+          -0.2085332395758,
+          -0.19163005051556165
+        ],
+        "prediction": [
+          -0.1857261589786109,
+          -0.1857261589786109,
+          -0.1857261589786109
+        ]
+      },
+      {
+        "kind": "t5",
+        "h_factor": 0.5,
+        "n": [
+          250,
+          1000,
+          4000
+        ],
+        "observed": [
+          0.0822439436390417,
+          0.0814388505375164,
+          0.078906865528714
+        ],
+        "lower": [
+          0.056605974266125,
+          0.060596291177153636,
+          0.06139023035358726
+        ],
+        "upper": [
+          0.10788191301194999,
+          0.1022814098978,
+          0.09642350070384077
+        ],
+        "prediction": [
+          0.0878531343475345,
+          0.0878531343475345,
+          0.0878531343475345
+        ]
+      },
+      {
+        "kind": "t5",
+        "h_factor": 2.0,
+        "n": [
+          250,
+          1000,
+          4000
+        ],
+        "observed": [
+          -0.4582684287266335,
+          -0.4097664112120688,
+          -0.3829341770742024
+        ],
+        "lower": [
+          -0.487586736484325,
+          -0.4332011501863,
+          -0.40145957971999996
+        ],
+        "upper": [
+          -0.4289501209689,
+          -0.3863316722377,
+          -0.36440877442826575
+        ],
+        "prediction": [
+          -0.3514125373901381,
+          -0.3514125373901381,
+          -0.3514125373901381
+        ]
+      }
+    ],
+    "raster_images": 0
+  },
+  "outputs": {
+    "source/sections_r8/numbers_shape.tex": "ca3c0ab457a32f97ec6e5958407942b705c513b5f47f8f5d43c76baab2c5da06",
+    "source/figures/fig_shape_cost.pdf": "039130b1abb93580c6596aee1287bce8bd056edf656c3acaa9c424d0820d41c7"
+  },
+  "scientific_results_recomputed": false
+}

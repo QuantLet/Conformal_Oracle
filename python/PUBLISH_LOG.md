@@ -42,3 +42,24 @@ Date: 2026-05-12
 - GitHub release: https://github.com/danpele/Conformal_Oracle/releases/tag/v0.3.0-python
 - Migration guide: https://github.com/danpele/Conformal_Oracle/blob/main/python/docs/migration_v0.3.md
 - CHANGELOG: https://github.com/danpele/Conformal_Oracle/blob/main/python/CHANGELOG.md
+
+
+## 0.4.0 build — 2026-09-13 (uploaded to PyPI the same day)
+
+R7 workflows plus the R8 analysis tools (one-coefficient corrections,
+nuisance-free optimism estimators, paired calendar bootstrap, past-loss
+selection). Whole-package Ruff passes; mypy on the new modules passes with
+`--python-version 3.12` (one pre-existing `no-any-return` remains in
+`diagnostics/diebold_mariano.py`). Twine checks pass; a clean-install smoke
+test of the wheel in a fresh virtualenv exercises the new API.
+
+| File | Size | Blake2-256 |
+|:-----|:-----|:-----------|
+| `conformal_oracle-0.4.0-py3-none-any.whl` | 103,848 B | `3b7380f4b980000e37e8e37a8f8dbe6212b7a0f79ee6b2ede67ac30c5139140b` |
+| `conformal_oracle-0.4.0.tar.gz` | 164,878 B | `513c53de307fe4969d5b735aa8376b65c764743ded084b5437a18e6da5fb30f4` |
+
+Upload requires the maintainer's PyPI token, entered by the maintainer:
+`TWINE_USERNAME=__token__ TWINE_PASSWORD=<token> twine upload dist/*`.
+
+**Published 2026-09-13** by the maintainer's token via `twine upload --non-interactive`;
+PyPI file digests verified against the local artefacts. https://pypi.org/project/conformal-oracle/0.4.0/

@@ -1,0 +1,10 @@
+{
+  "stage_sha256": "58b1a5a376523c72bfaab300478d978228268c2786035cbc6e276d7bff78b032",
+  "all_calculable_returns_retained": true,
+  "data_selection_before_new_forecast_evaluation": true,
+  "replacements": {
+    "WTI": "USO",
+    "GOLD": "GLD",
+    "NATGAS": "UNG"
+  }
+}

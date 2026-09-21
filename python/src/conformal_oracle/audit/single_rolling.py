@@ -21,6 +21,7 @@ from conformal_oracle.diagnostics.christoffersen import christoffersen_pvalue
 from conformal_oracle.diagnostics.diebold_mariano import quantile_score_sequence
 from conformal_oracle.diagnostics.kupiec import kupiec_pof_pvalue
 from conformal_oracle.diagnostics.scoring import fissler_ziegel_fz0, quantile_score
+from conformal_oracle.recalibration.base import RecalibrationMethod
 
 
 @dataclass
@@ -147,8 +148,8 @@ def _audit_rolling_from_quantiles(
             f"warmup ({warmup}) must be smaller than the series length ({n})"
         )
 
-    realised_all = returns.iloc[warmup:].values
-    q_lo_all = q_lo.iloc[warmup:].values
+    realised_all = returns.iloc[warmup:].to_numpy()
+    q_lo_all = q_lo.iloc[warmup:].to_numpy()
 
     # Scores: S_t = q_lo_t - r_t
     scores = q_lo_all - realised_all
@@ -220,7 +221,7 @@ def audit_rolling(
     warmup: int = 250,
     persistence: int = 20,
     seed: int = 2026,
-    recalibration: object | None = None,
+    recalibration: RecalibrationMethod | None = None,
 ) -> RollingAuditResult:
     """Run the rolling conformal audit pipeline.
 
@@ -243,7 +244,7 @@ def audit_rolling(
         es_raw_all.append(-fc.expected_shortfall(alpha))
 
     n_fc = len(all_forecasts)
-    realised_all = returns.iloc[warmup:].values
+    realised_all = returns.iloc[warmup:].to_numpy()
 
     scores = np.array([
         fc.quantile(alpha) - r

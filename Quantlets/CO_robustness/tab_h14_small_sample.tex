@@ -1,0 +1,68 @@
+\begin{table}[H]
+	\centering
+	\caption{Small-sample behaviour of $\qVstat$ (500 replications, $\alpha=0.01$, $f_c=0.70$). The forecaster assumes Normal innovations regardless of the true DGP. Green\% denotes the percentage of replications satisfying the Basel Traffic Light Green zone (at most 4 violations over 250 observations, scaled to sample size).}
+	\label{tab:small_sample_qV}
+	\footnotesize
+	\begin{tabular}{@{}llcccc@{}}
+		\hline\hline
+		DGP & $T$ & Mean $\qVstat$ & Std $\qVstat$ & $\hat\pi$ & Green\% \\
+		\hline
+		Normal (correct)
+		& 250   & 0.0009 & 0.0039 & 0.018 & 45 \\
+		& 500   & 0.0017 & 0.0034 & 0.014 & 57 \\
+		& 1,000   & 0.0017 & 0.0028 & 0.012 & 65 \\
+		& 2,000   & 0.0017 & 0.0020 & 0.011 & 79 \\
+		& 5,000   & 0.0020 & 0.0011 & 0.010 & 92 \\
+		\addlinespace
+		Student-$t(5)$
+		& 250   & 0.0048 & 0.0082 & 0.018 & 43 \\
+		& 500   & 0.0059 & 0.0069 & 0.014 & 55 \\
+		& 1,000   & 0.0059 & 0.0050 & 0.012 & 65 \\
+		& 2,000   & 0.0062 & 0.0034 & 0.011 & 84 \\
+		& 5,000   & 0.0060 & 0.0017 & 0.011 & 94 \\
+		\addlinespace
+		Student-$t(3)$
+		& 250   & 0.0067 & 0.0095 & 0.018 & 42 \\
+		& 500   & 0.0065 & 0.0073 & 0.015 & 50 \\
+		& 1,000   & 0.0072 & 0.0059 & 0.011 & 70 \\
+		& 2,000   & 0.0071 & 0.0041 & 0.011 & 85 \\
+		& 5,000   & 0.0071 & 0.0021 & 0.010 & 95 \\
+		\addlinespace
+		Skewed-$t(3)$
+		& 250   & 0.0100 & 0.0092 & 0.016 & 44 \\
+		& 500   & 0.0112 & 0.0083 & 0.012 & 60 \\
+		& 1,000   & 0.0107 & 0.0071 & 0.011 & 69 \\
+		& 2,000   & 0.0100 & 0.0045 & 0.011 & 82 \\
+		& 5,000   & 0.0106 & 0.0029 & 0.010 & 97 \\
+		\addlinespace
+		Mixture of Normals
+		& 250   & 0.0075 & 0.0111 & 0.017 & 45 \\
+		& 500   & 0.0070 & 0.0089 & 0.014 & 54 \\
+		& 1,000   & 0.0083 & 0.0073 & 0.011 & 71 \\
+		& 2,000   & 0.0079 & 0.0050 & 0.011 & 84 \\
+		& 5,000   & 0.0082 & 0.0033 & 0.010 & 96 \\
+		\hline\hline
+	\end{tabular}
+	\begin{minipage}{\linewidth}\footnotesize
+		\smallskip
+		DGPs are GARCH(1,1) with parameters
+		$\omega = 10^{-5}$, $\alpha_1 = 0.10$, $\beta_1 = 0.85$,
+		identical to Table~\ref{tab:simulation_extended}.
+		The forecaster, however, differs:
+		Table~\ref{tab:simulation_extended} uses GARCH(1,1)-Normal
+		with the true conditional volatility, isolating tail-shape
+		misspecification; this table uses a rolling-window Gaussian
+		forecaster (window $= \min(250, T/5)$), which adds estimation
+		error in~$\hat\sigma_t$ to the misspecification of innovations.
+		The two sources combine to produce the higher dispersion
+		of~$\qVstat$ observed at small~$T$.
+		The standard deviation of $\qVstat$ decreases monotonically with $T$
+		across all DGPs (a 3--5$\times$ reduction from $T=250$ to $T=5{,}000$),
+		confirming that estimation error in the conformal threshold is
+		dominated by tail sparsity at small sample sizes and vanishes at
+		the $O((\alpha T)^{-1/2})$ rate. At small sample sizes
+		($T \leq 500$), corrected violation rates exceed the nominal level
+		due to estimation noise in the empirical quantile, consistent with
+		finite-sample variability in extreme tails.
+	\end{minipage}
+\end{table}

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
@@ -13,6 +14,10 @@ from conformal_oracle._types import (
 )
 from conformal_oracle.contrib.tsfm._base import BaseTSFMForecaster
 from conformal_oracle.contrib.tsfm._cache import TSFMPredictionCache
+
+if TYPE_CHECKING:
+    from timesfm import TimesFM_2p5_200M_torch
+
 
 PAPER_MODEL = "google/timesfm-2.5-200m-pytorch"
 QUANTILE_LEVELS = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])
@@ -29,6 +34,8 @@ class TimesFM25Forecaster(BaseTSFMForecaster):
     Paper model:
       google/timesfm-2.5-200m-pytorch
     """
+
+    _model: TimesFM_2p5_200M_torch | None
 
     def __init__(
         self,
@@ -91,6 +98,7 @@ class TimesFM25Forecaster(BaseTSFMForecaster):
         self, returns: pd.Series, t: int
     ) -> PredictiveDistribution:
         self._ensure_model()
+        assert self._model is not None
 
         context = self._get_context(returns, t)
 

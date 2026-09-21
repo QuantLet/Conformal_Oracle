@@ -6,6 +6,7 @@ These emit DeprecationWarning and forward to the canonical API.
 from __future__ import annotations
 
 import warnings
+from typing import Any
 
 import pandas as pd
 
@@ -17,7 +18,7 @@ from conformal_oracle.audit.single_static import StaticAuditResult
 def audit_static(
     returns: pd.Series,
     forecaster: Forecaster,
-    **kwargs: object,
+    **kwargs: Any,
 ) -> StaticAuditResult:
     """Deprecated: use ``audit(returns, forecaster, mode='static')``."""
     warnings.warn(
@@ -36,7 +37,7 @@ def audit_static(
 def audit_rolling(
     returns: pd.Series,
     forecaster: Forecaster,
-    **kwargs: object,
+    **kwargs: Any,
 ) -> RollingAuditResult:
     """Deprecated: use ``audit(returns, forecaster, mode='rolling')``."""
     warnings.warn(
@@ -55,7 +56,7 @@ def audit_rolling(
 def audit_with_benchmarks(
     returns: pd.Series,
     forecaster: Forecaster,
-    **kwargs: object,
+    **kwargs: Any,
 ) -> object:
     """Deprecated: use ``compare_forecasters()`` instead."""
     warnings.warn(
@@ -73,8 +74,8 @@ def audit_with_benchmarks(
 
 def audit_panel(
     returns_panel: pd.DataFrame,
-    forecasters: object,
-    **kwargs: object,
+    forecasters: dict[str, Forecaster],
+    **kwargs: Any,
 ) -> object:
     """Deprecated: use ``conformal_oracle.panel.audit_panel()``."""
     warnings.warn(

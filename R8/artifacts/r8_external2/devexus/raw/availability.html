@@ -1,0 +1,1254 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+	
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 14">
+<meta name=Originator content="Microsoft Word 14">
+<link rel=File-List href="tw_5_ports_developed_files/filelist.xml">
+<link rel=Edit-Time-Data href="tw_5_ports_developed_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Kenneth R. French - Description of Fama/French Factors</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Tu.Nguyen@dimensional.com</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Tu.Nguyen@dimensional.com</o:LastAuthor>
+  <o:Revision>4</o:Revision>
+  <o:TotalTime>0</o:TotalTime>
+  <o:Created>2013-05-15T19:04:00Z</o:Created>
+  <o:LastSaved>2013-07-03T15:23:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>771</o:Words>
+  <o:Characters>4395</o:Characters>
+  <o:Company>Dimensional Fund Advisors</o:Company>
+  <o:Lines>36</o:Lines>
+  <o:Paragraphs>10</o:Paragraphs>
+  <o:CharactersWithSpaces>5156</o:CharactersWithSpaces>
+  <o:Version>14.00</o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:AllowPNG/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]-->
+<link rel=themeData href="tw_5_ports_developed_files/themedata.thmx">
+<link rel=colorSchemeMapping
+href="tw_5_ports_developed_files/colorschememapping.xml">
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>FullPage</w:Zoom>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:TrackMoves>false</w:TrackMoves>
+  <w:TrackFormatting/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>X-NONE</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SplitPgBreakAndParaMark/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"
+  DefSemiHidden="true" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="267">
+  <w:LsdException Locked="false" Priority="0" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 9"/>
+  <w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" Priority="10" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" Priority="11" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" Priority="22" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" Priority="59" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Table Grid"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-520081665 -1073717157 41 0 66047 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;}
+a:link, span.MsoHyperlink
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:black;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:black;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-style-priority:99;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"Balloon Text Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;}
+span.BalloonTextChar
+	{mso-style-name:"Balloon Text Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Balloon Text";
+	mso-ansi-font-size:8.0pt;
+	mso-bidi-font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";
+	mso-ascii-font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Tahoma;
+	mso-bidi-font-family:Tahoma;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-size:10.0pt;
+	mso-ansi-font-size:10.0pt;
+	mso-bidi-font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif";}
+</style>
+<![endif]-->
+<meta name=keywords
+content="Monthly, Annual, Series, Stocks, Portfolio, Formation, Detail, NYSE, AMEX, NASDAQ, Fama/French, SMB, HML, value-weight, book-to-market">
+<meta name=description
+content="Rm-Rf includes all NYSE, AMEX, and NASDAQ firms. SMB and HML for July of year t to June of t+1 include all NYSE, AMEX, and NASDAQ stocks for which we have market equity data for December of t-1 and June of t, and (positive) book equity data for t-1.">
+<!-----------------------------------------------------------------------------------
+--
+-- Site Developed by Dimensional Fund Advisors Web Team (http://www.dfafunds.com).
+-- Web Producer: Robert Dintzner
+-- Webmaster: Keith J. Hasely
+-- Graphic Artist: Dan Searle
+-- Jr. Developer/Jr. Graphic Artist: Hiroshi Nakahara
+--
+-- All images and code are property of Ken French. Use in part or whole is illegal
+-- except by permission of Ken French or Dimensional Fund Advisors
+--
+------------------------------------------------------------------------------------><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1026"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+	
+
+<body bgcolor=white lang=EN-US link=black vlink=black style='tab-interval:.5in'
+alink="#000000">
+
+<div class=WordSection1>
+
+<p class=MsoNormal style='margin-bottom:12.0pt'><span style='mso-fareast-font-family:
+"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=650
+ style='width:487.5pt;mso-cellspacing:0in;mso-yfti-tbllook:1184;mso-padding-alt:
+ 0in 0in 0in 0in'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=140 valign=top style='width:105.0pt;padding:0in 0in 0in 0in'>
+  <p class=MsoNormal style='margin-bottom:12.0pt'><span style='font-size:10.0pt;
+  mso-fareast-font-family:"Times New Roman"'><script language="JavaScript">
+
+<!--
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+//		Script written by Keith J. Hasely
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Constants
+
+
+var INT_VERSION = parseInt(navigator.appVersion);
+
+var STRING_BROWSER = navigator.appName;
+
+
+// Variable
+var
+ bool_finished_loading = 0;
+var bool_browser_scriptable = 0;
+
+
+// Checks for browsers that supports the image object
+
+if ((INT_VERSION >= 3) && (STRING_BROWSER == "Netscape")){bool_browser_scriptable = 1}
+if ((INT_VERSION >= 4) && (STRING_BROWSER == "Microsoft Internet Explorer")) {bool_browser_scriptable = 1}
+
+
+// If the browser supports the image object
+
+if (bool_browser_scriptable){
+// Image Object Creation
+
+	var kf_hi_lo = new Image(108, 65);
+	kf_hi_lo.src = "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Board_HiLoSm.jpg";
+
+	var kf_bio = new Image(108, 65);
+	kf_bio.src = "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Board_BiographySm.jpg";
+
+	var kf_curriculum = new Image(108, 65);
+	kf_curriculum.src = "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Board_CurriculumSm.jpg";
+
+	var kf_working = new Image(108, 65);
+	kf_working.src = "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Board_WorkingSm.jpg";
+
+	var kf_data = new Image(108, 65);
+	kf_data.src = "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Board_DataSm.jpg";
+
+	var kf_consulting = new Image(108, 65);
+	kf_consulting.src = "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Board_ConsultingSm.jpg";
+
+	var kf_fff = new Image(108, 65);
+	kf_fff.src = "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Board_fffSm.jpg"
+
+	var kf_contact = new Image(108, 65);
+	kf_contact.src = "http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Board_ContactSm.jpg";
+
+
+	bool_finished_loading = 1;
+
+} // END if (bool_browser_scriptable)
+
+
+	function kf_on_image(object_name){
+
+		if (bool_finished_loading){
+			self.document.kf_blackboard.src = object_name.src;
+		} // END if
+	} // END function on_image
+
+
+	function kf_off_imag(){
+		if (bool_finished_loading){
+			self.document.kf_blackboard.src = kf_data.src
+		} // END if
+	} // END function off_imag
+
+
+
+//-->
+  </script><script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	
+	ga('create', 'UA-6277349-16', 'auto');
+	ga('send', 'pageview');
+	</script>
+</span><span style='mso-fareast-font-family:"Times New Roman";
+  mso-no-proof:yes'><img width=108 height=65 id="_x0000_i1047"
+  src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Board_DataSm.jpg"
+  alt="Description: Description: Description: http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Board_DataSm.jpg"></span><span
+  style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=140
+   style='width:105.0pt;mso-cellspacing:0in;mso-yfti-tbllook:1184;mso-padding-alt:
+   0in 0in 0in 0in'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><a
+    href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/index.html"><span
+    style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+    text-decoration:none;text-underline:none'><img border=0 width=42 height=16
+    id="_x0000_i1046"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Home_nav.gif"
+    alt="Description: Description: Description: Home"></span></a><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:1'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    mso-no-proof:yes'><img border=0 width=100 height=7 id="_x0000_i1045"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/blank.gif"
+    alt="Description: Description: Description:  "></span><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:2'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><a
+    href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/biography.html"><span
+    style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+    text-decoration:none;text-underline:none'><img border=0 width=81 height=20
+    id="_x0000_i1044"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Biography_nav.gif"
+    alt="Description: Description: Description: Biography"></span></a><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:3'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    mso-no-proof:yes'><img border=0 width=100 height=7 id="_x0000_i1043"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/blank.gif"
+    alt="Description: Description: Description:  "></span><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:4'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><a
+    href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/curriculum_vitae.html"><span
+    style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+    text-decoration:none;text-underline:none'><img border=0 width=123
+    height=16 id="_x0000_i1042"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Curriculum_nav.gif"
+    alt="Description: Description: Description: Curriculum Vitae"></span></a><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:5'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    mso-no-proof:yes'><img border=0 width=100 height=7 id="_x0000_i1041"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/blank.gif"
+    alt="Description: Description: Description:  "></span><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:6'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><a
+    href="http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=1455"
+    target="_blank"><span style='mso-fareast-font-family:"Times New Roman";
+    mso-no-proof:yes;text-decoration:none;text-underline:none'><img border=0
+    width=113 height=15 id="_x0000_i1040"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Working_nav.gif"
+    alt="Description: Description: Description: Working Papers"></span></a><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:7;height:1.5pt'>
+    <td valign=top style='padding:0in 0in 0in 0in;height:1.5pt'>
+    <p class=MsoNormal style='mso-line-height-alt:1.5pt'><span
+    style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes'><img
+    border=0 width=100 height=7 id="_x0000_i1039"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/blank.gif"
+    alt="Description: Description: Description:  "></span><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:8'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><a
+    href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html"><span
+    style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+    text-decoration:none;text-underline:none'><img border=0 width=99 height=19
+    id="_x0000_i1038"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Data_blue_nav.gif"
+    alt="Description: Description: Description: Data Library"></span></a><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:9'>
+    <td valign=top style='padding:0in 0in 0in 0in'><!-- Begin nested table for the Data Library Section -->
+    <table class=MsoNormalTable border=0 cellpadding=0 style='mso-cellspacing:
+     1.5pt;mso-yfti-tbllook:1184;mso-padding-alt:0in 0in 0in 0in'>
+     <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+      <td width=10 style='width:7.5pt;padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+      </td>
+      <td style='padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><a
+      href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html#Research"><span
+      style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+      text-decoration:none;text-underline:none'><img border=0 width=133
+      height=14 id="_x0000_i1037"
+      src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Research_returns_blue_nav.gif"
+      alt="Description: Description: Description: U.S. Research Returns"></span></a><span
+      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+      </td>
+     </tr>
+     <tr style='mso-yfti-irow:1'>
+      <td width=10 style='width:7.5pt;padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+      </td>
+      <td style='padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><a
+      href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html#Benchmarks"><span
+      style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+      text-decoration:none;text-underline:none'><img border=0 width=97
+      height=16 id="_x0000_i1036"
+      src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Benchmarks_nav.gif"
+      alt="Description: Description: Description: Benchmarks"></span></a><span
+      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+      </td>
+     </tr>
+     <tr style='mso-yfti-irow:2'>
+      <td width=10 style='width:7.5pt;padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+      </td>
+      <td style='padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><a
+      href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html#Breakpoints"><span
+      style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+      text-decoration:none;text-underline:none'><img border=0 width=150
+      height=14 id="_x0000_i1035"
+      src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Research_breakpoints_nav.gif"
+      alt="Description: Description: Description: U.S. Research Breakpoints"></span></a><span
+      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+      </td>
+     </tr>
+     <tr style='mso-yfti-irow:3'>
+      <td style='padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+      </td>
+      <td style='padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><a
+      href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html#BookEquity"><span
+      style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+      text-decoration:none;text-underline:none'><img border=0 width=116
+      height=14 id="_x0000_i1034"
+      src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/US_Book_Equity_Data_nav.gif"
+      alt="Description: Description: Description: U.S. Book Equity Data"></span></a><span
+      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+      </td>
+     </tr>
+     <tr style='mso-yfti-irow:4'>
+      <td width=10 style='width:7.5pt;padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+      </td>
+      <td style='padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><a
+      href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html#International"><span
+      style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+      text-decoration:none;text-underline:none'><img border=0 width=112
+      height=29 id="_x0000_i1033"
+      src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Int_research_returns_nav.gif"
+      alt="Description: Description: Description: International Research Returns"></span></a><span
+      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+      </td>
+     </tr>
+     <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+      <td width=10 style='width:7.5pt;padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+      </td>
+      <td style='padding:0in 0in 0in 0in'>
+      <p class=MsoNormal><a
+      href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html#Developed"><span
+      style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+      text-decoration:none;text-underline:none'><img border=0 width=137
+      height=29 id="_x0000_i1032"
+      src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/dev_mark_return_nav.gif"
+      alt="Description: Description: Description: Developed Market Returns"></span></a><span
+      style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+      </td>
+     </tr>
+    </table>
+    </td>
+   </tr>
+<!-- End nested table for the Data Library Section -->
+   <tr style='mso-yfti-irow:10'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    mso-no-proof:yes'><img border=0 width=100 height=7 id="_x0000_i1031"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/blank.gif"
+    alt="Description: Description: Description:  "></span><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:11'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><a
+    href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/consul_rel.html"><span
+    style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+    text-decoration:none;text-underline:none'><img border=0 width=88 height=31
+    id="_x0000_i1030"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Consulting_nav.gif"
+    alt="Description: Description: Description: Consulting Relationship"></span></a><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:12'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    mso-no-proof:yes'><img border=0 width=100 height=9 id="_x0000_i1029"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/blank.gif"
+    alt="Description: Description: Description: http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/blank.gif"></span><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:13'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><a href="http://www.dimensional.com/famafrench/"><span
+    style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+    text-decoration:none;text-underline:none'><img border=0 width=145
+    height=13 id="_x0000_i1028"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/fff_nav.gif"
+    alt="Description: Description: Description: Fama / French Forum"></span></a><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:14'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+    mso-no-proof:yes'><img border=0 width=100 height=20 id="_x0000_i1027"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/blank.gif"
+    alt="Description: Description: Description:  "></span><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:15;mso-yfti-lastrow:yes'>
+    <td valign=top style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><a
+    href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/contact_Information.html"><span
+    style='mso-fareast-font-family:"Times New Roman";mso-no-proof:yes;
+    text-decoration:none;text-underline:none'><img border=0 width=138
+    height=17 id="_x0000_i1026"
+    src="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/images/Contact_nav.gif"
+    alt="Description: Description: Description: Contact Information"></span></a><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+  </table>
+  </td>
+  <td width=20 rowspan=2 style='width:15.0pt;padding:0in 0in 0in 0in'>
+  <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+  </td>
+  <td width=470 rowspan=2 valign=top style='width:352.5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoNormal style='margin-bottom:12.0pt'><b><span style='font-size:
+  10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman";
+  color:#336699'>Description of 25 Portfolios Formed on Size and Book-to-Market
+  for Developed Markets</span></b><span style='mso-fareast-font-family:"Times New Roman"'>
+  </span><span style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:
+  "Times New Roman"'><o:p></o:p></span></p>
+  <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width="100%"
+   style='width:100.0%;mso-cellspacing:0in;mso-yfti-tbllook:1184;mso-padding-alt:
+   0in 0in 0in 0in'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+    <td width="24%" valign=top style='width:24.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><b><span style='font-size:10.0pt;mso-fareast-font-family:
+    "Times New Roman"'>Daily Returns:</span></b><span style='mso-fareast-font-family:
+    "Times New Roman"'><o:p></o:p></span></p>
+    </td>
+    <td width="2%" valign=top style='width:2.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="75%" valign=top style='width:75.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+    "Times New Roman"'>July 1, 1990 - July 31, 2026</span><span style='mso-fareast-font-family:
+    "Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:1'>
+    <td width="24%" valign=top style='width:24.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="2%" valign=top style='width:2.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="75%" valign=top style='width:75.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+    <td width="24%" valign=top style='width:24.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><b><span style='font-size:10.0pt;mso-fareast-font-family:
+    "Times New Roman"'>Monthly Returns:</span></b><span style='mso-fareast-font-family:
+    "Times New Roman"'><o:p></o:p></span></p>
+    </td>
+    <td width="2%" valign=top style='width:2.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="75%" valign=top style='width:75.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+    "Times New Roman"'>July 1990 - July, 2026</span><span style='mso-fareast-font-family:
+    "Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:1'>
+    <td width="24%" valign=top style='width:24.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="2%" valign=top style='width:2.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="75%" valign=top style='width:75.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:2'>
+    <td width="24%" valign=top style='width:24.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><b><span style='font-size:10.0pt;mso-fareast-font-family:
+    "Times New Roman"'>Annual Returns:</span></b><span style='mso-fareast-font-family:
+    "Times New Roman"'><o:p></o:p></span></p>
+    </td>
+    <td width="2%" valign=top style='width:2.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="75%" valign=top style='width:75.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+    "Times New Roman"'>1991–2025</span><span style='mso-fareast-font-family:
+    "Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:3'>
+    <td width="24%" valign=top style='width:24.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="2%" valign=top style='width:2.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="75%" valign=top style='width:75.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:4'>
+    <td width="24%" valign=top style='width:24.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><b><span style='font-size:10.0pt;mso-fareast-font-family:
+    "Times New Roman"'>Construction:</span></b><span style='mso-fareast-font-family:
+    "Times New Roman"'><o:p></o:p></span></p>
+    </td>
+    <td width="2%" valign=top style='width:2.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="75%" valign=top style='width:75.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+    "Times New Roman"'>All returns are in U.S. dollars, include dividends and
+    capital gains, and are not continuously compounded. We sort stocks in a
+    region into five market cap and five book-to-market equity (B/M) groups at
+    the end of each June.<br>
+    <br>
+    The size breakpoints for a region are the 3rd, 7th, 13th, and 25th
+    percentiles of the region's aggregate market capitalization. The B/M
+    breakpoints for all stocks in a region are the 20th, 40th, 60th, and 80th
+    percentiles of B/M for the big (top 90% of market cap) stocks of the
+    region.<br>
+    <br>
+    The developed portfolios use developed size breaks, but we use the B/M
+    breakpoints for each region to allocate the region's stocks to the developed
+    portfolios. 
+    Similarly, the developed ex us portfolios use developed ex us size breaks and regional B/M breakpoints.
+    The 25 value-weight size-B/M portfolios for a region are the
+    intersections of the independent 5x5 size and B/M sorts.</span><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:5'>
+    <td width="24%" valign=top style='width:24.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="2%" valign=top style='width:2.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="75%" valign=top style='width:75.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr style='mso-yfti-irow:6;mso-yfti-lastrow:yes'>
+    <td width="24%" valign=top style='width:24.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><b><span style='font-size:10.0pt;mso-fareast-font-family:
+    "Times New Roman"'>Stocks:</span></b><span style='mso-fareast-font-family:
+    "Times New Roman"'><o:p></o:p></span></p>
+    </td>
+    <td width="2%" valign=top style='width:2.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+    </td>
+    <td width="75%" valign=top style='width:75.0%;padding:0in 0in 0in 0in'>
+    <p class=MsoNormal><span style='font-size:10.0pt;mso-fareast-font-family:
+    "Times New Roman"'>The portfolios for July of year t to June of t+1 include
+    all stocks for which we have market equity data for December of t–1 and
+    June of t, and (positive) book equity data for t–1.</span><span
+    style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+  </table>
+
+  
+  <p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>&nbsp;<o:p></o:p></span></p>
+  
+  <table width="470" border="0" cellspacing="0" cellpadding="1">
+    <tr>
+        <td bgcolor="#336699">
+
+
+                                                    <table border="0" cellspacing="0" cellpadding="1" bgcolor="#ffffff" width="100%">
+													<tr valign="bottom">
+														<td colspan="7"><img src="images/space.gif" width="4" height="4"></td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>Country</b></font></td>
+														<td align="center" width="49"><font face="Times New Roman, Times, serif" size="2"><b>Developed</font></td>
+														<td align="center" width="62"><font face="Times New Roman, Times, serif" size="2"><b>Developed ex US</font></td>
+														<td align="center" width="59"><font face="Times New Roman, Times, serif" size="2"><b>Europe</font></td>
+														<td align="center" width="38"><font face="Times New Roman, Times, serif" size="2"><b>Japan</b></font></td>
+														<td align="center" width="90"><font face="Times New Roman, Times, serif" size="2"><b>Asia Pacific ex Japan</b></font></td>
+														<td align="center" width="39"><font face="Times New Roman, Times, serif" size="2"><b>North America</font></td>
+													</tr>
+													<tr height="1">
+														<td colspan="7" height="1"><img src="images/blue_line.gif" width="100%" height="1"></td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font size="2" face="Times New Roman, Times, serif"><b>&nbsp;Australia </b></font>
+														</td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Austria</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Belgium </b></font>
+														</td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+                                                    <tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Canada</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="90">&nbsp;</td>
+                                                        <td align="center" width="38">&nbsp;</td>
+                                                        <td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Switzerland</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Germany</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Denmark</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Spain</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Finland</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;France</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Great Britain</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+                                                    <tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Greece</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Hong Kong</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="59">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+                                                        <td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Ireland</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+                                                     
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Italy</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Japan</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="59">&nbsp;</td>
+                                                        <td align="center" width="39"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td height="22" width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Netherlands</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Norway</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;New Zealand</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="59">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+                                                    <tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Portugal</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Sweden</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+													<tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;Singapore</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="59">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="39">&nbsp;</td>
+													</tr>
+                                                    <tr valign="bottom">
+														<td width="118"><font face="Times New Roman, Times, serif" size="2"><b>&nbsp;United 
+                                                            States</b></font></td>
+														<td align="center" width="49"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+														<td align="center" width="62">&nbsp;</td>
+														<td align="center" width="59">&nbsp;</td>
+														<td align="center" width="39">&nbsp;</td>
+														<td align="center" width="90">&nbsp;</td>
+														<td align="center" width="39"><img src="images/check.gif" width="12" height="12" vspace="2"></td>
+													</tr>
+												</table>
+            </td>
+		</tr>
+    </table>
+
+
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
+  <td width=140 valign=top style='width:105.0pt;padding:0in 0in 0in 0in'>
+  <p>&nbsp;</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+</div>
+
+</body>
+
+</html>

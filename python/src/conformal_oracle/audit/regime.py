@@ -42,7 +42,7 @@ def classify_regime_rolling(
     A model is classified as replacement if R_t > threshold for at
     least `persistence` consecutive trading days.
     """
-    above = (replacement_ratio > threshold).astype(int).values
+    above = (replacement_ratio > threshold).astype(int).to_numpy()
     max_run = _max_consecutive(above)
     if max_run >= persistence:
         return "replacement"

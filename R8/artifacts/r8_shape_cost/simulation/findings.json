@@ -1,0 +1,32 @@
+{
+  "status": "complete",
+  "primary_sign_crossing": "supported",
+  "primary_cells": [
+    "normal_n1000_h0.5",
+    "normal_n1000_h2"
+  ],
+  "families": {
+    "primary": {
+      "contrasts": 12,
+      "critical": 2.6536244429551656
+    },
+    "sensitivity": {
+      "contrasts": 36,
+      "critical": 3.0028296899396336
+    }
+  },
+  "bootstrap_draws": 9999,
+  "independent_histories": 5000,
+  "bootstrap_seed": 2026091131,
+  "conditioning": "Exact contiguous expectation conditional on calibration history",
+  "quantitative_equivalence_claimed": false,
+  "financial_generalisation_claimed": false,
+  "all_primary_cells_observed_sign_agrees": true,
+  "outputs": {
+    "bootstrap_indices.npz": "6109046649761ebed06c993408a63a63b2fb49a21d9b7ea97195bae0cfd23838",
+    "primary_bootstrap.npz": "9a566997595aaf60bae44ace23e09374fc6849655354807c4dfbb3e52336290b",
+    "sensitivity_bootstrap.npz": "fd53cd9117ed824d0737464903cc13df4b679830f9d42004ac15fd5147608bd4",
+    "contrasts.csv": "1676cf49ce1feb7d8dc4beb72df563323b2f74bfc668deaf9c425bd80214769c",
+    "method_summary.csv": "3d71f66b92f72040ac9d76ca7c6d13f9a093256ccc44863e956a958c52c55f46"
+  }
+}

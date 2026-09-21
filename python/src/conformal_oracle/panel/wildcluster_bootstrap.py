@@ -43,7 +43,7 @@ def _kupiec_lr(violations: np.ndarray, alpha: float) -> float:
         (N - X) * np.log((1 - alpha) / (1 - pi_hat))
         + X * np.log(alpha / pi_hat)
     )
-    return max(lr, 0.0)
+    return float(max(lr, 0.0))
 
 
 def wild_cluster_bootstrap_kupiec(
