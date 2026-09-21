@@ -1,5 +1,9 @@
 # Conformal Recalibration of Extreme Tail Quantiles under Temporal Dependence
 
+> The home of this work is [danpele/Conformal_Oracle](https://github.com/danpele/Conformal_Oracle):
+> issues, releases and the PyPI package live there. The copy under the QuantLet
+> organisation is an automatic mirror.
+
 The current R8 replication package is in [`R8/`](R8/). It includes the
 intermediate numerical results needed to regenerate the paper's tables and
 figures, the original producers, a locked Python environment specification and
