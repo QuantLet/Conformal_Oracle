@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.5.1] - 2026-09-21
+
+### Changed
+
+- **Documentation only; the package code is identical to 0.5.0.** The
+  description that reaches PyPI cannot be edited after a release, so these
+  corrections ship as a patch.
+- The opening paragraph announces 0.5.0's intensity rather than 0.4.0's
+  separated protocol.
+- The earlier manuscript is cited by one deposit tag, `R8-2026-09-13-repair1`,
+  the deposit its R7 and R8 APIs shipped from, with its later extensions named;
+  the current manuscript's deposit, `R9-2026-09-21`, is identified as separate,
+  so the `R9` prefix no longer stands for two manuscripts without qualification.
+- The result about estimating the intensity is attributed to the estimator the
+  manuscript actually tests, a plug-in built from a Bartlett long-run variance
+  and a kernel density at the fitted shift.
+  `diagnostics.optimism.first_order_shrinkage` is named as a different
+  estimator of the same quantity, keeping `validated=False` for its own reason.
+
 ## [0.5.0] - 2026-09-21
 
 ### Added

@@ -10,8 +10,10 @@ Conformal recalibration and backtesting for extreme financial quantiles.
 Given any return series and either a forecaster object or a
 pre-computed quantile path, `conformal-oracle` computes a
 one-parameter conformal correction and reports coverage, Quantile Score and
-correction-magnitude diagnostics. Version 0.4.0 adds an explicit separated
-single-split protocol and a calibration-only selective-deployment policy.
+correction-magnitude diagnostics. Version 0.5.0 adds the intensity of that
+correction, the fraction of the fitted shift actually applied; 0.4.0 added the
+separated single-split protocol and the calibration-only selective-deployment
+policy, both unchanged.
 The legacy regime labels are descriptive, not a validation of the forecaster.
 
 The core install is **dependency-agnostic**: it needs only NumPy,
@@ -26,7 +28,10 @@ Companion software for:
 
 The R7 and R8 APIs of version 0.4.0 accompany the earlier manuscript, "Conformal
 Recalibration of Extreme Tail Quantiles under Temporal Dependence", replication
-tag `R9-2026-09-17-v2`, and are unchanged in this release.
+tag `R8-2026-09-13-repair1`, the deposit those APIs shipped from; its later
+extensions are tagged `R9-2026-09-17` and `R9-2026-09-17-v2` in the same
+repository. The current manuscript has its own deposit, tagged
+`R9-2026-09-21`, in a separate repository.
 
 ## Scope and interpretation
 
@@ -199,10 +204,13 @@ manuscript, intensity 0.5 lowered quantile loss against the whole shift at
 every calibration length in every universe, and against the raw forecast once
 the window held 1000 pairs. The evidence is retrospective.
 
-**The intensity is not estimated.** `diagnostics.optimism.first_order_shrinkage`
-estimates the same quantity and keeps `validated=False`: on those panels the
-estimated intensity loses to the fixed 0.5 in every supported comparison between
-them, and at short windows it degenerates to the whole shift.
+**The intensity is not estimated.** The manuscript tests a plug-in estimator of
+it, built from a Bartlett long-run variance of the calibration breach indicator
+and a kernel density at the fitted shift, and that estimator loses to the fixed
+0.5 in every supported comparison between them; at short windows it degenerates
+to the whole shift. `diagnostics.optimism.first_order_shrinkage` is a different
+estimator of the same quantity and keeps `validated=False` for its own reason,
+the value criterion of the earlier study.
 
 **Short windows.** When the conformal rank reaches the calibration sample size,
 at `alpha = 0.01` any window of 198 pairs or fewer, the fitted shift is the

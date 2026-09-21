@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "conformal-oracle"
-version = "0.5.0"
+version = "0.5.1"
 description = "Conformal recalibration and backtesting for extreme financial quantiles"
 readme = "README.md"
 license = "MIT"
