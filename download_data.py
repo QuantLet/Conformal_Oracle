@@ -31,8 +31,8 @@ from pathlib import Path
 #   zip -r cfp_ijf_data.zip cfp_ijf_data -x '*.DS_Store'
 #   gh release create data-v1 cfp_ijf_data.zip --repo QuantLet/Conformal_Oracle \
 #       --title "Conformal_Oracle dataset" --notes "Forecast parquets + tables."
-RELEASE_PAGE = "https://github.com/QuantLet/Conformal_Oracle/releases/tag/data-v1"
-ARCHIVE_URL  = "https://github.com/QuantLet/Conformal_Oracle/releases/download/data-v1/cfp_ijf_data.zip"
+RELEASE_PAGE = "https://github.com/danpele/Conformal_Oracle/releases/tag/data-v1"
+ARCHIVE_URL  = "https://github.com/danpele/Conformal_Oracle/releases/download/data-v1/cfp_ijf_data.zip"
 ARCHIVE_SHA256 = "a6349b795b21fd7bdb63ea39d927f1671f5dedacbc64763b3d26c88b5a7fd98f"
 # ---------------------------------------------------------------------------
 

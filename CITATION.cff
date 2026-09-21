@@ -20,8 +20,8 @@ authors:
   - family-names: "Härdle"
     given-names: Wolfgang Karl
     affiliation: "Humboldt University Berlin, Institute for Digital Assets"
-repository-code: "https://github.com/QuantLet/Conformal_Oracle"
-url: "https://github.com/QuantLet/Conformal_Oracle"
+repository-code: "https://github.com/danpele/Conformal_Oracle"
+url: "https://github.com/danpele/Conformal_Oracle"
 license: MIT
 preferred-citation:
   type: article
@@ -43,5 +43,5 @@ preferred-citation:
       given-names: Wolfgang Karl
       affiliation: "Humboldt University Berlin, Institute for Digital Assets"
   year: 2026
-  url: "https://github.com/QuantLet/Conformal_Oracle"
+  url: "https://github.com/danpele/Conformal_Oracle"
   notes: "The R7 and R8 public APIs accompany the earlier manuscript, Conformal Recalibration of Extreme Tail Quantiles under Temporal Dependence."

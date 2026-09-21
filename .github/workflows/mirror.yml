@@ -1,0 +1,38 @@
+name: mirror
+
+# Keeps QuantLet/Conformal_Oracle in step with this repository, which is the
+# canonical one and the only one PyPI trusts to publish. The mirror's own
+# release workflow is disabled, so mirroring a tag there publishes nothing.
+# Authentication is a deploy key whose write access is limited to that one
+# repository; it cannot reach anything else in the organisation.
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*-python']
+  workflow_dispatch:
+
+concurrency:
+  group: mirror
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push main and the release tags to the mirror
+        env:
+          MIRROR_SSH_KEY: ${{ secrets.MIRROR_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$MIRROR_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts 2>/dev/null
+          git remote add mirror git@github.com:QuantLet/Conformal_Oracle.git
+          git push --force mirror "refs/remotes/origin/main:refs/heads/main"
+          git push --force mirror "refs/tags/*:refs/tags/*"
+          echo "mirror updated to $(git rev-parse --short HEAD)"

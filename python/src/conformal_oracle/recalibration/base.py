@@ -75,10 +75,11 @@ class ConformalShift:
     calibration pairs; that evidence is retrospective.
 
     Estimating the intensity from the same window that fits the shift did
-    worse than the fixed 0.5 in every supported comparison between them. The
-    estimator is available as a diagnostic, not as a deployment rule: see
-    :func:`conformal_oracle.diagnostics.optimism.first_order_shrinkage`, which
-    carries ``validated=False`` for the same reason.
+    worse than the fixed 0.5 in every supported comparison between them, so no
+    estimator of it is exposed here.
+    :func:`conformal_oracle.diagnostics.optimism.first_order_shrinkage` is a
+    different estimator of the same quantity and carries ``validated=False``
+    for its own reason.
 
     Args:
         intensity: Fraction of the fitted shift to apply, in [0, 1].

@@ -1,5 +1,45 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- **The links return to `danpele/Conformal_Oracle`, which is now canonical in
+  every sense.** Control of the repository authorised to publish is control of
+  the package: with trusted publishing, anyone who can modify or trigger the
+  release workflow in that repository can publish a version of it. On a personal
+  account that is the author alone; in an organisation it is everyone with write
+  access there, and the administrators who can change environments, workflows
+  and protection rules. The publisher stays on the personal account, so the
+  links point at the same place. Package metadata, README links, Colab badges,
+  clone instructions and `CITATION.cff` all move back.
+- **`QuantLet/Conformal_Oracle` becomes an automatic mirror**, updated by a
+  workflow here on every push to `main` and every `v*-python` tag, through a
+  deploy key with write access to that repository alone. Its release workflow
+  stays disabled, so only this repository can publish, and its README says it is
+  a mirror.
+- `PUBLISH_LOG.md` and the historical files under `R8/history/` keep their links
+  as records of what happened at the time.
+
+## [0.5.1] - 2026-09-21
+
+### Changed
+
+- **Documentation only; the package code is identical to 0.5.0.** The
+  description that reaches PyPI cannot be edited after a release, so these
+  corrections ship as a patch.
+- The opening paragraph announces 0.5.0's intensity rather than 0.4.0's
+  separated protocol.
+- The earlier manuscript is cited by one deposit tag, `R8-2026-09-13-repair1`,
+  the deposit its R7 and R8 APIs shipped from, with its later extensions named;
+  the current manuscript's deposit, `R9-2026-09-21`, is identified as separate,
+  so the `R9` prefix no longer stands for two manuscripts without qualification.
+- The result about estimating the intensity is attributed to the estimator the
+  manuscript actually tests, a plug-in built from a Bartlett long-run variance
+  and a kernel density at the fitted shift.
+  `diagnostics.optimism.first_order_shrinkage` is named as a different
+  estimator of the same quantity, keeping `validated=False` for its own reason.
+
 ## [0.5.0] - 2026-09-21
 
 ### Added
@@ -35,7 +75,8 @@
   source of every published release. The links previously pointed to
   `danpele/Conformal_Oracle`, which is three releases behind, so the PyPI page
   for 0.4.0 sends readers to 0.3.0-era code. `PUBLISH_LOG.md` keeps its links as
-  the record of where the 0.3.0 release happened.
+  the record of where the 0.3.0 release happened. This was reversed before the
+  next release; see the unreleased entry at the top.
 - **Release workflow** moved into this repository, tag-triggered on `v*-python`
   through trusted publishing. It stays inert until the PyPI trusted publisher is
   transferred, so that only one repository can publish.
@@ -262,7 +303,7 @@ Initial public release. Static and rolling conformal audit pipelines,
 9 recalibration baselines, 4 TSFM wrappers, panel-level inference,
 full backtesting diagnostics.
 
-[0.3.0]: https://github.com/QuantLet/Conformal_Oracle/compare/v0.2.2-python...v0.3.0-python
-[0.2.2]: https://github.com/QuantLet/Conformal_Oracle/compare/v0.2.1-python...v0.2.2-python
-[0.2.1]: https://github.com/QuantLet/Conformal_Oracle/compare/v0.2.0-python...v0.2.1-python
-[0.2.0]: https://github.com/QuantLet/Conformal_Oracle/releases/tag/v0.2.0-python
+[0.3.0]: https://github.com/danpele/Conformal_Oracle/compare/v0.2.2-python...v0.3.0-python
+[0.2.2]: https://github.com/danpele/Conformal_Oracle/compare/v0.2.1-python...v0.2.2-python
+[0.2.1]: https://github.com/danpele/Conformal_Oracle/compare/v0.2.0-python...v0.2.1-python
+[0.2.0]: https://github.com/danpele/Conformal_Oracle/releases/tag/v0.2.0-python
