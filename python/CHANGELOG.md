@@ -1,5 +1,57 @@
 # Changelog
 
+## [0.5.0] - 2026-09-21
+
+### Added
+
+- **`ConformalShift(intensity=...)`**: the deployed correction is
+  `intensity * c_hat`, validated to lie in `[0, 1]`. The default stays `1.0`,
+  the whole conformal shift, so no result from 0.4.0 or earlier moves unless the
+  argument is passed. `ConformalShift.shift` exposes the correction actually
+  applied.
+
+  Intensity `0.5` is the average of the raw and the fully corrected threshold.
+  At that intensity the leading coefficient of the local-bias corollary is
+  `(f/8)(sigma^2 - 3 delta^2)`, so the correction pays over a region three times
+  wider in squared bias than the whole shift, costs a quarter as much when no
+  correction was needed, and is the optimal intensity at the boundary where the
+  whole shift stops paying. On the evaluated panels it lowered quantile loss
+  against the whole shift at every calibration length in every universe, and
+  against the raw forecast once the shift was fitted on 1000 calibration pairs.
+  The recommended static setting is `intensity=0.5` with at least 1000
+  calibration pairs; that evidence is retrospective.
+
+- **A short-window warning.** `ConformalShift.fit` raises a `UserWarning` when
+  `ceil((n + 1)(1 - alpha)) >= n`, at `alpha = 0.01` any window of 198 pairs or
+  fewer, stating that the fitted shift is the largest calibration score.
+
+- **Tests** for the intensity, the endpoints, the rejection of values outside
+  `[0, 1]`, the warning, and the agreement of the two version declarations.
+
+### Changed
+
+- **Canonical repository.** Every live link in the package metadata, the README
+  and the notebooks now points to `QuantLet/Conformal_Oracle`, which holds the
+  source of every published release. The links previously pointed to
+  `danpele/Conformal_Oracle`, which is three releases behind, so the PyPI page
+  for 0.4.0 sends readers to 0.3.0-era code. `PUBLISH_LOG.md` keeps its links as
+  the record of where the 0.3.0 release happened.
+- **Release workflow** moved into this repository, tag-triggered on `v*-python`
+  through trusted publishing. It stays inert until the PyPI trusted publisher is
+  transferred, so that only one repository can publish.
+- README: the companion-paper citation now names the current manuscript; a new
+  correction-intensity section; a note on how the intensity relates to the R7
+  pre-deployment indication rule; a sentence in the regime-classification
+  documentation stating that the diagnosis uses the whole fitted shift.
+
+### Note
+
+The intensity is not estimated from data anywhere in the public API. The
+estimator of the same quantity, `diagnostics.optimism.first_order_shrinkage`,
+keeps `validated=False`: on the evaluated panels it loses to the fixed `0.5` in
+every supported comparison between them, and at short windows it degenerates to
+the whole shift.
+
 ## [0.4.0] - Unreleased
 
 ### Added (R8, 13 September 2026)

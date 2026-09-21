@@ -85,3 +85,6 @@ garch_conformal_detail.csv
 /ql_logo.png
 /qr_logo.png
 /Sigla_MAAT.png
+python/dist/
+python/build/
+python/src/*.egg-info/

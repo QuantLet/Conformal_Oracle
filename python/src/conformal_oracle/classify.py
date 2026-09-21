@@ -36,6 +36,10 @@ def classify_regime(
 
     Supply exactly one of ``forecast`` or ``forecaster``.
 
+    The regime is a property of the forecaster, not of a correction policy, so
+    the diagnosis uses the whole fitted shift and does not depend on the
+    ``intensity`` passed to :class:`~conformal_oracle.recalibration.ConformalShift`.
+
     Returns a :class:`RegimeVerdict` summarising the regime.
     """
     from conformal_oracle.audit import audit

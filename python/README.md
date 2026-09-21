@@ -21,8 +21,12 @@ is required unless you use the built-in benchmark wrappers.
 Companion software for:
 
 > Pele, D.T., Bolovaneanu, V., Ginavar, A.T., Lessmann, S., Hardle, W.K.
-> "Conformal Recalibration of Extreme Tail Quantiles under Temporal Dependence"
-> (2026, manuscript R8; replication tag `R9-2026-09-17-v2`).
+> "When Does Recalibration Improve Value-at-Risk Forecasts? Estimation Cost,
+> Dependence and How Much to Correct" (2026).
+
+The R7 and R8 APIs of version 0.4.0 accompany the earlier manuscript, "Conformal
+Recalibration of Extreme Tail Quantiles under Temporal Dependence", replication
+tag `R9-2026-09-17-v2`, and are unchanged in this release.
 
 ## Scope and interpretation
 
@@ -47,6 +51,15 @@ remove, not to introduce a new miscalibration measure. The displacement and
 its associated score reduction are different quantities; the finite-sample
 conformal order statistic need not exactly minimise the calibration score.
 
+## Version 0.5.0
+
+`ConformalShift` takes an `intensity` argument; the deployed correction is
+`intensity * c_hat`. The default stays `1.0`, so nothing moves for existing
+callers. The recommended static setting is `intensity=0.5` on at least 1000
+calibration pairs. `fit` now warns when the conformal rank reaches the
+calibration sample size. See the correction-intensity section below. The R7 and
+R8 APIs are unchanged.
+
 ## Version 0.4.0
 
 This release adds the R8 analysis tools listed in the next section and the
@@ -64,8 +77,8 @@ All three corrections use `ceil((n+1)(1-alpha))`, not an interpolated empirical
 quantile. When that rank exceeds the calibration-sample size, the existing
 implementation returns the sample maximum as a finite proxy; this case does
 not retain the usual finite-sample conformal coverage guarantee. See the
-[methodology](https://github.com/danpele/Conformal_Oracle/blob/main/python/docs/methodology.md)
-and [changelog](https://github.com/danpele/Conformal_Oracle/blob/main/python/CHANGELOG.md).
+[methodology](https://github.com/QuantLet/Conformal_Oracle/blob/main/python/docs/methodology.md)
+and [changelog](https://github.com/QuantLet/Conformal_Oracle/blob/main/python/CHANGELOG.md).
 
 ## R8: estimation cost, correction form and selection
 
@@ -147,6 +160,54 @@ print(result_roll.summary())
 No `arch`, no `torch`, no heavyweight dependency -- just your
 quantile series.
 
+## Correction intensity
+
+`ConformalShift(intensity=...)` applies a fraction of the fitted shift; the
+deployed correction is `intensity * c_hat`. The default, `1.0`, is the whole
+shift, so results from 0.4.0 and earlier are unchanged unless the argument is
+passed.
+
+```python
+from conformal_oracle import audit
+from conformal_oracle.contrib.benchmarks import GJRGARCHForecaster
+from conformal_oracle.recalibration import ConformalShift
+
+# Recommended static setting: the average of the raw and the fully corrected
+# threshold, fitted on at least 1000 calibration pairs.
+result = audit(
+    returns, GJRGARCHForecaster(), alpha=0.01, mode="static",
+    recalibration=ConformalShift(intensity=0.5),
+)
+```
+
+`recalibration=` belongs to the forecaster path. On the agnostic `forecast=`
+path, apply the intensity to the quantile series yourself:
+
+```python
+shift = ConformalShift(intensity=0.5)
+shift.fit(-q_cal.to_numpy(), r_cal.to_numpy(), alpha=0.01)
+q_corrected = q_lo - shift.shift          # q_lo is the lower-tail quantile
+```
+
+**Why 0.5.** The whole shift lowers expected loss only when the correction the
+forecaster needs is larger than the standard error of the fitted quantile. At
+intensity 0.5 the leading coefficient of the local-bias corollary becomes
+`(f/8)(sigma^2 - 3 delta^2)`: the correction pays over a region three times
+wider in squared bias, costs a quarter as much when no correction was needed,
+and is the optimal intensity at that boundary. On the panels of the current
+manuscript, intensity 0.5 lowered quantile loss against the whole shift at
+every calibration length in every universe, and against the raw forecast once
+the window held 1000 pairs. The evidence is retrospective.
+
+**The intensity is not estimated.** `diagnostics.optimism.first_order_shrinkage`
+estimates the same quantity and keeps `validated=False`: on those panels the
+estimated intensity loses to the fixed 0.5 in every supported comparison between
+them, and at short windows it degenerates to the whole shift.
+
+**Short windows.** When the conformal rank reaches the calibration sample size,
+at `alpha = 0.01` any window of 198 pairs or fewer, the fitted shift is the
+largest calibration score and `ConformalShift.fit` raises a `UserWarning`.
+
 ## R7: separated single-split estimator
 
 ```python
@@ -199,6 +260,14 @@ print(decision.apply, decision.reasons)
 
 Apply if the calibration Basel zone is not Green **or** the calibration
 Kupiec p-value is below `kupiec_level`; otherwise preserve raw forecasts.
+
+This rule and the correction intensity answer different questions and compose.
+The R7 rule decides **whether** to correct, from calibration coverage alone, and
+accompanies the earlier manuscript. The intensity decides **how much** to apply
+once the answer is yes, and the current manuscript recommends `intensity=0.5`
+with at least 1000 calibration pairs. `selectively_recalibrate` applies the
+whole shift; to deploy the recommended setting after a positive decision, build
+the correction with `ConformalShift(intensity=0.5)`.
 The decision function accepts no evaluation outcomes. Callers must supply a
 genuine calibration block and already causal forecasts; array values alone
 cannot establish their provenance. The helper verifies the decision's
@@ -210,7 +279,7 @@ time-t correction uses only outcomes before t; the initial decision remains
 fixed. The skip path needs no evaluation outcomes. An ex-post score comparison
 is separate from the policy and cannot be used to choose the initial decision.
 
-See the [API reference](https://github.com/danpele/Conformal_Oracle/blob/main/python/docs/api.md)
+See the [API reference](https://github.com/QuantLet/Conformal_Oracle/blob/main/python/docs/api.md)
 for the precise R7 Basel convention and a read-only artifact reproduction command.
 
 ## Quickstart -- with a forecaster object
@@ -277,18 +346,18 @@ result = audit(returns, MyForecaster(), alpha=0.01)
   outcomes separately; requires the complete replication artifacts.
 - [Quickstart (S&P 500)](examples/notebooks/quickstart_sp500.ipynb) --
   Static and rolling conformal audits with GJR-GARCH and Lag-Llama.
-  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danpele/Conformal_Oracle/blob/main/python/examples/notebooks/quickstart_sp500.ipynb)
+  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/QuantLet/Conformal_Oracle/blob/main/python/examples/notebooks/quickstart_sp500.ipynb)
 - [Legacy Table 4 replication](examples/notebooks/reproduce_table4_full.ipynb) --
   9 forecasters x 24 assets under an earlier protocol, with checkpointing.
   This notebook does not reproduce the current R7 tables.
-  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danpele/Conformal_Oracle/blob/main/python/examples/notebooks/reproduce_table4_full.ipynb)
+  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/QuantLet/Conformal_Oracle/blob/main/python/examples/notebooks/reproduce_table4_full.ipynb)
 
 ## Documentation
 
-- [API Reference](https://github.com/danpele/Conformal_Oracle/blob/main/python/docs/api.md)
-- [Methodology](https://github.com/danpele/Conformal_Oracle/blob/main/python/docs/methodology.md)
-- [Conventions](https://github.com/danpele/Conformal_Oracle/blob/main/python/docs/conventions.md) (return units, VaR sign, alpha)
-- [Migration Guide (v0.3)](https://github.com/danpele/Conformal_Oracle/blob/main/python/docs/migration_v0.3.md)
+- [API Reference](https://github.com/QuantLet/Conformal_Oracle/blob/main/python/docs/api.md)
+- [Methodology](https://github.com/QuantLet/Conformal_Oracle/blob/main/python/docs/methodology.md)
+- [Conventions](https://github.com/QuantLet/Conformal_Oracle/blob/main/python/docs/conventions.md) (return units, VaR sign, alpha)
+- [Migration Guide (v0.3)](https://github.com/QuantLet/Conformal_Oracle/blob/main/python/docs/migration_v0.3.md)
 
 ## Requirements
 
